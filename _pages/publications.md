@@ -11,7 +11,7 @@ permalink: /publications/
 {% endif %}
 
 {% if author.googlescholar %}
-  You can also find my articles on <u><a href="{{author.googlescholar}}">my Google Scholar profile</a>.</u>
+  You can also find my articles on <b><a href="{{author.googlescholar}}">my Google Scholar profile</a>.</b>
 {% endif %}
 
 {% for post in site.publications reversed %}
