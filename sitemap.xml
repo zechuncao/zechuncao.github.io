@@ -2,7 +2,7 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>http://0.0.0.0:8080/books/the_godfather/</loc>
-<lastmod>2025-09-23T11:06:01+00:00</lastmod>
+<lastmod>2025-09-23T19:42:47+00:00</lastmod>
 </url>
 <url>
 <loc>http://0.0.0.0:8080/news/2022/looking%20for%20students/</loc>
@@ -23,6 +23,26 @@
 <url>
 <loc>http://0.0.0.0:8080/news/2023/Jag-AI%20awarded/</loc>
 <lastmod>2023-09-18T05:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://0.0.0.0:8080/news/2024/google%20grant/</loc>
+<lastmod>2024-06-25T05:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://0.0.0.0:8080/news/2024/college%20award/</loc>
+<lastmod>2024-08-22T05:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://0.0.0.0:8080/news/2025/mentor%20award/</loc>
+<lastmod>2025-05-19T05:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://0.0.0.0:8080/news/2025/german%20phd/</loc>
+<lastmod>2025-08-02T05:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://0.0.0.0:8080/news/2025/JISA%20paper/</loc>
+<lastmod>2025-09-19T05:00:00+00:00</lastmod>
 </url>
 <url>
 <loc>http://0.0.0.0:8080/blog/2015/formatting-and-links/</loc>
@@ -158,7 +178,7 @@
 </url>
 <url>
 <loc>http://0.0.0.0:8080/projects/smart_sat/</loc>
-<lastmod>2025-09-23T11:06:01+00:00</lastmod>
+<lastmod>2025-09-23T19:42:47+00:00</lastmod>
 </url>
 <url>
 <loc>http://0.0.0.0:8080/</loc>
