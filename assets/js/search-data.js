@@ -425,7 +425,7 @@ ninja.data = [{
           section: "News",},{id: "news-congratulations-to-german-zavala-villafuerte-on-his-official-acceptance-with-a-full-scholarship-to-the-computer-science-ph-d-program-at-the-university-of-houston",
           title: 'Congratulations to German Zavala Villafuerte on his official acceptance, with a full scholarship,...',
           description: "",
-          section: "News",},{id: "news-our-paper-on-privacy-preserving-geo-spatial-queries-has-been-accepted-for-publication-in-the-journal-of-information-security-and-applications-jisa-congratulations-to-the-team",
+          section: "News",},{id: "news-our-paper-on-privacy-preserving-geo-spatial-queries-has-been-accepted-for-publication-in-the-journal-of-information-security-and-applications-jisa-congratulations-to-my-student-brian-kishiyama-and-the-team",
           title: 'Our paper on privacy-preserving geo-spatial queries has been accepted for publication in the...',
           description: "",
           section: "News",},{id: "projects-smartsat",

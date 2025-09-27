@@ -2,7 +2,7 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>http://0.0.0.0:8080/books/the_godfather/</loc>
-<lastmod>2025-09-23T20:17:30+00:00</lastmod>
+<lastmod>2025-09-27T12:41:36+00:00</lastmod>
 </url>
 <url>
 <loc>http://0.0.0.0:8080/news/2022/looking%20for%20students/</loc>
@@ -178,7 +178,7 @@
 </url>
 <url>
 <loc>http://0.0.0.0:8080/projects/smart_sat/</loc>
-<lastmod>2025-09-23T20:17:30+00:00</lastmod>
+<lastmod>2025-09-27T12:41:36+00:00</lastmod>
 </url>
 <url>
 <loc>http://0.0.0.0:8080/</loc>
