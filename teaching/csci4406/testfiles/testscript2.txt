@@ -1,5 +1,5 @@
-http://www2.cs.uh.edu/~gnawali/courses/cosc4377-s12/hw4/testfiles2/vinelab1.tar.gz
-http://www2.cs.uh.edu/~gnawali/courses/cosc4377-s12/hw4/testfiles2/vinelab2.tar.gz
-http://www2.cs.uh.edu/~gnawali/courses/cosc4377-s12/hw4/testfiles2/vinelab3.tar.gz
-http://www2.cs.uh.edu/~gnawali/courses/cosc4377-s12/hw4/testfiles2/vinelab4.tar.gz
-http://www2.cs.uh.edu/~gnawali/courses/cosc4377-s12/hw4/testfiles2/vinelab5.tar.gz
+https://zechuncao.com/teaching/csci4406/testfiles/testfiles2/vinelab1.tar.gz
+https://zechuncao.com/teaching/csci4406/testfiles/testfiles2/vinelab2.tar.gz
+https://zechuncao.com/teaching/csci4406/testfiles/testfiles2/vinelab3.tar.gz
+https://zechuncao.com/teaching/csci4406/testfiles/testfiles2/vinelab4.tar.gz
+https://zechuncao.com/teaching/csci4406/testfiles/testfiles2/vinelab5.tar.gz
