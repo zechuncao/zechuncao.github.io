@@ -16,12 +16,12 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/news/";
           },
-        },{id: "nav-projects",
-          title: "projects",
+        },{id: "nav-research",
+          title: "research",
           description: "",
           section: "Navigation",
           handler: () => {
-            window.location.href = "/projects/";
+            window.location.href = "/research/";
           },
         },{id: "nav-teaching",
           title: "teaching",
@@ -431,11 +431,11 @@ ninja.data = [{
           section: "News",},{id: "news-i-was-honored-to-be-invited-as-a-panelist-for-the-cyber-amp-amp-ai-panel-at-the-ieee-iccst-2025",
           title: 'I was honored to be invited as a panelist for the Cyber &amp;amp;amp;...',
           description: "",
-          section: "News",},{id: "projects-smartsat",
+          section: "News",},{id: "research-smartsat",
           title: 'SmartSAT',
           description: "Building a Smart Mobility Network for the San Antonio Transit to Improve Transit Service and Social Impact (SmartSAT)",
-          section: "Projects",handler: () => {
-              window.location.href = "/projects/smart_sat/";
+          section: "Research",handler: () => {
+              window.location.href = "/research/smart_sat/";
             },},{
         id: 'social-email',
         title: 'email',

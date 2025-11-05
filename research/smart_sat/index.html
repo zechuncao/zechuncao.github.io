@@ -17,12 +17,12 @@
   
   
     
-      a post with geojson | Zechun Cao
+      SmartSAT | Zechun Cao
     
   
 </title>
 <meta name="author" content="Zechun Cao">
-<meta name="description" content="this is what included geojson code could look like">
+<meta name="description" content="Building a Smart Mobility Network for the San Antonio Transit to Improve Transit Service and Social Impact (SmartSAT)">
 
 
 
@@ -57,7 +57,7 @@
   <link rel="shortcut icon" href="/assets/img/favicon.ico?e6520438769890b5a39019c290f97024">
 
 <link rel="stylesheet" href="/assets/css/main.css?d41d8cd98f00b204e9800998ecf8427e">
-<link rel="canonical" href="http://0.0.0.0:8080/blog/2024/geojson-map/">
+<link rel="canonical" href="http://0.0.0.0:8080/research/smart_sat/">
 
 
   <!-- Dark Mode -->
@@ -68,9 +68,6 @@
   </script>
 
 
-
-  <!-- GeoJSON support via Leaflet -->
-  <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.css" integrity="sha256-q9ba7o845pMPFU+zcAll8rv+gC+fSovKsOoNQ6cynuQ=" crossorigin="anonymous">
 
 
 
@@ -251,8 +248,10 @@
             
               
                 
-                <li class="nav-item ">
+                <li class="nav-item active">
                   <a class="nav-link" href="/research/">research
+                    
+                      <span class="sr-only">(current)</span>
                     
                   </a>
                 </li>
@@ -316,221 +315,226 @@
       
         
 
-
-
-
-
-
 <div class="post">
   <header class="post-header">
-    <h1 class="post-title">a post with geojson</h1>
-    <p class="post-meta">
-      Created on January 26, 2024
-      
-      
-      
-    </p>
-    <p class="post-tags">
-      
-        <a href="/blog/2024"> <i class="fa-solid fa-calendar fa-sm"></i> 2024 </a>
-      
-      
-          ·  
-        
-          
-            <a href="/blog/tag/formatting"> <i class="fa-solid fa-hashtag fa-sm"></i> formatting</a>
-          
-          
-             
-          
-        
-          
-            <a href="/blog/tag/charts"> <i class="fa-solid fa-hashtag fa-sm"></i> charts</a>
-          
-          
-             
-          
-        
-          
-            <a href="/blog/tag/maps"> <i class="fa-solid fa-hashtag fa-sm"></i> maps</a>
-          
-          
-        
-      
-
-      
-          ·  
-        
-          
-            <a href="/blog/category/sample-posts"> <i class="fa-solid fa-tag fa-sm"></i> sample-posts</a>
-          
-          
-        
-      
-    </p>
+    <h1 class="post-title">SmartSAT</h1>
+    <p class="post-description">Building a Smart Mobility Network for the San Antonio Transit to Improve Transit Service and Social Impact (SmartSAT)</p>
   </header>
 
-  <article class="post-content">
+  <article>
+    <div class="row">
+    <div class="col-sm mt-3 mt-md-0">
+        
+
+
+
+<figure>
+  <picture>
+    <!-- Auto scaling with imagemagick -->
+    <!--
+      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
+      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
+    -->
     
-    <div id="markdown-content">
-      <p>This is an example post with some <a href="https://geojson.org/" rel="external nofollow noopener" target="_blank">geojson</a> code. The support is provided thanks to <a href="https://leafletjs.com/" rel="external nofollow noopener" target="_blank">Leaflet</a>. To create your own visualization, go to <a href="https://geojson.io/" rel="external nofollow noopener" target="_blank">geojson.io</a>.</p>
+      
+        <source class="responsive-img-srcset" srcset="/assets/img/smartSAT/white-bus-on-road-near-in-high-rise-building-480.webp 480w,/assets/img/smartSAT/white-bus-on-road-near-in-high-rise-building-800.webp 800w,/assets/img/smartSAT/white-bus-on-road-near-in-high-rise-building-1400.webp 1400w," type="image/webp" sizes="95vw"></source>
+      
+    
+    <img src="/assets/img/smartSAT/white-bus-on-road-near-in-high-rise-building.jpeg" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
+  </picture>
 
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">```</span><span class="nl">geojson
-</span><span class="sb">{
-  "type": "FeatureCollection",
-  "features": [
-    {
-      "type": "Feature",
-      "properties": {},
-      "geometry": {
-        "coordinates": [
-          [
-            [
-              -60.11363029935569,
-              -2.904625022183211
-            ],
-            [
-              -60.11363029935569,
-              -3.162613728707967
-            ],
-            [
-              -59.820894493858034,
-              -3.162613728707967
-            ],
-            [
-              -59.820894493858034,
-              -2.904625022183211
-            ],
-            [
-              -60.11363029935569,
-              -2.904625022183211
-            ]
-          ]
-        ],
-        "type": "Polygon"
-      }
-    }
-  ]
-}</span>
-<span class="p">```</span>
-</code></pre></div></div>
-
-<p>Which generates:</p>
-
-<pre><code class="language-geojson">{
-  "type": "FeatureCollection",
-  "features": [
-    {
-      "type": "Feature",
-      "properties": {},
-      "geometry": {
-        "coordinates": [
-          [
-            [
-              -60.11363029935569,
-              -2.904625022183211
-            ],
-            [
-              -60.11363029935569,
-              -3.162613728707967
-            ],
-            [
-              -59.820894493858034,
-              -3.162613728707967
-            ],
-            [
-              -59.820894493858034,
-              -2.904625022183211
-            ],
-            [
-              -60.11363029935569,
-              -2.904625022183211
-            ]
-          ]
-        ],
-        "type": "Polygon"
-      }
-    }
-  ]
-}
-</code></pre>
+  
+</figure>
 
     </div>
+</div>
+
+<p><strong>Project Overview</strong></p>
+
+<p>SmartSAT utilizes a multipronged approach to conduct quantitative and qualitative research using secure intelligent technology, build intra- and inter-disciplinary research capacity at A&amp;M-SA, build research partnerships between A&amp;M-SA and SA VIA Metropolitan Transit (VIA Transit) to facilitate data driven transit planning decisions, and increase the competitiveness of A&amp;M-SA faculty-student research for future CISE grants. The SmartSAT app will be customizable and will include real-time bus arrival information, notices when seating is limited, instant alert messages for schedule changes and other important information, and interactive features to directly collect data from riders about their commute experience. All services will be available in both English and Spanish. Researchers and students from diverse disciplines (sociology, computer science, cyber security, and information science) will work collaboratively to achieve project success.</p>
+
+<!-- The objectives of the SmartSAT are to:
+
+1. improve the accuracy of bus arrival time reporting
+
+2. provide up-to-date information about seating availability and important transit alerts
+
+3. collect data that will be used to improve rider satisfaction and inclusivity of VIA transit -->
+
+<p><strong>Privacy-Preserving Spatial Queries in SmartSAT</strong></p>
+
+<p>Bus route planning and real-time, traffic-aware arrival time estimation are essential services offered by SmartSAT. However, like most location-based services, these features typically require the client to disclose their exact location and destination to the cloud service provider in order to compute the fastest bus route and the estimated arrival time at the selected stop.</p>
+
+<div class="row">
+    <div class="col-sm mt-3 mt-md-0">
+        
+
+
+
+<figure>
+  <picture>
+    <!-- Auto scaling with imagemagick -->
+    <!--
+      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
+      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
+    -->
+    
+      
+        <source class="responsive-img-srcset" srcset="/assets/img/smartSAT/DHVO%20Post-480.webp 480w,/assets/img/smartSAT/DHVO%20Post-800.webp 800w,/assets/img/smartSAT/DHVO%20Post-1400.webp 1400w," type="image/webp" sizes="95vw"></source>
+      
+    
+    <img src="/assets/img/smartSAT/DHVO%20Post.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="example image" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
+  </picture>
+
+  
+</figure>
+
+    </div>
+</div>
+
+<div class="caption">
+We propose a novel exact nearest neighbor spatial search algorithm, Dynamic Hierarchical Voronoi Overlay (DHVO).
+</div>
+
+<p>In this work, we design <strong>privacy-preserving spatial computing algorithms</strong> and a <strong>secure network communication protocol</strong> that enable accurate route and time estimations while protecting the rider’s sensitive location information <a class="citation" href="#cao2025jisa">(Cao et al., 2025)</a>.</p>
+
+<p><br></p>
+
+<h3 id="acknowledgements">Acknowledgements</h3>
+<p>This research was supported in part by NSF under grants CNS-2131193 and CNS-2219588. <img src="/assets/img/NSF_4-Color_bitmap_Logo.png" height="100" width="100" class="rounded float-right" alt="..."></p>
+
+<p><br>
+<br>
+<br></p>
+
   </article>
 
   
-
+    <h2>References</h2>
+    <div class="publications">
+      <h2 class="bibliography">2025</h2>
+<ol class="bibliography"><li>
+<div class="row">
+  
+    <div class="col col-sm-2 abbr">
+          <abbr class="badge rounded w-100">JISA</abbr>
+        
+      
+      
+    </div>
   
 
-  
-    
+  <!-- Entry bib key -->
+  <div id="cao2025jisa" class="col-sm-8">
+    <!-- Title -->
+    <div class="title">PrivNN: A private and efficient framework for spatial nearest neighbor query processing</div>
+    <!-- Author -->
+    <div class="author">
       
 
+      
+      Zechun
+            Cao, Brian
+            Kishiyama, and Jeong
+            Yang
+      
+    </div>
+
+    <!-- Journal/Book title and date -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="periodical">
+      <em>Journal of Information Security and Applications</em>,  2025
+    </div>
+    <div class="periodical">
+      
+    </div>
+
+    <!-- Links/Buttons -->
+    <div class="links">
+      
+      
+        <a class="abstract btn btn-sm z-depth-0" role="button">Abs</a>
+      
+      
+        <a href="https://doi.org/https://doi.org/10.1016/j.jisa.2025.104244" class="btn btn-sm z-depth-0" role="button" rel="external nofollow noopener" target="_blank">DOI</a>
+      
+      
+      
+        <a class="bibtex btn btn-sm z-depth-0" role="button">Bib</a>
+      
+      
+      
+        
+          <a href="/assets/pdf/cao_2025_jisa.pdf" class="btn btn-sm z-depth-0" role="button">PDF</a>
+        
+      
+      
+      
+      
+      
+      
+      
+      
+    </div>
+    
+      
+      
+
+      
+      
+
+      
+      
+
+      
+      
+      
+    
+
+    
+
+    
+      <!-- Hidden abstract block -->
+      <div class="abstract hidden">
+        <p>A common query type in location-based services (LBS) is finding the nearest neighbor (NN) of a given query object. However, the exact location of the query object is often sensitive information, posing significant privacy risks if the LBS server is untrusted or compromised. In this paper, we propose PrivNN, a novel spatial NN query processing framework that allows users to perform exact NN queries without revealing their location. Our framework introduces a novel spatial NN search algorithm, Dynamic Hierarchical Voronoi Overlay (DHVO), which efficiently finds the nearest neighbor by iteratively refining the search region using multi-granular Voronoi diagrams. We also present a client–server communication protocol that enables the server to respond to encrypted spatial NN queries by employing homomorphic encryption. We rigorously prove the correctness of our algorithm, analyze the theoretical properties of our framework, and demonstrate its strong security and robust privacy bounds. We implement and evaluate PrivNN on real-world spatial datasets, showing that it substantially reduces computational and communication overhead while remaining practical for private NN search in LBS applications.</p>
+      </div>
+    
+
+    
+      <!-- Hidden bibtex block -->
+      <div class="bibtex hidden">
+        <figure class="highlight"><pre><code class="language-bibtex" data-lang="bibtex"><span class="nc">@article</span><span class="p">{</span><span class="nl">cao2025jisa</span><span class="p">,</span>
+  <span class="na">title</span> <span class="p">=</span> <span class="s">{PrivNN: A private and efficient framework for spatial nearest neighbor query processing}</span><span class="p">,</span>
+  <span class="na">author</span> <span class="p">=</span> <span class="s">{Cao, Zechun and Kishiyama, Brian and Yang, Jeong}</span><span class="p">,</span>
+  <span class="na">journal</span> <span class="p">=</span> <span class="s">{Journal of Information Security and Applications}</span><span class="p">,</span>
+  <span class="na">volume</span> <span class="p">=</span> <span class="s">{94}</span><span class="p">,</span>
+  <span class="na">pages</span> <span class="p">=</span> <span class="s">{104244}</span><span class="p">,</span>
+  <span class="na">year</span> <span class="p">=</span> <span class="s">{2025}</span><span class="p">,</span>
+  <span class="na">issn</span> <span class="p">=</span> <span class="s">{2214-2126}</span><span class="p">,</span>
+  <span class="na">doi</span> <span class="p">=</span> <span class="s">{https://doi.org/10.1016/j.jisa.2025.104244}</span><span class="p">,</span>
+  <span class="na">url</span> <span class="p">=</span> <span class="s">{https://www.sciencedirect.com/science/article/pii/S2214212625002819}</span><span class="p">,</span>
+  <span class="na">keywords</span> <span class="p">=</span> <span class="s">{Privacy, Security, Privacy-preserving computation, Location-based services, Nearest neighbor search, Spatial query processing}</span><span class="p">,</span>
+  <span class="na">publisher</span> <span class="p">=</span> <span class="s">{Elsevier}</span><span class="p">,</span>
+<span class="p">}</span></code></pre></figure>
+      </div>
+    
+
+    
+  </div>
+</div>
+</li></ol>
+    </div>
   
-    
-    
-      <br>
-      <hr>
-      <br>
-      <ul class="list-disc pl-8"></ul>
 
-      <!-- Adds related posts to the end of an article -->
-      <h2 class="text-3xl font-semibold mb-4 mt-12">Enjoy Reading This Article?</h2>
-    
-
-    <p class="mb-2">Here are some more articles you might like to read next:</p>
-  
-
-  <li class="my-2">
-    
-      <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="https://blog.google/technology/ai/google-gemini-update-flash-ai-assistant-io-2024/" target="_blank" rel="external nofollow noopener">Google Gemini updates: Flash 1.5, Gemma 2 and Project Astra</a>
-      <svg width="1rem" height="1rem" viewbox="0 0 30 30" xmlns="http://www.w3.org/2000/svg">
-        <path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path>
-      </svg>
-    
-  </li>
-
-  
-
-  <li class="my-2">
-    
-      <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="https://medium.com/@al-folio/displaying-external-posts-on-your-al-folio-blog-b60a1d241a0a?source=rss-17feae71c3c4------2" target="_blank" rel="external nofollow noopener">Displaying External Posts on Your al-folio Blog</a>
-      <svg width="1rem" height="1rem" viewbox="0 0 30 30" xmlns="http://www.w3.org/2000/svg">
-        <path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path>
-      </svg>
-    
-  </li>
-
-  
-
-  <li class="my-2">
-    
-      <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2025/plotly/">a post with plotly.js</a>
-    
-  </li>
-
-  
-
-  <li class="my-2">
-    
-      <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2024/photo-gallery/">a post with image galleries</a>
-    
-  </li>
-
-  
-
-  <li class="my-2">
-    
-      <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2024/tabs/">a post with tabs</a>
-    
-  </li>
-
-
-
-    
-  
-
-  
   
 </div>
 
@@ -580,10 +584,6 @@
 
 
 
-
-  <!-- Leaflet -->
-  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.js" integrity="sha256-MgH13bFTTNqsnuEoqNPBLDaqxjGH+lCpqrukmXc8Ppg=" crossorigin="anonymous"></script>
-  <script defer src="/assets/js/leaflet-setup.js?b6313931e203b924523e2d8b75fe8874" type="text/javascript"></script>
 
 
 
