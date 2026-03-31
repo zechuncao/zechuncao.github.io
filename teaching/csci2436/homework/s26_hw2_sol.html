@@ -2563,7 +2563,7 @@ window.Quarto = {
 <p><strong>(1) Addition:</strong></p>
 <ul>
 <li>Sorted Array: <span class="math inline">O(n)</span> — Must find the correct position via binary search (<span class="math inline">O(\log n)</span>), but shifting elements to make room takes <span class="math inline">O(n)</span>.</li>
-<li>Unsorted Array: <span class="math inline">O(1)</span> — Simply append the new entry at the end (assuming no duplicate check needed, or the key is known to be new).</li>
+<li>Unsorted Array: <span class="math inline">O(n)</span> — Must perform a linear search to check for a duplicate key before inserting. The insertion itself is <span class="math inline">O(1)</span> (append at end), but the duplicate check dominates.</li>
 </ul>
 <p><strong>(2) Retrieval:</strong></p>
 <ul>
@@ -2592,7 +2592,7 @@ window.Quarto = {
 <tr class="odd">
 <td style="text-align: left;">Addition</td>
 <td style="text-align: center;"><span class="math inline">O(n)</span></td>
-<td style="text-align: center;"><span class="math inline">O(1)</span></td>
+<td style="text-align: center;"><span class="math inline">O(n)</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Retrieval</td>
