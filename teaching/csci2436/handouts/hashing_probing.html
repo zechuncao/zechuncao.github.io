@@ -2302,6 +2302,19 @@ window.Quarto = {
 <section id="worksheet" class="level2">
 <h2 class="anchored" data-anchor-id="worksheet">Worksheet</h2>
 <p>Fill this in as we work through the examples together.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Reviewing on your own?">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Reviewing on your own?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This is the post-lecture review copy. Try each problem first using the blank tables, then click <strong>Show answer</strong> to check your work.</p>
+</div>
+</div>
 </section>
 <section id="example-1-linear-probing" class="level2">
 <h2 class="anchored" data-anchor-id="example-1-linear-probing">Example 1 — Linear Probing</h2>
@@ -2347,9 +2360,147 @@ window.Quarto = {
 </tr>
 </tbody>
 </table>
+<div class="callout callout-style-default callout-tip callout-titled" title="Show answer — final table &amp; trace">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Show answer — final table &amp; trace
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Final table</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>idx</th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>key</td>
+<td>51</td>
+<td>14</td>
+<td>27</td>
+<td>–</td>
+<td>–</td>
+<td>–</td>
+<td>19</td>
+<td>32</td>
+<td>7</td>
+<td>45</td>
+<td>–</td>
+<td>50</td>
+<td>38</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Trace</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>key</th>
+<th><span class="math inline">H(k)</span></th>
+<th>probe</th>
+<th>final slot</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>19</td>
+<td>6</td>
+<td>—</td>
+<td>6</td>
+</tr>
+<tr class="even">
+<td>32</td>
+<td>6</td>
+<td>7</td>
+<td>7</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>7</td>
+<td>8</td>
+<td>8</td>
+</tr>
+<tr class="even">
+<td>45</td>
+<td>6</td>
+<td>7, 8, 9</td>
+<td>9</td>
+</tr>
+<tr class="odd">
+<td>50</td>
+<td>11</td>
+<td>—</td>
+<td>11</td>
+</tr>
+<tr class="even">
+<td>14</td>
+<td>1</td>
+<td>—</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>38</td>
+<td>12</td>
+<td>—</td>
+<td>12</td>
+</tr>
+<tr class="even">
+<td>51</td>
+<td>12</td>
+<td>0 (wraparound)</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>27</td>
+<td>1</td>
+<td>2</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<p>Two patterns to notice: insertion of <strong>45</strong> illustrates <strong>primary clustering</strong> (three probes through a contiguous run); insertion of <strong>51</strong> illustrates <strong>wraparound</strong>.</p>
+</div>
+</div>
+</div>
 <section id="exit-micro-question" class="level3">
 <h3 class="anchored" data-anchor-id="exit-micro-question">Exit micro-question</h3>
 <p>Using the finished table, search for key <strong>84</strong> (<span class="math inline">84 \bmod 13 = 6</span>). Which slots are probed, and when does the search stop?</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Show answer">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Show answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Probes 6, 7, 8, 9, then <strong>10 (empty)</strong> → key not found. This motivates why deletions in linear probing need <strong>tombstones</strong>: if we had deleted slot 8 with a plain empty, the search for 45 would have stopped early.</p>
+</div>
+</div>
+</div>
 </section>
 </section>
 <section id="example-2-quadratic-probing" class="level2">
@@ -2359,6 +2510,24 @@ window.Quarto = {
 <section id="warm-up" class="level3">
 <h3 class="anchored" data-anchor-id="warm-up">Warm-up</h3>
 <p>If <span class="math inline">H(k) = 3</span> and table size is 17, what are the first six probe indices?</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Show answer">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Show answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><span class="math inline">3,\ 4,\ 7,\ 12,\ 2,\ 11</span>.</p>
+<p>Computation: <span class="math inline">j^2 \bmod 17</span> for <span class="math inline">j=0..5</span> is <span class="math inline">0, 1, 4, 9, 16, 8</span>; add 3 and reduce mod 17 → <span class="math inline">3, 4, 7, 12, 19 \bmod 17 = 2, 11</span>.</p>
+<p>All six probes are distinct. In fact, for prime <span class="math inline">n = 17</span> the first <span class="math inline">\lceil n/2 \rceil = 9</span> probes are guaranteed distinct. This is exactly why quadratic probing requires <strong>load factor ≤ 0.5</strong> and a <strong>prime table size</strong> — violate either and probes start cycling before the table is half full, so some slots become unreachable.</p>
+</div>
+</div>
+</div>
 </section>
 <section id="insertion-problem" class="level3">
 <h3 class="anchored" data-anchor-id="insertion-problem">Insertion problem</h3>
@@ -2431,6 +2600,161 @@ window.Quarto = {
 </tr>
 </tbody>
 </table>
+<div class="callout callout-style-default callout-tip callout-titled" title="Show answer — final table &amp; trace">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Show answer — final table &amp; trace
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Final table</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 7%">
+<col style="width: 6%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 6%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>idx</th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+<th>15</th>
+<th>16</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>key</td>
+<td>33</td>
+<td>–</td>
+<td>–</td>
+<td>3</td>
+<td>–</td>
+<td>5</td>
+<td>22</td>
+<td>–</td>
+<td>–</td>
+<td>39</td>
+<td>10</td>
+<td>27</td>
+<td>12</td>
+<td>29</td>
+<td>–</td>
+<td>–</td>
+<td>50</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Trace</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>key</th>
+<th><span class="math inline">H(k)</span></th>
+<th>probes <span class="math inline">(j=0,1,2,\dots)</span></th>
+<th>final slot</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>10</td>
+<td>10</td>
+<td>—</td>
+<td>10</td>
+</tr>
+<tr class="even">
+<td>27</td>
+<td>10</td>
+<td>10, <strong>11</strong></td>
+<td>11</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>5</td>
+<td>—</td>
+<td>5</td>
+</tr>
+<tr class="even">
+<td>22</td>
+<td>5</td>
+<td>5, <strong>6</strong></td>
+<td>6</td>
+</tr>
+<tr class="odd">
+<td>39</td>
+<td>5</td>
+<td>5, 6, <strong>9</strong></td>
+<td>9</td>
+</tr>
+<tr class="even">
+<td>12</td>
+<td>12</td>
+<td>—</td>
+<td>12</td>
+</tr>
+<tr class="odd">
+<td>29</td>
+<td>12</td>
+<td>12, <strong>13</strong></td>
+<td>13</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>3</td>
+<td>—</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td>50</td>
+<td>16</td>
+<td>—</td>
+<td>16</td>
+</tr>
+<tr class="even">
+<td>33</td>
+<td>16</td>
+<td>16, <strong>0</strong> (wrap)</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
 </section>
 <section id="discussion-does-quadratic-probing-fix-clustering" class="level3">
 <h3 class="anchored" data-anchor-id="discussion-does-quadratic-probing-fix-clustering">Discussion — does quadratic probing fix clustering?</h3>
@@ -2480,6 +2804,76 @@ window.Quarto = {
 </tr>
 </tbody>
 </table>
+<div class="callout callout-style-default callout-tip callout-titled" title="Show answer — Table A trace">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Show answer — Table A trace
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>key</th>
+<th><span class="math inline">H(k)</span></th>
+<th>probes</th>
+<th>final slot</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>12</td>
+<td>0</td>
+<td>—</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>24</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>36</td>
+<td>0</td>
+<td>1, 2</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>48</td>
+<td>0</td>
+<td>1, 2, 3</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td>16</td>
+<td>4</td>
+<td>—</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<td>28</td>
+<td>4</td>
+<td>5</td>
+<td>5</td>
+</tr>
+<tr class="odd">
+<td>40</td>
+<td>4</td>
+<td>5, 6</td>
+<td>6</td>
+</tr>
+</tbody>
+</table>
+<p>Final: <strong>every key collapsed into slots 0–6.</strong> Ten probes wasted on collisions.</p>
+</div>
+</div>
+</div>
 </section>
 <section id="table-b-size-13-hkk-bmod-13" class="level3">
 <h3 class="anchored" data-anchor-id="table-b-size-13-hkk-bmod-13">Table B — size 13, <span class="math inline">H(k)=k \bmod 13</span></h3>
@@ -2521,6 +2915,76 @@ window.Quarto = {
 </tr>
 </tbody>
 </table>
+<div class="callout callout-style-default callout-tip callout-titled" title="Show answer — Table B trace">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Show answer — Table B trace
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>key</th>
+<th><span class="math inline">H(k)</span></th>
+<th>probes</th>
+<th>final slot</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>12</td>
+<td>12</td>
+<td>—</td>
+<td>12</td>
+</tr>
+<tr class="even">
+<td>24</td>
+<td>11</td>
+<td>—</td>
+<td>11</td>
+</tr>
+<tr class="odd">
+<td>36</td>
+<td>10</td>
+<td>—</td>
+<td>10</td>
+</tr>
+<tr class="even">
+<td>48</td>
+<td>9</td>
+<td>—</td>
+<td>9</td>
+</tr>
+<tr class="odd">
+<td>16</td>
+<td>3</td>
+<td>—</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td>28</td>
+<td>2</td>
+<td>—</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td>40</td>
+<td>1</td>
+<td>—</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>Final: <strong>zero collisions.</strong> Keys spread uniformly.</p>
+</div>
+</div>
+</div>
 <div class="callout callout-style-default callout-tip callout-titled" title="The punch line">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -2667,10 +3131,152 @@ window.Quarto = {
 <p>Be careful when computing <span class="math inline">H_2(7)</span>. What is <span class="math inline">7 \bmod 7</span>? What would happen in the probe sequence if <span class="math inline">H_2</span> ever returned <span class="math inline">0</span>?</p>
 </div>
 </div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Show answer — final table &amp; trace">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Show answer — final table &amp; trace
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Final table</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>idx</th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>key</td>
+<td>–</td>
+<td>14</td>
+<td>27</td>
+<td>37</td>
+<td>50</td>
+<td>–</td>
+<td>24</td>
+<td>7</td>
+<td>20</td>
+<td>–</td>
+<td>–</td>
+<td>11</td>
+<td>–</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Trace</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>key</th>
+<th><span class="math inline">H_1</span></th>
+<th><span class="math inline">H_2</span></th>
+<th>probe sequence</th>
+<th>final slot</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>14</td>
+<td>1</td>
+<td><span class="math inline">7-0=7</span></td>
+<td>—</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>27</td>
+<td>1</td>
+<td><span class="math inline">7-6=1</span></td>
+<td><span class="math inline">1 \to 2</span></td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td>11</td>
+<td>11</td>
+<td><span class="math inline">7-4=3</span></td>
+<td>—</td>
+<td>11</td>
+</tr>
+<tr class="even">
+<td>24</td>
+<td>11</td>
+<td><span class="math inline">7-3=4</span></td>
+<td><span class="math inline">11 \to 15\bmod 13=2 \to 19\bmod 13=6</span></td>
+<td>6</td>
+</tr>
+<tr class="odd">
+<td>37</td>
+<td>11</td>
+<td><span class="math inline">7-2=5</span></td>
+<td><span class="math inline">11 \to 16\bmod 13=3</span></td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td>50</td>
+<td>11</td>
+<td><span class="math inline">7-1=6</span></td>
+<td><span class="math inline">11 \to 17\bmod 13=4</span></td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>7</td>
+<td><span class="math inline">7-0=7</span></td>
+<td>—</td>
+<td>7</td>
+</tr>
+<tr class="even">
+<td>20</td>
+<td>7</td>
+<td><span class="math inline">7-6=1</span></td>
+<td><span class="math inline">7 \to 8</span></td>
+<td>8</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The key-7 trap.</strong> <span class="math inline">7 \bmod 7 = 0</span>, so a naïve formula would give <span class="math inline">H_2(7) = 0</span> — every probe lands on the same slot, infinite loop. The form <span class="math inline">7 - (k \bmod 7)</span> returns <strong>7</strong> instead of 0, sidestepping the trap. This is why textbooks write <span class="math inline">H_2</span> as <span class="math inline">q - (k \bmod q)</span> with a prime <span class="math inline">q &lt; N</span>.</p>
+<p><strong>Why double hashing wins.</strong> Keys 11, 24, 37, 50 all have <strong>identical <span class="math inline">H_1 = 11</span></strong>, yet they end up in <strong>completely different slots</strong> (11, 6, 3, 4) because each has a <strong>different <span class="math inline">H_2</span></strong>. Quadratic probing cannot do this: identical <span class="math inline">H_1</span> means identical probe path. That’s why double hashing is the go-to open-addressing technique when secondary clustering matters.</p>
+</div>
+</div>
+</div>
 </section>
 <section id="exit-ticket" class="level3">
 <h3 class="anchored" data-anchor-id="exit-ticket">Exit ticket</h3>
 <p>Using the same <span class="math inline">H_1</span>, <span class="math inline">H_2</span>, and the completed table above, where does key <strong>33</strong> go?</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Show answer">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Show answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><span class="math inline">H_1(33) = 33 \bmod 13 = 7</span>, collision. <span class="math inline">H_2(33) = 7 - (33 \bmod 7) = 7 - 5 = 2</span>. Probe: <span class="math inline">7 \to 9</span>. Slot <strong>9</strong>.</p>
+</div>
+</div>
+</div>
 </section>
 </section>
 <section id="wrap-up-load-factors-to-remember" class="level2">
