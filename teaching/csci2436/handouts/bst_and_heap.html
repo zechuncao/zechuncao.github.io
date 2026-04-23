@@ -2263,8 +2263,7 @@ window.Quarto = {
   <li><a href="#example-2-max-heap-insertion-and-delete-max" id="toc-example-2-max-heap-insertion-and-delete-max" class="nav-link" data-scroll-target="#example-2-max-heap-insertion-and-delete-max">Example 2 — Max-Heap Insertion and Delete-Max</a>
   <ul class="collapse">
   <li><a href="#part-a-draw-the-final-max-heap-as-a-tree" id="toc-part-a-draw-the-final-max-heap-as-a-tree" class="nav-link" data-scroll-target="#part-a-draw-the-final-max-heap-as-a-tree">Part (a) — Draw the final max-heap as a tree</a></li>
-  <li><a href="#part-b-array-representation" id="toc-part-b-array-representation" class="nav-link" data-scroll-target="#part-b-array-representation">Part (b) — Array representation</a></li>
-  <li><a href="#part-c-one-delete-max" id="toc-part-c-one-delete-max" class="nav-link" data-scroll-target="#part-c-one-delete-max">Part (c) — One delete-max</a></li>
+  <li><a href="#part-b-one-delete-max" id="toc-part-b-one-delete-max" class="nav-link" data-scroll-target="#part-b-one-delete-max">Part (b) — One delete-max</a></li>
   <li><a href="#discussion-heap-vs-bst" id="toc-discussion-heap-vs-bst" class="nav-link" data-scroll-target="#discussion-heap-vs-bst">Discussion — heap vs BST</a></li>
   </ul></li>
   </ul>
@@ -2518,84 +2517,8 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="part-b-array-representation" class="level3">
-<h3 class="anchored" data-anchor-id="part-b-array-representation">Part (b) — Array representation</h3>
-<p>Fill in the array representation of the final heap (index 0 is the root). Recall the index arithmetic: for a node at index <span class="math inline">i</span>, the left child is at <span class="math inline">2i+1</span>, the right child at <span class="math inline">2i+2</span>, and the parent at <span class="math inline">\lfloor (i-1)/2 \rfloor</span>.</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>idx</th>
-<th>0</th>
-<th>1</th>
-<th>2</th>
-<th>3</th>
-<th>4</th>
-<th>5</th>
-<th>6</th>
-<th>7</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>key</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<div class="callout callout-style-default callout-tip callout-titled" title="Show answer">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Show answer
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>idx</th>
-<th>0</th>
-<th>1</th>
-<th>2</th>
-<th>3</th>
-<th>4</th>
-<th>5</th>
-<th>6</th>
-<th>7</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>key</td>
-<td>27</td>
-<td>16</td>
-<td>21</td>
-<td>14</td>
-<td>11</td>
-<td>3</td>
-<td>5</td>
-<td>8</td>
-</tr>
-</tbody>
-</table>
-<p>Because the heap is a <em>complete</em> binary tree, the array has no gaps — every slot from 0 to <span class="math inline">n-1</span> is filled. That is what lets us use <span class="math inline">2i+1</span> / <span class="math inline">2i+2</span> / <span class="math inline">\lfloor(i-1)/2\rfloor</span> instead of storing parent/child pointers at every node. This is also why heaps and BSTs have different storage stories: a BST is not generally complete, so the array representation would waste space on missing nodes.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="part-c-one-delete-max" class="level3">
-<h3 class="anchored" data-anchor-id="part-c-one-delete-max">Part (c) — One delete-max</h3>
+<section id="part-b-one-delete-max" class="level3">
+<h3 class="anchored" data-anchor-id="part-b-one-delete-max">Part (b) — One delete-max</h3>
 <p>Perform a single <strong>delete-max</strong> on the heap from Part (a). Recall the three steps:</p>
 <ol type="1">
 <li>Save the root value (this is the “removed” maximum).</li>
@@ -2607,7 +2530,7 @@ window.Quarto = {
 (draw here)
 </div>
 <div class="callout callout-style-default callout-tip callout-titled" title="Show answer">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -2616,7 +2539,7 @@ window.Quarto = {
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Removed value: <strong>27</strong>.</p>
 <p>After replacing the root with the last node (<strong>8</strong>) and heapifying down:</p>
