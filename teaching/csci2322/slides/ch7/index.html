@@ -244,17 +244,17 @@ Zechun (Jacob) Cao
 </section>
 <section id="complements-of-events" class="slide level2">
 <h2>Complements of Events</h2>
-<p><strong><em>Theorem 1:</em></strong> Let <span class="math inline">\(E\)</span> be an event in sample space <span class="math inline">\(S\)</span>. Let <span class="math inline">\(\overline{\!E\!} = S - E\)</span> be the complementary event. Then</p>
-<p><span class="math display">\[p(\overline{\!E\!}) = 1 - p(E).\]</span></p>
-<p><strong><em>Proof:</em></strong> <span class="math inline">\(p(\overline{\!E\!}) = \dfrac{|S| - |E|}{|S|}
+<p><strong><em>Theorem 1:</em></strong> Let <span class="math inline">\(E\)</span> be an event in sample space <span class="math inline">\(S\)</span>. Let <span class="math inline">\(\overline{E} = S - E\)</span> be the complementary event. Then</p>
+<p><span class="math display">\[p(\overline{E}) = 1 - p(E).\]</span></p>
+<p><strong><em>Proof:</em></strong> <span class="math inline">\(p(\overline{E}) = \dfrac{|S| - |E|}{|S|}
 = 1 - \dfrac{|E|}{|S|} = 1 - p(E).\)</span></p>
 </section>
 <section id="complement-example" class="slide level2">
 <h2>Complement Example</h2>
 <p><strong><em>Example:</em></strong> A sequence of <span class="math inline">\(10\)</span> bits is chosen randomly. What is the probability that at least one of these bits is <span class="math inline">\(0\)</span>?</p>
 <div class="fragment">
-<p><strong><em>Solution:</em></strong> Let <span class="math inline">\(E\)</span> be the event that at least one of the <span class="math inline">\(10\)</span> bits is <span class="math inline">\(0\)</span>. Then <span class="math inline">\(\overline{\!E\!}\)</span> is the event that all bits are <span class="math inline">\(1\)</span>. The sample space has size <span class="math inline">\(2^{10} = 1024\)</span>, and <span class="math inline">\(|\overline{\!E\!}| = 1\)</span>, so</p>
-<p><span class="math display">\[p(E) = 1 - p(\overline{\!E\!}) = 1 - \frac{1}{1024} = \frac{1023}{1024}.\]</span></p>
+<p><strong><em>Solution:</em></strong> Let <span class="math inline">\(E\)</span> be the event that at least one of the <span class="math inline">\(10\)</span> bits is <span class="math inline">\(0\)</span>. Then <span class="math inline">\(\overline{E}\)</span> is the event that all bits are <span class="math inline">\(1\)</span>. The sample space has size <span class="math inline">\(2^{10} = 1024\)</span>, and <span class="math inline">\(|\overline{E}| = 1\)</span>, so</p>
+<p><span class="math display">\[p(E) = 1 - p(\overline{E}) = 1 - \frac{1}{1024} = \frac{1023}{1024}.\]</span></p>
 </div>
 </section>
 <section id="union-of-two-events" class="slide level2">
@@ -330,7 +330,7 @@ Zechun (Jacob) Cao
 </section>
 <section id="complements-and-unions-general" class="slide level2">
 <h2>Complements and Unions (General)</h2>
-<p><strong>Complement:</strong> <span class="math display">\[p(\overline{\!E\!}) = 1 - p(E).\]</span></p>
+<p><strong>Complement:</strong> <span class="math display">\[p(\overline{E}) = 1 - p(E).\]</span></p>
 <p><strong>Union:</strong> <span class="math display">\[p(E_1 \cup E_2) = p(E_1) + p(E_2) - p(E_1 \cap E_2).\]</span></p>
 <p>Both formulas carry over from the equally-likely case.</p>
 </section>
@@ -498,7 +498,7 @@ Zechun (Jacob) Cao
 <p><em>Thomas Bayes (1702–1761)</em></p>
 <p><strong><em>Bayes’ Theorem:</em></strong> Suppose <span class="math inline">\(E\)</span> and <span class="math inline">\(F\)</span> are events from a sample space <span class="math inline">\(S\)</span> with <span class="math inline">\(p(E) \ne 0\)</span> and <span class="math inline">\(p(F) \ne 0\)</span>. Then</p>
 <p><span class="math display">\[p(F \mid E) = \frac{p(E \mid F)\,p(F)}
-{p(E \mid F)\,p(F) + p(E \mid \overline{\!F\!})\,p(\overline{\!F\!})}.\]</span></p>
+{p(E \mid F)\,p(F) + p(E \mid \overline{F})\,p(\overline{F})}.\]</span></p>
 </div><div class="column" style="width:28%;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -511,8 +511,8 @@ Zechun (Jacob) Cao
 <h2>Bayes’ Theorem — Example</h2>
 <p><strong><em>Example:</em></strong> Box 1 contains <span class="math inline">\(2\)</span> green and <span class="math inline">\(7\)</span> red balls. Box 2 contains <span class="math inline">\(4\)</span> green and <span class="math inline">\(3\)</span> red. Bob picks a box at random, then a ball at random from that box. Given that the ball is red, what is the probability that he picked Box 1?</p>
 <p>Let <span class="math inline">\(E\)</span> = “ball is red,” <span class="math inline">\(F\)</span> = “picked Box 1.”</p>
-<p><span class="math display">\[p(F) = p(\overline{\!F\!}) = \tfrac{1}{2},\quad
-p(E \mid F) = \tfrac{7}{9},\quad p(E \mid \overline{\!F\!}) = \tfrac{3}{7}.\]</span></p>
+<p><span class="math display">\[p(F) = p(\overline{F}) = \tfrac{1}{2},\quad
+p(E \mid F) = \tfrac{7}{9},\quad p(E \mid \overline{F}) = \tfrac{3}{7}.\]</span></p>
 <p><span class="math display">\[p(F \mid E)
 = \frac{(7/9)(1/2)}{(7/9)(1/2) + (3/7)(1/2)}
 = \frac{7/18}{7/18 + 3/14}
@@ -537,7 +537,7 @@ p(E \mid F) = \tfrac{7}{9},\quad p(E \mid \overline{\!F\!}) = \tfrac{3}{7}.\]</s
 <section id="derivation-of-bayes-theorem-2" class="slide level2">
 <h2>Derivation of Bayes’ Theorem</h2>
 <p>To express <span class="math inline">\(p(E)\)</span> without referring to <span class="math inline">\(F \cap E\)</span> directly, condition on whether <span class="math inline">\(F\)</span> occurs:</p>
-<p><span class="math display">\[p(E) = p(E \mid F)\,p(F) + p(E \mid \overline{\!F\!})\,p(\overline{\!F\!}).\]</span></p>
+<p><span class="math display">\[p(E) = p(E \mid F)\,p(F) + p(E \mid \overline{F})\,p(\overline{F}).\]</span></p>
 <p>Substituting gives the statement of Bayes’ theorem.</p>
 </section>
 <section id="applying-bayes-theorem" class="slide level2">
@@ -557,10 +557,10 @@ p(E \mid F) = \tfrac{7}{9},\quad p(E \mid \overline{\!F\!}) = \tfrac{3}{7}.\]</s
 <section id="applying-bayes-theorem-1" class="slide level2">
 <h2>Applying Bayes’ Theorem</h2>
 <p>Let <span class="math inline">\(D\)</span> = “has the disease,” <span class="math inline">\(E\)</span> = “tests positive.”</p>
-<p><span class="math display">\[p(D) = 10^{-5},\; p(\overline{\!D\!}) = 1 - 10^{-5},\;
-p(E \mid D) = 0.99,\; p(E \mid \overline{\!D\!}) = 0.005.\]</span></p>
+<p><span class="math display">\[p(D) = 10^{-5},\; p(\overline{D}) = 1 - 10^{-5},\;
+p(E \mid D) = 0.99,\; p(E \mid \overline{D}) = 0.005.\]</span></p>
 <p><span class="math display">\[p(D \mid E) = \frac{p(E \mid D)\,p(D)}
-{p(E \mid D)\,p(D) + p(E \mid \overline{\!D\!})\,p(\overline{\!D\!})}\]</span></p>
+{p(E \mid D)\,p(D) + p(E \mid \overline{D})\,p(\overline{D})}\]</span></p>
 <p><span class="math display">\[= \frac{(0.99)(10^{-5})}
 {(0.99)(10^{-5}) + (0.005)(1 - 10^{-5})}
 \approx 0.002.\]</span></p>
@@ -569,10 +569,10 @@ p(E \mid D) = 0.99,\; p(E \mid \overline{\!D\!}) = 0.005.\]</span></p>
 <section id="applying-bayes-theorem-2" class="slide level2">
 <h2>Applying Bayes’ Theorem</h2>
 <p>What if the result is negative?</p>
-<p><span class="math display">\[p(\overline{\!D\!} \mid \overline{\!E\!})
-= \frac{p(\overline{\!E\!} \mid \overline{\!D\!})\,p(\overline{\!D\!})}
-{p(\overline{\!E\!} \mid \overline{\!D\!})\,p(\overline{\!D\!})
-+ p(\overline{\!E\!} \mid D)\,p(D)}\]</span></p>
+<p><span class="math display">\[p(\overline{D} \mid \overline{E})
+= \frac{p(\overline{E} \mid \overline{D})\,p(\overline{D})}
+{p(\overline{E} \mid \overline{D})\,p(\overline{D})
++ p(\overline{E} \mid D)\,p(D)}\]</span></p>
 <p><span class="math display">\[= \frac{(0.995)(1 - 10^{-5})}
 {(0.995)(1 - 10^{-5}) + (0.01)(10^{-5})}
 \approx 0.9999999.\]</span></p>
@@ -597,8 +597,8 @@ p(E \mid D) = 0.99,\; p(E \mid \overline{\!D\!}) = 0.005.\]</span></p>
 <h2>Bayesian Spam Filters</h2>
 <p>Let <span class="math inline">\(S\)</span> = “message is spam” and <span class="math inline">\(E\)</span> = “message contains <span class="math inline">\(w\)</span>.” By Bayes’ theorem,</p>
 <p><span class="math display">\[p(S \mid E) = \frac{p(E \mid S)\,p(S)}
-{p(E \mid S)\,p(S) + p(E \mid \overline{\!S\!})\,p(\overline{\!S\!})}.\]</span></p>
-<p>Assuming <span class="math inline">\(p(S) = p(\overline{\!S\!}) = 1/2\)</span> and substituting <span class="math inline">\(p(E \mid S) \approx p(w)\)</span>, <span class="math inline">\(p(E \mid \overline{\!S\!}) \approx q(w)\)</span>:</p>
+{p(E \mid S)\,p(S) + p(E \mid \overline{S})\,p(\overline{S})}.\]</span></p>
+<p>Assuming <span class="math inline">\(p(S) = p(\overline{S}) = 1/2\)</span> and substituting <span class="math inline">\(p(E \mid S) \approx p(w)\)</span>, <span class="math inline">\(p(E \mid \overline{S}) \approx q(w)\)</span>:</p>
 <p><span class="math display">\[r(w) = \frac{p(w)}{p(w) + q(w)}.\]</span></p>
 <p>Classify the message as spam if <span class="math inline">\(r(w)\)</span> exceeds a threshold.</p>
 </section>
