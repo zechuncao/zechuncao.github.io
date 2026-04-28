@@ -470,172 +470,24 @@ Zechun (Jacob) Cao
 <p>The probability that a composite <span class="math inline">\(n\)</span> passes Miller’s test for a random <span class="math inline">\(b\)</span> is less than <span class="math inline">\(1/4\)</span>.</p>
 <p>Run the test <span class="math inline">\(k\)</span> times with independent random bases. If <span class="math inline">\(n\)</span> passes all <span class="math inline">\(k\)</span> times, the probability that <span class="math inline">\(n\)</span> is composite is at most <span class="math inline">\((1/4)^k\)</span>. With <span class="math inline">\(k = 10\)</span>, this is less than <span class="math inline">\(1\)</span> in <span class="math inline">\(10^6\)</span>.</p>
 </section>
-<section id="section-7.3" class="slide level2 center section-divider">
-<h2>Section 7.3</h2>
-<p>Bayes’ Theorem</p>
-</section>
-<section id="section-summary-2" class="slide level2">
-<h2>Section Summary</h2>
-<ul>
-<li>Bayes’ Theorem</li>
-<li>Generalized Bayes’ Theorem</li>
-<li>Bayesian Spam Filters</li>
-</ul>
-</section>
-<section id="motivation-for-bayes-theorem" class="slide level2">
-<h2>Motivation for Bayes’ Theorem</h2>
-<p>Bayes’ theorem lets us use probability to answer questions such as:</p>
-<ul>
-<li>Given that someone tests <strong>positive</strong> for a disease, what is the probability that they actually have it?</li>
-<li>Given that someone tests <strong>negative</strong>, what is the probability that they do have it?</li>
-</ul>
-<p>Applications span medicine, law, artificial intelligence, engineering, and many other fields.</p>
-</section>
-<section id="bayes-theorem" class="slide level2">
-<h2>Bayes’ Theorem</h2>
-<div class="columns">
-<div class="column" style="width:72%;">
-<p><em>Thomas Bayes (1702–1761)</em></p>
-<p><strong><em>Bayes’ Theorem:</em></strong> Suppose <span class="math inline">\(E\)</span> and <span class="math inline">\(F\)</span> are events from a sample space <span class="math inline">\(S\)</span> with <span class="math inline">\(p(E) \ne 0\)</span> and <span class="math inline">\(p(F) \ne 0\)</span>. Then</p>
-<p><span class="math display">\[p(F \mid E) = \frac{p(E \mid F)\,p(F)}
-{p(E \mid F)\,p(F) + p(E \mid \overline{F})\,p(\overline{F})}.\]</span></p>
-</div><div class="column" style="width:28%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="images/bayes.jpg" class="quarto-figure quarto-figure-center" style="width:80.0%"></p>
-</figure>
-</div>
-</div></div>
-</section>
-<section id="bayes-theorem-example" class="slide level2">
-<h2>Bayes’ Theorem — Example</h2>
-<p><strong><em>Example:</em></strong> Box 1 contains <span class="math inline">\(2\)</span> green and <span class="math inline">\(7\)</span> red balls. Box 2 contains <span class="math inline">\(4\)</span> green and <span class="math inline">\(3\)</span> red. Bob picks a box at random, then a ball at random from that box. Given that the ball is red, what is the probability that he picked Box 1?</p>
-<p>Let <span class="math inline">\(E\)</span> = “ball is red,” <span class="math inline">\(F\)</span> = “picked Box 1.”</p>
-<p><span class="math display">\[p(F) = p(\overline{F}) = \tfrac{1}{2},\quad
-p(E \mid F) = \tfrac{7}{9},\quad p(E \mid \overline{F}) = \tfrac{3}{7}.\]</span></p>
-<p><span class="math display">\[p(F \mid E)
-= \frac{(7/9)(1/2)}{(7/9)(1/2) + (3/7)(1/2)}
-= \frac{7/18}{7/18 + 3/14}
-= \frac{49}{76}.\]</span></p>
-</section>
-<section id="derivation-of-bayes-theorem" class="slide level2">
-<h2>Derivation of Bayes’ Theorem</h2>
-<p>Recall the definition of conditional probability:</p>
-<p><span class="math display">\[p(E \mid F) = \frac{p(E \cap F)}{p(F)}.\]</span></p>
-<p>Solving for the intersection:</p>
-<p><span class="math display">\[p(E \cap F) = p(E \mid F)\,p(F).\]</span></p>
-</section>
-<section id="derivation-of-bayes-theorem-1" class="slide level2">
-<h2>Derivation of Bayes’ Theorem</h2>
-<p>By symmetry,</p>
-<p><span class="math display">\[p(E \cap F) = p(F \mid E)\,p(E).\]</span></p>
-<p>Equating the two expressions for <span class="math inline">\(p(E \cap F)\)</span>:</p>
-<p><span class="math display">\[p(F \mid E)\,p(E) = p(E \mid F)\,p(F).\]</span></p>
-<p>Solving for <span class="math inline">\(p(F \mid E)\)</span> gives</p>
-<p><span class="math display">\[p(F \mid E) = \frac{p(E \mid F)\,p(F)}{p(E)}.\]</span></p>
-</section>
-<section id="derivation-of-bayes-theorem-2" class="slide level2">
-<h2>Derivation of Bayes’ Theorem</h2>
-<p>To express <span class="math inline">\(p(E)\)</span> without referring to <span class="math inline">\(F \cap E\)</span> directly, condition on whether <span class="math inline">\(F\)</span> occurs:</p>
-<p><span class="math display">\[p(E) = p(E \mid F)\,p(F) + p(E \mid \overline{F})\,p(\overline{F}).\]</span></p>
-<p>Substituting gives the statement of Bayes’ theorem.</p>
-</section>
-<section id="applying-bayes-theorem" class="slide level2">
-<h2>Applying Bayes’ Theorem</h2>
-<p><strong><em>Example:</em></strong> One person in <span class="math inline">\(100{,}000\)</span> has a particular disease. A test gives:</p>
-<ul>
-<li>a <strong>positive</strong> result <span class="math inline">\(99\%\)</span> of the time when given to someone with the disease;</li>
-<li>a <strong>negative</strong> result <span class="math inline">\(99.5\%\)</span> of the time when given to someone without it.</li>
-</ul>
-<p>Find:</p>
-<ol type="1">
-<li>the probability that a person who tests positive has the disease;</li>
-<li>the probability that a person who tests negative does not have the disease.</li>
-</ol>
-<p>Should someone who tests positive be worried?</p>
-</section>
-<section id="applying-bayes-theorem-1" class="slide level2">
-<h2>Applying Bayes’ Theorem</h2>
-<p>Let <span class="math inline">\(D\)</span> = “has the disease,” <span class="math inline">\(E\)</span> = “tests positive.”</p>
-<p><span class="math display">\[p(D) = 10^{-5},\; p(\overline{D}) = 1 - 10^{-5},\;
-p(E \mid D) = 0.99,\; p(E \mid \overline{D}) = 0.005.\]</span></p>
-<p><span class="math display">\[p(D \mid E) = \frac{p(E \mid D)\,p(D)}
-{p(E \mid D)\,p(D) + p(E \mid \overline{D})\,p(\overline{D})}\]</span></p>
-<p><span class="math display">\[= \frac{(0.99)(10^{-5})}
-{(0.99)(10^{-5}) + (0.005)(1 - 10^{-5})}
-\approx 0.002.\]</span></p>
-<p>Even after a positive test, the chance of having the disease is only about <span class="math inline">\(0.2\%\)</span>.</p>
-</section>
-<section id="applying-bayes-theorem-2" class="slide level2">
-<h2>Applying Bayes’ Theorem</h2>
-<p>What if the result is negative?</p>
-<p><span class="math display">\[p(\overline{D} \mid \overline{E})
-= \frac{p(\overline{E} \mid \overline{D})\,p(\overline{D})}
-{p(\overline{E} \mid \overline{D})\,p(\overline{D})
-+ p(\overline{E} \mid D)\,p(D)}\]</span></p>
-<p><span class="math display">\[= \frac{(0.995)(1 - 10^{-5})}
-{(0.995)(1 - 10^{-5}) + (0.01)(10^{-5})}
-\approx 0.9999999.\]</span></p>
-<p>So a negative test almost certainly means the disease is absent.</p>
-</section>
-<section id="generalized-bayes-theorem" class="slide level2">
-<h2>Generalized Bayes’ Theorem</h2>
-<p><strong><em>Generalized Bayes’ Theorem:</em></strong> Suppose <span class="math inline">\(E\)</span> is an event and <span class="math inline">\(F_1, F_2, \ldots, F_n\)</span> are mutually exclusive events with <span class="math inline">\(\bigcup_{i=1}^{n} F_i = S\)</span>, and <span class="math inline">\(p(F_i) \ne 0\)</span> for <span class="math inline">\(i = 1, \ldots, n\)</span>. Then for each <span class="math inline">\(j\)</span>,</p>
-<p><span class="math display">\[p(F_j \mid E) = \frac{p(E \mid F_j)\,p(F_j)}
-{\displaystyle\sum_{i=1}^{n} p(E \mid F_i)\,p(F_i)}.\]</span></p>
-</section>
-<section id="bayesian-spam-filters" class="slide level2">
-<h2>Bayesian Spam Filters</h2>
-<p>Given an initial set <span class="math inline">\(B\)</span> of spam messages and a set <span class="math inline">\(G\)</span> of non-spam messages, we can predict whether a new message is spam.</p>
-<p>For a word <span class="math inline">\(w\)</span>, let <span class="math inline">\(n_B(w)\)</span> and <span class="math inline">\(n_G(w)\)</span> be the number of messages in <span class="math inline">\(B\)</span> and <span class="math inline">\(G\)</span> containing <span class="math inline">\(w\)</span>.</p>
-<p>Estimated probability a spam message contains <span class="math inline">\(w\)</span>:</p>
-<p><span class="math display">\[p(w) = \frac{n_B(w)}{|B|}.\]</span></p>
-<p>Estimated probability a non-spam message contains <span class="math inline">\(w\)</span>:</p>
-<p><span class="math display">\[q(w) = \frac{n_G(w)}{|G|}.\]</span></p>
-</section>
-<section id="bayesian-spam-filters-1" class="slide level2">
-<h2>Bayesian Spam Filters</h2>
-<p>Let <span class="math inline">\(S\)</span> = “message is spam” and <span class="math inline">\(E\)</span> = “message contains <span class="math inline">\(w\)</span>.” By Bayes’ theorem,</p>
-<p><span class="math display">\[p(S \mid E) = \frac{p(E \mid S)\,p(S)}
-{p(E \mid S)\,p(S) + p(E \mid \overline{S})\,p(\overline{S})}.\]</span></p>
-<p>Assuming <span class="math inline">\(p(S) = p(\overline{S}) = 1/2\)</span> and substituting <span class="math inline">\(p(E \mid S) \approx p(w)\)</span>, <span class="math inline">\(p(E \mid \overline{S}) \approx q(w)\)</span>:</p>
-<p><span class="math display">\[r(w) = \frac{p(w)}{p(w) + q(w)}.\]</span></p>
-<p>Classify the message as spam if <span class="math inline">\(r(w)\)</span> exceeds a threshold.</p>
-</section>
-<section id="bayesian-spam-filters-example" class="slide level2">
-<h2>Bayesian Spam Filters — Example</h2>
-<p><strong><em>Example:</em></strong> The word <em>Rolex</em> occurs in <span class="math inline">\(250\)</span> of <span class="math inline">\(2000\)</span> spam messages and in <span class="math inline">\(5\)</span> of <span class="math inline">\(1000\)</span> non-spam messages. Use threshold <span class="math inline">\(0.9\)</span>.</p>
-<p><span class="math display">\[p(\text{Rolex}) = \frac{250}{2000} = 0.125,\quad
-q(\text{Rolex}) = \frac{5}{1000} = 0.005.\]</span></p>
-<p><span class="math display">\[r(\text{Rolex}) = \frac{0.125}{0.125 + 0.005}
-= \frac{0.125}{0.130} \approx 0.962.\]</span></p>
-<p>Since <span class="math inline">\(0.962 &gt; 0.9\)</span>, classify as spam and reject.</p>
-</section>
-<section id="spam-filters-multiple-words" class="slide level2">
-<h2>Spam Filters — Multiple Words</h2>
-<p>Accuracy improves by considering more than one word.</p>
-<p>Let <span class="math inline">\(E_1, E_2\)</span> be the events that the message contains words <span class="math inline">\(w_1, w_2\)</span>. Assume the events are independent and <span class="math inline">\(p(S) = 1/2\)</span>. Then</p>
-<p><span class="math display">\[r(w_1, w_2) = \frac{p(w_1)\,p(w_2)}
-{p(w_1)\,p(w_2) + q(w_1)\,q(w_2)}.\]</span></p>
-</section>
-<section id="spam-filters-multiple-words-1" class="slide level2">
-<h2>Spam Filters — Multiple Words</h2>
-<p><strong><em>Example:</em></strong> <span class="math inline">\(2000\)</span> spam and <span class="math inline">\(1000\)</span> non-spam messages. The word <em>stock</em> occurs in <span class="math inline">\(400\)</span> spam and <span class="math inline">\(60\)</span> non-spam; <em>undervalued</em> occurs in <span class="math inline">\(200\)</span> spam and <span class="math inline">\(25\)</span> non-spam.</p>
-<p><span class="math display">\[p(\text{stock}) = 0.2,\; q(\text{stock}) = 0.06,\;
-p(\text{under.}) = 0.1,\; q(\text{under.}) = 0.025.\]</span></p>
-<p><span class="math display">\[r = \frac{(0.2)(0.1)}{(0.2)(0.1) + (0.06)(0.025)}
-= \frac{0.02}{0.02 + 0.0015} \approx 0.930.\]</span></p>
-<p>With threshold <span class="math inline">\(0.9\)</span>, classify as spam.</p>
-</section>
-<section id="spam-filters-multiple-words-2" class="slide level2">
-<h2>Spam Filters — Multiple Words</h2>
-<p>In general, with <span class="math inline">\(k\)</span> independent words <span class="math inline">\(w_1, \ldots, w_k\)</span>,</p>
-<p><span class="math display">\[r(w_1, \ldots, w_k)
-= \frac{\prod_{i=1}^{k} p(w_i)}
-{\prod_{i=1}^{k} p(w_i) + \prod_{i=1}^{k} q(w_i)}.\]</span></p>
-<p>The more words considered, the more accurate the filter. Accuracy can be further improved by treating word pairs or certain strings as single features.</p>
 
-</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <p><img src="images/TAMUSA_final_logo-5.png" class="slide-logo"></p>
