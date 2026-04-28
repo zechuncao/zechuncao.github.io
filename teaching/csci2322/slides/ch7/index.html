@@ -344,8 +344,8 @@ Zechun (Jacob) Cao
 <p><strong><em>Definition:</em></strong> Let <span class="math inline">\(E\)</span> and <span class="math inline">\(F\)</span> be events with <span class="math inline">\(p(F) &gt; 0\)</span>. The <strong>conditional probability</strong> of <span class="math inline">\(E\)</span> given <span class="math inline">\(F\)</span> is</p>
 <p><span class="math display">\[p(E \mid F) = \frac{p(E \cap F)}{p(F)}.\]</span></p>
 </section>
-<section id="conditional-probability-example" class="slide level2">
-<h2>Conditional Probability Example</h2>
+<section id="conditional-probability-1" class="slide level2">
+<h2>Conditional Probability</h2>
 <p><strong><em>Example:</em></strong> A bit string of length four is generated at random (each of the <span class="math inline">\(16\)</span> strings equally likely). What is the probability that it contains at least two consecutive <span class="math inline">\(0\)</span>s, given that its first bit is a <span class="math inline">\(0\)</span>?</p>
 <div class="fragment">
 <p><strong><em>Solution:</em></strong> Let <span class="math inline">\(E\)</span> be “at least two consecutive <span class="math inline">\(0\)</span>s” and <span class="math inline">\(F\)</span> be “first bit is <span class="math inline">\(0\)</span>.” Then</p>
@@ -354,8 +354,8 @@ Zechun (Jacob) Cao
 <p><span class="math display">\[p(E \mid F) = \frac{5/16}{1/2} = \frac{5}{8}.\]</span></p>
 </div>
 </section>
-<section id="conditional-probability-example-1" class="slide level2">
-<h2>Conditional Probability Example</h2>
+<section id="conditional-probability-2" class="slide level2">
+<h2>Conditional Probability</h2>
 <p><strong><em>Example:</em></strong> A family has two children. Assuming <span class="math inline">\(BB\)</span>, <span class="math inline">\(BG\)</span>, <span class="math inline">\(GB\)</span>, <span class="math inline">\(GG\)</span> are equally likely, what is the probability of two boys given at least one boy?</p>
 <div class="fragment">
 <p><strong><em>Solution:</em></strong> <span class="math inline">\(E = \{BB\}\)</span>, <span class="math inline">\(F = \{BB, BG, GB\}\)</span>, <span class="math inline">\(E \cap F = \{BB\}\)</span>. So <span class="math inline">\(p(F) = 3/4\)</span> and <span class="math inline">\(p(E \cap F) = 1/4\)</span>.</p>
@@ -365,10 +365,10 @@ Zechun (Jacob) Cao
 <section id="independence" class="slide level2">
 <h2>Independence</h2>
 <p><strong><em>Definition:</em></strong> The events <span class="math inline">\(E\)</span> and <span class="math inline">\(F\)</span> are <strong>independent</strong> if and only if</p>
-<p><span class="math display">\[p(E \cap F) = p(E)\,p(F).\]</span></p>
+<p><span class="math display">\[p(E \cap F) = p(E)\,p(F)\]</span></p>
 </section>
-<section id="independence-example" class="slide level2">
-<h2>Independence Example</h2>
+<section id="independence-1" class="slide level2">
+<h2>Independence</h2>
 <p><strong><em>Example:</em></strong> <span class="math inline">\(E\)</span> = bit string of length <span class="math inline">\(4\)</span> begins with <span class="math inline">\(1\)</span>; <span class="math inline">\(F\)</span> = bit string contains an even number of <span class="math inline">\(1\)</span>s. Are <span class="math inline">\(E\)</span> and <span class="math inline">\(F\)</span> independent?</p>
 <div class="fragment">
 <p><strong><em>Solution:</em></strong> There are <span class="math inline">\(8\)</span> strings starting with <span class="math inline">\(1\)</span> and <span class="math inline">\(8\)</span> with an even number of <span class="math inline">\(1\)</span>s:</p>
@@ -377,8 +377,8 @@ Zechun (Jacob) Cao
 <p>Since <span class="math inline">\(p(E)\,p(F) = 1/4 = p(E \cap F)\)</span>, the events are independent.</p>
 </div>
 </section>
-<section id="independence-example-1" class="slide level2">
-<h2>Independence Example</h2>
+<section id="independence-2" class="slide level2">
+<h2>Independence</h2>
 <p><strong><em>Example:</em></strong> <span class="math inline">\(E\)</span> = two boys, <span class="math inline">\(F\)</span> = at least one boy. Are <span class="math inline">\(E\)</span> and <span class="math inline">\(F\)</span> independent?</p>
 <div class="fragment">
 <p><strong><em>Solution:</em></strong> <span class="math inline">\(p(E) = 1/4\)</span>, <span class="math inline">\(p(F) = 3/4\)</span>, <span class="math inline">\(p(E \cap F) = 1/4\)</span>.</p>
