@@ -28,8 +28,74 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-661777b9f281a4f2038ae7eacbe57301.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-040aa64161c1ce662d4e670875b04189.css">
   <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -141,8 +207,175 @@ Zechun (Jacob) Cao
 </div>
 
 </section>
-<section id="chapter-summary" class="slide level2">
-<h2>Chapter Summary</h2>
+<section id="warm-up-the-menu" class="slide level2">
+<h2>Warm-Up: The Menu</h2>
+<blockquote>
+<p><em>“Soup or salad comes with this entrée.”</em></p>
+</blockquote>
+<p>You ask for <strong>both</strong>. The server refuses.</p>
+<p><span class="vote-prompt">Vote — is the server wrong to refuse?</span></p>
+<div class="columns">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>A.</strong> Yes</p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>B.</strong> No</p>
+</div>
+</div></div>
+<aside class="notes">
+<p>COLD OPEN. No syllabus, no agenda first — those come after.</p>
+<p>Frame the whole activity once, here: “Three quick claims. No notes, no math. Every one is A or B, and everybody votes.”</p>
+<p>Then run this one: read the sentence aloud, then “Hands up for A — three, two, one.” Count out loud. Then hands for B. Count out loud.</p>
+<p>Do not resolve it. “Hold that thought.”</p>
+<p>If the room stays silent, put your own hand up first and count only B.</p>
+<p>Optional: tally on the chalkboard (<strong>B</strong> key) so the split stays visible and you can point back at it later.</p>
+<p>About 40 seconds.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="warm-up-the-syllabus" class="slide level2">
+<h2>Warm-Up: The Syllabus</h2>
+<blockquote>
+<p><em>“If you turn in every lab, you pass the course.”</em></p>
+</blockquote>
+<p>Dana passed the course.</p>
+<p><span class="vote-prompt">Vote — does it follow that Dana turned in every lab?</span></p>
+<div class="columns">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>A.</strong> Yes</p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>B.</strong> No</p>
+</div>
+</div></div>
+<aside class="notes">
+<p>Same drill: read it aloud, hands for A, count, hands for B, count.</p>
+<p>Rooms go heavily A here. Say “Strong agreement. Noted.” and move on without resolving it — the disagreement arrives on the next slide.</p>
+<p>If someone blurts the right answer: “Right — don’t say why yet, I’m coming back to you.” Then actually come back at “Understanding Implication.”</p>
+<p>About 40 seconds.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="warm-up-this-class" class="slide level2">
+<h2>Warm-Up: This Class</h2>
+<blockquote>
+<p><em>“This class is not both hard and boring.”</em></p>
+</blockquote>
+<p><span class="vote-prompt">Vote — does that mean it is not hard, and also not boring?</span></p>
+<div class="columns">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>A.</strong> Yes</p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>B.</strong> No</p>
+</div>
+</div></div>
+<aside class="notes">
+<p>This is the one that splits the room. Slow down here.</p>
+<p>Read it aloud, hands for A, count, hands for B, count — then work the split: call on one student from each side. “You voted A, why?” then “You voted B, why?” Let them go about 30 seconds.</p>
+<p>Do not adjudicate: “Both of you sounded reasonable. That is exactly the problem.” Then click straight through to the payoff.</p>
+<p>About 60 seconds.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="warm-up-the-catch" class="slide level2">
+<h2>Warm-Up: The Catch</h2>
+<p>All three claims are <strong>false</strong> — and English is why.</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Where intuition slipped</th>
+<th style="text-align: left;">Today’s fix</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>1.</strong> <em>or</em> means two different things</td>
+<td style="text-align: left;">give <em>or</em> exactly one meaning</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>2.</strong> <em>if</em> is not the same as <em>only if</em></td>
+<td style="text-align: left;">give them separate notation</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>3.</strong> <em>not both</em> is not <em>neither</em></td>
+<td style="text-align: left;">check all four cases in a table</td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<p>Propositional logic is English with the ambiguity taken out — every word gets one fixed meaning, written down in a table, read the same way by everyone.</p>
+</div>
+<aside class="notes">
+<p>Click in, then pause before speaking. Let the word “false” sit.</p>
+<p>Say: “All three are false.”</p>
+<p>Walk the table one line each — no proofs, no truth tables yet. This is naming the traps, not springing them.</p>
+<p>Click the fragment and deliver it slowly. It is the thesis of the whole section: “Propositional logic is English with the ambiguity taken out.”</p>
+<p>Close and hand off: “By the end of today you can prove all three. Let’s build the tools.” — then straight into the agenda.</p>
+<p>Budget: 1 minute. Whole opener ~3.5 minutes.</p>
+<p>Where each claim gets paid off:</p>
+<ul>
+<li><strong>3</strong> at “Why Not Just English?” — the access-check bug is the same shape: <em>not both</em> vs.&nbsp;<em>neither</em>, disagreeing on exactly the two mixed rows. Say “this is our hard-and-boring sentence wearing a hoodie.”</li>
+<li><strong>1</strong> at “The Connective Or in English” — the soup-or-salad sentence returns verbatim, so say “here is our friend from the warm-up.”</li>
+<li><strong>2</strong> at “Understanding Implication.”</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="where-this-chapter-goes" class="slide level2">
+<h2>Where This Chapter Goes</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
 <ul>
@@ -172,38 +405,8 @@ Zechun (Jacob) Cao
 <h2>Section 1.1</h2>
 <p>Propositional Logic</p>
 </section>
-<section id="propositional-logic-summary" class="slide level2">
-<h2>Propositional Logic Summary</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<ul>
-<li>The Language of Propositions
-<ul>
-<li>Connectives</li>
-<li>Truth Values</li>
-<li>Truth Tables</li>
-</ul></li>
-<li>Applications
-<ul>
-<li>Translating English Sentences</li>
-<li>System Specifications</li>
-<li>Logic Puzzles</li>
-<li>Logic Circuits</li>
-</ul></li>
-</ul>
-</div><div class="column" style="width:50%;">
-<ul>
-<li>Logical Equivalences
-<ul>
-<li>Important Equivalences</li>
-<li>Showing Equivalence</li>
-<li>Satisfiability</li>
-</ul></li>
-</ul>
-</div></div>
-</section>
-<section id="section-summary" class="slide level2">
-<h2>Section Summary</h2>
+<section id="todays-plan" class="slide level2">
+<h2>Today’s Plan</h2>
 <ul>
 <li>Propositions</li>
 <li>Connectives
@@ -371,6 +574,131 @@ Zechun (Jacob) Cao
 <p>“I am at home or it is raining.”</p>
 </div>
 </section>
+<section id="why-not-just-english" class="slide level2">
+<h2>Why Not Just English?</h2>
+<p>A teammate “simplifies” your access check during code review:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb1-1"><a href=""></a><span class="cf">if</span> <span class="op">(!(</span>isAdmin <span class="op">&amp;&amp;</span> isLoggedIn<span class="op">))</span> <span class="fu">denyAccess</span><span class="op">();</span>   <span class="co">// yours</span></span>
+<span id="cb1-2"><a href=""></a><span class="cf">if</span> <span class="op">(!</span>isAdmin <span class="op">&amp;&amp;</span> <span class="op">!</span>isLoggedIn<span class="op">)</span>  <span class="fu">denyAccess</span><span class="op">();</span>   <span class="co">// theirs</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><span class="vote-prompt">Vote — do these two lines behave the same?</span></p>
+<div class="columns">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>A.</strong> Same</p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>B.</strong> Different</p>
+</div>
+</div></div>
+<aside class="notes">
+<p>Read both lines aloud in English first — they sound like the same sentence: “deny unless they are an admin and logged in” vs.&nbsp;“deny if they are not an admin and not logged in.”</p>
+<p>Hands for A, count. Hands for B, count. Do not resolve — click straight through.</p>
+<p>Rooms split here, and the split <em>is</em> the point: everyone in this room speaks fluent English, and English did not settle it.</p>
+<p>About 60 seconds.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="why-not-just-english-1" class="slide level2">
+<h2>Why Not Just English?</h2>
+<p>Write <span class="math inline">\(a\)</span> for <code>isAdmin</code> and <span class="math inline">\(l\)</span> for <code>isLoggedIn</code>:</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span class="math inline">\(a\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(l\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\neg(a \wedge l)\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\neg a \wedge \neg l\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">F</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">F</td>
+<td style="text-align: center;"><strong>T</strong></td>
+<td style="text-align: center;"><strong>F</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">T</td>
+<td style="text-align: center;"><strong>T</strong></td>
+<td style="text-align: center;"><strong>F</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">T</td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<p>Two rows of four disagree — and row 2 is a <strong>logged-out admin walking straight in</strong>.</p>
+</div>
+<div class="fragment">
+<p>That is what the notation buys: not shorter writing, <strong>decidable</strong> writing.</p>
+</div>
+<aside class="notes">
+<p>Walk row 2 out loud and slowly: admin yes, logged in no. Your line denies access. Their line does not. That is a security hole shipped by a code review that sounded perfectly reasonable.</p>
+<p>Say the payoff line as written: “Two reasonable people can argue about the English all afternoon. Four rows settle it in twenty seconds — the same way, for everyone.”</p>
+<p>Callback — this is warm-up claim 3. “Not both hard and boring” has the same shape as “not (admin and logged in)”, and the two readings disagree on exactly the mixed rows. Point at the board tally if you kept one.</p>
+<p>Forward pointer, one sentence and no more: the correct rewrite is <span class="math inline">\(\neg a \vee \neg l\)</span>, and in 1.3 that swap gets a name.</p>
+<p>About 90 seconds.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="short-circuit-evaluation" class="slide level2">
+<h2>Short-Circuit Evaluation</h2>
+<ul>
+<li><span class="math inline">\(p \wedge q\)</span> is Java’s <code>p &amp;&amp; q</code></li>
+<li><span class="math inline">\(p \vee q\)</span> is Java’s <code>p || q</code></li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb2-1"><a href=""></a><span class="cf">if</span> <span class="op">(</span>user <span class="op">!=</span> <span class="kw">null</span> <span class="op">&amp;&amp;</span> user<span class="op">.</span><span class="fu">isActive</span><span class="op">())</span>   <span class="co">// safe</span></span>
+<span id="cb2-2"><a href=""></a><span class="cf">if</span> <span class="op">(</span>user<span class="op">.</span><span class="fu">isActive</span><span class="op">()</span> <span class="op">&amp;&amp;</span> user <span class="op">!=</span> <span class="kw">null</span><span class="op">)</span>   <span class="co">// NullPointerException</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment">
+<p>Look at the last two rows of the <span class="math inline">\(\wedge\)</span> table: when <span class="math inline">\(p\)</span> is <strong>F</strong>, the conjunction is <strong>F</strong> whatever <span class="math inline">\(q\)</span> turns out to be — so Java never bothers to evaluate <span class="math inline">\(q\)</span>. <strong>Short-circuit evaluation</strong> is a truth table doing real work.</p>
+</div>
+<aside class="notes">
+<p>Show both lines, ask which one crashes and why, then reveal.</p>
+<p>The mirror case for disjunction: the first two rows of the <span class="math inline">\(\vee\)</span> table are T whatever <span class="math inline">\(q\)</span> is, so <code>q</code> is skipped whenever the left side is true — which is what makes <code>if (s == null || s.isEmpty())</code> safe.</p>
+<p>Keep this one short. The previous two slides made the argument; this is the souvenir.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
 <section id="the-connective-or-in-english" class="slide level2">
 <h2>The Connective Or in English</h2>
 <p>In English “or” has two distinct meanings.</p>
@@ -414,6 +742,82 @@ Zechun (Jacob) Cao
 </tr>
 </tbody>
 </table>
+</section>
+<section id="the-connective-or-in-english-2" class="slide level2">
+<h2>The Connective Or in English</h2>
+<p><span class="math inline">\(\oplus\)</span> is <strong>not</strong> a fifth connective to memorize — it is shorthand for something you can already write:</p>
+<table class="caption-top" style="width:100%;">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span class="math inline">\(p\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(q\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(p \vee q\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\neg(p \wedge q)\)</span></th>
+<th style="text-align: center;"><span class="math inline">\((p \vee q) \wedge \neg(p \wedge q)\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(p \oplus q\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">F</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">T</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">T</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">F</td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<p>The last two columns match — English’s exclusive <em>or</em> is already expressible with <span class="math inline">\(\vee\)</span>, <span class="math inline">\(\wedge\)</span>, and <span class="math inline">\(\neg\)</span>.</p>
+</div>
+<aside class="notes">
+<p>This is the honest answer to “is <span class="math inline">\(\oplus\)</span> on the exam?” — no, and this table is why: it is not a new primitive, just an abbreviation.</p>
+<p>Good place to hand the room the pencil. Give them the first two columns and let them fill the rest before advancing; it is their first multi-column truth table, and it rehearses exactly the mechanic used later in “Example Truth Table.”</p>
+<p>Callback: this settles warm-up claim 1. The server was right to refuse.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="implication" class="slide level2">
 <h2>Implication</h2>
@@ -499,6 +903,38 @@ Zechun (Jacob) Cao
 <li>a <strong>sufficient condition</strong> for <span class="math inline">\(q\)</span> is <span class="math inline">\(p\)</span></li>
 </ul>
 </div></div>
+</section>
+<section id="point-the-arrow" class="slide level2">
+<h2>Point the Arrow</h2>
+<p>Let <span class="math inline">\(g\)</span>: “you graduate.” <span class="math inline">\(p\)</span>: “you pass CSCI 2322.”</p>
+<p><span class="vote-prompt">Point left or right — which way does the arrow go?</span></p>
+<ol type="1">
+<li>You can graduate <strong>only if</strong> you pass 2322. <span class="fragment arrow-ans"><span class="math inline">\(g \rightarrow p\)</span></span></li>
+<li>You graduate <strong>whenever</strong> you pass 2322. <span class="fragment arrow-ans"><span class="math inline">\(p \rightarrow g\)</span></span></li>
+<li>Passing 2322 is <strong>necessary</strong> for graduating. <span class="fragment arrow-ans"><span class="math inline">\(g \rightarrow p\)</span></span></li>
+<li>Passing 2322 is <strong>sufficient</strong> for graduating. <span class="fragment arrow-ans"><span class="math inline">\(p \rightarrow g\)</span></span></li>
+<li>You graduate <strong>unless</strong> you fail 2322. <span class="fragment arrow-ans"><span class="math inline">\(p \rightarrow g\)</span></span></li>
+</ol>
+<aside class="notes">
+<p>Hand mechanic: right arm out means the arrow points right (<span class="math inline">\(p \rightarrow g\)</span>), left arm means left (<span class="math inline">\(g \rightarrow p\)</span>). The whole room answers at once and you read it in one glance — no volunteers, no stalling.</p>
+<p>Run it fast: read the sentence, “three, two, one, point,” then click. Five items in about four minutes.</p>
+<p>The two that matter:</p>
+<ul>
+<li><strong>1 vs.&nbsp;4.</strong> <em>only if</em> and <em>sufficient for</em> point opposite ways. This is the most common single error on Exam 1 — say that out loud.</li>
+<li><strong>5.</strong> <em>unless</em> hides a negation. “Fail 2322” is <span class="math inline">\(\neg p\)</span>, and “<span class="math inline">\(g\)</span> unless <span class="math inline">\(\neg p\)</span>” is exactly <span class="math inline">\(p \rightarrow g\)</span> — same answer as 4, from a sentence that looks nothing like it. Expect this one to go badly. That is fine; it is the one they will remember.</li>
+</ul>
+<p>If the room nails all five, skip the discussion and move on — do not spend the time you just saved.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="related-conditionals" class="slide level2">
 <h2>Related Conditionals</h2>
@@ -795,7 +1231,7 @@ Zechun (Jacob) Cao
 <h2>Section 1.2</h2>
 <p>Applications of Propositional Logic</p>
 </section>
-<section id="section-summary-1" class="slide level2">
+<section id="section-summary" class="slide level2">
 <h2>Section Summary</h2>
 <ul>
 <li>Translating English to Propositional Logic</li>
