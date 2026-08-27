@@ -95,7 +95,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-5d0d66b4c57dd3d189879ebc88401ca3.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-e2c6aac924d841f5af7a76e90cdf9702.css">
   <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -203,7 +203,10 @@
 <div class="quarto-title-author-name">
 Zechun (Jacob) Cao 
 </div>
-</div>
+        <p class="quarto-title-affiliation">
+            Adapted from R. Sedgewick and K. Wayne, <em>Algorithms</em>, 4th edition.
+          </p>
+    </div>
 </div>
 
 </section>
@@ -217,19 +220,6 @@ Zechun (Jacob) Cao
 <div class="fragment">
 <p><strong><em>How many guesses do you need to be certain — no luck involved?</em></strong></p>
 </div>
-<aside class="notes">
-<p>Play it. Take real guesses from the room until someone lands it. Let them call out a wrong strategy first (counting up from 1) before anyone says “halve it.”</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
 <section id="twenty" class="slide level2">
 <h2>Twenty</h2>
@@ -274,41 +264,106 @@ Zechun (Jacob) Cao
 <p>Others are the opposite. Doubling the input <em>multiplies</em> the work, and a few doublings later the program stops finishing at all.</p>
 </div>
 <div class="fragment">
-<p><strong><em>Today: how to tell which one you wrote, before you ship it.</em></strong></p>
+<p><strong><em>Today: how to tell the two apart — before your users tell you.</em></strong></p>
 </div>
-</section>
-<section id="today" class="slide level2">
-<h2>Today</h2>
-<ul>
-<li>Measure how an algorithm’s running time grows with its input.</li>
-<li>Read an algorithm’s <strong>order of growth</strong> off its code.</li>
-<li>Use <strong>big O</strong> to compare two algorithms for the same problem.</li>
-</ul>
 </section>
 <section id="the-question-is-not-new" class="slide level2">
 <h2>The Question Is Not New</h2>
 <div class="columns">
 <div class="column" style="width:58%;">
 <blockquote>
-<p>As soon as an Analytic Engine exists, it will necessarily guide the future course of the science. Whenever any result is sought by its aid, the question will arise — by what course of calculation can these results be arrived at by the machine in the <strong>shortest time</strong>?</p>
+<p>As soon as an Analytical Engine exists, it will necessarily guide the future course of the science. Whenever any result is sought by its aid, the question will then arise — by what course of calculation can these results be arrived at by the machine in the <strong>shortest time</strong>?</p>
 <p>— Charles Babbage, 1864</p>
 </blockquote>
 </div><div class="column" style="width:42%;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="images/difference_engine.jpg" class="quarto-figure quarto-figure-center" style="width:72.0%"></p>
+<p><img data-src="images/babbage_engine.jpg" class="quarto-figure quarto-figure-center" style="width:72.0%"></p>
 </figure>
 </div>
-<p><em>How many times do you have to turn the crank?</em></p>
+<p>Babbage’s engine — brass gears and a hand crank.</p>
+<p><strong><em>How many times do you have to turn it?</em></strong></p>
+</div></div>
+</section>
+<section id="who-is-asking" class="slide level2">
+<h2>Who Is Asking</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/cast_of_characters.png" class="quarto-figure quarto-figure-center" style="width:95.0%"></p>
+</figure>
+</div>
+</section>
+<section id="why-analyze-an-algorithm" class="slide level2">
+<h2>Why Analyze an Algorithm?</h2>
+<ul>
+<li><strong>Predict performance.</strong> Will this finish before the demo?</li>
+<li><strong>Compare algorithms.</strong> Which of the two should I ship?</li>
+<li><strong>Provide guarantees.</strong> What can I promise a customer?</li>
+<li><strong>Understand the theory.</strong> Why can nobody do better?</li>
+</ul>
+<div class="fragment">
+<p>The first three are this course. The fourth is a course of its own.</p>
+</div>
+<div class="fragment">
+<p><strong><em>The practical reason: avoid performance bugs.</em></strong> The code is correct, every test passes, and it is unusable at real size.</p>
+</div>
+</section>
+<section id="two-times-this-mattered" class="slide level2">
+<h2>Two Times This Mattered</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Discrete Fourier Transform</strong></p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/fft_decompose.png" class="nostretch quarto-figure quarto-figure-center" style="width:66.0%"></p>
+</figure>
+</div>
+<p>Brute force <span class="math inline">\(N^2\)</span>; <strong>FFT</strong> <span class="math inline">\(N \log N\)</span>. No JPEG, no MRI, no Wi-Fi.</p>
+</div><div class="column" style="width:50%;">
+<p><strong><span class="math inline">\(N\)</span>-body simulation</strong></p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/nbody_cluster.png" class="nostretch quarto-figure quarto-figure-center" style="width:66.0%"></p>
+</figure>
+</div>
+<p>Brute force <span class="math inline">\(N^2\)</span>; <strong>Barnes–Hut</strong> <span class="math inline">\(N \log N\)</span>. A stunt became an instrument.</p>
+</div></div>
+</section>
+<section id="from-n2-to-n-log-n" class="slide level2">
+<h2>From <span class="math inline">\(N^2\)</span> to <span class="math inline">\(N \log N\)</span></h2>
+<div class="columns">
+<div class="column" style="width:62%;">
+<div class="r-stack">
+<p><img data-src="images/growth_orders_2k.png" class="nostretch" style="width:100.0%"></p>
+<p><img data-src="images/growth_orders_8k.png" class="fragment nostretch" style="width:100.0%" data-fragment-index="1"></p>
+</div>
+</div><div class="column" style="width:38%;">
+<p>Stop at <span class="math inline">\(2\)</span>K. You can barely tell the three of them apart.</p>
+<div class="fragment" data-fragment-index="1">
+<p>Run on to <span class="math inline">\(8\)</span>K: the quadratic one takes <span class="math inline">\(64\times\)</span> what it took at <span class="math inline">\(1\)</span>K, the linearithmic one about <span class="math inline">\(10\times\)</span>.</p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p><strong><em>Nobody waited for a faster machine.</em></strong></p>
+</div>
 </div></div>
 </section>
 <section id="part-1" class="slide level2 center section-divider">
 <h2>Part 1</h2>
 <p>Measure</p>
 </section>
+<section id="why-anyone-cares" class="slide level2">
+<h2>Why Anyone Cares</h2>
+<p>Your phone suggests people you might know. This is one way it decides.</p>
+<p><strong><em>Which three of them all know each other?</em></strong></p>
+<div class="r-stack">
+<p><img data-src="images/friend_graph_0.png" class="nostretch" style="width:82.0%"></p>
+<p><img data-src="images/friend_graph_1.png" class="fragment nostretch" style="width:82.0%"></p>
+<p><img data-src="images/friend_graph_2.png" class="fragment nostretch" style="width:82.0%"></p>
+</div>
+</section>
 <section id="the-3-sum-problem" class="slide level2">
 <h2>The 3-Sum Problem</h2>
-<p>Given <span class="math inline">\(N\)</span> distinct integers, how many triples sum to exactly zero?</p>
+<p>Take the people out and the question keeps its shape: given <span class="math inline">\(N\)</span> distinct integers, how many triples sum to exactly zero?</p>
 <table class="trace caption-top">
 <tbody>
 <tr class="odd">
@@ -369,26 +424,40 @@ Zechun (Jacob) Cao
 </tbody>
 </table>
 <p><strong><em>Find them.</em></strong> Eight numbers, three at a time.</p>
-<aside class="notes">
-<p>Give the room a genuine 60 seconds on the bare array before advancing. Take triples as students call them out; the fragments reveal in the same order they usually find them. Someone always spots 30 - 40 + 10 first.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
+</section>
+<section id="sum-in-geometry-problems" class="slide level2">
+<h2>3-Sum in Geometry Problems</h2>
+<p>Send each of those same eight numbers <span class="math inline">\(a\)</span> to the point <span class="math inline">\((a, a^3)\)</span>.</p>
+<div class="columns pairfig">
+<div class="column" style="width:55%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/threesum_collinear.png" class="nostretch quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+<div class="cap">
+<p>Three points land on one straight line exactly when the three numbers sum to zero.</p>
+</div>
+</div><div class="column" style="width:45%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/angry_birds.png" class="nostretch quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+<div class="cap">
+<p>A physics engine is computational geometry.</p>
+</div>
+</div></div>
+<div class="fragment">
+<p><span class="lead-blue">Context.</span> Deeply related to problems in computational geometry.</p>
+</div>
 </section>
 <section id="how-much-work-is-that" class="slide level2">
 <h2>How Much Work Is That?</h2>
 <p>You just did it by eye for <span class="math inline">\(8\)</span> numbers.</p>
 <p><strong><em>How many triples did you have to check?</em></strong></p>
 <div class="fragment">
-<p><span class="math display">\[\binom{8}{3} = \frac{8 \cdot 7 \cdot 6}{6} = 56\]</span></p>
+<p><span class="math display">\[\binom{8}{3} = \frac{8 \cdot 7 \cdot 6}{3!} = 56\]</span></p>
 </div>
 <div class="fragment">
 <table class="caption-top">
@@ -423,64 +492,40 @@ Zechun (Jacob) Cao
 <p><strong><em>Eighty-five billion triples.</em></strong> Hold on to that number — we are about to find out what it costs.</p>
 </div>
 </section>
-<section id="why-anyone-cares" class="slide level2">
-<h2>Why Anyone Cares</h2>
-<p>Your phone suggests people you might know. This is one way it decides.</p>
-<p><strong><em>Which three of them all know each other?</em></strong></p>
-<div class="r-stack">
-<p><img data-src="images/friend_graph_0.png" class="nostretch" style="width:82.0%"></p>
-<p><img data-src="images/friend_graph_1.png" class="fragment nostretch" style="width:82.0%"></p>
-<p><img data-src="images/friend_graph_2.png" class="fragment nostretch" style="width:82.0%"></p>
-</div>
-<aside class="notes">
-<p>Leave stage 0 up and make them hunt: 56 trios, how many are complete? Most rooms guess far too high. Reveal stage 1, then stage 2.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="why-anyone-cares-1" class="slide level2">
-<h2>Why Anyone Cares</h2>
-<p>Counting trios is the same triple loop, on data you already carry around.</p>
+<section id="the-same-loop-on-real-data" class="slide level2">
+<h2>The Same Loop, on Real Data</h2>
+<p><span class="math inline">\(^\dagger\)</span> If we need to spend <span class="math inline">\(1.2\)</span> ns per triple.</p>
 <table class="caption-top">
 <thead>
 <tr class="header">
-<th style="text-align: left;">Network</th>
-<th style="text-align: right;">Trios to check</th>
-<th style="text-align: right;">Time<span class="math inline">\(^\dagger\)</span></th>
+<th data-quarto-table-cell-role="th">Network</th>
+<th data-quarto-table-cell-role="th">Trios to check</th>
+<th data-quarto-table-cell-role="th">Time<sup>†</sup></th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td style="text-align: left;">your <span class="math inline">\(8\)</span> friends</td>
-<td style="text-align: right;"><span class="math inline">\(56\)</span></td>
-<td style="text-align: right;">instant</td>
+<tr class="fragment odd">
+<td>your 8 friends</td>
+<td>56</td>
+<td>instant</td>
 </tr>
-<tr class="even">
-<td style="text-align: left;">a <span class="math inline">\(1{,}000\)</span>-person club</td>
-<td style="text-align: right;"><span class="math inline">\(1.7 \times 10^{8}\)</span></td>
-<td style="text-align: right;"><span class="math inline">\(0.2\)</span> s</td>
+<tr class="fragment even">
+<td>a 1,000-person club</td>
+<td>1.7 × 10<sup>8</sup></td>
+<td>0.2 s</td>
 </tr>
-<tr class="odd">
-<td style="text-align: left;">a <span class="math inline">\(10{,}000\)</span>-student campus</td>
-<td style="text-align: right;"><span class="math inline">\(1.7 \times 10^{11}\)</span></td>
-<td style="text-align: right;"><span class="math inline">\(3.4\)</span> min</td>
+<tr class="fragment odd">
+<td>a 10,000-student campus</td>
+<td>1.7 × 10<sup>11</sup></td>
+<td>3.4 min</td>
 </tr>
-<tr class="even">
-<td style="text-align: left;">a <span class="math inline">\(100{,}000\)</span>-user app</td>
-<td style="text-align: right;"><span class="math inline">\(1.7 \times 10^{14}\)</span></td>
-<td style="text-align: right;"><span class="math inline">\(2.4\)</span> days</td>
+<tr class="fragment even">
+<td>a 100,000-user app</td>
+<td>1.7 × 10<sup>14</sup></td>
+<td>2.4 days</td>
 </tr>
 </tbody>
 </table>
-<p><span class="math inline">\(^\dagger\)</span> at the <span class="math inline">\(1.2\)</span> ns per triple our own brute force measured.</p>
 <div class="fragment">
 <p>Ten times the users, <strong>a thousand times</strong> the work.</p>
 </div>
@@ -520,24 +565,10 @@ Zechun (Jacob) Cao
 </tbody>
 </table>
 </div>
-<aside class="notes">
-<p>Show of hands on each column. Most of the room picks 0.4 s. Do not correct anyone — just run it.</p>
-<pre><code>java ThreeSum.java 500 1000 2000 4000</code></pre>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
 <section id="the-doubling-race" class="slide level2">
 <h2>The Doubling Race</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href=""></a><span class="ex">%</span> java ThreeSum.java 500 1000 2000 4000</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href=""></a><span class="ex">%</span> java ThreeSum.java 500 1000 2000 4000</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -549,151 +580,644 @@ Zechun (Jacob) Cao
 <tbody>
 <tr class="odd">
 <td>500</td>
-<td>0.03</td>
+<td>0.030</td>
 <td>—</td>
 </tr>
 <tr class="fragment even">
 <td>1,000</td>
-<td>0.21</td>
+<td>0.207</td>
 <td>6.9</td>
 </tr>
 <tr class="fragment odd">
 <td>2,000</td>
-<td>1.64</td>
+<td>1.643</td>
 <td>7.9</td>
 </tr>
 <tr class="fragment even">
 <td>4,000</td>
-<td>13.21</td>
+<td>13.207</td>
 <td>8.0</td>
 </tr>
 <tr class="fragment odd">
 <td>8,000</td>
-<td>105.33</td>
+<td>105.326</td>
 <td>8.0</td>
 </tr>
 </tbody>
 </table>
-<aside class="notes">
-<p>Run 500/1000/2000/4000 live — about 15 seconds total, and the 13-second row is the pause that sells it.</p>
-<p>Then start <code>java ThreeSum.java 8000</code> in a second terminal and leave it running. It needs ~1 min 45 s. Move on; come back to it at “Predict, Then Verify.”</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
-<section id="the-ratio-is-the-signal" class="slide level2">
-<h2>The Ratio Is the Signal</h2>
-<p>Doubling the input does not double the time. It multiplies it by <span class="math inline">\(8\)</span> — every single time.</p>
+<section id="what-sets-the-running-time" class="slide level2">
+<h2>What Sets the Running Time?</h2>
+<p>Two independent things.</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><span class="lead-blue">The algorithm.</span> How the number of steps grows as <span class="math inline">\(N\)</span> grows — one loop, two loops, three.</p>
+</div><div class="column" style="width:50%;">
+<p><span class="lead-blue">The machine.</span> How long a single step takes — a few nanoseconds, fixed by the hardware you run on.</p>
+</div></div>
 <div class="fragment">
-<p><span class="math display">\[\frac{T(2N)}{T(N)} \;=\; \frac{a\,(2N)^b}{a\,N^b} \;=\; 2^b\]</span></p>
+<p>Guess a shape with one unknown for each:</p>
+<p><span class="math display">\[T(N) = a \cdot N^{b}\]</span></p>
+<p><span class="math inline">\(a\)</span> belongs to the machine, <span class="math inline">\(b\)</span> to the algorithm. <span class="lead-red">We want <span class="math inline">\(b\)</span>.</span></p>
 </div>
+</section>
+<section id="the-ratio-is-the-exponent" class="slide level2 dense-table">
+<h2>The Ratio Is the Exponent</h2>
+<div class="columns">
+<div class="column" style="width:46%;">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: right;"><span class="math inline">\(N\)</span></th>
+<th style="text-align: right;">time (s)</th>
+<th style="text-align: right;">ratio</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;"><span class="math inline">\(500\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.030\)</span></td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"><span class="math inline">\(1{,}000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.207\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(6.9\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;"><span class="math inline">\(2{,}000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(1.643\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(7.9\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"><span class="math inline">\(4{,}000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(13.207\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(8.0\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;"><span class="math inline">\(8{,}000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(105.326\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(8.0\)</span></td>
+</tr>
+</tbody>
+</table>
+</div><div class="column" style="width:54%;">
+<p>We cannot measure <span class="math inline">\(b\)</span> directly. But we can double <span class="math inline">\(N\)</span> and divide:</p>
+<p><span class="math display">\[\frac{T(2N)}{T(N)} = \frac{a\,(2N)^{b}}{a\,N^{b}} = 2^{b}\]</span></p>
 <div class="fragment">
-<p>So <span class="math inline">\(2^b = 8\)</span>, which gives <span class="math inline">\(b = 3\)</span>:</p>
-<p><span class="math display">\[T(N) \;\approx\; a\,N^3\]</span></p>
+<p>The machine’s constant <span class="math inline">\(a\)</span> <strong>cancels</strong>. What is left measures <span class="math inline">\(b\)</span> alone.</p>
+</div>
+</div></div>
+<div class="fragment">
+<p>Our ratio settles at <span class="math inline">\(8 = 2^{3}\)</span>, so <span class="math inline">\(b = 3\)</span>. <span class="lead-red">3-Sum is cubic — measured, not read off the code.</span></p>
 </div>
 </section>
 <section id="why-isnt-the-first-ratio-8" class="slide level2">
 <h2>Why Isn’t the First Ratio 8?</h2>
-<p>Look again at the ratio column: <span class="math inline">\(6.9\)</span>, then <span class="math inline">\(7.9\)</span>, then <span class="math inline">\(8.0\)</span>, <span class="math inline">\(8.0\)</span>. The sort-and-search race is worse — <span class="math inline">\(1.9\)</span>, <span class="math inline">\(4.8\)</span>, <span class="math inline">\(3.9\)</span>, <span class="math inline">\(4.0\)</span>, <span class="math inline">\(4.0\)</span>.</p>
+<p>The first ratio is <span class="math inline">\(6.9\)</span>, not <span class="math inline">\(8\)</span>. At <span class="math inline">\(N = 500\)</span> the whole run takes <span class="math inline">\(0.030\)</span> seconds.</p>
+<div class="fragment">
+<ul>
+<li><strong>Java is still compiling.</strong> That same call takes <span class="math inline">\(0.028\)</span> s the first time and <span class="math inline">\(0.006\)</span> s once the JIT has optimized it — five times faster, identical code.</li>
+<li><strong>Fixed costs dominate.</strong> Allocating the array and reading the clock are a big slice of <span class="math inline">\(0.030\)</span> s and nothing at all of <span class="math inline">\(105\)</span> s.</li>
+</ul>
+</div>
 <div class="fragment">
 <p><strong><em>The early rows are not measuring the algorithm.</em></strong></p>
 </div>
-</section>
-<section id="why-isnt-the-first-ratio-8-1" class="slide level2">
-<h2>Why Isn’t the First Ratio 8?</h2>
-<p>At <span class="math inline">\(N = 500\)</span> the whole run takes <span class="math inline">\(0.03\)</span> seconds.</p>
-<ul>
-<li>Java has not finished compiling your loop yet. That same call takes <span class="math inline">\(0.028\)</span> s the first time and <span class="math inline">\(0.006\)</span> s once the JIT has optimized it — <strong>five times faster, identical code</strong>.</li>
-<li>Costs that do not depend on <span class="math inline">\(N\)</span> — allocating the array, reading the clock — are a big slice of <span class="math inline">\(0.03\)</span> s and nothing at all of <span class="math inline">\(105\)</span> s.</li>
-</ul>
 </section>
 <section id="read-the-bottom-of-the-table" class="slide level2">
 <h2>Read the Bottom of the Table</h2>
 <p>The ratios <strong>converge</strong>. Take <span class="math inline">\(b\)</span> from where they settle, not from the first row.</p>
 <div class="fragment">
-<p>The doubling hypothesis is a claim about large <span class="math inline">\(N\)</span> — small <span class="math inline">\(N\)</span> is where the machine, not the algorithm, is doing the talking.</p>
+<p>The rule is a claim about large <span class="math inline">\(N\)</span> — small <span class="math inline">\(N\)</span> is where the machine, not the algorithm, is doing the talking.</p>
 </div>
 <div class="fragment">
 <p><strong><em>And if they never settle?</em></strong> Then it is not a power law, and the method does not apply.</p>
 </div>
+<div class="fragment">
+<p><span class="lead-red">Bad news.</span> Precise measurements are hard to get. <span class="lead-blue">Good news.</span> Cheaper than in any other science — run a hundred experiments before lunch.</p>
+</div>
 </section>
 <section id="predict-then-verify" class="slide level2">
 <h2>Predict, Then Verify</h2>
-<p>We never measured <span class="math inline">\(N = 16{,}000\)</span>. We do not have to.</p>
+<p><span class="lead-blue">The rule.</span> Ratio <span class="math inline">\(8\)</span> means every doubling costs <span class="math inline">\(8\times\)</span>.</p>
+<p><span class="lead-red">Predict.</span> <span class="math inline">\(N = 4{,}000\)</span> took <span class="math inline">\(13.207\)</span> s, so <span class="math inline">\(N = 8{,}000\)</span> should take about <span class="math inline">\(13.207 \times 8 = 105.7\)</span> s.</p>
 <div class="fragment">
-<p><span class="math display">\[105 \text{ s} \times 8 \;=\; 842 \text{ s} \;\approx\; 14 \text{ minutes}\]</span></p>
+<p><span class="lead-blue">Observe.</span> The <span class="math inline">\(8{,}000\)</span> run we started earlier: <strong><span class="math inline">\(105.3\)</span> seconds</strong>.</p>
 </div>
 <div class="fragment">
-<p>And <span class="math inline">\(N = 32{,}000\)</span> is another <span class="math inline">\(\times 8\)</span>: about <span class="math inline">\(1.9\)</span> <strong>hours</strong>.</p>
-<p><strong><em>We are not going to sit here for it.</em></strong> That is the point — the measurement at <span class="math inline">\(N \le 8{,}000\)</span> already told us.</p>
+<p><strong><em>Within half a percent — from a number we never measured.</em></strong></p>
 </div>
-</section>
-<section id="the-picture" class="slide level2">
-<h2>The Picture</h2>
-
-<img data-src="images/threesum_loglog.png" class="quarto-figure quarto-figure-center r-stretch" style="width:86.0%"><p>On log-log axes, <span class="math inline">\(T(N) = a N^b\)</span> is a straight line of slope <span class="math inline">\(b\)</span>.</p>
+<div class="fragment">
+<p>Want the constant too? <span class="math inline">\(105.326 = a \times 8000^{3}\)</span> gives <span class="math inline">\(a = 2.06 \times 10^{-10}\)</span>.</p>
+</div>
 </section>
 <section id="what-transfers-what-doesnt" class="slide level2">
 <h2>What Transfers, What Doesn’t</h2>
 <div class="columns">
-<div class="column" style="width:50%;">
+<div class="column" style="width:55%;">
 <p><strong>The constant <span class="math inline">\(a\)</span></strong></p>
-<p>Depends on my laptop, my compiler, my JVM, what else was running.</p>
-<p><em>Yours will differ.</em></p>
-</div><div class="column" style="width:50%;">
+<ul>
+<li>Hardware — CPU, cache</li>
+<li>Software — compiler, JVM</li>
+<li>System — OS, other apps</li>
+</ul>
+</div><div class="column" style="width:45%;">
 <p><strong>The exponent <span class="math inline">\(b\)</span></strong></p>
-<p>Depends on the algorithm. Nothing else.</p>
-<p><em>Yours will be <span class="math inline">\(3\)</span> too.</em></p>
+<p>The algorithm.</p>
+<p><em>Nothing else.</em></p>
 </div></div>
 <div class="fragment">
-<p>This is why we compare algorithms with <strong>big O</strong> and not with stopwatches.</p>
+<p>Run this on your laptop: <span class="math inline">\(a\)</span> will differ, <span class="math inline">\(b\)</span> will still be <span class="math inline">\(3\)</span>.</p>
+</div>
+<div class="fragment">
+<p><span class="lead-red">That is why we compare with big O, not stopwatches.</span></p>
 </div>
 </section>
 <section id="part-2" class="slide level2 center section-divider">
 <h2>Part 2</h2>
+<p>Count It</p>
+</section>
+<section id="mathematical-models-for-running-time" class="slide level2 long-title">
+<h2>Mathematical Models for Running Time</h2>
+<p><span class="lead-blue">Total running time:</span> sum of cost × frequency for all operations.</p>
+<ul>
+<li>Need to analyze the program to determine the set of operations.</li>
+<li><strong>Cost</strong> depends on the machine and the compiler.</li>
+<li><strong>Frequency</strong> depends on the algorithm and the input data.</li>
+</ul>
+<div class="book-row">
+  <img src="images/taocp_vol1.png" alt="The Art of Computer Programming, Volume 1: Fundamental Algorithms">
+  <img src="images/taocp_vol2.png" alt="The Art of Computer Programming, Volume 2: Seminumerical Algorithms">
+  <img src="images/taocp_vol3.png" alt="The Art of Computer Programming, Volume 3: Sorting and Searching">
+  <img src="images/taocp_vol4a.png" alt="The Art of Computer Programming, Volume 4A: Combinatorial Algorithms">
+  <figure>
+    <img src="images/knuth.png" alt="Donald Knuth">
+    <figcaption>Donald Knuth<br>1974 Turing Award</figcaption>
+  </figure>
+</div>
+<p><span class="lead-red">In principle,</span> accurate mathematical models are available.</p>
+<div class="fragment">
+<p><span class="lead-blue">In practice,</span> you measure — and we did. Now we count.</p>
+</div>
+</section>
+<section id="cost-of-basic-operations" class="slide level2 dense-table">
+<h2>Cost of Basic Operations</h2>
+<p><span class="lead-blue">Challenge.</span> How to estimate the constants.</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">operation</th>
+<th style="text-align: center;">example</th>
+<th style="text-align: right;">nanoseconds<span class="math inline">\(^\dagger\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">integer add</td>
+<td style="text-align: center;"><code>a + b</code></td>
+<td style="text-align: right;"><span class="math inline">\(2.1\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">integer multiply</td>
+<td style="text-align: center;"><code>a * b</code></td>
+<td style="text-align: right;"><span class="math inline">\(2.4\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">integer divide</td>
+<td style="text-align: center;"><code>a / b</code></td>
+<td style="text-align: right;"><span class="math inline">\(5.4\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">floating-point add</td>
+<td style="text-align: center;"><code>a + b</code></td>
+<td style="text-align: right;"><span class="math inline">\(4.6\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">floating-point multiply</td>
+<td style="text-align: center;"><code>a * b</code></td>
+<td style="text-align: right;"><span class="math inline">\(4.2\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">floating-point divide</td>
+<td style="text-align: center;"><code>a / b</code></td>
+<td style="text-align: right;"><span class="math inline">\(13.5\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">sine</td>
+<td style="text-align: center;"><code>Math.sin(theta)</code></td>
+<td style="text-align: right;"><span class="math inline">\(91.3\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">arctangent</td>
+<td style="text-align: center;"><code>Math.atan2(y, x)</code></td>
+<td style="text-align: right;"><span class="math inline">\(129.0\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\ldots\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\ldots\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(\ldots\)</span></td>
+</tr>
+</tbody>
+</table>
+<p><span class="math inline">\(^\dagger\)</span> Running OS X on a MacBook Pro, <span class="math inline">\(2.2\)</span> GHz, <span class="math inline">\(2\)</span> GB RAM.</p>
+</section>
+<section id="cost-of-basic-operations-1" class="slide level2 dense-table">
+<h2>Cost of Basic Operations</h2>
+<p><span class="lead-blue">Observation.</span> Most primitive operations take constant time.</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">operation</th>
+<th style="text-align: center;">example</th>
+<th style="text-align: right;">nanoseconds<span class="math inline">\(^\dagger\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">variable declaration</td>
+<td style="text-align: center;"><code>int a</code></td>
+<td style="text-align: right;"><span class="math inline">\(c_1\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">assignment statement</td>
+<td style="text-align: center;"><code>a = b</code></td>
+<td style="text-align: right;"><span class="math inline">\(c_2\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">integer compare</td>
+<td style="text-align: center;"><code>a &lt; b</code></td>
+<td style="text-align: right;"><span class="math inline">\(c_3\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">array element access</td>
+<td style="text-align: center;"><code>a[i]</code></td>
+<td style="text-align: right;"><span class="math inline">\(c_4\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">array length</td>
+<td style="text-align: center;"><code>a.length</code></td>
+<td style="text-align: right;"><span class="math inline">\(c_5\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1D array allocation</td>
+<td style="text-align: center;"><code>new int[N]</code></td>
+<td style="text-align: right;"><span class="math inline">\(c_6 N\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2D array allocation</td>
+<td style="text-align: center;"><code>new int[N][N]</code></td>
+<td style="text-align: right;"><span class="math inline">\(c_7 N^2\)</span></td>
+</tr>
+</tbody>
+</table>
+<p><span class="lead-red">Caveat.</span> Non-primitive operations often take more than constant time — the novice mistake is abusive string concatenation.</p>
+</section>
+<section id="example-1-sum" class="slide level2 dense-table">
+<h2>Example: 1-Sum</h2>
+<p><span class="lead-blue">Q.</span> How many instructions as a function of input size <span class="math inline">\(N\)</span>?</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb3-1"><a href=""></a><span class="dt">int</span> count <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb3-2"><a href=""></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> N<span class="op">;</span> i<span class="op">++)</span></span>
+<span id="cb3-3"><a href=""></a>   <span class="cf">if</span> <span class="op">(</span>a<span class="op">[</span>i<span class="op">]</span> <span class="op">==</span> <span class="dv">0</span><span class="op">)</span></span>
+<span id="cb3-4"><a href=""></a>      count<span class="op">++;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><span class="math inline">\(N\)</span> array accesses.</p>
+</div><div class="column" style="width:50%;">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">operation</th>
+<th style="text-align: center;">frequency</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">variable declaration</td>
+<td style="text-align: center;"><span class="math inline">\(2\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">assignment statement</td>
+<td style="text-align: center;"><span class="math inline">\(2\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">less than compare</td>
+<td style="text-align: center;"><span class="math inline">\(N + 1\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">equal to compare</td>
+<td style="text-align: center;"><span class="math inline">\(N\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">array access</td>
+<td style="text-align: center;"><span class="math inline">\(N\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">increment</td>
+<td style="text-align: center;"><span class="math inline">\(N\)</span> to <span class="math inline">\(2N\)</span></td>
+</tr>
+</tbody>
+</table>
+</div></div>
+</section>
+<section id="example-2-sum" class="slide level2 dense-table">
+<h2>Example: 2-Sum</h2>
+<p><span class="lead-blue">Q.</span> How many instructions as a function of input size <span class="math inline">\(N\)</span>?</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb4-1"><a href=""></a><span class="dt">int</span> count <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb4-2"><a href=""></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> N<span class="op">;</span> i<span class="op">++)</span></span>
+<span id="cb4-3"><a href=""></a>   <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> i<span class="op">+</span><span class="dv">1</span><span class="op">;</span> j <span class="op">&lt;</span> N<span class="op">;</span> j<span class="op">++)</span></span>
+<span id="cb4-4"><a href=""></a>      <span class="cf">if</span> <span class="op">(</span>a<span class="op">[</span>i<span class="op">]</span> <span class="op">+</span> a<span class="op">[</span>j<span class="op">]</span> <span class="op">==</span> <span class="dv">0</span><span class="op">)</span></span>
+<span id="cb4-5"><a href=""></a>         count<span class="op">++;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The inner loop runs <span class="math inline">\(0 + 1 + 2 + \cdots + (N-1)\)</span> times:</p>
+<p><span class="math display">\[\tfrac{1}{2}\bigl(\underbrace{N^2}_{\text{square}} -
+  \underbrace{N}_{\text{diagonal}}\bigr)\]</span></p>
+<p><span class="math display">\[=\; \tfrac{1}{2}N(N-1) \;=\; \binom{N}{2}\]</span></p>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/triangle_sum.png" class="quarto-figure quarto-figure-center" style="width:86.0%"></p>
+</figure>
+</div>
+</div></div>
+</section>
+<section id="example-2-sum-1" class="slide level2 dense-table">
+<h2>Example: 2-Sum</h2>
+<p><span class="lead-blue">Q.</span> How many instructions as a function of input size <span class="math inline">\(N\)</span>?</p>
+<div class="columns">
+<div class="column" style="width:45%;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb5-1"><a href=""></a><span class="dt">int</span> count <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb5-2"><a href=""></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> N<span class="op">;</span> i<span class="op">++)</span></span>
+<span id="cb5-3"><a href=""></a>   <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> i<span class="op">+</span><span class="dv">1</span><span class="op">;</span> j <span class="op">&lt;</span> N<span class="op">;</span> j<span class="op">++)</span></span>
+<span id="cb5-4"><a href=""></a>      <span class="cf">if</span> <span class="op">(</span>a<span class="op">[</span>i<span class="op">]</span> <span class="op">+</span> a<span class="op">[</span>j<span class="op">]</span> <span class="op">==</span> <span class="dv">0</span><span class="op">)</span></span>
+<span id="cb5-5"><a href=""></a>         count<span class="op">++;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="width:55%;">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">operation</th>
+<th style="text-align: center;">frequency</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">variable declaration</td>
+<td style="text-align: center;"><span class="math inline">\(N + 2\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">assignment statement</td>
+<td style="text-align: center;"><span class="math inline">\(N + 2\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">less than compare</td>
+<td style="text-align: center;"><span class="math inline">\(\tfrac{1}{2}(N+1)(N+2)\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">equal to compare</td>
+<td style="text-align: center;"><span class="math inline">\(\tfrac{1}{2}N(N-1)\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">array access</td>
+<td style="text-align: center;"><span class="math inline">\(N(N-1)\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">increment</td>
+<td style="text-align: center;"><span class="math inline">\(\tfrac{1}{2}N(N-1)\)</span> to <span class="math inline">\(N(N-1)\)</span></td>
+</tr>
+</tbody>
+</table>
+</div></div>
+<div class="fragment">
+<p><span class="lead-red">Tedious to count exactly.</span></p>
+</div>
+</section>
+<section id="simplifying-the-calculations" class="slide level2">
+<h2>Simplifying the Calculations</h2>
+<div class="pull-quote">
+“ It is convenient to have a <span class="hi">measure of the amount of work involved in a computing process</span>, even though it be a very <span class="hi">crude</span> one. We may count up the number of times that various elementary operations are applied in the whole process and then given them various weights. We might, for instance, count the number of additions, subtractions, multiplications, divisions, recording of numbers, and extractions of figures from tables. In the case of computing with matrices most of the work consists of multiplications and writing down numbers, and <span class="hi">we shall therefore only attempt to count the number of multiplications and recordings.</span> ” &nbsp; <span class="who">— Alan Turing</span>
+</div>
+
+<div class="paper-row">
+  <img src="images/turing_paper.png" alt="Rounding-off errors in matrix processes, by A. M. Turing, 1947">
+  <img src="images/turing_portrait.jpg" alt="Alan Turing">
+</div>
+</section>
+<section id="simplification-1-cost-model" class="slide level2 dense-table">
+<h2>Simplification 1: Cost Model</h2>
+<p><span class="lead-blue">Cost model.</span> Use some basic operation as a proxy for running time.</p>
+<div class="columns">
+<div class="column" style="width:45%;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb6-1"><a href=""></a><span class="dt">int</span> count <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb6-2"><a href=""></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> N<span class="op">;</span> i<span class="op">++)</span></span>
+<span id="cb6-3"><a href=""></a>   <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> i<span class="op">+</span><span class="dv">1</span><span class="op">;</span> j <span class="op">&lt;</span> N<span class="op">;</span> j<span class="op">++)</span></span>
+<span id="cb6-4"><a href=""></a>      <span class="cf">if</span> <span class="op">(</span>a<span class="op">[</span>i<span class="op">]</span> <span class="op">+</span> a<span class="op">[</span>j<span class="op">]</span> <span class="op">==</span> <span class="dv">0</span><span class="op">)</span></span>
+<span id="cb6-5"><a href=""></a>         count<span class="op">++;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="width:55%;">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">operation</th>
+<th style="text-align: center;">frequency</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">variable declaration</td>
+<td style="text-align: center;"><span class="math inline">\(N + 2\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">assignment statement</td>
+<td style="text-align: center;"><span class="math inline">\(N + 2\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">less than compare</td>
+<td style="text-align: center;"><span class="math inline">\(\tfrac{1}{2}(N+1)(N+2)\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">equal to compare</td>
+<td style="text-align: center;"><span class="math inline">\(\tfrac{1}{2}N(N-1)\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>array access</strong></td>
+<td style="text-align: center;"><span class="math inline">\(\mathbf{N(N-1)}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">increment</td>
+<td style="text-align: center;"><span class="math inline">\(\tfrac{1}{2}N(N-1)\)</span> to <span class="math inline">\(N(N-1)\)</span></td>
+</tr>
+</tbody>
+</table>
+</div></div>
+<p><span class="lead-red">Cost model <span class="math inline">\(=\)</span> array accesses.</span> We assume the compiler and the JVM optimize none of them away.</p>
+</section>
+<section id="simplification-2-tilde-notation" class="slide level2 dense-table">
+<h2>Simplification 2: Tilde Notation</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li>Estimate running time (or memory) as a function of <span class="math inline">\(N\)</span>.</li>
+<li>Ignore lower-order terms — negligible when <span class="math inline">\(N\)</span> is large, and when <span class="math inline">\(N\)</span> is small we do not care.</li>
+</ul>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Ex 1.</strong></td>
+<td style="text-align: left;"><span class="math inline">\(\tfrac{1}{6}N^3 + 20N + 16\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\sim \tfrac{1}{6}N^3\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Ex 2.</strong></td>
+<td style="text-align: left;"><span class="math inline">\(\tfrac{1}{6}N^3 + 100N^{4/3} + 56\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\sim \tfrac{1}{6}N^3\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Ex 3.</strong></td>
+<td style="text-align: left;"><span class="math inline">\(\tfrac{1}{6}N^3 - \tfrac{1}{2}N^2 + \tfrac{1}{3}N\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\sim \tfrac{1}{6}N^3\)</span></td>
+</tr>
+</tbody>
+</table>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/tilde_plot.png" class="quarto-figure quarto-figure-center" style="width:100.0%"></p>
+</figure>
+</div>
+<p><span class="lead-blue">Technical definition.</span> <span class="math inline">\(f(N) \sim g(N)\)</span> means <span class="math inline">\(\lim_{N \to \infty} f(N)/g(N) = 1\)</span>.</p>
+</div></div>
+</section>
+<section id="simplification-2-tilde-notation-1" class="slide level2 dense-table">
+<h2>Simplification 2: Tilde Notation</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 36%">
+<col style="width: 36%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">operation</th>
+<th style="text-align: center;">frequency</th>
+<th style="text-align: center;">tilde notation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">variable declaration</td>
+<td style="text-align: center;"><span class="math inline">\(N + 2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\sim N\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">assignment statement</td>
+<td style="text-align: center;"><span class="math inline">\(N + 2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\sim N\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">less than compare</td>
+<td style="text-align: center;"><span class="math inline">\(\tfrac{1}{2}(N+1)(N+2)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\sim \tfrac{1}{2}N^2\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">equal to compare</td>
+<td style="text-align: center;"><span class="math inline">\(\tfrac{1}{2}N(N-1)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\sim \tfrac{1}{2}N^2\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">array access</td>
+<td style="text-align: center;"><span class="math inline">\(N(N-1)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\sim N^2\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">increment</td>
+<td style="text-align: center;"><span class="math inline">\(\tfrac{1}{2}N(N-1)\)</span> to <span class="math inline">\(N(N-1)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\sim \tfrac{1}{2}N^2\)</span> to <span class="math inline">\(\sim N^2\)</span></td>
+</tr>
+</tbody>
+</table>
+<p><span class="lead-blue">Bottom line.</span> Use a cost model and tilde notation to simplify the counts.</p>
+</section>
+<section id="example-2-sum-2" class="slide level2">
+<h2>Example: 2-Sum</h2>
+<p><span class="lead-blue">Q.</span> Approximately how many array accesses as a function of input size <span class="math inline">\(N\)</span>?</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb7-1"><a href=""></a><span class="dt">int</span> count <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb7-2"><a href=""></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> N<span class="op">;</span> i<span class="op">++)</span></span>
+<span id="cb7-3"><a href=""></a>   <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> i<span class="op">+</span><span class="dv">1</span><span class="op">;</span> j <span class="op">&lt;</span> N<span class="op">;</span> j<span class="op">++)</span></span>
+<span id="cb7-4"><a href=""></a>      <span class="cf">if</span> <span class="op">(</span>a<span class="op">[</span>i<span class="op">]</span> <span class="op">+</span> a<span class="op">[</span>j<span class="op">]</span> <span class="op">==</span> <span class="dv">0</span><span class="op">)</span>      <span class="co">// inner loop</span></span>
+<span id="cb7-5"><a href=""></a>         count<span class="op">++;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment">
+<p><span class="lead-red">A.</span> <span class="math inline">\(\sim N^2\)</span> array accesses.</p>
+</div>
+<div class="fragment">
+<p><span class="lead-blue">Bottom line.</span> Use a cost model and tilde notation to simplify the counts.</p>
+</div>
+</section>
+<section id="example-3-sum" class="slide level2">
+<h2>Example: 3-Sum</h2>
+<p><span class="lead-blue">Q.</span> Approximately how many array accesses as a function of input size <span class="math inline">\(N\)</span>?</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb8-1"><a href=""></a><span class="dt">int</span> count <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb8-2"><a href=""></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> N<span class="op">;</span> i<span class="op">++)</span></span>
+<span id="cb8-3"><a href=""></a>   <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> i<span class="op">+</span><span class="dv">1</span><span class="op">;</span> j <span class="op">&lt;</span> N<span class="op">;</span> j<span class="op">++)</span></span>
+<span id="cb8-4"><a href=""></a>      <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> k <span class="op">=</span> j<span class="op">+</span><span class="dv">1</span><span class="op">;</span> k <span class="op">&lt;</span> N<span class="op">;</span> k<span class="op">++)</span></span>
+<span id="cb8-5"><a href=""></a>         <span class="cf">if</span> <span class="op">(</span>a<span class="op">[</span>i<span class="op">]</span> <span class="op">+</span> a<span class="op">[</span>j<span class="op">]</span> <span class="op">+</span> a<span class="op">[</span>k<span class="op">]</span> <span class="op">==</span> <span class="dv">0</span><span class="op">)</span>      <span class="co">// inner loop</span></span>
+<span id="cb8-6"><a href=""></a>            count<span class="op">++;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment">
+<p><span class="math display">\[\binom{N}{3} \;=\; \frac{N(N-1)(N-2)}{3!} \;\sim\; \tfrac{1}{6}N^3 \;\;\text{triples}\]</span></p>
+</div>
+<div class="fragment">
+<p>Three array accesses per triple: <span class="math inline">\(3 \times \tfrac{1}{6}N^3 = \tfrac{1}{2}N^3\)</span>.</p>
+</div>
+<div class="fragment">
+<p><span class="lead-red">A.</span> <span class="math inline">\(\sim \tfrac{1}{2}N^3\)</span> array accesses.</p>
+</div>
+</section>
+<section id="part-3" class="slide level2 center section-divider">
+<h2>Part 3</h2>
 <p>Name It</p>
 </section>
 <section id="order-of-growth" class="slide level2">
 <h2>Order of Growth</h2>
-<p>Keep the term that wins as <span class="math inline">\(n\)</span> grows. Throw away everything else.</p>
-<p><span class="math display">\[f(n) = n^2 + 100n + \log_{10} n + 1{,}000 \;=\; O(n^2)\]</span></p>
-<ul>
-<li>Drop <strong>constant factors</strong> — they live in <span class="math inline">\(a\)</span>, which is machine-specific.</li>
-<li>Drop <strong>lower-order terms</strong> — <span class="math inline">\(n^2\)</span> swamps them all eventually.</li>
-</ul>
+<p>Part 2 ended with <span class="math inline">\(\sim \tfrac{1}{2}N^3\)</span> array accesses. The <span class="math inline">\(\tfrac{1}{2}\)</span> is machine-specific. The <span class="math inline">\(N^3\)</span> is not.</p>
+<div class="fragment">
+<p><span class="lead-blue">Definition.</span> If <span class="math inline">\(T(N) \sim c\,g(N)\)</span> for some constant <span class="math inline">\(c &gt; 0\)</span>, the <strong>order of growth</strong> of <span class="math inline">\(T(N)\)</span> is <span class="math inline">\(g(N)\)</span>.</p>
+</div>
+<div class="fragment">
+<p>Drop the <strong>leading coefficient</strong> — it moves with the machine, the compiler, the JVM. Drop the <strong>lower-order terms</strong> — the leading power swamps them.</p>
+<p><span class="math display">\[\tfrac{1}{2}N^3 \;\longrightarrow\; N^3 \qquad\qquad
+  \tfrac{1}{2}N^2 - \tfrac{1}{2}N \;\longrightarrow\; N^2\]</span></p>
+</div>
 </section>
-<section id="big-o" class="slide level2">
-<h2>Big O</h2>
-<div class="columns">
-<div class="column" style="width:55%;">
-<p><span class="math inline">\(f(n)\)</span> is <span class="math inline">\(O(g(n))\)</span> when there are positive constants <span class="math inline">\(c\)</span> and <span class="math inline">\(N\)</span> with</p>
-<p><span class="math display">\[f(n) \le c \cdot g(n) \quad \text{for all } n \ge N .\]</span></p>
-<p>In words: past some point, <span class="math inline">\(g\)</span> is an <strong>upper bound</strong> on <span class="math inline">\(f\)</span>, up to a constant factor.</p>
-</div><div class="column" style="width:45%;">
+<section id="seven-functions-cover-it" class="slide level2">
+<h2>Seven Functions Cover It</h2>
+<p><span class="lead-blue">Good news.</span> Almost every algorithm you will meet has one of these seven orders of growth.</p>
+<p><span class="math display">\[1 \;&lt;\; \log N \;&lt;\; N \;&lt;\; N\log N \;&lt;\; N^2 \;&lt;\; N^3 \;&lt;\; 2^N\]</span></p>
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="images/big_o_definition.jpg" class="quarto-figure quarto-figure-center" style="width:100.0%"></p>
+<p><img data-src="images/growth_curves.png" class="quarto-figure quarto-figure-center" style="width:84.0%"></p>
 </figure>
 </div>
-</div></div>
-<p>We use it to <em>compare</em>. Proving a bound straight from the definition is work for an algorithms course.</p>
 </section>
-<section id="reading-big-o-off-the-code" class="slide level2">
-<h2>Reading Big O Off the Code</h2>
+<section id="common-orders-of-growth" class="slide level2 dense-table">
+<h2>Common Orders of Growth</h2>
 <table class="caption-top">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 23%">
+</colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: center;">Order</th>
-<th style="text-align: left;">Name</th>
-<th style="text-align: left;">What it looks like</th>
+<th style="text-align: center;">order</th>
+<th style="text-align: left;">name</th>
+<th style="text-align: left;">code framework</th>
+<th style="text-align: left;">example</th>
 <th style="text-align: center;"><span class="math inline">\(T(2N)/T(N)\)</span></th>
 </tr>
 </thead>
@@ -702,68 +1226,88 @@ Zechun (Jacob) Cao
 <td style="text-align: center;"><span class="math inline">\(1\)</span></td>
 <td style="text-align: left;">constant</td>
 <td style="text-align: left;">a statement</td>
+<td style="text-align: left;">add two numbers</td>
 <td style="text-align: center;"><span class="math inline">\(1\)</span></td>
 </tr>
 <tr class="even">
-<td style="text-align: center;"><span class="math inline">\(\log n\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\log N\)</span></td>
 <td style="text-align: left;">logarithmic</td>
 <td style="text-align: left;">halve each step</td>
+<td style="text-align: left;">binary search</td>
 <td style="text-align: center;"><span class="math inline">\(\approx 1\)</span></td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;"><span class="math inline">\(n\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(N\)</span></td>
 <td style="text-align: left;">linear</td>
 <td style="text-align: left;">one loop</td>
+<td style="text-align: left;">find the maximum</td>
 <td style="text-align: center;"><span class="math inline">\(2\)</span></td>
 </tr>
 <tr class="even">
-<td style="text-align: center;"><span class="math inline">\(n \log n\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(N \log N\)</span></td>
 <td style="text-align: left;">linearithmic</td>
 <td style="text-align: left;">divide and conquer</td>
+<td style="text-align: left;">mergesort</td>
 <td style="text-align: center;"><span class="math inline">\(\approx 2\)</span></td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;"><span class="math inline">\(n^2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(N^2\)</span></td>
 <td style="text-align: left;">quadratic</td>
 <td style="text-align: left;">double loop</td>
+<td style="text-align: left;">check all pairs</td>
 <td style="text-align: center;"><span class="math inline">\(4\)</span></td>
 </tr>
 <tr class="even">
-<td style="text-align: center;"><span class="math inline">\(n^3\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(N^3\)</span></td>
 <td style="text-align: left;">cubic</td>
 <td style="text-align: left;">triple loop</td>
+<td style="text-align: left;">check all triples</td>
 <td style="text-align: center;"><span class="math inline">\(8\)</span></td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;"><span class="math inline">\(2^n\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(2^N\)</span></td>
 <td style="text-align: left;">exponential</td>
-<td style="text-align: left;">try every subset</td>
+<td style="text-align: left;">exhaustive search</td>
+<td style="text-align: left;">check all subsets</td>
 <td style="text-align: center;"><span class="math inline">\(T(N)\)</span></td>
 </tr>
 </tbody>
 </table>
-<p><strong><em>The last column is the one we just measured.</em></strong></p>
+<p><strong><em>The last column is the one we measured in Part 1.</em></strong></p>
 </section>
-<section id="the-ladder" class="slide level2">
-<h2>The Ladder</h2>
-<p><span class="math display">\[O(1) &lt; O(\log n) &lt; O(n) &lt; O(n \log n) &lt; O(n^2) &lt; O(n^3) &lt; O(2^n)\]</span></p>
-
-<img data-src="images/growth_function_curves.png" class="quarto-figure quarto-figure-center r-stretch" style="width:58.0%"></section>
+<section id="big-o" class="slide level2">
+<h2>Big O</h2>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p><span class="math inline">\(T(N)\)</span> is <span class="math inline">\(O(g(N))\)</span> when there are positive constants <span class="math inline">\(c\)</span> and <span class="math inline">\(N_0\)</span> with</p>
+<p><span class="math display">\[T(N) \le c \cdot g(N) \quad \text{for all } N \ge N_0 .\]</span></p>
+<p>In words: past some point, <span class="math inline">\(g\)</span> is an <strong>upper bound</strong> on <span class="math inline">\(T\)</span>, up to a constant factor.</p>
+</div><div class="column" style="width:45%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/big_o_definition.png" class="quarto-figure quarto-figure-center" style="width:100.0%"></p>
+</figure>
+</div>
+</div></div>
+<div class="fragment">
+<p><span class="lead-red">Common mistake.</span> Reading big O as an approximate model. <span class="math inline">\(100N\)</span> is honestly <span class="math inline">\(O(N^2)\)</span> — true, and useless. <strong>Order of growth describes; big O bounds.</strong></p>
+</div>
+</section>
 <section id="your-turn" class="slide level2">
 <h2>Your Turn</h2>
 <p>What is the order of growth of</p>
-<p><span class="math display">\[f(n) = 5n^2 + 2^n + 10n \;?\]</span></p>
+<p><span class="math display">\[T(N) = 5N^2 + 2^N + 10N \;?\]</span></p>
 <div class="fragment">
-<p><strong><em><span class="math inline">\(O(2^n)\)</span></em></strong> — the exponential term beats every polynomial term, no matter how large the polynomial’s coefficients are.</p>
+<p><strong><em><span class="math inline">\(2^N\)</span></em></strong> — the exponential term beats every polynomial term, no matter how large the polynomial’s coefficients are. By <span class="math inline">\(N = 20\)</span> it is already <span class="math inline">\(99.8\%\)</span> of the total.</p>
 </div>
 </section>
-<section id="part-3" class="slide level2 center section-divider">
-<h2>Part 3</h2>
+<section id="part-4" class="slide level2 center section-divider">
+<h2>Part 4</h2>
 <p>Compare</p>
 </section>
 <section id="can-we-do-better" class="slide level2">
 <h2>Can We Do Better?</h2>
-<p>The triple loop asks: <em>for every <span class="math inline">\(i\)</span>, <span class="math inline">\(j\)</span>, <span class="math inline">\(k\)</span> — do they sum to zero?</em></p>
+<p><span class="lead-blue">Back to 3-Sum.</span> The triple loop asks: for every <span class="math inline">\(i\)</span>, <span class="math inline">\(j\)</span>, <span class="math inline">\(k\)</span> — is <span class="math inline">\(a_i + a_j + a_k = 0\)</span>?</p>
 <div class="fragment">
 <p>Turn it around. Pick a pair <span class="math inline">\(a_i, a_j\)</span>. The third number is forced:</p>
 <p><span class="math display">\[a_k = -(a_i + a_j)\]</span></p>
@@ -920,47 +1464,34 @@ Zechun (Jacob) Cao
 <div class="fragment">
 <p>Four comparisons, and <span class="math inline">\(1 + \lfloor \log_2 15 \rfloor = 4\)</span>.</p>
 </div>
-<aside class="notes">
-<p>Before advancing past the bare array, ask which element they would check first and why. Someone will say “the middle” — ask them what that buys, and only then step the fragments.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
 <section id="trivial-to-implement" class="slide level2">
 <h2>Trivial to Implement?</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb4-1"><a href=""></a><span class="kw">public</span> <span class="dt">static</span> <span class="dt">int</span> <span class="fu">binarySearch</span><span class="op">(</span><span class="dt">int</span><span class="op">[]</span> a<span class="op">,</span> <span class="dt">int</span> key<span class="op">)</span></span>
-<span id="cb4-2"><a href=""></a><span class="op">{</span></span>
-<span id="cb4-3"><a href=""></a>   <span class="dt">int</span> lo <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> hi <span class="op">=</span> a<span class="op">.</span><span class="fu">length</span> <span class="op">-</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb4-4"><a href=""></a>   <span class="cf">while</span> <span class="op">(</span>lo <span class="op">&lt;=</span> hi<span class="op">)</span></span>
-<span id="cb4-5"><a href=""></a>   <span class="op">{</span></span>
-<span id="cb4-6"><a href=""></a>      <span class="dt">int</span> mid <span class="op">=</span> lo <span class="op">+</span> <span class="op">(</span>hi <span class="op">-</span> lo<span class="op">)</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span></span>
-<span id="cb4-7"><a href=""></a>      <span class="cf">if</span>      <span class="op">(</span>key <span class="op">&lt;</span> a<span class="op">[</span>mid<span class="op">])</span> hi <span class="op">=</span> mid <span class="op">-</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb4-8"><a href=""></a>      <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>key <span class="op">&gt;</span> a<span class="op">[</span>mid<span class="op">])</span> lo <span class="op">=</span> mid <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb4-9"><a href=""></a>      <span class="cf">else</span> <span class="cf">return</span> mid<span class="op">;</span></span>
-<span id="cb4-10"><a href=""></a>   <span class="op">}</span></span>
-<span id="cb4-11"><a href=""></a>   <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
-<span id="cb4-12"><a href=""></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb9-1"><a href=""></a><span class="kw">public</span> <span class="dt">static</span> <span class="dt">int</span> <span class="fu">binarySearch</span><span class="op">(</span><span class="dt">int</span><span class="op">[]</span> a<span class="op">,</span> <span class="dt">int</span> key<span class="op">)</span></span>
+<span id="cb9-2"><a href=""></a><span class="op">{</span></span>
+<span id="cb9-3"><a href=""></a>   <span class="dt">int</span> lo <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> hi <span class="op">=</span> a<span class="op">.</span><span class="fu">length</span> <span class="op">-</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb9-4"><a href=""></a>   <span class="cf">while</span> <span class="op">(</span>lo <span class="op">&lt;=</span> hi<span class="op">)</span></span>
+<span id="cb9-5"><a href=""></a>   <span class="op">{</span></span>
+<span id="cb9-6"><a href=""></a>      <span class="dt">int</span> mid <span class="op">=</span> lo <span class="op">+</span> <span class="op">(</span>hi <span class="op">-</span> lo<span class="op">)</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb9-7"><a href=""></a>      <span class="cf">if</span>      <span class="op">(</span>key <span class="op">&lt;</span> a<span class="op">[</span>mid<span class="op">])</span> hi <span class="op">=</span> mid <span class="op">-</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb9-8"><a href=""></a>      <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>key <span class="op">&gt;</span> a<span class="op">[</span>mid<span class="op">])</span> lo <span class="op">=</span> mid <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb9-9"><a href=""></a>      <span class="cf">else</span> <span class="cf">return</span> mid<span class="op">;</span></span>
+<span id="cb9-10"><a href=""></a>   <span class="op">}</span></span>
+<span id="cb9-11"><a href=""></a>   <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
+<span id="cb9-12"><a href=""></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
 <p>First published in <span class="math inline">\(1946\)</span>. First <strong>correct</strong> one published in <span class="math inline">\(1962\)</span>. A bug in Java’s own <code>Arrays.binarySearch()</code> was found in <span class="math inline">\(2006\)</span>.</p>
 </div>
 </section>
-<section id="sort-binary-search" class="slide level2">
-<h2>Sort + Binary Search</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb5-1"><a href=""></a><span class="bu">Arrays</span><span class="op">.</span><span class="fu">sort</span><span class="op">(</span>b<span class="op">);</span>                                  <span class="co">// step 1</span></span>
-<span id="cb5-2"><a href=""></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> N<span class="op">;</span> i<span class="op">++)</span></span>
-<span id="cb5-3"><a href=""></a>   <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> i<span class="op">+</span><span class="dv">1</span><span class="op">;</span> j <span class="op">&lt;</span> N<span class="op">;</span> j<span class="op">++)</span></span>
-<span id="cb5-4"><a href=""></a>   <span class="op">{</span></span>
-<span id="cb5-5"><a href=""></a>      <span class="dt">int</span> k <span class="op">=</span> <span class="bu">Arrays</span><span class="op">.</span><span class="fu">binarySearch</span><span class="op">(</span>b<span class="op">,</span> <span class="op">-(</span>b<span class="op">[</span>i<span class="op">]</span> <span class="op">+</span> b<span class="op">[</span>j<span class="op">]));</span>   <span class="co">// step 2</span></span>
-<span id="cb5-6"><a href=""></a>      <span class="cf">if</span> <span class="op">(</span>k <span class="op">&gt;</span> j<span class="op">)</span> count<span class="op">++;</span></span>
-<span id="cb5-7"><a href=""></a>   <span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="an-n2-log-n-algorithm-for-3-sum" class="slide level2 long-title">
+<h2>An <span class="math inline">\(N^2 \log N\)</span> Algorithm for 3-Sum</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb10-1"><a href=""></a><span class="bu">Arrays</span><span class="op">.</span><span class="fu">sort</span><span class="op">(</span>b<span class="op">);</span>                                  <span class="co">// step 1</span></span>
+<span id="cb10-2"><a href=""></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> N<span class="op">;</span> i<span class="op">++)</span></span>
+<span id="cb10-3"><a href=""></a>   <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> i<span class="op">+</span><span class="dv">1</span><span class="op">;</span> j <span class="op">&lt;</span> N<span class="op">;</span> j<span class="op">++)</span></span>
+<span id="cb10-4"><a href=""></a>   <span class="op">{</span></span>
+<span id="cb10-5"><a href=""></a>      <span class="dt">int</span> k <span class="op">=</span> <span class="bu">Arrays</span><span class="op">.</span><span class="fu">binarySearch</span><span class="op">(</span>b<span class="op">,</span> <span class="op">-(</span>b<span class="op">[</span>i<span class="op">]</span> <span class="op">+</span> b<span class="op">[</span>j<span class="op">]));</span>   <span class="co">// step 2</span></span>
+<span id="cb10-6"><a href=""></a>      <span class="cf">if</span> <span class="op">(</span>k <span class="op">&gt;</span> j<span class="op">)</span> count<span class="op">++;</span></span>
+<span id="cb10-7"><a href=""></a>   <span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -1060,25 +1591,25 @@ Zechun (Jacob) Cao
 <tbody>
 <tr class="odd">
 <td style="text-align: center;"><span class="math inline">\(1{,}000\)</span></td>
-<td style="text-align: right;"><span class="math inline">\(0.21\)</span> s</td>
+<td style="text-align: right;"><span class="math inline">\(0.207\)</span> s</td>
 <td style="text-align: right;"><span class="math inline">\(0.029\)</span> s</td>
 <td style="text-align: right;"><span class="math inline">\(7\times\)</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: center;"><span class="math inline">\(2{,}000\)</span></td>
-<td style="text-align: right;"><span class="math inline">\(1.64\)</span> s</td>
+<td style="text-align: right;"><span class="math inline">\(1.643\)</span> s</td>
 <td style="text-align: right;"><span class="math inline">\(0.056\)</span> s</td>
 <td style="text-align: right;"><span class="math inline">\(29\times\)</span></td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;"><span class="math inline">\(4{,}000\)</span></td>
-<td style="text-align: right;"><span class="math inline">\(13.21\)</span> s</td>
+<td style="text-align: right;"><span class="math inline">\(13.207\)</span> s</td>
 <td style="text-align: right;"><span class="math inline">\(0.266\)</span> s</td>
 <td style="text-align: right;"><span class="math inline">\(50\times\)</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: center;"><span class="math inline">\(8{,}000\)</span></td>
-<td style="text-align: right;"><span class="math inline">\(105.33\)</span> s</td>
+<td style="text-align: right;"><span class="math inline">\(105.326\)</span> s</td>
 <td style="text-align: right;"><span class="math inline">\(1.048\)</span> s</td>
 <td style="text-align: right;"><span class="math inline">\(100\times\)</span></td>
 </tr>
@@ -1096,7 +1627,7 @@ Zechun (Jacob) Cao
 </tr>
 </tbody>
 </table>
-<p><span class="math inline">\(^\dagger\)</span> predicted from the doubling hypothesis, not measured.</p>
+<p><span class="math inline">\(^\dagger\)</span> predicted by multiplying by <span class="math inline">\(8\)</span> per doubling, not measured.</p>
 </section>
 <section id="the-verdict" class="slide level2">
 <h2>The Verdict</h2>
@@ -1162,8 +1693,8 @@ Zechun (Jacob) Cao
 <p>The triple loop cannot stop early — it runs every triple no matter what. Binary search can get lucky on the very first compare.</p>
 </div>
 </section>
-<section id="part-4" class="slide level2 center section-divider">
-<h2>Part 4</h2>
+<section id="part-5" class="slide level2 center section-divider">
+<h2>Part 5</h2>
 <p>Now You Do It</p>
 </section>
 <section id="sum-1-2-cdots-n" class="slide level2">
@@ -1171,23 +1702,23 @@ Zechun (Jacob) Cao
 <div class="columns">
 <div class="column" style="width:33%;">
 <p><strong>Algorithm A</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb6-1"><a href=""></a><span class="dt">long</span> sum <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb6-2"><a href=""></a><span class="cf">for</span> <span class="op">(</span><span class="dt">long</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb6-3"><a href=""></a>     i <span class="op">&lt;=</span> n<span class="op">;</span> i<span class="op">++)</span></span>
-<span id="cb6-4"><a href=""></a>   sum <span class="op">=</span> sum <span class="op">+</span> i<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb11-1"><a href=""></a><span class="dt">long</span> sum <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb11-2"><a href=""></a><span class="cf">for</span> <span class="op">(</span><span class="dt">long</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb11-3"><a href=""></a>     i <span class="op">&lt;=</span> n<span class="op">;</span> i<span class="op">++)</span></span>
+<span id="cb11-4"><a href=""></a>   sum <span class="op">=</span> sum <span class="op">+</span> i<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column" style="width:33%;">
 <p><strong>Algorithm B</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb7-1"><a href=""></a>sum <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb7-2"><a href=""></a><span class="cf">for</span> <span class="op">(</span><span class="dt">long</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb7-3"><a href=""></a>     i <span class="op">&lt;=</span> n<span class="op">;</span> i<span class="op">++)</span></span>
-<span id="cb7-4"><a href=""></a><span class="op">{</span></span>
-<span id="cb7-5"><a href=""></a>   <span class="cf">for</span> <span class="op">(</span><span class="dt">long</span> j <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb7-6"><a href=""></a>        j <span class="op">&lt;=</span> i<span class="op">;</span> j<span class="op">++)</span></span>
-<span id="cb7-7"><a href=""></a>      sum <span class="op">=</span> sum <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb7-8"><a href=""></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb12-1"><a href=""></a>sum <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb12-2"><a href=""></a><span class="cf">for</span> <span class="op">(</span><span class="dt">long</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb12-3"><a href=""></a>     i <span class="op">&lt;=</span> n<span class="op">;</span> i<span class="op">++)</span></span>
+<span id="cb12-4"><a href=""></a><span class="op">{</span></span>
+<span id="cb12-5"><a href=""></a>   <span class="cf">for</span> <span class="op">(</span><span class="dt">long</span> j <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb12-6"><a href=""></a>        j <span class="op">&lt;=</span> i<span class="op">;</span> j<span class="op">++)</span></span>
+<span id="cb12-7"><a href=""></a>      sum <span class="op">=</span> sum <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb12-8"><a href=""></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column" style="width:33%;">
 <p><strong>Algorithm C</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb8-1"><a href=""></a>sum <span class="op">=</span> n <span class="op">*</span> <span class="op">(</span>n <span class="op">+</span> <span class="dv">1</span><span class="op">)</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb13-1"><a href=""></a>sum <span class="op">=</span> n <span class="op">*</span> <span class="op">(</span>n <span class="op">+</span> <span class="dv">1</span><span class="op">)</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div></div>
 <p><strong><em>Order of growth for each? Which would you ship?</em></strong></p>
 </section>
