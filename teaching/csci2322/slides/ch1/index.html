@@ -95,7 +95,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-040aa64161c1ce662d4e670875b04189.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-e393d7100ac16c84a79489c1a9d5df6c.css">
   <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -1205,8 +1205,1245 @@ Zechun (Jacob) Cao
 <h2>Logic Circuits</h2>
 <p>More complicated digital circuits can be constructed by combining these basic circuits to produce the desired output given the input signals by building a circuit for each piece of the output expression and then combining them. For example:</p>
 
-
 <img data-src="images/logic_circuit_example.jpg" class="quarto-figure quarto-figure-center r-stretch" style="width:78.0%"></section>
+<section id="section-1.3" class="slide level2 center section-divider">
+<h2>Section 1.3</h2>
+<p>Propositional Equivalences</p>
+</section>
+<section id="todays-plan-1" class="slide level2">
+<h2>Today’s Plan</h2>
+<ul>
+<li>Tautologies, contradictions, and contingencies</li>
+<li>Logical equivalence
+<ul>
+<li>De Morgan’s laws</li>
+<li>Key logical equivalences</li>
+<li>Equivalence proofs</li>
+</ul></li>
+<li>Propositional satisfiability</li>
+</ul>
+</section>
+<section id="warm-up-always-or-never" class="slide level2">
+<h2>Warm-Up: Always or Never?</h2>
+<p>For each proposition: is it <strong>always</strong> true, <strong>never</strong> true, or does it <strong>depend</strong> on the variables?</p>
+<p><span class="vote-prompt">Vote — always, never, or depends?</span></p>
+<ol type="1">
+<li><span class="math inline">\(p \vee \neg p\)</span> <span class="fragment ans">always</span></li>
+<li><span class="math inline">\(p \wedge \neg p\)</span> <span class="fragment ans">never</span></li>
+<li><span class="math inline">\(p \rightarrow \neg p\)</span> <span class="fragment ans">depends — true when <span class="math inline">\(p\)</span> is F</span></li>
+<li><span class="math inline">\((p \wedge q) \rightarrow p\)</span> <span class="fragment ans">always</span></li>
+</ol>
+<div class="fragment">
+<p>Each of these three kinds has a name.</p>
+</div>
+</section>
+<section id="three-kinds-of-propositions" class="slide level2">
+<h2>Three Kinds of Propositions</h2>
+<ul>
+<li>A <strong>tautology</strong> is a proposition which is always true, e.g.&nbsp;<span class="math inline">\(p \vee \neg p\)</span>.</li>
+<li>A <strong>contradiction</strong> is a proposition which is always false, e.g. <span class="math inline">\(p \wedge \neg p\)</span>.</li>
+<li>A <strong>contingency</strong> is a proposition which is neither a tautology nor a contradiction, such as <span class="math inline">\(p\)</span> or <span class="math inline">\(p \rightarrow \neg p\)</span>.</li>
+</ul>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span class="math inline">\(p\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\neg p\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(p \vee \neg p\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(p \wedge \neg p\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">F</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">F</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="why-it-matters-dead-code" class="slide level2">
+<h2>Why It Matters: Dead Code</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb3-1"><a href=""></a><span class="cf">if</span> <span class="op">(</span>n <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">0</span> <span class="op">||</span> n <span class="op">%</span> <span class="dv">2</span> <span class="op">!=</span> <span class="dv">0</span><span class="op">)</span> <span class="fu">refresh</span><span class="op">();</span>   <span class="co">// A</span></span>
+<span id="cb3-2"><a href=""></a><span class="cf">if</span> <span class="op">(</span>x <span class="op">&gt;</span> <span class="dv">10</span> <span class="op">&amp;&amp;</span> x <span class="op">&lt;</span> <span class="dv">5</span><span class="op">)</span>          <span class="fu">refund</span><span class="op">();</span>    <span class="co">// B</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><span class="vote-prompt">Vote — for each <code>if</code>: tautology, contradiction, or contingency?</span></p>
+<ul>
+<li><strong>A</strong> is a <span class="fragment ans">tautology — the test is pointless, <code>refresh()</code> always runs.</span></li>
+<li><strong>B</strong> is a <span class="fragment ans">contradiction — <code>refund()</code> is dead code and never runs.</span></li>
+</ul>
+<div class="fragment">
+<p>Compilers and IDEs flag both (“condition is always true / false”) by checking exactly the definitions on the previous slide. A contingency is the only kind of condition worth writing.</p>
+</div>
+</section>
+<section id="logically-equivalent" class="slide level2">
+<h2>Logically Equivalent</h2>
+<ul>
+<li>Two compound propositions <span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span> are <strong>logically equivalent</strong> if <span class="math inline">\(p \leftrightarrow q\)</span> is a tautology.</li>
+<li>We write this as <span class="math inline">\(p \equiv q\)</span> (or as <span class="math inline">\(p \Leftrightarrow q\)</span>), where <span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span> are compound propositions.</li>
+<li>Two compound propositions <span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span> are equivalent if and only if the columns in a truth table giving their truth values agree.</li>
+</ul>
+</section>
+<section id="logically-equivalent-1" class="slide level2">
+<h2>Logically Equivalent</h2>
+<p><strong><em>Example:</em></strong> Show that <span class="math inline">\(\neg p \vee q\)</span> is equivalent to <span class="math inline">\(p \rightarrow q\)</span>.</p>
+<div class="fragment">
+<p><strong><em>Solution:</em></strong></p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span class="math inline">\(p\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(q\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\neg p\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\neg p \vee q\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(p \rightarrow q\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">T</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">F</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">T</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">T</td>
+</tr>
+</tbody>
+</table>
+<p>The last two columns agree, so <span class="math inline">\(\neg p \vee q \equiv p \rightarrow q\)</span>.</p>
+</div>
+</section>
+<section id="de-morgans-laws" class="slide level2">
+<h2>De Morgan’s Laws</h2>
+<div class="columns">
+<div class="column" style="width:72%;">
+<p><em>Augustus De Morgan (1806–1871)</em></p>
+<p><span class="math display">\[\neg(p \wedge q) \equiv \neg p \vee \neg q\]</span> <span class="math display">\[\neg(p \vee q) \equiv \neg p \wedge \neg q\]</span></p>
+<div class="fragment">
+<p>Remember the warm-up? “This class is not both hard and boring” is <span class="math inline">\(\neg(h \wedge b) \equiv \neg h \vee \neg b\)</span>: not hard, <strong>or</strong> not boring.</p>
+</div>
+</div><div class="column" style="width:28%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/de_morgan.jpg" class="quarto-figure quarto-figure-center" style="width:62.0%"></p>
+</figure>
+</div>
+</div></div>
+</section>
+<section id="de-morgans-laws-1" class="slide level2">
+<h2>De Morgan’s Laws</h2>
+<p><strong><em>Example:</em></strong> Use a truth table to show that De Morgan’s second law holds.</p>
+<p><span class="vote-prompt">Fill in the last two columns.</span></p>
+<table class="caption-top" style="width:100%;">
+<colgroup>
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 14%">
+<col style="width: 21%">
+<col style="width: 28%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span class="math inline">\(p\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(q\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\neg p\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\neg q\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(p \vee q\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\neg(p \vee q)\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\neg p \wedge \neg q\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">T</td>
+<td style="text-align: center;"><span class="fragment" data-fragment-index="1">F</span></td>
+<td style="text-align: center;"><span class="fragment" data-fragment-index="2">F</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">T</td>
+<td style="text-align: center;"><span class="fragment" data-fragment-index="1">F</span></td>
+<td style="text-align: center;"><span class="fragment" data-fragment-index="2">F</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">T</td>
+<td style="text-align: center;"><span class="fragment" data-fragment-index="1">F</span></td>
+<td style="text-align: center;"><span class="fragment" data-fragment-index="2">F</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">F</td>
+<td style="text-align: center;"><span class="fragment" data-fragment-index="1">T</span></td>
+<td style="text-align: center;"><span class="fragment" data-fragment-index="2">T</span></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="de-morgans-laws-in-english" class="slide level2">
+<h2>De Morgan’s Laws in English</h2>
+<p><span class="vote-prompt">Vote — which sentence is the negation of <em>“The server is up and the database is reachable”</em>?</span></p>
+<div class="columns vote-row">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>A.</strong> The server is down and the database is unreachable.</p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>B.</strong> The server is down or the database is unreachable.</p>
+</div>
+</div></div>
+<div class="columns vote-row">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>C.</strong> The server is up or the database is reachable.</p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>D.</strong> The server is down and the database is reachable.</p>
+</div>
+</div></div>
+<div class="fragment">
+<p><strong>B</strong> — <span class="math inline">\(\neg(u \wedge r) \equiv \neg u \vee \neg r\)</span>: negating an <em>and</em> gives an <em>or</em>.</p>
+</div>
+</section>
+<section id="key-logical-equivalences" class="slide level2">
+<h2>Key Logical Equivalences</h2>
+<ul>
+<li><strong>Identity laws:</strong> <span class="math inline">\(p \wedge \mathbf{T} \equiv p\)</span>, <span class="math inline">\(\quad p \vee \mathbf{F} \equiv p\)</span></li>
+<li><strong>Domination laws:</strong> <span class="math inline">\(p \vee \mathbf{T} \equiv \mathbf{T}\)</span>, <span class="math inline">\(\quad p \wedge \mathbf{F} \equiv \mathbf{F}\)</span></li>
+<li><strong>Idempotent laws:</strong> <span class="math inline">\(p \vee p \equiv p\)</span>, <span class="math inline">\(\quad p \wedge p \equiv p\)</span></li>
+<li><strong>Double negation law:</strong> <span class="math inline">\(\neg(\neg p) \equiv p\)</span></li>
+<li><strong>Negation laws:</strong> <span class="math inline">\(p \vee \neg p \equiv \mathbf{T}\)</span>, <span class="math inline">\(\quad p \wedge \neg p \equiv \mathbf{F}\)</span></li>
+</ul>
+</section>
+<section id="key-logical-equivalences-1" class="slide level2">
+<h2>Key Logical Equivalences</h2>
+<ul>
+<li><strong>Commutative laws:</strong> <span class="math inline">\(p \vee q \equiv q \vee p\)</span>, <span class="math inline">\(\quad p \wedge q \equiv q \wedge p\)</span></li>
+<li><strong>Associative laws:</strong> <span class="math inline">\((p \vee q) \vee r \equiv p \vee (q \vee r)\)</span>, <span class="math inline">\(\quad (p \wedge q) \wedge r \equiv p \wedge (q \wedge r)\)</span></li>
+<li><strong>Distributive laws:</strong> <span class="math inline">\(p \vee (q \wedge r) \equiv (p \vee q) \wedge (p \vee r)\)</span>, <span class="math inline">\(\quad p \wedge (q \vee r) \equiv (p \wedge q) \vee (p \wedge r)\)</span></li>
+<li><strong>De Morgan’s laws:</strong> <span class="math inline">\(\neg(p \wedge q) \equiv \neg p \vee \neg q\)</span>, <span class="math inline">\(\quad \neg(p \vee q) \equiv \neg p \wedge \neg q\)</span></li>
+<li><strong>Absorption laws:</strong> <span class="math inline">\(p \vee (p \wedge q) \equiv p\)</span>, <span class="math inline">\(\quad p \wedge (p \vee q) \equiv p\)</span></li>
+</ul>
+</section>
+<section id="name-that-law" class="slide level2">
+<h2>Name That Law</h2>
+<p><span class="vote-prompt">Call out the law that justifies each step.</span></p>
+<ol type="1">
+<li><span class="math inline">\(p \vee (p \wedge q) \equiv p\)</span> <span class="fragment ans">absorption</span></li>
+<li><span class="math inline">\(q \wedge \mathbf{F} \equiv \mathbf{F}\)</span> <span class="fragment ans">domination</span></li>
+<li><span class="math inline">\(\neg(\neg r) \equiv r\)</span> <span class="fragment ans">double negation</span></li>
+<li><span class="math inline">\(p \vee (q \wedge r) \equiv (p \vee q) \wedge (p \vee r)\)</span> <span class="fragment ans">distributive</span></li>
+<li><span class="math inline">\((p \vee q) \vee r \equiv p \vee (q \vee r)\)</span> <span class="fragment ans">associative</span></li>
+<li><span class="math inline">\(\neg(p \vee q) \equiv \neg p \wedge \neg q\)</span> <span class="fragment ans">De Morgan</span></li>
+</ol>
+</section>
+<section id="more-logical-equivalences" class="slide level2">
+<h2>More Logical Equivalences</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/rosen_table7.png" class="quarto-figure quarto-figure-center" style="width:82.0%"></p>
+</figure>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/rosen_table8.png" class="quarto-figure quarto-figure-center" style="width:92.0%"></p>
+</figure>
+</div>
+<p><em>Tables 7 and 8 are provided on exams.</em></p>
+</div></div>
+</section>
+<section id="constructing-equivalences" class="slide level2">
+<h2>Constructing Equivalences</h2>
+<ul>
+<li>We can show that two expressions are logically equivalent by developing a series of logically equivalent statements.</li>
+<li>To prove that <span class="math inline">\(A \equiv B\)</span> we produce a series of equivalences beginning with <span class="math inline">\(A\)</span> and ending with <span class="math inline">\(B\)</span>: <span class="math display">\[A \equiv A_1 \equiv A_2 \equiv \cdots \equiv A_n \equiv B\]</span></li>
+<li>Keep in mind that whenever a proposition (represented by a propositional variable) occurs in the equivalences listed earlier, it may be replaced by an arbitrarily complex compound proposition.</li>
+</ul>
+</section>
+<section id="equivalence-proofs" class="slide level2">
+<h2>Equivalence Proofs</h2>
+<p><strong><em>Example:</em></strong> Show that <span class="math inline">\(\neg(p \vee (\neg p \wedge q))\)</span> is logically equivalent to <span class="math inline">\(\neg p \wedge \neg q\)</span>.</p>
+<div class="fragment" data-fragment-index="0">
+<p><strong><em>Solution:</em></strong></p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Step</th>
+<th style="text-align: left;">Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\neg(p \vee (\neg p \wedge q))\)</span></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="fragment" data-fragment-index="1"><span class="math inline">\(\equiv \neg p \wedge \neg(\neg p \wedge q)\)</span></span></td>
+<td style="text-align: left;"><span class="fragment" data-fragment-index="1">second De Morgan law</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="fragment" data-fragment-index="2"><span class="math inline">\(\equiv \neg p \wedge [\neg(\neg p) \vee \neg q]\)</span></span></td>
+<td style="text-align: left;"><span class="fragment" data-fragment-index="2">first De Morgan law</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="fragment" data-fragment-index="3"><span class="math inline">\(\equiv \neg p \wedge (p \vee \neg q)\)</span></span></td>
+<td style="text-align: left;"><span class="fragment" data-fragment-index="3">double negation law</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="fragment" data-fragment-index="4"><span class="math inline">\(\equiv (\neg p \wedge p) \vee (\neg p \wedge \neg q)\)</span></span></td>
+<td style="text-align: left;"><span class="fragment" data-fragment-index="4">second distributive law</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="equivalence-proofs-1" class="slide level2">
+<h2>Equivalence Proofs</h2>
+<p><strong><em>Solution (continued):</em></strong> Show that <span class="math inline">\(\neg(p \vee (\neg p \wedge q))\)</span> is logically equivalent to <span class="math inline">\(\neg p \wedge \neg q\)</span>.</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Step</th>
+<th style="text-align: left;">Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\((\neg p \wedge p) \vee (\neg p \wedge \neg q)\)</span></td>
+<td style="text-align: left;">from the previous slide</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="fragment" data-fragment-index="1"><span class="math inline">\(\equiv \mathbf{F} \vee (\neg p \wedge \neg q)\)</span></span></td>
+<td style="text-align: left;"><span class="fragment" data-fragment-index="1">because <span class="math inline">\(\neg p \wedge p \equiv \mathbf{F}\)</span></span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="fragment" data-fragment-index="2"><span class="math inline">\(\equiv (\neg p \wedge \neg q) \vee \mathbf{F}\)</span></span></td>
+<td style="text-align: left;"><span class="fragment" data-fragment-index="2">commutative law for disjunction</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="fragment" data-fragment-index="3"><span class="math inline">\(\equiv \neg p \wedge \neg q\)</span></span></td>
+<td style="text-align: left;"><span class="fragment" data-fragment-index="3">identity law for <span class="math inline">\(\mathbf{F}\)</span></span></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="equivalence-proofs-2" class="slide level2">
+<h2>Equivalence Proofs</h2>
+<p><strong><em>Example:</em></strong> Show that <span class="math inline">\((p \wedge q) \rightarrow (p \vee q)\)</span> is a tautology.</p>
+<div class="fragment" data-fragment-index="0">
+<p><strong><em>Solution:</em></strong></p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Step</th>
+<th style="text-align: left;">Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\((p \wedge q) \rightarrow (p \vee q)\)</span></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="fragment" data-fragment-index="1"><span class="math inline">\(\equiv \neg(p \wedge q) \vee (p \vee q)\)</span></span></td>
+<td style="text-align: left;"><span class="fragment" data-fragment-index="1">by <span class="math inline">\(p \rightarrow q \equiv \neg p \vee q\)</span></span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="fragment" data-fragment-index="2"><span class="math inline">\(\equiv (\neg p \vee \neg q) \vee (p \vee q)\)</span></span></td>
+<td style="text-align: left;"><span class="fragment" data-fragment-index="2">first De Morgan law</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="fragment" data-fragment-index="3"><span class="math inline">\(\equiv (\neg p \vee p) \vee (\neg q \vee q)\)</span></span></td>
+<td style="text-align: left;"><span class="fragment" data-fragment-index="3">associative and commutative laws for disjunction</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="fragment" data-fragment-index="4"><span class="math inline">\(\equiv \mathbf{T} \vee \mathbf{T}\)</span></span></td>
+<td style="text-align: left;"><span class="fragment" data-fragment-index="4">negation law</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="fragment" data-fragment-index="5"><span class="math inline">\(\equiv \mathbf{T}\)</span></span></td>
+<td style="text-align: left;"><span class="fragment" data-fragment-index="5">domination law</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="your-turn" class="slide level2">
+<h2>Your Turn</h2>
+<p><strong><em>Example:</em></strong> Show that <span class="math inline">\(p \wedge (\neg p \vee q) \equiv p \wedge q\)</span>.</p>
+<p><span class="vote-prompt">Each step appears first — name the law before it is revealed.</span></p>
+<div class="fragment" data-fragment-index="0">
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Step</th>
+<th style="text-align: left;">Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(p \wedge (\neg p \vee q)\)</span></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="fragment" data-fragment-index="1"><span class="math inline">\(\equiv (p \wedge \neg p) \vee (p \wedge q)\)</span></span></td>
+<td style="text-align: left;"><span class="fragment" data-fragment-index="2">distributive law</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="fragment" data-fragment-index="3"><span class="math inline">\(\equiv \mathbf{F} \vee (p \wedge q)\)</span></span></td>
+<td style="text-align: left;"><span class="fragment" data-fragment-index="4">negation law</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="fragment" data-fragment-index="5"><span class="math inline">\(\equiv (p \wedge q) \vee \mathbf{F}\)</span></span></td>
+<td style="text-align: left;"><span class="fragment" data-fragment-index="6">commutative law</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="fragment" data-fragment-index="7"><span class="math inline">\(\equiv p \wedge q\)</span></span></td>
+<td style="text-align: left;"><span class="fragment" data-fragment-index="8">identity law</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="simplify-it" class="slide level2">
+<h2>Simplify It</h2>
+<p><span class="vote-prompt">Vote — which is equivalent to <span class="math inline">\((p \vee \neg p) \wedge q\)</span>?</span></p>
+<div class="columns vote-row">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>A.</strong> <span class="math inline">\(q\)</span></p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>B.</strong> <span class="math inline">\(\mathbf{T}\)</span></p>
+</div>
+</div></div>
+<div class="columns vote-row">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>C.</strong> <span class="math inline">\(p\)</span></p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>D.</strong> <span class="math inline">\(\mathbf{F}\)</span></p>
+</div>
+</div></div>
+<div class="fragment">
+<p><strong>A</strong> — <span class="math inline">\((p \vee \neg p) \wedge q \equiv \mathbf{T} \wedge q \equiv q\)</span> by the negation law, then the identity law.</p>
+</div>
+</section>
+<section id="why-it-matters-gates" class="slide level2">
+<h2>Why It Matters: Gates</h2>
+<p>Section 1.2 built circuits from AND, OR, and NOT gates. Every gate costs chip area, power, and time.</p>
+<p><span class="math display">\[(p \wedge q) \vee (p \wedge \neg q)\]</span></p>
+<p>As written this circuit needs <strong>four</strong> gates: two ANDs, one NOT, one OR.</p>
+<p><span class="vote-prompt">Vote — how many gates does it really need?</span></p>
+<div class="columns vote-row">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>A.</strong> 0</p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>B.</strong> 1</p>
+</div>
+</div></div>
+<div class="columns vote-row">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>C.</strong> 2</p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>D.</strong> 4</p>
+</div>
+</div></div>
+</section>
+<section id="why-it-matters-gates-1" class="slide level2">
+<h2>Why It Matters: Gates</h2>
+<div class="fragment" data-fragment-index="0">
+<p><strong><em>Solution:</em></strong></p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Step</th>
+<th style="text-align: left;">Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\((p \wedge q) \vee (p \wedge \neg q)\)</span></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="fragment" data-fragment-index="1"><span class="math inline">\(\equiv p \wedge (q \vee \neg q)\)</span></span></td>
+<td style="text-align: left;"><span class="fragment" data-fragment-index="1">distributive law</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="fragment" data-fragment-index="2"><span class="math inline">\(\equiv p \wedge \mathbf{T}\)</span></span></td>
+<td style="text-align: left;"><span class="fragment" data-fragment-index="2">negation law</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="fragment" data-fragment-index="3"><span class="math inline">\(\equiv p\)</span></span></td>
+<td style="text-align: left;"><span class="fragment" data-fragment-index="3">identity law</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="fragment">
+<p><strong>A</strong> — zero gates: the output is just the wire <span class="math inline">\(p\)</span>. Circuit minimization (Chapter 12) is equivalence proofs at industrial scale.</p>
+</div>
+</section>
+<section id="propositional-satisfiability" class="slide level2">
+<h2>Propositional Satisfiability</h2>
+<ul>
+<li>A compound proposition is <strong>satisfiable</strong> if there is an assignment of truth values to its variables that makes it true. When no such assignment exists, the compound proposition is <strong>unsatisfiable</strong>.</li>
+<li>A compound proposition is unsatisfiable if and only if its negation is a tautology.</li>
+</ul>
+<div class="fragment">
+<p>Deciding satisfiability is the <strong>SAT problem</strong> — the first problem ever shown to be NP-complete (Cook, 1971), and the engine behind chip verification and package dependency solvers.</p>
+</div>
+</section>
+<section id="propositional-satisfiability-1" class="slide level2">
+<h2>Propositional Satisfiability</h2>
+<p><strong><em>Example:</em></strong> Determine the satisfiability of the following compound propositions:</p>
+<p><span class="math display">\[(p \vee \neg q) \wedge (q \vee \neg r) \wedge (r \vee \neg p)\]</span></p>
+<div class="fragment">
+<p><strong><em>Solution:</em></strong> Satisfiable. Assign <span class="math inline">\(\mathbf{T}\)</span> to <span class="math inline">\(p\)</span>, <span class="math inline">\(q\)</span>, and <span class="math inline">\(r\)</span>.</p>
+</div>
+<div class="fragment">
+<p><span class="math display">\[(p \vee q \vee r) \wedge (\neg p \vee \neg q \vee \neg r)\]</span></p>
+</div>
+<div class="fragment">
+<p><strong><em>Solution:</em></strong> Satisfiable. Assign <span class="math inline">\(\mathbf{T}\)</span> to <span class="math inline">\(p\)</span> and <span class="math inline">\(\mathbf{F}\)</span> to <span class="math inline">\(q\)</span>.</p>
+</div>
+</section>
+<section id="propositional-satisfiability-2" class="slide level2">
+<h2>Propositional Satisfiability</h2>
+<p><strong><em>Example (continued):</em></strong> Determine the satisfiability of</p>
+<p><span class="math display">\[\begin{aligned}
+(p \vee \neg q) \wedge (q \vee \neg r) \wedge (r \vee \neg p) \\
+{}\wedge (p \vee q \vee r) \wedge (\neg p \vee \neg q \vee \neg r)
+\end{aligned}\]</span></p>
+<div class="fragment">
+<p><strong><em>Solution:</em></strong> Not satisfiable. Check each possible assignment of truth values to the propositional variables and none will make the proposition true.</p>
+</div>
+<div class="fragment">
+<p>Why: the first three clauses are true only when <span class="math inline">\(p\)</span>, <span class="math inline">\(q\)</span>, <span class="math inline">\(r\)</span> all have the same value; the last two are true only when they do not.</p>
+</div>
+</section>
+<section id="satisfiable-or-not" class="slide level2">
+<h2>Satisfiable or Not?</h2>
+<p><span class="vote-prompt">Vote — is <span class="math inline">\((p \vee q) \wedge (\neg p \vee q) \wedge \neg q\)</span> satisfiable?</span></p>
+<div class="columns">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>A.</strong> Satisfiable</p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>B.</strong> Not satisfiable</p>
+</div>
+</div></div>
+<div class="fragment">
+<p><strong>B</strong> — by the distributive law, <span class="math inline">\((p \vee q) \wedge (\neg p \vee q) \equiv (p \wedge \neg p) \vee q \equiv q\)</span>, so the whole proposition is <span class="math inline">\(q \wedge \neg q \equiv \mathbf{F}\)</span>.</p>
+</div>
+</section>
+<section id="why-it-matters-dependencies" class="slide level2">
+<h2>Why It Matters: Dependencies</h2>
+<p>Your project needs two packages, <strong>A</strong> and <strong>C</strong>:</p>
+<ul>
+<li>A requires library B, <strong>version 2</strong></li>
+<li>C requires library B, <strong>version 1</strong></li>
+<li>only one version of B can be installed at a time</li>
+</ul>
+<p><span class="vote-prompt">Vote — can the installer satisfy this?</span></p>
+<div class="columns">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>A.</strong> Yes</p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>B.</strong> No</p>
+</div>
+</div></div>
+</section>
+<section id="why-it-matters-dependencies-1" class="slide level2">
+<h2>Why It Matters: Dependencies</h2>
+<p>Let <span class="math inline">\(a\)</span>, <span class="math inline">\(c\)</span> mean “A / C is installed” and <span class="math inline">\(b_1\)</span>, <span class="math inline">\(b_2\)</span> mean “B version 1 / 2 is installed.” The installer must make this true:</p>
+<p><span class="math display">\[a \wedge c \wedge (a \rightarrow b_2) \wedge (c \rightarrow b_1) \wedge \neg(b_1 \wedge b_2)\]</span></p>
+<div class="fragment">
+<p><strong>B</strong> — unsatisfiable: <span class="math inline">\(a\)</span> and <span class="math inline">\(c\)</span> force <span class="math inline">\(b_2\)</span> and <span class="math inline">\(b_1\)</span>, and the last clause forbids having both.</p>
+</div>
+<div class="fragment">
+<p>Dependency resolution <em>is</em> propositional satisfiability. <code>conda</code> ships a SAT solver for exactly this; <code>pip</code>’s resolver backtracks through the same search space, which is why a bad resolve can take minutes.</p>
+</div>
+</section>
+<section id="section-1.4" class="slide level2 center section-divider">
+<h2>Section 1.4</h2>
+<p>Predicates and Quantifiers</p>
+</section>
+<section id="todays-plan-2" class="slide level2">
+<h2>Today’s Plan</h2>
+<ul>
+<li>Predicates and propositional functions</li>
+<li>Quantifiers
+<ul>
+<li>Universal quantifier <span class="math inline">\(\forall\)</span></li>
+<li>Existential quantifier <span class="math inline">\(\exists\)</span></li>
+</ul></li>
+<li>Translating English to logic</li>
+<li>Negating quantifiers
+<ul>
+<li>De Morgan’s laws for quantifiers</li>
+</ul></li>
+</ul>
+</section>
+<section id="warm-up-socrates" class="slide level2">
+<h2>Warm-Up: Socrates</h2>
+<blockquote>
+<p><em>“All men are mortal. Socrates is a man.”</em></p>
+</blockquote>
+<p><span class="vote-prompt">Vote — does it follow that Socrates is mortal?</span></p>
+<div class="columns">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>A.</strong> Yes</p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>B.</strong> No</p>
+</div>
+</div></div>
+<div class="fragment">
+<p>Obviously yes. Now try to <em>show</em> it with what we have so far.</p>
+</div>
+</section>
+<section id="beyond-propositional-logic" class="slide level2">
+<h2>Beyond Propositional Logic</h2>
+<ul>
+<li><span class="math inline">\(p\)</span>: “All men are mortal.” <span class="math inline">\(\quad q\)</span>: “Socrates is a man.” <span class="math inline">\(\quad r\)</span>: “Socrates is mortal.”</li>
+<li>In propositional logic these are three <strong>unrelated</strong> variables — nothing says <span class="math inline">\(p \wedge q \rightarrow r\)</span>.</li>
+<li>Can’t be represented in propositional logic. We need a language that talks about <strong>objects</strong>, their <strong>properties</strong>, and their <strong>relations</strong>.</li>
+<li>Later (Section 1.6) we’ll see how to draw the inference.</li>
+</ul>
+</section>
+<section id="introducing-predicate-logic" class="slide level2">
+<h2>Introducing Predicate Logic</h2>
+<p>Predicate logic uses the following new features:</p>
+<ul>
+<li><strong>Variables:</strong> <span class="math inline">\(x, y, z\)</span></li>
+<li><strong>Predicates:</strong> <span class="math inline">\(P(x)\)</span>, <span class="math inline">\(M(x)\)</span></li>
+<li><strong>Quantifiers</strong> (to be covered in a few slides)</li>
+</ul>
+<p><strong>Propositional functions</strong> are a generalization of propositions.</p>
+<ul>
+<li>They contain variables and a predicate, e.g., <span class="math inline">\(P(x)\)</span></li>
+<li>Variables can be replaced by elements from their <strong>domain</strong>.</li>
+</ul>
+</section>
+<section id="propositional-functions" class="slide level2">
+<h2>Propositional Functions</h2>
+<ul>
+<li>Propositional functions become propositions (and have truth values) when their variables are each replaced by a value from the domain (or bound by a quantifier, as we will see later).</li>
+<li>The statement <span class="math inline">\(P(x)\)</span> is said to be the value of the propositional function <span class="math inline">\(P\)</span> at <span class="math inline">\(x\)</span>.</li>
+<li>Often the domain is denoted by <span class="math inline">\(U\)</span>.</li>
+</ul>
+</section>
+<section id="propositional-functions-1" class="slide level2">
+<h2>Propositional Functions</h2>
+<div class="columns">
+<div class="column" style="width:46%;">
+<p><strong><em>Example:</em></strong> <span class="math inline">\(P(x)\)</span>: “<span class="math inline">\(x &gt; 0\)</span>”, <span class="math inline">\(U\)</span>: the integers. Then:</p>
+<ul>
+<li><span class="math inline">\(P(-3)\)</span> <span class="fragment ans">F</span></li>
+<li><span class="math inline">\(P(0)\)</span> <span class="fragment ans">F</span></li>
+<li><span class="math inline">\(P(3)\)</span> <span class="fragment ans">T</span></li>
+</ul>
+</div><div class="column" style="width:54%;">
+<div class="fragment">
+<p><strong><em>Example:</em></strong> Let “<span class="math inline">\(x + y = z\)</span>” be denoted by <span class="math inline">\(R(x, y, z)\)</span> and <span class="math inline">\(U\)</span> (for all three variables) be the integers. Find these truth values:</p>
+<ul>
+<li><span class="math inline">\(R(2, -1, 5)\)</span> <span class="fragment ans">F</span></li>
+<li><span class="math inline">\(R(3, 4, 7)\)</span> <span class="fragment ans">T</span></li>
+<li><span class="math inline">\(R(x, 3, z)\)</span> <span class="fragment ans">not a proposition</span></li>
+</ul>
+</div>
+</div></div>
+</section>
+<section id="propositional-functions-2" class="slide level2">
+<h2>Propositional Functions</h2>
+<p><strong><em>Your turn:</em></strong> Now let “<span class="math inline">\(x - y = z\)</span>” be denoted by <span class="math inline">\(Q(x, y, z)\)</span>, with <span class="math inline">\(U\)</span> as the integers.</p>
+<p><span class="vote-prompt">Call out each truth value.</span></p>
+<ul>
+<li><span class="math inline">\(Q(2, -1, 3)\)</span> <span class="fragment ans">T</span></li>
+<li><span class="math inline">\(Q(3, 4, 7)\)</span> <span class="fragment ans">F</span></li>
+<li><span class="math inline">\(Q(x, 3, z)\)</span> <span class="fragment ans">not a proposition</span></li>
+</ul>
+</section>
+<section id="compound-expressions" class="slide level2">
+<h2>Compound Expressions</h2>
+<p>Connectives from propositional logic carry over to predicate logic.</p>
+<p><strong><em>Example:</em></strong> If <span class="math inline">\(P(x)\)</span> denotes “<span class="math inline">\(x &gt; 0\)</span>,” find these truth values:</p>
+<ul>
+<li><span class="math inline">\(P(3) \vee P(-1)\)</span> <span class="fragment ans">T</span></li>
+<li><span class="math inline">\(P(3) \wedge P(-1)\)</span> <span class="fragment ans">F</span></li>
+<li><span class="math inline">\(P(3) \rightarrow P(-1)\)</span> <span class="fragment ans">F</span></li>
+<li><span class="math inline">\(P(3) \rightarrow \neg P(-1)\)</span> <span class="fragment ans">T</span></li>
+</ul>
+<div class="fragment">
+<p>Expressions with variables are not propositions and therefore do not have truth values — for example, <span class="math inline">\(P(3) \wedge P(y)\)</span> and <span class="math inline">\(P(x) \rightarrow P(y)\)</span>. With <strong>quantifiers</strong> (next), they become propositions.</p>
+</div>
+</section>
+<section id="quantifiers" class="slide level2">
+<h2>Quantifiers</h2>
+<ul>
+<li>We need <strong>quantifiers</strong> to express the meaning of English words including <em>all</em> and <em>some</em>:
+<ul>
+<li>“All men are mortal.”</li>
+<li>“Some cats do not have fur.”</li>
+</ul></li>
+<li>The two most important quantifiers are:
+<ul>
+<li><strong>Universal quantifier</strong>, “For all,” symbol: <span class="math inline">\(\forall\)</span></li>
+<li><strong>Existential quantifier</strong>, “There exists,” symbol: <span class="math inline">\(\exists\)</span></li>
+</ul></li>
+</ul>
+</section>
+<section id="quantifiers-1" class="slide level2">
+<h2>Quantifiers</h2>
+<ul>
+<li>We write as in <span class="math inline">\(\forall x\, P(x)\)</span> and <span class="math inline">\(\exists x\, P(x)\)</span>.</li>
+<li><span class="math inline">\(\forall x\, P(x)\)</span> asserts <span class="math inline">\(P(x)\)</span> is true for <strong>every</strong> <span class="math inline">\(x\)</span> in the domain.</li>
+<li><span class="math inline">\(\exists x\, P(x)\)</span> asserts <span class="math inline">\(P(x)\)</span> is true for <strong>some</strong> <span class="math inline">\(x\)</span> in the domain.</li>
+<li>The quantifiers are said to <strong>bind</strong> the variable <span class="math inline">\(x\)</span> in these expressions.</li>
+</ul>
+</section>
+<section id="universal-quantifier" class="slide level2">
+<h2>Universal Quantifier</h2>
+<p><span class="math inline">\(\forall x\, P(x)\)</span> is read as “For all <span class="math inline">\(x\)</span>, <span class="math inline">\(P(x)\)</span>” or “For every <span class="math inline">\(x\)</span>, <span class="math inline">\(P(x)\)</span>.”</p>
+<p><strong><em>Examples:</em></strong></p>
+<ul>
+<li>If <span class="math inline">\(P(x)\)</span> denotes “<span class="math inline">\(x &gt; 0\)</span>” and <span class="math inline">\(U\)</span> is the integers, then <span class="math inline">\(\forall x\, P(x)\)</span> is false.</li>
+<li>If <span class="math inline">\(P(x)\)</span> denotes “<span class="math inline">\(x &gt; 0\)</span>” and <span class="math inline">\(U\)</span> is the positive integers, then <span class="math inline">\(\forall x\, P(x)\)</span> is <span class="fragment ans">true</span>.</li>
+<li>If <span class="math inline">\(P(x)\)</span> denotes “<span class="math inline">\(x\)</span> is even” and <span class="math inline">\(U\)</span> is the integers, then <span class="math inline">\(\forall x\, P(x)\)</span> is <span class="fragment ans">false</span>.</li>
+</ul>
+</section>
+<section id="existential-quantifier" class="slide level2">
+<h2>Existential Quantifier</h2>
+<p><span class="math inline">\(\exists x\, P(x)\)</span> is read as “For some <span class="math inline">\(x\)</span>, <span class="math inline">\(P(x)\)</span>,” or as “There is an <span class="math inline">\(x\)</span> such that <span class="math inline">\(P(x)\)</span>,” or “For at least one <span class="math inline">\(x\)</span>, <span class="math inline">\(P(x)\)</span>.”</p>
+<p><strong><em>Examples:</em></strong></p>
+<ul>
+<li>If <span class="math inline">\(P(x)\)</span> denotes “<span class="math inline">\(x &gt; 0\)</span>” and <span class="math inline">\(U\)</span> is the integers, then <span class="math inline">\(\exists x\, P(x)\)</span> is true. It is also true if <span class="math inline">\(U\)</span> is the positive integers.</li>
+<li>If <span class="math inline">\(P(x)\)</span> denotes “<span class="math inline">\(x &lt; 0\)</span>” and <span class="math inline">\(U\)</span> is the positive integers, then <span class="math inline">\(\exists x\, P(x)\)</span> is <span class="fragment ans">false</span>.</li>
+<li>If <span class="math inline">\(P(x)\)</span> denotes “<span class="math inline">\(x\)</span> is even” and <span class="math inline">\(U\)</span> is the integers, then <span class="math inline">\(\exists x\, P(x)\)</span> is <span class="fragment ans">true</span>.</li>
+</ul>
+</section>
+<section id="quantifiers-as-loops" class="slide level2">
+<h2>Quantifiers as Loops</h2>
+<p>When the domain is finite, think of quantification as looping through the elements of the domain.</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><span class="math inline">\(\forall x\, P(x)\)</span></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb4-1"><a href=""></a><span class="dt">boolean</span> all <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb4-2"><a href=""></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> x <span class="op">:</span> U<span class="op">)</span></span>
+<span id="cb4-3"><a href=""></a>  <span class="cf">if</span> <span class="op">(!</span><span class="fu">P</span><span class="op">(</span>x<span class="op">))</span> <span class="op">{</span> all <span class="op">=</span> <span class="kw">false</span><span class="op">;</span> <span class="cf">break</span><span class="op">;</span> <span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>One counterexample: <strong>false</strong>, stop.</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><span class="math inline">\(\exists x\, P(x)\)</span></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb5-1"><a href=""></a><span class="dt">boolean</span> some <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb5-2"><a href=""></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> x <span class="op">:</span> U<span class="op">)</span></span>
+<span id="cb5-3"><a href=""></a>  <span class="cf">if</span> <span class="op">(</span><span class="fu">P</span><span class="op">(</span>x<span class="op">))</span> <span class="op">{</span> some <span class="op">=</span> <span class="kw">true</span><span class="op">;</span> <span class="cf">break</span><span class="op">;</span> <span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>One witness: <strong>true</strong>, stop.</li>
+</ul>
+</div></div>
+<div class="fragment">
+<p>Even if the domain is infinite we can still think this way, but the loop may not terminate.</p>
+</div>
+</section>
+<section id="why-it-matters-testing" class="slide level2">
+<h2>Why It Matters: Testing</h2>
+<p>Let <span class="math inline">\(S(x)\)</span> be “<code>sort</code> returns the correct output on input <span class="math inline">\(x\)</span>,” with <span class="math inline">\(U\)</span> all possible input arrays.</p>
+<p>Your <code>sort</code> passes 1,000 random test cases.</p>
+<p><span class="vote-prompt">Vote — which statement have the tests established?</span></p>
+<div class="columns">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>A.</strong> <span class="math inline">\(\forall x\, S(x)\)</span></p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>B.</strong> <span class="math inline">\(\exists x\, S(x)\)</span></p>
+</div>
+</div></div>
+<div class="fragment">
+<p><strong>B</strong> — each passing test is a <em>witness</em> for <span class="math inline">\(\exists x\, S(x)\)</span>. <span class="math inline">\(\forall x\, S(x)\)</span> needs a <strong>proof</strong> (Sections 1.6–1.7): testing shows the presence of bugs, never their absence (Dijkstra).</p>
+</div>
+</section>
+<section id="properties-of-quantifiers" class="slide level2">
+<h2>Properties of Quantifiers</h2>
+<p>The truth value of <span class="math inline">\(\exists x\, P(x)\)</span> and <span class="math inline">\(\forall x\, P(x)\)</span> depends on both the propositional function <span class="math inline">\(P(x)\)</span> and on the domain <span class="math inline">\(U\)</span>.</p>
+<p><strong><em>Examples:</em></strong></p>
+<ul>
+<li>If <span class="math inline">\(U\)</span> is the positive integers and <span class="math inline">\(P(x)\)</span> is the statement “<span class="math inline">\(x &lt; 2\)</span>”, then <span class="math inline">\(\exists x\, P(x)\)</span> is <span class="fragment ans">T</span>, <span class="math inline">\(\forall x\, P(x)\)</span> is <span class="fragment ans">F</span>.</li>
+<li>If <span class="math inline">\(U\)</span> is the negative integers and <span class="math inline">\(P(x)\)</span> is the statement “<span class="math inline">\(x &lt; 2\)</span>”, then <span class="math inline">\(\exists x\, P(x)\)</span> is <span class="fragment ans">T</span>, <span class="math inline">\(\forall x\, P(x)\)</span> is <span class="fragment ans">T</span>.</li>
+</ul>
+</section>
+<section id="properties-of-quantifiers-1" class="slide level2">
+<h2>Properties of Quantifiers</h2>
+<p><strong><em>Examples (continued):</em></strong></p>
+<ul>
+<li>If <span class="math inline">\(U\)</span> consists of 3, 4, and 5, and <span class="math inline">\(P(x)\)</span> is the statement “<span class="math inline">\(x &gt; 2\)</span>”, then both <span class="math inline">\(\exists x\, P(x)\)</span> and <span class="math inline">\(\forall x\, P(x)\)</span> are true.</li>
+<li>But if <span class="math inline">\(P(x)\)</span> is the statement “<span class="math inline">\(x &lt; 2\)</span>”, then both <span class="math inline">\(\exists x\, P(x)\)</span> and <span class="math inline">\(\forall x\, P(x)\)</span> are false.</li>
+</ul>
+<div class="fragment">
+<p><strong><em>Your turn:</em></strong> <span class="math inline">\(U = \{1, 2, 3\}\)</span>.</p>
+<ul>
+<li><span class="math inline">\(P(x)\)</span>: “<span class="math inline">\(x^2 &lt; 10\)</span>”. <span class="math inline">\(\forall x\, P(x)\)</span> is <span class="fragment ans">T</span></li>
+<li><span class="math inline">\(Q(x)\)</span>: “<span class="math inline">\(x\)</span> is prime”. <span class="math inline">\(\exists x\, Q(x)\)</span> is <span class="fragment ans">T</span>, <span class="math inline">\(\forall x\, Q(x)\)</span> is <span class="fragment ans">F</span></li>
+</ul>
+</div>
+</section>
+<section id="precedence-of-quantifiers" class="slide level2">
+<h2>Precedence of Quantifiers</h2>
+<ul>
+<li>The quantifiers <span class="math inline">\(\forall\)</span> and <span class="math inline">\(\exists\)</span> have higher precedence than all the logical operators.</li>
+<li>For example, <span class="math inline">\(\forall x\, P(x) \vee Q(x)\)</span> means <span class="math inline">\((\forall x\, P(x)) \vee Q(x)\)</span>.</li>
+<li><span class="math inline">\(\forall x\, (P(x) \vee Q(x))\)</span> means something different.</li>
+<li>Unfortunately, people often write <span class="math inline">\(\forall x\, P(x) \vee Q(x)\)</span> when they mean <span class="math inline">\(\forall x\, (P(x) \vee Q(x))\)</span>.</li>
+</ul>
+</section>
+<section id="translating-english-to-logic" class="slide level2">
+<h2>Translating English to Logic</h2>
+<p><strong><em>Example:</em></strong> “Every student in this class plays League of Legends (LOL).”</p>
+<p>Let <span class="math inline">\(S(x)\)</span>: “<span class="math inline">\(x\)</span> is a student in this class,” <span class="math inline">\(L(x)\)</span>: “<span class="math inline">\(x\)</span> plays LOL,” and <span class="math inline">\(U\)</span> be all people.</p>
+<p><span class="vote-prompt">Vote — which translation is correct?</span></p>
+<div class="columns vote-row">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>A.</strong> <span class="math inline">\(\forall x\, (S(x) \wedge L(x))\)</span></p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>B.</strong> <span class="math inline">\(\forall x\, (S(x) \rightarrow L(x))\)</span></p>
+</div>
+</div></div>
+<div class="columns vote-row">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>C.</strong> <span class="math inline">\(\exists x\, (S(x) \wedge L(x))\)</span></p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>D.</strong> <span class="math inline">\(\exists x\, (S(x) \rightarrow L(x))\)</span></p>
+</div>
+</div></div>
+</section>
+<section id="translating-english-to-logic-1" class="slide level2">
+<h2>Translating English to Logic</h2>
+<p><strong><em>Solution:</em></strong> First decide on the domain <span class="math inline">\(U\)</span>.</p>
+<div class="fragment">
+<ul>
+<li><strong>Solution 1:</strong> If <span class="math inline">\(U\)</span> is all students in this class, define a propositional function <span class="math inline">\(L(x)\)</span> denoting “<span class="math inline">\(x\)</span> plays LOL” and translate as <span class="math inline">\(\forall x\, L(x)\)</span>.</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li><strong>Solution 2:</strong> But if <span class="math inline">\(U\)</span> is all people, also define a propositional function <span class="math inline">\(S(x)\)</span> denoting “<span class="math inline">\(x\)</span> is a student in this class” and translate as <span class="math inline">\(\forall x\, (S(x) \rightarrow L(x))\)</span> — choice <strong>B</strong>.</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li><span class="math inline">\(\forall x\, (S(x) \wedge L(x))\)</span> is not correct. What does it mean? <span class="fragment ans">Everyone in the world is a student in this class and plays LOL.</span></li>
+</ul>
+</div>
+</section>
+<section id="translating-english-to-logic-2" class="slide level2">
+<h2>Translating English to Logic</h2>
+<p><strong><em>Example:</em></strong> “Some student in this class plays LOL.”</p>
+<p>Same <span class="math inline">\(S(x)\)</span>, <span class="math inline">\(L(x)\)</span>, and <span class="math inline">\(U\)</span> (all people).</p>
+<p><span class="vote-prompt">Vote — which translation is correct?</span></p>
+<div class="columns vote-row">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>A.</strong> <span class="math inline">\(\exists x\, (S(x) \wedge L(x))\)</span></p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>B.</strong> <span class="math inline">\(\exists x\, (S(x) \rightarrow L(x))\)</span></p>
+</div>
+</div></div>
+<div class="columns vote-row">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>C.</strong> <span class="math inline">\(\forall x\, (S(x) \wedge L(x))\)</span></p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>D.</strong> <span class="math inline">\(\forall x\, (S(x) \rightarrow L(x))\)</span></p>
+</div>
+</div></div>
+</section>
+<section id="translating-english-to-logic-3" class="slide level2">
+<h2>Translating English to Logic</h2>
+<p><strong><em>Solution:</em></strong> First decide on the domain <span class="math inline">\(U\)</span>.</p>
+<div class="fragment">
+<ul>
+<li><strong>Solution 1:</strong> If <span class="math inline">\(U\)</span> is all students in this class, translate as <span class="math inline">\(\exists x\, L(x)\)</span>.</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li><strong>Solution 2:</strong> But if <span class="math inline">\(U\)</span> is all people, then translate as <span class="math inline">\(\exists x\, (S(x) \wedge L(x))\)</span> — choice <strong>A</strong>.</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li><span class="math inline">\(\exists x\, (S(x) \rightarrow L(x))\)</span> is not correct. What does it mean? <span class="fragment ans">It is true as soon as <em>one</em> person in the world is not in this class — <span class="math inline">\(S(x)\)</span> false makes the implication true.</span></li>
+</ul>
+</div>
+</section>
+<section id="rule-of-thumb" class="slide level2">
+<h2>Rule of Thumb</h2>
+<ul>
+<li>“<strong>Every</strong> <span class="math inline">\(S\)</span> is <span class="math inline">\(L\)</span>”: <span class="math inline">\(\forall x\, (S(x) \rightarrow L(x))\)</span> — the universal quantifier pairs with <span class="math inline">\(\rightarrow\)</span>.</li>
+<li>“<strong>Some</strong> <span class="math inline">\(S\)</span> is <span class="math inline">\(L\)</span>”: <span class="math inline">\(\exists x\, (S(x) \wedge L(x))\)</span> — the existential quantifier pairs with <span class="math inline">\(\wedge\)</span>.</li>
+</ul>
+<div class="fragment">
+<p>Swapping them gives a statement that is either far too strong (<span class="math inline">\(\forall\)</span> with <span class="math inline">\(\wedge\)</span>: <em>everyone</em> is an <span class="math inline">\(S\)</span>) or trivially true (<span class="math inline">\(\exists\)</span> with <span class="math inline">\(\rightarrow\)</span>: one non-<span class="math inline">\(S\)</span> suffices).</p>
+</div>
+</section>
+<section id="equivalences-in-predicate-logic" class="slide level2">
+<h2>Equivalences in Predicate Logic</h2>
+<ul>
+<li>Statements involving predicates and quantifiers are <strong>logically equivalent</strong> if and only if they have the same truth value
+<ul>
+<li>for every predicate substituted into these statements, and</li>
+<li>for every domain of discourse used for the variables in the expressions.</li>
+</ul></li>
+<li>The notation <span class="math inline">\(S \equiv T\)</span> indicates that <span class="math inline">\(S\)</span> and <span class="math inline">\(T\)</span> are logically equivalent.</li>
+<li><strong><em>Example:</em></strong> <span class="math inline">\(\forall x\, \neg\neg S(x) \equiv \forall x\, S(x)\)</span></li>
+</ul>
+</section>
+<section id="quantifiers-as-wedge-and-vee" class="slide level2">
+<h2>Quantifiers as <span class="math inline">\(\wedge\)</span> and <span class="math inline">\(\vee\)</span></h2>
+<ul>
+<li>If the domain is finite, a universally quantified proposition is equivalent to a <strong>conjunction</strong> of propositions without quantifiers, and an existentially quantified proposition is equivalent to a <strong>disjunction</strong>.</li>
+<li>If <span class="math inline">\(U\)</span> consists of the integers 1, 2, and 3: <span class="math display">\[\forall x\, P(x) \equiv P(1) \wedge P(2) \wedge P(3)\]</span> <span class="math display">\[\exists x\, P(x) \equiv P(1) \vee P(2) \vee P(3)\]</span></li>
+<li>Even if the domain is infinite, you can still think of the quantifiers in this fashion, but the equivalent expressions will be infinitely long.</li>
+</ul>
+</section>
+<section id="quantifiers-as-wedge-and-vee-1" class="slide level2">
+<h2>Quantifiers as <span class="math inline">\(\wedge\)</span> and <span class="math inline">\(\vee\)</span></h2>
+<p><strong><em>Your turn:</em></strong> Let <span class="math inline">\(U = \{2, 4, 6\}\)</span>.</p>
+<ul>
+<li>Write <span class="math inline">\(\exists x\, P(x)\)</span> without quantifiers. <span class="fragment ans"><span class="math inline">\(P(2) \vee P(4) \vee P(6)\)</span></span></li>
+<li>Write <span class="math inline">\(\forall x\, P(x)\)</span> without quantifiers. <span class="fragment ans"><span class="math inline">\(P(2) \wedge P(4) \wedge P(6)\)</span></span></li>
+<li>If <span class="math inline">\(P(x)\)</span> is “<span class="math inline">\(x\)</span> is even”, which of the two is true? <span class="fragment ans">both</span></li>
+</ul>
+</section>
+<section id="why-it-matters-empty-lists" class="slide level2">
+<h2>Why It Matters: Empty Lists</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb6-1"><a href=""></a><span class="bu">List</span><span class="op">&lt;</span><span class="bu">Integer</span><span class="op">&gt;</span> scores <span class="op">=</span> <span class="bu">List</span><span class="op">.</span><span class="fu">of</span><span class="op">();</span>           <span class="co">// empty</span></span>
+<span id="cb6-2"><a href=""></a>scores<span class="op">.</span><span class="fu">stream</span><span class="op">().</span><span class="fu">allMatch</span><span class="op">(</span>s <span class="op">-&gt;</span> s <span class="op">&gt;=</span> <span class="dv">60</span><span class="op">);</span>     <span class="co">// ∀x P(x)</span></span>
+<span id="cb6-3"><a href=""></a>scores<span class="op">.</span><span class="fu">stream</span><span class="op">().</span><span class="fu">anyMatch</span><span class="op">(</span>s <span class="op">-&gt;</span> s <span class="op">&gt;=</span> <span class="dv">60</span><span class="op">);</span>     <span class="co">// ∃x P(x)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><span class="vote-prompt">Vote — what does each call return?</span></p>
+<ul>
+<li><code>allMatch</code> returns <span class="fragment ans"><code>true</code> — there is no counterexample</span></li>
+<li><code>anyMatch</code> returns <span class="fragment ans"><code>false</code> — there is no witness</span></li>
+</ul>
+<div class="fragment">
+<p>Over an empty domain the conjunction for <span class="math inline">\(\forall x\, P(x)\)</span> has no terms and is <span class="math inline">\(\mathbf{T}\)</span>; the disjunction for <span class="math inline">\(\exists x\, P(x)\)</span> is <span class="math inline">\(\mathbf{F}\)</span>. “Every student passed” is <strong>vacuously true</strong> of an empty class — and “all checks passed” with zero checks is a classic bug.</p>
+</div>
+</section>
+<section id="negating-quantifiers" class="slide level2">
+<h2>Negating Quantifiers</h2>
+<p>Consider <span class="math inline">\(\forall x\, J(x)\)</span>: “Every student in your class has taken a course in Java.” Here <span class="math inline">\(J(x)\)</span> is “<span class="math inline">\(x\)</span> has taken a course in Java” and the domain is students in your class.</p>
+<p><span class="vote-prompt">Vote — which sentence is the negation?</span></p>
+<div class="columns vote-row">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>A.</strong> No student has taken Java.</p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>B.</strong> Some student has not taken Java.</p>
+</div>
+</div></div>
+<div class="columns vote-row">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>C.</strong> Some student has taken Java.</p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>D.</strong> Every student has not taken Java.</p>
+</div>
+</div></div>
+</section>
+<section id="negating-quantifiers-1" class="slide level2">
+<h2>Negating Quantifiers</h2>
+<div class="fragment">
+<p><strong><em>Solution:</em></strong> Negating the original statement gives “It is not the case that every student in your class has taken Java.” This implies that “There is a student in your class who has not taken Java” — choice <strong>B</strong>.</p>
+</div>
+<div class="fragment">
+<p>Symbolically, <span class="math inline">\(\neg\forall x\, J(x)\)</span> and <span class="math inline">\(\exists x\, \neg J(x)\)</span> are equivalent.</p>
+</div>
+<div class="fragment">
+<p>Watch the trap: choices <strong>A</strong> and <strong>D</strong> both say <span class="math inline">\(\forall x\, \neg J(x)\)</span> — much stronger than the negation.</p>
+</div>
+</section>
+<section id="negating-quantifiers-2" class="slide level2">
+<h2>Negating Quantifiers</h2>
+<p>Now consider <span class="math inline">\(\exists x\, J(x)\)</span>: “There is a student in this class who has taken a course in Java,” where <span class="math inline">\(J(x)\)</span> is “<span class="math inline">\(x\)</span> has taken a course in Java.”</p>
+<div class="fragment">
+<p>Negating the original statement gives “It is not the case that there is a student in this class who has taken Java.” This implies that “Every student in this class has not taken Java.”</p>
+</div>
+<div class="fragment">
+<p>Symbolically, <span class="math inline">\(\neg\exists x\, J(x)\)</span> and <span class="math inline">\(\forall x\, \neg J(x)\)</span> are equivalent.</p>
+</div>
+</section>
+<section id="de-morgan-for-quantifiers" class="slide level2">
+<h2>De Morgan for Quantifiers</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 28%">
+<col style="width: 28%">
+<col style="width: 21%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Negation</th>
+<th style="text-align: center;">Equivalent</th>
+<th style="text-align: left;">Negation true when</th>
+<th style="text-align: left;">False when</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(\neg\exists x\, P(x)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\forall x\, \neg P(x)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(P(x)\)</span> is false for every <span class="math inline">\(x\)</span></td>
+<td style="text-align: left;">some <span class="math inline">\(x\)</span> has <span class="math inline">\(P(x)\)</span> true</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(\neg\forall x\, P(x)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\exists x\, \neg P(x)\)</span></td>
+<td style="text-align: left;">some <span class="math inline">\(x\)</span> has <span class="math inline">\(P(x)\)</span> false</td>
+<td style="text-align: left;"><span class="math inline">\(P(x)\)</span> is true for every <span class="math inline">\(x\)</span></td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<p><strong>These are important. You will use these.</strong></p>
+</div>
+</section>
+<section id="why-it-matters-bug-reports" class="slide level2">
+<h2>Why It Matters: Bug Reports</h2>
+<p>Your test asserts <em>“Every API response arrives in under 200 ms.”</em> Tonight it <strong>fails</strong>.</p>
+<p><span class="vote-prompt">Vote — what do you now know for certain?</span></p>
+<div class="columns vote-row">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>A.</strong> Every response was slow.</p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>B.</strong> Some response was slow.</p>
+</div>
+</div></div>
+<div class="columns vote-row">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>C.</strong> No response arrived.</p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>D.</strong> The average was slow.</p>
+</div>
+</div></div>
+<div class="fragment">
+<p><strong>B</strong> — <span class="math inline">\(\neg\forall x\, P(x) \equiv \exists x\, \neg P(x)\)</span>: a failed <em>for all</em> hands you one <strong>counterexample</strong>. Good bug reports name it.</p>
+</div>
+</section>
+<section id="translating-english-to-logic-4" class="slide level2">
+<h2>Translating English to Logic</h2>
+<p><strong><em>Example:</em></strong> “Some student in this class has visited Mexico.”</p>
+<div class="fragment">
+<p><strong><em>Solution:</em></strong> Let <span class="math inline">\(M(x)\)</span> denote “<span class="math inline">\(x\)</span> has visited Mexico” and <span class="math inline">\(S(x)\)</span> denote “<span class="math inline">\(x\)</span> is a student in this class,” and <span class="math inline">\(U\)</span> be all people. <span class="math display">\[\exists x\, (S(x) \wedge M(x))\]</span></p>
+</div>
+<div class="fragment">
+<p><strong><em>Example:</em></strong> “Every student in this class has visited Canada or Mexico.”</p>
+</div>
+<div class="fragment">
+<p><strong><em>Solution:</em></strong> Add <span class="math inline">\(C(x)\)</span> denoting “<span class="math inline">\(x\)</span> has visited Canada.” <span class="math display">\[\forall x\, (S(x) \rightarrow (C(x) \vee M(x)))\]</span></p>
+</div>
+</section>
+<section id="negating-english-statements" class="slide level2">
+<h2>Negating English Statements</h2>
+<p><strong><em>Example:</em></strong> Find the negation of “There is an honest politician.” Let <span class="math inline">\(H(x)\)</span> denote “<span class="math inline">\(x\)</span> is honest” and <span class="math inline">\(U\)</span> be all politicians.</p>
+<div class="fragment">
+<p><strong><em>Solution:</em></strong> The statement is <span class="math inline">\(\exists x\, H(x)\)</span>. Its negation is <span class="math inline">\(\neg\exists x\, H(x) \equiv \forall x\, \neg H(x)\)</span>: “Every politician is dishonest.”</p>
+</div>
+<div class="fragment">
+<p><strong><em>Example:</em></strong> Find the negation of “All Americans eat cheeseburgers.” Let <span class="math inline">\(C(x)\)</span> denote “<span class="math inline">\(x\)</span> eats cheeseburgers” and <span class="math inline">\(U\)</span> be all Americans.</p>
+</div>
+<div class="fragment">
+<p><strong><em>Solution:</em></strong> The statement is <span class="math inline">\(\forall x\, C(x)\)</span>. Its negation is <span class="math inline">\(\neg\forall x\, C(x) \equiv \exists x\, \neg C(x)\)</span>: “Some American does not eat cheeseburgers.”</p>
+</div>
+</section>
+<section id="your-turn-1" class="slide level2">
+<h2>Your Turn</h2>
+<p>Let <span class="math inline">\(B(x)\)</span> be “<span class="math inline">\(x\)</span> has a bug” and the domain be all programs.</p>
+<blockquote>
+<p><em>“Every program has a bug.”</em></p>
+</blockquote>
+<ul>
+<li>Express it with a quantifier. <span class="fragment ans"><span class="math inline">\(\forall x\, B(x)\)</span></span></li>
+<li>Negate it so no negation is left of a quantifier. <span class="fragment ans"><span class="math inline">\(\exists x\, \neg B(x)\)</span></span></li>
+<li>Say the negation in plain English. <span class="fragment ans">There is a program with no bugs.</span></li>
+</ul>
+</section>
+<section id="system-specification-example" class="slide level2">
+<h2>System Specification Example</h2>
+<p>Predicate logic is used for specifying properties that systems must satisfy. For example, translate into predicate logic:</p>
+<ul>
+<li>“Every mail message larger than one megabyte will be compressed.”</li>
+<li>“If a user is active, at least one network link will be available.”</li>
+</ul>
+<p><span class="vote-prompt">Think — what predicates and variables do you need?</span></p>
+</section>
+<section id="system-specification-example-1" class="slide level2">
+<h2>System Specification Example</h2>
+<p>Decide on predicates and domains (left implicit here) for the variables:</p>
+<ul>
+<li>Let <span class="math inline">\(L(m, y)\)</span> be “Mail message <span class="math inline">\(m\)</span> is larger than <span class="math inline">\(y\)</span> megabytes.”</li>
+<li>Let <span class="math inline">\(C(m)\)</span> denote “Mail message <span class="math inline">\(m\)</span> will be compressed.”</li>
+<li>Let <span class="math inline">\(A(u)\)</span> represent “User <span class="math inline">\(u\)</span> is active.”</li>
+<li>Let <span class="math inline">\(S(n, x)\)</span> represent “Network link <span class="math inline">\(n\)</span> is in state <span class="math inline">\(x\)</span>.”</li>
+</ul>
+</section>
+<section id="system-specification-example-2" class="slide level2">
+<h2>System Specification Example</h2>
+<p>“Every mail message larger than one megabyte will be compressed.”</p>
+<div class="fragment">
+<p><span class="math display">\[\forall m\, (L(m, 1) \rightarrow C(m))\]</span></p>
+</div>
+<div class="fragment">
+<p>“If a user is active, at least one network link will be available.”</p>
+</div>
+<div class="fragment">
+<p><span class="math display">\[\forall u\, (A(u) \rightarrow \exists n\, S(n, \text{available}))\]</span></p>
+</div>
+
+</section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <p><img src="images/TAMUSA_final_logo-5.png" class="slide-logo"></p>
