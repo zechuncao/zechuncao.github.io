@@ -95,7 +95,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-37b818f2ffada3b53ba5ec1d8d97b5da.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-5b2aabf3fd4424a04d6601aeb39c436d.css">
   <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -240,9 +240,42 @@ Zechun (Jacob) Cao
 <p><strong><em>One rule, four features. Today we build the thing that enforces it.</em></strong></p>
 </div>
 </section>
+<section id="what-a-collection-does" class="slide level2">
+<h2>What a Collection Does</h2>
+<p>A <em>collection</em> holds objects. A client only ever asks it three things:</p>
+<ul>
+<li><strong>Add</strong> one item.</li>
+<li><strong>Remove</strong> one item.</li>
+<li><strong>Is it empty?</strong></li>
+</ul>
+<div class="fragment">
+<p>Adding is never in doubt — the new item goes wherever new items go.</p>
+</div>
+<div class="fragment">
+<p><strong><em>Removing is a decision. Which item comes back?</em></strong></p>
+</div>
+</section>
+<section id="push-and-pop" class="slide level2">
+<h2>Push and Pop</h2>
+<div class="columns">
+<div class="column" style="width:58%;">
+<p>Pile the five typed words up in the order they were typed. Both operations work at the same end, the <strong>top</strong>.</p>
+<p><span class="lead-blue">push.</span> Put a new item on the top.</p>
+<p><span class="lead-red">pop.</span> Take the top item off and hand it back.</p>
+<div class="fragment">
+<p>Typing a word was a <code>push</code>. Each <strong>Ctrl-Z</strong> was a <code>pop</code>, which is why <code>of</code> came off before <code>best</code>.</p>
+</div>
+</div><div class="column" style="width:42%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/stack_top.png" class="quarto-figure quarto-figure-center" style="width:82.0%"></p>
+</figure>
+</div>
+</div></div>
+</section>
 <section id="two-collections-one-question" class="slide level2">
 <h2>Two Collections, One Question</h2>
-<p>Both hold objects, and both insert at the same end.</p>
+<p>Both add at the same end: <code>push</code> for a stack, <code>enqueue</code> for a queue.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="images/stack_vs_queue.png" class="quarto-figure quarto-figure-center" style="width:82.0%"></p>
@@ -321,8 +354,8 @@ Zechun (Jacob) Cao
 <p><span class="lead-red">Performance.</span> Drop in the optimized implementation exactly where it matters, and nowhere else.</p>
 </div>
 </section>
-<section id="the-stack-api-exam" class="slide level2 dense-table">
-<h2>The Stack API <span class="mustknow">exam</span></h2>
+<section id="the-stack-api" class="slide level2 dense-table">
+<h2>The Stack API</h2>
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -372,7 +405,8 @@ Zechun (Jacob) Cao
 <span id="cb1-7"><a href=""></a><span class="cf">while</span> <span class="op">(!</span>stack<span class="op">.</span><span class="fu">isEmpty</span><span class="op">())</span></span>
 <span id="cb1-8"><a href=""></a>   <span class="bu">System</span><span class="op">.</span><span class="fu">out</span><span class="op">.</span><span class="fu">print</span><span class="op">(</span>stack<span class="op">.</span><span class="fu">pop</span><span class="op">()</span> <span class="op">+</span> <span class="st">" "</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
-<p>Reversal is what a stack <em>is</em>. You will not find a loop that reverses anything — the order fell out of the removal rule.</p>
+<p>Neither loop reverses anything. The first pushes the words in the order they arrive; the second pops until the stack is empty. The output comes out backwards because <code>pop()</code> always hands back the most recent word.</p>
+<p><strong><em>Reversal is not something the client codes. It is what a stack does.</em></strong></p>
 </div>
 </section>
 <section id="reading-a-stack" class="slide level2">
@@ -624,33 +658,33 @@ Zechun (Jacob) Cao
 <h2>Part 2</h2>
 <p>A Chain of Nodes</p>
 </section>
-<section id="which-end-is-the-top" class="slide level2">
-<h2>Which End Is the Top?</h2>
-<p>Push <code>it</code>, <code>was</code>, <code>the</code>, <code>best</code>, <code>of</code> in that order. Which representation lets both <code>push</code> and <code>pop</code> take constant time?</p>
-<p><strong>A.</strong> It cannot be done efficiently with a singly linked list.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="images/poll_linked.png" class="quarto-figure quarto-figure-center" style="width:76.0%"></p>
-</figure>
+<section id="where-do-the-items-live" class="slide level2">
+<h2>Where Do the Items Live?</h2>
+<p>The API is settled, and it said nothing about storage. Now we owe it an implementation.</p>
+<ul>
+<li>A client may push ten items or ten million, and never says which.</li>
+<li>It never says when it will stop, either.</li>
+</ul>
+<div class="fragment">
+<p>A Java array has its length fixed the moment it is created, so asking for one block up front means guessing.</p>
+<p><strong><em>So don’t guess. Ask for one small box per item, and let each box remember where the next one is.</em></strong></p>
 </div>
 </section>
-<section id="put-the-top-at-the-front" class="slide level2">
-<h2>Put the Top at the Front</h2>
-<p><span class="lead-blue">Answer: C.</span> A singly linked list gives immediate access to its <strong>first</strong> node.</p>
-<ul>
-<li><code>topNode</code> refers to that first node.</li>
-<li><code>push</code> inserts a new node before it.</li>
-<li><code>pop</code> removes it.</li>
-</ul>
+<section id="one-item-one-node" class="slide level2">
+<h2>One Item, One Node</h2>
+<p>A <strong>node</strong> is a small object with two fields: <code>data</code> holds one item, and <code>next</code> holds a reference to the node after it — or <code>null</code> at the end.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="images/linked_stack.png" class="quarto-figure quarto-figure-center" style="width:82.0%"></p>
+<p><img data-src="images/node_anatomy.png" class="quarto-figure quarto-figure-center" style="width:62.0%"></p>
 </figure>
+</div>
+<div class="fragment">
+<p>A node knows nothing about the chain as a whole. One item, one neighbour.</p>
 </div>
 </section>
 <section id="the-node-class" class="slide level2">
 <h2>The Node Class</h2>
-<p>Every node holds one item and a link to the next node down the chain.</p>
+<p>The same two fields, as a Java class.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb8-1"><a href=""></a><span class="kw">private</span> <span class="kw">class</span> <span class="bu">Node</span></span>
 <span id="cb8-2"><a href=""></a><span class="op">{</span></span>
 <span id="cb8-3"><a href=""></a>   <span class="kw">private</span> T data<span class="op">;</span></span>
@@ -665,6 +699,47 @@ Zechun (Jacob) Cao
 <p><code>getData()</code> reads the item; <code>getNext()</code> follows the chain one link further. Both <code>Node</code> and its fields are <code>private</code> — a client never sees one.</p>
 </div>
 </section>
+<section id="one-handle-one-direction" class="slide level2">
+<h2>One Handle, One Direction</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/chain_access.png" class="quarto-figure quarto-figure-center" style="width:86.0%"></p>
+</figure>
+</div>
+<p>The stack object stores <strong>one</strong> reference, to the first node. Links run one way: from a node you reach the next, never the one before.</p>
+<div class="fragment">
+<p><strong><em>The first node is free. Any other one costs a walk down the chain.</em></strong></p>
+</div>
+</section>
+<section id="which-end-is-the-top" class="slide level2">
+<h2>Which End Is the Top?</h2>
+<p>Push <code>it</code>, <code>was</code>, <code>the</code>, <code>best</code>, <code>of</code> in that order. <code>push</code> and <code>pop</code> both act on the top — where should the top sit so that <strong>both</strong> are constant time?</p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/poll_linked.png" class="quarto-figure quarto-figure-center" style="width:72.0%"></p>
+</figure>
+</div>
+<ul class="choices row">
+  <li><span class="k">A</span> not efficiently</li>
+  <li><span class="k">B</span> top at the end</li>
+  <li class="fragment pick"><span class="k">C</span> top at the front</li>
+</ul>
+</section>
+<section id="put-the-top-at-the-front" class="slide level2">
+<h2>Put the Top at the Front</h2>
+<p>Option <strong>B</strong> puts the top four links from the only reference we hold, so every <code>push</code> and every <code>pop</code> would walk past all <span class="math inline">\(N\)</span> nodes to reach it.</p>
+<div class="fragment">
+<p>Put the top at the <strong>front</strong>, on the node we already have in hand.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/linked_stack.png" class="quarto-figure quarto-figure-center" style="width:60.0%"></p>
+</figure>
+</div>
+</div>
+<div class="fragment">
+<p>The first node is now the top, so the handle is named <code>topNode</code>. <code>push</code> inserts before it, <code>pop</code> removes it — neither one walks.</p>
+</div>
+</section>
 <section id="pop-in-two-moves" class="slide level2">
 <h2>pop, in Two Moves</h2>
 <div class="r-stack">
@@ -675,9 +750,9 @@ Zechun (Jacob) Cao
 <p><code>return top;</code> sends the saved item back to the client. The old node is now unreachable, so Java can reclaim it.</p>
 </div>
 </section>
-<section id="write-pop-exam" class="slide level2 code-mid">
-<h2>Write pop <span class="mustknow">exam</span></h2>
-<p><a class="livecode" href="https://v49.livecodes.io/#config=code%2FN4IgLglmA2CmIC4QFUB2kawCYAIAKATgPYBWsAxmCADQhawDO5BEADpEaoiDSABawAhlm4AeALawwgnOT6CCDKQF4AOigAqAMQC0ADnU4A9AD5VqCVJmpBktSABuEWAHdWRAmEPlOYWOnsXCCwwPmV6J3JYHSCQvmocCFQoCEFoHSY02GUARgA6AAZDU14%2BMHFoAEEwMEVuaEFUAHN7f28GhgZ7dV5pJoZEAG0AXVpBSggHWABRLCgPbiYWdl5xBQBrAFdWRFAG5s3BJvgkMoreH3R-KiRROYdZDq71S%2Bkk2AJ1M1QcHFE%2BHImAASsGg0CICVEDFYjUSWHsNkkXwA6h5oFhREZoY0TABCTEA76-UQQcRNR6CTr2cFNIiGNJgalEWmGBgEcj2MpgVgMBBGIzQSYUIj0Bh5CBEAVCnyioyUpRgBhGPziVgNPxKkiCByCPIMBxNYpEv6sEwATSIm0eEHI62wf2xP2C9h8myunxAJgKmMdJhwkEkYsxpvMxIARpsapw4S7Le6dBGo6hDHMGIIw3AsCYADJEYRJJp5IuYxNgTjfTH3CtLNhgY38nAKxLJSBpZusSOhnCCqYyxh5LU68WoDtgHDKHDqHQ5dQAbnMXeEWGmU3Q2YgDD8qA%2BAAoAOTg4R7hKUgCeqHIOB3AEpx37gF3fpdNzhS9GJ1giORNpJ0HkAI6bB8p4AMqghQZYEDu6gAMSuvGb7JiA17zsmPy-MYRg4C4ghQP6EBgt2eb0Fgj44IIOF4T2wqigO2q6oeJGoWRDbHGOSQpG2lrcp26FPpwL4ca20AAPKRqO47dtKIr9oOurcaOqEYTg2xYIIfg7kJqSieJkYoQufGvpGZaoHknDkIKtqSWeF5Xreyj3mRvyIXkqbppmkm1EBSnKZhOAEG62FQHwODbi47a8b5sgCWOwAKZGCQfMQBCJQAHlAADCMkAL7WZRY7UX2YpyXkAWoDuQSoJ%2BLh5PBYD6YZvyqepsA7vF9U%2Bb82XMYZABmboTNGzUae1t4Po10WoC%2BdUfJJn7fr%2BYAAUBBCgeBlAeNBIBwXGfgeg1UXPmOiKwHNX4-tcy3AWBcAbVBsEneoDVOZNL6DBgcAJHVwySe1epqlA%2B6qOYe7PRNEC9VeMKKLAACS6A7nVt64soE4AHKCGjY0vb8lXVbVu2SXVnW%2BTNBDDtuBAaLAqVjhOeNEDVxMvdlL0Q1eH2wNjE2-CdFMfNTtOeVAcAk11L0uUklOC3Tk4gBllnrDgSIgGLRlJq5G7ufaE69WkSgk6z6HZQ1PrMLW3wgNltCbqecC7CA%2BxNIcxzcOQnQXL41zcAT6C4ZT1DmL7byU%2BrJk4ONvx%2BLTOhpBATSoAgsjXB8Pm9b4Sc5LA4iNo0DAZB8EOoUbeQ0kQEddrEoSZwArAUrCpcX5hWzb5srAgeyNM7RwnCAcme1c6DcKS7ieDgJWRgReTTKqYCgdItrTKlUTsBKqA9UYABUm%2BhpvODrlMOh9o25CCL16fojg6cEI2gr0DgABMegJOoyIsH4ODuKw6h5Lvu%2Bf7AWA6wbyJAYORaABAhBYFPNhd%2BW48ifyIKwEBG5lYbgYAWHANNxgwBgZwU6gptw4B0Dof0Ah-5pkkK%2BfYSsGB8EZj8aMoRToMDvrABBlQwEuDgf4V8oJGYJGYZ-YgTQCC2EbJAME-8fCqgIowciVV-JugYAkRMiDkG3jDLAeQUwwGCjtAAoBN4k54W3FMG%2BwgdQXkYP-MsrA0YyQSAwcuX9WCYKEZQlhC8lZEHMQo3AvjZp2lgDyfyUhNgEGSM0MhsAKG2FOnYxIKor4eFgOYhBAAlQKeFzIJPLnQxmZD1JGXJNRQRAgfi9QItAf%2BSQYnKw2PaQheS2ICBvkEUI9SLLyn8Uop0Y4jj%2B1-j8TeRhzAdgzDaCknQcBvygLAPASCD6wCyvQcwkcMITMshI9SUyHBEGCA0pIO4QK1ALCMciBB%2BjXjIhsqKpzxjrHhntPWURRCnJYM0P0m5HmSTCvvJIdosAPNtKIEwN41a-B%2BbaPIHY6FbSgE9SFOyYVwr4FtHCDAkU4xResWFmx4XqGYditCUVfggVPJubOZlIyws%2BTAcq6hFmsDcdE0IkCEmkkYAgElZKcAUqpeIGlS1WD0ugOVaFeKv43gOmSgVKphV0qSAynckrYVIJlci%2BV1LuJKvQOK1V3j1UaLBnyhsIlrHqJQWAqpqVsAJAGkQcQi0yGoLLI2eh4UhFunoAQXq4JwpyAoLQyR0BsIeHWLyHFDY1XStleLVARtzDKo%2BK806IKnnujTaIDQ3w7k4H2YctFO4NChVcNMdAq1404FLXGkmtbAHAOrWGIgRA4Cwg3DPdgp4IVkULbgCyQgoINSTagKpNgw3dJmeuVAQKM05r9CPOAi0wEZueam8YsAF3rLIqKyYLUcAOPvnYo9sBZwYQbFUxQx0ZLNi6fIJIBllJbKmTOud3iQER39Eg09fzNhgnPaO59mxJmXhbW2oQToGBdrnp%2B4AYSwARJ%2BCe29qNQr-ugIB3dIHtn9seEOz9vl4MofvhOVAGGsOks2ThvZBzcDFtLWFCttRTw3MMvm5Sv6wq-rI64Q9MkdxMcraeQRP6ZIoQvVhQhSt3VttwHY6NWFTyWhvs0nAbTTo4AAPo6d03p-TBnDMGeUjivlZmTOGVyg2fw9GCV8CfdR0DNbDFNtuTi9mmloOzx7deNj5mo58GIOFf5MH56PKXivDg5Vq3KVBEoUzGFIGIcid%2BxMk8hsQACLqUEL2yzfkbMuYc78F9l5a0ar8xhDjGFS2JInKwRtEL-PKQbGsGB7LCmhYzRFkJUXFM4GUxEqSRCNO-CM%2BNibhniu%2BSS0h1LhsCuKK-tNvdOoP5TrAaetzPNhH7o-qWtS0hkWrYPVxmmYAep8pOx-U9JasHCYSGd2mp6xo4EOzICc1xVrnrLULXjz2ZKUZxdd06pass5bgwhub73KNXZYGt06v62Jo3O5D2bKXty01hxhKzWFCtbcTYt3Ab7sAZpbiAW2cA6GAMVEMUYFO2604QCMWg7sGCEEYFIbgvBRVfkYM4uozP6ffk3E6sCNQCwDA7tbEAI8PBM%2BADLueDWpeK9oBqBXjsu4u17srxgjOB5bhuDwGX5iMGcG4AAFgAJy9FbdAVXIB-DaxEEgNI0BeA4KFG7ASEHeA-MQ1LkASD-BW2ykAA" target="_blank" rel="noopener">live code</a></p>
+<section id="write-pop" class="slide level2 code-mid">
+<h2>Write pop</h2>
+<p><span class="livecode">live code</span></p>
 <p><code>peek()</code> is written for you. Complete the one update that leaves the stack one node shorter.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb9-1"><a href=""></a><span class="kw">public</span> T <span class="fu">peek</span><span class="op">()</span></span>
 <span id="cb9-2"><a href=""></a><span class="op">{</span></span>
@@ -694,6 +769,9 @@ Zechun (Jacob) Cao
 <span id="cb9-13"><a href=""></a></span>
 <span id="cb9-14"><a href=""></a>   <span class="cf">return</span> top<span class="op">;</span></span>
 <span id="cb9-15"><a href=""></a><span class="op">}</span> <span class="co">// end pop</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment">
+<p><code>pop</code> in <strong>live code</strong>: with the line missing, the chain never shrinks.</p>
+</div>
 </section>
 <section id="peek-and-pop-in-java" class="slide level2">
 <h2>peek and pop, in Java</h2>
@@ -725,9 +803,9 @@ Zechun (Jacob) Cao
 <p>No existing node moves. <code>push</code> creates one node and changes one reference.</p>
 </div>
 </section>
-<section id="write-push-exam" class="slide level2">
-<h2>Write push <span class="mustknow">exam</span></h2>
-<p><a class="livecode" href="https://v49.livecodes.io/#config=code%2FN4IgLglmA2CmIC4QFUB2kawCYAIAKATgPYBWsAxmCADQhawDO5BEADpEaoiDSABawAhlm4AeALawwgnOT6CCDKQF4AOigAqAMQC0ADnU4A9AD5VqCVJmpBktSABuEWAHdWRAmEPlOYWOnsXCCwwPmV6J3JYHSCQvmocCFQoCEFoHSY02GUARgA6AAZDU14%2BMHFoAEEwMEVuaEFUAHN7f28GhgZ7dV5pJoZEAG0AXVpBSggHWABRLCgPbiYWdl5xBQBrAFdWRFAG5s3BJvgkMoreH3R-KiRROYdZDq71S%2Bkk2AJ1M1QcHFE%2BHImAASsGg0CICVEDFYjUSWHsNkkXwA6h5oFhREZoY0TABCTEA76-UQQcRNR6CTr2cFNIiGNJgalEWmGBgEcj2MpgVgMBBGIzQSYUIj0Bh5CBEAVCnyioyUpRgBhGPziVgNPxKkiCByCPIMBxNYpEv6sEwATSIm0eEHI62wf2xP2C9h8myunxAJgKmMdJhwkEkYsxpvMxIARpsapw4S7Le6dBGo6hDHMGIIw3AsCYADJEYRJJp5IuYxNgTjfTH3CtLNhgY38nAKxLJSBpZusSOhnCCqYyxh5LU68WoDtgHDKHDqHQ5dQAbnMXeEWGmU3Q2YgDD8qA%2BAAoAOTg4R7hKUgCeqHIOB3AEpx37gF3fpdNzhS9GJ1giORNpJ0HkAI6bB8p4AMqghQZYEDu6gAMSuvGb7JiA17zsmPy-MYRg4C4ghQP6EBgt2eb0Fgj44IIOF4T2wqigO2q6oeJGoWRDbHGOSQpG2lrcp26FPpwL4ca20AAPKRqO47dtKIr9oOurcaOqEYTg2xYIIfg7kJqSieJkYoQufGvpGZaoHknDkIKtqSWeF5Xreyj3mRvyIXkqbppmkm1EBSnKZhOAEG62FQHwODbi47a8b5sgCWOwAKZGCQfMQBCJQAHlAADCMkAL7WZRY7UX2YpyXkAWoDuQSoJ%2BLh5PBYD6YZvyqepsA7vF9U%2Bb82XMYZABmboTNGzUae1t4Po10WoC%2BdUfJJn7fr%2BYAAUBBCgeBlAeNBIBwXGfgeg1UXPmOiKwHNX4-tcy3AWBcAbVBsEneoDVOZNL6DBgcAJHVwySe1epqlA%2B6qOYe7PRNEC9VeMKKLAACS6A7nVt64soE4AHKCGjY0vb8lXVbVu2SXVnW%2BTNBDDtuBAaLAqVjhOeNEDVxMvdlL0Q1eH2wNjE2-CdFMfNTtOeVAcAk11L0uUklOC3Tk4gBllnrDgSIgGLRlJq5G7ufaE69WkSgk6z6HZQ1PrMLW3wgNltCbqecC7CA%2BxNIcxzcOQnQXL41zcAT6C4ZT1DmL7byU%2BrJk4ONvx%2BLTOhpBATSoAgsjXB8Pm9b4Sc5LA4iNo0DAZB8EOoUbeQ0kQEddrEoSZwArAUrCpcX5hWzb5srAgeyNM7RwnCAcme1c6DcKS7ieDgJWRgReTTKqYCgdItrTKlUTsBKqA9UYABUm%2BhpvODrlMOh9o25CCL16fojg6cEI2gr0DgABMegJOoyIsH4ODuKw6h5Lvu%2Bf7AWA6wbyJAYORaABAhBYFPNhd%2BW48ifyIKwEBG5lYbgYAWHANNxgwBgZwU6gptw4B0Dof0Ah-5pkkK%2BfYSsGB8EZj8aMoRToMDvrABBlQwEuDgf4V8oJGYJGYZ-YgTQCC2EbJAME-8fCqgIowciVV-JugYAkRMiDkG3jDLAeQUwwGCjtAAoBN4k54W3FMG%2BwgdQXkYP-MsrA0YyQSAwcuX9WCYKEZQlhC8lZEHMQo3AvjZp2lgDyfyUhNgEGSM0MhsAKG2FOnYxIKor4eFgOYhBAAlQKeFzIJPLnQxmZD1JGXJNRQRAgfi9QItAf%2BSQYnKw2PaQheS2ICBvkEUI9SLLyn8Uop0Y4jj%2B1-j8TeRhzAdgzDaCknQcBvygLAPASCD6wCyvQcwkcMITMshI9SUyHBEGCA0pIO4QK1ALCMciBB%2BjXjIhsqKpzxjrHhntPWURRCnJYM0P0m5HmSTCvvJIdosAPNtKIEwN41a-B%2BbaPIHY6FbSgE9SFOyYVwr4FtHCDAkU4xResWFmx4XqGYditCUVfggVPJubOZlIyws%2BTAcq6hFmsDcdE0IkCEmkkYAgElZKcAUqpeIGlS1WD0ugOVaFeKv43gOmSgVKphV0qSAynckrYVIJlci%2BV1LuJKvQOK1V3j1UaLBnyhsIlrHqJQWAqpqVsAJAGkQcQi0yGoLLI2eh4UhFunoAQXq4JwpyAoLQyR0BsIeHWLyHFDY1XStleLVARtzDKo%2BK806IKnnujTaIDQ3w7k4H2YctFO4NChVcNMdAq1404FLXGkmtbAHAOrWGIgRA4Cwg3DPdgp4IVkULbgCyQgoINSTagKpNgw3dJmeuVAQKM05r9CPOAi0wEZueam8YsAF3rLIqKyYLUcAOPvnYo9sBZwYQbFUxQx0ZLNi6fIJIBllJbKmTOud3iQER39Eg09fzNhgnPaO59mxJmXhbW2oQToGBdrnp%2B4AYSwARJ%2BCe29qNQr-ugIB3dIHtn9seEOz9vl4MofvhOVAGGsOks2ThvZBzcDFtLWFCttRTw3MMvm5Sv6wq-rI64Q9MkdxMcraeQRP6ZIoQvVhQhSt3VttwHY6NWFTyWhvs0nAbTTo4AAPo6d03p-TBnDMGeUjivlZmTOGVyg2fw9GCV8CfdR0DNbDFNtuTi9mmloOzx7deNj5mo58GIOFf5MH56PKXivDg5Vq3KVBEoUzGFIGIcid%2BxMk8hsQACLqUEL2yzfkbMuYc78F9l5a0ar8xhDjGFS2JInKwRtEL-PKQbGsGB7LCmhYzRFkJUXFM4GUxEqSRCNO-CM%2BNibhniu%2BSS0h1LhsCuKK-tNvdOoP5TrAaetzPNhH7o-qWtS0hkWrYPVxmmYAep8pOx-U9JasHCYSGd2mp6xo4EOzICc1xVrnrLULXjz2ZKUZxdd06pass5bgwhub73KNXZYGt06v62Jo3O5D2bKXty01hxhKzWFCtbcTYt3Ab7sAZpbiAW2cA6GAMVEMUYFO2604QCMWg7sGCEEYFIbgvBRVfkYM4uozP6ffk3E6sCNQCwDA7tbEAI8PBM%2BADLueDWpeK9oBqBXjsu4u17srxgjOB5bhuDwGX5iMGcG4AAFgAJy9FbdAVXIB-DaxEEgNI0BeA4KFG7ASEHeA-MQ1LkASD-BW2ykAA" target="_blank" rel="noopener">live code</a></p>
+<section id="write-push" class="slide level2">
+<h2>Write push</h2>
+<p><span class="livecode">live code</span></p>
 <p><code>newNode</code> already stores the new entry and points to the old top. Complete the update that makes it the new top.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb11-1"><a href=""></a><span class="kw">public</span> <span class="dt">void</span> <span class="fu">push</span><span class="op">(</span>T newEntry<span class="op">)</span></span>
 <span id="cb11-2"><a href=""></a><span class="op">{</span></span>
@@ -735,6 +813,9 @@ Zechun (Jacob) Cao
 <span id="cb11-4"><a href=""></a>   <span class="co">// your line here  __________________________________</span></span>
 <span id="cb11-5"><a href=""></a></span>
 <span id="cb11-6"><a href=""></a><span class="op">}</span> <span class="co">// end push</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment">
+<p><code>push</code> in <strong>live code</strong>: with the line missing, the chain stays empty.</p>
+</div>
 </section>
 <section id="push-in-java" class="slide level2">
 <h2>push, in Java</h2>
@@ -802,8 +883,8 @@ Zechun (Jacob) Cao
 <p><span class="lead-blue">The rule.</span> <code>topNode</code> is the only handle onto the chain. Save what you need before you move the pointer that finds it — which is exactly why the real <code>pop()</code> calls <code>peek()</code> first.</p>
 </div>
 </section>
-<section id="what-it-costs-exam" class="slide level2">
-<h2>What It Costs <span class="mustknow">exam</span></h2>
+<section id="what-it-costs" class="slide level2">
+<h2>What It Costs</h2>
 <p><span class="lead-blue">Proposition.</span> Every operation takes <strong>constant time in the worst case</strong>.</p>
 <div class="fragment">
 <p>Not on average. Not usually. Every time.</p>
@@ -852,6 +933,1514 @@ Zechun (Jacob) Cao
 <p>This counts the stack, not the items. Those belong to the client.</p>
 </div>
 </div></div>
+</section>
+<section id="part-3" class="slide level2 center section-divider">
+<h2>Part 3</h2>
+<p>An Array and an Index</p>
+</section>
+<section id="where-does-the-top-go" class="slide level2">
+<h2>Where Does the Top Go?</h2>
+<p>Same five pushes, now into an array of capacity <span class="math inline">\(10\)</span>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/poll_array.png" class="quarto-figure quarto-figure-center" style="width:80.0%"></p>
+</figure>
+</div>
+<ul class="choices row">
+  <li><span class="k">A</span> not efficiently</li>
+  <li class="fragment pick"><span class="k">B</span> top at the end</li>
+  <li><span class="k">C</span> top at index 0</li>
+</ul>
+</section>
+<section id="where-does-the-top-go-1" class="slide level2">
+<h2>Where Does the Top Go?</h2>
+<p>Option <strong>C</strong> puts the top where every <code>push</code> and <code>pop</code> has to shift all <span class="math inline">\(N\)</span> items to make room — linear time again, for the same reason as before.</p>
+<div class="fragment">
+<p>Put the top at the <strong>end</strong>, where growing and shrinking cost nothing.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/array_stack.png" class="quarto-figure quarto-figure-center" style="width:58.0%"></p>
+</figure>
+</div>
+</div>
+<div class="fragment">
+<p><span class="lead-red">Both answer the same way:</span> put the top where the structure is already cheap.</p>
+</div>
+</section>
+<section id="fixed-capacity-in-java" class="slide level2 code-mid">
+<h2>Fixed Capacity, in Java</h2>
+<ul>
+<li><code>stack[]</code> holds the items; <code>topIndex</code> is the index of the top.</li>
+<li>An empty stack is <code>topIndex == -1</code>.</li>
+<li><code>push</code> stores at <code>topIndex + 1</code>; <code>pop</code> reads at <code>topIndex</code>.</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb15-1"><a href=""></a><span class="kw">public</span> <span class="dt">void</span> <span class="fu">push</span><span class="op">(</span>T newEntry<span class="op">)</span></span>
+<span id="cb15-2"><a href=""></a><span class="op">{</span></span>
+<span id="cb15-3"><a href=""></a>   topIndex<span class="op">++;</span></span>
+<span id="cb15-4"><a href=""></a>   stack<span class="op">[</span>topIndex<span class="op">]</span> <span class="op">=</span> newEntry<span class="op">;</span></span>
+<span id="cb15-5"><a href=""></a><span class="op">}</span> <span class="co">// end push</span></span>
+<span id="cb15-6"><a href=""></a></span>
+<span id="cb15-7"><a href=""></a><span class="kw">public</span> T <span class="fu">pop</span><span class="op">()</span></span>
+<span id="cb15-8"><a href=""></a><span class="op">{</span></span>
+<span id="cb15-9"><a href=""></a>   T top <span class="op">=</span> <span class="fu">peek</span><span class="op">();</span>               <span class="co">// might throw EmptyStackException</span></span>
+<span id="cb15-10"><a href=""></a>   topIndex<span class="op">--;</span></span>
+<span id="cb15-11"><a href=""></a>   <span class="cf">return</span> top<span class="op">;</span></span>
+<span id="cb15-12"><a href=""></a><span class="op">}</span> <span class="co">// end pop</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment">
+<p><strong><em>One of these two has a bug that no test will ever fail on.</em></strong></p>
+</div>
+</section>
+<section id="two-ways-to-break-it" class="slide level2">
+<h2>Two Ways to Break It</h2>
+<p><span class="lead-blue">Underflow.</span> <code>pop</code> or <code>peek</code> on an empty stack. Already settled in Part 1: throw <code>EmptyStackException</code>. Both implementations agree, because it is the interface’s decision.</p>
+<div class="fragment">
+<p><span class="lead-red">Overflow.</span> <code>push</code> onto a full array. The linked version cannot have this bug — it allocates a node whenever it needs one.</p>
+</div>
+<div class="fragment">
+<p><strong><em>This is the first place the client could tell the two apart. We are going to make sure it can’t.</em></strong></p>
+</div>
+</section>
+<section id="why-pop-writes-a-null" class="slide level2">
+<h2>Why <code>pop</code> Writes a <code>null</code></h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="codehead bad">
+what we wrote
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb16-1"><a href=""></a><span class="kw">public</span> T <span class="fu">pop</span><span class="op">()</span></span>
+<span id="cb16-2"><a href=""></a><span class="op">{</span></span>
+<span id="cb16-3"><a href=""></a>   T top <span class="op">=</span> <span class="fu">peek</span><span class="op">();</span></span>
+<span id="cb16-4"><a href=""></a>   topIndex<span class="op">--;</span></span>
+<span id="cb16-5"><a href=""></a>   <span class="cf">return</span> top<span class="op">;</span></span>
+<span id="cb16-6"><a href=""></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="width:50%;">
+<div class="codehead">
+one line better
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb17-1"><a href=""></a><span class="kw">public</span> T <span class="fu">pop</span><span class="op">()</span></span>
+<span id="cb17-2"><a href=""></a><span class="op">{</span></span>
+<span id="cb17-3"><a href=""></a>   T top <span class="op">=</span> <span class="fu">peek</span><span class="op">();</span></span>
+<span id="cb17-4"><a href=""></a>   stack<span class="op">[</span>topIndex<span class="op">]</span> <span class="op">=</span> <span class="kw">null</span><span class="op">;</span></span>
+<span id="cb17-5"><a href=""></a>   topIndex<span class="op">--;</span></span>
+<span id="cb17-6"><a href=""></a>   <span class="cf">return</span> top<span class="op">;</span></span>
+<span id="cb17-7"><a href=""></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div></div>
+<div class="fragment">
+<p><span class="lead-red">Loitering.</span> Holding a reference to an object you will never use again. The item is popped, the client has forgotten it, and the array still points at it — so the collector cannot reclaim it.</p>
+</div>
+</section>
+<section id="write-push-and-pop" class="slide level2 code-tight">
+<h2>Write push and pop</h2>
+<p><span class="livecode">live code</span></p>
+<p>Write the version that does not loiter.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb18-1"><a href=""></a><span class="kw">public</span> <span class="dt">void</span> <span class="fu">push</span><span class="op">(</span>T newEntry<span class="op">)</span></span>
+<span id="cb18-2"><a href=""></a><span class="op">{</span></span>
+<span id="cb18-3"><a href=""></a>   <span class="fu">ensureCapacity</span><span class="op">();</span></span>
+<span id="cb18-4"><a href=""></a>   <span class="co">// your two lines here  ______________________________</span></span>
+<span id="cb18-5"><a href=""></a></span>
+<span id="cb18-6"><a href=""></a></span>
+<span id="cb18-7"><a href=""></a><span class="op">}</span> <span class="co">// end push</span></span>
+<span id="cb18-8"><a href=""></a></span>
+<span id="cb18-9"><a href=""></a><span class="kw">public</span> T <span class="fu">pop</span><span class="op">()</span></span>
+<span id="cb18-10"><a href=""></a><span class="op">{</span></span>
+<span id="cb18-11"><a href=""></a>   T top <span class="op">=</span> <span class="fu">peek</span><span class="op">();</span>               <span class="co">// might throw EmptyStackException</span></span>
+<span id="cb18-12"><a href=""></a>   <span class="co">// your two lines here  ______________________________</span></span>
+<span id="cb18-13"><a href=""></a></span>
+<span id="cb18-14"><a href=""></a></span>
+<span id="cb18-15"><a href=""></a>   <span class="cf">return</span> top<span class="op">;</span></span>
+<span id="cb18-16"><a href=""></a><span class="op">}</span> <span class="co">// end pop</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment">
+<p>The other order — <code>stack[topIndex + 1] = newEntry;</code> then <code>topIndex++;</code> — is just as correct.</p>
+</div>
+</section>
+<section id="who-picks-the-capacity" class="slide level2">
+<h2>Who Picks the Capacity?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb19-1"><a href=""></a>StackInterface<span class="op">&lt;</span><span class="bu">String</span><span class="op">&gt;</span> s <span class="op">=</span> <span class="kw">new</span> ArrayStack<span class="op">&lt;&gt;(</span><span class="dv">100</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong><em>How is the client supposed to know the number is 100?</em></strong></p>
+<div class="fragment">
+<p>It isn’t. <code>push</code> is supposed to work, always. A constructor that demands a capacity is not an implementation of our interface — it is a different, smaller promise.</p>
+</div>
+<div class="fragment">
+<p><span class="lead-blue">Q.</span> So how do we grow the array?</p>
+</div>
+</section>
+<section id="place-your-bets" class="slide level2">
+<h2>Place Your Bets</h2>
+<p><span class="lead-blue">First try.</span> When the array is full, make a new array <strong>one slot bigger</strong> and copy everything across.</p>
+<div class="fragment">
+<p>Building a stack of <span class="math inline">\(N\)</span> items costs <span class="math inline">\(N\)</span> stores, plus a copy on nearly every push. Copying <span class="math inline">\(k - 1\)</span> items costs <span class="math inline">\(2(k-1)\)</span> array accesses — one read and one write each.</p>
+</div>
+<div class="fragment">
+<p><strong><em>How many array accesses to push <span class="math inline">\(N\)</span> items? Commit to an answer.</em></strong></p>
+<table class="caption-top">
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">about <span class="math inline">\(2N\)</span></td>
+<td style="text-align: center;">about <span class="math inline">\(N \log N\)</span></td>
+<td style="text-align: center;">about <span class="math inline">\(N^2\)</span></td>
+<td style="text-align: center;">about <span class="math inline">\(2^N\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="grow-by-one-the-bill" class="slide level2">
+<h2>Grow by One: the Bill</h2>
+<p><span class="math display">\[N \;+\; \bigl(2 + 4 + \cdots + 2(N-1)\bigr) \;=\; N + N(N-1) \;=\; N^2\]</span></p>
+<div class="columns">
+<div class="column" style="width:55%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/grow_by_one.png" class="quarto-figure quarto-figure-center" style="width:100.0%"></p>
+</figure>
+</div>
+</div><div class="column" style="width:45%;">
+<p><span class="lead-red">Quadratic.</span> A stack of a million items costs a trillion array accesses to build.</p>
+<div class="fragment">
+<p>And every one of those accesses is spent on an operation the linked version does for free.</p>
+</div>
+</div></div>
+</section>
+<section id="repeated-doubling" class="slide level2">
+<h2>Repeated Doubling</h2>
+<p><span class="lead-blue">The fix.</span> Do not resize <em>often</em>. Resize <em>rarely</em>, and take a big step when you do.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb20-1"><a href=""></a><span class="kw">public</span> <span class="dt">void</span> <span class="fu">push</span><span class="op">(</span>T newEntry<span class="op">)</span></span>
+<span id="cb20-2"><a href=""></a><span class="op">{</span></span>
+<span id="cb20-3"><a href=""></a>   <span class="fu">ensureCapacity</span><span class="op">();</span></span>
+<span id="cb20-4"><a href=""></a>   topIndex<span class="op">++;</span></span>
+<span id="cb20-5"><a href=""></a>   stack<span class="op">[</span>topIndex<span class="op">]</span> <span class="op">=</span> newEntry<span class="op">;</span></span>
+<span id="cb20-6"><a href=""></a><span class="op">}</span> <span class="co">// end push</span></span>
+<span id="cb20-7"><a href=""></a></span>
+<span id="cb20-8"><a href=""></a><span class="kw">private</span> <span class="dt">void</span> <span class="fu">ensureCapacity</span><span class="op">()</span></span>
+<span id="cb20-9"><a href=""></a><span class="op">{</span></span>
+<span id="cb20-10"><a href=""></a>   <span class="cf">if</span> <span class="op">(</span>topIndex <span class="op">&gt;=</span> stack<span class="op">.</span><span class="fu">length</span> <span class="op">-</span> <span class="dv">1</span><span class="op">)</span>          <span class="co">// the array is full</span></span>
+<span id="cb20-11"><a href=""></a>      stack <span class="op">=</span> <span class="bu">Arrays</span><span class="op">.</span><span class="fu">copyOf</span><span class="op">(</span>stack<span class="op">,</span> <span class="dv">2</span> <span class="op">*</span> stack<span class="op">.</span><span class="fu">length</span><span class="op">);</span></span>
+<span id="cb20-12"><a href=""></a><span class="op">}</span> <span class="co">// end ensureCapacity</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="repeated-doubling-the-bill" class="slide level2">
+<h2>Repeated Doubling: the Bill</h2>
+<p>Doubling to capacity <span class="math inline">\(k\)</span> copies <span class="math inline">\(k/2\)</span> items, so it costs <span class="math inline">\(k\)</span> accesses. Every doubling before that one cost half as much.</p>
+<p><span class="math display">\[N \;+\; \bigl(2 + 4 + 8 + \cdots + N\bigr) \;=\; N + 2(N-1) \;\sim\; 3N\]</span></p>
+<div class="fragment">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/grow_doubling.png" class="quarto-figure quarto-figure-center" style="width:52.0%"></p>
+</figure>
+</div>
+</div>
+</section>
+<section id="repeated-doubling-the-bill-1" class="slide level2">
+<h2>Repeated Doubling: the Bill</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: right;"><span class="math inline">\(N\)</span></th>
+<th style="text-align: right;">grow by one</th>
+<th style="text-align: right;">repeated doubling</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;"><span class="math inline">\(16\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(256\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(46\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"><span class="math inline">\(128\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(16{,}384\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(382\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;"><span class="math inline">\(1{,}024\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(1{,}048{,}576\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(3{,}070\)</span></td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<p>Same interface. Same client code. <strong><em>One line of the implementation.</em></strong></p>
+</div>
+</section>
+<section id="now-shrink-it" class="slide level2">
+<h2>Now Shrink It</h2>
+<p>A stack that grew to a million and then popped back to ten should not still be holding a million slots.</p>
+<div class="fragment">
+<p><span class="lead-blue">First try.</span> Halve the array when it is one-half full.</p>
+</div>
+<div class="fragment">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/thrashing.png" class="quarto-figure quarto-figure-center" style="width:74.0%"></p>
+</figure>
+</div>
+</div>
+</section>
+<section id="now-shrink-it-1" class="slide level2">
+<h2>Now Shrink It</h2>
+<p>Sit at the boundary and alternate <code>push</code>, <code>pop</code>, <code>push</code>, <code>pop</code>. Every single operation copies the whole array.</p>
+<div class="fragment">
+<p><span class="lead-red">Cost.</span> <span class="math inline">\(M\)</span> operations, each proportional to <span class="math inline">\(N\)</span>. The worst case is back to quadratic — and this time an adversary does not even need to try hard.</p>
+</div>
+<div class="fragment">
+<p><strong><em>The bug is that grow and shrink fire at the same place. Leave a gap.</em></strong></p>
+</div>
+</section>
+<section id="halve-at-one-quarter" class="slide level2">
+<h2>Halve at One Quarter</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb21-1"><a href=""></a><span class="kw">public</span> T <span class="fu">pop</span><span class="op">()</span></span>
+<span id="cb21-2"><a href=""></a><span class="op">{</span></span>
+<span id="cb21-3"><a href=""></a>   T top <span class="op">=</span> <span class="fu">peek</span><span class="op">();</span></span>
+<span id="cb21-4"><a href=""></a>   stack<span class="op">[</span>topIndex<span class="op">]</span> <span class="op">=</span> <span class="kw">null</span><span class="op">;</span></span>
+<span id="cb21-5"><a href=""></a>   topIndex<span class="op">--;</span></span>
+<span id="cb21-6"><a href=""></a>   <span class="cf">if</span> <span class="op">(</span>topIndex <span class="op">+</span> <span class="dv">1</span> <span class="op">&gt;</span> <span class="dv">0</span> <span class="op">&amp;&amp;</span> topIndex <span class="op">+</span> <span class="dv">1</span> <span class="op">==</span> stack<span class="op">.</span><span class="fu">length</span> <span class="op">/</span> <span class="dv">4</span><span class="op">)</span></span>
+<span id="cb21-7"><a href=""></a>      stack <span class="op">=</span> <span class="bu">Arrays</span><span class="op">.</span><span class="fu">copyOf</span><span class="op">(</span>stack<span class="op">,</span> stack<span class="op">.</span><span class="fu">length</span> <span class="op">/</span> <span class="dv">2</span><span class="op">);</span></span>
+<span id="cb21-8"><a href=""></a>   <span class="cf">return</span> top<span class="op">;</span></span>
+<span id="cb21-9"><a href=""></a><span class="op">}</span> <span class="co">// end pop</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment">
+<p><span class="lead-blue">Invariant.</span> The array is always between <span class="math inline">\(25\%\)</span> and <span class="math inline">\(100\%\)</span> full.</p>
+</div>
+<div class="fragment">
+<p>After a resize it sits at half full, so it takes <span class="math inline">\(N/2\)</span> more operations in <em>either</em> direction to trigger the next one. The gap pays for the copy.</p>
+</div>
+</section>
+<section id="amortized-analysis" class="slide level2">
+<h2>Amortized Analysis</h2>
+<p><span class="lead-blue">Definition.</span> Start from an empty data structure. The <strong>amortized</strong> cost of an operation is the average cost per operation over a worst-case sequence of them.</p>
+<div class="columns">
+<div class="column" style="width:56%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/push_cost.png" class="quarto-figure quarto-figure-center" style="width:100.0%"></p>
+</figure>
+</div>
+</div><div class="column" style="width:44%;">
+<p>Individual pushes are unbounded — the one that doubles a <span class="math inline">\(64\)</span>-slot array costs <span class="math inline">\(129\)</span> accesses.</p>
+<div class="fragment">
+<p>The running average never passes <span class="math inline">\(3\)</span>.</p>
+</div>
+</div></div>
+</section>
+<section id="amortized-is-not-average" class="slide level2">
+<h2>Amortized Is Not Average</h2>
+<p><span class="lead-blue">Proposition.</span> Starting from an empty stack, any sequence of <span class="math inline">\(M\)</span> <code>push</code> and <code>pop</code> operations takes time proportional to <span class="math inline">\(M\)</span>.</p>
+<div class="fragment">
+<p><span class="lead-red">Average case</span> averages over <em>inputs</em>, and assumes the inputs are random. An adversary breaks it.</p>
+</div>
+<div class="fragment">
+<p><span class="lead-blue">Amortized cost</span> averages over the <em>sequence</em>, and holds for the worst sequence there is. There is nothing left to assume.</p>
+</div>
+<div class="fragment">
+<p><strong><em>That is a guarantee, and you can promise it to a customer.</em></strong></p>
+</div>
+</section>
+<section id="the-performance-table" class="slide level2">
+<h2>The Performance Table</h2>
+<p>Order of growth of the running time, for a resizing-array stack holding <span class="math inline">\(N\)</span> items:</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: center;">best</th>
+<th style="text-align: center;">worst</th>
+<th style="text-align: center;">amortized</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">construct</td>
+<td style="text-align: center;"><span class="math inline">\(1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>push</code></td>
+<td style="text-align: center;"><span class="math inline">\(1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(N\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>pop</code></td>
+<td style="text-align: center;"><span class="math inline">\(1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(N\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>isEmpty</code></td>
+<td style="text-align: center;"><span class="math inline">\(1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1\)</span></td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<p>The <span class="math inline">\(N\)</span> in the worst-case column is real — it is the doubling — and it is also the reason the amortized column is <span class="math inline">\(1\)</span>.</p>
+</div>
+</section>
+<section id="what-it-costs-in-memory-1" class="slide level2">
+<h2>What It Costs in Memory</h2>
+<p><span class="lead-blue">Proposition.</span> A resizing-array stack with <span class="math inline">\(N\)</span> items uses between about <span class="math inline">\(8N\)</span> and <span class="math inline">\(32N\)</span> bytes.</p>
+<ul>
+<li><span class="math inline">\(\sim 8N\)</span> when the array is full — one <span class="math inline">\(8\)</span>-byte reference per item.</li>
+<li><span class="math inline">\(\sim 32N\)</span> when it is one-quarter full — the array holds <span class="math inline">\(4N\)</span> slots.</li>
+</ul>
+<div class="fragment">
+<p>Against <span class="math inline">\(\sim 40N\)</span> for the chain, whose worst case <em>is</em> its best case.</p>
+<p><strong><em>The array wastes slots. The chain wastes bytes per item. Neither is free.</em></strong></p>
+</div>
+</section>
+<section id="head-to-head" class="slide level2 dense-table">
+<h2>Head to Head</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">linked list</th>
+<th style="text-align: left;">resizing array</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>push</code> / <code>pop</code></td>
+<td style="text-align: left;"><span class="math inline">\(O(1)\)</span> <strong>worst case</strong></td>
+<td style="text-align: left;"><span class="math inline">\(O(1)\)</span> <strong>amortized</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">the slow operation</td>
+<td style="text-align: left;">there isn’t one</td>
+<td style="text-align: left;">the push that doubles</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">memory per item</td>
+<td style="text-align: left;"><span class="math inline">\(\sim 40\)</span> bytes</td>
+<td style="text-align: left;"><span class="math inline">\(8\)</span> to <span class="math inline">\(32\)</span> bytes</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">overhead</td>
+<td style="text-align: left;">two references per item</td>
+<td style="text-align: left;">unused slots</td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<p><span class="lead-blue">Use the chain</span> when no single operation may be slow — an animation frame, a control loop, anything with a deadline.</p>
+</div>
+<div class="fragment">
+<p><span class="lead-red">Use the array</span> when total time and memory matter more than any one operation. Most of the time, this one.</p>
+</div>
+</section>
+<section id="head-to-head-1" class="slide level2">
+<h2>Head to Head</h2>
+<p>The client wrote <code>push</code> and <code>pop</code> and never found out which it got.</p>
+<div class="fragment">
+<p>That is what the interface bought: two data structures with different worst cases, different memory profiles, and no shared code, behind <strong>one</strong> set of five operations.</p>
+</div>
+</section>
+<section id="part-4" class="slide level2 center section-divider">
+<h2>Part 4</h2>
+<p>One Stack, Any Type</p>
+</section>
+<section id="we-want-more-than-one-stack" class="slide level2">
+<h2>We Want More Than One Stack</h2>
+<p>We built a stack of strings. We also want a stack of URLs, a stack of integers, a stack of delimiters, a stack of vans.</p>
+<div class="fragment">
+<p><span class="lead-blue">Attempt 1.</span> Write a separate class for each type.</p>
+</div>
+<div class="fragment">
+<ul>
+<li>Writing the same code five times is tedious and error-prone.</li>
+<li>Maintaining five copies of it is worse: you will fix the bug in four.</li>
+</ul>
+</div>
+<div class="fragment">
+<p>This was the only reasonable approach until Java 1.5. <strong><em>We can do better.</em></strong></p>
+</div>
+</section>
+<section id="attempt-2-a-stack-of-object" class="slide level2">
+<h2>Attempt 2: A Stack of <code>Object</code></h2>
+<p>Everything in Java is an <code>Object</code>, so store <code>Object</code> and let the client cast on the way out.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb22-1"><a href=""></a>StackOfObjects s <span class="op">=</span> <span class="kw">new</span> <span class="fu">StackOfObjects</span><span class="op">();</span></span>
+<span id="cb22-2"><a href=""></a>Apple  a <span class="op">=</span> <span class="kw">new</span> <span class="fu">Apple</span><span class="op">();</span></span>
+<span id="cb22-3"><a href=""></a>Orange b <span class="op">=</span> <span class="kw">new</span> <span class="fu">Orange</span><span class="op">();</span></span>
+<span id="cb22-4"><a href=""></a>s<span class="op">.</span><span class="fu">push</span><span class="op">(</span>a<span class="op">);</span></span>
+<span id="cb22-5"><a href=""></a>s<span class="op">.</span><span class="fu">push</span><span class="op">(</span>b<span class="op">);</span></span>
+<span id="cb22-6"><a href=""></a>a <span class="op">=</span> <span class="op">(</span>Apple<span class="op">)</span> s<span class="op">.</span><span class="fu">pop</span><span class="op">();</span>      <span class="co">// compiles fine</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment">
+<p><span class="lead-blue">It compiles.</span> It also pops an <code>Orange</code> and casts it to <code>Apple</code>.</p>
+<p><span class="lead-red"><code>ClassCastException</code>, at run time, in front of a user.</span></p>
+</div>
+</section>
+<section id="attempt-3-generics" class="slide level2">
+<h2>Attempt 3: Generics</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb23-1"><a href=""></a>StackInterface<span class="op">&lt;</span>Apple<span class="op">&gt;</span> s <span class="op">=</span> <span class="kw">new</span> LinkedStack<span class="op">&lt;&gt;();</span></span>
+<span id="cb23-2"><a href=""></a>Apple  a <span class="op">=</span> <span class="kw">new</span> <span class="fu">Apple</span><span class="op">();</span></span>
+<span id="cb23-3"><a href=""></a>Orange b <span class="op">=</span> <span class="kw">new</span> <span class="fu">Orange</span><span class="op">();</span></span>
+<span id="cb23-4"><a href=""></a>s<span class="op">.</span><span class="fu">push</span><span class="op">(</span>a<span class="op">);</span></span>
+<span id="cb23-5"><a href=""></a>s<span class="op">.</span><span class="fu">push</span><span class="op">(</span>b<span class="op">);</span>                <span class="co">// will not compile</span></span>
+<span id="cb23-6"><a href=""></a>a <span class="op">=</span> s<span class="op">.</span><span class="fu">pop</span><span class="op">();</span>              <span class="co">// no cast needed</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment">
+<p>The same mistake, caught by <code>javac</code> before the program ever runs.</p>
+</div>
+<div class="fragment">
+<p><span class="lead-red">Guiding principle.</span> Welcome compile-time errors; avoid run-time errors.</p>
+</div>
+</section>
+<section id="the-same-class-parameterized" class="slide level2">
+<h2>The Same Class, Parameterized</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="codehead">
+of strings
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb24-1"><a href=""></a><span class="kw">public</span> <span class="kw">class</span> LinkedStackOfStrings</span>
+<span id="cb24-2"><a href=""></a><span class="op">{</span></span>
+<span id="cb24-3"><a href=""></a>   <span class="kw">private</span> <span class="bu">Node</span> topNode<span class="op">;</span></span>
+<span id="cb24-4"><a href=""></a></span>
+<span id="cb24-5"><a href=""></a>   <span class="kw">private</span> <span class="kw">class</span> <span class="bu">Node</span></span>
+<span id="cb24-6"><a href=""></a>   <span class="op">{</span></span>
+<span id="cb24-7"><a href=""></a>      <span class="bu">String</span> data<span class="op">;</span></span>
+<span id="cb24-8"><a href=""></a>      <span class="bu">Node</span>   next<span class="op">;</span></span>
+<span id="cb24-9"><a href=""></a>   <span class="op">}</span></span>
+<span id="cb24-10"><a href=""></a></span>
+<span id="cb24-11"><a href=""></a>   <span class="kw">public</span> <span class="dt">void</span> <span class="fu">push</span><span class="op">(</span><span class="bu">String</span> e<span class="op">)</span></span>
+<span id="cb24-12"><a href=""></a>   <span class="op">{</span> <span class="kw">...</span> <span class="op">}</span></span>
+<span id="cb24-13"><a href=""></a></span>
+<span id="cb24-14"><a href=""></a>   <span class="kw">public</span> <span class="bu">String</span> <span class="fu">pop</span><span class="op">()</span></span>
+<span id="cb24-15"><a href=""></a>   <span class="op">{</span> <span class="kw">...</span> <span class="op">}</span></span>
+<span id="cb24-16"><a href=""></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="width:50%;">
+<div class="codehead">
+of anything
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb25-1"><a href=""></a><span class="kw">public</span> <span class="kw">class</span> LinkedStack<span class="op">&lt;</span>T<span class="op">&gt;</span></span>
+<span id="cb25-2"><a href=""></a><span class="op">{</span></span>
+<span id="cb25-3"><a href=""></a>   <span class="kw">private</span> <span class="bu">Node</span> topNode<span class="op">;</span></span>
+<span id="cb25-4"><a href=""></a></span>
+<span id="cb25-5"><a href=""></a>   <span class="kw">private</span> <span class="kw">class</span> <span class="bu">Node</span></span>
+<span id="cb25-6"><a href=""></a>   <span class="op">{</span></span>
+<span id="cb25-7"><a href=""></a>      T    data<span class="op">;</span></span>
+<span id="cb25-8"><a href=""></a>      <span class="bu">Node</span> next<span class="op">;</span></span>
+<span id="cb25-9"><a href=""></a>   <span class="op">}</span></span>
+<span id="cb25-10"><a href=""></a></span>
+<span id="cb25-11"><a href=""></a>   <span class="kw">public</span> <span class="dt">void</span> <span class="fu">push</span><span class="op">(</span>T e<span class="op">)</span></span>
+<span id="cb25-12"><a href=""></a>   <span class="op">{</span> <span class="kw">...</span> <span class="op">}</span></span>
+<span id="cb25-13"><a href=""></a></span>
+<span id="cb25-14"><a href=""></a>   <span class="kw">public</span> T <span class="fu">pop</span><span class="op">()</span></span>
+<span id="cb25-15"><a href=""></a>   <span class="op">{</span> <span class="kw">...</span> <span class="op">}</span></span>
+<span id="cb25-16"><a href=""></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div></div>
+<div class="fragment">
+<p>Every <code>String</code> became <code>T</code>. <strong><em>That is the whole edit.</em></strong></p>
+</div>
+</section>
+<section id="generic-arrays-in-theory" class="slide level2">
+<h2>Generic Arrays, in Theory</h2>
+<p>The chain generalized without a fight because it never names an array type. The array implementation is not so lucky.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb26-1"><a href=""></a><span class="kw">public</span> <span class="kw">class</span> ArrayStack<span class="op">&lt;</span>T<span class="op">&gt;</span> <span class="kw">implements</span> StackInterface<span class="op">&lt;</span>T<span class="op">&gt;</span></span>
+<span id="cb26-2"><a href=""></a><span class="op">{</span></span>
+<span id="cb26-3"><a href=""></a>   <span class="kw">private</span> T<span class="op">[]</span> stack<span class="op">;</span></span>
+<span id="cb26-4"><a href=""></a>   <span class="kw">private</span> <span class="dt">int</span> topIndex<span class="op">;</span></span>
+<span id="cb26-5"><a href=""></a></span>
+<span id="cb26-6"><a href=""></a>   <span class="kw">public</span> <span class="fu">ArrayStack</span><span class="op">(</span><span class="dt">int</span> initialCapacity<span class="op">)</span></span>
+<span id="cb26-7"><a href=""></a>   <span class="op">{</span></span>
+<span id="cb26-8"><a href=""></a>      stack <span class="op">=</span> <span class="kw">new</span> T<span class="op">[</span>initialCapacity<span class="op">];</span>     <span class="co">// will not compile</span></span>
+<span id="cb26-9"><a href=""></a>      topIndex <span class="op">=</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
+<span id="cb26-10"><a href=""></a>   <span class="op">}</span></span>
+<span id="cb26-11"><a href=""></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment">
+<p><span class="lead-red">Generic array creation is not allowed in Java.</span></p>
+</div>
+</section>
+<section id="generic-arrays-in-practice" class="slide level2">
+<h2>Generic Arrays, in Practice</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb27-1"><a href=""></a><span class="kw">public</span> <span class="fu">ArrayStack</span><span class="op">(</span><span class="dt">int</span> initialCapacity<span class="op">)</span></span>
+<span id="cb27-2"><a href=""></a><span class="op">{</span></span>
+<span id="cb27-3"><a href=""></a>   <span class="fu">checkCapacity</span><span class="op">(</span>initialCapacity<span class="op">);</span></span>
+<span id="cb27-4"><a href=""></a>   <span class="at">@SuppressWarnings</span><span class="op">(</span><span class="st">"unchecked"</span><span class="op">)</span></span>
+<span id="cb27-5"><a href=""></a>   T<span class="op">[]</span> tempStack <span class="op">=</span> <span class="op">(</span>T<span class="op">[])</span> <span class="kw">new</span> <span class="bu">Object</span><span class="op">[</span>initialCapacity<span class="op">];</span></span>
+<span id="cb27-6"><a href=""></a>   stack <span class="op">=</span> tempStack<span class="op">;</span></span>
+<span id="cb27-7"><a href=""></a>   topIndex <span class="op">=</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
+<span id="cb27-8"><a href=""></a><span class="op">}</span> <span class="co">// end constructor</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment">
+<p>Allocate an <code>Object[]</code> and cast it. <code>javac -Xlint:unchecked</code> warns that it cannot verify the cast; <code>@SuppressWarnings</code> says <em>we checked, it is safe</em> — the array is private, and only <code>push</code> ever writes to it.</p>
+</div>
+<div class="fragment">
+<p><span class="lead-blue">Why does Java make us do this?</span> Short answer: backward compatibility. Long answer: type erasure, and it is a course of its own.</p>
+</div>
+</section>
+<section id="primitives-and-autoboxing" class="slide level2">
+<h2>Primitives and Autoboxing</h2>
+<p><span class="lead-blue">Q.</span> <code>T</code> must be a class. What about <code>int</code>, <code>double</code>, <code>char</code>?</p>
+<div class="fragment">
+<p><span class="lead-blue">Wrapper types.</span> Every primitive has a class that holds one: <code>Integer</code> for <code>int</code>, <code>Character</code> for <code>char</code>.</p>
+</div>
+<div class="fragment">
+<p><span class="lead-blue">Autoboxing.</span> The compiler inserts the conversion for you.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb28-1"><a href=""></a>StackInterface<span class="op">&lt;</span><span class="bu">Integer</span><span class="op">&gt;</span> s <span class="op">=</span> <span class="kw">new</span> LinkedStack<span class="op">&lt;&gt;();</span></span>
+<span id="cb28-2"><a href=""></a>s<span class="op">.</span><span class="fu">push</span><span class="op">(</span><span class="dv">17</span><span class="op">);</span>          <span class="co">// s.push(Integer.valueOf(17));</span></span>
+<span id="cb28-3"><a href=""></a><span class="dt">int</span> a <span class="op">=</span> s<span class="op">.</span><span class="fu">pop</span><span class="op">();</span>     <span class="co">// int a = s.pop().intValue();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="fragment">
+<p><span class="lead-red">Bottom line.</span> One class, any type of data.</p>
+</div>
+</section>
+<section id="looking-without-touching" class="slide level2">
+<h2>Looking Without Touching</h2>
+<p><span class="lead-blue">Design challenge.</span> Let a client walk the items — top first — without telling it whether they live in a chain or an array.</p>
+<div class="fragment">
+<p>Java’s answer: implement <code>java.lang.Iterable&lt;T&gt;</code>, and the client gets the <code>for-each</code> loop for free.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb29-1"><a href=""></a><span class="cf">for</span> <span class="op">(</span><span class="bu">String</span> s <span class="op">:</span> stack<span class="op">)</span></span>
+<span id="cb29-2"><a href=""></a>   StdOut<span class="op">.</span><span class="fu">println</span><span class="op">(</span>s<span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="fragment">
+<p>That loop is the <em>only</em> thing the client writes. Which representation it is walking never comes up.</p>
+</div>
+</section>
+<section id="iterable-and-iterator" class="slide level2">
+<h2><code>Iterable</code> and <code>Iterator</code></h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><span class="lead-blue">An <code>Iterable</code></span> has a method that hands back an <code>Iterator</code>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb30-1"><a href=""></a><span class="kw">public</span> <span class="kw">interface</span> <span class="bu">Iterable</span><span class="op">&lt;</span>T<span class="op">&gt;</span></span>
+<span id="cb30-2"><a href=""></a><span class="op">{</span></span>
+<span id="cb30-3"><a href=""></a>   <span class="bu">Iterator</span><span class="op">&lt;</span>T<span class="op">&gt;</span> <span class="fu">iterator</span><span class="op">();</span></span>
+<span id="cb30-4"><a href=""></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="width:50%;">
+<p><span class="lead-blue">An <code>Iterator</code></span> knows whether there is a next item, and what it is.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb31-1"><a href=""></a><span class="kw">public</span> <span class="kw">interface</span> <span class="bu">Iterator</span><span class="op">&lt;</span>T<span class="op">&gt;</span></span>
+<span id="cb31-2"><a href=""></a><span class="op">{</span></span>
+<span id="cb31-3"><a href=""></a>   <span class="dt">boolean</span> <span class="fu">hasNext</span><span class="op">();</span></span>
+<span id="cb31-4"><a href=""></a>   T <span class="fu">next</span><span class="op">();</span></span>
+<span id="cb31-5"><a href=""></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div></div>
+<div class="fragment">
+<p>Two interfaces, three methods. Every collection in the Java library implements them, and so can yours.</p>
+</div>
+</section>
+<section id="the-array-iterator" class="slide level2">
+<h2>The Array Iterator</h2>
+<p>Walking an array-backed stack top-first means counting <strong>down</strong> from <code>topIndex</code>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb32-1"><a href=""></a><span class="kw">public</span> <span class="bu">Iterator</span><span class="op">&lt;</span>T<span class="op">&gt;</span> <span class="fu">iterator</span><span class="op">()</span> <span class="op">{</span> <span class="cf">return</span> <span class="kw">new</span> <span class="fu">ReverseArrayIterator</span><span class="op">();</span> <span class="op">}</span></span>
+<span id="cb32-2"><a href=""></a></span>
+<span id="cb32-3"><a href=""></a><span class="kw">private</span> <span class="kw">class</span> ReverseArrayIterator <span class="kw">implements</span> <span class="bu">Iterator</span><span class="op">&lt;</span>T<span class="op">&gt;</span></span>
+<span id="cb32-4"><a href=""></a><span class="op">{</span></span>
+<span id="cb32-5"><a href=""></a>   <span class="kw">private</span> <span class="dt">int</span> i <span class="op">=</span> topIndex<span class="op">;</span></span>
+<span id="cb32-6"><a href=""></a></span>
+<span id="cb32-7"><a href=""></a>   <span class="kw">public</span> <span class="dt">boolean</span> <span class="fu">hasNext</span><span class="op">()</span> <span class="op">{</span> <span class="cf">return</span> i <span class="op">&gt;=</span> <span class="dv">0</span><span class="op">;</span> <span class="op">}</span></span>
+<span id="cb32-8"><a href=""></a>   <span class="kw">public</span> T <span class="fu">next</span><span class="op">()</span>          <span class="op">{</span> <span class="cf">return</span> stack<span class="op">[</span>i<span class="op">--];</span> <span class="op">}</span></span>
+<span id="cb32-9"><a href=""></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment">
+<p>The chain’s iterator walks <code>topNode</code>, <code>topNode.next</code>, and so on — same order, different code, and the client cannot tell.</p>
+</div>
+</section>
+<section id="why-not-java.util.stack" class="slide level2 long-title">
+<h2>Why Not <code>java.util.Stack</code>?</h2>
+<p>It exists. It has <code>push</code>, <code>pop</code>, <code>peek</code>, and iteration. <strong><em>And you should not use it.</em></strong></p>
+<div class="fragment">
+<p>It <code>extends java.util.Vector</code>, so it also has <code>get(int)</code> and <code>remove(int)</code> — a “stack” whose client can reach into the middle and pull something out.</p>
+</div>
+<div class="fragment">
+<p><span class="lead-red">The design mistake.</span> A stack <strong>has a</strong> list. It is not <strong>a kind of</strong> list. Inheriting from <code>Vector</code> published every operation the interface was written to hide.</p>
+</div>
+</section>
+<section id="the-bug-report" class="slide level2">
+<h2>The Bug Report</h2>
+<blockquote>
+<p>The iterator method on <code>java.util.Stack</code> iterates through a Stack from the bottom up. One would think that it should iterate as if it were popping off the top of the Stack.</p>
+<p>— Java bug report, June 27, 2001</p>
+</blockquote>
+<div class="fragment">
+<blockquote>
+<p>It was an incorrect design decision to have <code>Stack</code> extend <code>Vector</code> (“is-a” rather than “has-a”). We sympathize with the submitter but cannot fix this because of compatibility.</p>
+<p>— status: <strong>closed, will not fix</strong></p>
+</blockquote>
+</div>
+<div class="fragment">
+<p>Twenty-five years later it is still there. <strong><em>Interface decisions outlive the people who make them.</em></strong></p>
+</div>
+</section>
+<section id="part-5" class="slide level2 center section-divider">
+<h2>Part 5</h2>
+<p>What Stacks Are For</p>
+</section>
+<section id="where-youve-used-one" class="slide level2">
+<h2>Where You’ve Used One</h2>
+<ul>
+<li>Undo in a word processor, and <strong>Back</strong> in a web browser.</li>
+<li>The runtime stack that tracks the methods a program is inside.</li>
+<li>The Java virtual machine, which is a stack machine.</li>
+<li>Parsing, in every compiler ever written.</li>
+<li>PostScript, the language your printer speaks.</li>
+</ul>
+<div class="fragment">
+<p><strong><em>Every program left in this chapter is painful to write without a stack and nearly trivial with one.</em></strong></p>
+</div>
+</section>
+<section id="how-a-function-call-works" class="slide level2">
+<h2>How a Function Call Works</h2>
+<ul>
+<li><strong>Call:</strong> push the local variables and the return address.</li>
+<li><strong>Return:</strong> pop them, and resume where the address says.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/program_stack.png" class="quarto-figure quarto-figure-center" style="width:72.0%"></p>
+</figure>
+</div>
+</section>
+<section id="how-a-function-call-works-1" class="slide level2">
+<h2>How a Function Call Works</h2>
+<p>A <strong>recursive</strong> function is one that calls itself, so it appears in several frames at once — with different local variables in each.</p>
+<div class="fragment">
+<p>The stack is what keeps those copies apart. <code>gcd(216, 192)</code> has not finished; it is waiting under two other frames for an answer.</p>
+</div>
+<div class="fragment">
+<p><span class="lead-red">Consequence.</span> Any recursion can be rewritten with an explicit stack, because that is all recursion ever was.</p>
+</div>
+</section>
+<section id="undo-for-real" class="slide level2">
+<h2>Undo, for Real</h2>
+<p>Slide 1 of this deck was Ctrl-Z. This is the program under it.</p>
+<p>Characters arrive one at a time, and <code>[undo]</code> means <em>throw the last one away</em>:</p>
+<p><span class="math display">\[\texttt{h\;e\;l\;[undo]\;l\;l\;o\;[undo]\;o\;w\;o\;r\;l\;d}\]</span></p>
+<div class="fragment">
+<p><strong><em>What is left at the end?</em></strong></p>
+</div>
+<div class="fragment">
+<p><code>helloworld</code></p>
+</div>
+</section>
+<section id="undo-for-real-1" class="slide level2 dense-table">
+<h2>Undo, for Real</h2>
+<p><span class="doit">work it</span></p>
+<p>Push every character. On <code>[undo]</code>, pop one — if there is one.</p>
+<table class="steps caption-top">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">read</th>
+<th class="st" data-quarto-table-cell-role="th">stack (bottom → top)</th>
+<th class="note" data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td class="tok">h</td>
+<td class="st">h</td>
+<td class="note"></td>
+</tr>
+<tr class="fragment even">
+<td class="tok">e</td>
+<td class="st">he</td>
+<td class="note"></td>
+</tr>
+<tr class="fragment odd">
+<td class="tok">l</td>
+<td class="st">hel</td>
+<td class="note"></td>
+</tr>
+<tr class="fragment even">
+<td class="tok">[undo]</td>
+<td class="st">he</td>
+<td class="note">popped l</td>
+</tr>
+<tr class="fragment odd">
+<td class="tok">llo</td>
+<td class="st">hello</td>
+<td class="note">three pushes</td>
+</tr>
+<tr class="fragment even">
+<td class="tok">[undo]</td>
+<td class="st">hell</td>
+<td class="note">popped o</td>
+</tr>
+<tr class="fragment result odd">
+<td class="tok">oworld</td>
+<td class="st">helloworld</td>
+<td class="note">six pushes</td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<p>Twelve pushes, two pops, ten characters left. <strong><em>And the answer is sitting upside down.</em></strong></p>
+</div>
+</section>
+<section id="the-stack-is-backwards" class="slide level2">
+<h2>The Stack Is Backwards</h2>
+<p><code>s</code> holds <code>helloworld</code> bottom to top, so <code>d</code> is what comes off first. Popping it spells <code>dlrowolleh</code>.</p>
+<div class="fragment">
+<p>Pour <code>s</code> into a second stack <code>t</code> and the order flips. Popping <code>t</code> spells the answer.</p>
+</div>
+<div class="fragment">
+<p><strong><em>That is the warmup client from Part 1</em></strong>, which reversed its input without a reversing loop. Here we want the reversal, so we do it twice.</p>
+</div>
+</section>
+<section id="write-the-undo-loop" class="slide level2 code-mid">
+<h2>Write the Undo Loop</h2>
+<p><span class="livecode">live code</span></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb33-1"><a href=""></a>Algorithm <span class="fu">processString</span><span class="op">(</span>S<span class="op">):</span></span>
+<span id="cb33-2"><a href=""></a>   Create an empty stack s</span>
+<span id="cb33-3"><a href=""></a></span>
+<span id="cb33-4"><a href=""></a>   <span class="cf">for</span> each <span class="dt">char</span> c in S<span class="op">:</span></span>
+<span id="cb33-5"><a href=""></a>      <span class="cf">if</span> <span class="op">(</span>c <span class="op">!=</span> <span class="op">[</span>undo<span class="op">]):</span></span>
+<span id="cb33-6"><a href=""></a>         <span class="co">// your line here  ____________________</span></span>
+<span id="cb33-7"><a href=""></a></span>
+<span id="cb33-8"><a href=""></a>      <span class="cf">else</span> <span class="cf">if</span> <span class="op">(!</span>s<span class="op">.</span><span class="fu">isEmpty</span><span class="op">()):</span></span>
+<span id="cb33-9"><a href=""></a>         <span class="co">// your line here  ____________________</span></span>
+<span id="cb33-10"><a href=""></a></span>
+<span id="cb33-11"><a href=""></a></span>
+<span id="cb33-12"><a href=""></a>   Create an empty stack t              <span class="co">// flip s into t</span></span>
+<span id="cb33-13"><a href=""></a>   <span class="co">// your two lines here  ____________________</span></span>
+<span id="cb33-14"><a href=""></a></span>
+<span id="cb33-15"><a href=""></a></span>
+<span id="cb33-16"><a href=""></a>   Create <span class="bu">String</span> str                    <span class="co">// read t into str</span></span>
+<span id="cb33-17"><a href=""></a>   <span class="co">// your two lines here  ____________________</span></span>
+<span id="cb33-18"><a href=""></a></span>
+<span id="cb33-19"><a href=""></a></span>
+<span id="cb33-20"><a href=""></a>   <span class="cf">return</span> str</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="the-undo-loop" class="slide level2 code-tight">
+<h2>The Undo Loop</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb34-1"><a href=""></a>Algorithm <span class="fu">processString</span><span class="op">(</span>S<span class="op">):</span></span>
+<span id="cb34-2"><a href=""></a>   Create an empty stack s</span>
+<span id="cb34-3"><a href=""></a></span>
+<span id="cb34-4"><a href=""></a>   <span class="cf">for</span> each <span class="dt">char</span> c in S<span class="op">:</span></span>
+<span id="cb34-5"><a href=""></a>      <span class="cf">if</span> <span class="op">(</span>c <span class="op">!=</span> <span class="op">[</span>undo<span class="op">]):</span></span>
+<span id="cb34-6"><a href=""></a>         s<span class="op">.</span><span class="fu">push</span><span class="op">(</span>c<span class="op">);</span></span>
+<span id="cb34-7"><a href=""></a>      <span class="cf">else</span> <span class="cf">if</span> <span class="op">(!</span>s<span class="op">.</span><span class="fu">isEmpty</span><span class="op">()):</span></span>
+<span id="cb34-8"><a href=""></a>         s<span class="op">.</span><span class="fu">pop</span><span class="op">();</span></span>
+<span id="cb34-9"><a href=""></a></span>
+<span id="cb34-10"><a href=""></a>   Create an empty stack t              <span class="co">// flip s into t</span></span>
+<span id="cb34-11"><a href=""></a>   <span class="cf">while</span> <span class="op">(!</span>s<span class="op">.</span><span class="fu">isEmpty</span><span class="op">())</span></span>
+<span id="cb34-12"><a href=""></a>      t<span class="op">.</span><span class="fu">push</span><span class="op">(</span>s<span class="op">.</span><span class="fu">pop</span><span class="op">());</span></span>
+<span id="cb34-13"><a href=""></a></span>
+<span id="cb34-14"><a href=""></a>   Create <span class="bu">String</span> str                    <span class="co">// read t into str</span></span>
+<span id="cb34-15"><a href=""></a>   <span class="cf">while</span> <span class="op">(!</span>t<span class="op">.</span><span class="fu">isEmpty</span><span class="op">())</span></span>
+<span id="cb34-16"><a href=""></a>      str <span class="op">+=</span> t<span class="op">.</span><span class="fu">pop</span><span class="op">();</span></span>
+<span id="cb34-17"><a href=""></a></span>
+<span id="cb34-18"><a href=""></a>   <span class="cf">return</span> str</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment">
+<p><span class="lead-blue">Cost.</span> <span class="math inline">\(O(n)\)</span> time — each character is pushed at most twice and popped at most twice. <span class="math inline">\(O(n)\)</span> space — <code>s</code> and <code>t</code> never hold more than <span class="math inline">\(n\)</span> items between them.</p>
+</div>
+</section>
+<section id="balanced-delimiters" class="slide level2">
+<h2>Balanced Delimiters</h2>
+<p>Every <code>(</code>, <code>[</code>, and <code>{</code> in a program must be closed — by the matching symbol, and in the right order.</p>
+<p><span class="math display">\[\{\,[\,(\;)\,]\,\}\quad\text{yes}\qquad\qquad
+  \{\,[\,(\;]\;)\,\}\quad\text{no}\]</span></p>
+<div class="fragment">
+<p><span class="lead-blue">The insight.</span> When a closing symbol arrives, it must match the <strong>most recent</strong> unmatched opening symbol.</p>
+<p><strong><em>“Most recent” is the word that tells you to reach for a stack.</em></strong></p>
+</div>
+</section>
+<section id="balanced-delimiters-1" class="slide level2">
+<h2>Balanced Delimiters</h2>
+<p><span class="doit">work it</span></p>
+<p>Scan <code>{ [ ( ) ] }</code> left to right. Push on an opener; on a closer, pop and check the pair.</p>
+<table class="steps caption-top">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">read</th>
+<th class="st" data-quarto-table-cell-role="th">stack (bottom → top)</th>
+<th data-quarto-table-cell-role="th">what happened</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td class="tok">{</td>
+<td class="st">{</td>
+<td class="note">push</td>
+</tr>
+<tr class="fragment even">
+<td class="tok">[</td>
+<td class="st">{ [</td>
+<td class="note">push</td>
+</tr>
+<tr class="fragment odd">
+<td class="tok">(</td>
+<td class="st">{ [ (</td>
+<td class="note">push</td>
+</tr>
+<tr class="fragment even">
+<td class="tok">)</td>
+<td class="st">{ [</td>
+<td class="note">popped ( — pairs</td>
+</tr>
+<tr class="fragment odd">
+<td class="tok">]</td>
+<td class="st">{</td>
+<td class="note">popped [ — pairs</td>
+</tr>
+<tr class="fragment result even">
+<td class="tok">}</td>
+<td class="st">(empty)</td>
+<td class="note">popped { — pairs</td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<p>Ends empty, never mismatched. <span class="lead-blue">Balanced.</span></p>
+</div>
+</section>
+<section id="three-ways-to-fail" class="slide level2">
+<h2>Three Ways to Fail</h2>
+<table class="steps caption-top">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">expression</th>
+<th class="st" data-quarto-table-cell-role="th">stops at</th>
+<th data-quarto-table-cell-role="th">because</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td class="tok">{ [ ( ] ) }</td>
+<td class="st">]</td>
+<td class="note">popped ( — wrong type</td>
+</tr>
+<tr class="fragment even">
+<td class="tok">[ ( ) ] }</td>
+<td class="st">}</td>
+<td class="note">stack already empty</td>
+</tr>
+<tr class="fragment odd">
+<td class="tok">{ [ ( ) ]</td>
+<td class="st">end of input</td>
+<td class="note">stack still holds {</td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<p>Three different bugs, three different checks. <strong><em>Two of them are easy to forget, and both are one line.</em></strong></p>
+</div>
+</section>
+<section id="balanced-delimiters-in-java" class="slide level2 code-tight">
+<h2>Balanced Delimiters, in Java</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb35-1"><a href=""></a><span class="kw">public</span> <span class="dt">static</span> <span class="dt">boolean</span> <span class="fu">checkBalance</span><span class="op">(</span><span class="bu">String</span> expression<span class="op">)</span></span>
+<span id="cb35-2"><a href=""></a><span class="op">{</span></span>
+<span id="cb35-3"><a href=""></a>   StackInterface<span class="op">&lt;</span><span class="bu">Character</span><span class="op">&gt;</span> openDelimiters <span class="op">=</span> <span class="kw">new</span> LinkedStack<span class="op">&lt;&gt;();</span></span>
+<span id="cb35-4"><a href=""></a>   <span class="dt">boolean</span> isBalanced <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb35-5"><a href=""></a>   <span class="dt">int</span> index <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb35-6"><a href=""></a></span>
+<span id="cb35-7"><a href=""></a>   <span class="cf">while</span> <span class="op">(</span>isBalanced <span class="op">&amp;&amp;</span> <span class="op">(</span>index <span class="op">&lt;</span> expression<span class="op">.</span><span class="fu">length</span><span class="op">()))</span></span>
+<span id="cb35-8"><a href=""></a>   <span class="op">{</span></span>
+<span id="cb35-9"><a href=""></a>      <span class="dt">char</span> next <span class="op">=</span> expression<span class="op">.</span><span class="fu">charAt</span><span class="op">(</span>index<span class="op">);</span></span>
+<span id="cb35-10"><a href=""></a>      <span class="cf">switch</span> <span class="op">(</span>next<span class="op">)</span></span>
+<span id="cb35-11"><a href=""></a>      <span class="op">{</span></span>
+<span id="cb35-12"><a href=""></a>         <span class="cf">case</span> <span class="ch">'('</span><span class="op">:</span> <span class="cf">case</span> <span class="ch">'['</span><span class="op">:</span> <span class="cf">case</span> <span class="ch">'{'</span><span class="op">:</span></span>
+<span id="cb35-13"><a href=""></a>            openDelimiters<span class="op">.</span><span class="fu">push</span><span class="op">(</span>next<span class="op">);</span></span>
+<span id="cb35-14"><a href=""></a>            <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb35-15"><a href=""></a>         <span class="cf">case</span> <span class="ch">')'</span><span class="op">:</span> <span class="cf">case</span> <span class="ch">']'</span><span class="op">:</span> <span class="cf">case</span> <span class="ch">'}'</span><span class="op">:</span></span>
+<span id="cb35-16"><a href=""></a>            <span class="cf">if</span> <span class="op">(</span>openDelimiters<span class="op">.</span><span class="fu">isEmpty</span><span class="op">())</span>               <span class="co">// failure 2</span></span>
+<span id="cb35-17"><a href=""></a>               isBalanced <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb35-18"><a href=""></a>            <span class="cf">else</span></span>
+<span id="cb35-19"><a href=""></a>               isBalanced <span class="op">=</span> <span class="fu">isPaired</span><span class="op">(</span>openDelimiters<span class="op">.</span><span class="fu">pop</span><span class="op">(),</span> next<span class="op">);</span>  <span class="co">// 1</span></span>
+<span id="cb35-20"><a href=""></a>            <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb35-21"><a href=""></a>         <span class="kw">default</span><span class="op">:</span> <span class="cf">break</span><span class="op">;</span>                                <span class="co">// ignore the rest</span></span>
+<span id="cb35-22"><a href=""></a>      <span class="op">}</span></span>
+<span id="cb35-23"><a href=""></a>      index<span class="op">++;</span></span>
+<span id="cb35-24"><a href=""></a>   <span class="op">}</span></span>
+<span id="cb35-25"><a href=""></a>   <span class="cf">return</span> isBalanced <span class="op">&amp;&amp;</span> openDelimiters<span class="op">.</span><span class="fu">isEmpty</span><span class="op">();</span>       <span class="co">// failure 3</span></span>
+<span id="cb35-26"><a href=""></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="infix-prefix-postfix" class="slide level2">
+<h2>Infix, Prefix, Postfix</h2>
+<p>Three places to write a binary operator, all saying the same thing:</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">notation</th>
+<th style="text-align: left;">the operator sits</th>
+<th style="text-align: center;">example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>infix</strong></td>
+<td style="text-align: left;">between its operands</td>
+<td style="text-align: center;"><span class="math inline">\(a + b\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>prefix</strong></td>
+<td style="text-align: left;">before its operands</td>
+<td style="text-align: center;"><span class="math inline">\(+\;a\;b\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>postfix</strong></td>
+<td style="text-align: left;">after its operands</td>
+<td style="text-align: center;"><span class="math inline">\(a\;b\;+\)</span></td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<p>Infix is what we write and the only one that needs precedence rules to be read. <code>3 * 2 + 1</code> means <span class="math inline">\(7\)</span> only because we agreed <code>*</code> binds tighter.</p>
+</div>
+<div class="fragment">
+<p>Postfix needs no such agreement, and no parentheses. <strong><em>That is why machines use it.</em></strong></p>
+</div>
+</section>
+<section id="question-6" class="slide level2">
+<h2>Question</h2>
+<p><strong><em>What does this postfix expression evaluate to?</em></strong></p>
+<p><span class="math display">\[6\;\;3\;\;2\;\;+\;\;*\]</span></p>
+<ul class="choices">
+  <li><span class="k">A</span> 18</li>
+  <li><span class="k">B</span> 36</li>
+  <li><span class="k">C</span> 24</li>
+  <li><span class="k">D</span> 11</li>
+  <li class="fragment pick"><span class="k">E</span> 30</li>
+</ul>
+</section>
+<section id="question-7" class="slide level2">
+<h2>Question</h2>
+<p><span class="lead-red">The trap.</span> <span class="math inline">\(18\)</span> is what you get by reading <code>6 3 *</code> first — left to right, the way infix trains you.</p>
+<div class="fragment">
+<p>Postfix says otherwise: an operator applies to the <strong>two most recent</strong> values, which here are <span class="math inline">\(3\)</span> and <span class="math inline">\(2\)</span>.</p>
+<p><span class="math display">\[6 \times (3 + 2) \;=\; 30\]</span></p>
+</div>
+</section>
+<section id="evaluating-postfix" class="slide level2">
+<h2>Evaluating Postfix</h2>
+<p>One stack. Push every value; on an operator, pop two, apply, push the result.</p>
+<table class="steps caption-top">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">read</th>
+<th class="st" data-quarto-table-cell-role="th">value stack (bottom → top)</th>
+<th data-quarto-table-cell-role="th">what happened</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td class="tok">6</td>
+<td class="st">6</td>
+<td class="note">push</td>
+</tr>
+<tr class="fragment even">
+<td class="tok">3</td>
+<td class="st">6 3</td>
+<td class="note">push</td>
+</tr>
+<tr class="fragment odd">
+<td class="tok">2</td>
+<td class="st">6 3 2</td>
+<td class="note">push</td>
+</tr>
+<tr class="fragment even">
+<td class="tok">+</td>
+<td class="st">6 5</td>
+<td class="note">popped 2 then 3, pushed 3 + 2</td>
+</tr>
+<tr class="fragment result odd">
+<td class="tok">*</td>
+<td class="st">30</td>
+<td class="note">popped 5 then 6, pushed 6 × 5</td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<p><span class="lead-red">Watch the order.</span> The <strong>second</strong> pop is the <strong>left</strong> operand. For <span class="math inline">\(+\)</span> and <span class="math inline">\(\times\)</span> nobody notices; for <span class="math inline">\(-\)</span>, <span class="math inline">\(/\)</span>, and <span class="math inline">\(\hat{}\)</span> it is the whole answer.</p>
+</div>
+</section>
+<section id="the-postfix-algorithm" class="slide level2">
+<h2>The Postfix Algorithm</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb36-1"><a href=""></a><span class="kw">public</span> <span class="dt">static</span> <span class="dt">double</span> <span class="fu">evaluatePostfix</span><span class="op">(</span><span class="bu">String</span> postfix<span class="op">)</span></span>
+<span id="cb36-2"><a href=""></a><span class="op">{</span></span>
+<span id="cb36-3"><a href=""></a>   StackInterface<span class="op">&lt;</span><span class="bu">Double</span><span class="op">&gt;</span> valueStack <span class="op">=</span> <span class="kw">new</span> LinkedStack<span class="op">&lt;&gt;();</span></span>
+<span id="cb36-4"><a href=""></a></span>
+<span id="cb36-5"><a href=""></a>   <span class="cf">for</span> <span class="op">(</span><span class="bu">String</span> token <span class="op">:</span> postfix<span class="op">.</span><span class="fu">split</span><span class="op">(</span><span class="st">"</span><span class="sc">\\</span><span class="st">s+"</span><span class="op">))</span></span>
+<span id="cb36-6"><a href=""></a>   <span class="op">{</span></span>
+<span id="cb36-7"><a href=""></a>      <span class="cf">if</span> <span class="op">(</span><span class="fu">isOperator</span><span class="op">(</span>token<span class="op">))</span></span>
+<span id="cb36-8"><a href=""></a>      <span class="op">{</span></span>
+<span id="cb36-9"><a href=""></a>         <span class="dt">double</span> operandTwo <span class="op">=</span> valueStack<span class="op">.</span><span class="fu">pop</span><span class="op">();</span>     <span class="co">// right operand</span></span>
+<span id="cb36-10"><a href=""></a>         <span class="dt">double</span> operandOne <span class="op">=</span> valueStack<span class="op">.</span><span class="fu">pop</span><span class="op">();</span>     <span class="co">// left operand</span></span>
+<span id="cb36-11"><a href=""></a>         valueStack<span class="op">.</span><span class="fu">push</span><span class="op">(</span><span class="fu">apply</span><span class="op">(</span>token<span class="op">,</span> operandOne<span class="op">,</span> operandTwo<span class="op">));</span></span>
+<span id="cb36-12"><a href=""></a>      <span class="op">}</span></span>
+<span id="cb36-13"><a href=""></a>      <span class="cf">else</span></span>
+<span id="cb36-14"><a href=""></a>         valueStack<span class="op">.</span><span class="fu">push</span><span class="op">(</span><span class="bu">Double</span><span class="op">.</span><span class="fu">parseDouble</span><span class="op">(</span>token<span class="op">));</span></span>
+<span id="cb36-15"><a href=""></a>   <span class="op">}</span></span>
+<span id="cb36-16"><a href=""></a>   <span class="cf">return</span> valueStack<span class="op">.</span><span class="fu">peek</span><span class="op">();</span></span>
+<span id="cb36-17"><a href=""></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment">
+<p>No precedence table. No parentheses. <strong><em>No second stack.</em></strong></p>
+</div>
+</section>
+<section id="your-turn" class="slide level2">
+<h2>Your Turn</h2>
+<p><span class="doit">work it</span></p>
+<p>Evaluate each, and write the infix expression it came from.</p>
+<p><span class="math display">\[2\;\;3\;\;2\;\;4\;\;*\;\;+\;\;*
+\qquad\qquad
+1\;\;2\;\;3\;\;4\;\;\hat{}\;\;*\;\;+\]</span></p>
+<div class="fragment">
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">postfix</th>
+<th style="text-align: left;">infix</th>
+<th style="text-align: right;">value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(2\;3\;2\;4\;*\;+\;*\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(2 \times \bigl(3 + (2 \times 4)\bigr)\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(22\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(1\;2\;3\;4\;\hat{}\;*\;+\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(1 + \bigl(2 \times (3^4)\bigr)\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(163\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="fragment">
+<p>Recovering the infix form is the same trace read backwards: each operator names the two subexpressions sitting under it.</p>
+</div>
+</section>
+<section id="dijkstras-two-stack-algorithm" class="slide level2">
+<h2>Dijkstra’s Two-Stack Algorithm</h2>
+<p><span class="lead-blue">Goal.</span> Evaluate a fully parenthesized <strong>infix</strong> expression directly, with no conversion step.</p>
+<p>Keep two stacks — one for values, one for operators — and one rule per token:</p>
+<ul>
+<li><strong>Value</strong> — push it onto the value stack.</li>
+<li><strong>Operator</strong> — push it onto the operator stack.</li>
+<li><strong>Left parenthesis</strong> — ignore it.</li>
+<li><strong>Right parenthesis</strong> — pop an operator and two values; apply and push.</li>
+</ul>
+<div class="fragment">
+<p><span class="lead-red">That is the entire algorithm. — E. W. Dijkstra</span></p>
+</div>
+</section>
+<section id="the-demo" class="slide level2 tiny-table">
+<h2>The Demo</h2>
+<p><span class="doit">call the next row</span></p>
+<p><span class="math display">\[(\,1 + (\,(\,2 + 3\,) * (\,4 * 5\,)\,)\,)\]</span></p>
+<table class="steps caption-top">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">read</th>
+<th class="st" data-quarto-table-cell-role="th">value stack</th>
+<th class="st" data-quarto-table-cell-role="th">operator stack</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td class="tok">1</td>
+<td class="st">1</td>
+<td class="st"></td>
+</tr>
+<tr class="fragment even">
+<td class="tok">+</td>
+<td class="st">1</td>
+<td class="st">+</td>
+</tr>
+<tr class="fragment odd">
+<td class="tok">2</td>
+<td class="st">1 2</td>
+<td class="st">+</td>
+</tr>
+<tr class="fragment even">
+<td class="tok">+</td>
+<td class="st">1 2</td>
+<td class="st">+ +</td>
+</tr>
+<tr class="fragment odd">
+<td class="tok">3</td>
+<td class="st">1 2 3</td>
+<td class="st">+ +</td>
+</tr>
+<tr class="fragment even">
+<td class="tok">)</td>
+<td class="st">1 5</td>
+<td class="st">+</td>
+</tr>
+<tr class="fragment odd">
+<td class="tok">*</td>
+<td class="st">1 5</td>
+<td class="st">+ *</td>
+</tr>
+<tr class="fragment even">
+<td class="tok">4</td>
+<td class="st">1 5 4</td>
+<td class="st">+ *</td>
+</tr>
+<tr class="fragment odd">
+<td class="tok">*</td>
+<td class="st">1 5 4</td>
+<td class="st">+ * *</td>
+</tr>
+<tr class="fragment even">
+<td class="tok">5</td>
+<td class="st">1 5 4 5</td>
+<td class="st">+ * *</td>
+</tr>
+<tr class="fragment odd">
+<td class="tok">)</td>
+<td class="st">1 5 20</td>
+<td class="st">+ *</td>
+</tr>
+<tr class="fragment even">
+<td class="tok">)</td>
+<td class="st">1 100</td>
+<td class="st">+</td>
+</tr>
+<tr class="fragment result odd">
+<td class="tok">)</td>
+<td class="st">101</td>
+<td class="st"></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="why-it-works" class="slide level2">
+<h2>Why It Works</h2>
+<p>Every time the algorithm meets an operator surrounded by two values inside parentheses, it leaves the result on the value stack — so the run is the same as if that subexpression had been the value all along.</p>
+<p><span class="math display">\[(\,1 + (\,(\,2 + 3\,) * (\,4 * 5\,)\,)\,)
+\;\longrightarrow\; (\,1 + (\,5 * (\,4 * 5\,)\,)\,)\]</span></p>
+<div class="fragment">
+<p>Apply the same argument again, and again: <span class="math display">\[(\,1 + (\,5 * 20\,)\,) \;\longrightarrow\;
+  (\,1 + 100\,) \;\longrightarrow\; 101\]</span></p>
+</div>
+<div class="fragment">
+<p><span class="lead-red">That is an interpreter</span> — it reads a language and computes what the language says.</p>
+</div>
+</section>
+<section id="infix-to-postfix" class="slide level2 wrap-table dense-table">
+<h2>Infix to Postfix</h2>
+<p>The other route: convert once, then evaluate with one stack. One rule per token, and the stack holds <strong>operators</strong>, not values.</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">token</th>
+<th style="text-align: left;">what to do</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">operand</td>
+<td style="text-align: left;">append it to the output</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>^</code></td>
+<td style="text-align: left;">push it</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>+ - * /</code></td>
+<td style="text-align: left;">pop while the top has <strong>at least equal</strong> precedence, then push it</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>(</code></td>
+<td style="text-align: left;">push it</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>)</code></td>
+<td style="text-align: left;">pop until <code>(</code> is popped; discard both</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">end of input</td>
+<td style="text-align: left;">pop whatever is left</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="infix-to-postfix-1" class="slide level2 dense-table">
+<h2>Infix to Postfix</h2>
+<p><span class="doit">call the next row</span></p>
+<p><span class="math display">\[a + b * (\,c + d\,)\]</span></p>
+<table class="steps caption-top">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">read</th>
+<th class="out" data-quarto-table-cell-role="th">output</th>
+<th class="st" data-quarto-table-cell-role="th">operator stack</th>
+<th data-quarto-table-cell-role="th">what happened</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td class="tok">a</td>
+<td class="out">a</td>
+<td class="st"></td>
+<td class="note">append</td>
+</tr>
+<tr class="fragment even">
+<td class="tok">+</td>
+<td class="out">a</td>
+<td class="st">+</td>
+<td class="note">stack empty, push</td>
+</tr>
+<tr class="fragment odd">
+<td class="tok">b</td>
+<td class="out">ab</td>
+<td class="st">+</td>
+<td class="note">append</td>
+</tr>
+<tr class="fragment even">
+<td class="tok">*</td>
+<td class="out">ab</td>
+<td class="st">+ *</td>
+<td class="note">+ is lower, push</td>
+</tr>
+<tr class="fragment odd">
+<td class="tok">(</td>
+<td class="out">ab</td>
+<td class="st">+ * (</td>
+<td class="note">push</td>
+</tr>
+<tr class="fragment even">
+<td class="tok">c</td>
+<td class="out">abc</td>
+<td class="st">+ * (</td>
+<td class="note">append</td>
+</tr>
+<tr class="fragment odd">
+<td class="tok">+</td>
+<td class="out">abc</td>
+<td class="st">+ * ( +</td>
+<td class="note">( blocks the pop, push</td>
+</tr>
+<tr class="fragment even">
+<td class="tok">d</td>
+<td class="out">abcd</td>
+<td class="st">+ * ( +</td>
+<td class="note">append</td>
+</tr>
+<tr class="fragment odd">
+<td class="tok">)</td>
+<td class="out">abcd+</td>
+<td class="st">+ *</td>
+<td class="note">pop to ( , discard both</td>
+</tr>
+<tr class="fragment result even">
+<td class="tok">end</td>
+<td class="out">abcd+*+</td>
+<td class="st"></td>
+<td class="note">pop the rest</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="your-turn-1" class="slide level2">
+<h2>Your Turn</h2>
+<p><span class="doit">work it</span></p>
+<p>Convert to postfix. The stack column is the part to write down.</p>
+<p><span class="math display">\[a \,/\, b * \bigl(\,c + (\,d - e\,)\,\bigr)\]</span></p>
+<div class="fragment">
+<p><span class="lead-blue">Answer.</span> <span class="math inline">\(\;a\;b\;/\;c\;d\;e\;-\;+\;*\)</span></p>
+</div>
+<div class="fragment">
+<p>Two checkpoints worth arguing about:</p>
+<ul>
+<li>At <code>*</code> the top is <code>/</code> — <strong>equal</strong> precedence, so it pops. Left to right, as arithmetic requires.</li>
+<li>At the first <code>)</code> only the <code>-</code> comes off; the <code>+</code> sits below a <code>(</code>.</li>
+</ul>
+</div>
+</section>
+<section id="your-turn-2" class="slide level2">
+<h2>Your Turn</h2>
+<p>Three more, for the same rules and no parentheses at all:</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">infix</th>
+<th style="text-align: left;">postfix</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(a + b * c\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(a\;b\;c\;*\;+\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(a - b + c\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(a\;b\;-\;c\;+\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(a \hat{}\; b \hat{}\; c\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(a\;b\;c\;\hat{}\;\hat{}\)</span></td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<p>The third is the one that catches people. <code>^</code> is <strong>right</strong> associative — <span class="math inline">\(a^{(b^c)}\)</span>, not <span class="math inline">\((a^b)^c\)</span> — which is exactly why the rules push <code>^</code> without popping the <code>^</code> already there.</p>
+</div>
+</section>
+<section id="drop-the-parentheses" class="slide level2">
+<h2>Drop the Parentheses</h2>
+<p>Dijkstra’s algorithm gives the same answer if each operator is written <em>after</em> its two values:</p>
+<p><span class="math display">\[(\,1\,(\,(\,2\;3\;+\,)\;(\,4\;5\;*\,)\;*\,)\;+\,)\]</span></p>
+<div class="fragment">
+<p>And now nothing depends on the parentheses at all:</p>
+<p><span class="math display">\[1\;\;2\;\;3\;+\;4\;\;5\;*\;*\;+\]</span></p>
+</div>
+</section>
+<section id="drop-the-parentheses-1" class="slide level2">
+<h2>Drop the Parentheses</h2>
+<p><span class="lead-blue">Postfix</span>, or <strong>reverse Polish notation</strong>, after Jan Łukasiewicz.</p>
+<div class="fragment">
+<p>Used by PostScript, Forth, HP calculators, and the Java virtual machine — a machine with one stack evaluates it without ever looking ahead.</p>
+</div>
+<div class="fragment">
+<p><strong><em>A stack turned an expression into a language.</em></strong></p>
+</div>
+</section>
+<section id="the-question-reversed" class="slide level2">
+<h2>The Question, Reversed</h2>
+<p>Part 1 opened with two collections that insert at the same end, and <em>which item you remove</em> named the structure.</p>
+<div class="fragment">
+<p><span class="lead-blue">Now the exercise.</span> You have stacks and nothing else. Build a queue — <code>enqueue</code> at the back, <code>dequeue</code> from the front.</p>
+</div>
+<div class="fragment">
+<p>A stack hands back the newest item; a queue needs the oldest. <strong><em>One reversal apart — and you just wrote a reverser.</em></strong></p>
+</div>
+</section>
+<section id="two-stacks-one-queue" class="slide level2">
+<h2>Two Stacks, One Queue</h2>
+<ul>
+<li><code>s1</code> takes whatever <code>enqueue</code> is given, and does nothing else.</li>
+<li><code>dequeue</code> pours <code>s1</code> into <code>s2</code>, which reverses it, then pops <code>s2</code>.</li>
+<li>Pour <strong>only when <code>s2</code> is empty</strong>. Whatever is already in <code>s2</code> is already in the right order.</li>
+</ul>
+<div class="fragment">
+<p><span class="lead-red">The bug to avoid.</span> Pour while <code>s2</code> still holds items and two generations interleave: the oldest item is no longer on top, and nothing throws.</p>
+</div>
+</section>
+<section id="two-stacks-one-queue-1" class="slide level2 dense-table">
+<h2>Two Stacks, One Queue</h2>
+<p><span class="doit">work it</span></p>
+<table class="steps caption-top">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">call</th>
+<th class="st" data-quarto-table-cell-role="th">s1</th>
+<th class="st" data-quarto-table-cell-role="th">s2</th>
+<th class="note" data-quarto-table-cell-role="th">returns</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td class="tok">enqueue 1</td>
+<td class="st">1</td>
+<td class="st">(empty)</td>
+<td class="note"></td>
+</tr>
+<tr class="fragment even">
+<td class="tok">enqueue 2</td>
+<td class="st">1 2</td>
+<td class="st">(empty)</td>
+<td class="note"></td>
+</tr>
+<tr class="fragment odd">
+<td class="tok">enqueue 3</td>
+<td class="st">1 2 3</td>
+<td class="st">(empty)</td>
+<td class="note"></td>
+</tr>
+<tr class="fragment even">
+<td class="tok">dequeue</td>
+<td class="st">(empty)</td>
+<td class="st">3 2</td>
+<td class="note">1 — poured first</td>
+</tr>
+<tr class="fragment odd">
+<td class="tok">dequeue</td>
+<td class="st">(empty)</td>
+<td class="st">3</td>
+<td class="note">2 — no pour</td>
+</tr>
+<tr class="fragment even">
+<td class="tok">enqueue 4</td>
+<td class="st">4</td>
+<td class="st">3</td>
+<td class="note"></td>
+</tr>
+<tr class="fragment odd">
+<td class="tok">dequeue</td>
+<td class="st">4</td>
+<td class="st">(empty)</td>
+<td class="note">3 — no pour</td>
+</tr>
+<tr class="fragment result even">
+<td class="tok">dequeue</td>
+<td class="st">(empty)</td>
+<td class="st">(empty)</td>
+<td class="note">4 — poured</td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<p>Out came <span class="math inline">\(1, 2, 3, 4\)</span>. <strong><em>The 4 arrived after the 2 came out, and still had to wait behind the 3.</em></strong></p>
+</div>
+</section>
+<section id="write-the-queue" class="slide level2">
+<h2>Write the Queue</h2>
+<p><span class="livecode">live code</span></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb37-1"><a href=""></a>Algorithm <span class="fu">enqueue</span><span class="op">(</span>value<span class="op">):</span></span>
+<span id="cb37-2"><a href=""></a>   <span class="co">// your line here  ____________________</span></span>
+<span id="cb37-3"><a href=""></a></span>
+<span id="cb37-4"><a href=""></a></span>
+<span id="cb37-5"><a href=""></a>Algorithm <span class="fu">dequeue</span><span class="op">():</span></span>
+<span id="cb37-6"><a href=""></a>   <span class="cf">if</span> <span class="op">(</span>s2<span class="op">.</span><span class="fu">isEmpty</span><span class="op">())</span>                    <span class="co">// move everything across</span></span>
+<span id="cb37-7"><a href=""></a>      <span class="co">// your two lines here  ____________________</span></span>
+<span id="cb37-8"><a href=""></a></span>
+<span id="cb37-9"><a href=""></a></span>
+<span id="cb37-10"><a href=""></a>   <span class="cf">if</span> <span class="op">(</span>s2<span class="op">.</span><span class="fu">isEmpty</span><span class="op">())</span></span>
+<span id="cb37-11"><a href=""></a>      <span class="cf">return</span> <span class="st">"queue is empty"</span></span>
+<span id="cb37-12"><a href=""></a>   <span class="cf">else</span></span>
+<span id="cb37-13"><a href=""></a>      <span class="co">// your line here  ____________________</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="the-queue" class="slide level2 code-mid">
+<h2>The Queue</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb38-1"><a href=""></a>Algorithm <span class="fu">enqueue</span><span class="op">(</span>value<span class="op">):</span></span>
+<span id="cb38-2"><a href=""></a>   s1<span class="op">.</span><span class="fu">push</span><span class="op">(</span>value<span class="op">);</span></span>
+<span id="cb38-3"><a href=""></a></span>
+<span id="cb38-4"><a href=""></a>Algorithm <span class="fu">dequeue</span><span class="op">():</span></span>
+<span id="cb38-5"><a href=""></a>   <span class="cf">if</span> <span class="op">(</span>s2<span class="op">.</span><span class="fu">isEmpty</span><span class="op">())</span>                    <span class="co">// move everything across</span></span>
+<span id="cb38-6"><a href=""></a>      <span class="cf">while</span> <span class="op">(!</span>s1<span class="op">.</span><span class="fu">isEmpty</span><span class="op">())</span></span>
+<span id="cb38-7"><a href=""></a>         s2<span class="op">.</span><span class="fu">push</span><span class="op">(</span>s1<span class="op">.</span><span class="fu">pop</span><span class="op">());</span></span>
+<span id="cb38-8"><a href=""></a></span>
+<span id="cb38-9"><a href=""></a>   <span class="cf">if</span> <span class="op">(</span>s2<span class="op">.</span><span class="fu">isEmpty</span><span class="op">())</span></span>
+<span id="cb38-10"><a href=""></a>      <span class="cf">return</span> <span class="st">"queue is empty"</span></span>
+<span id="cb38-11"><a href=""></a>   <span class="cf">else</span></span>
+<span id="cb38-12"><a href=""></a>      <span class="cf">return</span> s2<span class="op">.</span><span class="fu">pop</span><span class="op">();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment">
+<p>The second <code>isEmpty()</code> is not a duplicate of the first. The first asks whether to pour; the second catches the case where the pour found nothing to move, and the queue really is empty.</p>
+</div>
+</section>
+<section id="what-the-queue-costs" class="slide level2">
+<h2>What the Queue Costs</h2>
+<p><code>enqueue</code> is one push. <strong><em>Constant time, always.</em></strong></p>
+<div class="fragment">
+<p>A single <code>dequeue</code> can cost <span class="math inline">\(O(n)\)</span> — the one that finds <code>s2</code> empty and carries the whole queue across.</p>
+</div>
+<div class="fragment">
+<p><span class="lead-blue">Amortized <span class="math inline">\(O(1)\)</span>.</span> Over any sequence of calls, each item is pushed twice and popped twice and then it is gone. Four operations per item, however the calls interleave. Space is <span class="math inline">\(O(n)\)</span>.</p>
+</div>
+<div class="fragment">
+<p><strong><em>Part 3’s argument, on a different data structure.</em></strong> The worst single operation is slow; the sequence is not.</p>
+</div>
+</section>
+<section id="what-you-can-do-now" class="slide level2">
+<h2>What You Can Do Now</h2>
+<ul>
+<li>State the five stack operations without naming a representation.</li>
+<li>Write <code>push</code> and <code>pop</code> for both implementations from an empty method body, and give the cost of each.</li>
+<li>Say which implementation a client should get, why doubling makes <code>push</code> amortized <span class="math inline">\(O(1)\)</span>, and why the array halves at one quarter.</li>
+<li>Trace balanced delimiters, postfix evaluation, infix-to-postfix, and Dijkstra’s two-stack algorithm by hand.</li>
+<li>Write the undo loop and the two-stack queue, and say what each costs.</li>
+</ul>
+<div class="fragment">
+<p><strong><em>Next: the same five questions, with the other removal rule.</em></strong></p>
+</div>
 
 </section>
     </div>
