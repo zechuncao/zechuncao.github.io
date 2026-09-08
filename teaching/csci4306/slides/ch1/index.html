@@ -1,0 +1,2657 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="index_files/libs/clipboard/clipboard.min.js"></script>
+<script src="index_files/libs/quarto-html/tabby.min.js"></script>
+<script src="index_files/libs/quarto-html/popper.min.js"></script>
+<script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.27">
+
+  <meta name="author" content="Zechun (Jacob) Cao">
+  <title>Chapter 1 — Introduction</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-f6a1f38664a92e72e450d0d10cbcbd99.css">
+  <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Chapter 1</h1>
+  <p class="subtitle">Introduction</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Zechun (Jacob) Cao 
+</div>
+        <p class="quarto-title-affiliation">
+            Adapted from J. F. Kurose and K. W. Ross, <em>Computer Networking: A Top-Down Approach</em>, 8th edition, Pearson, 2020. Slide material copyright 1996–2020 J. F. Kurose and K. W. Ross. Additional framing from Peterson &amp; Davie, <em>Computer Networks: A Systems Approach</em>, and Rutgers CS 552.
+          </p>
+    </div>
+</div>
+
+</section>
+<section id="warm-up-one-click" class="slide level2">
+<h2>Warm-Up: One Click</h2>
+<p>You type <code>tamusa.edu</code> and press <strong>Enter</strong>. The page appears in about a second.</p>
+<p><span class="vote-prompt">Vote — how many separate machines had to cooperate?</span></p>
+<div class="columns vote-row">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>A.</strong> Just 2 — mine and theirs</p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>B.</strong> About 5</p>
+</div>
+</div></div>
+<div class="columns vote-row">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>C.</strong> 15 to 30</p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>D.</strong> Hundreds</p>
+</div>
+</div></div>
+</section>
+<section id="warm-up-one-click-1" class="slide level2">
+<h2>Warm-Up: One Click</h2>
+<div class="fragment">
+<p><strong>C or D</strong>, depending on how you count. A single page load typically touches:</p>
+</div>
+<div class="fragment">
+<ul>
+<li>a DNS resolver, plus the root, <code>.edu</code>, and <code>tamusa.edu</code> name servers</li>
+<li>10–20 routers between here and the server</li>
+<li>a load balancer, one or more web servers, a database</li>
+<li>a CDN edge node that may serve the images from Dallas, not from campus</li>
+</ul>
+</div>
+<div class="fragment">
+<p>Every one of them followed rules written down years ago by people who have never met. <strong>That is what this course is about.</strong></p>
+</div>
+</section>
+<section id="warm-up-two-cables" class="slide level2">
+<h2>Warm-Up: Two Cables</h2>
+<p>You must move a <strong>1 TB</strong> dataset to a collaborator 3,000 km away.</p>
+<p><span class="vote-prompt">Vote — which link finishes first?</span></p>
+<div class="columns vote-row">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>A.</strong> 10 Gbps fiber, 15 ms one-way</p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>B.</strong> 100 Mbps link, 1 ms one-way</p>
+</div>
+</div></div>
+<div class="fragment">
+<p><strong>A</strong>, by a factor of 100. For a <em>big</em> transfer, only the rate matters.</p>
+</div>
+<div class="fragment">
+<p>Now make it a <strong>1 KB</strong> chat message instead. Now <strong>B</strong> wins, and the rate is irrelevant.</p>
+</div>
+<div class="fragment">
+<p>“Fast” is two different quantities — <strong>throughput</strong> and <strong>delay</strong> — and they trade off against each other. Section 1.4.</p>
+</div>
+</section>
+<section id="warm-up-busy-signal" class="slide level2">
+<h2>Warm-Up: Busy Signal</h2>
+<p>Landline telephones used to give you a <strong>busy signal</strong> when the network was full. Your video call today gets <em>choppy</em> instead.</p>
+<p><span class="vote-prompt">Vote — which behaviour is better engineering?</span></p>
+<div class="columns vote-row">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>A.</strong> Busy signal — refuse, or work perfectly</p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>B.</strong> Choppy — degrade, but let everyone in</p>
+</div>
+</div></div>
+<div class="fragment">
+<p>Neither is “right.” They are <strong>circuit switching</strong> and <strong>packet switching</strong>, and the Internet bet everything on <strong>B</strong>. Section 1.3 explains why that bet paid off.</p>
+</div>
+</section>
+<section id="where-this-chapter-goes" class="slide level2">
+<h2>Where This Chapter Goes</h2>
+<p><strong>Goal:</strong> get the <em>feel</em>, the <em>big picture</em>, and the <em>vocabulary</em>. Depth comes in Chapters 2–8. <strong>Approach:</strong> use the Internet as the running example.</p>
+<ul>
+<li><strong>1.1</strong> What is the Internet? What is a protocol?</li>
+<li><strong>1.2</strong> Network edge: hosts, access networks, physical media</li>
+<li><strong>1.3</strong> Network core: packet vs circuit switching, structure</li>
+<li><strong>1.4</strong> Performance: delay, loss, throughput</li>
+<li><strong>1.5</strong> Protocol layers and service models</li>
+<li><strong>1.6</strong> Networks under attack</li>
+<li><strong>1.7</strong> History</li>
+</ul>
+</section>
+<section id="section-1.1" class="slide level2 center section-divider">
+<h2>Section 1.1</h2>
+<p>What Is the Internet?</p>
+</section>
+<section id="todays-plan" class="slide level2">
+<h2>Today’s Plan</h2>
+<ul>
+<li>Two views of the Internet
+<ul>
+<li>the “nuts and bolts” view — what it is <em>made of</em></li>
+<li>the “service” view — what it <em>does for you</em></li>
+</ul></li>
+<li>Hosts, links, packet switches, networks, ISPs</li>
+<li>What a protocol is, and who writes them</li>
+</ul>
+</section>
+<section id="nuts-and-bolts" class="slide level2">
+<h2>Nuts and Bolts</h2>
+<div class="columns">
+<div class="column" style="width:58%;">
+<div class="fragment" data-fragment-index="1">
+<p><strong>Billions of connected devices:</strong> <em>hosts</em> = <strong>end systems</strong>, running network apps at the Internet’s edge.</p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p><strong>Packet switches:</strong> forward <em>packets</em> (chunks of data) — <strong>routers</strong> and <strong>switches</strong>.</p>
+</div>
+<div class="fragment" data-fragment-index="3">
+<p><strong>Communication links:</strong> fiber, copper, radio, satellite. Transmission rate = <strong>bandwidth</strong>.</p>
+</div>
+<div class="fragment" data-fragment-index="4">
+<p><strong>Networks:</strong> a collection of devices, routers, and links <strong>managed by one organization</strong>.</p>
+</div>
+</div><div class="column" style="width:42%;">
+<p><img data-src="images/internet_map.png" style="width:90.0%"></p>
+</div></div>
+</section>
+<section id="nuts-and-bolts-1" class="slide level2">
+<h2>Nuts and Bolts</h2>
+<div class="columns">
+<div class="column" style="width:58%;">
+<p>The Internet is a <strong>network of networks</strong>: interconnected ISPs.</p>
+<div class="fragment">
+<p><strong>Protocols</strong> are everywhere. They control the sending and receiving of messages: HTTP, TCP, IP, Wi-Fi, 4G, Ethernet.</p>
+</div>
+<div class="fragment">
+<p><strong>Internet standards</strong> are public documents:</p>
+<ul>
+<li><strong>RFC</strong> — Request for Comments</li>
+<li><strong>IETF</strong> — Internet Engineering Task Force</li>
+</ul>
+</div>
+<div class="fragment">
+<p>No company owns the Internet.</p>
+</div>
+</div><div class="column" style="width:42%;">
+<p><img data-src="images/internet_map.png" style="width:90.0%"></p>
+</div></div>
+</section>
+<section id="the-service-view" class="slide level2">
+<h2>The Service View</h2>
+<p>Instead of asking what the Internet <em>is</em>, ask what it <em>provides</em>.</p>
+<div class="fragment">
+<p><strong>Infrastructure that provides services to applications:</strong> the Web, streaming video, teleconferencing, email, games, e-commerce, social media, connected appliances.</p>
+</div>
+<div class="fragment">
+<p><strong>A programming interface to distributed applications:</strong> “hooks” that let a sending app connect to, and use, the Internet’s transport service.</p>
+</div>
+<div class="fragment">
+<p>Like a postal service, it offers <strong>service options</strong> — and, like the postal service, it makes <strong>no promise</strong> that any one letter arrives.</p>
+</div>
+</section>
+<section id="fun-connected-devices" class="slide level2">
+<h2>Fun Connected Devices</h2>
+<div class="fragment" data-fragment-index="1">
+<ul>
+<li>Internet refrigerator, web-enabled toaster, IP picture frame</li>
+<li>Fitbit, AR headsets, sensorized mattress</li>
+<li>Amazon Echo, security cameras, smart thermostats</li>
+<li>Tweet-a-watt energy monitor</li>
+<li><strong>Pacemaker and monitor</strong></li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p><span class="vote-prompt">Which of these worries you most, and why?</span></p>
+</div>
+<div class="fragment" data-fragment-index="3">
+<p>Every device on this list speaks the same protocols we will study. A bug in TCP is a bug in your thermostat <em>and</em> in the pacemaker.</p>
+</div>
+</section>
+<section id="your-turn-name-it" class="slide level2">
+<h2>Your Turn: Name It</h2>
+<p>Classify each item as <strong>host</strong>, <strong>link</strong>, <strong>packet switch</strong>, or <strong>network</strong>.</p>
+<div class="fragment" data-fragment-index="0">
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Item</th>
+<th style="text-align: left;">Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Your laptop</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="1">host</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">The campus Wi-Fi access point</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2">packet switch</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">A Cat-6 Ethernet cable</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="3">link</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>tamusa.edu</code>’s web server</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="4">host</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">AT&amp;T’s backbone</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="5">network</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">A geostationary satellite hop</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="6">link</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="whats-a-protocol" class="slide level2">
+<h2>What’s a Protocol?</h2>
+<p><strong>Human protocols:</strong></p>
+<ul>
+<li>“What’s the time?” &nbsp;&nbsp; “I have a question.” &nbsp;&nbsp; introductions</li>
+<li>… specific <strong>messages</strong> sent</li>
+<li>… specific <strong>actions</strong> taken when a message is received</li>
+</ul>
+<div class="fragment">
+<p><strong>Network protocols:</strong> the same idea, but the parties are <em>machines</em>. All communication activity in the Internet is governed by protocols.</p>
+</div>
+</section>
+<section id="whats-a-protocol-1" class="slide level2">
+<h2>What’s a Protocol?</h2>
+<div class="activity">
+<p><span class="activity-label">Definition</span></p>
+<p>A <strong>protocol</strong> defines the <strong>format</strong> and <strong>order</strong> of messages exchanged among network entities, and the <strong>actions taken</strong> on message transmission and receipt.</p>
+</div>
+<div class="fragment">
+<p>So three things must be pinned down for every protocol in this course:</p>
+</div>
+<div class="fragment">
+<ol type="1">
+<li><strong>What</strong> may be said — the message format.</li>
+<li><strong>When</strong> it may be said — the ordering rules.</li>
+<li><strong>What to do</strong> on receipt, and on silence.</li>
+</ol>
+</div>
+</section>
+<section id="a-protocol-you-already-use" class="slide level2">
+<h2>A Protocol You Already Use</h2>
+<div class="columns">
+<div class="column" style="width:48%;">
+<p><strong>Human</strong></p>
+<ul>
+<li>“Hi”</li>
+<li>“Hi”</li>
+<li>“Got the time?”</li>
+<li>“2:00”</li>
+</ul>
+</div><div class="column" style="width:52%;">
+<div class="fragment">
+<p><strong>TCP + HTTP</strong></p>
+<ul>
+<li>TCP connection request</li>
+<li>TCP connection response</li>
+<li><code>GET http://gaia.cs.umass.edu/</code></li>
+<li><code>&lt;file&gt;</code></li>
+</ul>
+</div>
+</div></div>
+<div class="fragment">
+<p>Same shape: <strong>greet, establish, request, respond.</strong> The difference is that a machine cannot improvise when the other side says something unexpected — so the rules must be written down exactly.</p>
+</div>
+</section>
+<section id="activity-design-a-protocol" class="slide level2">
+<h2>Activity: Design a Protocol</h2>
+<div class="activity">
+<p><span class="activity-label">In pairs — 6 minutes</span></p>
+<p>Design a protocol for a <strong>vending machine</strong> and a <strong>phone</strong> paying for a drink. Write down:</p>
+<ol type="1">
+<li>the <strong>messages</strong> (names and fields), in order</li>
+<li>what each side <strong>does</strong> on receiving each message</li>
+<li>what happens if a message is <strong>lost</strong></li>
+</ol>
+</div>
+<div class="fragment">
+<p><span class="vote-prompt">Then we build one together — and find the bug in it.</span></p>
+</div>
+</section>
+<section id="a-first-attempt" class="slide level2">
+<h2>A First Attempt</h2>
+<p>Four messages, in order:</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">#</th>
+<th style="text-align: left;">Message</th>
+<th style="text-align: left;">From</th>
+<th style="text-align: left;">Fields</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;"><code>SELECT</code></td>
+<td style="text-align: left;">phone</td>
+<td style="text-align: left;"><code>slot</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2</td>
+<td style="text-align: left;"><code>PRICE</code></td>
+<td style="text-align: left;">machine</td>
+<td style="text-align: left;"><code>slot</code>, <code>amount</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3</td>
+<td style="text-align: left;"><code>PAY</code></td>
+<td style="text-align: left;">phone</td>
+<td style="text-align: left;"><code>slot</code>, <code>amount</code>, <code>card_token</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">4</td>
+<td style="text-align: left;"><code>DISPENSED</code></td>
+<td style="text-align: left;">machine</td>
+<td style="text-align: left;"><code>slot</code></td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<p><strong>On loss:</strong> the phone re-sends <code>PAY</code> if no <code>DISPENSED</code> arrives within five seconds.</p>
+</div>
+</section>
+<section id="where-it-breaks" class="slide level2">
+<h2>Where It Breaks</h2>
+<p>The machine charges the card, turns the motor, drops the drink — and its <code>DISPENSED</code> message is lost.</p>
+<p><span class="vote-prompt">Vote — what does the phone do next, and what does it cost?</span></p>
+<div class="fragment">
+<p>The timer fires, so the phone re-sends <code>PAY</code>. The machine cannot tell a retransmission from a new purchase, so it <strong>charges again</strong> — and may drop a second drink.</p>
+</div>
+</section>
+<section id="where-it-breaks-1" class="slide level2">
+<h2>Where It Breaks</h2>
+<div class="fragment" data-fragment-index="1">
+<p>The message that went missing was the <strong>acknowledgement</strong>, not the request.</p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p>So the retransmission you added to protect the request is the thing that does the damage.</p>
+</div>
+<div class="fragment" data-fragment-index="3">
+<p>Nobody designs that bug on purpose. It arrives free with any protocol that retries.</p>
+</div>
+</section>
+<section id="naming-the-transaction" class="slide level2">
+<h2>Naming the Transaction</h2>
+<p>Make <code>PAY</code> <strong>idempotent</strong>: handling it twice has the same effect as handling it once.</p>
+<div class="fragment" data-fragment-index="1">
+<ul>
+<li>The phone picks a fresh <code>txid</code> per <strong>purchase</strong>, and puts the <em>same</em> one on every retransmission of it.</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="2">
+<ul>
+<li><code>DISPENSED</code> echoes the <code>txid</code>, so a reply can be matched to an attempt.</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="3">
+<ul>
+<li>The machine keeps a table of completed <code>txid</code>s. On a repeat it does <strong>not</strong> charge — it re-sends the stored <code>DISPENSED</code>.</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="4">
+<p>A retransmission now costs a duplicate <em>message</em>, never a duplicate <em>charge</em>.</p>
+</div>
+</section>
+<section id="what-you-just-invented" class="slide level2">
+<h2>What You Just Invented</h2>
+<div class="fragment" data-fragment-index="1">
+<p><strong>Sequence numbers.</strong> A <code>txid</code> plus a set of completed ones <em>is</em> duplicate detection — and echoing it in the reply is exactly why an acknowledgement carries a sequence number. Chapter 3.</p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p><strong>A retransmission timer.</strong> Too short and you flood the machine with spurious retries; too long and the user decides it is broken and walks away.</p>
+</div>
+</section>
+<section id="what-you-just-invented-1" class="slide level2">
+<h2>What You Just Invented</h2>
+<div class="fragment" data-fragment-index="1">
+<p><strong>A limit on what is achievable.</strong> Exactly-once delivery over a lossy link is not attainable. The honest guarantee is <strong>at-least-once</strong> delivery plus <strong>idempotent</strong> handling.</p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p>Which is why a real protocol also needs a give-up bound — five tries, then stop — and a refund path.</p>
+</div>
+<div class="fragment" data-fragment-index="3">
+<p><span class="vote-prompt">And whose protocol breaks if the <em>phone</em> dies right after sending <code>PAY</code>?</span></p>
+</div>
+<div class="fragment" data-fragment-index="4">
+<p>No <code>txid</code> survives, so the <strong>machine’s</strong> table has to be the durable side. That is why servers keep the state and clients do the retrying, not the other way round.</p>
+</div>
+</section>
+<section id="section-1.2" class="slide level2 center section-divider">
+<h2>Section 1.2</h2>
+<p>The Network Edge</p>
+</section>
+<section id="todays-plan-1" class="slide level2">
+<h2>Today’s Plan</h2>
+<ul>
+<li>Where the edge stops and the core begins</li>
+<li>Access networks
+<ul>
+<li>cable (HFC), DSL, home, wireless, enterprise</li>
+<li>the two questions to ask about any access network</li>
+</ul></li>
+<li>Hosts sending packets: <span class="math inline">\(L\)</span>, <span class="math inline">\(R\)</span>, and <span class="math inline">\(L/R\)</span></li>
+<li>Physical media: guided and unguided</li>
+</ul>
+</section>
+<section id="a-closer-look" class="slide level2">
+<h2>A Closer Look</h2>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p><strong>Network edge:</strong></p>
+<ul>
+<li><strong>hosts</strong>: clients and servers</li>
+<li>servers often live in <strong>data centers</strong></li>
+</ul>
+<div class="fragment">
+<p><strong>Access networks, physical media:</strong> the wired and wireless links that attach a host to its first router.</p>
+</div>
+<div class="fragment">
+<p><strong>Network core:</strong> interconnected routers — the network of networks.</p>
+</div>
+</div><div class="column" style="width:45%;">
+<p><img data-src="images/map_edge.png" style="width:98.0%"></p>
+</div></div>
+</section>
+<section id="access-networks" class="slide level2">
+<h2>Access Networks</h2>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p><strong>Q: How do we connect an end system to its edge router?</strong></p>
+<ul>
+<li>residential access networks</li>
+<li>institutional access networks</li>
+<li>mobile access networks (Wi-Fi, 4G/5G)</li>
+</ul>
+</div><div class="column" style="width:45%;">
+<p><img data-src="images/map_access.png" style="width:98.0%"></p>
+</div></div>
+</section>
+<section id="access-networks-1" class="slide level2">
+<h2>Access Networks</h2>
+<p>Whatever the technology, the same two questions decide how it feels to use:</p>
+<div class="activity">
+<p><span class="activity-label">Ask of every access network</span></p>
+<ol type="1">
+<li>What is the <strong>transmission rate</strong>, in bits/sec?</li>
+<li>Is access <strong>shared</strong> with the neighbours, or <strong>dedicated</strong> to you?</li>
+</ol>
+</div>
+<div class="fragment">
+<p>Hold on to question 2. It is the difference between a rate you can count on and a rate you can only hope for.</p>
+</div>
+</section>
+<section id="cable-access-hfc" class="slide level2">
+<h2>Cable Access: HFC</h2>
+<p><img data-src="images/cable_access.png" style="width:62.0%"></p>
+<div class="fragment">
+<ul>
+<li><strong>HFC</strong>: hybrid fiber coax. Cable and fiber attach homes to the ISP router.</li>
+<li><strong>Asymmetric</strong>: 40 Mbps–1.2 Gbps downstream, 30–100 Mbps upstream.</li>
+<li><strong>Frequency division multiplexing</strong>: data and TV ride different frequency bands on the same cable.</li>
+</ul>
+</div>
+</section>
+<section id="cable-shared-or-not" class="slide level2">
+<h2>Cable: Shared or Not?</h2>
+<p>Homes on a street share one coaxial distribution network back to the cable headend.</p>
+<p><span class="vote-prompt">Vote — your neighbour starts a 4K download. What happens to you?</span></p>
+<div class="columns vote-row">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>A.</strong> Nothing — I have my own line</p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>B.</strong> My speed drops</p>
+</div>
+</div></div>
+<div class="fragment">
+<p><strong>B.</strong> Cable is a <strong>shared</strong> access network. This is exactly why cable slows down at 8 p.m. and why your advertised rate is “up to.”</p>
+</div>
+</section>
+<section id="dsl-access" class="slide level2">
+<h2>DSL Access</h2>
+<p><img data-src="images/dsl_access.png" style="width:62.0%"></p>
+<div class="fragment">
+<ul>
+<li>Uses the <strong>existing</strong> telephone line to the central office <strong>DSLAM</strong>.</li>
+<li>Data to the Internet, voice to the telephone network — different frequencies on one pair.</li>
+<li>24–52 Mbps down, 3.5–16 Mbps up, <strong>dedicated</strong> to your line.</li>
+</ul>
+</div>
+</section>
+<section id="home-networks" class="slide level2">
+<h2>Home Networks</h2>
+<p><img data-src="images/home_network.png" style="width:76.0%"></p>
+<div class="fragment">
+<p>The “router” in your closet is really four devices in one box: cable or DSL modem, router, firewall/NAT, and Wi-Fi access point.</p>
+</div>
+</section>
+<section id="wireless-access" class="slide level2">
+<h2>Wireless Access</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Wireless LAN (WLAN)</strong></p>
+<p><img data-src="images/wireless_wlan.png" style="width:88.0%"></p>
+<ul>
+<li>within a building, ~100 ft</li>
+<li>802.11 (Wi-Fi): 11, 54, 450 Mbps</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><strong>Wide-area cellular</strong></p>
+<p><img data-src="images/wireless_cellular.png" style="width:88.0%"></p>
+<ul>
+<li>operator-run, tens of km</li>
+<li>4G: tens of Mbps; 5G higher</li>
+</ul>
+</div></div>
+<div class="fragment">
+<p>Both are <strong>shared</strong>: one base station’s capacity splits among everyone attached.</p>
+</div>
+</section>
+<section id="enterprise-access" class="slide level2">
+<h2>Enterprise Access</h2>
+<p><img data-src="images/enterprise.png" style="width:71.0%"></p>
+<div class="fragment">
+<ul>
+<li>Companies and universities mix wired and wireless.</li>
+<li><strong>Ethernet</strong>: 100 Mbps, 1 Gbps, 10 Gbps wired.</li>
+<li><strong>Wi-Fi</strong>: access points at 11, 54, 450 Mbps.</li>
+<li>Switches <em>and</em> routers — the distinction comes in Chapter 6.</li>
+</ul>
+</div>
+</section>
+<section id="hosts-send-packets" class="slide level2">
+<h2>Hosts Send Packets</h2>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p>A sending host:</p>
+<ol type="1">
+<li>takes an application message</li>
+<li>breaks it into <strong>packets</strong> of <span class="math inline">\(L\)</span> bits</li>
+<li>pushes each packet into the link at <strong>transmission rate</strong> <span class="math inline">\(R\)</span></li>
+</ol>
+<div class="fragment">
+<p><span class="math inline">\(R\)</span> is also called link <strong>capacity</strong> or link <strong>bandwidth</strong>.</p>
+</div>
+<div class="fragment">
+<p><span class="math display">\[d_{\text{trans}} \;=\; \frac{L \text{ (bits)}}{R \text{ (bits/sec)}}\]</span></p>
+</div>
+</div><div class="column" style="width:45%;">
+<p><img data-src="images/host_packets.png" style="width:95.0%"></p>
+</div></div>
+</section>
+<section id="your-turn-how-long" class="slide level2">
+<h2>Your Turn: How Long?</h2>
+<p><strong><em>Example:</em></strong> A 1500-byte packet is pushed onto a 100 Mbps link. How long does the transmission take?</p>
+<div class="fragment">
+<p><strong><em>Solution:</em></strong> <span class="math inline">\(L = 1500 \times 8 = 12{,}000\)</span> bits.</p>
+<p><span class="math display">\[d_{\text{trans}} = \frac{12{,}000}{100 \times 10^{6}}
+= 1.2 \times 10^{-4}\ \text{s} = 0.12\ \text{ms}\]</span></p>
+</div>
+<div class="fragment">
+<p>Same packet on 54 Mbps Wi-Fi: <span class="math inline">\(d_{\text{trans}} = 0.22\)</span> ms.</p>
+<p>Note what is <em>missing</em> from this formula: <strong>distance</strong>. Hold that thought until Section 1.4.</p>
+</div>
+</section>
+<section id="physical-media-guided" class="slide level2">
+<h2>Physical Media: Guided</h2>
+<div class="fragment" data-fragment-index="1">
+<p>A <strong>bit</strong> propagates between transmitter/receiver pairs; the <strong>physical link</strong> is whatever lies between them.</p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p><strong>Guided media</strong> — signals travel in a solid:</p>
+</div>
+<div class="fragment" data-fragment-index="3">
+<ul>
+<li><strong>Twisted pair (TP)</strong>: two insulated copper wires. Cat 5: 100 Mbps / 1 Gbps Ethernet. Cat 6: 10 Gbps.</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="4">
+<ul>
+<li><strong>Coaxial cable</strong>: two concentric conductors, bidirectional, hundreds of Mbps per frequency channel.</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="5">
+<ul>
+<li><strong>Fiber optic</strong>: glass carrying light pulses, one pulse per bit. Tens to hundreds of Gbps, very low error rate, immune to electromagnetic noise, repeaters spaced far apart.</li>
+</ul>
+</div>
+</section>
+<section id="physical-media-wireless" class="slide level2">
+<h2>Physical Media: Wireless</h2>
+<p><strong>Unguided media</strong> — the signal propagates freely in the electromagnetic spectrum. No wire, broadcast, and half-duplex.</p>
+<div class="fragment">
+<p>Propagation is at the mercy of the environment: <strong>reflection</strong>, <strong>obstruction</strong> by objects, <strong>interference</strong> from other transmitters.</p>
+</div>
+<div class="fragment">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Radio link type</th>
+<th style="text-align: left;">Typical rate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Terrestrial microwave</td>
+<td style="text-align: left;">up to 45 Mbps per channel</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Wireless LAN (Wi-Fi)</td>
+<td style="text-align: left;">hundreds of Mbps</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Wide-area cellular (4G)</td>
+<td style="text-align: left;">tens of Mbps</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Satellite</td>
+<td style="text-align: left;">45 Mbps per channel, <strong>270 ms</strong> end-to-end</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="why-it-matters-satellite" class="slide level2">
+<h2>Why It Matters: Satellite</h2>
+<p>A geostationary satellite sits 35,786 km up. The signal must go up and back down — twice for a round trip.</p>
+<p><span class="vote-prompt">Vote — can better hardware fix the 270 ms delay?</span></p>
+<div class="columns vote-row">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>A.</strong> Yes, with a faster modem</p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>B.</strong> No</p>
+</div>
+</div></div>
+<div class="fragment">
+<p><strong>B.</strong> That delay is <em>distance divided by the speed of light</em>. No engineering removes it — which is exactly why Starlink flies at 550 km instead of 35,786 km.</p>
+</div>
+</section>
+<section id="activity-rate-your-link" class="slide level2">
+<h2>Activity: Rate Your Link</h2>
+<div class="activity">
+<p><span class="activity-label">Everyone — 5 minutes, phone or laptop</span></p>
+<ol type="1">
+<li>Run a speed test on <strong>campus Wi-Fi</strong>. Record down/up in Mbps.</li>
+<li>Turn Wi-Fi off and repeat on <strong>cellular</strong>.</li>
+<li>Post both numbers.</li>
+</ol>
+</div>
+<div class="fragment">
+<p>Then, as a room: which link is <strong>shared</strong>, and how can you tell from the numbers alone? Whose number is the outlier, and where are they sitting?</p>
+</div>
+</section>
+<section id="section-1.3" class="slide level2 center section-divider">
+<h2>Section 1.3</h2>
+<p>The Network Core</p>
+</section>
+<section id="todays-plan-2" class="slide level2">
+<h2>Today’s Plan</h2>
+<ul>
+<li>Packet switching: store-and-forward, queueing, loss</li>
+<li>Forwarding vs routing — the two core functions</li>
+<li>Circuit switching, FDM and TDM</li>
+<li>Why the Internet chose packets</li>
+<li>Internet structure: how a network of networks gets built</li>
+</ul>
+</section>
+<section id="the-network-core" class="slide level2">
+<h2>The Network Core</h2>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p>A <strong>mesh of interconnected routers</strong>.</p>
+<div class="fragment">
+<p><strong>Packet switching:</strong></p>
+<ul>
+<li>hosts break messages into <strong>packets</strong></li>
+<li>routers <strong>forward</strong> them link by link</li>
+<li>each packet goes at <strong>full link capacity</strong></li>
+</ul>
+</div>
+<div class="fragment">
+<p>No reservation, no setup, no promise.</p>
+</div>
+</div><div class="column" style="width:45%;">
+<p><img data-src="images/map_core.png" style="width:98.0%"></p>
+</div></div>
+</section>
+<section id="store-and-forward" class="slide level2">
+<h2>Store and Forward</h2>
+<p><img data-src="images/store_forward.png" style="width:98.0%"></p>
+<div class="fragment">
+<p><strong>Store and forward:</strong> the router must receive the <strong>entire</strong> packet before it can start transmitting on the next link.</p>
+</div>
+<div class="fragment">
+<p>So a one-hop path costs <span class="math inline">\(L/R\)</span>, and a two-link path costs <span class="math inline">\(2L/R\)</span> (ignoring propagation for now).</p>
+</div>
+</section>
+<section id="store-and-forward-1" class="slide level2">
+<h2>Store and Forward</h2>
+<p><strong><em>Example:</em></strong> <span class="math inline">\(L = 10\)</span> Kbits, <span class="math inline">\(R = 100\)</span> Mbps.</p>
+<div class="fragment">
+<p><span class="math display">\[d_{\text{trans}} = \frac{10 \times 10^{3}}{100 \times 10^{6}}
+= 10^{-4}\ \text{s} = 0.1\ \text{ms per hop}\]</span></p>
+</div>
+<div class="fragment">
+<p>End-to-end over two links: <span class="math inline">\(2L/R = 0.2\)</span> ms.</p>
+</div>
+<div class="fragment">
+<div class="activity">
+<p><span class="activity-label">Why store-and-forward, and not just relay bit by bit?</span></p>
+<p>Because the router has to read the <strong>destination address in the header</strong> — and it cannot trust a packet it has not fully received and error-checked.</p>
+</div>
+</div>
+</section>
+<section id="your-turn-three-hops" class="slide level2">
+<h2>Your Turn: Three Hops</h2>
+<p><strong><em>Example:</em></strong> A 1000-byte packet crosses <strong>3 links</strong>, each 2 Mbps. Propagation is negligible. What is the end-to-end delay?</p>
+<div class="fragment">
+<p><strong><em>Solution:</em></strong> <span class="math inline">\(L = 1000 \times 8 = 8000\)</span> bits.</p>
+<p><span class="math display">\[\frac{L}{R} = \frac{8000}{2 \times 10^{6}} = 4\ \text{ms per link}
+\qquad
+d_{\text{end-end}} = 3 \times 4 = 12\ \text{ms}\]</span></p>
+</div>
+<div class="fragment">
+<p>In general, for <span class="math inline">\(N\)</span> links of equal rate: <span class="math inline">\(d_{\text{end-end}} = N \cdot L/R\)</span>.</p>
+</div>
+</section>
+<section id="queueing-and-loss" class="slide level2">
+<h2>Queueing and Loss</h2>
+<p><img data-src="images/queue_loss.png" style="width:98.0%"></p>
+<div class="fragment">
+<p>If the <strong>arrival rate</strong> to a link exceeds its <strong>transmission rate</strong> for a while:</p>
+<ul>
+<li>packets <strong>queue</strong>, waiting their turn on the output link</li>
+<li>packets are <strong>dropped</strong> if the router’s buffer fills up</li>
+</ul>
+</div>
+</section>
+<section id="forwarding-vs-routing" class="slide level2">
+<h2>Forwarding vs Routing</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><img data-src="images/fwd_routing.png" style="width:95.0%"></p>
+</div><div class="column" style="width:50%;">
+<div class="fragment">
+<p><strong>Forwarding</strong> is <em>local</em>: move an arriving packet from an input link to the right output link. One router, one packet, microseconds.</p>
+</div>
+<div class="fragment">
+<p><strong>Routing</strong> is <em>global</em>: determine the source-to-destination paths packets take. All routers, all destinations, seconds to minutes.</p>
+</div>
+<div class="fragment">
+<p>Routing algorithms <strong>write</strong> the forwarding table; forwarding <strong>reads</strong> it. Chapters 4 and 5.</p>
+</div>
+</div></div>
+</section>
+<section id="circuit-switching" class="slide level2">
+<h2>Circuit Switching</h2>
+<div class="columns">
+<div class="column" style="width:52%;">
+<p>End-to-end resources are <strong>allocated to and reserved for</strong> a “call.”</p>
+<div class="fragment">
+<p>Each link here has four circuits. This call holds the 2nd circuit on the top link and the 1st on the right link.</p>
+</div>
+</div><div class="column" style="width:48%;">
+<p><img data-src="images/circuit_switch.png" style="width:98.0%"></p>
+</div></div>
+</section>
+<section id="circuit-switching-1" class="slide level2">
+<h2>Circuit Switching</h2>
+<div class="fragment" data-fragment-index="1">
+<ul>
+<li><strong>Dedicated</strong> resources: no sharing.</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="2">
+<ul>
+<li><strong>Guaranteed</strong>, circuit-like performance.</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="3">
+<ul>
+<li>A circuit sits <strong>idle</strong> when the call is silent — and nobody else may use it.</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="4">
+<ul>
+<li>Commonly used in traditional telephone networks.</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="5">
+<p>That third point is the whole argument against circuit switching: you pay for capacity whether or not you use it.</p>
+</div>
+</section>
+<section id="fdm-and-tdm" class="slide level2">
+<h2>FDM and TDM</h2>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p><strong>Frequency division multiplexing</strong></p>
+<ul>
+<li>the spectrum is cut into narrow bands</li>
+<li>each call owns one band</li>
+<li>it may transmit continuously, at that band’s rate</li>
+</ul>
+</div><div class="column" style="width:45%;">
+<p><img data-src="images/fdm_tdm.png" style="width:98.0%"></p>
+</div></div>
+</section>
+<section id="fdm-and-tdm-1" class="slide level2">
+<h2>FDM and TDM</h2>
+<p><strong>Time division multiplexing</strong></p>
+<ul>
+<li>time is cut into slots</li>
+<li>each call gets periodic slots</li>
+<li>it may use the <em>whole</em> band, but only during its own slots</li>
+</ul>
+<div class="fragment">
+<p>Either way, the reservation is <strong>static</strong>. A silent call still owns its band or its slot.</p>
+</div>
+</section>
+<section id="packet-or-circuit" class="slide level2">
+<h2>Packet or Circuit?</h2>
+<p><span class="vote-prompt">Vote — which switching style does each system use?</span></p>
+<div class="fragment" data-fragment-index="0">
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">System</th>
+<th style="text-align: left;">Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">A 1990s landline phone call</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="1">circuit</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">A Zoom call today</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2">packet</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">A reserved lane on a toll road</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="3">circuit</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">A restaurant that takes walk-ins</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="4">packet</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">A restaurant that takes reservations</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="5">circuit</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Netflix streaming</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="6">packet</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="packet-beats-circuit" class="slide level2">
+<h2>Packet Beats Circuit</h2>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p><strong>Setup:</strong> a 1 Gbps link. Each user needs 100 Mbps <em>when active</em>, and is active <strong>10%</strong> of the time.</p>
+<div class="fragment">
+<p><strong>Circuit switching:</strong> reserve 100 Mbps per user <span class="math inline">\(\;\Rightarrow\;\)</span> <strong>10 users</strong>, and that is the hard ceiling.</p>
+</div>
+<div class="fragment">
+<p><strong>Packet switching:</strong> admit <strong>35 users</strong>. The probability that more than 10 are active at once is <strong>less than 0.0004</strong>.</p>
+</div>
+</div><div class="column" style="width:45%;">
+<p><img data-src="images/ps_vs_cs.png" style="width:95.0%"></p>
+</div></div>
+<div class="fragment">
+<p>3.5<span class="math inline">\(\times\)</span> the users, and overload roughly one second in 40 minutes.</p>
+</div>
+</section>
+<section id="where-0.0004-comes-from" class="slide level2">
+<h2>Where 0.0004 Comes From</h2>
+<p>With <span class="math inline">\(N = 35\)</span> independent users, each active with probability <span class="math inline">\(p = 0.1\)</span>, the number active is <strong>binomial</strong>:</p>
+<p><span class="math display">\[P(\text{more than 10 active}) \;=\;
+\sum_{k=11}^{35} \binom{35}{k} (0.1)^{k}(0.9)^{35-k}\]</span></p>
+<div class="fragment">
+<p><span class="math display">\[= 0.000424 \;&lt;\; 0.0004\ \text{(rounded up in the text)}\]</span></p>
+</div>
+<div class="fragment">
+<p><span class="vote-prompt">And if we admit far more than 35?</span></p>
+</div>
+<div class="fragment">
+<p><span class="math inline">\(N = 50 \Rightarrow 0.0094\)</span>. &nbsp; <span class="math inline">\(N = 100 \Rightarrow 0.42\)</span>. The guarantee degrades <strong>fast</strong> — statistical multiplexing is a bet, not a proof.</p>
+</div>
+</section>
+<section id="your-turn-size-the-link" class="slide level2">
+<h2>Your Turn: Size the Link</h2>
+<p><strong><em>Example:</em></strong> A 10 Mbps link. Each user needs 1 Mbps when active and is active 20% of the time. How many users under each scheme?</p>
+<div class="fragment">
+<p><strong><em>Solution:</em></strong> Circuit switching: <span class="math inline">\(10 / 1 = \mathbf{10}\)</span> users.</p>
+</div>
+<div class="fragment">
+<p>Packet switching with 25 users:</p>
+<p><span class="math display">\[P(\text{more than 10 active}) = \sum_{k=11}^{25}\binom{25}{k}(0.2)^k(0.8)^{25-k}
+= 0.0056\]</span></p>
+</div>
+<div class="fragment">
+<p><strong>25 users</strong>, with about a 0.6% chance of congestion — 2.5<span class="math inline">\(\times\)</span> the circuit-switched capacity.</p>
+</div>
+</section>
+<section id="is-packet-switching-perfect" class="slide level2">
+<h2>Is Packet Switching Perfect?</h2>
+<div class="fragment" data-fragment-index="1">
+<p><strong>Where it wins:</strong></p>
+<ul>
+<li>great for <strong>bursty</strong> traffic — sometimes data to send, often not</li>
+<li>resource sharing</li>
+<li>simpler: no call setup</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p><strong>Where it hurts:</strong></p>
+<ul>
+<li><strong>congestion</strong> is possible: delay and loss from buffer overflow</li>
+<li>needs extra protocols for reliable transfer and congestion control</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="3">
+<p><span class="vote-prompt">So how do we get circuit-like guarantees on a packet network?</span></p>
+</div>
+</section>
+<section id="activity-human-network" class="slide level2">
+<h2>Activity: Human Network</h2>
+<div class="activity">
+<p><span class="activity-label">Whole room — 10 minutes</span></p>
+<ol type="1">
+<li>Four students stand in a line: <strong>source, R1, R2, destination</strong>.</li>
+<li>The source writes a message on <strong>four sticky notes</strong>, numbered 1–4.</li>
+<li>Rule: a router may pass a note along only <strong>after</strong> it has fully read it. Count “one-thousand-one” while reading. That is <span class="math inline">\(L/R\)</span>.</li>
+</ol>
+</div>
+</section>
+<section id="activity-human-network-1" class="slide level2">
+<h2>Activity: Human Network</h2>
+<p>Now break it, one change at a time:</p>
+<div class="fragment" data-fragment-index="1">
+<ul>
+<li>Give R1 <strong>two</strong> sources at once. Watch the queue form in their hand.</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="2">
+<ul>
+<li>Cap R1’s hand at <strong>two</strong> notes. The third one dropped is <strong>loss</strong>.</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="3">
+<ul>
+<li>Deliver note 3 before note 2. Who has to fix that, and where?</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="4">
+<p>You have now demonstrated queueing delay, packet loss, and reordering — the three things Chapter 3 spends a hundred pages repairing.</p>
+</div>
+</section>
+<section id="network-of-networks" class="slide level2">
+<h2>Network of Networks</h2>
+<p><strong>Question:</strong> given <em>millions</em> of access ISPs, how do we connect them?</p>
+<p><img data-src="images/non_mesh.png" style="width:72.0%"></p>
+<div class="fragment">
+<p>Connecting every pair directly does not scale: <span class="math inline">\(O(N^{2})\)</span> links.</p>
+</div>
+</section>
+<section id="network-of-networks-1" class="slide level2">
+<h2>Network of Networks</h2>
+<p><strong>Option:</strong> connect every access ISP to one <strong>global transit ISP</strong>.</p>
+<p><img data-src="images/non_global.png" style="width:65.0%"></p>
+<div class="fragment">
+<p>Now it is <span class="math inline">\(O(N)\)</span>. <strong>Customer</strong> and <strong>provider</strong> ISPs sign an economic agreement — the customer pays for transit.</p>
+</div>
+</section>
+<section id="network-of-networks-2" class="slide level2">
+<h2>Network of Networks</h2>
+<p>If one global ISP is a viable business, there will be <strong>competitors</strong> — and they will want to interconnect.</p>
+<p><img data-src="images/non_compete.png" style="width:62.0%"></p>
+<div class="fragment">
+<p>They meet at <strong>Internet exchange points (IXPs)</strong> over <strong>peering links</strong> — often settlement-free, since both sides benefit.</p>
+</div>
+</section>
+<section id="network-of-networks-3" class="slide level2">
+<h2>Network of Networks</h2>
+<p><strong>Regional ISPs</strong> arise to aggregate access networks in one geography.</p>
+<p><img data-src="images/non_regional.png" style="width:71.0%"></p>
+<div class="fragment">
+<p>The hierarchy is now three deep: access <span class="math inline">\(\rightarrow\)</span> regional <span class="math inline">\(\rightarrow\)</span> global.</p>
+</div>
+</section>
+<section id="network-of-networks-4" class="slide level2">
+<h2>Network of Networks</h2>
+<p><strong>Content provider networks</strong> (Google, Microsoft, Akamai, Netflix) build their own backbones to put content close to users.</p>
+<p><img data-src="images/non_content.png" style="width:62.0%"></p>
+<div class="fragment">
+<p>They <strong>bypass</strong> the tier-1 ISPs wherever they can — less money paid out, and fewer hops of delay for you.</p>
+</div>
+</section>
+<section id="tier-1-isps" class="slide level2">
+<h2>Tier-1 ISPs</h2>
+<p><img data-src="images/tier1.png" style="width:98.0%"></p>
+<div class="fragment">
+<p>At the “center”: a small number of very well-connected large networks.</p>
+</div>
+</section>
+<section id="tier-1-isps-1" class="slide level2">
+<h2>Tier-1 ISPs</h2>
+<div class="fragment" data-fragment-index="1">
+<p><strong>Tier-1 commercial ISPs</strong> — Lumen/Level 3, Sprint, AT&amp;T, NTT. National and international coverage, and they peer with each other rather than buying transit.</p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p><strong>Content provider networks</strong> — Google, Meta. Private networks linking their own data centers, often bypassing tier-1 and regional ISPs entirely.</p>
+</div>
+<div class="fragment" data-fragment-index="3">
+<p>Both sit at the center, but for different reasons: one sells reachability, the other refuses to buy it.</p>
+</div>
+</section>
+<section id="a-real-tier-1-map" class="slide level2">
+<h2>A Real Tier-1 Map</h2>
+<p><img data-src="images/sprint_map.png" style="width:98.0%"></p>
+<div class="credit">
+<p>Sprint’s North American backbone, 2019. Diamonds are <strong>PoPs</strong> — points of presence, where customer and peer networks attach.</p>
+</div>
+</section>
+<section id="why-it-matters-peering" class="slide level2">
+<h2>Why It Matters: Peering</h2>
+<p>Netflix is roughly 15% of North American downstream traffic. It could buy transit from a tier-1 ISP and pay per bit.</p>
+<p><span class="vote-prompt">Vote — what did they build instead?</span></p>
+<div class="columns vote-row">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>A.</strong> A bigger transit contract</p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>B.</strong> Their own network + caches inside ISPs</p>
+</div>
+</div></div>
+<div class="fragment">
+<p><strong>B.</strong> Open Connect puts a cache box <em>inside</em> your ISP. Your stream never crosses a tier-1 link. The Internet’s shape is set by <strong>economics</strong> at least as much as by engineering.</p>
+</div>
+</section>
+<section id="section-1.4" class="slide level2 center section-divider">
+<h2>Section 1.4</h2>
+<p>Delay, Loss, and Throughput</p>
+</section>
+<section id="todays-plan-3" class="slide level2">
+<h2>Today’s Plan</h2>
+<ul>
+<li>Where delay and loss actually come from</li>
+<li>The four sources of nodal delay</li>
+<li>Transmission vs propagation — the distinction that trips everyone</li>
+<li>Traffic intensity <span class="math inline">\(La/R\)</span></li>
+<li>Measuring a real path with <code>traceroute</code></li>
+<li>Throughput and the bottleneck link</li>
+</ul>
+</section>
+<section id="where-delay-comes-from" class="slide level2">
+<h2>Where Delay Comes From</h2>
+<p><img data-src="images/queue_router.png" style="width:98.0%"></p>
+<div class="fragment">
+<p>Packets <strong>queue</strong> in router buffers, waiting their turn on the output link. When the arrival rate exceeds the output capacity, the queue grows — and when the buffer is full, packets are <strong>lost</strong>.</p>
+</div>
+</section>
+<section id="four-sources-of-delay" class="slide level2">
+<h2>Four Sources of Delay</h2>
+<div class="columns">
+<div class="column" style="width:52%;">
+<p><img data-src="images/delay_nodal.png" style="width:98.0%"></p>
+<p><span class="math display">\[d_{\text{nodal}} = d_{\text{proc}} + d_{\text{queue}}
++ d_{\text{trans}} + d_{\text{prop}}\]</span></p>
+</div><div class="column" style="width:48%;">
+<div class="fragment">
+<p><span class="math inline">\(d_{\text{proc}}\)</span> — <strong>nodal processing</strong>: check bit errors, pick the output link. Typically &lt; 1 ms.</p>
+</div>
+<div class="fragment">
+<p><span class="math inline">\(d_{\text{queue}}\)</span> — <strong>queueing</strong>: waiting at the output link. Depends on congestion; the only one that varies wildly.</p>
+</div>
+</div></div>
+</section>
+<section id="four-sources-of-delay-1" class="slide level2">
+<h2>Four Sources of Delay</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><span class="math inline">\(d_{\text{trans}}\)</span> — <strong>transmission delay</strong></p>
+<ul>
+<li><span class="math inline">\(L\)</span>: packet length (bits)</li>
+<li><span class="math inline">\(R\)</span>: link rate (bps)</li>
+</ul>
+<p><span class="math display">\[d_{\text{trans}} = \frac{L}{R}\]</span></p>
+<p><em>Time to push the packet out.</em></p>
+</div><div class="column" style="width:50%;">
+<div class="fragment">
+<p><span class="math inline">\(d_{\text{prop}}\)</span> — <strong>propagation delay</strong></p>
+<ul>
+<li><span class="math inline">\(d\)</span>: length of the link (m)</li>
+<li><span class="math inline">\(s\)</span>: propagation speed (<span class="math inline">\(\approx 2 \times 10^{8}\)</span> m/s)</li>
+</ul>
+<p><span class="math display">\[d_{\text{prop}} = \frac{d}{s}\]</span></p>
+<p><em>Time for a bit to travel.</em></p>
+</div>
+</div></div>
+<div class="fragment">
+<p>Very different: <span class="math inline">\(d_{\text{trans}}\)</span> depends on the packet, <span class="math inline">\(d_{\text{prop}}\)</span> does not.</p>
+</div>
+</section>
+<section id="your-turn-which-dominates" class="slide level2">
+<h2>Your Turn: Which Dominates?</h2>
+<p><strong><em>Example:</em></strong> A 1500-byte packet on a 100 Mbps link that is 3,000 km long (<span class="math inline">\(s = 2 \times 10^{8}\)</span> m/s). Which delay dominates?</p>
+<div class="fragment">
+<p><strong><em>Solution:</em></strong></p>
+<p><span class="math display">\[d_{\text{trans}} = \frac{12{,}000}{10^{8}} = 0.12\ \text{ms}
+\qquad
+d_{\text{prop}} = \frac{3 \times 10^{6}}{2 \times 10^{8}} = 15\ \text{ms}\]</span></p>
+</div>
+<div class="fragment">
+<p>Propagation wins by <strong>125<span class="math inline">\(\times\)</span></strong>. Upgrading that link to 1 Gbps takes the total from 15.12 ms to 15.01 ms — a <strong>0.7%</strong> improvement.</p>
+</div>
+</section>
+<section id="the-caravan-analogy" class="slide level2">
+<h2>The Caravan Analogy</h2>
+<p><img data-src="images/caravan.png" style="width:98.0%"></p>
+<ul>
+<li>Cars propagate at 100 km/hr; the toll booth takes <strong>12 s</strong> per car.</li>
+<li>car <span class="math inline">\(\approx\)</span> bit, &nbsp; caravan <span class="math inline">\(\approx\)</span> packet, &nbsp; toll booth <span class="math inline">\(\approx\)</span> router.</li>
+</ul>
+<div class="fragment">
+<p><span class="vote-prompt">How long until the caravan is lined up at the 2nd booth?</span></p>
+</div>
+</section>
+<section id="the-caravan-analogy-1" class="slide level2">
+<h2>The Caravan Analogy</h2>
+<p><strong><em>Solution:</em></strong> Two pieces, exactly like <span class="math inline">\(d_{\text{trans}}\)</span> and <span class="math inline">\(d_{\text{prop}}\)</span>.</p>
+<div class="fragment">
+<p>Push the whole caravan through the booth: <span class="math inline">\(12 \times 10 = 120\)</span> s.</p>
+</div>
+<div class="fragment">
+<p>Last car propagates 100 km at 100 km/hr: <span class="math inline">\(1\)</span> hr <span class="math inline">\(= 3600\)</span> s.</p>
+</div>
+<div class="fragment">
+<p><span class="math display">\[120 + 3600 = 3720\ \text{s} = \mathbf{62\ minutes}\]</span></p>
+</div>
+</section>
+<section id="the-caravan-analogy-2" class="slide level2">
+<h2>The Caravan Analogy</h2>
+<p><strong><em>Example (continued):</em></strong> Now cars propagate at <strong>1000 km/hr</strong> and the booth takes <strong>1 minute</strong> per car.</p>
+<p><span class="vote-prompt">Will cars reach the 2nd booth before all are serviced at the 1st?</span></p>
+<div class="fragment">
+<p><strong><em>Solution:</em></strong> <strong>Yes.</strong> The first car is serviced at <span class="math inline">\(t = 1\)</span> min, then propagates <span class="math inline">\(100/1000\)</span> hr <span class="math inline">\(= 6\)</span> min, arriving at <span class="math inline">\(t = 7\)</span> min.</p>
+</div>
+<div class="fragment">
+<p>At <span class="math inline">\(t = 7\)</span> min the booth has serviced 7 cars — <strong>3 are still queued</strong>. The packet is spread across both links at once. Store-and-forward routers <em>cannot</em> do this; they must wait for the whole packet.</p>
+</div>
+</section>
+<section id="traffic-intensity" class="slide level2">
+<h2>Traffic Intensity</h2>
+<div class="columns">
+<div class="column" style="width:52%;">
+<ul>
+<li><span class="math inline">\(R\)</span>: link bandwidth (bps)</li>
+<li><span class="math inline">\(L\)</span>: packet length (bits)</li>
+<li><span class="math inline">\(a\)</span>: average packet <strong>arrival rate</strong></li>
+</ul>
+<div class="fragment">
+<p><span class="math display">\[\text{traffic intensity} = \frac{La}{R}\]</span></p>
+</div>
+</div><div class="column" style="width:48%;">
+<p><img data-src="images/queue_intensity.png" style="width:98.0%"></p>
+</div></div>
+</section>
+<section id="traffic-intensity-1" class="slide level2">
+<h2>Traffic Intensity</h2>
+<div class="fragment" data-fragment-index="1">
+<ul>
+<li><span class="math inline">\(La/R \approx 0\)</span>: average queueing delay is small.</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="2">
+<ul>
+<li><span class="math inline">\(La/R \rightarrow 1\)</span>: average queueing delay grows <strong>without bound</strong>.</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="3">
+<ul>
+<li><span class="math inline">\(La/R &gt; 1\)</span>: more work arrives than can be served — the average delay is <strong>infinite</strong>.</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="4">
+<p>Notice that the bad case is not “the link is full.” It is “the link is <em>almost</em> full,” which happens far more often.</p>
+</div>
+</section>
+<section id="your-turn-how-busy" class="slide level2">
+<h2>Your Turn: How Busy?</h2>
+<p><strong><em>Example:</em></strong> <span class="math inline">\(L = 1000\)</span> bits, <span class="math inline">\(R = 1\)</span> Mbps. Compute <span class="math inline">\(La/R\)</span> for <span class="math inline">\(a = 500\)</span>, <span class="math inline">\(800\)</span>, and <span class="math inline">\(1200\)</span> packets/sec.</p>
+<div class="fragment" data-fragment-index="0">
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><span class="math inline">\(a\)</span> (pkt/s)</th>
+<th style="text-align: left;"><span class="math inline">\(La/R\)</span></th>
+<th style="text-align: left;">Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">500</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="1">0.5</span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="1">comfortable</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">800</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2">0.8</span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2">queues noticeably</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">1200</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="3">1.2</span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="3">unbounded — loss</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="fragment" data-fragment-index="4">
+<p>Design rule: engineer links to run <strong>well below</strong> 1, not just below it. The curve is nearly vertical near the end.</p>
+</div>
+</section>
+<section id="packet-loss" class="slide level2">
+<h2>Packet Loss</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><img data-src="images/loss_buffer.png" style="width:98.0%"></p>
+</div><div class="column" style="width:50%;">
+<div class="fragment">
+<ul>
+<li>The queue (buffer) ahead of a link has <strong>finite</strong> capacity.</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>A packet arriving to a full queue is <strong>dropped</strong>.</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>It may be retransmitted by the previous node, by the source, <strong>or not at all</strong>.</li>
+</ul>
+</div>
+</div></div>
+</section>
+<section id="real-delays-traceroute" class="slide level2">
+<h2>Real Delays: traceroute</h2>
+<p><code>traceroute</code> measures delay to each router along a path.</p>
+<div class="fragment">
+<p>For each hop <span class="math inline">\(i\)</span>:</p>
+<ul>
+<li>send three packets that will reach router <span class="math inline">\(i\)</span> (time-to-live <span class="math inline">\(= i\)</span>)</li>
+<li>router <span class="math inline">\(i\)</span> returns them to the sender</li>
+<li>the sender measures the elapsed interval</li>
+</ul>
+</div>
+<div class="fragment">
+<p>Three probes per hop, so you see three numbers per line. <code>* * *</code> means no response — the probe was lost, or that router declines to reply.</p>
+</div>
+</section>
+<section id="real-delays-traceroute-1" class="slide level2">
+<h2>Real Delays: traceroute</h2>
+<p><img data-src="images/traceroute.png" style="width:76.0%"></p>
+<div class="fragment">
+<p><span class="vote-prompt">Hop 11 reports 112 ms, hop 12 reports 111 ms. Delays <em>decreased</em>. Why?</span></p>
+</div>
+<div class="fragment">
+<p>Each line is an <strong>independent</strong> round trip at a different instant, with different queueing. Samples, not a cumulative sum.</p>
+</div>
+</section>
+<section id="activity-trace-your-path" class="slide level2">
+<h2>Activity: Trace Your Path</h2>
+<div class="activity">
+<p><span class="activity-label">Everyone — 8 minutes, terminal</span></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href=""></a><span class="fu">ping</span> <span class="at">-c</span> 5 tamusa.edu</span>
+<span id="cb1-2"><a href=""></a><span class="ex">traceroute</span> tamusa.edu          <span class="co"># tracert on Windows</span></span>
+<span id="cb1-3"><a href=""></a><span class="ex">traceroute</span> www.sydney.edu.au</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Record: <strong>hop count</strong> and <strong>minimum RTT</strong> for each destination.</p>
+</div>
+<div class="fragment">
+<p>As a room:</p>
+<ul>
+<li>What is the smallest RTT anyone got to Sydney?</li>
+<li>San Antonio to Sydney is ~14,000 km. At <span class="math inline">\(2\times10^{8}\)</span> m/s the round trip alone is <strong>140 ms</strong>. Did anyone beat that?</li>
+</ul>
+</div>
+</section>
+<section id="throughput" class="slide level2">
+<h2>Throughput</h2>
+<div class="columns">
+<div class="column" style="width:52%;">
+<p><strong>Throughput:</strong> the rate (bits/time) at which bits are delivered from sender to receiver.</p>
+<ul>
+<li><strong>instantaneous</strong>: rate at a given moment</li>
+<li><strong>average</strong>: rate over a longer period</li>
+</ul>
+<div class="fragment">
+<p>The fluid-in-a-pipe picture: the server pours bits in, and each link is a pipe of a given diameter.</p>
+</div>
+</div><div class="column" style="width:48%;">
+<p><img data-src="images/throughput_pipe.png" style="width:98.0%"></p>
+</div></div>
+</section>
+<section id="the-bottleneck-link" class="slide level2">
+<h2>The Bottleneck Link</h2>
+<p><img data-src="images/throughput_bneck.png" style="width:70.0%"></p>
+<div class="fragment">
+<p>Average end-to-end throughput is <span class="math inline">\(\min(R_s, R_c)\)</span> — the <strong>bottleneck link</strong> constrains the whole path.</p>
+</div>
+</section>
+<section id="sharing-the-backbone" class="slide level2">
+<h2>Sharing the Backbone</h2>
+<div class="columns">
+<div class="column" style="width:45%;">
+<p><img data-src="images/throughput_shared.png" style="width:98.0%"></p>
+</div><div class="column" style="width:55%;">
+<p>Ten connections fairly share a backbone link of rate <span class="math inline">\(R\)</span>.</p>
+<div class="fragment">
+<p><span class="math display">\[\text{per-connection} = \min\!\left(R_c,\, R_s,\, \frac{R}{10}\right)\]</span></p>
+</div>
+<div class="fragment">
+<p>In practice <span class="math inline">\(R_c\)</span> or <span class="math inline">\(R_s\)</span> — the <strong>access</strong> links — is the bottleneck, not the core. Backbones are over-provisioned; your Wi-Fi is not.</p>
+</div>
+</div></div>
+</section>
+<section id="your-turn-movie-night" class="slide level2">
+<h2>Your Turn: Movie Night</h2>
+<p><strong><em>Example:</em></strong> Server link <span class="math inline">\(R_s = 100\)</span> Mbps, your link <span class="math inline">\(R_c = 25\)</span> Mbps, backbone <span class="math inline">\(R = 1\)</span> Gbps shared by 10 connections. How long to download a 5 GB movie?</p>
+<div class="fragment">
+<p><strong><em>Solution:</em></strong> <span class="math inline">\(\min(100,\ 25,\ 1000/10) = \mathbf{25}\)</span> Mbps.</p>
+</div>
+<div class="fragment">
+<p><span class="math inline">\(5\ \text{GB} = 40 \times 10^{9}\)</span> bits.</p>
+<p><span class="math display">\[T = \frac{40 \times 10^{9}}{25 \times 10^{6}} = 1600\ \text{s}
+\approx 27\ \text{minutes}\]</span></p>
+</div>
+<div class="fragment">
+<p>Upgrading the <em>server</em> to 10 Gbps changes nothing. Fix the bottleneck or fix nothing.</p>
+</div>
+</section>
+<section id="why-it-matters-latency" class="slide level2">
+<h2>Why It Matters: Latency</h2>
+<p>Your link is 1 Gbps and the round trip to the server is 100 ms.</p>
+<p><span class="vote-prompt">Vote — how much data is “in flight” at any instant?</span></p>
+<div class="columns vote-row">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>A.</strong> A few KB</p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>B.</strong> About 12.5 MB</p>
+</div>
+</div></div>
+<div class="fragment">
+<p><strong>B.</strong> The <strong>delay <span class="math inline">\(\times\)</span> bandwidth product</strong>:</p>
+<p><span class="math display">\[0.1\ \text{s} \times 10^{9}\ \text{bps} = 10^{8}\ \text{bits}
+= 12.5\ \text{MB}\]</span></p>
+</div>
+<div class="fragment">
+<p>A 1 MB file fits entirely inside one round trip — so its transfer time is dominated by the RTT, not the rate. Chapter 3 lives on this number.</p>
+</div>
+</section>
+<section id="section-1.5" class="slide level2 center section-divider">
+<h2>Section 1.5</h2>
+<p>Layering and Service Models</p>
+</section>
+<section id="todays-plan-4" class="slide level2">
+<h2>Today’s Plan</h2>
+<ul>
+<li>Why we need a structure at all</li>
+<li>Layering, by analogy with air travel</li>
+<li>The five-layer Internet protocol stack</li>
+<li>Encapsulation — how headers get added and removed</li>
+<li>The seven-layer OSI reference model</li>
+</ul>
+</section>
+<section id="networks-are-complex" class="slide level2">
+<h2>Networks Are Complex</h2>
+<p>Networks have many moving pieces: hosts, routers, links of various media, applications, protocols, hardware, software.</p>
+<div class="fragment">
+<p><span class="vote-prompt">Is there any hope of <em>organizing</em> the structure of a network?</span></p>
+</div>
+<div class="fragment">
+<p>… or at least of organizing our <strong>discussion</strong> of networks?</p>
+</div>
+<div class="fragment">
+<p>The answer that the Internet’s designers reached — and that every large system has since copied — is <strong>layering</strong>.</p>
+</div>
+</section>
+<section id="layers-air-travel" class="slide level2">
+<h2>Layers: Air Travel</h2>
+<p><img data-src="images/air_travel.png" style="width:98.0%"></p>
+<div class="fragment">
+<p>Each <strong>layer</strong> implements a service, using its own internal actions and relying on the services of the layer below.</p>
+</div>
+</section>
+<section id="why-layering" class="slide level2">
+<h2>Why Layering?</h2>
+<div class="fragment" data-fragment-index="1">
+<p><strong>Dealing with complex systems:</strong></p>
+<ul>
+<li>explicit structure lets us identify the pieces and their relationships</li>
+<li>a layered <strong>reference model</strong> gives us shared vocabulary</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p><strong>Modularization eases maintenance and updating:</strong></p>
+<ul>
+<li>a change in a layer’s <em>implementation</em> is transparent to the rest of the system</li>
+<li>changing the gate procedure does not affect ticketing</li>
+</ul>
+</div>
+</section>
+<section id="why-layering-1" class="slide level2">
+<h2>Why Layering?</h2>
+<p><span class="vote-prompt">Cost — is layering ever <em>harmful</em>?</span></p>
+<div class="fragment">
+<p>Yes. A layer that hides information the layer above needs makes the upper layer <strong>guess</strong>.</p>
+</div>
+<div class="fragment">
+<p>TCP treats every lost packet as a sign of congestion and slows down. On a wireless link, most losses are <strong>interference</strong>, not congestion — so TCP slows down for no reason.</p>
+</div>
+<div class="fragment">
+<p>The link layer knew the difference. The interface gave it no way to say so. Chapter 7 has the scars.</p>
+</div>
+</section>
+<section id="the-internet-stack" class="slide level2">
+<h2>The Internet Stack</h2>
+<div class="columns">
+<div class="column" style="width:52%;">
+<div class="fragment" data-fragment-index="5">
+<p><strong>application</strong> — supports network apps. <span class="term">IMAP, SMTP, HTTP</span></p>
+</div>
+<div class="fragment" data-fragment-index="4">
+<p><strong>transport</strong> — process to process. <span class="term">TCP, UDP</span></p>
+</div>
+<div class="fragment" data-fragment-index="3">
+<p><strong>network</strong> — datagrams source to destination. <span class="term">IP, OSPF</span></p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p><strong>link</strong> — between neighbouring elements. <span class="term">Ethernet, 802.11</span></p>
+</div>
+<div class="fragment" data-fragment-index="1">
+<p><strong>physical</strong> — bits “on the wire.”</p>
+</div>
+</div><div class="column" style="width:48%;">
+<svg viewbox="0 0 320 340" width="100%" style="max-height:62vh">
+  <g class="fragment" data-fragment-index="1">
+    <rect class="box" x="30" y="270" width="260" height="52" rx="4"></rect>
+    <text x="160" y="302" text-anchor="middle" font-size="22">physical</text>
+  </g>
+  <g class="fragment" data-fragment-index="2">
+    <rect class="box" x="30" y="212" width="260" height="52" rx="4"></rect>
+    <text x="160" y="244" text-anchor="middle" font-size="22">link</text>
+  </g>
+  <g class="fragment" data-fragment-index="3">
+    <rect class="box" x="30" y="154" width="260" height="52" rx="4"></rect>
+    <text x="160" y="186" text-anchor="middle" font-size="22">network</text>
+  </g>
+  <g class="fragment" data-fragment-index="4">
+    <rect class="box" x="30" y="96" width="260" height="52" rx="4"></rect>
+    <text x="160" y="128" text-anchor="middle" font-size="22">transport</text>
+  </g>
+  <g class="fragment" data-fragment-index="5">
+    <rect class="box" x="30" y="38" width="260" height="52" rx="4"></rect>
+    <text x="160" y="70" text-anchor="middle" font-size="22">application</text>
+  </g>
+</svg>
+</div></div>
+</section>
+<section id="spot-the-layer" class="slide level2">
+<h2>Spot the Layer</h2>
+<p><span class="vote-prompt">Vote — which layer does each belong to?</span></p>
+<div class="fragment" data-fragment-index="0">
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Artifact</th>
+<th style="text-align: left;">Layer</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>GET /index.html HTTP/1.1</code></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="1">application</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">A port number, e.g.&nbsp;443</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2">transport</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">The address <code>129.7.1.20</code></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="3">network</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">A MAC address <code>3c:22:fb:...</code></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="4">link</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Voltage levels on a Cat-6 pair</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="5">physical</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">A TCP sequence number</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="6">transport</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="encapsulation" class="slide level2">
+<h2>Encapsulation</h2>
+<p>Each layer takes the unit from above, adds its own <strong>header</strong>, and hands the result down. The receiver strips them in reverse.</p>
+<svg viewbox="250 15 640 275" width="100%" style="max-height:52vh">
+  <!-- message -->
+  <g class="fragment" data-fragment-index="1">
+    <rect class="box-pay" x="600" y="30" width="120" height="44" rx="3"></rect>
+    <text x="660" y="59" text-anchor="middle" font-size="20">M</text>
+    <text x="560" y="59" text-anchor="end" font-size="19" class="lbl-blue">message</text>
+    <text x="740" y="59" font-size="17">application</text>
+  </g>
+  <!-- segment -->
+  <g class="fragment" data-fragment-index="2">
+    <rect class="box-hdr" x="540" y="90" width="60" height="44" rx="3"></rect>
+    <text x="570" y="119" text-anchor="middle" font-size="19">Ht</text>
+    <rect class="box-pay" x="600" y="90" width="120" height="44" rx="3"></rect>
+    <text x="660" y="119" text-anchor="middle" font-size="20">M</text>
+    <text x="500" y="119" text-anchor="end" font-size="19" class="lbl-blue">segment</text>
+    <text x="740" y="119" font-size="17">transport</text>
+  </g>
+  <!-- datagram -->
+  <g class="fragment" data-fragment-index="3">
+    <rect class="box-hdr" x="480" y="150" width="60" height="44" rx="3"></rect>
+    <text x="510" y="179" text-anchor="middle" font-size="19">Hn</text>
+    <rect class="box-hdr" x="540" y="150" width="60" height="44" rx="3"></rect>
+    <text x="570" y="179" text-anchor="middle" font-size="19">Ht</text>
+    <rect class="box-pay" x="600" y="150" width="120" height="44" rx="3"></rect>
+    <text x="660" y="179" text-anchor="middle" font-size="20">M</text>
+    <text x="440" y="179" text-anchor="end" font-size="19" class="lbl-blue">datagram</text>
+    <text x="740" y="179" font-size="17">network</text>
+  </g>
+  <!-- frame -->
+  <g class="fragment" data-fragment-index="4">
+    <rect class="box-hdr" x="420" y="210" width="60" height="44" rx="3"></rect>
+    <text x="450" y="239" text-anchor="middle" font-size="19">Hl</text>
+    <rect class="box-hdr" x="480" y="210" width="60" height="44" rx="3"></rect>
+    <text x="510" y="239" text-anchor="middle" font-size="19">Hn</text>
+    <rect class="box-hdr" x="540" y="210" width="60" height="44" rx="3"></rect>
+    <text x="570" y="239" text-anchor="middle" font-size="19">Ht</text>
+    <rect class="box-pay" x="600" y="210" width="120" height="44" rx="3"></rect>
+    <text x="660" y="239" text-anchor="middle" font-size="20">M</text>
+    <text x="380" y="239" text-anchor="end" font-size="19" class="lbl-blue">frame</text>
+    <text x="740" y="239" font-size="17">link</text>
+  </g>
+  <g class="fragment" data-fragment-index="5">
+    <path class="arrow" d="M 305 40 L 305 254" marker-end="url(#ar)"></path>
+    <text transform="rotate(-90 278 147)" x="278" y="147" text-anchor="middle" font-size="18" class="lbl-red">down at the source</text>
+    <defs>
+      <marker id="ar" markerwidth="9" markerheight="9" refx="6" refy="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#c0392b"></path></marker>
+    </defs>
+  </g>
+</svg>
+</section>
+<section id="encapsulation-1" class="slide level2">
+<h2>Encapsulation</h2>
+<p><img data-src="images/encapsulation.png" style="width:60.0%"></p>
+<div class="fragment">
+<p>A <strong>switch</strong> touches only the link layer; a <strong>router</strong> goes up to the network layer. Neither ever opens <span class="math inline">\(M\)</span>.</p>
+</div>
+</section>
+<section id="your-turn-header-cost" class="slide level2">
+<h2>Your Turn: Header Cost</h2>
+<p><strong><em>Example:</em></strong> TCP adds 20 bytes, IP adds 20 bytes, Ethernet adds 18. What fraction of the frame is overhead for a 1000-byte payload? For a 40-byte one?</p>
+<div class="fragment">
+<p><strong><em>Solution:</em></strong> Total header <span class="math inline">\(= 20 + 20 + 18 = 58\)</span> bytes.</p>
+<p><span class="math display">\[\frac{58}{1058} = 5.5\% \qquad\text{vs}\qquad \frac{58}{98} = 59.2\%\]</span></p>
+</div>
+<div class="fragment">
+<p>This is why a chatty protocol that sends one keystroke per packet wastes most of the link, and why Chapter 3 bothers with Nagle’s algorithm.</p>
+</div>
+</section>
+<section id="the-osi-model" class="slide level2">
+<h2>The OSI Model</h2>
+<div class="columns">
+<div class="column" style="width:52%;">
+<p>Two layers the Internet stack lacks:</p>
+<div class="fragment" data-fragment-index="1">
+<p><strong>presentation</strong> — interpret the <em>meaning</em> of data: encryption, compression, machine conventions.</p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p><strong>session</strong> — synchronization, checkpointing, recovery.</p>
+</div>
+<div class="fragment" data-fragment-index="3">
+<p>If an application needs them, the <strong>application</strong> implements them.</p>
+</div>
+</div><div class="column" style="width:48%;">
+<svg viewbox="0 0 300 400" width="100%" style="max-height:64vh">
+  <g>
+    <rect class="box" x="20" y="336" width="260" height="44" rx="3"></rect>
+    <text x="150" y="364" text-anchor="middle" font-size="20">physical</text>
+    <rect class="box" x="20" y="288" width="260" height="44" rx="3"></rect>
+    <text x="150" y="316" text-anchor="middle" font-size="20">link</text>
+    <rect class="box" x="20" y="240" width="260" height="44" rx="3"></rect>
+    <text x="150" y="268" text-anchor="middle" font-size="20">network</text>
+    <rect class="box" x="20" y="192" width="260" height="44" rx="3"></rect>
+    <text x="150" y="220" text-anchor="middle" font-size="20">transport</text>
+  </g>
+  <g class="fragment" data-fragment-index="2">
+    <rect class="box-hdr" x="20" y="144" width="260" height="44" rx="3"></rect>
+    <text x="150" y="172" text-anchor="middle" font-size="20">session</text>
+  </g>
+  <g class="fragment" data-fragment-index="1">
+    <rect class="box-hdr" x="20" y="96" width="260" height="44" rx="3"></rect>
+    <text x="150" y="124" text-anchor="middle" font-size="20">presentation</text>
+  </g>
+  <g>
+    <rect class="box" x="20" y="48" width="260" height="44" rx="3"></rect>
+    <text x="150" y="76" text-anchor="middle" font-size="20">application</text>
+  </g>
+</svg>
+</div></div>
+</section>
+<section id="why-it-matters-modularity" class="slide level2">
+<h2>Why It Matters: Modularity</h2>
+<p>You walk out of the building. Your phone drops Wi-Fi and joins 5G. Your video call keeps going.</p>
+<p><span class="vote-prompt">Vote — which layers had to change?</span></p>
+<div class="columns vote-row">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>A.</strong> All five</p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>B.</strong> The bottom two (and an address)</p>
+</div>
+</div></div>
+<div class="fragment">
+<p><strong>B.</strong> 802.11 was swapped for a cellular link layer; the IP address changed. HTTP and the video codec never noticed.</p>
+</div>
+<div class="fragment">
+<p>That substitution works only because the interface between layers is narrow and written down.</p>
+</div>
+</section>
+<section id="activity-layer-relay" class="slide level2">
+<h2>Activity: Layer Relay</h2>
+<div class="activity">
+<p><span class="activity-label">Five volunteers — 8 minutes</span></p>
+<p>Each student <em>is</em> one layer. Pass a folded paper down the stack; each layer staples on a slip with its own header before passing it on.</p>
+<ul>
+<li><strong>application</strong> writes the message</li>
+<li><strong>transport</strong> adds a port number</li>
+<li><strong>network</strong> adds source and destination IP</li>
+<li><strong>link</strong> adds a MAC address</li>
+<li><strong>physical</strong> walks it across the room</li>
+</ul>
+</div>
+</section>
+<section id="activity-layer-relay-1" class="slide level2">
+<h2>Activity: Layer Relay</h2>
+<p>Then run it <strong>up</strong> the receiving stack, stripping one slip per layer.</p>
+<div class="fragment">
+<p>Ask each student the same two questions:</p>
+<ol type="1">
+<li>What did you have to <strong>read</strong>?</li>
+<li>What did you deliberately <strong>ignore</strong>?</li>
+</ol>
+</div>
+<div class="fragment">
+<p>Answer 2 is the point. The network layer never looked at the port number, and the link layer never looked at the IP address.</p>
+</div>
+</section>
+<section id="section-1.6" class="slide level2 center section-divider">
+<h2>Section 1.6</h2>
+<p>Networks Under Attack</p>
+</section>
+<section id="todays-plan-5" class="slide level2">
+<h2>Today’s Plan</h2>
+<ul>
+<li>Why the Internet was not designed to be secure</li>
+<li>Malware, botnets, and DDoS</li>
+<li>Packet sniffing and IP spoofing</li>
+<li>Where the defences live</li>
+</ul>
+</section>
+<section id="networks-under-attack" class="slide level2">
+<h2>Networks Under Attack</h2>
+<p>The field of network security asks:</p>
+<ul>
+<li>how can attackers attack computer networks?</li>
+<li>how can we defend networks against attacks?</li>
+<li>how do we design architectures that are <strong>immune</strong> to attack?</li>
+</ul>
+<div class="fragment">
+<p>The Internet was not originally designed with much security in mind.</p>
+</div>
+</section>
+<section id="networks-under-attack-1" class="slide level2">
+<h2>Networks Under Attack</h2>
+<p>The original vision, in the designers’ own words:</p>
+<blockquote>
+<p><em>“a group of mutually trusting users attached to a transparent network.”</em></p>
+</blockquote>
+<div class="fragment">
+<p>Every word of that is now false. Users are not mutually trusting, and the network is anything but transparent.</p>
+</div>
+<div class="fragment">
+<p>Protocol designers have been playing <strong>catch-up</strong> ever since. Security considerations now appear at <strong>every</strong> layer.</p>
+</div>
+</section>
+<section id="malware" class="slide level2">
+<h2>Malware</h2>
+<div class="fragment" data-fragment-index="1">
+<p><strong>Virus</strong> — self-replicating infection by <em>receiving and executing</em> an object, e.g.&nbsp;an email attachment.</p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p><strong>Worm</strong> — self-replicating infection by <em>passively receiving</em> an object that then executes itself. No user action required.</p>
+</div>
+<div class="fragment" data-fragment-index="3">
+<p><strong>Spyware</strong> — records keystrokes and sites visited, uploads to a collection site.</p>
+</div>
+<div class="fragment" data-fragment-index="4">
+<p>An infected host can be enrolled in a <strong>botnet</strong> and used for spam or distributed denial of service.</p>
+</div>
+</section>
+<section id="denial-of-service" class="slide level2">
+<h2>Denial of Service</h2>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p><strong>DoS:</strong> make a resource unavailable to legitimate traffic by overwhelming it with bogus traffic.</p>
+<div class="fragment">
+<ol type="1">
+<li>select a target</li>
+<li>break into hosts around the network (a <strong>botnet</strong>)</li>
+<li>flood the target from every compromised host</li>
+</ol>
+</div>
+</div><div class="column" style="width:45%;">
+<p><img data-src="images/dos.png" style="width:87.0%"></p>
+</div></div>
+<div class="fragment">
+<p>The “distributed” in DDoS is what makes it hard: there is no single source address to block.</p>
+</div>
+</section>
+<section id="packet-sniffing" class="slide level2">
+<h2>Packet Sniffing</h2>
+<p><img data-src="images/sniffing.png" style="width:78.0%"></p>
+<div class="fragment">
+<p>On <strong>broadcast media</strong> — shared Ethernet, wireless — a network interface in <em>promiscuous mode</em> reads and records every passing packet, passwords included.</p>
+</div>
+<div class="fragment">
+<p>Wireshark, which we use for the labs, is exactly this tool. It is defensive <em>and</em> offensive; which one depends only on whose network it is pointed at.</p>
+</div>
+</section>
+<section id="ip-spoofing" class="slide level2">
+<h2>IP Spoofing</h2>
+<p><img data-src="images/spoofing.png" style="width:78.0%"></p>
+<div class="fragment">
+<p>Nothing in IP verifies that the <strong>source address</strong> in a packet belongs to the sender. C can send a packet claiming to be B.</p>
+</div>
+<div class="fragment">
+<p>Every “call from your bank’s number,” every reflection/amplification attack, and every anonymous flood starts here. Chapter 8.</p>
+</div>
+</section>
+<section id="spot-the-attack" class="slide level2">
+<h2>Spot the Attack</h2>
+<p><span class="vote-prompt">Vote — name the attack in each scenario.</span></p>
+<div class="fragment" data-fragment-index="0">
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Scenario</th>
+<th style="text-align: left;">Attack</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Free airport Wi-Fi logs your passwords</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="1">sniffing</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">50,000 cameras flood one web server</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2">DDoS</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Packets arrive claiming to be from you</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="3">IP spoofing</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">A PDF attachment installs a keylogger</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="4">virus / spyware</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">A server is compromised with no clicks</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="5">worm</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="why-it-matters-trust" class="slide level2">
+<h2>Why It Matters: Trust</h2>
+<p>The original design assumed <strong>mutually trusting users</strong>. Every attack on the last four slides exploits an assumption, not a bug.</p>
+<p><span class="vote-prompt">Vote — could we have designed it securely in 1974?</span></p>
+<div class="columns vote-row">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>A.</strong> Yes, they were careless</p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>B.</strong> Not at that cost and scale</p>
+</div>
+</div></div>
+<div class="fragment">
+<p><strong>B</strong>, mostly. Public-key cryptography was published in 1976, and per-packet crypto was far beyond the hardware of the day. The design they <em>did</em> choose — simple, unverified, best-effort — is why the Internet scaled at all.</p>
+</div>
+</section>
+<section id="wireshark" class="slide level2">
+<h2>Wireshark</h2>
+<p><img data-src="images/wireshark.png" style="width:76.0%"></p>
+<div class="fragment">
+<p>The packet <strong>capture</strong> library (<code>pcap</code>) takes a copy of every frame the interface sees; the packet <strong>analyzer</strong> parses it back up through the layers and shows you the headers we just drew by hand.</p>
+</div>
+</section>
+<section id="section-1.7" class="slide level2 center section-divider">
+<h2>Section 1.7</h2>
+<p>A Short History</p>
+</section>
+<section id="section" class="slide level2">
+<h2>1961–1972</h2>
+<p><strong>Early packet-switching principles</strong></p>
+<div class="fragment" data-fragment-index="1">
+<ul>
+<li><strong>1961</strong> Kleinrock: queueing theory shows packet switching is effective</li>
+<li><strong>1964</strong> Baran: packet switching in military networks</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="2">
+<ul>
+<li><strong>1967</strong> ARPAnet conceived at the Advanced Research Projects Agency</li>
+<li><strong>1969</strong> first ARPAnet node operational</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="3">
+<ul>
+<li><strong>1972</strong> ARPAnet public demo; NCP, the first host-to-host protocol; the first email program; 15 nodes</li>
+</ul>
+</div>
+</section>
+<section id="section-1" class="slide level2">
+<h2>1972–1980</h2>
+<p><strong>Internetworking, and proprietary networks</strong></p>
+<div class="columns">
+<div class="column" style="width:62%;">
+<ul>
+<li><strong>1970</strong> ALOHAnet, satellite network in Hawaii</li>
+<li><strong>1974</strong> Cerf and Kahn: an architecture for interconnecting networks</li>
+<li><strong>1976</strong> Ethernet at Xerox PARC</li>
+<li><strong>late 70s</strong> DECnet, SNA, XNA — proprietary architectures</li>
+<li><strong>1979</strong> ARPAnet reaches 200 nodes</li>
+</ul>
+</div><div class="column" style="width:38%;">
+<p><img data-src="images/arpanet_map.png" style="width:98.0%"></p>
+</div></div>
+</section>
+<section id="cerf-and-kahns-principles" class="slide level2">
+<h2>Cerf and Kahn’s Principles</h2>
+<div class="fragment" data-fragment-index="1">
+<ul>
+<li><strong>minimalism, autonomy</strong> — no internal changes required to interconnect networks</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="2">
+<ul>
+<li><strong>best-effort service model</strong> — the network promises nothing</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="3">
+<ul>
+<li><strong>stateless routers</strong> — no per-connection state in the core</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="4">
+<ul>
+<li><strong>decentralized control</strong> — no single administrative entity</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="5">
+<p>These four choices <em>are</em> today’s Internet architecture. Every performance problem in Chapters 3–7 is the price of one of them, and every scaling success is the payoff.</p>
+</div>
+</section>
+<section id="section-2" class="slide level2">
+<h2>1980–1990</h2>
+<p><strong>New protocols, a proliferation of networks</strong></p>
+<ul>
+<li><strong>1982</strong> SMTP email protocol defined</li>
+<li><strong>1983</strong> deployment of <strong>TCP/IP</strong></li>
+<li><strong>1983</strong> DNS defined, for name-to-IP-address translation</li>
+<li><strong>1985</strong> FTP protocol defined</li>
+<li><strong>1988</strong> TCP congestion control</li>
+</ul>
+<div class="fragment">
+<p>New national networks: CSnet, BITnet, NSFnet, Minitel. About <strong>100,000</strong> hosts connected.</p>
+</div>
+</section>
+<section id="s2000s" class="slide level2">
+<h2>1990s–2000s</h2>
+<p><strong>Commercialization and the Web</strong></p>
+<ul>
+<li><strong>early 1990s</strong> ARPAnet decommissioned</li>
+<li><strong>1991</strong> NSF lifts restrictions on commercial use of NSFnet</li>
+<li><strong>early 1990s</strong> the Web: hypertext [Bush 1945, Nelson 1960s]; HTML and HTTP by Berners-Lee</li>
+<li><strong>1994</strong> Mosaic, then Netscape</li>
+<li><strong>late 1990s</strong> commercialization of the Web</li>
+</ul>
+<div class="fragment">
+<p>More killer apps: instant messaging, P2P file sharing. Network security comes to the forefront. ~50 million hosts, backbone links at Gbps.</p>
+</div>
+</section>
+<section id="today" class="slide level2">
+<h2>2005–Today</h2>
+<div class="fragment" data-fragment-index="1">
+<ul>
+<li>~18 billion devices attached (2017), and rising</li>
+<li>smartphones (iPhone, 2007), aggressive broadband deployment</li>
+<li>ubiquitous high-speed wireless: 4G/5G, Wi-Fi</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="2">
+<ul>
+<li>online social networks at billions of users</li>
+<li><strong>service providers build their own networks</strong> — Google, Meta, Microsoft bypass the commercial Internet to sit close to you</li>
+<li>enterprises move to the <strong>cloud</strong>: AWS, Azure</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="3">
+<p>Notice the direction of travel: the network gets <strong>flatter</strong>, and the content moves <strong>closer</strong>. That is Section 1.3’s economics, still running.</p>
+</div>
+</section>
+<section id="activity-predict-2035" class="slide level2">
+<h2>Activity: Predict 2035</h2>
+<div class="activity">
+<p><span class="activity-label">In pairs — 5 minutes, then share</span></p>
+<p>Every decade above was driven by one dominant force: research funding, then commercialization, then mobility, then content.</p>
+<p>Name <strong>one</strong> force you think reshapes the Internet by 2035, and <strong>one</strong> property of today’s architecture it will strain.</p>
+</div>
+<div class="fragment">
+<p>Keep your answer. We will come back to it in Chapter 8 and see whether the architecture you named actually bends.</p>
+</div>
+</section>
+<section id="chapter-1-summary" class="slide level2">
+<h2>Chapter 1: Summary</h2>
+<p>We covered a great deal of ground:</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li>what the Internet is, in two views</li>
+<li>what a protocol is</li>
+<li>network edge, access networks, core</li>
+<li>packet vs circuit switching</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<ul>
+<li>Internet structure</li>
+<li>performance: loss, delay, throughput</li>
+<li>layering and service models</li>
+<li>security</li>
+<li>history</li>
+</ul>
+</div></div>
+<div class="fragment">
+<p>You now have <strong>context, overview, vocabulary,</strong> and a <em>feel</em> for networking. Depth, detail, and considerably more fun to follow.</p>
+</div>
+</section>
+<section id="whats-next" class="slide level2">
+<h2>What’s Next</h2>
+<p><strong>Chapter 2 — the Application Layer.</strong> We start at the top of the stack, where you already live: the Web and HTTP, DNS, email, P2P, and socket programming.</p>
+<div class="fragment">
+<p>Two things to carry forward from today:</p>
+<ol type="1">
+<li>Every question in this course reduces to <strong>who does what, at which layer, and what does it cost in delay</strong>.</li>
+<li>When something is slow, find the <strong>bottleneck</strong> before you optimize anything.</li>
+</ol>
+</div>
+
+</section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<p><img src="images/TAMUSA_final_logo-5.png" class="slide-logo"></p>
+<div class="footer footer-default">
+<p>CSCI 4306 Computer Networks</p>
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="index_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="index_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="index_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="index_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="index_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="index_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="index_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="index_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="index_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': true,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true,"width":"normal","numbers":true},
+'chalkboard': {"buttons":true,"theme":"whiteboard","boardmarkerWidth":3},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>
