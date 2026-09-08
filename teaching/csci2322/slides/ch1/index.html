@@ -1831,11 +1831,12 @@ Zechun (Jacob) Cao
 </section>
 <section id="why-it-matters-dependencies" class="slide level2">
 <h2>Why It Matters: Dependencies</h2>
-<p>Your project needs two packages, <strong>A</strong> and <strong>C</strong>:</p>
+<p>Your project needs TensorFlow and OpenCV, so you ask <code>pip</code> for both:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href=""></a><span class="ex">pip</span> install <span class="st">"tensorflow==2.17.0"</span> <span class="st">"opencv-python==5.0.0.93"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
-<li>A requires library B, <strong>version 2</strong></li>
-<li>C requires library B, <strong>version 1</strong></li>
-<li>only one version of B can be installed at a time</li>
+<li><code>tensorflow 2.17.0</code> requires <code>numpy &lt; 2.0</code></li>
+<li><code>opencv-python 5.0.0.93</code> requires <code>numpy &gt;= 2.0</code></li>
+<li>one environment holds exactly <strong>one</strong> <code>numpy</code></li>
 </ul>
 <p><span class="vote-prompt">Vote — can the installer satisfy this?</span></p>
 <div class="columns">
@@ -1853,13 +1854,83 @@ Zechun (Jacob) Cao
 </section>
 <section id="why-it-matters-dependencies-1" class="slide level2">
 <h2>Why It Matters: Dependencies</h2>
-<p>Let <span class="math inline">\(a\)</span>, <span class="math inline">\(c\)</span> mean “A / C is installed” and <span class="math inline">\(b_1\)</span>, <span class="math inline">\(b_2\)</span> mean “B version 1 / 2 is installed.” The installer must make this true:</p>
-<p><span class="math display">\[a \wedge c \wedge (a \rightarrow b_2) \wedge (c \rightarrow b_1) \wedge \neg(b_1 \wedge b_2)\]</span></p>
+<p>Let <span class="math inline">\(t\)</span>, <span class="math inline">\(o\)</span> mean “TensorFlow / OpenCV is installed” and <span class="math inline">\(n_1\)</span>, <span class="math inline">\(n_2\)</span> mean “<code>numpy</code> 1.x / 2.x is installed.” The installer must make this true:</p>
+<p><span class="math display">\[t \wedge o \wedge (t \rightarrow n_1) \wedge (o \rightarrow n_2) \wedge \neg(n_1 \wedge n_2)\]</span></p>
 <div class="fragment">
-<p><strong>B</strong> — unsatisfiable: <span class="math inline">\(a\)</span> and <span class="math inline">\(c\)</span> force <span class="math inline">\(b_2\)</span> and <span class="math inline">\(b_1\)</span>, and the last clause forbids having both.</p>
+<p><strong>B</strong> — unsatisfiable: <span class="math inline">\(t\)</span> and <span class="math inline">\(o\)</span> force <span class="math inline">\(n_1\)</span> and <span class="math inline">\(n_2\)</span>, and the last clause forbids having both. <code>pip</code> reaches the same verdict:</p>
+<pre><code>The conflict is caused by:
+    tensorflow 2.17.0 depends on numpy&lt;2.0.0 and &gt;=1.26.0
+    opencv-python 5.0.0.93 depends on numpy&gt;=2
+ERROR: ResolutionImpossible</code></pre>
+</div>
+</section>
+<section id="why-it-matters-dependencies-2" class="slide level2">
+<h2>Why It Matters: Dependencies</h2>
+<p>Drop the pin on <code>opencv-python</code> and the resolver goes hunting for an assignment that works:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href=""></a><span class="ex">pip</span> install <span class="st">"tensorflow==2.17.0"</span> opencv-python</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>Downloading opencv_python-4.14.0.94 ...
+Downloading opencv_python-4.13.0.92 ...
+        ...
+Downloading opencv_python-4.11.0.86 ...   &lt;-- numpy 1.26.4 works</code></pre>
+<div class="fragment">
+<p>Five versions rejected before the sixth satisfied every clause — the assignment <span class="math inline">\(t = o = n_1 = \mathbf{T}\)</span>, <span class="math inline">\(n_2 = \mathbf{F}\)</span>.</p>
+</div>
+</section>
+<section id="why-it-matters-dependencies-3" class="slide level2">
+<h2>Why It Matters: Dependencies</h2>
+<p>Dependency resolution <em>is</em> propositional satisfiability.</p>
+<ul>
+<li><code>conda</code> ships a SAT solver for exactly this — and when the clauses cannot all hold it says so in our vocabulary: <code>UnsatisfiableError</code>.</li>
+<li><code>pip</code> backtracks through the same search space, which is why a bad resolve can take minutes.</li>
+</ul>
+<div class="fragment">
+<p>Both are searching for one satisfying assignment among <span class="math inline">\(2^n\)</span> candidates, where <span class="math inline">\(n\)</span> counts every version of every package in play. Formally the problem is NP-complete; in practice the solver is why <code>pip install tensorflow</code> usually just works.</p>
+</div>
+</section>
+<section id="why-it-matters-exam-week" class="slide level2">
+<h2>Why It Matters: Exam Week</h2>
+<p>Two final-exam slots are left — <strong>Monday</strong> and <strong>Wednesday</strong> — and no student may sit two exams in the same slot. These pairs share a student:</p>
+<ul>
+<li>CSCI 2322 and CSCI 2336</li>
+<li>CSCI 2336 and MATH 2413</li>
+<li>CSCI 2322 and MATH 2413</li>
+</ul>
+<p><span class="vote-prompt">Vote — can the registrar schedule all three exams?</span></p>
+<div class="columns">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>A.</strong> Yes</p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>B.</strong> No</p>
+</div>
+</div></div>
+</section>
+<section id="why-it-matters-exam-week-1" class="slide level2">
+<h2>Why It Matters: Exam Week</h2>
+<p>Let <span class="math inline">\(m_1\)</span>, <span class="math inline">\(m_2\)</span>, <span class="math inline">\(m_3\)</span> mean “2322 / 2336 / 2413 sits on <strong>Monday</strong>” (false means Wednesday). Each shared student forbids a matching pair:</p>
+<p><span class="math display">\[(m_1 \oplus m_2) \wedge (m_2 \oplus m_3) \wedge (m_1 \oplus m_3)\]</span></p>
+<p>where <span class="math inline">\(x \oplus y \equiv (x \vee y) \wedge \neg(x \wedge y)\)</span> — clauses, just like the package problem.</p>
+<div class="fragment">
+<p><strong>B</strong> — unsatisfiable. Two slots, three courses: some pair must share a slot, but every pair has a student in common. Open a third slot and there are six schedules.</p>
+</div>
+</section>
+<section id="why-it-matters-exam-week-2" class="slide level2">
+<h2>Why It Matters: Exam Week</h2>
+<p>The registrar’s real instance has hundreds of courses and room limits — same encoding, same solver.</p>
+<div class="fragment">
+<p>Wherever the task is <em>“find one configuration that breaks no rule,”</em> it is a satisfiability problem:</p>
+<ul>
+<li><strong>scheduling</strong> — exams, work shifts, CPU registers in a compiler</li>
+<li><strong>chip verification</strong> — any input where circuit and spec disagree?</li>
+<li><strong>security</strong> — any input that drives this program past the end of a buffer?</li>
+</ul>
 </div>
 <div class="fragment">
-<p>Dependency resolution <em>is</em> propositional satisfiability. <code>conda</code> ships a SAT solver for exactly this; <code>pip</code>’s resolver backtracks through the same search space, which is why a bad resolve can take minutes.</p>
+<p>Chapter 10 revisits this exact puzzle as <strong>graph coloring</strong>.</p>
 </div>
 </section>
 <section id="section-1.4" class="slide level2 center section-divider">
@@ -2030,17 +2101,17 @@ Zechun (Jacob) Cao
 <div class="columns">
 <div class="column" style="width:50%;">
 <p><span class="math inline">\(\forall x\, P(x)\)</span></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb4-1"><a href=""></a><span class="dt">boolean</span> all <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
-<span id="cb4-2"><a href=""></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> x <span class="op">:</span> U<span class="op">)</span></span>
-<span id="cb4-3"><a href=""></a>  <span class="cf">if</span> <span class="op">(!</span><span class="fu">P</span><span class="op">(</span>x<span class="op">))</span> <span class="op">{</span> all <span class="op">=</span> <span class="kw">false</span><span class="op">;</span> <span class="cf">break</span><span class="op">;</span> <span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb8-1"><a href=""></a><span class="dt">boolean</span> all <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb8-2"><a href=""></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> x <span class="op">:</span> U<span class="op">)</span></span>
+<span id="cb8-3"><a href=""></a>  <span class="cf">if</span> <span class="op">(!</span><span class="fu">P</span><span class="op">(</span>x<span class="op">))</span> <span class="op">{</span> all <span class="op">=</span> <span class="kw">false</span><span class="op">;</span> <span class="cf">break</span><span class="op">;</span> <span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li>One counterexample: <strong>false</strong>, stop.</li>
 </ul>
 </div><div class="column" style="width:50%;">
 <p><span class="math inline">\(\exists x\, P(x)\)</span></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb5-1"><a href=""></a><span class="dt">boolean</span> some <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
-<span id="cb5-2"><a href=""></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> x <span class="op">:</span> U<span class="op">)</span></span>
-<span id="cb5-3"><a href=""></a>  <span class="cf">if</span> <span class="op">(</span><span class="fu">P</span><span class="op">(</span>x<span class="op">))</span> <span class="op">{</span> some <span class="op">=</span> <span class="kw">true</span><span class="op">;</span> <span class="cf">break</span><span class="op">;</span> <span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb9-1"><a href=""></a><span class="dt">boolean</span> some <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb9-2"><a href=""></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> x <span class="op">:</span> U<span class="op">)</span></span>
+<span id="cb9-3"><a href=""></a>  <span class="cf">if</span> <span class="op">(</span><span class="fu">P</span><span class="op">(</span>x<span class="op">))</span> <span class="op">{</span> some <span class="op">=</span> <span class="kw">true</span><span class="op">;</span> <span class="cf">break</span><span class="op">;</span> <span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li>One witness: <strong>true</strong>, stop.</li>
 </ul>
@@ -2242,9 +2313,9 @@ Zechun (Jacob) Cao
 </section>
 <section id="why-it-matters-empty-lists" class="slide level2">
 <h2>Why It Matters: Empty Lists</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb6-1"><a href=""></a><span class="bu">List</span><span class="op">&lt;</span><span class="bu">Integer</span><span class="op">&gt;</span> scores <span class="op">=</span> <span class="bu">List</span><span class="op">.</span><span class="fu">of</span><span class="op">();</span>           <span class="co">// empty</span></span>
-<span id="cb6-2"><a href=""></a>scores<span class="op">.</span><span class="fu">stream</span><span class="op">().</span><span class="fu">allMatch</span><span class="op">(</span>s <span class="op">-&gt;</span> s <span class="op">&gt;=</span> <span class="dv">60</span><span class="op">);</span>     <span class="co">// ∀x P(x)</span></span>
-<span id="cb6-3"><a href=""></a>scores<span class="op">.</span><span class="fu">stream</span><span class="op">().</span><span class="fu">anyMatch</span><span class="op">(</span>s <span class="op">-&gt;</span> s <span class="op">&gt;=</span> <span class="dv">60</span><span class="op">);</span>     <span class="co">// ∃x P(x)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb10-1"><a href=""></a><span class="bu">List</span><span class="op">&lt;</span><span class="bu">Integer</span><span class="op">&gt;</span> scores <span class="op">=</span> <span class="bu">List</span><span class="op">.</span><span class="fu">of</span><span class="op">();</span>           <span class="co">// empty</span></span>
+<span id="cb10-2"><a href=""></a>scores<span class="op">.</span><span class="fu">stream</span><span class="op">().</span><span class="fu">allMatch</span><span class="op">(</span>s <span class="op">-&gt;</span> s <span class="op">&gt;=</span> <span class="dv">60</span><span class="op">);</span>     <span class="co">// ∀x P(x)</span></span>
+<span id="cb10-3"><a href=""></a>scores<span class="op">.</span><span class="fu">stream</span><span class="op">().</span><span class="fu">anyMatch</span><span class="op">(</span>s <span class="op">-&gt;</span> s <span class="op">&gt;=</span> <span class="dv">60</span><span class="op">);</span>     <span class="co">// ∃x P(x)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><span class="vote-prompt">Vote — what does each call return?</span></p>
 <ul>
 <li><code>allMatch</code> returns <span class="fragment ans"><code>true</code> — there is no counterexample</span></li>
