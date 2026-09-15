@@ -6,8 +6,8 @@
 <script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="index_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.8.27">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Zechun (Jacob) Cao">
   <title>Chapter 1 — Introduction</title>
@@ -17,10 +17,16 @@
   <link rel="stylesheet" href="index_files/libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="index_files/libs/revealjs/dist/reveal.css">
   <style>
-    code{white-space: pre-wrap;}
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -95,7 +101,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-f6a1f38664a92e72e450d0d10cbcbd99.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-bacd66df58427b0c9d32c2ffc4cb0031.css">
   <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -201,10 +207,10 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Zechun (Jacob) Cao 
+Zechun (Jacob) Cao
 </div>
         <p class="quarto-title-affiliation">
-            Adapted from J. F. Kurose and K. W. Ross, <em>Computer Networking: A Top-Down Approach</em>, 8th edition, Pearson, 2020. Slide material copyright 1996–2020 J. F. Kurose and K. W. Ross. Additional framing from Peterson &amp; Davie, <em>Computer Networks: A Systems Approach</em>, and Rutgers CS 552.
+            Adapted from J. F. Kurose and K. W. Ross, <em>Computer Networking: A Top-Down Approach</em>, 8th edition.<br>Original slides © 1996–2020 J. F. Kurose and K. W. Ross.
           </p>
     </div>
 </div>
@@ -759,7 +765,7 @@ Zechun (Jacob) Cao
 </ul>
 </div></div>
 <div class="fragment">
-<p>Both are <strong>shared</strong>: one base station’s capacity splits among everyone attached.</p>
+<p>Both are <strong>shared</strong>: everyone attached splits one base station.</p>
 </div>
 </section>
 <section id="enterprise-access" class="slide level2">
@@ -900,19 +906,43 @@ Zechun (Jacob) Cao
 <p>Then, as a room: which link is <strong>shared</strong>, and how can you tell from the numbers alone? Whose number is the outlier, and where are they sitting?</p>
 </div>
 </section>
+<section id="how-to-read-this-deck" class="slide level2">
+<h2>How to Read This Deck</h2>
+<p>From here on, every slide carries one of three marks.</p>
+<div class="fragment">
+<p><strong><span class="ex-inline">Must Know</span> — we do it in class; expect it on the exam.</strong> The formula, the definition, or the worked problem a question is built from. Drill these first.</p>
+</div>
+<div class="fragment">
+<p><strong>Unmarked — we do it in class, and the exam can still ask about it.</strong> No mark does not mean off the exam. Understand it; just drill the tagged slides first.</p>
+</div>
+<div class="fragment">
+<p><strong><span class="rd-inline">Reading</span> — you do it on your own.</strong> Supporting detail, collected at the end of each section. Nothing is click-to-reveal there.</p>
+</div>
+</section>
 <section id="section-1.3" class="slide level2 center section-divider">
 <h2>Section 1.3</h2>
 <p>The Network Core</p>
 </section>
 <section id="todays-plan-2" class="slide level2">
 <h2>Today’s Plan</h2>
+<div class="columns">
+<div class="column" style="width:58%;">
+<p><strong>In class</strong></p>
 <ul>
-<li>Packet switching: store-and-forward, queueing, loss</li>
-<li>Forwarding vs routing — the two core functions</li>
-<li>Circuit switching, FDM and TDM</li>
-<li>Why the Internet chose packets</li>
-<li>Internet structure: how a network of networks gets built</li>
+<li>Store-and-forward, queueing <span class="ex-inline">Must Know</span></li>
+<li>Forwarding vs routing</li>
+<li>Circuit vs packet switching <span class="ex-inline">Must Know</span></li>
+<li>A network of networks</li>
 </ul>
+</div><div class="column" style="width:42%;">
+<p><strong>After class</strong> <span class="rd-inline">Reading</span></p>
+<ul>
+<li>Behind the <span class="math inline">\(0.0004\)</span></li>
+<li>Segmentation</li>
+<li>Regional ISPs</li>
+<li>Tier-1 detail and a real backbone map</li>
+</ul>
+</div></div>
 </section>
 <section id="the-network-core" class="slide level2">
 <h2>The Network Core</h2>
@@ -934,8 +964,8 @@ Zechun (Jacob) Cao
 <p><img data-src="images/map_core.png" style="width:98.0%"></p>
 </div></div>
 </section>
-<section id="store-and-forward" class="slide level2">
-<h2>Store and Forward</h2>
+<section id="store-and-forward-must-know" class="slide level2">
+<h2>Store and Forward <span class="ex">Must Know</span></h2>
 <p><img data-src="images/store_forward.png" style="width:98.0%"></p>
 <div class="fragment">
 <p><strong>Store and forward:</strong> the router must receive the <strong>entire</strong> packet before it can start transmitting on the next link.</p>
@@ -944,7 +974,7 @@ Zechun (Jacob) Cao
 <p>So a one-hop path costs <span class="math inline">\(L/R\)</span>, and a two-link path costs <span class="math inline">\(2L/R\)</span> (ignoring propagation for now).</p>
 </div>
 </section>
-<section id="store-and-forward-1" class="slide level2">
+<section id="store-and-forward" class="slide level2">
 <h2>Store and Forward</h2>
 <p><strong><em>Example:</em></strong> <span class="math inline">\(L = 10\)</span> Kbits, <span class="math inline">\(R = 100\)</span> Mbps.</p>
 <div class="fragment">
@@ -961,8 +991,8 @@ Zechun (Jacob) Cao
 </div>
 </div>
 </section>
-<section id="your-turn-three-hops" class="slide level2">
-<h2>Your Turn: Three Hops</h2>
+<section id="your-turn-three-hops-must-know" class="slide level2">
+<h2>Your Turn: Three Hops <span class="ex">Must Know</span></h2>
 <p><strong><em>Example:</em></strong> A 1000-byte packet crosses <strong>3 links</strong>, each 2 Mbps. Propagation is negligible. What is the end-to-end delay?</p>
 <div class="fragment">
 <p><strong><em>Solution:</em></strong> <span class="math inline">\(L = 1000 \times 8 = 8000\)</span> bits.</p>
@@ -985,6 +1015,17 @@ d_{\text{end-end}} = 3 \times 4 = 12\ \text{ms}\]</span></p>
 </ul>
 </div>
 </section>
+<section id="your-turn-in-the-queue-must-know" class="slide level2">
+<h2>Your Turn: In the Queue <span class="ex">Must Know</span></h2>
+<p><strong><em>Example:</em></strong> A packet arrives at an output link. One packet is <strong>half</strong> transmitted and <strong>two</strong> more are waiting ahead of it. All packets are 1500 bytes; the link is 10 Mbps. How long does it wait?</p>
+<div class="fragment">
+<p><strong><em>Solution:</em></strong> Bits still ahead of it: <span class="math inline">\(0.5 \times 12{,}000 + 2 \times 12{,}000 = 30{,}000\)</span> bits.</p>
+<p><span class="math display">\[d_{\text{queue}} = \frac{30{,}000}{10 \times 10^{6}} = 3\ \text{ms}\]</span></p>
+</div>
+<div class="fragment">
+<p>In general, with <span class="math inline">\(n\)</span> packets queued and <span class="math inline">\(x\)</span> bits of the current one already sent: <span class="math inline">\(d_{\text{queue}} = \dfrac{(L - x) + nL}{R}\)</span>.</p>
+</div>
+</section>
 <section id="forwarding-vs-routing" class="slide level2">
 <h2>Forwarding vs Routing</h2>
 <div class="columns">
@@ -1005,65 +1046,27 @@ d_{\text{end-end}} = 3 \times 4 = 12\ \text{ms}\]</span></p>
 <section id="circuit-switching" class="slide level2">
 <h2>Circuit Switching</h2>
 <div class="columns">
-<div class="column" style="width:52%;">
-<p>End-to-end resources are <strong>allocated to and reserved for</strong> a “call.”</p>
+<div class="column" style="width:55%;">
+<p>End-to-end resources are <strong>allocated to and reserved for</strong> a “call,” as in the traditional telephone network.</p>
+<p>Each link here has four circuits. This call holds the 2nd on the top link and the 1st on the right.</p>
 <div class="fragment">
-<p>Each link here has four circuits. This call holds the 2nd circuit on the top link and the 1st on the right link.</p>
+<p><strong>Dedicated</strong> resources, <strong>guaranteed</strong> performance — and the circuit sits <strong>idle</strong> when the call is silent, with nobody else allowed to use it. That is the whole argument against it.</p>
 </div>
-</div><div class="column" style="width:48%;">
+</div><div class="column" style="width:45%;">
 <p><img data-src="images/circuit_switch.png" style="width:98.0%"></p>
 </div></div>
-</section>
-<section id="circuit-switching-1" class="slide level2">
-<h2>Circuit Switching</h2>
-<div class="fragment" data-fragment-index="1">
-<ul>
-<li><strong>Dedicated</strong> resources: no sharing.</li>
-</ul>
-</div>
-<div class="fragment" data-fragment-index="2">
-<ul>
-<li><strong>Guaranteed</strong>, circuit-like performance.</li>
-</ul>
-</div>
-<div class="fragment" data-fragment-index="3">
-<ul>
-<li>A circuit sits <strong>idle</strong> when the call is silent — and nobody else may use it.</li>
-</ul>
-</div>
-<div class="fragment" data-fragment-index="4">
-<ul>
-<li>Commonly used in traditional telephone networks.</li>
-</ul>
-</div>
-<div class="fragment" data-fragment-index="5">
-<p>That third point is the whole argument against circuit switching: you pay for capacity whether or not you use it.</p>
-</div>
 </section>
 <section id="fdm-and-tdm" class="slide level2">
 <h2>FDM and TDM</h2>
 <div class="columns">
-<div class="column" style="width:55%;">
-<p><strong>Frequency division multiplexing</strong></p>
-<ul>
-<li>the spectrum is cut into narrow bands</li>
-<li>each call owns one band</li>
-<li>it may transmit continuously, at that band’s rate</li>
-</ul>
-</div><div class="column" style="width:45%;">
+<div class="column" style="width:56%;">
+<p><strong>Frequency division</strong> — the spectrum is cut into bands. Each call owns one band and may transmit continuously, at that band’s rate.</p>
+<p><strong>Time division</strong> — time is cut into frames of <span class="math inline">\(k\)</span> slots. Each call owns one slot per frame, so it gets <span class="math inline">\(R/k\)</span> of the link.</p>
+</div><div class="column" style="width:44%;">
 <p><img data-src="images/fdm_tdm.png" style="width:98.0%"></p>
 </div></div>
-</section>
-<section id="fdm-and-tdm-1" class="slide level2">
-<h2>FDM and TDM</h2>
-<p><strong>Time division multiplexing</strong></p>
-<ul>
-<li>time is cut into slots</li>
-<li>each call gets periodic slots</li>
-<li>it may use the <em>whole</em> band, but only during its own slots</li>
-</ul>
 <div class="fragment">
-<p>Either way, the reservation is <strong>static</strong>. A silent call still owns its band or its slot.</p>
+<p>Either way the reservation is <strong>static</strong>: a silent call still owns its band or its slot. That idle capacity is what packet switching reclaims.</p>
 </div>
 </section>
 <section id="packet-or-circuit" class="slide level2">
@@ -1110,56 +1113,115 @@ d_{\text{end-end}} = 3 \times 4 = 12\ \text{ms}\]</span></p>
 </table>
 </div>
 </section>
-<section id="packet-beats-circuit" class="slide level2">
-<h2>Packet Beats Circuit</h2>
+<section id="packet-beats-circuit-must-know" class="slide level2">
+<h2>Packet Beats Circuit <span class="ex">Must Know</span></h2>
 <div class="columns">
-<div class="column" style="width:55%;">
+<div class="column" style="width:42%;">
 <p><strong>Setup:</strong> a 1 Gbps link. Each user needs 100 Mbps <em>when active</em>, and is active <strong>10%</strong> of the time.</p>
+</div><div class="column" style="width:58%;">
+<p><img data-src="images/ps_vs_cs.png" style="width:100.0%"></p>
+</div></div>
 <div class="fragment">
 <p><strong>Circuit switching:</strong> reserve 100 Mbps per user <span class="math inline">\(\;\Rightarrow\;\)</span> <strong>10 users</strong>, and that is the hard ceiling.</p>
 </div>
 <div class="fragment">
-<p><strong>Packet switching:</strong> admit <strong>35 users</strong>. The probability that more than 10 are active at once is <strong>less than 0.0004</strong>.</p>
+<p><strong>Packet switching:</strong> admit <strong>35 users</strong>. The probability that more than 10 are active at once is <strong>about 0.0004</strong>.</p>
 </div>
-</div><div class="column" style="width:45%;">
-<p><img data-src="images/ps_vs_cs.png" style="width:95.0%"></p>
-</div></div>
 <div class="fragment">
-<p>3.5<span class="math inline">\(\times\)</span> the users, and overload roughly one second in 40 minutes.</p>
+<p>3.5<span class="math inline">\(\times\)</span> the users, and overload roughly one second in 40 minutes. Where does 35 come from? Next slide.</p>
 </div>
 </section>
-<section id="where-0.0004-comes-from" class="slide level2">
-<h2>Where 0.0004 Comes From</h2>
-<p>With <span class="math inline">\(N = 35\)</span> independent users, each active with probability <span class="math inline">\(p = 0.1\)</span>, the number active is <strong>binomial</strong>:</p>
-<p><span class="math display">\[P(\text{more than 10 active}) \;=\;
-\sum_{k=11}^{35} \binom{35}{k} (0.1)^{k}(0.9)^{35-k}\]</span></p>
+<section id="finding-the-35-must-know" class="slide level2">
+<h2>Finding the 35 <span class="ex">Must Know</span></h2>
+<p><strong>Step 1 — the ceiling.</strong> How many can be active at once? <span class="math inline">\(R / r = 1000 / 100 = 10\)</span>. More than 10 active is <strong>overload</strong>.</p>
 <div class="fragment">
-<p><span class="math display">\[= 0.000424 \;&lt;\; 0.0004\ \text{(rounded up in the text)}\]</span></p>
+<p><strong>Step 2 — the odds of overload.</strong> Each of <span class="math inline">\(N\)</span> users is active with <span class="math inline">\(p = 0.1\)</span>, independently, so the number active, <span class="math inline">\(X\)</span>, is <strong>binomial</strong>:</p>
 </div>
 <div class="fragment">
-<p><span class="vote-prompt">And if we admit far more than 35?</span></p>
+<p><span class="math display">\[P(\text{overload}) = P(X &gt; 10) = 1 - \sum_{k=0}^{10} \binom{N}{k}\,(0.1)^{k}\,(0.9)^{N-k}\]</span></p>
 </div>
 <div class="fragment">
-<p><span class="math inline">\(N = 50 \Rightarrow 0.0094\)</span>. &nbsp; <span class="math inline">\(N = 100 \Rightarrow 0.42\)</span>. The guarantee degrades <strong>fast</strong> — statistical multiplexing is a bet, not a proof.</p>
+<p>Eleven terms. Nobody sums this by hand. On the exam you <strong>write the expression</strong>, and a <strong>table of its values is given</strong> — you pick <span class="math inline">\(N\)</span> from it. Next slide shows what that looks like.</p>
 </div>
 </section>
-<section id="your-turn-size-the-link" class="slide level2">
-<h2>Your Turn: Size the Link</h2>
-<p><strong><em>Example:</em></strong> A 10 Mbps link. Each user needs 1 Mbps when active and is active 20% of the time. How many users under each scheme?</p>
+<section id="finding-the-35-must-know-1" class="slide level2">
+<h2>Finding the 35 <span class="ex">Must Know</span></h2>
+<p><strong>Step 3 — pick a tolerance, then try <span class="math inline">\(N\)</span>.</strong> The link does not tell you <span class="math inline">\(N\)</span>; <em>you</em> decide how much overload is acceptable. Say <strong>under 0.1%</strong> of the time.</p>
 <div class="fragment">
-<p><strong><em>Solution:</em></strong> Circuit switching: <span class="math inline">\(10 / 1 = \mathbf{10}\)</span> users.</p>
+<p>Step <span class="math inline">\(N\)</span> by 5 and read off <span class="math inline">\(P(X &gt; 10)\)</span>. <strong>This is the table the exam hands you</strong>; your job is to pick from it:</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;"><span class="math inline">\(N\)</span></th>
+<th style="text-align: left;">20</th>
+<th style="text-align: left;">30</th>
+<th style="text-align: left;"><strong>35</strong></th>
+<th style="text-align: left;">40</th>
+<th style="text-align: left;">50</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(P(X &gt; 10)\)</span></td>
+<td style="text-align: left;">0.0000</td>
+<td style="text-align: left;">0.0001</td>
+<td style="text-align: left;"><strong>0.0004</strong></td>
+<td style="text-align: left;">0.0015</td>
+<td style="text-align: left;">0.0094</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="fragment">
-<p>Packet switching with 25 users:</p>
-<p><span class="math display">\[P(\text{more than 10 active}) = \sum_{k=11}^{25}\binom{25}{k}(0.2)^k(0.8)^{25-k}
-= 0.0056\]</span></p>
-</div>
-<div class="fragment">
-<p><strong>25 users</strong>, with about a 0.6% chance of congestion — 2.5<span class="math inline">\(\times\)</span> the circuit-switched capacity.</p>
+<p><strong>35 is the last <span class="math inline">\(N\)</span> under the line:</strong> 0.04% passes, 40 users would be 0.15%. A looser tolerance buys more users — at 1%, <span class="math inline">\(N = 50\)</span> just fits.</p>
 </div>
 </section>
-<section id="is-packet-switching-perfect" class="slide level2">
-<h2>Is Packet Switching Perfect?</h2>
+<section id="your-turn-size-the-link-must-know" class="slide level2">
+<h2>Your Turn: Size the Link <span class="ex">Must Know</span></h2>
+<p><strong><em>Example:</em></strong> A 10 Mbps link. Each user needs 1 Mbps <strong>when active</strong> and is active 20% of the time. Overload is acceptable <strong>1%</strong> of the time. How many users can we serve?</p>
+<div class="fragment">
+<p><strong><em>Solution — Step 1:</em></strong> the link holds <span class="math inline">\(10 / 1 = \mathbf{10}\)</span> active users. Circuit switching stops there.</p>
+</div>
+<div class="fragment">
+<p><strong><em>Step 2:</em></strong> with <span class="math inline">\(N\)</span> users, <span class="math inline">\(X \sim \text{Binomial}(N,\, 0.2)\)</span>, and</p>
+</div>
+<div class="fragment">
+<p><span class="math display">\[P(X &gt; 10) = 1 - \sum_{k=0}^{10} \binom{N}{k}\,(0.2)^{k}\,(0.8)^{N-k}\]</span></p>
+</div>
+</section>
+<section id="your-turn-size-the-link-must-know-1" class="slide level2">
+<h2>Your Turn: Size the Link <span class="ex">Must Know</span></h2>
+<p><strong><em>Step 3:</em></strong> the tolerance is <strong>1%</strong>. The table is given; pick the largest <span class="math inline">\(N\)</span> under the line:</p>
+<div class="fragment">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;"><span class="math inline">\(N\)</span></th>
+<th style="text-align: left;">15</th>
+<th style="text-align: left;">20</th>
+<th style="text-align: left;"><strong>25</strong></th>
+<th style="text-align: left;">30</th>
+<th style="text-align: left;">35</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(P(X &gt; 10)\)</span></td>
+<td style="text-align: left;">0.0000</td>
+<td style="text-align: left;">0.0006</td>
+<td style="text-align: left;"><strong>0.0056</strong></td>
+<td style="text-align: left;">0.0256</td>
+<td style="text-align: left;">0.0747</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="fragment">
+<p><strong>25 users</strong>: 0.56% is under the 1% line, and 30 would be 2.6%. 2.5<span class="math inline">\(\times\)</span> the users for a 0.6% risk of congestion.</p>
+</div>
+</section>
+<section id="where-packets-hurt" class="slide level2">
+<h2>Where Packets Hurt</h2>
 <div class="fragment" data-fragment-index="1">
 <p><strong>Where it wins:</strong></p>
 <ul>
@@ -1182,7 +1244,7 @@ d_{\text{end-end}} = 3 \times 4 = 12\ \text{ms}\]</span></p>
 <section id="activity-human-network" class="slide level2">
 <h2>Activity: Human Network</h2>
 <div class="activity">
-<p><span class="activity-label">Whole room — 10 minutes</span></p>
+<p><span class="activity-label">Whole room — 8 minutes</span></p>
 <ol type="1">
 <li>Four students stand in a line: <strong>source, R1, R2, destination</strong>.</li>
 <li>The source writes a message on <strong>four sticky notes</strong>, numbered 1–4.</li>
@@ -1214,21 +1276,13 @@ d_{\text{end-end}} = 3 \times 4 = 12\ \text{ms}\]</span></p>
 </section>
 <section id="network-of-networks" class="slide level2">
 <h2>Network of Networks</h2>
-<p><strong>Question:</strong> given <em>millions</em> of access ISPs, how do we connect them?</p>
-<p><img data-src="images/non_mesh.png" style="width:72.0%"></p>
+<p><strong>Question:</strong> given <em>millions</em> of access ISPs, how do we connect them? Wiring every pair directly needs <span class="math inline">\(O(N^{2})\)</span> links.</p>
+<p><img data-src="images/non_global.png" style="width:55.0%"></p>
 <div class="fragment">
-<p>Connecting every pair directly does not scale: <span class="math inline">\(O(N^{2})\)</span> links.</p>
+<p><strong>Option:</strong> one <strong>global transit ISP</strong>, <span class="math inline">\(O(N)\)</span> links. <strong>Customer</strong> and <strong>provider</strong> ISPs sign an economic agreement — the customer pays for transit.</p>
 </div>
 </section>
 <section id="network-of-networks-1" class="slide level2">
-<h2>Network of Networks</h2>
-<p><strong>Option:</strong> connect every access ISP to one <strong>global transit ISP</strong>.</p>
-<p><img data-src="images/non_global.png" style="width:65.0%"></p>
-<div class="fragment">
-<p>Now it is <span class="math inline">\(O(N)\)</span>. <strong>Customer</strong> and <strong>provider</strong> ISPs sign an economic agreement — the customer pays for transit.</p>
-</div>
-</section>
-<section id="network-of-networks-2" class="slide level2">
 <h2>Network of Networks</h2>
 <p>If one global ISP is a viable business, there will be <strong>competitors</strong> — and they will want to interconnect.</p>
 <p><img data-src="images/non_compete.png" style="width:62.0%"></p>
@@ -1236,15 +1290,7 @@ d_{\text{end-end}} = 3 \times 4 = 12\ \text{ms}\]</span></p>
 <p>They meet at <strong>Internet exchange points (IXPs)</strong> over <strong>peering links</strong> — often settlement-free, since both sides benefit.</p>
 </div>
 </section>
-<section id="network-of-networks-3" class="slide level2">
-<h2>Network of Networks</h2>
-<p><strong>Regional ISPs</strong> arise to aggregate access networks in one geography.</p>
-<p><img data-src="images/non_regional.png" style="width:71.0%"></p>
-<div class="fragment">
-<p>The hierarchy is now three deep: access <span class="math inline">\(\rightarrow\)</span> regional <span class="math inline">\(\rightarrow\)</span> global.</p>
-</div>
-</section>
-<section id="network-of-networks-4" class="slide level2">
+<section id="network-of-networks-2" class="slide level2">
 <h2>Network of Networks</h2>
 <p><strong>Content provider networks</strong> (Google, Microsoft, Akamai, Netflix) build their own backbones to put content close to users.</p>
 <p><img data-src="images/non_content.png" style="width:62.0%"></p>
@@ -1252,30 +1298,15 @@ d_{\text{end-end}} = 3 \times 4 = 12\ \text{ms}\]</span></p>
 <p>They <strong>bypass</strong> the tier-1 ISPs wherever they can — less money paid out, and fewer hops of delay for you.</p>
 </div>
 </section>
-<section id="tier-1-isps" class="slide level2">
-<h2>Tier-1 ISPs</h2>
-<p><img data-src="images/tier1.png" style="width:98.0%"></p>
+<section id="who-sits-at-the-center" class="slide level2">
+<h2>Who Sits at the Center</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/tier1.png" class="quarto-figure quarto-figure-center" style="width:66.0%"></p>
+</figure>
+</div>
 <div class="fragment">
-<p>At the “center”: a small number of very well-connected large networks.</p>
-</div>
-</section>
-<section id="tier-1-isps-1" class="slide level2">
-<h2>Tier-1 ISPs</h2>
-<div class="fragment" data-fragment-index="1">
-<p><strong>Tier-1 commercial ISPs</strong> — Lumen/Level 3, Sprint, AT&amp;T, NTT. National and international coverage, and they peer with each other rather than buying transit.</p>
-</div>
-<div class="fragment" data-fragment-index="2">
-<p><strong>Content provider networks</strong> — Google, Meta. Private networks linking their own data centers, often bypassing tier-1 and regional ISPs entirely.</p>
-</div>
-<div class="fragment" data-fragment-index="3">
-<p>Both sit at the center, but for different reasons: one sells reachability, the other refuses to buy it.</p>
-</div>
-</section>
-<section id="a-real-tier-1-map" class="slide level2">
-<h2>A Real Tier-1 Map</h2>
-<p><img data-src="images/sprint_map.png" style="width:98.0%"></p>
-<div class="credit">
-<p>Sprint’s North American backbone, 2019. Diamonds are <strong>PoPs</strong> — points of presence, where customer and peer networks attach.</p>
+<p>A handful of very well-connected networks: <strong>tier-1 ISPs</strong>, which peer instead of buying transit, and <strong>content providers</strong>, which buy none.</p>
 </div>
 </section>
 <section id="why-it-matters-peering" class="slide level2">
@@ -1298,35 +1329,85 @@ d_{\text{end-end}} = 3 \times 4 = 12\ \text{ms}\]</span></p>
 <p><strong>B.</strong> Open Connect puts a cache box <em>inside</em> your ISP. Your stream never crosses a tier-1 link. The Internet’s shape is set by <strong>economics</strong> at least as much as by engineering.</p>
 </div>
 </section>
+<section id="read-after-class" class="slide level2 center reading-divider">
+<h2>Read After Class</h2>
+<p>Section 1.3 — supporting material</p>
+<ul>
+<li>Behind the <span class="math inline">\(0.0004\)</span></li>
+<li>Segmentation</li>
+<li>Regional ISPs</li>
+<li>Tier-1 detail, and a real backbone map</li>
+</ul>
+<p><a href="#/section-1.4">In class: skip ahead to Section 1.4</a></p>
+</section>
+<section id="behind-the-0.0004-reading" class="slide level2">
+<h2>Behind the 0.0004 <span class="rd">Reading</span></h2>
+<p>The tables on <em>Finding the 35</em> and <em>Size the Link</em> come from this function. <code>cap</code> is the circuit-switching ceiling, <span class="math inline">\(R/r\)</span>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="" aria-label="1"></a><span class="im">from</span> math <span class="im">import</span> comb</span>
+<span id="cb1-2"><a href="" aria-label="2"></a></span>
+<span id="cb1-3"><a href="" aria-label="3"></a><span class="kw">def</span> p_overload(N, p, cap):</span>
+<span id="cb1-4"><a href="" aria-label="4"></a>    <span class="cf">return</span> <span class="dv">1</span> <span class="op">-</span> <span class="bu">sum</span>(comb(N, k) <span class="op">*</span> p<span class="op">**</span>k <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> p)<span class="op">**</span>(N <span class="op">-</span> k) <span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(cap <span class="op">+</span> <span class="dv">1</span>))</span>
+<span id="cb1-5"><a href="" aria-label="5"></a></span>
+<span id="cb1-6"><a href="" aria-label="6"></a>p_overload(<span class="dv">35</span>, <span class="fl">0.1</span>, <span class="dv">10</span>)   <span class="co"># 0.00042</span></span>
+<span id="cb1-7"><a href="" aria-label="7"></a>p_overload(<span class="dv">25</span>, <span class="fl">0.2</span>, <span class="dv">10</span>)   <span class="co"># 0.0056</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Admit more, and the guarantee degrades fast: with <span class="math inline">\(p = 0.1\)</span>, <span class="math inline">\(N = 50 \Rightarrow 0.0094\)</span> and <span class="math inline">\(N = 100 \Rightarrow 0.42\)</span>. Statistical multiplexing is a <strong>bet</strong>, not a proof. The tolerance is the designer’s choice; Kurose’s 35 keeps overload near one second in every 40 minutes.</p>
+</section>
+<section id="segmentation-reading" class="slide level2">
+<h2>Segmentation <span class="rd">Reading</span></h2>
+<p>A <span class="math inline">\(10^{6}\)</span>-bit message crosses <strong>three</strong> 5 Mbps links through two store-and-forward switches. Sent whole, each hop takes <span class="math inline">\(0.2\)</span> s and the message arrives after <span class="math inline">\(3 \times 0.2 = 0.6\)</span> s.</p>
+<p>Cut into 100 packets of <span class="math inline">\(10{,}000\)</span> bits, each hop takes <span class="math inline">\(2\)</span> ms per packet. The first packet arrives at <span class="math inline">\(3 \times 2 = 6\)</span> ms, and one more completes every <span class="math inline">\(2\)</span> ms after that; the last arrives at <span class="math inline">\(6 + 99 \times 2 = 204\)</span> ms — about a <strong>third</strong> of the time.</p>
+<p>In general, <span class="math inline">\(P\)</span> packets over <span class="math inline">\(N\)</span> hops take <span class="math inline">\((N + P - 1)\,L/R\)</span>: the switches <strong>pipeline</strong>, forwarding packet <span class="math inline">\(k\)</span> while packet <span class="math inline">\(k + 1\)</span> is still being sent. The price is a header on every packet and reassembly at the receiver.</p>
+</section>
+<section id="regional-isps-reading" class="slide level2">
+<h2>Regional ISPs <span class="rd">Reading</span></h2>
+<p><strong>Regional ISPs</strong> arise to aggregate the access networks of one geography, then buy transit upward from a global ISP.</p>
+<p><img data-src="images/non_regional.png" style="width:62.0%"></p>
+<p>The hierarchy is now three deep: access <span class="math inline">\(\rightarrow\)</span> regional <span class="math inline">\(\rightarrow\)</span> global.</p>
+</section>
+<section id="tier-1-isps-reading" class="slide level2">
+<h2>Tier-1 ISPs <span class="rd">Reading</span></h2>
+<p><strong>Tier-1 commercial ISPs</strong> — Lumen/Level 3, Sprint, AT&amp;T, NTT. National and international coverage, and they peer with each other rather than buying transit from anyone.</p>
+<p><strong>Content provider networks</strong> — Google, Meta. Private networks linking their own data centers, often bypassing tier-1 and regional ISPs entirely.</p>
+<p>Both sit at the center, but for different reasons: one sells reachability, the other refuses to buy it.</p>
+</section>
+<section id="a-real-tier-1-map-reading" class="slide level2">
+<h2>A Real Tier-1 Map <span class="rd">Reading</span></h2>
+<p><img data-src="images/sprint_map.png" style="width:92.0%"></p>
+<div class="credit">
+<p>Sprint’s North American backbone, 2019. Diamonds are <strong>PoPs</strong> — points of presence, where customer and peer networks attach.</p>
+</div>
+</section>
 <section id="section-1.4" class="slide level2 center section-divider">
 <h2>Section 1.4</h2>
 <p>Delay, Loss, and Throughput</p>
 </section>
 <section id="todays-plan-3" class="slide level2">
 <h2>Today’s Plan</h2>
+<div class="columns">
+<div class="column" style="width:62%;">
+<p><strong>In class</strong></p>
 <ul>
-<li>Where delay and loss actually come from</li>
-<li>The four sources of nodal delay</li>
-<li>Transmission vs propagation — the distinction that trips everyone</li>
-<li>Traffic intensity <span class="math inline">\(La/R\)</span></li>
-<li>Measuring a real path with <code>traceroute</code></li>
-<li>Throughput and the bottleneck link</li>
+<li>Four sources of nodal delay <span class="ex-inline">Must Know</span></li>
+<li>Transmission vs propagation <span class="ex-inline">Must Know</span></li>
+<li>Traffic intensity <span class="math inline">\(La/R\)</span> <span class="ex-inline">Must Know</span></li>
+<li><code>traceroute</code> on a real path</li>
+<li>Throughput, the bottleneck link <span class="ex-inline">Must Know</span></li>
+<li>Bandwidth <span class="math inline">\(\times\)</span> delay <span class="ex-inline">Must Know</span></li>
 </ul>
+</div><div class="column" style="width:38%;">
+<p><strong>After class</strong> <span class="rd-inline">Reading</span></p>
+<ul>
+<li>Queueing at a router</li>
+<li>The caravan analogy</li>
+<li>Packet loss</li>
+</ul>
+</div></div>
 </section>
-<section id="where-delay-comes-from" class="slide level2">
-<h2>Where Delay Comes From</h2>
-<p><img data-src="images/queue_router.png" style="width:98.0%"></p>
-<div class="fragment">
-<p>Packets <strong>queue</strong> in router buffers, waiting their turn on the output link. When the arrival rate exceeds the output capacity, the queue grows — and when the buffer is full, packets are <strong>lost</strong>.</p>
-</div>
-</section>
-<section id="four-sources-of-delay" class="slide level2">
-<h2>Four Sources of Delay</h2>
+<section id="four-sources-of-delay-must-know" class="slide level2">
+<h2>Four Sources of Delay <span class="ex">Must Know</span></h2>
 <div class="columns">
 <div class="column" style="width:52%;">
 <p><img data-src="images/delay_nodal.png" style="width:98.0%"></p>
-<p><span class="math display">\[d_{\text{nodal}} = d_{\text{proc}} + d_{\text{queue}}
-+ d_{\text{trans}} + d_{\text{prop}}\]</span></p>
 </div><div class="column" style="width:48%;">
 <div class="fragment">
 <p><span class="math inline">\(d_{\text{proc}}\)</span> — <strong>nodal processing</strong>: check bit errors, pick the output link. Typically &lt; 1 ms.</p>
@@ -1335,9 +1416,11 @@ d_{\text{end-end}} = 3 \times 4 = 12\ \text{ms}\]</span></p>
 <p><span class="math inline">\(d_{\text{queue}}\)</span> — <strong>queueing</strong>: waiting at the output link. Depends on congestion; the only one that varies wildly.</p>
 </div>
 </div></div>
+<p><span class="math display">\[d_{\text{nodal}} = d_{\text{proc}} + d_{\text{queue}}
++ d_{\text{trans}} + d_{\text{prop}}\]</span></p>
 </section>
-<section id="four-sources-of-delay-1" class="slide level2">
-<h2>Four Sources of Delay</h2>
+<section id="four-sources-of-delay-must-know-1" class="slide level2">
+<h2>Four Sources of Delay <span class="ex">Must Know</span></h2>
 <div class="columns">
 <div class="column" style="width:50%;">
 <p><span class="math inline">\(d_{\text{trans}}\)</span> — <strong>transmission delay</strong></p>
@@ -1362,9 +1445,9 @@ d_{\text{end-end}} = 3 \times 4 = 12\ \text{ms}\]</span></p>
 <p>Very different: <span class="math inline">\(d_{\text{trans}}\)</span> depends on the packet, <span class="math inline">\(d_{\text{prop}}\)</span> does not.</p>
 </div>
 </section>
-<section id="your-turn-which-dominates" class="slide level2">
-<h2>Your Turn: Which Dominates?</h2>
-<p><strong><em>Example:</em></strong> A 1500-byte packet on a 100 Mbps link that is 3,000 km long (<span class="math inline">\(s = 2 \times 10^{8}\)</span> m/s). Which delay dominates?</p>
+<section id="your-turn-which-wins-must-know" class="slide level2">
+<h2>Your Turn: Which Wins? <span class="ex">Must Know</span></h2>
+<p><strong><em>Example:</em></strong> A 1500-byte packet on a 100 Mbps link that is 3,000 km long, with <span class="math inline">\(s = 2 \times 10^{8}\)</span> m/s. Which delay dominates?</p>
 <div class="fragment">
 <p><strong><em>Solution:</em></strong></p>
 <p><span class="math display">\[d_{\text{trans}} = \frac{12{,}000}{10^{8}} = 0.12\ \text{ms}
@@ -1373,41 +1456,6 @@ d_{\text{prop}} = \frac{3 \times 10^{6}}{2 \times 10^{8}} = 15\ \text{ms}\]</spa
 </div>
 <div class="fragment">
 <p>Propagation wins by <strong>125<span class="math inline">\(\times\)</span></strong>. Upgrading that link to 1 Gbps takes the total from 15.12 ms to 15.01 ms — a <strong>0.7%</strong> improvement.</p>
-</div>
-</section>
-<section id="the-caravan-analogy" class="slide level2">
-<h2>The Caravan Analogy</h2>
-<p><img data-src="images/caravan.png" style="width:98.0%"></p>
-<ul>
-<li>Cars propagate at 100 km/hr; the toll booth takes <strong>12 s</strong> per car.</li>
-<li>car <span class="math inline">\(\approx\)</span> bit, &nbsp; caravan <span class="math inline">\(\approx\)</span> packet, &nbsp; toll booth <span class="math inline">\(\approx\)</span> router.</li>
-</ul>
-<div class="fragment">
-<p><span class="vote-prompt">How long until the caravan is lined up at the 2nd booth?</span></p>
-</div>
-</section>
-<section id="the-caravan-analogy-1" class="slide level2">
-<h2>The Caravan Analogy</h2>
-<p><strong><em>Solution:</em></strong> Two pieces, exactly like <span class="math inline">\(d_{\text{trans}}\)</span> and <span class="math inline">\(d_{\text{prop}}\)</span>.</p>
-<div class="fragment">
-<p>Push the whole caravan through the booth: <span class="math inline">\(12 \times 10 = 120\)</span> s.</p>
-</div>
-<div class="fragment">
-<p>Last car propagates 100 km at 100 km/hr: <span class="math inline">\(1\)</span> hr <span class="math inline">\(= 3600\)</span> s.</p>
-</div>
-<div class="fragment">
-<p><span class="math display">\[120 + 3600 = 3720\ \text{s} = \mathbf{62\ minutes}\]</span></p>
-</div>
-</section>
-<section id="the-caravan-analogy-2" class="slide level2">
-<h2>The Caravan Analogy</h2>
-<p><strong><em>Example (continued):</em></strong> Now cars propagate at <strong>1000 km/hr</strong> and the booth takes <strong>1 minute</strong> per car.</p>
-<p><span class="vote-prompt">Will cars reach the 2nd booth before all are serviced at the 1st?</span></p>
-<div class="fragment">
-<p><strong><em>Solution:</em></strong> <strong>Yes.</strong> The first car is serviced at <span class="math inline">\(t = 1\)</span> min, then propagates <span class="math inline">\(100/1000\)</span> hr <span class="math inline">\(= 6\)</span> min, arriving at <span class="math inline">\(t = 7\)</span> min.</p>
-</div>
-<div class="fragment">
-<p>At <span class="math inline">\(t = 7\)</span> min the booth has serviced 7 cars — <strong>3 are still queued</strong>. The packet is spread across both links at once. Store-and-forward routers <em>cannot</em> do this; they must wait for the whole packet.</p>
 </div>
 </section>
 <section id="traffic-intensity" class="slide level2">
@@ -1447,8 +1495,8 @@ d_{\text{prop}} = \frac{3 \times 10^{6}}{2 \times 10^{8}} = 15\ \text{ms}\]</spa
 <p>Notice that the bad case is not “the link is full.” It is “the link is <em>almost</em> full,” which happens far more often.</p>
 </div>
 </section>
-<section id="your-turn-how-busy" class="slide level2">
-<h2>Your Turn: How Busy?</h2>
+<section id="your-turn-how-busy-must-know" class="slide level2">
+<h2>Your Turn: How Busy? <span class="ex">Must Know</span></h2>
 <p><strong><em>Example:</em></strong> <span class="math inline">\(L = 1000\)</span> bits, <span class="math inline">\(R = 1\)</span> Mbps. Compute <span class="math inline">\(La/R\)</span> for <span class="math inline">\(a = 500\)</span>, <span class="math inline">\(800\)</span>, and <span class="math inline">\(1200\)</span> packets/sec.</p>
 <div class="fragment" data-fragment-index="0">
 <table class="caption-top">
@@ -1487,31 +1535,8 @@ d_{\text{prop}} = \frac{3 \times 10^{6}}{2 \times 10^{8}} = 15\ \text{ms}\]</spa
 <p>Design rule: engineer links to run <strong>well below</strong> 1, not just below it. The curve is nearly vertical near the end.</p>
 </div>
 </section>
-<section id="packet-loss" class="slide level2">
-<h2>Packet Loss</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p><img data-src="images/loss_buffer.png" style="width:98.0%"></p>
-</div><div class="column" style="width:50%;">
-<div class="fragment">
-<ul>
-<li>The queue (buffer) ahead of a link has <strong>finite</strong> capacity.</li>
-</ul>
-</div>
-<div class="fragment">
-<ul>
-<li>A packet arriving to a full queue is <strong>dropped</strong>.</li>
-</ul>
-</div>
-<div class="fragment">
-<ul>
-<li>It may be retransmitted by the previous node, by the source, <strong>or not at all</strong>.</li>
-</ul>
-</div>
-</div></div>
-</section>
-<section id="real-delays-traceroute" class="slide level2">
-<h2>Real Delays: traceroute</h2>
+<section id="using-traceroute" class="slide level2">
+<h2>Using traceroute</h2>
 <p><code>traceroute</code> measures delay to each router along a path.</p>
 <div class="fragment">
 <p>For each hop <span class="math inline">\(i\)</span>:</p>
@@ -1525,32 +1550,52 @@ d_{\text{prop}} = \frac{3 \times 10^{6}}{2 \times 10^{8}} = 15\ \text{ms}\]</spa
 <p>Three probes per hop, so you see three numbers per line. <code>* * *</code> means no response — the probe was lost, or that router declines to reply.</p>
 </div>
 </section>
-<section id="real-delays-traceroute-1" class="slide level2">
-<h2>Real Delays: traceroute</h2>
+<section id="using-traceroute-1" class="slide level2">
+<h2>Using traceroute</h2>
 <p><img data-src="images/traceroute.png" style="width:76.0%"></p>
 <div class="fragment">
 <p><span class="vote-prompt">Hop 11 reports 112 ms, hop 12 reports 111 ms. Delays <em>decreased</em>. Why?</span></p>
 </div>
+</section>
+<section id="using-traceroute-2" class="slide level2">
+<h2>Using traceroute</h2>
+<p><span class="vote-prompt">Hop 11 reports 112 ms, hop 12 reports 111 ms. Delays <em>decreased</em>. Why?</span></p>
 <div class="fragment">
 <p>Each line is an <strong>independent</strong> round trip at a different instant, with different queueing. Samples, not a cumulative sum.</p>
+</div>
+<div class="fragment">
+<p>The evidence is on the same line: hop 12’s three probes span 111–116 ms, hop 11’s span 112–114 ms. The spread <em>within</em> one hop is bigger than the difference <em>between</em> the two hops — so the 1 ms “decrease” is noise.</p>
+</div>
+<div class="fragment">
+<p>Hop 8 shows it too: 104, 109, 106 ms for the same router, three different queues.</p>
 </div>
 </section>
 <section id="activity-trace-your-path" class="slide level2">
 <h2>Activity: Trace Your Path</h2>
 <div class="activity">
-<p><span class="activity-label">Everyone — 8 minutes, terminal</span></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href=""></a><span class="fu">ping</span> <span class="at">-c</span> 5 tamusa.edu</span>
-<span id="cb1-2"><a href=""></a><span class="ex">traceroute</span> tamusa.edu          <span class="co"># tracert on Windows</span></span>
-<span id="cb1-3"><a href=""></a><span class="ex">traceroute</span> www.sydney.edu.au</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Record: <strong>hop count</strong> and <strong>minimum RTT</strong> for each destination.</p>
+<p><span class="activity-label">Everyone — 6 minutes, terminal</span></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="" aria-label="1"></a><span class="fu">ping</span> <span class="at">-c</span> 5 tamusa.edu</span>
+<span id="cb2-2"><a href="" aria-label="2"></a><span class="ex">traceroute</span> tamusa.edu                    <span class="co"># tracert on Windows</span></span>
+<span id="cb2-3"><a href="" aria-label="3"></a><span class="ex">traceroute</span> speedtest.sydney.linode.com</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Record the <strong>hop count</strong> and <strong>minimum RTT</strong> for each destination.</p>
+<p>Then compute the propagation-only round trip to Sydney (about 14,000 km at <span class="math inline">\(2\times10^{8}\)</span> m/s) and compare it with your minimum RTT.</p>
 </div>
-<div class="fragment">
-<p>As a room:</p>
-<ul>
-<li>What is the smallest RTT anyone got to Sydney?</li>
-<li>San Antonio to Sydney is ~14,000 km. At <span class="math inline">\(2\times10^{8}\)</span> m/s the round trip alone is <strong>140 ms</strong>. Did anyone beat that?</li>
-</ul>
-</div>
+<aside class="notes">
+<p>Six minutes at the terminal, then about three to debrief.</p>
+<p>Debrief. Put the smallest Sydney RTT anyone got on the board. The great-circle distance is about 13,500 km, so the propagation-only round trip is 140 ms; nobody gets under it. Typical is 180 to 220 ms: fiber follows the cables, not the great circle (about 1.3 to 1.5 times the distance), and every one of the 15 to 25 hops adds processing and queueing. If someone reports far less than 140 ms they reached an anycast or CDN address, not Sydney; that is why the target is the Linode host, not www.sydney.edu.au (CloudFront, about 15 ms from campus). Assignment 1 repeats this measurement on the same hosts.</p>
+<p>Hop count. tamusa.edu should be a handful of hops; Sydney is 15 to 25. Ask where the path leaves the country: look for the jump of 100 ms or more between two consecutive lines, the trans-Pacific hop.</p>
+<p>Troubleshooting. Windows is <code>tracert</code>. Ubuntu may lack traceroute (<code>sudo apt install traceroute</code>, or <code>tracepath</code>). Lines of <code>* * *</code> are routers that do not answer, not a broken path. If campus Wi-Fi blocks ICMP entirely, run it on the CloudLab node instead.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="throughput" class="slide level2">
 <h2>Throughput</h2>
@@ -1568,8 +1613,8 @@ d_{\text{prop}} = \frac{3 \times 10^{6}}{2 \times 10^{8}} = 15\ \text{ms}\]</spa
 <p><img data-src="images/throughput_pipe.png" style="width:98.0%"></p>
 </div></div>
 </section>
-<section id="the-bottleneck-link" class="slide level2">
-<h2>The Bottleneck Link</h2>
+<section id="the-bottleneck-link-must-know" class="slide level2">
+<h2>The Bottleneck Link <span class="ex">Must Know</span></h2>
 <p><img data-src="images/throughput_bneck.png" style="width:70.0%"></p>
 <div class="fragment">
 <p>Average end-to-end throughput is <span class="math inline">\(\min(R_s, R_c)\)</span> — the <strong>bottleneck link</strong> constrains the whole path.</p>
@@ -1590,8 +1635,8 @@ d_{\text{prop}} = \frac{3 \times 10^{6}}{2 \times 10^{8}} = 15\ \text{ms}\]</spa
 </div>
 </div></div>
 </section>
-<section id="your-turn-movie-night" class="slide level2">
-<h2>Your Turn: Movie Night</h2>
+<section id="your-turn-movie-night-must-know" class="slide level2">
+<h2>Your Turn: Movie Night <span class="ex">Must Know</span></h2>
 <p><strong><em>Example:</em></strong> Server link <span class="math inline">\(R_s = 100\)</span> Mbps, your link <span class="math inline">\(R_c = 25\)</span> Mbps, backbone <span class="math inline">\(R = 1\)</span> Gbps shared by 10 connections. How long to download a 5 GB movie?</p>
 <div class="fragment">
 <p><strong><em>Solution:</em></strong> <span class="math inline">\(\min(100,\ 25,\ 1000/10) = \mathbf{25}\)</span> Mbps.</p>
@@ -1605,8 +1650,8 @@ d_{\text{prop}} = \frac{3 \times 10^{6}}{2 \times 10^{8}} = 15\ \text{ms}\]</spa
 <p>Upgrading the <em>server</em> to 10 Gbps changes nothing. Fix the bottleneck or fix nothing.</p>
 </div>
 </section>
-<section id="why-it-matters-latency" class="slide level2">
-<h2>Why It Matters: Latency</h2>
+<section id="bits-in-flight-must-know" class="slide level2">
+<h2>Bits in Flight <span class="ex">Must Know</span></h2>
 <p>Your link is 1 Gbps and the round trip to the server is 100 ms.</p>
 <p><span class="vote-prompt">Vote — how much data is “in flight” at any instant?</span></p>
 <div class="columns vote-row">
@@ -1630,72 +1675,85 @@ d_{\text{prop}} = \frac{3 \times 10^{6}}{2 \times 10^{8}} = 15\ \text{ms}\]</spa
 <p>A 1 MB file fits entirely inside one round trip — so its transfer time is dominated by the RTT, not the rate. Chapter 3 lives on this number.</p>
 </div>
 </section>
+<section id="read-after-class-1" class="slide level2 center reading-divider">
+<h2>Read After Class</h2>
+<p>Section 1.4 — supporting material</p>
+<ul>
+<li>Queueing at a router</li>
+<li>The caravan analogy</li>
+<li>Packet loss</li>
+</ul>
+<p><a href="#/section-1.5">In class: skip ahead to Section 1.5</a></p>
+</section>
+<section id="queueing-at-a-router-reading" class="slide level2">
+<h2>Queueing at a Router <span class="rd">Reading</span></h2>
+<p><img data-src="images/queue_router.png" style="width:94.0%"></p>
+<p>Packets <strong>queue</strong> in router buffers, waiting their turn on the output link. When the arrival rate exceeds the output capacity the queue grows — and when the buffer is full, packets are <strong>lost</strong>.</p>
+</section>
+<section id="the-caravan-analogy-reading" class="slide level2">
+<h2>The Caravan Analogy <span class="rd">Reading</span></h2>
+<p><img data-src="images/caravan.png" style="width:98.0%"></p>
+<p>Cars propagate at 100 km/hr; the toll booth takes <strong>12 s</strong> per car. car <span class="math inline">\(\approx\)</span> bit, &nbsp; caravan <span class="math inline">\(\approx\)</span> packet, &nbsp; toll booth <span class="math inline">\(\approx\)</span> router.</p>
+<p><strong>How long until the caravan is lined up at the 2nd booth?</strong> Push the whole caravan through the first booth: <span class="math inline">\(12 \times 10 = 120\)</span> s. Then the last car propagates 100 km at 100 km/hr <span class="math inline">\(= 3600\)</span> s. Total <span class="math inline">\(120 + 3600 = 3720\)</span> s <span class="math inline">\(=\)</span> <strong>62 minutes</strong> — that is <span class="math inline">\(d_{\text{trans}} + d_{\text{prop}}\)</span>.</p>
+</section>
+<section id="the-caravan-analogy-reading-1" class="slide level2">
+<h2>The Caravan Analogy <span class="rd">Reading</span></h2>
+<p><strong><em>Example (continued):</em></strong> Now cars propagate at <strong>1000 km/hr</strong> and the booth takes <strong>1 minute</strong> per car. Will cars reach the 2nd booth before all ten are serviced at the 1st?</p>
+<p><strong>Yes.</strong> The first car is serviced at <span class="math inline">\(t = 1\)</span> min, then propagates <span class="math inline">\(100/1000\)</span> hr <span class="math inline">\(= 6\)</span> min, arriving at <span class="math inline">\(t = 7\)</span> min. By then the booth has serviced 7 cars — <strong>3 are still queued</strong>.</p>
+<p>The packet is spread across both links at once. Store-and-forward routers <em>cannot</em> do this; they must wait for the whole packet.</p>
+</section>
+<section id="packet-loss-reading" class="slide level2">
+<h2>Packet Loss <span class="rd">Reading</span></h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><img data-src="images/loss_buffer.png" style="width:98.0%"></p>
+</div><div class="column" style="width:50%;">
+<ul>
+<li>The queue (buffer) ahead of a link has <strong>finite</strong> capacity.</li>
+<li>A packet arriving to a full queue is <strong>dropped</strong>.</li>
+<li>It may be retransmitted by the previous node, by the source, <strong>or not at all</strong>.</li>
+</ul>
+</div></div>
+</section>
 <section id="section-1.5" class="slide level2 center section-divider">
 <h2>Section 1.5</h2>
 <p>Layering and Service Models</p>
 </section>
 <section id="todays-plan-4" class="slide level2">
 <h2>Today’s Plan</h2>
+<div class="columns">
+<div class="column" style="width:58%;">
+<p><strong>In class</strong></p>
 <ul>
-<li>Why we need a structure at all</li>
-<li>Layering, by analogy with air travel</li>
-<li>The five-layer Internet protocol stack</li>
-<li>Encapsulation — how headers get added and removed</li>
-<li>The seven-layer OSI reference model</li>
+<li>Why layering</li>
+<li>Five-layer Internet stack <span class="ex-inline">Must Know</span></li>
+<li>Encapsulation <span class="ex-inline">Must Know</span></li>
+<li>What a header costs <span class="ex-inline">Must Know</span></li>
 </ul>
-</section>
-<section id="networks-are-complex" class="slide level2">
-<h2>Networks Are Complex</h2>
-<p>Networks have many moving pieces: hosts, routers, links of various media, applications, protocols, hardware, software.</p>
-<div class="fragment">
-<p><span class="vote-prompt">Is there any hope of <em>organizing</em> the structure of a network?</span></p>
-</div>
-<div class="fragment">
-<p>… or at least of organizing our <strong>discussion</strong> of networks?</p>
-</div>
-<div class="fragment">
-<p>The answer that the Internet’s designers reached — and that every large system has since copied — is <strong>layering</strong>.</p>
-</div>
-</section>
-<section id="layers-air-travel" class="slide level2">
-<h2>Layers: Air Travel</h2>
-<p><img data-src="images/air_travel.png" style="width:98.0%"></p>
-<div class="fragment">
-<p>Each <strong>layer</strong> implements a service, using its own internal actions and relying on the services of the layer below.</p>
-</div>
+</div><div class="column" style="width:42%;">
+<p><strong>After class</strong> <span class="rd-inline">Reading</span></p>
+<ul>
+<li>Networks are complex</li>
+<li>Layering by analogy with air travel</li>
+<li>What layering costs</li>
+<li>The seven-layer OSI model</li>
+</ul>
+</div></div>
 </section>
 <section id="why-layering" class="slide level2">
 <h2>Why Layering?</h2>
 <div class="fragment" data-fragment-index="1">
-<p><strong>Dealing with complex systems:</strong></p>
-<ul>
-<li>explicit structure lets us identify the pieces and their relationships</li>
-<li>a layered <strong>reference model</strong> gives us shared vocabulary</li>
-</ul>
+<p>Each <strong>layer</strong> implements a service, using its own internal actions and relying on the services of the layer below.</p>
 </div>
 <div class="fragment" data-fragment-index="2">
-<p><strong>Modularization eases maintenance and updating:</strong></p>
-<ul>
-<li>a change in a layer’s <em>implementation</em> is transparent to the rest of the system</li>
-<li>changing the gate procedure does not affect ticketing</li>
-</ul>
+<p><strong>Explicit structure</strong> lets us identify the pieces and their relationships, and gives us shared vocabulary — a <em>reference model</em>.</p>
+</div>
+<div class="fragment" data-fragment-index="3">
+<p><strong>Modularity</strong> eases maintenance: a change inside one layer’s <em>implementation</em> is invisible to the rest of the system.</p>
 </div>
 </section>
-<section id="why-layering-1" class="slide level2">
-<h2>Why Layering?</h2>
-<p><span class="vote-prompt">Cost — is layering ever <em>harmful</em>?</span></p>
-<div class="fragment">
-<p>Yes. A layer that hides information the layer above needs makes the upper layer <strong>guess</strong>.</p>
-</div>
-<div class="fragment">
-<p>TCP treats every lost packet as a sign of congestion and slows down. On a wireless link, most losses are <strong>interference</strong>, not congestion — so TCP slows down for no reason.</p>
-</div>
-<div class="fragment">
-<p>The link layer knew the difference. The interface gave it no way to say so. Chapter 7 has the scars.</p>
-</div>
-</section>
-<section id="the-internet-stack" class="slide level2">
-<h2>The Internet Stack</h2>
+<section id="the-internet-stack-must-know" class="slide level2">
+<h2>The Internet Stack <span class="ex">Must Know</span></h2>
 <div class="columns">
 <div class="column" style="width:52%;">
 <div class="fragment" data-fragment-index="5">
@@ -1782,8 +1840,8 @@ d_{\text{prop}} = \frac{3 \times 10^{6}}{2 \times 10^{8}} = 15\ \text{ms}\]</spa
 </table>
 </div>
 </section>
-<section id="encapsulation" class="slide level2">
-<h2>Encapsulation</h2>
+<section id="encapsulation-must-know" class="slide level2">
+<h2>Encapsulation <span class="ex">Must Know</span></h2>
 <p>Each layer takes the unit from above, adds its own <strong>header</strong>, and hands the result down. The receiver strips them in reverse.</p>
 <svg viewbox="250 15 640 275" width="100%" style="max-height:52vh">
   <!-- message -->
@@ -1835,15 +1893,15 @@ d_{\text{prop}} = \frac{3 \times 10^{6}}{2 \times 10^{8}} = 15\ \text{ms}\]</spa
   </g>
 </svg>
 </section>
-<section id="encapsulation-1" class="slide level2">
+<section id="encapsulation" class="slide level2">
 <h2>Encapsulation</h2>
 <p><img data-src="images/encapsulation.png" style="width:60.0%"></p>
 <div class="fragment">
 <p>A <strong>switch</strong> touches only the link layer; a <strong>router</strong> goes up to the network layer. Neither ever opens <span class="math inline">\(M\)</span>.</p>
 </div>
 </section>
-<section id="your-turn-header-cost" class="slide level2">
-<h2>Your Turn: Header Cost</h2>
+<section id="your-turn-header-cost-must-know" class="slide level2">
+<h2>Your Turn: Header Cost <span class="ex">Must Know</span></h2>
 <p><strong><em>Example:</em></strong> TCP adds 20 bytes, IP adds 20 bytes, Ethernet adds 18. What fraction of the frame is overhead for a 1000-byte payload? For a 40-byte one?</p>
 <div class="fragment">
 <p><strong><em>Solution:</em></strong> Total header <span class="math inline">\(= 20 + 20 + 18 = 58\)</span> bytes.</p>
@@ -1853,49 +1911,8 @@ d_{\text{prop}} = \frac{3 \times 10^{6}}{2 \times 10^{8}} = 15\ \text{ms}\]</spa
 <p>This is why a chatty protocol that sends one keystroke per packet wastes most of the link, and why Chapter 3 bothers with Nagle’s algorithm.</p>
 </div>
 </section>
-<section id="the-osi-model" class="slide level2">
-<h2>The OSI Model</h2>
-<div class="columns">
-<div class="column" style="width:52%;">
-<p>Two layers the Internet stack lacks:</p>
-<div class="fragment" data-fragment-index="1">
-<p><strong>presentation</strong> — interpret the <em>meaning</em> of data: encryption, compression, machine conventions.</p>
-</div>
-<div class="fragment" data-fragment-index="2">
-<p><strong>session</strong> — synchronization, checkpointing, recovery.</p>
-</div>
-<div class="fragment" data-fragment-index="3">
-<p>If an application needs them, the <strong>application</strong> implements them.</p>
-</div>
-</div><div class="column" style="width:48%;">
-<svg viewbox="0 0 300 400" width="100%" style="max-height:64vh">
-  <g>
-    <rect class="box" x="20" y="336" width="260" height="44" rx="3"></rect>
-    <text x="150" y="364" text-anchor="middle" font-size="20">physical</text>
-    <rect class="box" x="20" y="288" width="260" height="44" rx="3"></rect>
-    <text x="150" y="316" text-anchor="middle" font-size="20">link</text>
-    <rect class="box" x="20" y="240" width="260" height="44" rx="3"></rect>
-    <text x="150" y="268" text-anchor="middle" font-size="20">network</text>
-    <rect class="box" x="20" y="192" width="260" height="44" rx="3"></rect>
-    <text x="150" y="220" text-anchor="middle" font-size="20">transport</text>
-  </g>
-  <g class="fragment" data-fragment-index="2">
-    <rect class="box-hdr" x="20" y="144" width="260" height="44" rx="3"></rect>
-    <text x="150" y="172" text-anchor="middle" font-size="20">session</text>
-  </g>
-  <g class="fragment" data-fragment-index="1">
-    <rect class="box-hdr" x="20" y="96" width="260" height="44" rx="3"></rect>
-    <text x="150" y="124" text-anchor="middle" font-size="20">presentation</text>
-  </g>
-  <g>
-    <rect class="box" x="20" y="48" width="260" height="44" rx="3"></rect>
-    <text x="150" y="76" text-anchor="middle" font-size="20">application</text>
-  </g>
-</svg>
-</div></div>
-</section>
-<section id="why-it-matters-modularity" class="slide level2">
-<h2>Why It Matters: Modularity</h2>
+<section id="swap-a-layer" class="slide level2">
+<h2>Swap a Layer</h2>
 <p>You walk out of the building. Your phone drops Wi-Fi and joins 5G. Your video call keeps going.</p>
 <p><span class="vote-prompt">Vote — which layers had to change?</span></p>
 <div class="columns vote-row">
@@ -1945,33 +1962,97 @@ d_{\text{prop}} = \frac{3 \times 10^{6}}{2 \times 10^{8}} = 15\ \text{ms}\]</spa
 <p>Answer 2 is the point. The network layer never looked at the port number, and the link layer never looked at the IP address.</p>
 </div>
 </section>
+<section id="read-after-class-2" class="slide level2 center reading-divider">
+<h2>Read After Class</h2>
+<p>Section 1.5 — supporting material</p>
+<ul>
+<li>Networks are complex</li>
+<li>Layers, by analogy with air travel</li>
+<li>What layering costs</li>
+<li>The seven-layer OSI model</li>
+</ul>
+<p><a href="#/section-1.6">In class: skip ahead to Section 1.6</a></p>
+</section>
+<section id="networks-are-complex-reading" class="slide level2">
+<h2>Networks Are Complex <span class="rd">Reading</span></h2>
+<p>Networks have many moving pieces: hosts, routers, links of various media, applications, protocols, hardware, software.</p>
+<p>Is there any hope of <em>organizing</em> the structure of a network — or at least of organizing our <strong>discussion</strong> of networks?</p>
+<p>The answer the Internet’s designers reached, and that every large system has since copied, is <strong>layering</strong>.</p>
+</section>
+<section id="layers-air-travel-reading" class="slide level2">
+<h2>Layers: Air Travel <span class="rd">Reading</span></h2>
+<p><img data-src="images/air_travel.png" style="width:82.0%"></p>
+<p>A ticket is bought at one counter and redeemed at another; the plane takes off from one runway and lands on another.</p>
+<p>Each <strong>layer</strong> implements a service, using its own internal actions and relying on the services of the layer below. Changing the gate procedure does not affect ticketing.</p>
+</section>
+<section id="what-layering-costs-reading" class="slide level2">
+<h2>What Layering Costs <span class="rd">Reading</span></h2>
+<p>Is layering ever <em>harmful</em>? Yes. A layer that hides information the layer above needs makes the upper layer <strong>guess</strong>.</p>
+<p>TCP treats every lost packet as a sign of congestion and slows down. On a wireless link, most losses are <strong>interference</strong>, not congestion — so TCP slows down for no reason.</p>
+<p>The link layer knew the difference. The interface gave it no way to say so. Chapter 7 has the scars.</p>
+</section>
+<section id="the-osi-model-reading" class="slide level2">
+<h2>The OSI Model <span class="rd">Reading</span></h2>
+<div class="columns">
+<div class="column" style="width:52%;">
+<p>Two layers the Internet stack lacks:</p>
+<p><strong>presentation</strong> — interpret the <em>meaning</em> of data: encryption, compression, machine conventions.</p>
+<p><strong>session</strong> — synchronization, checkpointing, recovery.</p>
+<p>If an application needs them, the <strong>application</strong> implements them.</p>
+</div><div class="column" style="width:48%;">
+<svg viewbox="0 0 300 400" width="100%" style="max-height:64vh">
+  <g>
+    <rect class="box" x="20" y="336" width="260" height="44" rx="3"></rect>
+    <text x="150" y="364" text-anchor="middle" font-size="20">physical</text>
+    <rect class="box" x="20" y="288" width="260" height="44" rx="3"></rect>
+    <text x="150" y="316" text-anchor="middle" font-size="20">link</text>
+    <rect class="box" x="20" y="240" width="260" height="44" rx="3"></rect>
+    <text x="150" y="268" text-anchor="middle" font-size="20">network</text>
+    <rect class="box" x="20" y="192" width="260" height="44" rx="3"></rect>
+    <text x="150" y="220" text-anchor="middle" font-size="20">transport</text>
+  </g>
+  <g>
+    <rect class="box-hdr" x="20" y="144" width="260" height="44" rx="3"></rect>
+    <text x="150" y="172" text-anchor="middle" font-size="20">session</text>
+  </g>
+  <g>
+    <rect class="box-hdr" x="20" y="96" width="260" height="44" rx="3"></rect>
+    <text x="150" y="124" text-anchor="middle" font-size="20">presentation</text>
+  </g>
+  <g>
+    <rect class="box" x="20" y="48" width="260" height="44" rx="3"></rect>
+    <text x="150" y="76" text-anchor="middle" font-size="20">application</text>
+  </g>
+</svg>
+</div></div>
+</section>
 <section id="section-1.6" class="slide level2 center section-divider">
 <h2>Section 1.6</h2>
 <p>Networks Under Attack</p>
 </section>
 <section id="todays-plan-5" class="slide level2">
 <h2>Today’s Plan</h2>
+<div class="columns">
+<div class="column" style="width:52%;">
+<p><strong>In class</strong></p>
 <ul>
 <li>Why the Internet was not designed to be secure</li>
-<li>Malware, botnets, and DDoS</li>
-<li>Packet sniffing and IP spoofing</li>
-<li>Where the defences live</li>
+<li>The four classic attacks <span class="ex-inline">Must Know</span></li>
+<li>Name the attack</li>
 </ul>
-</section>
-<section id="networks-under-attack" class="slide level2">
-<h2>Networks Under Attack</h2>
-<p>The field of network security asks:</p>
+</div><div class="column" style="width:48%;">
+<p><strong>After class</strong> <span class="rd-inline">Reading</span></p>
 <ul>
-<li>how can attackers attack computer networks?</li>
-<li>how can we defend networks against attacks?</li>
-<li>how do we design architectures that are <strong>immune</strong> to attack?</li>
+<li>Malware and botnets</li>
+<li>Denial of service</li>
+<li>Packet sniffing, IP spoofing</li>
+<li>Wireshark</li>
+<li>Secure in 1974?</li>
 </ul>
-<div class="fragment">
-<p>The Internet was not originally designed with much security in mind.</p>
-</div>
+</div></div>
 </section>
-<section id="networks-under-attack-1" class="slide level2">
-<h2>Networks Under Attack</h2>
+<section id="not-designed-to-be-secure" class="slide level2">
+<h2>Not Designed to Be Secure</h2>
 <p>The original vision, in the designers’ own words:</p>
 <blockquote>
 <p><em>“a group of mutually trusting users attached to a transparent network.”</em></p>
@@ -1980,61 +2061,22 @@ d_{\text{prop}} = \frac{3 \times 10^{6}}{2 \times 10^{8}} = 15\ \text{ms}\]</spa
 <p>Every word of that is now false. Users are not mutually trusting, and the network is anything but transparent.</p>
 </div>
 <div class="fragment">
-<p>Protocol designers have been playing <strong>catch-up</strong> ever since. Security considerations now appear at <strong>every</strong> layer.</p>
+<p>Protocol designers have been playing <strong>catch-up</strong> ever since. Security considerations now appear at <strong>every</strong> layer — and every attack below exploits an <strong>assumption</strong>, not a bug.</p>
 </div>
 </section>
-<section id="malware" class="slide level2">
-<h2>Malware</h2>
+<section id="four-ways-in-must-know" class="slide level2">
+<h2>Four Ways In <span class="ex">Must Know</span></h2>
 <div class="fragment" data-fragment-index="1">
-<p><strong>Virus</strong> — self-replicating infection by <em>receiving and executing</em> an object, e.g.&nbsp;an email attachment.</p>
+<p><strong>Malware</strong> — a <em>virus</em> needs you to open it; a <em>worm</em> needs nothing from you at all. Either can enroll your host in a <strong>botnet</strong>.</p>
 </div>
 <div class="fragment" data-fragment-index="2">
-<p><strong>Worm</strong> — self-replicating infection by <em>passively receiving</em> an object that then executes itself. No user action required.</p>
+<p><strong>Denial of service</strong> — flood a target from thousands of compromised hosts. Distributed, so there is no one source address to block.</p>
 </div>
 <div class="fragment" data-fragment-index="3">
-<p><strong>Spyware</strong> — records keystrokes and sites visited, uploads to a collection site.</p>
+<p><strong>Packet sniffing</strong> — on shared media, a promiscuous interface reads every passing packet. Wireshark is exactly this tool.</p>
 </div>
 <div class="fragment" data-fragment-index="4">
-<p>An infected host can be enrolled in a <strong>botnet</strong> and used for spam or distributed denial of service.</p>
-</div>
-</section>
-<section id="denial-of-service" class="slide level2">
-<h2>Denial of Service</h2>
-<div class="columns">
-<div class="column" style="width:55%;">
-<p><strong>DoS:</strong> make a resource unavailable to legitimate traffic by overwhelming it with bogus traffic.</p>
-<div class="fragment">
-<ol type="1">
-<li>select a target</li>
-<li>break into hosts around the network (a <strong>botnet</strong>)</li>
-<li>flood the target from every compromised host</li>
-</ol>
-</div>
-</div><div class="column" style="width:45%;">
-<p><img data-src="images/dos.png" style="width:87.0%"></p>
-</div></div>
-<div class="fragment">
-<p>The “distributed” in DDoS is what makes it hard: there is no single source address to block.</p>
-</div>
-</section>
-<section id="packet-sniffing" class="slide level2">
-<h2>Packet Sniffing</h2>
-<p><img data-src="images/sniffing.png" style="width:78.0%"></p>
-<div class="fragment">
-<p>On <strong>broadcast media</strong> — shared Ethernet, wireless — a network interface in <em>promiscuous mode</em> reads and records every passing packet, passwords included.</p>
-</div>
-<div class="fragment">
-<p>Wireshark, which we use for the labs, is exactly this tool. It is defensive <em>and</em> offensive; which one depends only on whose network it is pointed at.</p>
-</div>
-</section>
-<section id="ip-spoofing" class="slide level2">
-<h2>IP Spoofing</h2>
-<p><img data-src="images/spoofing.png" style="width:78.0%"></p>
-<div class="fragment">
-<p>Nothing in IP verifies that the <strong>source address</strong> in a packet belongs to the sender. C can send a packet claiming to be B.</p>
-</div>
-<div class="fragment">
-<p>Every “call from your bank’s number,” every reflection/amplification attack, and every anonymous flood starts here. Chapter 8.</p>
+<p><strong>IP spoofing</strong> — nothing in IP checks that the <strong>source address</strong> in a packet belongs to the sender.</p>
 </div>
 </section>
 <section id="spot-the-attack" class="slide level2">
@@ -2043,8 +2085,8 @@ d_{\text{prop}} = \frac{3 \times 10^{6}}{2 \times 10^{8}} = 15\ \text{ms}\]</spa
 <div class="fragment" data-fragment-index="0">
 <table class="caption-top">
 <colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
+<col style="width: 68%">
+<col style="width: 31%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -2054,15 +2096,15 @@ d_{\text{prop}} = \frac{3 \times 10^{6}}{2 \times 10^{8}} = 15\ \text{ms}\]</spa
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Free airport Wi-Fi logs your passwords</td>
+<td style="text-align: left;">Airport Wi-Fi logs your passwords</td>
 <td style="text-align: left;"><span class="fragment ans" data-fragment-index="1">sniffing</span></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">50,000 cameras flood one web server</td>
+<td style="text-align: left;">50,000 cameras flood one server</td>
 <td style="text-align: left;"><span class="fragment ans" data-fragment-index="2">DDoS</span></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Packets arrive claiming to be from you</td>
+<td style="text-align: left;">Packets claim to be from you</td>
 <td style="text-align: left;"><span class="fragment ans" data-fragment-index="3">IP spoofing</span></td>
 </tr>
 <tr class="even">
@@ -2070,83 +2112,108 @@ d_{\text{prop}} = \frac{3 \times 10^{6}}{2 \times 10^{8}} = 15\ \text{ms}\]</spa
 <td style="text-align: left;"><span class="fragment ans" data-fragment-index="4">virus / spyware</span></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">A server is compromised with no clicks</td>
+<td style="text-align: left;">A server is infected with no clicks</td>
 <td style="text-align: left;"><span class="fragment ans" data-fragment-index="5">worm</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Your bank transfer is edited in transit</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="6">man in the middle</span></td>
 </tr>
 </tbody>
 </table>
 </div>
 </section>
-<section id="why-it-matters-trust" class="slide level2">
-<h2>Why It Matters: Trust</h2>
-<p>The original design assumed <strong>mutually trusting users</strong>. Every attack on the last four slides exploits an assumption, not a bug.</p>
-<p><span class="vote-prompt">Vote — could we have designed it securely in 1974?</span></p>
-<div class="columns vote-row">
-<div class="column" style="width:48%;">
-<div class="vote">
-<p><strong>A.</strong> Yes, they were careless</p>
-</div>
-</div><div class="column" style="width:4%;">
-
-</div><div class="column" style="width:48%;">
-<div class="vote">
-<p><strong>B.</strong> Not at that cost and scale</p>
-</div>
-</div></div>
-<div class="fragment">
-<p><strong>B</strong>, mostly. Public-key cryptography was published in 1976, and per-packet crypto was far beyond the hardware of the day. The design they <em>did</em> choose — simple, unverified, best-effort — is why the Internet scaled at all.</p>
-</div>
+<section id="read-after-class-3" class="slide level2 center reading-divider">
+<h2>Read After Class</h2>
+<p>Section 1.6 — supporting material</p>
+<ul>
+<li>What network security asks</li>
+<li>Malware, denial of service</li>
+<li>Packet sniffing, IP spoofing</li>
+<li>Wireshark</li>
+<li>Secure in 1974?</li>
+</ul>
+<p><a href="#/section-1.7">In class: skip ahead to Section 1.7</a></p>
 </section>
-<section id="wireshark" class="slide level2">
-<h2>Wireshark</h2>
-<p><img data-src="images/wireshark.png" style="width:76.0%"></p>
-<div class="fragment">
-<p>The packet <strong>capture</strong> library (<code>pcap</code>) takes a copy of every frame the interface sees; the packet <strong>analyzer</strong> parses it back up through the layers and shows you the headers we just drew by hand.</p>
-</div>
+<section id="networks-under-attack-reading" class="slide level2">
+<h2>Networks Under Attack <span class="rd">Reading</span></h2>
+<p>The field of network security asks:</p>
+<ul>
+<li>how can attackers attack computer networks?</li>
+<li>how can we defend networks against attacks?</li>
+<li>how do we design architectures that are <strong>immune</strong> to attack?</li>
+</ul>
+<p>The Internet was not originally designed with much security in mind, so the answers are almost always retrofits — added at a layer, years after the layer shipped.</p>
+</section>
+<section id="malware-reading" class="slide level2">
+<h2>Malware <span class="rd">Reading</span></h2>
+<p><strong>Virus</strong> — self-replicating infection by <em>receiving and executing</em> an object, e.g.&nbsp;an email attachment.</p>
+<p><strong>Worm</strong> — self-replicating infection by <em>passively receiving</em> an object that then executes itself. No user action required.</p>
+<p><strong>Spyware</strong> — records keystrokes and sites visited, uploads them to a collection site.</p>
+<p>An infected host can be enrolled in a <strong>botnet</strong> and used for spam or distributed denial of service.</p>
+</section>
+<section id="denial-of-service-reading" class="slide level2">
+<h2>Denial of Service <span class="rd">Reading</span></h2>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p><strong>DoS:</strong> make a resource unavailable to legitimate traffic by overwhelming it with bogus traffic.</p>
+<ol type="1">
+<li>select a target</li>
+<li>break into hosts around the network (a <strong>botnet</strong>)</li>
+<li>flood the target from every compromised host</li>
+</ol>
+</div><div class="column" style="width:45%;">
+<p><img data-src="images/dos.png" style="width:87.0%"></p>
+</div></div>
+<p>The “distributed” in DDoS is what makes it hard: there is no single source address to block.</p>
+</section>
+<section id="packet-sniffing-reading" class="slide level2">
+<h2>Packet Sniffing <span class="rd">Reading</span></h2>
+<p><img data-src="images/sniffing.png" style="width:70.0%"></p>
+<p>On <strong>broadcast media</strong> — shared Ethernet, wireless — a network interface in <em>promiscuous mode</em> reads and records every passing packet, passwords included. Wireshark, which we use for the labs, is exactly this tool: defensive <em>or</em> offensive depending only on whose network it is pointed at.</p>
+</section>
+<section id="ip-spoofing-reading" class="slide level2">
+<h2>IP Spoofing <span class="rd">Reading</span></h2>
+<p><img data-src="images/spoofing.png" style="width:70.0%"></p>
+<p>Nothing in IP verifies that the <strong>source address</strong> in a packet belongs to the sender. C can send a packet claiming to be B. Every “call from your bank’s number,” every reflection/amplification attack, and every anonymous flood starts here. Chapter 8.</p>
+</section>
+<section id="wireshark-reading" class="slide level2">
+<h2>Wireshark <span class="rd">Reading</span></h2>
+<p><img data-src="images/wireshark.png" style="width:66.0%"></p>
+<p>The packet <strong>capture</strong> library (<code>pcap</code>) takes a copy of every frame the interface sees; the packet <strong>analyzer</strong> parses it back up through the layers and shows you the headers we drew by hand in Section 1.5.</p>
+</section>
+<section id="secure-in-1974-reading" class="slide level2">
+<h2>Secure in 1974? <span class="rd">Reading</span></h2>
+<p>Every attack in this section exploits an assumption, not a bug. Could the designers have built it securely in 1974?</p>
+<p>Mostly not, at that cost and scale. Public-key cryptography was published in 1976, and per-packet cryptography was far beyond the hardware of the day. The design they <em>did</em> choose — simple, unverified, best-effort — is why the Internet scaled at all. Security has been retrofitted, layer by layer, ever since; Chapter 8 is that story.</p>
 </section>
 <section id="section-1.7" class="slide level2 center section-divider">
 <h2>Section 1.7</h2>
 <p>A Short History</p>
 </section>
-<section id="section" class="slide level2">
-<h2>1961–1972</h2>
-<p><strong>Early packet-switching principles</strong></p>
-<div class="fragment" data-fragment-index="1">
-<ul>
-<li><strong>1961</strong> Kleinrock: queueing theory shows packet switching is effective</li>
-<li><strong>1964</strong> Baran: packet switching in military networks</li>
-</ul>
-</div>
-<div class="fragment" data-fragment-index="2">
-<ul>
-<li><strong>1967</strong> ARPAnet conceived at the Advanced Research Projects Agency</li>
-<li><strong>1969</strong> first ARPAnet node operational</li>
-</ul>
-</div>
-<div class="fragment" data-fragment-index="3">
-<ul>
-<li><strong>1972</strong> ARPAnet public demo; NCP, the first host-to-host protocol; the first email program; 15 nodes</li>
-</ul>
-</div>
-</section>
-<section id="section-1" class="slide level2">
-<h2>1972–1980</h2>
-<p><strong>Internetworking, and proprietary networks</strong></p>
+<section id="todays-plan-6" class="slide level2">
+<h2>Today’s Plan</h2>
 <div class="columns">
-<div class="column" style="width:62%;">
+<div class="column" style="width:52%;">
+<p><strong>In class</strong></p>
 <ul>
-<li><strong>1970</strong> ALOHAnet, satellite network in Hawaii</li>
-<li><strong>1974</strong> Cerf and Kahn: an architecture for interconnecting networks</li>
-<li><strong>1976</strong> Ethernet at Xerox PARC</li>
-<li><strong>late 70s</strong> DECnet, SNA, XNA — proprietary architectures</li>
-<li><strong>1979</strong> ARPAnet reaches 200 nodes</li>
+<li>Cerf and Kahn’s four design principles</li>
+<li>Where the architecture goes next</li>
 </ul>
-</div><div class="column" style="width:38%;">
-<p><img data-src="images/arpanet_map.png" style="width:98.0%"></p>
+</div><div class="column" style="width:48%;">
+<p><strong>After class</strong> <span class="rd-inline">Reading</span></p>
+<ul>
+<li>The principles in practice</li>
+<li>1961–1972: packet switching, ARPAnet</li>
+<li>1972–1980: internetworking</li>
+<li>1980–1990: TCP/IP, DNS, congestion control</li>
+<li>1990s–today: Web, mobile, cloud</li>
+</ul>
 </div></div>
 </section>
 <section id="cerf-and-kahns-principles" class="slide level2">
 <h2>Cerf and Kahn’s Principles</h2>
+<p>In 1974 Cerf and Kahn set out an architecture for interconnecting networks. Four choices, still load-bearing today:</p>
 <div class="fragment" data-fragment-index="1">
 <ul>
 <li><strong>minimalism, autonomy</strong> — no internal changes required to interconnect networks</li>
@@ -2168,11 +2235,94 @@ d_{\text{prop}} = \frac{3 \times 10^{6}}{2 \times 10^{8}} = 15\ \text{ms}\]</spa
 </ul>
 </div>
 <div class="fragment" data-fragment-index="5">
-<p>These four choices <em>are</em> today’s Internet architecture. Every performance problem in Chapters 3–7 is the price of one of them, and every scaling success is the payoff.</p>
+<p>Every problem in Chapters 3–7 is the price of one of these.</p>
 </div>
 </section>
-<section id="section-2" class="slide level2">
-<h2>1980–1990</h2>
+<section id="activity-predict-2035" class="slide level2">
+<h2>Activity: Predict 2035</h2>
+<div class="activity">
+<p><span class="activity-label">In pairs — 5 minutes, then share</span></p>
+<p>Each decade of the Internet was driven by one dominant force: research funding, then commercialization, then mobility, then content.</p>
+<p>Name <strong>one</strong> force you think reshapes the Internet by 2035, and <strong>one</strong> property of today’s architecture it will strain.</p>
+</div>
+<div class="fragment">
+<p>Keep your answer. We will come back to it in Chapter 8 and see whether the architecture you named actually bends.</p>
+</div>
+</section>
+<section id="read-after-class-4" class="slide level2 center reading-divider">
+<h2>Read After Class</h2>
+<p>Section 1.7 — supporting material</p>
+<ul>
+<li>The principles in practice</li>
+<li>1961–1972, 1972–1980</li>
+<li>1980–1990, 1990s–2000s</li>
+<li>2005–today</li>
+</ul>
+<p><a href="#/chapter-1-summary">In class: skip ahead to the summary</a></p>
+</section>
+<section id="principles-in-practice-reading" class="slide level2">
+<h2>Principles in Practice <span class="rd">Reading</span></h2>
+<p>Which of Cerf and Kahn’s four principles explains each consequence?</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Consequence</th>
+<th style="text-align: left;">Principle</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">TCP must retransmit lost packets</td>
+<td style="text-align: left;"><strong>best-effort</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Nobody can promise your video call</td>
+<td style="text-align: left;"><strong>best-effort</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">A router reboot loses no state</td>
+<td style="text-align: left;"><strong>stateless routers</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">No one can shut the Internet off</td>
+<td style="text-align: left;"><strong>decentralized control</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ethernet and 5G both carry IP</td>
+<td style="text-align: left;"><strong>minimalism, autonomy</strong></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="reading" class="slide level2">
+<h2>1961–1972 <span class="rd">Reading</span></h2>
+<p><strong>Early packet-switching principles</strong></p>
+<ul>
+<li><strong>1961</strong> Kleinrock: queueing theory shows packet switching is effective</li>
+<li><strong>1964</strong> Baran: packet switching in military networks</li>
+<li><strong>1967</strong> ARPAnet conceived at the Advanced Research Projects Agency</li>
+<li><strong>1969</strong> first ARPAnet node operational</li>
+<li><strong>1972</strong> ARPAnet public demo; NCP, the first host-to-host protocol; the first email program; 15 nodes</li>
+</ul>
+</section>
+<section id="reading-1" class="slide level2">
+<h2>1972–1980 <span class="rd">Reading</span></h2>
+<p><strong>Internetworking, and proprietary networks</strong></p>
+<div class="columns">
+<div class="column" style="width:62%;">
+<ul>
+<li><strong>1970</strong> ALOHAnet, satellite network in Hawaii</li>
+<li><strong>1974</strong> Cerf and Kahn: an architecture for interconnecting networks</li>
+<li><strong>1976</strong> Ethernet at Xerox PARC</li>
+<li><strong>late 70s</strong> DECnet, SNA, XNA — proprietary architectures</li>
+<li><strong>1979</strong> ARPAnet reaches 200 nodes</li>
+</ul>
+</div><div class="column" style="width:38%;">
+<p><img data-src="images/arpanet_map.png" style="width:98.0%"></p>
+</div></div>
+</section>
+<section id="reading-2" class="slide level2">
+<h2>1980–1990 <span class="rd">Reading</span></h2>
 <p><strong>New protocols, a proliferation of networks</strong></p>
 <ul>
 <li><strong>1982</strong> SMTP email protocol defined</li>
@@ -2181,12 +2331,10 @@ d_{\text{prop}} = \frac{3 \times 10^{6}}{2 \times 10^{8}} = 15\ \text{ms}\]</spa
 <li><strong>1985</strong> FTP protocol defined</li>
 <li><strong>1988</strong> TCP congestion control</li>
 </ul>
-<div class="fragment">
 <p>New national networks: CSnet, BITnet, NSFnet, Minitel. About <strong>100,000</strong> hosts connected.</p>
-</div>
 </section>
-<section id="s2000s" class="slide level2">
-<h2>1990s–2000s</h2>
+<section id="s2000s-reading" class="slide level2">
+<h2>1990s–2000s <span class="rd">Reading</span></h2>
 <p><strong>Commercialization and the Web</strong></p>
 <ul>
 <li><strong>early 1990s</strong> ARPAnet decommissioned</li>
@@ -2195,40 +2343,19 @@ d_{\text{prop}} = \frac{3 \times 10^{6}}{2 \times 10^{8}} = 15\ \text{ms}\]</spa
 <li><strong>1994</strong> Mosaic, then Netscape</li>
 <li><strong>late 1990s</strong> commercialization of the Web</li>
 </ul>
-<div class="fragment">
 <p>More killer apps: instant messaging, P2P file sharing. Network security comes to the forefront. ~50 million hosts, backbone links at Gbps.</p>
-</div>
 </section>
-<section id="today" class="slide level2">
-<h2>2005–Today</h2>
-<div class="fragment" data-fragment-index="1">
+<section id="today-reading" class="slide level2">
+<h2>2005–Today <span class="rd">Reading</span></h2>
 <ul>
 <li>~18 billion devices attached (2017), and rising</li>
 <li>smartphones (iPhone, 2007), aggressive broadband deployment</li>
 <li>ubiquitous high-speed wireless: 4G/5G, Wi-Fi</li>
-</ul>
-</div>
-<div class="fragment" data-fragment-index="2">
-<ul>
 <li>online social networks at billions of users</li>
 <li><strong>service providers build their own networks</strong> — Google, Meta, Microsoft bypass the commercial Internet to sit close to you</li>
 <li>enterprises move to the <strong>cloud</strong>: AWS, Azure</li>
 </ul>
-</div>
-<div class="fragment" data-fragment-index="3">
-<p>Notice the direction of travel: the network gets <strong>flatter</strong>, and the content moves <strong>closer</strong>. That is Section 1.3’s economics, still running.</p>
-</div>
-</section>
-<section id="activity-predict-2035" class="slide level2">
-<h2>Activity: Predict 2035</h2>
-<div class="activity">
-<p><span class="activity-label">In pairs — 5 minutes, then share</span></p>
-<p>Every decade above was driven by one dominant force: research funding, then commercialization, then mobility, then content.</p>
-<p>Name <strong>one</strong> force you think reshapes the Internet by 2035, and <strong>one</strong> property of today’s architecture it will strain.</p>
-</div>
-<div class="fragment">
-<p>Keep your answer. We will come back to it in Chapter 8 and see whether the architecture you named actually bends.</p>
-</div>
+<p>The network gets <strong>flatter</strong> and the content moves <strong>closer</strong> — that is Section 1.3’s economics, still running.</p>
 </section>
 <section id="chapter-1-summary" class="slide level2">
 <h2>Chapter 1: Summary</h2>
