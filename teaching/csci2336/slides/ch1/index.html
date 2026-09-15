@@ -6,8 +6,8 @@
 <script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="index_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.8.27">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Zechun (Jacob) Cao">
   <title>Chapter 1 — The Efficiency of Algorithms</title>
@@ -17,10 +17,16 @@
   <link rel="stylesheet" href="index_files/libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="index_files/libs/revealjs/dist/reveal.css">
   <style>
-    code{white-space: pre-wrap;}
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -95,7 +101,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-e2c6aac924d841f5af7a76e90cdf9702.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-3613426333f0fcfa6787a5c6f5600aff.css">
   <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -201,7 +207,7 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Zechun (Jacob) Cao 
+Zechun (Jacob) Cao
 </div>
         <p class="quarto-title-affiliation">
             Adapted from R. Sedgewick and K. Wayne, <em>Algorithms</em>, 4th edition.
@@ -346,6 +352,16 @@ Zechun (Jacob) Cao
 <p><strong><em>Nobody waited for a faster machine.</em></strong></p>
 </div>
 </div></div>
+</section>
+<section id="how-to-read-this-deck" class="slide level2">
+<h2>How to Read This Deck</h2>
+<p>From here on, some slide titles carry a red mark.</p>
+<div class="fragment">
+<p><strong><span class="ex-inline">Must Know</span> — we do it in class; expect it on the exam.</strong> The formula, the definition, or the worked problem a question is built from. Drill these first.</p>
+</div>
+<div class="fragment">
+<p><strong>Unmarked — we do it in class, and the exam can still ask about it.</strong> No mark does not mean off the exam. Understand it; just drill the marked slides first.</p>
+</div>
 </section>
 <section id="part-1" class="slide level2 center section-divider">
 <h2>Part 1</h2>
@@ -532,20 +548,20 @@ Zechun (Jacob) Cao
 </section>
 <section id="brute-force" class="slide level2">
 <h2>Brute Force</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb1-1"><a href=""></a><span class="kw">public</span> <span class="kw">class</span> ThreeSum</span>
-<span id="cb1-2"><a href=""></a><span class="op">{</span></span>
-<span id="cb1-3"><a href=""></a>   <span class="kw">public</span> <span class="dt">static</span> <span class="dt">int</span> <span class="fu">count</span><span class="op">(</span><span class="dt">int</span><span class="op">[]</span> a<span class="op">)</span></span>
-<span id="cb1-4"><a href=""></a>   <span class="op">{</span></span>
-<span id="cb1-5"><a href=""></a>      <span class="dt">int</span> N <span class="op">=</span> a<span class="op">.</span><span class="fu">length</span><span class="op">;</span></span>
-<span id="cb1-6"><a href=""></a>      <span class="dt">int</span> count <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb1-7"><a href=""></a>      <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> N<span class="op">;</span> i<span class="op">++)</span>              <span class="co">// check each triple</span></span>
-<span id="cb1-8"><a href=""></a>         <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> i<span class="op">+</span><span class="dv">1</span><span class="op">;</span> j <span class="op">&lt;</span> N<span class="op">;</span> j<span class="op">++)</span>         <span class="co">// (ignore integer overflow)</span></span>
-<span id="cb1-9"><a href=""></a>            <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> k <span class="op">=</span> j<span class="op">+</span><span class="dv">1</span><span class="op">;</span> k <span class="op">&lt;</span> N<span class="op">;</span> k<span class="op">++)</span></span>
-<span id="cb1-10"><a href=""></a>               <span class="cf">if</span> <span class="op">(</span>a<span class="op">[</span>i<span class="op">]</span> <span class="op">+</span> a<span class="op">[</span>j<span class="op">]</span> <span class="op">+</span> a<span class="op">[</span>k<span class="op">]</span> <span class="op">==</span> <span class="dv">0</span><span class="op">)</span></span>
-<span id="cb1-11"><a href=""></a>                  count<span class="op">++;</span></span>
-<span id="cb1-12"><a href=""></a>      <span class="cf">return</span> count<span class="op">;</span></span>
-<span id="cb1-13"><a href=""></a>   <span class="op">}</span></span>
-<span id="cb1-14"><a href=""></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb1-1"><a href="" aria-label="1"></a><span class="kw">public</span> <span class="kw">class</span> ThreeSum</span>
+<span id="cb1-2"><a href="" aria-label="2"></a><span class="op">{</span></span>
+<span id="cb1-3"><a href="" aria-label="3"></a>   <span class="kw">public</span> <span class="dt">static</span> <span class="dt">int</span> <span class="fu">count</span><span class="op">(</span><span class="dt">int</span><span class="op">[]</span> a<span class="op">)</span></span>
+<span id="cb1-4"><a href="" aria-label="4"></a>   <span class="op">{</span></span>
+<span id="cb1-5"><a href="" aria-label="5"></a>      <span class="dt">int</span> N <span class="op">=</span> a<span class="op">.</span><span class="fu">length</span><span class="op">;</span></span>
+<span id="cb1-6"><a href="" aria-label="6"></a>      <span class="dt">int</span> count <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-7"><a href="" aria-label="7"></a>      <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> N<span class="op">;</span> i<span class="op">++)</span>              <span class="co">// check each triple</span></span>
+<span id="cb1-8"><a href="" aria-label="8"></a>         <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> i<span class="op">+</span><span class="dv">1</span><span class="op">;</span> j <span class="op">&lt;</span> N<span class="op">;</span> j<span class="op">++)</span>         <span class="co">// (ignore integer overflow)</span></span>
+<span id="cb1-9"><a href="" aria-label="9"></a>            <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> k <span class="op">=</span> j<span class="op">+</span><span class="dv">1</span><span class="op">;</span> k <span class="op">&lt;</span> N<span class="op">;</span> k<span class="op">++)</span></span>
+<span id="cb1-10"><a href="" aria-label="10"></a>               <span class="cf">if</span> <span class="op">(</span>a<span class="op">[</span>i<span class="op">]</span> <span class="op">+</span> a<span class="op">[</span>j<span class="op">]</span> <span class="op">+</span> a<span class="op">[</span>k<span class="op">]</span> <span class="op">==</span> <span class="dv">0</span><span class="op">)</span></span>
+<span id="cb1-11"><a href="" aria-label="11"></a>                  count<span class="op">++;</span></span>
+<span id="cb1-12"><a href="" aria-label="12"></a>      <span class="cf">return</span> count<span class="op">;</span></span>
+<span id="cb1-13"><a href="" aria-label="13"></a>   <span class="op">}</span></span>
+<span id="cb1-14"><a href="" aria-label="14"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>It is obviously correct. <strong><em>Is it fast enough?</em></strong></p>
 </section>
 <section id="place-your-bets" class="slide level2">
@@ -568,7 +584,7 @@ Zechun (Jacob) Cao
 </section>
 <section id="the-doubling-race" class="slide level2">
 <h2>The Doubling Race</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href=""></a><span class="ex">%</span> java ThreeSum.java 500 1000 2000 4000</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="" aria-label="1"></a><span class="ex">%</span> java ThreeSum.java 500 1000 2000 4000</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -621,8 +637,8 @@ Zechun (Jacob) Cao
 <p><span class="math inline">\(a\)</span> belongs to the machine, <span class="math inline">\(b\)</span> to the algorithm. <span class="lead-red">We want <span class="math inline">\(b\)</span>.</span></p>
 </div>
 </section>
-<section id="the-ratio-is-the-exponent" class="slide level2 dense-table">
-<h2>The Ratio Is the Exponent</h2>
+<section id="the-ratio-is-the-exponent-must-know" class="slide level2 dense-table long-title">
+<h2>The Ratio Is the Exponent <span class="ex">Must Know</span></h2>
 <div class="columns">
 <div class="column" style="width:46%;">
 <table class="caption-top">
@@ -698,8 +714,8 @@ Zechun (Jacob) Cao
 <p><span class="lead-red">Bad news.</span> Precise measurements are hard to get. <span class="lead-blue">Good news.</span> Cheaper than in any other science — run a hundred experiments before lunch.</p>
 </div>
 </section>
-<section id="predict-then-verify" class="slide level2">
-<h2>Predict, Then Verify</h2>
+<section id="predict-then-verify-must-know" class="slide level2">
+<h2>Predict, Then Verify <span class="ex">Must Know</span></h2>
 <p><span class="lead-blue">The rule.</span> Ratio <span class="math inline">\(8\)</span> means every doubling costs <span class="math inline">\(8\times\)</span>.</p>
 <p><span class="lead-red">Predict.</span> <span class="math inline">\(N = 4{,}000\)</span> took <span class="math inline">\(13.207\)</span> s, so <span class="math inline">\(N = 8{,}000\)</span> should take about <span class="math inline">\(13.207 \times 8 = 105.7\)</span> s.</p>
 <div class="fragment">
@@ -878,10 +894,10 @@ Zechun (Jacob) Cao
 <p><span class="lead-blue">Q.</span> How many instructions as a function of input size <span class="math inline">\(N\)</span>?</p>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb3-1"><a href=""></a><span class="dt">int</span> count <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb3-2"><a href=""></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> N<span class="op">;</span> i<span class="op">++)</span></span>
-<span id="cb3-3"><a href=""></a>   <span class="cf">if</span> <span class="op">(</span>a<span class="op">[</span>i<span class="op">]</span> <span class="op">==</span> <span class="dv">0</span><span class="op">)</span></span>
-<span id="cb3-4"><a href=""></a>      count<span class="op">++;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb3-1"><a href="" aria-label="1"></a><span class="dt">int</span> count <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb3-2"><a href="" aria-label="2"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> N<span class="op">;</span> i<span class="op">++)</span></span>
+<span id="cb3-3"><a href="" aria-label="3"></a>   <span class="cf">if</span> <span class="op">(</span>a<span class="op">[</span>i<span class="op">]</span> <span class="op">==</span> <span class="dv">0</span><span class="op">)</span></span>
+<span id="cb3-4"><a href="" aria-label="4"></a>      count<span class="op">++;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><span class="math inline">\(N\)</span> array accesses.</p>
 </div><div class="column" style="width:50%;">
 <table class="caption-top">
@@ -925,11 +941,11 @@ Zechun (Jacob) Cao
 <p><span class="lead-blue">Q.</span> How many instructions as a function of input size <span class="math inline">\(N\)</span>?</p>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb4-1"><a href=""></a><span class="dt">int</span> count <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb4-2"><a href=""></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> N<span class="op">;</span> i<span class="op">++)</span></span>
-<span id="cb4-3"><a href=""></a>   <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> i<span class="op">+</span><span class="dv">1</span><span class="op">;</span> j <span class="op">&lt;</span> N<span class="op">;</span> j<span class="op">++)</span></span>
-<span id="cb4-4"><a href=""></a>      <span class="cf">if</span> <span class="op">(</span>a<span class="op">[</span>i<span class="op">]</span> <span class="op">+</span> a<span class="op">[</span>j<span class="op">]</span> <span class="op">==</span> <span class="dv">0</span><span class="op">)</span></span>
-<span id="cb4-5"><a href=""></a>         count<span class="op">++;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb4-1"><a href="" aria-label="1"></a><span class="dt">int</span> count <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb4-2"><a href="" aria-label="2"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> N<span class="op">;</span> i<span class="op">++)</span></span>
+<span id="cb4-3"><a href="" aria-label="3"></a>   <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> i<span class="op">+</span><span class="dv">1</span><span class="op">;</span> j <span class="op">&lt;</span> N<span class="op">;</span> j<span class="op">++)</span></span>
+<span id="cb4-4"><a href="" aria-label="4"></a>      <span class="cf">if</span> <span class="op">(</span>a<span class="op">[</span>i<span class="op">]</span> <span class="op">+</span> a<span class="op">[</span>j<span class="op">]</span> <span class="op">==</span> <span class="dv">0</span><span class="op">)</span></span>
+<span id="cb4-5"><a href="" aria-label="5"></a>         count<span class="op">++;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The inner loop runs <span class="math inline">\(0 + 1 + 2 + \cdots + (N-1)\)</span> times:</p>
 <p><span class="math display">\[\tfrac{1}{2}\bigl(\underbrace{N^2}_{\text{square}} -
   \underbrace{N}_{\text{diagonal}}\bigr)\]</span></p>
@@ -947,11 +963,11 @@ Zechun (Jacob) Cao
 <p><span class="lead-blue">Q.</span> How many instructions as a function of input size <span class="math inline">\(N\)</span>?</p>
 <div class="columns">
 <div class="column" style="width:45%;">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb5-1"><a href=""></a><span class="dt">int</span> count <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb5-2"><a href=""></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> N<span class="op">;</span> i<span class="op">++)</span></span>
-<span id="cb5-3"><a href=""></a>   <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> i<span class="op">+</span><span class="dv">1</span><span class="op">;</span> j <span class="op">&lt;</span> N<span class="op">;</span> j<span class="op">++)</span></span>
-<span id="cb5-4"><a href=""></a>      <span class="cf">if</span> <span class="op">(</span>a<span class="op">[</span>i<span class="op">]</span> <span class="op">+</span> a<span class="op">[</span>j<span class="op">]</span> <span class="op">==</span> <span class="dv">0</span><span class="op">)</span></span>
-<span id="cb5-5"><a href=""></a>         count<span class="op">++;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb5-1"><a href="" aria-label="1"></a><span class="dt">int</span> count <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb5-2"><a href="" aria-label="2"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> N<span class="op">;</span> i<span class="op">++)</span></span>
+<span id="cb5-3"><a href="" aria-label="3"></a>   <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> i<span class="op">+</span><span class="dv">1</span><span class="op">;</span> j <span class="op">&lt;</span> N<span class="op">;</span> j<span class="op">++)</span></span>
+<span id="cb5-4"><a href="" aria-label="4"></a>      <span class="cf">if</span> <span class="op">(</span>a<span class="op">[</span>i<span class="op">]</span> <span class="op">+</span> a<span class="op">[</span>j<span class="op">]</span> <span class="op">==</span> <span class="dv">0</span><span class="op">)</span></span>
+<span id="cb5-5"><a href="" aria-label="5"></a>         count<span class="op">++;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column" style="width:55%;">
 <table class="caption-top">
 <thead>
@@ -1008,11 +1024,11 @@ Zechun (Jacob) Cao
 <p><span class="lead-blue">Cost model.</span> Use some basic operation as a proxy for running time.</p>
 <div class="columns">
 <div class="column" style="width:45%;">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb6-1"><a href=""></a><span class="dt">int</span> count <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb6-2"><a href=""></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> N<span class="op">;</span> i<span class="op">++)</span></span>
-<span id="cb6-3"><a href=""></a>   <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> i<span class="op">+</span><span class="dv">1</span><span class="op">;</span> j <span class="op">&lt;</span> N<span class="op">;</span> j<span class="op">++)</span></span>
-<span id="cb6-4"><a href=""></a>      <span class="cf">if</span> <span class="op">(</span>a<span class="op">[</span>i<span class="op">]</span> <span class="op">+</span> a<span class="op">[</span>j<span class="op">]</span> <span class="op">==</span> <span class="dv">0</span><span class="op">)</span></span>
-<span id="cb6-5"><a href=""></a>         count<span class="op">++;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb6-1"><a href="" aria-label="1"></a><span class="dt">int</span> count <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb6-2"><a href="" aria-label="2"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> N<span class="op">;</span> i<span class="op">++)</span></span>
+<span id="cb6-3"><a href="" aria-label="3"></a>   <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> i<span class="op">+</span><span class="dv">1</span><span class="op">;</span> j <span class="op">&lt;</span> N<span class="op">;</span> j<span class="op">++)</span></span>
+<span id="cb6-4"><a href="" aria-label="4"></a>      <span class="cf">if</span> <span class="op">(</span>a<span class="op">[</span>i<span class="op">]</span> <span class="op">+</span> a<span class="op">[</span>j<span class="op">]</span> <span class="op">==</span> <span class="dv">0</span><span class="op">)</span></span>
+<span id="cb6-5"><a href="" aria-label="5"></a>         count<span class="op">++;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column" style="width:55%;">
 <table class="caption-top">
 <thead>
@@ -1051,8 +1067,8 @@ Zechun (Jacob) Cao
 </div></div>
 <p><span class="lead-red">Cost model <span class="math inline">\(=\)</span> array accesses.</span> We assume the compiler and the JVM optimize none of them away.</p>
 </section>
-<section id="simplification-2-tilde-notation" class="slide level2 dense-table">
-<h2>Simplification 2: Tilde Notation</h2>
+<section id="simplification-2-tilde-notation-must-know" class="slide level2 dense-table long-title">
+<h2>Simplification 2: Tilde Notation <span class="ex">Must Know</span></h2>
 <div class="columns">
 <div class="column" style="width:50%;">
 <ul>
@@ -1092,7 +1108,7 @@ Zechun (Jacob) Cao
 <p><span class="lead-blue">Technical definition.</span> <span class="math inline">\(f(N) \sim g(N)\)</span> means <span class="math inline">\(\lim_{N \to \infty} f(N)/g(N) = 1\)</span>.</p>
 </div></div>
 </section>
-<section id="simplification-2-tilde-notation-1" class="slide level2 dense-table">
+<section id="simplification-2-tilde-notation" class="slide level2 dense-table">
 <h2>Simplification 2: Tilde Notation</h2>
 <table class="caption-top">
 <colgroup>
@@ -1145,11 +1161,11 @@ Zechun (Jacob) Cao
 <section id="example-2-sum-2" class="slide level2">
 <h2>Example: 2-Sum</h2>
 <p><span class="lead-blue">Q.</span> Approximately how many array accesses as a function of input size <span class="math inline">\(N\)</span>?</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb7-1"><a href=""></a><span class="dt">int</span> count <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb7-2"><a href=""></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> N<span class="op">;</span> i<span class="op">++)</span></span>
-<span id="cb7-3"><a href=""></a>   <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> i<span class="op">+</span><span class="dv">1</span><span class="op">;</span> j <span class="op">&lt;</span> N<span class="op">;</span> j<span class="op">++)</span></span>
-<span id="cb7-4"><a href=""></a>      <span class="cf">if</span> <span class="op">(</span>a<span class="op">[</span>i<span class="op">]</span> <span class="op">+</span> a<span class="op">[</span>j<span class="op">]</span> <span class="op">==</span> <span class="dv">0</span><span class="op">)</span>      <span class="co">// inner loop</span></span>
-<span id="cb7-5"><a href=""></a>         count<span class="op">++;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb7-1"><a href="" aria-label="1"></a><span class="dt">int</span> count <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb7-2"><a href="" aria-label="2"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> N<span class="op">;</span> i<span class="op">++)</span></span>
+<span id="cb7-3"><a href="" aria-label="3"></a>   <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> i<span class="op">+</span><span class="dv">1</span><span class="op">;</span> j <span class="op">&lt;</span> N<span class="op">;</span> j<span class="op">++)</span></span>
+<span id="cb7-4"><a href="" aria-label="4"></a>      <span class="cf">if</span> <span class="op">(</span>a<span class="op">[</span>i<span class="op">]</span> <span class="op">+</span> a<span class="op">[</span>j<span class="op">]</span> <span class="op">==</span> <span class="dv">0</span><span class="op">)</span>      <span class="co">// inner loop</span></span>
+<span id="cb7-5"><a href="" aria-label="5"></a>         count<span class="op">++;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
 <p><span class="lead-red">A.</span> <span class="math inline">\(\sim N^2\)</span> array accesses.</p>
 </div>
@@ -1157,15 +1173,15 @@ Zechun (Jacob) Cao
 <p><span class="lead-blue">Bottom line.</span> Use a cost model and tilde notation to simplify the counts.</p>
 </div>
 </section>
-<section id="example-3-sum" class="slide level2">
-<h2>Example: 3-Sum</h2>
+<section id="example-3-sum-must-know" class="slide level2">
+<h2>Example: 3-Sum <span class="ex">Must Know</span></h2>
 <p><span class="lead-blue">Q.</span> Approximately how many array accesses as a function of input size <span class="math inline">\(N\)</span>?</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb8-1"><a href=""></a><span class="dt">int</span> count <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb8-2"><a href=""></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> N<span class="op">;</span> i<span class="op">++)</span></span>
-<span id="cb8-3"><a href=""></a>   <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> i<span class="op">+</span><span class="dv">1</span><span class="op">;</span> j <span class="op">&lt;</span> N<span class="op">;</span> j<span class="op">++)</span></span>
-<span id="cb8-4"><a href=""></a>      <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> k <span class="op">=</span> j<span class="op">+</span><span class="dv">1</span><span class="op">;</span> k <span class="op">&lt;</span> N<span class="op">;</span> k<span class="op">++)</span></span>
-<span id="cb8-5"><a href=""></a>         <span class="cf">if</span> <span class="op">(</span>a<span class="op">[</span>i<span class="op">]</span> <span class="op">+</span> a<span class="op">[</span>j<span class="op">]</span> <span class="op">+</span> a<span class="op">[</span>k<span class="op">]</span> <span class="op">==</span> <span class="dv">0</span><span class="op">)</span>      <span class="co">// inner loop</span></span>
-<span id="cb8-6"><a href=""></a>            count<span class="op">++;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb8-1"><a href="" aria-label="1"></a><span class="dt">int</span> count <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb8-2"><a href="" aria-label="2"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> N<span class="op">;</span> i<span class="op">++)</span></span>
+<span id="cb8-3"><a href="" aria-label="3"></a>   <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> i<span class="op">+</span><span class="dv">1</span><span class="op">;</span> j <span class="op">&lt;</span> N<span class="op">;</span> j<span class="op">++)</span></span>
+<span id="cb8-4"><a href="" aria-label="4"></a>      <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> k <span class="op">=</span> j<span class="op">+</span><span class="dv">1</span><span class="op">;</span> k <span class="op">&lt;</span> N<span class="op">;</span> k<span class="op">++)</span></span>
+<span id="cb8-5"><a href="" aria-label="5"></a>         <span class="cf">if</span> <span class="op">(</span>a<span class="op">[</span>i<span class="op">]</span> <span class="op">+</span> a<span class="op">[</span>j<span class="op">]</span> <span class="op">+</span> a<span class="op">[</span>k<span class="op">]</span> <span class="op">==</span> <span class="dv">0</span><span class="op">)</span>      <span class="co">// inner loop</span></span>
+<span id="cb8-6"><a href="" aria-label="6"></a>            count<span class="op">++;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
 <p><span class="math display">\[\binom{N}{3} \;=\; \frac{N(N-1)(N-2)}{3!} \;\sim\; \tfrac{1}{6}N^3 \;\;\text{triples}\]</span></p>
 </div>
@@ -1180,8 +1196,8 @@ Zechun (Jacob) Cao
 <h2>Part 3</h2>
 <p>Name It</p>
 </section>
-<section id="order-of-growth" class="slide level2">
-<h2>Order of Growth</h2>
+<section id="order-of-growth-must-know" class="slide level2">
+<h2>Order of Growth <span class="ex">Must Know</span></h2>
 <p>Part 2 ended with <span class="math inline">\(\sim \tfrac{1}{2}N^3\)</span> array accesses. The <span class="math inline">\(\tfrac{1}{2}\)</span> is machine-specific. The <span class="math inline">\(N^3\)</span> is not.</p>
 <div class="fragment">
 <p><span class="lead-blue">Definition.</span> If <span class="math inline">\(T(N) \sim c\,g(N)\)</span> for some constant <span class="math inline">\(c &gt; 0\)</span>, the <strong>order of growth</strong> of <span class="math inline">\(T(N)\)</span> is <span class="math inline">\(g(N)\)</span>.</p>
@@ -1202,8 +1218,8 @@ Zechun (Jacob) Cao
 </figure>
 </div>
 </section>
-<section id="common-orders-of-growth" class="slide level2 dense-table">
-<h2>Common Orders of Growth</h2>
+<section id="common-orders-of-growth-must-know" class="slide level2 dense-table long-title">
+<h2>Common Orders of Growth <span class="ex">Must Know</span></h2>
 <table class="caption-top">
 <colgroup>
 <col style="width: 23%">
@@ -1275,8 +1291,8 @@ Zechun (Jacob) Cao
 </table>
 <p><strong><em>The last column is the one we measured in Part 1.</em></strong></p>
 </section>
-<section id="big-o" class="slide level2">
-<h2>Big O</h2>
+<section id="big-o-must-know" class="slide level2">
+<h2>Big O <span class="ex">Must Know</span></h2>
 <div class="columns">
 <div class="column" style="width:55%;">
 <p><span class="math inline">\(T(N)\)</span> is <span class="math inline">\(O(g(N))\)</span> when there are positive constants <span class="math inline">\(c\)</span> and <span class="math inline">\(N_0\)</span> with</p>
@@ -1293,8 +1309,8 @@ Zechun (Jacob) Cao
 <p><span class="lead-red">Common mistake.</span> Reading big O as an approximate model. <span class="math inline">\(100N\)</span> is honestly <span class="math inline">\(O(N^2)\)</span> — true, and useless. <strong>Order of growth describes; big O bounds.</strong></p>
 </div>
 </section>
-<section id="your-turn" class="slide level2">
-<h2>Your Turn</h2>
+<section id="your-turn-must-know" class="slide level2">
+<h2>Your Turn <span class="ex">Must Know</span></h2>
 <p>What is the order of growth of</p>
 <p><span class="math display">\[T(N) = 5N^2 + 2^N + 10N \;?\]</span></p>
 <div class="fragment">
@@ -1316,8 +1332,8 @@ Zechun (Jacob) Cao
 <p>So we do not need a third loop. We need to <strong>look up</strong> whether that number is in the array.</p>
 </div>
 </section>
-<section id="lookup-is-the-guessing-game" class="slide level2">
-<h2>Lookup Is the Guessing Game</h2>
+<section id="lookup-is-the-guessing-game-must-know" class="slide level2 long-title">
+<h2>Lookup Is the Guessing Game <span class="ex">Must Know</span></h2>
 <p>Sort the array first. Then finding a number in it is exactly what we played at the start of class.</p>
 <p>Binary search on <span class="math inline">\(N\)</span> sorted items: at most <span class="math inline">\(1 + \lfloor \log_2 N \rfloor\)</span> comparisons.</p>
 <div class="fragment">
@@ -1467,31 +1483,31 @@ Zechun (Jacob) Cao
 </section>
 <section id="trivial-to-implement" class="slide level2">
 <h2>Trivial to Implement?</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb9-1"><a href=""></a><span class="kw">public</span> <span class="dt">static</span> <span class="dt">int</span> <span class="fu">binarySearch</span><span class="op">(</span><span class="dt">int</span><span class="op">[]</span> a<span class="op">,</span> <span class="dt">int</span> key<span class="op">)</span></span>
-<span id="cb9-2"><a href=""></a><span class="op">{</span></span>
-<span id="cb9-3"><a href=""></a>   <span class="dt">int</span> lo <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> hi <span class="op">=</span> a<span class="op">.</span><span class="fu">length</span> <span class="op">-</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb9-4"><a href=""></a>   <span class="cf">while</span> <span class="op">(</span>lo <span class="op">&lt;=</span> hi<span class="op">)</span></span>
-<span id="cb9-5"><a href=""></a>   <span class="op">{</span></span>
-<span id="cb9-6"><a href=""></a>      <span class="dt">int</span> mid <span class="op">=</span> lo <span class="op">+</span> <span class="op">(</span>hi <span class="op">-</span> lo<span class="op">)</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span></span>
-<span id="cb9-7"><a href=""></a>      <span class="cf">if</span>      <span class="op">(</span>key <span class="op">&lt;</span> a<span class="op">[</span>mid<span class="op">])</span> hi <span class="op">=</span> mid <span class="op">-</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb9-8"><a href=""></a>      <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>key <span class="op">&gt;</span> a<span class="op">[</span>mid<span class="op">])</span> lo <span class="op">=</span> mid <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb9-9"><a href=""></a>      <span class="cf">else</span> <span class="cf">return</span> mid<span class="op">;</span></span>
-<span id="cb9-10"><a href=""></a>   <span class="op">}</span></span>
-<span id="cb9-11"><a href=""></a>   <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
-<span id="cb9-12"><a href=""></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb9-1"><a href="" aria-label="1"></a><span class="kw">public</span> <span class="dt">static</span> <span class="dt">int</span> <span class="fu">binarySearch</span><span class="op">(</span><span class="dt">int</span><span class="op">[]</span> a<span class="op">,</span> <span class="dt">int</span> key<span class="op">)</span></span>
+<span id="cb9-2"><a href="" aria-label="2"></a><span class="op">{</span></span>
+<span id="cb9-3"><a href="" aria-label="3"></a>   <span class="dt">int</span> lo <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> hi <span class="op">=</span> a<span class="op">.</span><span class="fu">length</span> <span class="op">-</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb9-4"><a href="" aria-label="4"></a>   <span class="cf">while</span> <span class="op">(</span>lo <span class="op">&lt;=</span> hi<span class="op">)</span></span>
+<span id="cb9-5"><a href="" aria-label="5"></a>   <span class="op">{</span></span>
+<span id="cb9-6"><a href="" aria-label="6"></a>      <span class="dt">int</span> mid <span class="op">=</span> lo <span class="op">+</span> <span class="op">(</span>hi <span class="op">-</span> lo<span class="op">)</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb9-7"><a href="" aria-label="7"></a>      <span class="cf">if</span>      <span class="op">(</span>key <span class="op">&lt;</span> a<span class="op">[</span>mid<span class="op">])</span> hi <span class="op">=</span> mid <span class="op">-</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb9-8"><a href="" aria-label="8"></a>      <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>key <span class="op">&gt;</span> a<span class="op">[</span>mid<span class="op">])</span> lo <span class="op">=</span> mid <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb9-9"><a href="" aria-label="9"></a>      <span class="cf">else</span> <span class="cf">return</span> mid<span class="op">;</span></span>
+<span id="cb9-10"><a href="" aria-label="10"></a>   <span class="op">}</span></span>
+<span id="cb9-11"><a href="" aria-label="11"></a>   <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
+<span id="cb9-12"><a href="" aria-label="12"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
 <p>First published in <span class="math inline">\(1946\)</span>. First <strong>correct</strong> one published in <span class="math inline">\(1962\)</span>. A bug in Java’s own <code>Arrays.binarySearch()</code> was found in <span class="math inline">\(2006\)</span>.</p>
 </div>
 </section>
 <section id="an-n2-log-n-algorithm-for-3-sum" class="slide level2 long-title">
 <h2>An <span class="math inline">\(N^2 \log N\)</span> Algorithm for 3-Sum</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb10-1"><a href=""></a><span class="bu">Arrays</span><span class="op">.</span><span class="fu">sort</span><span class="op">(</span>b<span class="op">);</span>                                  <span class="co">// step 1</span></span>
-<span id="cb10-2"><a href=""></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> N<span class="op">;</span> i<span class="op">++)</span></span>
-<span id="cb10-3"><a href=""></a>   <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> i<span class="op">+</span><span class="dv">1</span><span class="op">;</span> j <span class="op">&lt;</span> N<span class="op">;</span> j<span class="op">++)</span></span>
-<span id="cb10-4"><a href=""></a>   <span class="op">{</span></span>
-<span id="cb10-5"><a href=""></a>      <span class="dt">int</span> k <span class="op">=</span> <span class="bu">Arrays</span><span class="op">.</span><span class="fu">binarySearch</span><span class="op">(</span>b<span class="op">,</span> <span class="op">-(</span>b<span class="op">[</span>i<span class="op">]</span> <span class="op">+</span> b<span class="op">[</span>j<span class="op">]));</span>   <span class="co">// step 2</span></span>
-<span id="cb10-6"><a href=""></a>      <span class="cf">if</span> <span class="op">(</span>k <span class="op">&gt;</span> j<span class="op">)</span> count<span class="op">++;</span></span>
-<span id="cb10-7"><a href=""></a>   <span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb10-1"><a href="" aria-label="1"></a><span class="bu">Arrays</span><span class="op">.</span><span class="fu">sort</span><span class="op">(</span>b<span class="op">);</span>                                  <span class="co">// step 1</span></span>
+<span id="cb10-2"><a href="" aria-label="2"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> N<span class="op">;</span> i<span class="op">++)</span></span>
+<span id="cb10-3"><a href="" aria-label="3"></a>   <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> i<span class="op">+</span><span class="dv">1</span><span class="op">;</span> j <span class="op">&lt;</span> N<span class="op">;</span> j<span class="op">++)</span></span>
+<span id="cb10-4"><a href="" aria-label="4"></a>   <span class="op">{</span></span>
+<span id="cb10-5"><a href="" aria-label="5"></a>      <span class="dt">int</span> k <span class="op">=</span> <span class="bu">Arrays</span><span class="op">.</span><span class="fu">binarySearch</span><span class="op">(</span>b<span class="op">,</span> <span class="op">-(</span>b<span class="op">[</span>i<span class="op">]</span> <span class="op">+</span> b<span class="op">[</span>j<span class="op">]));</span>   <span class="co">// step 2</span></span>
+<span id="cb10-6"><a href="" aria-label="6"></a>      <span class="cf">if</span> <span class="op">(</span>k <span class="op">&gt;</span> j<span class="op">)</span> count<span class="op">++;</span></span>
+<span id="cb10-7"><a href="" aria-label="7"></a>   <span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -1660,8 +1676,8 @@ Zechun (Jacob) Cao
 </ul>
 <p><strong><em>Which of these does a customer care about?</em></strong></p>
 </section>
-<section id="best-average-worst-1" class="slide level2">
-<h2>Best, Average, Worst</h2>
+<section id="best-average-worst-must-know" class="slide level2">
+<h2>Best, Average, Worst <span class="ex">Must Know</span></h2>
 <p><strong><em>Fill in the table.</em></strong></p>
 <table class="caption-top">
 <thead>
@@ -1697,33 +1713,33 @@ Zechun (Jacob) Cao
 <h2>Part 5</h2>
 <p>Now You Do It</p>
 </section>
-<section id="sum-1-2-cdots-n" class="slide level2">
-<h2>Sum <span class="math inline">\(1 + 2 + \cdots + n\)</span></h2>
+<section id="sum-1-2-cdots-n-must-know" class="slide level2">
+<h2>Sum <span class="math inline">\(1 + 2 + \cdots + n\)</span> <span class="ex">Must Know</span></h2>
 <div class="columns">
 <div class="column" style="width:33%;">
 <p><strong>Algorithm A</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb11-1"><a href=""></a><span class="dt">long</span> sum <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb11-2"><a href=""></a><span class="cf">for</span> <span class="op">(</span><span class="dt">long</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb11-3"><a href=""></a>     i <span class="op">&lt;=</span> n<span class="op">;</span> i<span class="op">++)</span></span>
-<span id="cb11-4"><a href=""></a>   sum <span class="op">=</span> sum <span class="op">+</span> i<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb11-1"><a href="" aria-label="1"></a><span class="dt">long</span> sum <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb11-2"><a href="" aria-label="2"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">long</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb11-3"><a href="" aria-label="3"></a>     i <span class="op">&lt;=</span> n<span class="op">;</span> i<span class="op">++)</span></span>
+<span id="cb11-4"><a href="" aria-label="4"></a>   sum <span class="op">=</span> sum <span class="op">+</span> i<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column" style="width:33%;">
 <p><strong>Algorithm B</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb12-1"><a href=""></a>sum <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb12-2"><a href=""></a><span class="cf">for</span> <span class="op">(</span><span class="dt">long</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb12-3"><a href=""></a>     i <span class="op">&lt;=</span> n<span class="op">;</span> i<span class="op">++)</span></span>
-<span id="cb12-4"><a href=""></a><span class="op">{</span></span>
-<span id="cb12-5"><a href=""></a>   <span class="cf">for</span> <span class="op">(</span><span class="dt">long</span> j <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb12-6"><a href=""></a>        j <span class="op">&lt;=</span> i<span class="op">;</span> j<span class="op">++)</span></span>
-<span id="cb12-7"><a href=""></a>      sum <span class="op">=</span> sum <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb12-8"><a href=""></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb12-1"><a href="" aria-label="1"></a>sum <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb12-2"><a href="" aria-label="2"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">long</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb12-3"><a href="" aria-label="3"></a>     i <span class="op">&lt;=</span> n<span class="op">;</span> i<span class="op">++)</span></span>
+<span id="cb12-4"><a href="" aria-label="4"></a><span class="op">{</span></span>
+<span id="cb12-5"><a href="" aria-label="5"></a>   <span class="cf">for</span> <span class="op">(</span><span class="dt">long</span> j <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb12-6"><a href="" aria-label="6"></a>        j <span class="op">&lt;=</span> i<span class="op">;</span> j<span class="op">++)</span></span>
+<span id="cb12-7"><a href="" aria-label="7"></a>      sum <span class="op">=</span> sum <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb12-8"><a href="" aria-label="8"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column" style="width:33%;">
 <p><strong>Algorithm C</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb13-1"><a href=""></a>sum <span class="op">=</span> n <span class="op">*</span> <span class="op">(</span>n <span class="op">+</span> <span class="dv">1</span><span class="op">)</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb13-1"><a href="" aria-label="1"></a>sum <span class="op">=</span> n <span class="op">*</span> <span class="op">(</span>n <span class="op">+</span> <span class="dv">1</span><span class="op">)</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div></div>
 <p><strong><em>Order of growth for each? Which would you ship?</em></strong></p>
 </section>
-<section id="counting-basic-operations" class="slide level2">
-<h2>Counting Basic Operations</h2>
+<section id="counting-basic-operations-must-know" class="slide level2 long-title">
+<h2>Counting Basic Operations <span class="ex">Must Know</span></h2>
 <p>A <strong>basic operation</strong> is the largest contributor to total running time.</p>
 <table class="caption-top">
 <thead>
@@ -1768,7 +1784,7 @@ Zechun (Jacob) Cao
 </tbody>
 </table>
 </section>
-<section id="counting-basic-operations-1" class="slide level2">
+<section id="counting-basic-operations" class="slide level2">
 <h2>Counting Basic Operations</h2>
 <div class="columns">
 <div class="column" style="width:55%;">

@@ -101,7 +101,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-a344fe57ebbe1cd98b38b809e88f85d0.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-99f05ddcae4f36f4f02d876456c365bb.css">
   <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -334,6 +334,16 @@ Zechun (Jacob) Cao
 </table>
 <div class="fragment">
 <p>Parts 2 and 3 build the <em>same</em> API twice. Watch what the client can and cannot tell apart.</p>
+</div>
+</section>
+<section id="how-to-read-this-deck" class="slide level2">
+<h2>How to Read This Deck</h2>
+<p>From here on, some slide titles carry a red mark.</p>
+<div class="fragment">
+<p><strong><span class="ex-inline">Must Know</span> — we do it in class; expect it on the exam.</strong> The formula, the definition, or the worked problem a question is built from. Drill these first.</p>
+</div>
+<div class="fragment">
+<p><strong>Unmarked — we do it in class, and the exam can still ask about it.</strong> No mark does not mean off the exam. Understand it; just drill the marked slides first.</p>
 </div>
 </section>
 <section id="part-1" class="slide level2 center section-divider">
@@ -762,8 +772,8 @@ Zechun (Jacob) Cao
 <p>The first node is now the top, so the handle is named <code>topNode</code>. <code>push</code> inserts before it, <code>pop</code> removes it — neither one walks.</p>
 </div>
 </section>
-<section id="pop-in-two-moves" class="slide level2">
-<h2>pop, in Two Moves</h2>
+<section id="pop-in-two-moves-must-know" class="slide level2">
+<h2>pop, in Two Moves <span class="ex">Must Know</span></h2>
 <div class="r-stack">
 <p><img data-src="images/pop_1.png" class="nostretch" style="width:86.0%"></p>
 <p><img data-src="images/pop_2.png" class="fragment nostretch" style="width:86.0%"></p>
@@ -882,8 +892,8 @@ B
 <p><span class="lead-blue">The rule.</span> <code>topNode</code> is the only handle onto the chain. Save what you need before you move the pointer that finds it — which is exactly why the real <code>pop()</code> calls <code>peek()</code> first.</p>
 </div>
 </section>
-<section id="push-in-two-moves" class="slide level2">
-<h2>push, in Two Moves</h2>
+<section id="push-in-two-moves-must-know" class="slide level2">
+<h2>push, in Two Moves <span class="ex">Must Know</span></h2>
 <div class="r-stack">
 <p><img data-src="images/push_1.png" class="nostretch" style="width:86.0%"></p>
 <p><img data-src="images/push_2.png" class="fragment nostretch" style="width:86.0%"></p>
@@ -945,8 +955,8 @@ B
 <p><code>clear()</code> changes one reference; the entire old chain becomes unreachable.</p>
 </div>
 </section>
-<section id="write-the-chains-push-and-pop" class="slide level2 code-tight">
-<h2>Write the Chain’s push and pop</h2>
+<section id="write-the-chains-push-and-pop-must-know" class="slide level2 code-tight long-title">
+<h2>Write the Chain’s push and pop <span class="ex">Must Know</span></h2>
 <p><a class="livecode" href="https://v49.livecodes.io/?x=id/bymt7ezjv27" target="_blank" rel="noopener">live code</a></p>
 <p><code>peek()</code> and <code>Node</code> are written for you. Each body below is one line short.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb19-1"><a href="" aria-label="1"></a><span class="kw">public</span> <span class="dt">void</span> <span class="fu">push</span><span class="op">(</span>T newEntry<span class="op">)</span></span>
@@ -1056,8 +1066,8 @@ B
 <p><span class="lead-red">Both answer the same way:</span> put the top where the structure is already cheap.</p>
 </div>
 </section>
-<section id="one-array-one-index" class="slide level2">
-<h2>One Array, One Index</h2>
+<section id="one-array-one-index-must-know" class="slide level2">
+<h2>One Array, One Index <span class="ex">Must Know</span></h2>
 <p><code>stack[]</code> holds the items, bottom at index <span class="math inline">\(0\)</span>, and <code>topIndex</code> says where the top is.</p>
 <ul>
 <li>An empty stack is <code>topIndex == -1</code>.</li>
@@ -1093,8 +1103,8 @@ B
 <p>So <code>pop</code> calls it and gets the guard for free, just as in Part 2.</p>
 </div>
 </section>
-<section id="write-push-and-pop" class="slide level2">
-<h2>Write push and pop</h2>
+<section id="write-push-and-pop-must-know" class="slide level2">
+<h2>Write push and pop <span class="ex">Must Know</span></h2>
 <p>Two lines for <code>push</code>, one for <code>pop</code>. Call each one before it appears.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span><a href="" aria-label="1"></a><span class="kw">public</span> <span class="dt">void</span> <span class="fu">push</span><span class="op">(</span>T newEntry<span class="op">)</span></span>
 <span><a href="" aria-label="2"></a><span class="op">{</span></span>
@@ -1146,8 +1156,8 @@ B
   <li class="fragment pick"><span class="k">B</span></li>
 </ul>
 </section>
-<section id="loitering" class="slide level2">
-<h2>Loitering</h2>
+<section id="loitering-must-know" class="slide level2">
+<h2>Loitering <span class="ex">Must Know</span></h2>
 <p><span class="lead-blue">B.</span> Version <strong>A</strong> leaves the popped item sitting in the array. The client has forgotten it and the stack will never hand it back, but the slot still points at it — so the collector cannot reclaim it.</p>
 <div class="fragment">
 <p><span class="lead-red">Loitering.</span> Holding a reference to an object you will never use again.</p>
@@ -1253,8 +1263,8 @@ B
 <span id="cb26-11"><a href="" aria-label="11"></a>      stack <span class="op">=</span> <span class="bu">Arrays</span><span class="op">.</span><span class="fu">copyOf</span><span class="op">(</span>stack<span class="op">,</span> <span class="dv">2</span> <span class="op">*</span> stack<span class="op">.</span><span class="fu">length</span><span class="op">);</span></span>
 <span id="cb26-12"><a href="" aria-label="12"></a><span class="op">}</span> <span class="co">// end ensureCapacity</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="repeated-doubling-the-bill" class="slide level2">
-<h2>Repeated Doubling: the Bill</h2>
+<section id="repeated-doubling-the-bill-must-know" class="slide level2 long-title">
+<h2>Repeated Doubling: the Bill <span class="ex">Must Know</span></h2>
 <p>Doubling to capacity <span class="math inline">\(k\)</span> copies <span class="math inline">\(k/2\)</span> items, so it costs <span class="math inline">\(k\)</span> accesses. Every doubling before that one cost half as much.</p>
 <p><span class="math display">\[N \;+\; \bigl(2 + 4 + 8 + \cdots + N\bigr) \;=\; N + 2(N-1) \;\sim\; 3N\]</span></p>
 <div class="fragment">
@@ -1265,7 +1275,7 @@ B
 </div>
 </div>
 </section>
-<section id="repeated-doubling-the-bill-1" class="slide level2">
+<section id="repeated-doubling-the-bill" class="slide level2">
 <h2>Repeated Doubling: the Bill</h2>
 <table class="caption-top">
 <thead>
@@ -1321,8 +1331,8 @@ B
 <p><strong><em>The bug is that grow and shrink fire at the same place. Leave a gap.</em></strong></p>
 </div>
 </section>
-<section id="halve-at-one-quarter" class="slide level2">
-<h2>Halve at One Quarter</h2>
+<section id="halve-at-one-quarter-must-know" class="slide level2">
+<h2>Halve at One Quarter <span class="ex">Must Know</span></h2>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb27-1"><a href="" aria-label="1"></a><span class="kw">public</span> T <span class="fu">pop</span><span class="op">()</span></span>
 <span id="cb27-2"><a href="" aria-label="2"></a><span class="op">{</span></span>
 <span id="cb27-3"><a href="" aria-label="3"></a>   T top <span class="op">=</span> <span class="fu">peek</span><span class="op">();</span></span>
@@ -1339,8 +1349,8 @@ B
 <p>After a resize it holds <span class="math inline">\(N\)</span> items in <span class="math inline">\(2N\)</span> slots — <span class="math inline">\(N\)</span> more pushes before the next doubling, <span class="math inline">\(N/2\)</span> more pops before the next halving. The gap pays for the copy.</p>
 </div>
 </section>
-<section id="amortized-analysis" class="slide level2">
-<h2>Amortized Analysis</h2>
+<section id="amortized-analysis-must-know" class="slide level2">
+<h2>Amortized Analysis <span class="ex">Must Know</span></h2>
 <p><span class="lead-blue">Definition.</span> Start from an empty data structure. The <strong>amortized</strong> cost of an operation is the average cost per operation over a worst-case sequence of them.</p>
 <div class="columns">
 <div class="column" style="width:56%;">
@@ -1394,8 +1404,8 @@ B
 <p>An adversary who picks the inputs breaks the first. There is nothing left to pick in the second. <strong><em>That is a guarantee you can promise a customer.</em></strong></p>
 </div>
 </section>
-<section id="the-performance-table" class="slide level2">
-<h2>The Performance Table</h2>
+<section id="the-performance-table-must-know" class="slide level2">
+<h2>The Performance Table <span class="ex">Must Know</span></h2>
 <p>Order of growth of the running time, for a resizing-array stack holding <span class="math inline">\(N\)</span> items:</p>
 <table class="caption-top">
 <thead>
@@ -1882,8 +1892,8 @@ of anything
 <span id="cb39-19"><a href="" aria-label="19"></a></span>
 <span id="cb39-20"><a href="" aria-label="20"></a>   <span class="cf">return</span> str</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="the-undo-loop" class="slide level2 code-tight">
-<h2>The Undo Loop</h2>
+<section id="the-undo-loop-must-know" class="slide level2 code-tight">
+<h2>The Undo Loop <span class="ex">Must Know</span></h2>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb40-1"><a href="" aria-label="1"></a>Algorithm <span class="fu">processString</span><span class="op">(</span>S<span class="op">):</span></span>
 <span id="cb40-2"><a href="" aria-label="2"></a>   Create an empty stack s</span>
 <span id="cb40-3"><a href="" aria-label="3"></a></span>
@@ -1964,8 +1974,8 @@ of anything
 <p>Ends empty, never mismatched. <span class="lead-blue">Balanced.</span></p>
 </div>
 </section>
-<section id="three-ways-to-fail" class="slide level2">
-<h2>Three Ways to Fail</h2>
+<section id="three-ways-to-fail-must-know" class="slide level2">
+<h2>Three Ways to Fail <span class="ex">Must Know</span></h2>
 <table class="steps caption-top">
 <thead>
 <tr class="header">
@@ -2081,8 +2091,8 @@ of anything
 <p><span class="math display">\[6 \times (3 + 2) \;=\; 30\]</span></p>
 </div>
 </section>
-<section id="evaluating-postfix" class="slide level2">
-<h2>Evaluating Postfix</h2>
+<section id="evaluating-postfix-must-know" class="slide level2">
+<h2>Evaluating Postfix <span class="ex">Must Know</span></h2>
 <p>One stack. Push every value; on an operator, pop two, apply, push the result.</p>
 <table class="steps caption-top">
 <thead>
@@ -2185,8 +2195,8 @@ of anything
 <p>Recovering the infix form is the same trace read backwards: each operator names the two subexpressions sitting under it.</p>
 </div>
 </section>
-<section id="dijkstras-two-stack-algorithm" class="slide level2">
-<h2>Dijkstra’s Two-Stack Algorithm</h2>
+<section id="dijkstras-two-stack-algorithm-must-know" class="slide level2 long-title">
+<h2>Dijkstra’s Two-Stack Algorithm <span class="ex">Must Know</span></h2>
 <p><span class="lead-blue">Goal.</span> Evaluate a fully parenthesized <strong>infix</strong> expression directly, with no conversion step.</p>
 <p>Keep two stacks — one for values, one for operators — and one rule per token:</p>
 <ul>
@@ -2293,8 +2303,8 @@ of anything
 <p><span class="lead-red">That is an interpreter</span> — it reads a language and computes what the language says.</p>
 </div>
 </section>
-<section id="infix-to-postfix" class="slide level2 wrap-table dense-table">
-<h2>Infix to Postfix</h2>
+<section id="infix-to-postfix-must-know" class="slide level2 wrap-table dense-table">
+<h2>Infix to Postfix <span class="ex">Must Know</span></h2>
 <p>The other route: convert once, then evaluate with one stack. One rule per token, and the stack holds <strong>operators</strong>, not values.</p>
 <table class="caption-top">
 <colgroup>
@@ -2335,7 +2345,7 @@ of anything
 </tbody>
 </table>
 </section>
-<section id="infix-to-postfix-1" class="slide level2 dense-table">
+<section id="infix-to-postfix" class="slide level2 dense-table">
 <h2>Infix to Postfix</h2>
 <p><span class="doit">call the next row</span></p>
 <p><span class="math display">\[a + b * (\,c + d\,)\]</span></p>
@@ -2412,8 +2422,8 @@ of anything
 </tbody>
 </table>
 </section>
-<section id="your-turn-1" class="slide level2">
-<h2>Your Turn</h2>
+<section id="your-turn-must-know" class="slide level2">
+<h2>Your Turn <span class="ex">Must Know</span></h2>
 <p>Convert to postfix. The stack column is the part to write down.</p>
 <p><span class="math display">\[a \,/\, b * \bigl(\,c + (\,d - e\,)\,\bigr)\]</span></p>
 <div class="fragment">
@@ -2427,7 +2437,7 @@ of anything
 </ul>
 </div>
 </section>
-<section id="your-turn-2" class="slide level2">
+<section id="your-turn-1" class="slide level2">
 <h2>Your Turn</h2>
 <p>Three more, for the same rules and no parentheses at all:</p>
 <table class="caption-top">
@@ -2579,8 +2589,8 @@ of anything
 <span id="cb43-12"><a href="" aria-label="12"></a>   <span class="cf">else</span></span>
 <span id="cb43-13"><a href="" aria-label="13"></a>      <span class="co">// your line here  ____________________</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="the-queue" class="slide level2 code-mid">
-<h2>The Queue</h2>
+<section id="the-queue-must-know" class="slide level2 code-mid">
+<h2>The Queue <span class="ex">Must Know</span></h2>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb44-1"><a href="" aria-label="1"></a>Algorithm <span class="fu">enqueue</span><span class="op">(</span>value<span class="op">):</span></span>
 <span id="cb44-2"><a href="" aria-label="2"></a>   s1<span class="op">.</span><span class="fu">push</span><span class="op">(</span>value<span class="op">);</span></span>
 <span id="cb44-3"><a href="" aria-label="3"></a></span>
