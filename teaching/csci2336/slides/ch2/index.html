@@ -977,8 +977,8 @@ B
 <p>Run it and read the output. With <code>push</code> unfinished the first <code>pop</code> throws <code>EmptyStackException</code>; with <code>pop</code> unfinished, <code>of</code> comes back every time. The last <code>pop</code> in <code>main</code> is <em>supposed</em> to throw — that one is the guard.</p>
 </div>
 </section>
-<section id="what-it-costs" class="slide level2">
-<h2>What It Costs</h2>
+<section id="what-it-costs-must-know" class="slide level2">
+<h2>What It Costs <span class="ex">Must Know</span></h2>
 <p><strong><em>The chain holds <span class="math inline">\(N\)</span> items. What does each operation cost in the worst case? Call it before it appears.</em></strong></p>
 <table class="caption-top">
 <colgroup>
@@ -1459,8 +1459,8 @@ B
 <p><strong><em>The array wastes slots. The chain wastes bytes per item. Neither is free.</em></strong></p>
 </div>
 </section>
-<section id="head-to-head" class="slide level2 dense-table">
-<h2>Head to Head</h2>
+<section id="head-to-head-must-know" class="slide level2 dense-table">
+<h2>Head to Head <span class="ex">Must Know</span></h2>
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -1520,7 +1520,7 @@ B
 <p>Same client, same five operations. The row of the table that decided the race was <strong>overhead</strong>, not the big-O.</p>
 </div>
 </section>
-<section id="head-to-head-1" class="slide level2">
+<section id="head-to-head" class="slide level2">
 <h2>Head to Head</h2>
 <p>The client wrote <code>push</code> and <code>pop</code> and never found out which it got.</p>
 <div class="fragment">
