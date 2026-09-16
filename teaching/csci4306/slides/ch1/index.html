@@ -350,9 +350,6 @@ Zechun (Jacob) Cao
 <div class="fragment" data-fragment-index="3">
 <p><strong>Communication links:</strong> fiber, copper, radio, satellite. Transmission rate = <strong>bandwidth</strong>.</p>
 </div>
-<div class="fragment" data-fragment-index="4">
-<p><strong>Networks:</strong> a collection of devices, routers, and links <strong>managed by one organization</strong>.</p>
-</div>
 </div><div class="column" style="width:42%;">
 <p><img data-src="images/internet_map.png" style="width:90.0%"></p>
 </div></div>
@@ -361,10 +358,23 @@ Zechun (Jacob) Cao
 <h2>Nuts and Bolts</h2>
 <div class="columns">
 <div class="column" style="width:58%;">
+<div class="fragment" data-fragment-index="1">
+<p><strong>Networks:</strong> a collection of devices, routers, and links <strong>managed by one organization</strong>.</p>
+</div>
+<div class="fragment" data-fragment-index="2">
 <p>The Internet is a <strong>network of networks</strong>: interconnected ISPs.</p>
-<div class="fragment">
+</div>
+<div class="fragment" data-fragment-index="3">
 <p><strong>Protocols</strong> are everywhere. They control the sending and receiving of messages: HTTP, TCP, IP, Wi-Fi, 4G, Ethernet.</p>
 </div>
+</div><div class="column" style="width:42%;">
+<p><img data-src="images/internet_map.png" style="width:90.0%"></p>
+</div></div>
+</section>
+<section id="nuts-and-bolts-2" class="slide level2">
+<h2>Nuts and Bolts</h2>
+<div class="columns">
+<div class="column" style="width:58%;">
 <div class="fragment">
 <p><strong>Internet standards</strong> are public documents:</p>
 <ul>
@@ -793,12 +803,21 @@ Zechun (Jacob) Cao
 <div class="fragment">
 <p><span class="math inline">\(R\)</span> is also called link <strong>capacity</strong> or link <strong>bandwidth</strong>.</p>
 </div>
-<div class="fragment">
-<p><span class="math display">\[d_{\text{trans}} \;=\; \frac{L \text{ (bits)}}{R \text{ (bits/sec)}}\]</span></p>
-</div>
 </div><div class="column" style="width:45%;">
 <p><img data-src="images/host_packets.png" style="width:95.0%"></p>
 </div></div>
+</section>
+<section id="transmission-delay" class="slide level2">
+<h2>Transmission Delay</h2>
+<p><strong>Transmission delay</strong> is the time to push all <span class="math inline">\(L\)</span> bits onto the link:</p>
+<p><span class="math display">\[d_{\text{trans}} \;=\; \frac{L \text{ (bits)}}{R \text{ (bits/sec)}}\]</span></p>
+<div class="fragment">
+<p>Two unit conventions, used all semester:</p>
+<ul>
+<li><strong>Bits, not bytes.</strong> Packets are quoted in bytes; links in bits/sec. Convert first: 1500 bytes <span class="math inline">\(= 12{,}000\)</span> bits.</li>
+<li><strong>Decimal prefixes.</strong> 1 Mbps <span class="math inline">\(= 10^{6}\)</span> bits/sec, 1 GB <span class="math inline">\(= 10^{9}\)</span> bytes. Never <span class="math inline">\(2^{20}\)</span> in a delay or throughput problem.</li>
+</ul>
+</div>
 </section>
 <section id="your-turn-how-long" class="slide level2">
 <h2>Your Turn: How Long?</h2>
@@ -1029,9 +1048,9 @@ d_{\text{end-end}} = 3 \times 4 = 12\ \text{ms}\]</span></p>
 <section id="forwarding-vs-routing" class="slide level2">
 <h2>Forwarding vs Routing</h2>
 <div class="columns">
-<div class="column" style="width:50%;">
+<div class="column" style="width:45%;">
 <p><img data-src="images/fwd_routing.png" style="width:95.0%"></p>
-</div><div class="column" style="width:50%;">
+</div><div class="column" style="width:55%;">
 <div class="fragment">
 <p><strong>Forwarding</strong> is <em>local</em>: move an arriving packet from an input link to the right output link. One router, one packet, microseconds.</p>
 </div>
@@ -1046,13 +1065,13 @@ d_{\text{end-end}} = 3 \times 4 = 12\ \text{ms}\]</span></p>
 <section id="circuit-switching" class="slide level2">
 <h2>Circuit Switching</h2>
 <div class="columns">
-<div class="column" style="width:55%;">
+<div class="column" style="width:58%;">
 <p>End-to-end resources are <strong>allocated to and reserved for</strong> a “call,” as in the traditional telephone network.</p>
-<p>Each link here has four circuits. This call holds the 2nd on the top link and the 1st on the right.</p>
+<p>Each link has four circuits; this call holds the 2nd on the top link and the 1st on the right.</p>
 <div class="fragment">
 <p><strong>Dedicated</strong> resources, <strong>guaranteed</strong> performance — and the circuit sits <strong>idle</strong> when the call is silent, with nobody else allowed to use it. That is the whole argument against it.</p>
 </div>
-</div><div class="column" style="width:45%;">
+</div><div class="column" style="width:42%;">
 <p><img data-src="images/circuit_switch.png" style="width:98.0%"></p>
 </div></div>
 </section>
@@ -1128,7 +1147,7 @@ d_{\text{end-end}} = 3 \times 4 = 12\ \text{ms}\]</span></p>
 <p><strong>Packet switching:</strong> admit <strong>35 users</strong>. The probability that more than 10 are active at once is <strong>about 0.0004</strong>.</p>
 </div>
 <div class="fragment">
-<p>3.5<span class="math inline">\(\times\)</span> the users, and overload roughly one second in 40 minutes. Where does 35 come from? Next slide.</p>
+<p>3.5<span class="math inline">\(\times\)</span> the users, and overload roughly one second in 40 minutes.</p>
 </div>
 </section>
 <section id="finding-the-35-must-know" class="slide level2">
@@ -1285,7 +1304,7 @@ d_{\text{end-end}} = 3 \times 4 = 12\ \text{ms}\]</span></p>
 <section id="network-of-networks-1" class="slide level2">
 <h2>Network of Networks</h2>
 <p>If one global ISP is a viable business, there will be <strong>competitors</strong> — and they will want to interconnect.</p>
-<p><img data-src="images/non_compete.png" style="width:62.0%"></p>
+<p><img data-src="images/non_compete.png" style="width:54.0%"></p>
 <div class="fragment">
 <p>They meet at <strong>Internet exchange points (IXPs)</strong> over <strong>peering links</strong> — often settlement-free, since both sides benefit.</p>
 </div>
@@ -1293,7 +1312,7 @@ d_{\text{end-end}} = 3 \times 4 = 12\ \text{ms}\]</span></p>
 <section id="network-of-networks-2" class="slide level2">
 <h2>Network of Networks</h2>
 <p><strong>Content provider networks</strong> (Google, Microsoft, Akamai, Netflix) build their own backbones to put content close to users.</p>
-<p><img data-src="images/non_content.png" style="width:62.0%"></p>
+<p><img data-src="images/non_content.png" style="width:56.0%"></p>
 <div class="fragment">
 <p>They <strong>bypass</strong> the tier-1 ISPs wherever they can — less money paid out, and fewer hops of delay for you.</p>
 </div>
@@ -1435,7 +1454,7 @@ d_{\text{end-end}} = 3 \times 4 = 12\ \text{ms}\]</span></p>
 <p><span class="math inline">\(d_{\text{prop}}\)</span> — <strong>propagation delay</strong></p>
 <ul>
 <li><span class="math inline">\(d\)</span>: length of the link (m)</li>
-<li><span class="math inline">\(s\)</span>: propagation speed (<span class="math inline">\(\approx 2 \times 10^{8}\)</span> m/s)</li>
+<li><span class="math inline">\(s\)</span>: speed, <span class="math inline">\(\approx 2 \times 10^{8}\)</span> m/s</li>
 </ul>
 <p><span class="math display">\[d_{\text{prop}} = \frac{d}{s}\]</span></p>
 <p><em>Time for a bit to travel.</em></p>
@@ -1580,22 +1599,19 @@ d_{\text{prop}} = \frac{3 \times 10^{6}}{2 \times 10^{8}} = 15\ \text{ms}\]</spa
 <p>Record the <strong>hop count</strong> and <strong>minimum RTT</strong> for each destination.</p>
 <p>Then compute the propagation-only round trip to Sydney (about 14,000 km at <span class="math inline">\(2\times10^{8}\)</span> m/s) and compare it with your minimum RTT.</p>
 </div>
-<aside class="notes">
-<p>Six minutes at the terminal, then about three to debrief.</p>
-<p>Debrief. Put the smallest Sydney RTT anyone got on the board. The great-circle distance is about 13,500 km, so the propagation-only round trip is 140 ms; nobody gets under it. Typical is 180 to 220 ms: fiber follows the cables, not the great circle (about 1.3 to 1.5 times the distance), and every one of the 15 to 25 hops adds processing and queueing. If someone reports far less than 140 ms they reached an anycast or CDN address, not Sydney; that is why the target is the Linode host, not www.sydney.edu.au (CloudFront, about 15 ms from campus). Assignment 1 repeats this measurement on the same hosts.</p>
-<p>Hop count. tamusa.edu should be a handful of hops; Sydney is 15 to 25. Ask where the path leaves the country: look for the jump of 100 ms or more between two consecutive lines, the trans-Pacific hop.</p>
-<p>Troubleshooting. Windows is <code>tracert</code>. Ubuntu may lack traceroute (<code>sudo apt install traceroute</code>, or <code>tracepath</code>). Lines of <code>* * *</code> are routers that do not answer, not a broken path. If campus Wi-Fi blocks ICMP entirely, run it on the CloudLab node instead.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
+</section>
+<section id="activity-trace-your-path-1" class="slide level2">
+<h2>Activity: Trace Your Path</h2>
+<p><strong>Debrief.</strong> Smallest Sydney RTT in the room goes on the board.</p>
+<div class="fragment">
+<p>Propagation alone, there and back: <span class="math inline">\(2 \times 14{,}000 \text{ km} \;/\; (2 \times 10^{8} \text{ m/s}) = \mathbf{140\ ms}\)</span>. Nobody gets under it.</p>
+</div>
+<div class="fragment">
+<p>Typical is <strong>180–220 ms</strong>: fiber follows the cables, not the great circle (about <span class="math inline">\(1.3\)</span>–<span class="math inline">\(1.5\times\)</span> the distance), and each of the 15–25 hops adds processing and queueing.</p>
+</div>
+<div class="fragment">
+<p>Far <em>below</em> 140 ms? You reached an <strong>anycast</strong> or CDN address, not Sydney — which is why the target is the Linode host, not a university home page. Assignment 1 repeats this measurement on the same hosts.</p>
+</div>
 </section>
 <section id="throughput" class="slide level2">
 <h2>Throughput</h2>
@@ -2155,17 +2171,17 @@ d_{\text{prop}} = \frac{3 \times 10^{6}}{2 \times 10^{8}} = 15\ \text{ms}\]</spa
 <section id="denial-of-service-reading" class="slide level2">
 <h2>Denial of Service <span class="rd">Reading</span></h2>
 <div class="columns">
-<div class="column" style="width:55%;">
+<div class="column" style="width:60%;">
 <p><strong>DoS:</strong> make a resource unavailable to legitimate traffic by overwhelming it with bogus traffic.</p>
 <ol type="1">
 <li>select a target</li>
 <li>break into hosts around the network (a <strong>botnet</strong>)</li>
 <li>flood the target from every compromised host</li>
 </ol>
-</div><div class="column" style="width:45%;">
+</div><div class="column" style="width:40%;">
 <p><img data-src="images/dos.png" style="width:87.0%"></p>
 </div></div>
-<p>The “distributed” in DDoS is what makes it hard: there is no single source address to block.</p>
+<p><em>Distributed</em> is the hard part: no single source address to block.</p>
 </section>
 <section id="packet-sniffing-reading" class="slide level2">
 <h2>Packet Sniffing <span class="rd">Reading</span></h2>
