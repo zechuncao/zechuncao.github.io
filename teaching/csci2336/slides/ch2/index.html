@@ -101,7 +101,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-99f05ddcae4f36f4f02d876456c365bb.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-0784d1c3d8cad9c31c3067390e30315c.css">
   <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -1058,7 +1058,7 @@ B
 <p>Put the top at the <strong>end</strong>, where growing and shrinking cost nothing.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="images/array_stack.png" class="quarto-figure quarto-figure-center" style="width:58.0%"></p>
+<p><img data-src="images/array_stack.png" class="quarto-figure quarto-figure-center" style="width:55.0%"></p>
 </figure>
 </div>
 </div>
@@ -1362,49 +1362,31 @@ B
 </div><div class="column" style="width:44%;">
 <p>Individual pushes are unbounded — the one that doubles a <span class="math inline">\(64\)</span>-slot array costs <span class="math inline">\(129\)</span> accesses.</p>
 <div class="fragment">
-<p>The running average never passes <span class="math inline">\(3\)</span>.</p>
+<p>The running average never reaches <span class="math inline">\(5\)</span>, and it is back to <span class="math inline">\(3\)</span> before each doubling.</p>
 </div>
 </div></div>
 </section>
 <section id="amortized-is-not-average" class="slide level2">
 <h2>Amortized Is Not Average</h2>
-<p><span class="lead-blue">Proposition.</span> From an empty stack, any <span class="math inline">\(M\)</span> pushes and pops — whichever ones, in whichever order — cost time proportional to <span class="math inline">\(M\)</span>.</p>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: left;"></th>
-<th style="text-align: left;">average case</th>
-<th style="text-align: left;">amortized</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">averages over</td>
-<td style="text-align: left;">the <em>inputs</em></td>
-<td style="text-align: left;">the <em>operations</em> in a run</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">assumes</td>
-<td style="text-align: left;">typical inputs</td>
-<td style="text-align: left;">nothing — the worst run counts</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">a slow step</td>
-<td style="text-align: left;">can land any time</td>
-<td style="text-align: left;">was prepaid by the cheap ones</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">the promise</td>
-<td style="text-align: left;"><em>usually</em> fast</td>
-<td style="text-align: left;"><em>always</em> fast, in total</td>
-</tr>
-</tbody>
-</table>
+<p>Search an unsorted array of <span class="math inline">\(N\)</span> items for a key, front to back. Count one compare per item looked at.</p>
 <div class="fragment">
-<p>An adversary who picks the inputs breaks the first. There is nothing left to pick in the second. <strong><em>That is a guarantee you can promise a customer.</em></strong></p>
+<p><span class="lead-red">Average.</span> If the key is equally likely to be in any slot, a search stops after <span class="math inline">\((N+1)/2\)</span> compares on average. For <span class="math inline">\(N = 100\)</span>, about <span class="math inline">\(50\)</span>.</p>
+</div>
+<div class="fragment">
+<p><span class="lead-blue">Amortized.</span> Take the worst run of <span class="math inline">\(M\)</span> searches: every one asks for the key in the last slot. Each costs <span class="math inline">\(N\)</span>, so the run costs <span class="math inline">\(MN\)</span>, which is <span class="math inline">\(N\)</span> per search. For <span class="math inline">\(N = 100\)</span>, exactly <span class="math inline">\(100\)</span>.</p>
 </div>
 </section>
-<section id="the-performance-table-must-know" class="slide level2">
+<section id="amortized-is-not-average-1" class="slide level2">
+<h2>Amortized Is Not Average</h2>
+<p><span class="lead-red">Average.</span> The <span class="math inline">\(50\)</span> rests on an assumption about the keys. A client that always asks for the last item never sees it; that client pays <span class="math inline">\(100\)</span> on every search.</p>
+<div class="fragment">
+<p><span class="lead-blue">Amortized.</span> The <span class="math inline">\(100\)</span> assumes nothing. It counts the worst run there is, and since a search changes nothing, the worst run repeats the worst key. Amortized equals worst case here because no search pays for another.</p>
+</div>
+<div class="fragment">
+<p><span class="lead-blue">Proposition.</span> <code>push</code> is different. A doubling leaves the array half empty, so the worst run cannot repeat it: any <span class="math inline">\(M\)</span> pushes and pops from an empty stack cost time proportional to <span class="math inline">\(M\)</span>, though one push can cost <span class="math inline">\(N\)</span>.</p>
+</div>
+</section>
+<section id="the-performance-table-must-know" class="slide level2 long-title">
 <h2>The Performance Table <span class="ex">Must Know</span></h2>
 <p>Order of growth of the running time, for a resizing-array stack holding <span class="math inline">\(N\)</span> items:</p>
 <table class="caption-top">
@@ -1449,14 +1431,16 @@ B
 </section>
 <section id="what-it-costs-in-memory-1" class="slide level2">
 <h2>What It Costs in Memory</h2>
-<p><span class="lead-blue">Proposition.</span> A resizing-array stack with <span class="math inline">\(N\)</span> items uses between about <span class="math inline">\(8N\)</span> and <span class="math inline">\(32N\)</span> bytes.</p>
-<ul>
-<li><span class="math inline">\(\sim 8N\)</span> when the array is full — one <span class="math inline">\(8\)</span>-byte reference per item.</li>
-<li><span class="math inline">\(\sim 32N\)</span> when it is one-quarter full — the array holds <span class="math inline">\(4N\)</span> slots.</li>
-</ul>
+<p>Each slot of the array is one reference: <span class="math inline">\(8\)</span> bytes, whether or not it holds an item. <code>pop</code> keeps the array between <span class="math inline">\(25\%\)</span> and <span class="math inline">\(100\%\)</span> full.</p>
+<p><strong><em>A stack holds <span class="math inline">\(N\)</span> items. What is the fewest bytes the array can be using, and what is the most?</em></strong></p>
 <div class="fragment">
-<p>Against <span class="math inline">\(\sim 40N\)</span> for the chain, whose worst case <em>is</em> its best case.</p>
-<p><strong><em>The array wastes slots. The chain wastes bytes per item. Neither is free.</em></strong></p>
+<p><span class="lead-blue">Fewest.</span> The array is full: <span class="math inline">\(N\)</span> slots, <span class="math inline">\(8N\)</span> bytes.</p>
+</div>
+<div class="fragment">
+<p><span class="lead-red">Most.</span> The array is one-quarter full: <span class="math inline">\(4N\)</span> slots, <span class="math inline">\(32N\)</span> bytes.</p>
+</div>
+<div class="fragment">
+<p>The chain uses about <span class="math inline">\(40N\)</span> bytes however it is used. The array wastes empty slots; the chain wastes <span class="math inline">\(32\)</span> bytes of node per item.</p>
 </div>
 </section>
 <section id="head-to-head-must-know" class="slide level2 dense-table">
@@ -1512,7 +1496,7 @@ B
 </section>
 <section id="where-the-time-goes" class="slide level2">
 <h2>Where the Time Goes</h2>
-<p><span class="lead-red">The array</span> copies itself nineteen times a round — a million and a half references — and it barely registers. Each copy is one bulk move of a block of memory.</p>
+<p><span class="lead-red">The array</span> copies itself thirty-eight times a round — nineteen doublings on the way up, nineteen halvings on the way down, a million and a half references in all — and all of that copying takes a few milliseconds. Each copy is one bulk move of a block of memory.</p>
 <div class="fragment">
 <p><span class="lead-blue">The chain</span> builds a <code>Node</code> for every item: a million objects allocated and linked one at a time. <em>Two references per item</em> costs time, not just space.</p>
 </div>
@@ -1797,7 +1781,7 @@ of anything
 <h2>Undo, for Real</h2>
 <p>Slide 1 of this deck was Ctrl-Z. This is the program under it.</p>
 <p>Characters arrive one at a time, and <code>[undo]</code> means <em>throw the last one away</em>:</p>
-<p><span class="math display">\[\texttt{h\;e\;l\;[undo]\;l\;l\;o\;[undo]\;o\;w\;o\;r\;l\;d}\]</span></p>
+<p><span class="math display">\[\texttt{h}\;\;\texttt{e}\;\;\texttt{l}\;\;\texttt{[undo]}\;\;\texttt{l}\;\;\texttt{l}\;\;\texttt{o}\;\;\texttt{[undo]}\;\;\texttt{o}\;\;\texttt{w}\;\;\texttt{o}\;\;\texttt{r}\;\;\texttt{l}\;\;\texttt{d}\]</span></p>
 <div class="fragment">
 <p><strong><em>What is left at the end?</em></strong></p>
 </div>
@@ -1868,50 +1852,27 @@ of anything
 <p><strong><em>That is the warmup client from Part 1</em></strong>, which reversed its input without a reversing loop. Here we want the reversal, so we do it twice.</p>
 </div>
 </section>
-<section id="write-the-undo-loop" class="slide level2 code-mid">
-<h2>Write the Undo Loop</h2>
-<p><span class="livecode">live code</span></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb39-1"><a href="" aria-label="1"></a>Algorithm <span class="fu">processString</span><span class="op">(</span>S<span class="op">):</span></span>
-<span id="cb39-2"><a href="" aria-label="2"></a>   Create an empty stack s</span>
-<span id="cb39-3"><a href="" aria-label="3"></a></span>
-<span id="cb39-4"><a href="" aria-label="4"></a>   <span class="cf">for</span> each <span class="dt">char</span> c in S<span class="op">:</span></span>
-<span id="cb39-5"><a href="" aria-label="5"></a>      <span class="cf">if</span> <span class="op">(</span>c <span class="op">!=</span> <span class="op">[</span>undo<span class="op">]):</span></span>
-<span id="cb39-6"><a href="" aria-label="6"></a>         <span class="co">// your line here  ____________________</span></span>
-<span id="cb39-7"><a href="" aria-label="7"></a></span>
-<span id="cb39-8"><a href="" aria-label="8"></a>      <span class="cf">else</span> <span class="cf">if</span> <span class="op">(!</span>s<span class="op">.</span><span class="fu">isEmpty</span><span class="op">()):</span></span>
-<span id="cb39-9"><a href="" aria-label="9"></a>         <span class="co">// your line here  ____________________</span></span>
-<span id="cb39-10"><a href="" aria-label="10"></a></span>
-<span id="cb39-11"><a href="" aria-label="11"></a></span>
-<span id="cb39-12"><a href="" aria-label="12"></a>   Create an empty stack t              <span class="co">// flip s into t</span></span>
-<span id="cb39-13"><a href="" aria-label="13"></a>   <span class="co">// your two lines here  ____________________</span></span>
-<span id="cb39-14"><a href="" aria-label="14"></a></span>
-<span id="cb39-15"><a href="" aria-label="15"></a></span>
-<span id="cb39-16"><a href="" aria-label="16"></a>   Create <span class="bu">String</span> str                    <span class="co">// read t into str</span></span>
-<span id="cb39-17"><a href="" aria-label="17"></a>   <span class="co">// your two lines here  ____________________</span></span>
-<span id="cb39-18"><a href="" aria-label="18"></a></span>
-<span id="cb39-19"><a href="" aria-label="19"></a></span>
-<span id="cb39-20"><a href="" aria-label="20"></a>   <span class="cf">return</span> str</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="the-undo-loop-must-know" class="slide level2 code-tight">
-<h2>The Undo Loop <span class="ex">Must Know</span></h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb40-1"><a href="" aria-label="1"></a>Algorithm <span class="fu">processString</span><span class="op">(</span>S<span class="op">):</span></span>
-<span id="cb40-2"><a href="" aria-label="2"></a>   Create an empty stack s</span>
-<span id="cb40-3"><a href="" aria-label="3"></a></span>
-<span id="cb40-4"><a href="" aria-label="4"></a>   <span class="cf">for</span> each <span class="dt">char</span> c in S<span class="op">:</span></span>
-<span id="cb40-5"><a href="" aria-label="5"></a>      <span class="cf">if</span> <span class="op">(</span>c <span class="op">!=</span> <span class="op">[</span>undo<span class="op">]):</span></span>
-<span id="cb40-6"><a href="" aria-label="6"></a>         s<span class="op">.</span><span class="fu">push</span><span class="op">(</span>c<span class="op">);</span></span>
-<span id="cb40-7"><a href="" aria-label="7"></a>      <span class="cf">else</span> <span class="cf">if</span> <span class="op">(!</span>s<span class="op">.</span><span class="fu">isEmpty</span><span class="op">()):</span></span>
-<span id="cb40-8"><a href="" aria-label="8"></a>         s<span class="op">.</span><span class="fu">pop</span><span class="op">();</span></span>
-<span id="cb40-9"><a href="" aria-label="9"></a></span>
-<span id="cb40-10"><a href="" aria-label="10"></a>   Create an empty stack t              <span class="co">// flip s into t</span></span>
-<span id="cb40-11"><a href="" aria-label="11"></a>   <span class="cf">while</span> <span class="op">(!</span>s<span class="op">.</span><span class="fu">isEmpty</span><span class="op">())</span></span>
-<span id="cb40-12"><a href="" aria-label="12"></a>      t<span class="op">.</span><span class="fu">push</span><span class="op">(</span>s<span class="op">.</span><span class="fu">pop</span><span class="op">());</span></span>
-<span id="cb40-13"><a href="" aria-label="13"></a></span>
-<span id="cb40-14"><a href="" aria-label="14"></a>   Create <span class="bu">String</span> str                    <span class="co">// read t into str</span></span>
-<span id="cb40-15"><a href="" aria-label="15"></a>   <span class="cf">while</span> <span class="op">(!</span>t<span class="op">.</span><span class="fu">isEmpty</span><span class="op">())</span></span>
-<span id="cb40-16"><a href="" aria-label="16"></a>      str <span class="op">+=</span> t<span class="op">.</span><span class="fu">pop</span><span class="op">();</span></span>
-<span id="cb40-17"><a href="" aria-label="17"></a></span>
-<span id="cb40-18"><a href="" aria-label="18"></a>   <span class="cf">return</span> str</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="write-the-undo-loop-must-know" class="slide level2 code-tight">
+<h2>Write the Undo Loop <span class="ex">Must Know</span></h2>
+<p>Six lines are missing. Call each one before it appears.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span><a href="" aria-label="1"></a>Algorithm <span class="fu">processString</span><span class="op">(</span>S<span class="op">):</span></span>
+<span><a href="" aria-label="2"></a>   Create an empty stack s</span>
+<span><a href="" aria-label="3"></a></span>
+<span><a href="" aria-label="4"></a>   <span class="cf">for</span> each <span class="dt">char</span> c in S<span class="op">:</span></span>
+<span><a href="" aria-label="5"></a>      <span class="cf">if</span> <span class="op">(</span>c <span class="op">!=</span> <span class="op">[</span>undo<span class="op">]):</span></span>
+<span><a href="" aria-label="6"></a><span class="fragment">         s<span class="op">.</span><span class="fu">push</span><span class="op">(</span>c<span class="op">);</span></span></span>
+<span><a href="" aria-label="7"></a>      <span class="cf">else</span> <span class="cf">if</span> <span class="op">(!</span>s<span class="op">.</span><span class="fu">isEmpty</span><span class="op">()):</span></span>
+<span><a href="" aria-label="8"></a><span class="fragment">         s<span class="op">.</span><span class="fu">pop</span><span class="op">();</span></span></span>
+<span><a href="" aria-label="9"></a></span>
+<span><a href="" aria-label="10"></a>   Create an empty stack t              <span class="co">// flip s into t</span></span>
+<span><a href="" aria-label="11"></a><span class="fragment">   <span class="cf">while</span> <span class="op">(!</span>s<span class="op">.</span><span class="fu">isEmpty</span><span class="op">())</span></span></span>
+<span><a href="" aria-label="12"></a><span class="fragment">      t<span class="op">.</span><span class="fu">push</span><span class="op">(</span>s<span class="op">.</span><span class="fu">pop</span><span class="op">());</span></span></span>
+<span><a href="" aria-label="13"></a></span>
+<span><a href="" aria-label="14"></a>   Create <span class="bu">String</span> str                    <span class="co">// read t into str</span></span>
+<span><a href="" aria-label="15"></a><span class="fragment">   <span class="cf">while</span> <span class="op">(!</span>t<span class="op">.</span><span class="fu">isEmpty</span><span class="op">())</span></span></span>
+<span><a href="" aria-label="16"></a><span class="fragment">      str <span class="op">+=</span> t<span class="op">.</span><span class="fu">pop</span><span class="op">();</span></span></span>
+<span><a href="" aria-label="17"></a></span>
+<span><a href="" aria-label="18"></a>   <span class="cf">return</span> str</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
 <p><span class="lead-blue">Cost.</span> <span class="math inline">\(O(n)\)</span> time — each character is pushed at most twice and popped at most twice. <span class="math inline">\(O(n)\)</span> space — <code>s</code> and <code>t</code> never hold more than <span class="math inline">\(n\)</span> items between them.</p>
 </div>
@@ -1934,39 +1895,39 @@ of anything
 <tr class="header">
 <th data-quarto-table-cell-role="th">read</th>
 <th class="st" data-quarto-table-cell-role="th">stack (bottom → top)</th>
-<th data-quarto-table-cell-role="th">what happened</th>
+<th class="why" data-quarto-table-cell-role="th">what happened</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td class="tok">{</td>
 <td class="st">{</td>
-<td class="note">push</td>
+<td class="why">push</td>
 </tr>
 <tr class="fragment even">
 <td class="tok">[</td>
 <td class="st">{ [</td>
-<td class="note">push</td>
+<td class="why">push</td>
 </tr>
 <tr class="fragment odd">
 <td class="tok">(</td>
 <td class="st">{ [ (</td>
-<td class="note">push</td>
+<td class="why">push</td>
 </tr>
 <tr class="fragment even">
 <td class="tok">)</td>
 <td class="st">{ [</td>
-<td class="note">popped ( — pairs</td>
+<td class="why">popped ( — pairs</td>
 </tr>
 <tr class="fragment odd">
 <td class="tok">]</td>
 <td class="st">{</td>
-<td class="note">popped [ — pairs</td>
+<td class="why">popped [ — pairs</td>
 </tr>
 <tr class="fragment result even">
 <td class="tok">}</td>
 <td class="st">(empty)</td>
-<td class="note">popped { — pairs</td>
+<td class="why">popped { — pairs</td>
 </tr>
 </tbody>
 </table>
@@ -1974,31 +1935,31 @@ of anything
 <p>Ends empty, never mismatched. <span class="lead-blue">Balanced.</span></p>
 </div>
 </section>
-<section id="three-ways-to-fail-must-know" class="slide level2">
-<h2>Three Ways to Fail <span class="ex">Must Know</span></h2>
+<section id="three-ways-to-fail" class="slide level2">
+<h2>Three Ways to Fail</h2>
 <table class="steps caption-top">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th">expression</th>
 <th class="st" data-quarto-table-cell-role="th">stops at</th>
-<th data-quarto-table-cell-role="th">because</th>
+<th class="why" data-quarto-table-cell-role="th">because</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td class="tok">{ [ ( ] ) }</td>
 <td class="st">]</td>
-<td class="note">popped ( — wrong type</td>
+<td class="why">popped ( — wrong type</td>
 </tr>
 <tr class="fragment even">
 <td class="tok">[ ( ) ] }</td>
 <td class="st">}</td>
-<td class="note">stack already empty</td>
+<td class="why">stack already empty</td>
 </tr>
 <tr class="fragment odd">
 <td class="tok">{ [ ( ) ]</td>
 <td class="st">end of input</td>
-<td class="note">stack still holds {</td>
+<td class="why">stack still holds {</td>
 </tr>
 </tbody>
 </table>
@@ -2006,34 +1967,34 @@ of anything
 <p>Three different bugs, three different checks. <strong><em>Two of them are easy to forget, and both are one line.</em></strong></p>
 </div>
 </section>
-<section id="balanced-delimiters-in-java" class="slide level2 code-tight">
-<h2>Balanced Delimiters, in Java</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb41-1"><a href="" aria-label="1"></a><span class="kw">public</span> <span class="dt">static</span> <span class="dt">boolean</span> <span class="fu">checkBalance</span><span class="op">(</span><span class="bu">String</span> expression<span class="op">)</span></span>
-<span id="cb41-2"><a href="" aria-label="2"></a><span class="op">{</span></span>
-<span id="cb41-3"><a href="" aria-label="3"></a>   StackInterface<span class="op">&lt;</span><span class="bu">Character</span><span class="op">&gt;</span> openDelimiters <span class="op">=</span> <span class="kw">new</span> LinkedStack<span class="op">&lt;&gt;();</span></span>
-<span id="cb41-4"><a href="" aria-label="4"></a>   <span class="dt">boolean</span> isBalanced <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
-<span id="cb41-5"><a href="" aria-label="5"></a>   <span class="dt">int</span> index <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb41-6"><a href="" aria-label="6"></a></span>
-<span id="cb41-7"><a href="" aria-label="7"></a>   <span class="cf">while</span> <span class="op">(</span>isBalanced <span class="op">&amp;&amp;</span> <span class="op">(</span>index <span class="op">&lt;</span> expression<span class="op">.</span><span class="fu">length</span><span class="op">()))</span></span>
-<span id="cb41-8"><a href="" aria-label="8"></a>   <span class="op">{</span></span>
-<span id="cb41-9"><a href="" aria-label="9"></a>      <span class="dt">char</span> next <span class="op">=</span> expression<span class="op">.</span><span class="fu">charAt</span><span class="op">(</span>index<span class="op">);</span></span>
-<span id="cb41-10"><a href="" aria-label="10"></a>      <span class="cf">switch</span> <span class="op">(</span>next<span class="op">)</span></span>
-<span id="cb41-11"><a href="" aria-label="11"></a>      <span class="op">{</span></span>
-<span id="cb41-12"><a href="" aria-label="12"></a>         <span class="cf">case</span> <span class="ch">'('</span><span class="op">:</span> <span class="cf">case</span> <span class="ch">'['</span><span class="op">:</span> <span class="cf">case</span> <span class="ch">'{'</span><span class="op">:</span></span>
-<span id="cb41-13"><a href="" aria-label="13"></a>            openDelimiters<span class="op">.</span><span class="fu">push</span><span class="op">(</span>next<span class="op">);</span></span>
-<span id="cb41-14"><a href="" aria-label="14"></a>            <span class="cf">break</span><span class="op">;</span></span>
-<span id="cb41-15"><a href="" aria-label="15"></a>         <span class="cf">case</span> <span class="ch">')'</span><span class="op">:</span> <span class="cf">case</span> <span class="ch">']'</span><span class="op">:</span> <span class="cf">case</span> <span class="ch">'}'</span><span class="op">:</span></span>
-<span id="cb41-16"><a href="" aria-label="16"></a>            <span class="cf">if</span> <span class="op">(</span>openDelimiters<span class="op">.</span><span class="fu">isEmpty</span><span class="op">())</span>               <span class="co">// failure 2</span></span>
-<span id="cb41-17"><a href="" aria-label="17"></a>               isBalanced <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
-<span id="cb41-18"><a href="" aria-label="18"></a>            <span class="cf">else</span></span>
-<span id="cb41-19"><a href="" aria-label="19"></a>               isBalanced <span class="op">=</span> <span class="fu">isPaired</span><span class="op">(</span>openDelimiters<span class="op">.</span><span class="fu">pop</span><span class="op">(),</span> next<span class="op">);</span>  <span class="co">// 1</span></span>
-<span id="cb41-20"><a href="" aria-label="20"></a>            <span class="cf">break</span><span class="op">;</span></span>
-<span id="cb41-21"><a href="" aria-label="21"></a>         <span class="kw">default</span><span class="op">:</span> <span class="cf">break</span><span class="op">;</span>                                <span class="co">// ignore the rest</span></span>
-<span id="cb41-22"><a href="" aria-label="22"></a>      <span class="op">}</span></span>
-<span id="cb41-23"><a href="" aria-label="23"></a>      index<span class="op">++;</span></span>
-<span id="cb41-24"><a href="" aria-label="24"></a>   <span class="op">}</span></span>
-<span id="cb41-25"><a href="" aria-label="25"></a>   <span class="cf">return</span> isBalanced <span class="op">&amp;&amp;</span> openDelimiters<span class="op">.</span><span class="fu">isEmpty</span><span class="op">();</span>       <span class="co">// failure 3</span></span>
-<span id="cb41-26"><a href="" aria-label="26"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="balanced-delimiters-in-java-must-know" class="slide level2 code-mid long-title">
+<h2>Balanced Delimiters, in Java <span class="ex">Must Know</span></h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span><a href="" aria-label="1"></a><span class="kw">public</span> <span class="dt">static</span> <span class="dt">boolean</span> <span class="fu">checkBalance</span><span class="op">(</span><span class="bu">String</span> expression<span class="op">)</span></span>
+<span><a href="" aria-label="2"></a><span class="op">{</span></span>
+<span><a href="" aria-label="3"></a>   StackInterface<span class="op">&lt;</span><span class="bu">Character</span><span class="op">&gt;</span> openDelimiters <span class="op">=</span> <span class="kw">new</span> LinkedStack<span class="op">&lt;&gt;();</span></span>
+<span><a href="" aria-label="4"></a>   <span class="dt">boolean</span> isBalanced <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span><a href="" aria-label="5"></a>   <span class="dt">int</span> index <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span><a href="" aria-label="6"></a></span>
+<span><a href="" aria-label="7"></a>   <span class="cf">while</span> <span class="op">(</span>isBalanced <span class="op">&amp;&amp;</span> <span class="op">(</span>index <span class="op">&lt;</span> expression<span class="op">.</span><span class="fu">length</span><span class="op">()))</span></span>
+<span><a href="" aria-label="8"></a>   <span class="op">{</span></span>
+<span><a href="" aria-label="9"></a>      <span class="dt">char</span> next <span class="op">=</span> expression<span class="op">.</span><span class="fu">charAt</span><span class="op">(</span>index<span class="op">);</span></span>
+<span><a href="" aria-label="10"></a>      <span class="cf">switch</span> <span class="op">(</span>next<span class="op">)</span></span>
+<span><a href="" aria-label="11"></a>      <span class="op">{</span></span>
+<span><a href="" aria-label="12"></a>         <span class="cf">case</span> <span class="ch">'('</span><span class="op">:</span> <span class="cf">case</span> <span class="ch">'['</span><span class="op">:</span> <span class="cf">case</span> <span class="ch">'{'</span><span class="op">:</span></span>
+<span><a href="" aria-label="13"></a>            openDelimiters<span class="op">.</span><span class="fu">push</span><span class="op">(</span>next<span class="op">);</span></span>
+<span><a href="" aria-label="14"></a>            <span class="cf">break</span><span class="op">;</span></span>
+<span><a href="" aria-label="15"></a>         <span class="cf">case</span> <span class="ch">')'</span><span class="op">:</span> <span class="cf">case</span> <span class="ch">']'</span><span class="op">:</span> <span class="cf">case</span> <span class="ch">'}'</span><span class="op">:</span></span>
+<span><a href="" aria-label="16"></a><span class="fragment" data-fragment-index="2">            <span class="cf">if</span> <span class="op">(</span>openDelimiters<span class="op">.</span><span class="fu">isEmpty</span><span class="op">())</span>               <span class="co">// failure 2</span></span></span>
+<span><a href="" aria-label="17"></a><span class="fragment" data-fragment-index="2">               isBalanced <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span></span>
+<span><a href="" aria-label="18"></a><span class="fragment" data-fragment-index="2">            <span class="cf">else</span></span></span>
+<span><a href="" aria-label="19"></a><span class="fragment" data-fragment-index="1">               isBalanced <span class="op">=</span> <span class="fu">isPaired</span><span class="op">(</span>openDelimiters<span class="op">.</span><span class="fu">pop</span><span class="op">(),</span> next<span class="op">);</span> <span class="co">// failure 1</span></span></span>
+<span><a href="" aria-label="20"></a>            <span class="cf">break</span><span class="op">;</span></span>
+<span><a href="" aria-label="21"></a>         <span class="kw">default</span><span class="op">:</span> <span class="cf">break</span><span class="op">;</span>                                <span class="co">// ignore the rest</span></span>
+<span><a href="" aria-label="22"></a>      <span class="op">}</span></span>
+<span><a href="" aria-label="23"></a>      index<span class="op">++;</span></span>
+<span><a href="" aria-label="24"></a>   <span class="op">}</span></span>
+<span><a href="" aria-label="25"></a><span class="fragment" data-fragment-index="3">   <span class="cf">return</span> isBalanced <span class="op">&amp;&amp;</span> openDelimiters<span class="op">.</span><span class="fu">isEmpty</span><span class="op">();</span>       <span class="co">// failure 3</span></span></span>
+<span><a href="" aria-label="26"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="infix-prefix-postfix" class="slide level2">
 <h2>Infix, Prefix, Postfix</h2>
@@ -2099,34 +2060,34 @@ of anything
 <tr class="header">
 <th data-quarto-table-cell-role="th">read</th>
 <th class="st" data-quarto-table-cell-role="th">value stack (bottom → top)</th>
-<th data-quarto-table-cell-role="th">what happened</th>
+<th class="why" data-quarto-table-cell-role="th">what happened</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td class="tok">6</td>
 <td class="st">6</td>
-<td class="note">push</td>
+<td class="why">push</td>
 </tr>
 <tr class="fragment even">
 <td class="tok">3</td>
 <td class="st">6 3</td>
-<td class="note">push</td>
+<td class="why">push</td>
 </tr>
 <tr class="fragment odd">
 <td class="tok">2</td>
 <td class="st">6 3 2</td>
-<td class="note">push</td>
+<td class="why">push</td>
 </tr>
 <tr class="fragment even">
 <td class="tok">+</td>
 <td class="st">6 5</td>
-<td class="note">popped 2 then 3, pushed 3 + 2</td>
+<td class="why">popped 2 then 3, pushed 3 + 2</td>
 </tr>
 <tr class="fragment result odd">
 <td class="tok">*</td>
 <td class="st">30</td>
-<td class="note">popped 5 then 6, pushed 6 × 5</td>
+<td class="why">popped 5 then 6, pushed 6 × 5</td>
 </tr>
 </tbody>
 </table>
@@ -2136,23 +2097,23 @@ of anything
 </section>
 <section id="the-postfix-algorithm" class="slide level2">
 <h2>The Postfix Algorithm</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb42-1"><a href="" aria-label="1"></a><span class="kw">public</span> <span class="dt">static</span> <span class="dt">double</span> <span class="fu">evaluatePostfix</span><span class="op">(</span><span class="bu">String</span> postfix<span class="op">)</span></span>
-<span id="cb42-2"><a href="" aria-label="2"></a><span class="op">{</span></span>
-<span id="cb42-3"><a href="" aria-label="3"></a>   StackInterface<span class="op">&lt;</span><span class="bu">Double</span><span class="op">&gt;</span> valueStack <span class="op">=</span> <span class="kw">new</span> LinkedStack<span class="op">&lt;&gt;();</span></span>
-<span id="cb42-4"><a href="" aria-label="4"></a></span>
-<span id="cb42-5"><a href="" aria-label="5"></a>   <span class="cf">for</span> <span class="op">(</span><span class="bu">String</span> token <span class="op">:</span> postfix<span class="op">.</span><span class="fu">split</span><span class="op">(</span><span class="st">"</span><span class="sc">\\</span><span class="st">s+"</span><span class="op">))</span></span>
-<span id="cb42-6"><a href="" aria-label="6"></a>   <span class="op">{</span></span>
-<span id="cb42-7"><a href="" aria-label="7"></a>      <span class="cf">if</span> <span class="op">(</span><span class="fu">isOperator</span><span class="op">(</span>token<span class="op">))</span></span>
-<span id="cb42-8"><a href="" aria-label="8"></a>      <span class="op">{</span></span>
-<span id="cb42-9"><a href="" aria-label="9"></a>         <span class="dt">double</span> operandTwo <span class="op">=</span> valueStack<span class="op">.</span><span class="fu">pop</span><span class="op">();</span>     <span class="co">// right operand</span></span>
-<span id="cb42-10"><a href="" aria-label="10"></a>         <span class="dt">double</span> operandOne <span class="op">=</span> valueStack<span class="op">.</span><span class="fu">pop</span><span class="op">();</span>     <span class="co">// left operand</span></span>
-<span id="cb42-11"><a href="" aria-label="11"></a>         valueStack<span class="op">.</span><span class="fu">push</span><span class="op">(</span><span class="fu">apply</span><span class="op">(</span>token<span class="op">,</span> operandOne<span class="op">,</span> operandTwo<span class="op">));</span></span>
-<span id="cb42-12"><a href="" aria-label="12"></a>      <span class="op">}</span></span>
-<span id="cb42-13"><a href="" aria-label="13"></a>      <span class="cf">else</span></span>
-<span id="cb42-14"><a href="" aria-label="14"></a>         valueStack<span class="op">.</span><span class="fu">push</span><span class="op">(</span><span class="bu">Double</span><span class="op">.</span><span class="fu">parseDouble</span><span class="op">(</span>token<span class="op">));</span></span>
-<span id="cb42-15"><a href="" aria-label="15"></a>   <span class="op">}</span></span>
-<span id="cb42-16"><a href="" aria-label="16"></a>   <span class="cf">return</span> valueStack<span class="op">.</span><span class="fu">peek</span><span class="op">();</span></span>
-<span id="cb42-17"><a href="" aria-label="17"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb39-1"><a href="" aria-label="1"></a><span class="kw">public</span> <span class="dt">static</span> <span class="dt">double</span> <span class="fu">evaluatePostfix</span><span class="op">(</span><span class="bu">String</span> postfix<span class="op">)</span></span>
+<span id="cb39-2"><a href="" aria-label="2"></a><span class="op">{</span></span>
+<span id="cb39-3"><a href="" aria-label="3"></a>   StackInterface<span class="op">&lt;</span><span class="bu">Double</span><span class="op">&gt;</span> valueStack <span class="op">=</span> <span class="kw">new</span> LinkedStack<span class="op">&lt;&gt;();</span></span>
+<span id="cb39-4"><a href="" aria-label="4"></a></span>
+<span id="cb39-5"><a href="" aria-label="5"></a>   <span class="cf">for</span> <span class="op">(</span><span class="bu">String</span> token <span class="op">:</span> postfix<span class="op">.</span><span class="fu">split</span><span class="op">(</span><span class="st">"</span><span class="sc">\\</span><span class="st">s+"</span><span class="op">))</span></span>
+<span id="cb39-6"><a href="" aria-label="6"></a>   <span class="op">{</span></span>
+<span id="cb39-7"><a href="" aria-label="7"></a>      <span class="cf">if</span> <span class="op">(</span><span class="fu">isOperator</span><span class="op">(</span>token<span class="op">))</span></span>
+<span id="cb39-8"><a href="" aria-label="8"></a>      <span class="op">{</span></span>
+<span id="cb39-9"><a href="" aria-label="9"></a>         <span class="dt">double</span> operandTwo <span class="op">=</span> valueStack<span class="op">.</span><span class="fu">pop</span><span class="op">();</span>     <span class="co">// right operand</span></span>
+<span id="cb39-10"><a href="" aria-label="10"></a>         <span class="dt">double</span> operandOne <span class="op">=</span> valueStack<span class="op">.</span><span class="fu">pop</span><span class="op">();</span>     <span class="co">// left operand</span></span>
+<span id="cb39-11"><a href="" aria-label="11"></a>         valueStack<span class="op">.</span><span class="fu">push</span><span class="op">(</span><span class="fu">apply</span><span class="op">(</span>token<span class="op">,</span> operandOne<span class="op">,</span> operandTwo<span class="op">));</span></span>
+<span id="cb39-12"><a href="" aria-label="12"></a>      <span class="op">}</span></span>
+<span id="cb39-13"><a href="" aria-label="13"></a>      <span class="cf">else</span></span>
+<span id="cb39-14"><a href="" aria-label="14"></a>         valueStack<span class="op">.</span><span class="fu">push</span><span class="op">(</span><span class="bu">Double</span><span class="op">.</span><span class="fu">parseDouble</span><span class="op">(</span>token<span class="op">));</span></span>
+<span id="cb39-15"><a href="" aria-label="15"></a>   <span class="op">}</span></span>
+<span id="cb39-16"><a href="" aria-label="16"></a>   <span class="cf">return</span> valueStack<span class="op">.</span><span class="fu">peek</span><span class="op">();</span></span>
+<span id="cb39-17"><a href="" aria-label="17"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
 <p>No precedence table. No parentheses. <strong><em>No second stack.</em></strong></p>
 </div>
@@ -2211,7 +2172,6 @@ of anything
 </section>
 <section id="the-demo" class="slide level2 tiny-table">
 <h2>The Demo</h2>
-<p><span class="doit">call the next row</span></p>
 <p><span class="math display">\[(\,1 + (\,(\,2 + 3\,) * (\,4 * 5\,)\,)\,)\]</span></p>
 <table class="steps caption-top">
 <thead>
@@ -2347,7 +2307,6 @@ of anything
 </section>
 <section id="infix-to-postfix" class="slide level2 dense-table">
 <h2>Infix to Postfix</h2>
-<p><span class="doit">call the next row</span></p>
 <p><span class="math display">\[a + b * (\,c + d\,)\]</span></p>
 <table class="steps caption-top">
 <thead>
@@ -2355,7 +2314,7 @@ of anything
 <th data-quarto-table-cell-role="th">read</th>
 <th class="out" data-quarto-table-cell-role="th">output</th>
 <th class="st" data-quarto-table-cell-role="th">operator stack</th>
-<th data-quarto-table-cell-role="th">what happened</th>
+<th class="why" data-quarto-table-cell-role="th">what happened</th>
 </tr>
 </thead>
 <tbody>
@@ -2363,61 +2322,61 @@ of anything
 <td class="tok">a</td>
 <td class="out">a</td>
 <td class="st"></td>
-<td class="note">append</td>
+<td class="why">append</td>
 </tr>
 <tr class="fragment even">
 <td class="tok">+</td>
 <td class="out">a</td>
 <td class="st">+</td>
-<td class="note">stack empty, push</td>
+<td class="why">stack empty, push</td>
 </tr>
 <tr class="fragment odd">
 <td class="tok">b</td>
 <td class="out">ab</td>
 <td class="st">+</td>
-<td class="note">append</td>
+<td class="why">append</td>
 </tr>
 <tr class="fragment even">
 <td class="tok">*</td>
 <td class="out">ab</td>
 <td class="st">+ *</td>
-<td class="note">+ is lower, push</td>
+<td class="why">+ is lower, push</td>
 </tr>
 <tr class="fragment odd">
 <td class="tok">(</td>
 <td class="out">ab</td>
 <td class="st">+ * (</td>
-<td class="note">push</td>
+<td class="why">push</td>
 </tr>
 <tr class="fragment even">
 <td class="tok">c</td>
 <td class="out">abc</td>
 <td class="st">+ * (</td>
-<td class="note">append</td>
+<td class="why">append</td>
 </tr>
 <tr class="fragment odd">
 <td class="tok">+</td>
 <td class="out">abc</td>
 <td class="st">+ * ( +</td>
-<td class="note">( blocks the pop, push</td>
+<td class="why">( blocks the pop, push</td>
 </tr>
 <tr class="fragment even">
 <td class="tok">d</td>
 <td class="out">abcd</td>
 <td class="st">+ * ( +</td>
-<td class="note">append</td>
+<td class="why">append</td>
 </tr>
 <tr class="fragment odd">
 <td class="tok">)</td>
 <td class="out">abcd+</td>
 <td class="st">+ *</td>
-<td class="note">pop to ( , discard both</td>
+<td class="why">pop to ( , discard both</td>
 </tr>
 <tr class="fragment result even">
 <td class="tok">end</td>
 <td class="out">abcd+*+</td>
 <td class="st"></td>
-<td class="note">pop the rest</td>
+<td class="why">pop the rest</td>
 </tr>
 </tbody>
 </table>
@@ -2514,7 +2473,7 @@ of anything
 <th data-quarto-table-cell-role="th">call</th>
 <th class="st" data-quarto-table-cell-role="th">s1</th>
 <th class="st" data-quarto-table-cell-role="th">s2</th>
-<th class="note" data-quarto-table-cell-role="th">returns</th>
+<th class="why" data-quarto-table-cell-role="th">returns</th>
 </tr>
 </thead>
 <tbody>
@@ -2522,49 +2481,49 @@ of anything
 <td class="tok">enqueue 1</td>
 <td class="st">1</td>
 <td class="st">(empty)</td>
-<td class="note"></td>
+<td class="why"></td>
 </tr>
 <tr class="fragment even">
 <td class="tok">enqueue 2</td>
 <td class="st">1 2</td>
 <td class="st">(empty)</td>
-<td class="note"></td>
+<td class="why"></td>
 </tr>
 <tr class="fragment odd">
 <td class="tok">enqueue 3</td>
 <td class="st">1 2 3</td>
 <td class="st">(empty)</td>
-<td class="note"></td>
+<td class="why"></td>
 </tr>
 <tr class="fragment even">
 <td class="tok">dequeue</td>
 <td class="st">(empty)</td>
 <td class="st">3 2</td>
-<td class="note">1 — poured first</td>
+<td class="why">1 — poured first</td>
 </tr>
 <tr class="fragment odd">
 <td class="tok">dequeue</td>
 <td class="st">(empty)</td>
 <td class="st">3</td>
-<td class="note">2 — no pour</td>
+<td class="why">2 — no pour</td>
 </tr>
 <tr class="fragment even">
 <td class="tok">enqueue 4</td>
 <td class="st">4</td>
 <td class="st">3</td>
-<td class="note"></td>
+<td class="why"></td>
 </tr>
 <tr class="fragment odd">
 <td class="tok">dequeue</td>
 <td class="st">4</td>
 <td class="st">(empty)</td>
-<td class="note">3 — no pour</td>
+<td class="why">3 — no pour</td>
 </tr>
 <tr class="fragment result even">
 <td class="tok">dequeue</td>
 <td class="st">(empty)</td>
 <td class="st">(empty)</td>
-<td class="note">4 — poured</td>
+<td class="why">4 — poured</td>
 </tr>
 </tbody>
 </table>
@@ -2572,37 +2531,21 @@ of anything
 <p>Out came <span class="math inline">\(1, 2, 3, 4\)</span>. <strong><em>The 4 arrived after the 2 came out, and still had to wait behind the 3.</em></strong></p>
 </div>
 </section>
-<section id="write-the-queue" class="slide level2">
-<h2>Write the Queue</h2>
-<p><span class="livecode">live code</span></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb43-1"><a href="" aria-label="1"></a>Algorithm <span class="fu">enqueue</span><span class="op">(</span>value<span class="op">):</span></span>
-<span id="cb43-2"><a href="" aria-label="2"></a>   <span class="co">// your line here  ____________________</span></span>
-<span id="cb43-3"><a href="" aria-label="3"></a></span>
-<span id="cb43-4"><a href="" aria-label="4"></a></span>
-<span id="cb43-5"><a href="" aria-label="5"></a>Algorithm <span class="fu">dequeue</span><span class="op">():</span></span>
-<span id="cb43-6"><a href="" aria-label="6"></a>   <span class="cf">if</span> <span class="op">(</span>s2<span class="op">.</span><span class="fu">isEmpty</span><span class="op">())</span>                    <span class="co">// move everything across</span></span>
-<span id="cb43-7"><a href="" aria-label="7"></a>      <span class="co">// your two lines here  ____________________</span></span>
-<span id="cb43-8"><a href="" aria-label="8"></a></span>
-<span id="cb43-9"><a href="" aria-label="9"></a></span>
-<span id="cb43-10"><a href="" aria-label="10"></a>   <span class="cf">if</span> <span class="op">(</span>s2<span class="op">.</span><span class="fu">isEmpty</span><span class="op">())</span></span>
-<span id="cb43-11"><a href="" aria-label="11"></a>      <span class="cf">return</span> <span class="st">"queue is empty"</span></span>
-<span id="cb43-12"><a href="" aria-label="12"></a>   <span class="cf">else</span></span>
-<span id="cb43-13"><a href="" aria-label="13"></a>      <span class="co">// your line here  ____________________</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="the-queue-must-know" class="slide level2 code-mid">
-<h2>The Queue <span class="ex">Must Know</span></h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span id="cb44-1"><a href="" aria-label="1"></a>Algorithm <span class="fu">enqueue</span><span class="op">(</span>value<span class="op">):</span></span>
-<span id="cb44-2"><a href="" aria-label="2"></a>   s1<span class="op">.</span><span class="fu">push</span><span class="op">(</span>value<span class="op">);</span></span>
-<span id="cb44-3"><a href="" aria-label="3"></a></span>
-<span id="cb44-4"><a href="" aria-label="4"></a>Algorithm <span class="fu">dequeue</span><span class="op">():</span></span>
-<span id="cb44-5"><a href="" aria-label="5"></a>   <span class="cf">if</span> <span class="op">(</span>s2<span class="op">.</span><span class="fu">isEmpty</span><span class="op">())</span>                    <span class="co">// move everything across</span></span>
-<span id="cb44-6"><a href="" aria-label="6"></a>      <span class="cf">while</span> <span class="op">(!</span>s1<span class="op">.</span><span class="fu">isEmpty</span><span class="op">())</span></span>
-<span id="cb44-7"><a href="" aria-label="7"></a>         s2<span class="op">.</span><span class="fu">push</span><span class="op">(</span>s1<span class="op">.</span><span class="fu">pop</span><span class="op">());</span></span>
-<span id="cb44-8"><a href="" aria-label="8"></a></span>
-<span id="cb44-9"><a href="" aria-label="9"></a>   <span class="cf">if</span> <span class="op">(</span>s2<span class="op">.</span><span class="fu">isEmpty</span><span class="op">())</span></span>
-<span id="cb44-10"><a href="" aria-label="10"></a>      <span class="cf">return</span> <span class="st">"queue is empty"</span></span>
-<span id="cb44-11"><a href="" aria-label="11"></a>   <span class="cf">else</span></span>
-<span id="cb44-12"><a href="" aria-label="12"></a>      <span class="cf">return</span> s2<span class="op">.</span><span class="fu">pop</span><span class="op">();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="write-the-queue-must-know" class="slide level2">
+<h2>Write the Queue <span class="ex">Must Know</span></h2>
+<p>Four lines are missing. Call each one before it appears.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span><a href="" aria-label="1"></a>Algorithm <span class="fu">enqueue</span><span class="op">(</span>value<span class="op">):</span></span>
+<span><a href="" aria-label="2"></a><span class="fragment">   s1<span class="op">.</span><span class="fu">push</span><span class="op">(</span>value<span class="op">);</span></span></span>
+<span><a href="" aria-label="3"></a></span>
+<span><a href="" aria-label="4"></a>Algorithm <span class="fu">dequeue</span><span class="op">():</span></span>
+<span><a href="" aria-label="5"></a>   <span class="cf">if</span> <span class="op">(</span>s2<span class="op">.</span><span class="fu">isEmpty</span><span class="op">())</span>                    <span class="co">// move everything across</span></span>
+<span><a href="" aria-label="6"></a><span class="fragment">      <span class="cf">while</span> <span class="op">(!</span>s1<span class="op">.</span><span class="fu">isEmpty</span><span class="op">())</span></span></span>
+<span><a href="" aria-label="7"></a><span class="fragment">         s2<span class="op">.</span><span class="fu">push</span><span class="op">(</span>s1<span class="op">.</span><span class="fu">pop</span><span class="op">());</span></span></span>
+<span><a href="" aria-label="8"></a></span>
+<span><a href="" aria-label="9"></a>   <span class="cf">if</span> <span class="op">(</span>s2<span class="op">.</span><span class="fu">isEmpty</span><span class="op">())</span></span>
+<span><a href="" aria-label="10"></a>      <span class="cf">return</span> <span class="st">"queue is empty"</span></span>
+<span><a href="" aria-label="11"></a>   <span class="cf">else</span></span>
+<span><a href="" aria-label="12"></a><span class="fragment">      <span class="cf">return</span> s2<span class="op">.</span><span class="fu">pop</span><span class="op">();</span></span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
 <p>The second <code>isEmpty()</code> is not a duplicate of the first. The first asks whether to pour; the second catches the case where the pour found nothing to move, and the queue really is empty.</p>
 </div>
