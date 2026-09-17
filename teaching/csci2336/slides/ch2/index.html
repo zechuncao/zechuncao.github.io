@@ -1984,16 +1984,16 @@ of anything
 <span><a href="" aria-label="13"></a>            openDelimiters<span class="op">.</span><span class="fu">push</span><span class="op">(</span>next<span class="op">);</span></span>
 <span><a href="" aria-label="14"></a>            <span class="cf">break</span><span class="op">;</span></span>
 <span><a href="" aria-label="15"></a>         <span class="cf">case</span> <span class="ch">')'</span><span class="op">:</span> <span class="cf">case</span> <span class="ch">']'</span><span class="op">:</span> <span class="cf">case</span> <span class="ch">'}'</span><span class="op">:</span></span>
-<span><a href="" aria-label="16"></a><span class="fragment" data-fragment-index="2">            <span class="cf">if</span> <span class="op">(</span>openDelimiters<span class="op">.</span><span class="fu">isEmpty</span><span class="op">())</span>               <span class="co">// failure 2</span></span></span>
-<span><a href="" aria-label="17"></a><span class="fragment" data-fragment-index="2">               isBalanced <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span></span>
-<span><a href="" aria-label="18"></a><span class="fragment" data-fragment-index="2">            <span class="cf">else</span></span></span>
-<span><a href="" aria-label="19"></a><span class="fragment" data-fragment-index="1">               isBalanced <span class="op">=</span> <span class="fu">isPaired</span><span class="op">(</span>openDelimiters<span class="op">.</span><span class="fu">pop</span><span class="op">(),</span> next<span class="op">);</span> <span class="co">// failure 1</span></span></span>
+<span><a href="" aria-label="16"></a><span class="fragment">            <span class="cf">if</span> <span class="op">(</span>openDelimiters<span class="op">.</span><span class="fu">isEmpty</span><span class="op">())</span>               <span class="co">// failure 2</span></span></span>
+<span><a href="" aria-label="17"></a><span class="fragment">               isBalanced <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span></span>
+<span><a href="" aria-label="18"></a><span class="fragment">            <span class="cf">else</span></span></span>
+<span><a href="" aria-label="19"></a><span class="fragment">               isBalanced <span class="op">=</span> <span class="fu">isPaired</span><span class="op">(</span>openDelimiters<span class="op">.</span><span class="fu">pop</span><span class="op">(),</span> next<span class="op">);</span> <span class="co">// failure 1</span></span></span>
 <span><a href="" aria-label="20"></a>            <span class="cf">break</span><span class="op">;</span></span>
 <span><a href="" aria-label="21"></a>         <span class="kw">default</span><span class="op">:</span> <span class="cf">break</span><span class="op">;</span>                                <span class="co">// ignore the rest</span></span>
 <span><a href="" aria-label="22"></a>      <span class="op">}</span></span>
 <span><a href="" aria-label="23"></a>      index<span class="op">++;</span></span>
 <span><a href="" aria-label="24"></a>   <span class="op">}</span></span>
-<span><a href="" aria-label="25"></a><span class="fragment" data-fragment-index="3">   <span class="cf">return</span> isBalanced <span class="op">&amp;&amp;</span> openDelimiters<span class="op">.</span><span class="fu">isEmpty</span><span class="op">();</span>       <span class="co">// failure 3</span></span></span>
+<span><a href="" aria-label="25"></a><span class="fragment">   <span class="cf">return</span> isBalanced <span class="op">&amp;&amp;</span> openDelimiters<span class="op">.</span><span class="fu">isEmpty</span><span class="op">();</span>       <span class="co">// failure 3</span></span></span>
 <span><a href="" aria-label="26"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="infix-prefix-postfix" class="slide level2">
@@ -2118,6 +2118,16 @@ of anything
 <p>No precedence table. No parentheses. <strong><em>No second stack.</em></strong></p>
 </div>
 </section>
+<section id="cost-of-evaluating-postfix" class="slide level2">
+<h2>Cost of Evaluating Postfix</h2>
+<p>An expression with <span class="math inline">\(k\)</span> operators has <span class="math inline">\(k + 1\)</span> operands, so <span class="math inline">\(n = 2k + 1\)</span> tokens. Each operand is pushed once; each operator pops twice and pushes once.</p>
+<div class="fragment">
+<p><span class="lead-blue">Time.</span> <span class="math inline">\(n\)</span> pushes and <span class="math inline">\(n - 1\)</span> pops, each <span class="math inline">\(O(1)\)</span> on either stack implementation: <span class="math inline">\(O(n)\)</span> for one pass over the input.</p>
+</div>
+<div class="fragment">
+<p><span class="lead-blue">Space.</span> The value stack never holds more than <span class="math inline">\(k + 1\)</span> values: <span class="math inline">\(O(n)\)</span>.</p>
+</div>
+</section>
 <section id="your-turn" class="slide level2">
 <h2>Your Turn</h2>
 <p>Evaluate each, and write the infix expression it came from.</p>
@@ -2156,116 +2166,9 @@ of anything
 <p>Recovering the infix form is the same trace read backwards: each operator names the two subexpressions sitting under it.</p>
 </div>
 </section>
-<section id="dijkstras-two-stack-algorithm-must-know" class="slide level2 long-title">
-<h2>Dijkstra’s Two-Stack Algorithm <span class="ex">Must Know</span></h2>
-<p><span class="lead-blue">Goal.</span> Evaluate a fully parenthesized <strong>infix</strong> expression directly, with no conversion step.</p>
-<p>Keep two stacks — one for values, one for operators — and one rule per token:</p>
-<ul>
-<li><strong>Value</strong> — push it onto the value stack.</li>
-<li><strong>Operator</strong> — push it onto the operator stack.</li>
-<li><strong>Left parenthesis</strong> — ignore it.</li>
-<li><strong>Right parenthesis</strong> — pop an operator and two values; apply and push.</li>
-</ul>
-<div class="fragment">
-<p><span class="lead-red">That is the entire algorithm. — E. W. Dijkstra</span></p>
-</div>
-</section>
-<section id="the-demo" class="slide level2 tiny-table">
-<h2>The Demo</h2>
-<p><span class="math display">\[(\,1 + (\,(\,2 + 3\,) * (\,4 * 5\,)\,)\,)\]</span></p>
-<table class="steps caption-top">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th">read</th>
-<th class="st" data-quarto-table-cell-role="th">value stack</th>
-<th class="st" data-quarto-table-cell-role="th">operator stack</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td class="tok">1</td>
-<td class="st">1</td>
-<td class="st"></td>
-</tr>
-<tr class="fragment even">
-<td class="tok">+</td>
-<td class="st">1</td>
-<td class="st">+</td>
-</tr>
-<tr class="fragment odd">
-<td class="tok">2</td>
-<td class="st">1 2</td>
-<td class="st">+</td>
-</tr>
-<tr class="fragment even">
-<td class="tok">+</td>
-<td class="st">1 2</td>
-<td class="st">+ +</td>
-</tr>
-<tr class="fragment odd">
-<td class="tok">3</td>
-<td class="st">1 2 3</td>
-<td class="st">+ +</td>
-</tr>
-<tr class="fragment even">
-<td class="tok">)</td>
-<td class="st">1 5</td>
-<td class="st">+</td>
-</tr>
-<tr class="fragment odd">
-<td class="tok">*</td>
-<td class="st">1 5</td>
-<td class="st">+ *</td>
-</tr>
-<tr class="fragment even">
-<td class="tok">4</td>
-<td class="st">1 5 4</td>
-<td class="st">+ *</td>
-</tr>
-<tr class="fragment odd">
-<td class="tok">*</td>
-<td class="st">1 5 4</td>
-<td class="st">+ * *</td>
-</tr>
-<tr class="fragment even">
-<td class="tok">5</td>
-<td class="st">1 5 4 5</td>
-<td class="st">+ * *</td>
-</tr>
-<tr class="fragment odd">
-<td class="tok">)</td>
-<td class="st">1 5 20</td>
-<td class="st">+ *</td>
-</tr>
-<tr class="fragment even">
-<td class="tok">)</td>
-<td class="st">1 100</td>
-<td class="st">+</td>
-</tr>
-<tr class="fragment result odd">
-<td class="tok">)</td>
-<td class="st">101</td>
-<td class="st"></td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="why-it-works" class="slide level2">
-<h2>Why It Works</h2>
-<p>Every time the algorithm meets an operator surrounded by two values inside parentheses, it leaves the result on the value stack — so the run is the same as if that subexpression had been the value all along.</p>
-<p><span class="math display">\[(\,1 + (\,(\,2 + 3\,) * (\,4 * 5\,)\,)\,)
-\;\longrightarrow\; (\,1 + (\,5 * (\,4 * 5\,)\,)\,)\]</span></p>
-<div class="fragment">
-<p>Apply the same argument again, and again: <span class="math display">\[(\,1 + (\,5 * 20\,)\,) \;\longrightarrow\;
-  (\,1 + 100\,) \;\longrightarrow\; 101\]</span></p>
-</div>
-<div class="fragment">
-<p><span class="lead-red">That is an interpreter</span> — it reads a language and computes what the language says.</p>
-</div>
-</section>
 <section id="infix-to-postfix-must-know" class="slide level2 wrap-table dense-table">
 <h2>Infix to Postfix <span class="ex">Must Know</span></h2>
-<p>The other route: convert once, then evaluate with one stack. One rule per token, and the stack holds <strong>operators</strong>, not values.</p>
+<p>People write infix, so a machine needs a route from infix to postfix. One rule per token, and the stack holds <strong>operators</strong>, not values.</p>
 <table class="caption-top">
 <colgroup>
 <col style="width: 50%">
@@ -2423,6 +2326,139 @@ of anything
 </table>
 <div class="fragment">
 <p>The third is the one that catches people. <code>^</code> is <strong>right</strong> associative — <span class="math inline">\(a^{(b^c)}\)</span>, not <span class="math inline">\((a^b)^c\)</span> — which is exactly why the rules push <code>^</code> without popping the <code>^</code> already there.</p>
+</div>
+</section>
+<section id="cost-of-the-conversion" class="slide level2">
+<h2>Cost of the Conversion</h2>
+<p>Each operand is appended to the output once. Each operator and each <code>(</code> is pushed once and popped once.</p>
+<div class="fragment">
+<p>One token can pop many operators — a <code>)</code> empties the stack back to its <code>(</code>, and the end of input empties it — but nothing is popped twice.</p>
+</div>
+<div class="fragment">
+<p><span class="lead-blue">Time.</span> <span class="math inline">\(O(n)\)</span> for <span class="math inline">\(n\)</span> tokens. The long pops are paid for by the pushes before them: Part 3’s amortized argument again.</p>
+</div>
+<div class="fragment">
+<p><span class="lead-blue">Space.</span> <span class="math inline">\(O(n)\)</span> — the stack holds at most the operators and <code>(</code> read so far, and the output holds at most <span class="math inline">\(n\)</span> tokens.</p>
+</div>
+</section>
+<section id="dijkstras-two-stack-algorithm-must-know" class="slide level2 long-title">
+<h2>Dijkstra’s Two-Stack Algorithm <span class="ex">Must Know</span></h2>
+<p><span class="lead-blue">Goal.</span> Evaluate a fully parenthesized <strong>infix</strong> expression directly, with no conversion step.</p>
+<p>Keep two stacks — one for values, one for operators — and one rule per token:</p>
+<ul>
+<li><strong>Value</strong> — push it onto the value stack.</li>
+<li><strong>Operator</strong> — push it onto the operator stack.</li>
+<li><strong>Left parenthesis</strong> — ignore it.</li>
+<li><strong>Right parenthesis</strong> — pop an operator and two values; apply and push.</li>
+</ul>
+<div class="fragment">
+<p><span class="lead-red">That is the entire algorithm. — E. W. Dijkstra</span></p>
+</div>
+</section>
+<section id="the-demo" class="slide level2 tiny-table">
+<h2>The Demo</h2>
+<p><span class="math display">\[(\,1 + (\,(\,2 + 3\,) * (\,4 * 5\,)\,)\,)\]</span></p>
+<table class="steps caption-top">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">read</th>
+<th class="st" data-quarto-table-cell-role="th">value stack</th>
+<th class="st" data-quarto-table-cell-role="th">operator stack</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td class="tok">1</td>
+<td class="st">1</td>
+<td class="st"></td>
+</tr>
+<tr class="fragment even">
+<td class="tok">+</td>
+<td class="st">1</td>
+<td class="st">+</td>
+</tr>
+<tr class="fragment odd">
+<td class="tok">2</td>
+<td class="st">1 2</td>
+<td class="st">+</td>
+</tr>
+<tr class="fragment even">
+<td class="tok">+</td>
+<td class="st">1 2</td>
+<td class="st">+ +</td>
+</tr>
+<tr class="fragment odd">
+<td class="tok">3</td>
+<td class="st">1 2 3</td>
+<td class="st">+ +</td>
+</tr>
+<tr class="fragment even">
+<td class="tok">)</td>
+<td class="st">1 5</td>
+<td class="st">+</td>
+</tr>
+<tr class="fragment odd">
+<td class="tok">*</td>
+<td class="st">1 5</td>
+<td class="st">+ *</td>
+</tr>
+<tr class="fragment even">
+<td class="tok">4</td>
+<td class="st">1 5 4</td>
+<td class="st">+ *</td>
+</tr>
+<tr class="fragment odd">
+<td class="tok">*</td>
+<td class="st">1 5 4</td>
+<td class="st">+ * *</td>
+</tr>
+<tr class="fragment even">
+<td class="tok">5</td>
+<td class="st">1 5 4 5</td>
+<td class="st">+ * *</td>
+</tr>
+<tr class="fragment odd">
+<td class="tok">)</td>
+<td class="st">1 5 20</td>
+<td class="st">+ *</td>
+</tr>
+<tr class="fragment even">
+<td class="tok">)</td>
+<td class="st">1 100</td>
+<td class="st">+</td>
+</tr>
+<tr class="fragment result odd">
+<td class="tok">)</td>
+<td class="st">101</td>
+<td class="st"></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="why-it-works" class="slide level2">
+<h2>Why It Works</h2>
+<p>Every time the algorithm meets an operator surrounded by two values inside parentheses, it leaves the result on the value stack — so the run is the same as if that subexpression had been the value all along.</p>
+<p><span class="math display">\[(\,1 + (\,(\,2 + 3\,) * (\,4 * 5\,)\,)\,)
+\;\longrightarrow\; (\,1 + (\,5 * (\,4 * 5\,)\,)\,)\]</span></p>
+<div class="fragment">
+<p>Apply the same argument again, and again: <span class="math display">\[(\,1 + (\,5 * 20\,)\,) \;\longrightarrow\;
+  (\,1 + 100\,) \;\longrightarrow\; 101\]</span></p>
+</div>
+<div class="fragment">
+<p><span class="lead-red">That is an interpreter</span> — it reads a language and computes what the language says.</p>
+</div>
+</section>
+<section id="cost-of-the-two-stack-algorithm" class="slide level2 long-title">
+<h2>Cost of the Two-Stack Algorithm</h2>
+<p>Each value and each operator is pushed once and popped at most once. A <code>(</code> costs nothing; a <code>)</code> does three pops, one apply, and one push.</p>
+<div class="fragment">
+<p><span class="lead-blue">Time.</span> Constant work per token: <span class="math inline">\(O(n)\)</span> for <span class="math inline">\(n\)</span> tokens.</p>
+</div>
+<div class="fragment">
+<p><span class="lead-blue">Space.</span> <span class="math inline">\(O(n)\)</span> — every token is pushed at most once, so the two stacks together never hold more than <span class="math inline">\(n\)</span> items.</p>
+</div>
+<div class="fragment">
+<p>Both routes cost <span class="math inline">\(O(n)\)</span>. Dijkstra needs the parentheses written in; the conversion needs the precedence table. Neither needs a second pass.</p>
 </div>
 </section>
 <section id="drop-the-parentheses" class="slide level2">
