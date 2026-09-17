@@ -2622,7 +2622,7 @@ Downloading opencv_python-4.11.0.86 ...   &lt;-- numpy 1.26.4 works</code></pre>
 <li>Let <span class="math inline">\(Q(x, y)\)</span> be “<span class="math inline">\(x + y = 0\)</span>” and <span class="math inline">\(U\)</span> be the real numbers. Then <span class="math inline">\(\forall x\, \exists y\, Q(x, y)\)</span> is <span class="fragment ans">true</span>, but <span class="math inline">\(\exists y\, \forall x\, Q(x, y)\)</span> is <span class="fragment ans">false</span>.</li>
 </ul>
 <div class="fragment">
-<p>Same quantifier twice: order does not matter. <strong>Mixed quantifiers: order changes the meaning.</strong> <span class="math inline">\(\forall x\, \exists y\)</span> lets <span class="math inline">\(y\)</span> depend on <span class="math inline">\(x\)</span>; <span class="math inline">\(\exists y\, \forall x\)</span> demands one <span class="math inline">\(y\)</span> that works for every <span class="math inline">\(x\)</span>.</p>
+<p>When both quantifiers are the same kind, the order does not matter. When they are mixed, it does: <span class="math inline">\(\forall x\, \exists y\)</span> lets <span class="math inline">\(y\)</span> depend on <span class="math inline">\(x\)</span>, while <span class="math inline">\(\exists y\, \forall x\)</span> requires one <span class="math inline">\(y\)</span> that works for every <span class="math inline">\(x\)</span>.</p>
 </div>
 </section>
 <section id="order-of-quantifiers" class="slide level2">
@@ -2633,7 +2633,7 @@ Downloading opencv_python-4.11.0.86 ...   &lt;-- numpy 1.26.4 works</code></pre>
 <li>“Somebody is loved by everybody.” <span class="fragment ans"><span class="math inline">\(\exists y\, \forall x\, L(x, y)\)</span></span></li>
 </ul>
 <div class="fragment">
-<p><strong>B</strong> — the first lets each person pick their own somebody; the second names one person everybody loves. The second implies the first, never the reverse.</p>
+<p><strong>B</strong> — the first lets each person pick their own somebody; the second names one person everybody loves. The second implies the first, but not the reverse.</p>
 </div>
 </section>
 <section id="two-variable-quantifiers" class="slide level2">
@@ -2693,11 +2693,11 @@ Downloading opencv_python-4.11.0.86 ...   &lt;-- numpy 1.26.4 works</code></pre>
 <ol type="1">
 <li><span class="math inline">\(\forall x\, \forall y\, P(x, y)\)</span> <span class="fragment ans">F — <span class="math inline">\(2 / 1 \neq 1\)</span></span></li>
 <li><span class="math inline">\(\forall x\, \exists y\, P(x, y)\)</span> <span class="fragment ans">F — <span class="math inline">\(x = 0\)</span> has no <span class="math inline">\(y\)</span></span></li>
-<li><span class="math inline">\(\exists x\, \forall y\, P(x, y)\)</span> <span class="fragment ans">F — <span class="math inline">\(y = 2x\)</span> defeats every <span class="math inline">\(x\)</span></span></li>
+<li><span class="math inline">\(\exists x\, \forall y\, P(x, y)\)</span> <span class="fragment ans">F — for any <span class="math inline">\(x\)</span>, <span class="math inline">\(y = 2x\)</span> fails</span></li>
 <li><span class="math inline">\(\exists x\, \exists y\, P(x, y)\)</span> <span class="fragment ans">T — <span class="math inline">\(x = y = 1\)</span></span></li>
 </ol>
 <div class="fragment">
-<p>Compare with <span class="math inline">\(x \cdot y = 0\)</span>: one bad value of <span class="math inline">\(x\)</span> is enough to sink <span class="math inline">\(\forall x\, \exists y\)</span>.</p>
+<p>Compare with <span class="math inline">\(x \cdot y = 0\)</span>: here the single value <span class="math inline">\(x = 0\)</span> makes <span class="math inline">\(\forall x\, \exists y\)</span> false.</p>
 </div>
 </section>
 <section id="why-it-matters-superuser" class="slide level2">
@@ -2717,7 +2717,7 @@ Downloading opencv_python-4.11.0.86 ...   &lt;-- numpy 1.26.4 works</code></pre>
 </div>
 </div></div>
 <div class="fragment">
-<p><strong>B</strong> — one account that owns <em>every</em> file. <strong>A</strong> only says every file has <em>some</em> owner, possibly a different one each time. Swap two quantifiers and a healthy filesystem becomes a compromised one.</p>
+<p><strong>B</strong> — one account that owns <em>every</em> file. <strong>A</strong> only says every file has <em>some</em> owner, possibly a different one each time. Swapping the two quantifiers turns “every file has an owner” into “one account owns everything.”</p>
 </div>
 </section>
 <section id="translating-english-to-logic-5" class="slide level2">
@@ -2733,7 +2733,7 @@ Downloading opencv_python-4.11.0.86 ...   &lt;-- numpy 1.26.4 works</code></pre>
 <p><strong><em>Solution:</em></strong> <span class="math inline">\(\forall x\, (x \neq 0 \rightarrow \exists y\, (xy = 1))\)</span></p>
 </div>
 <div class="fragment">
-<p>Quantify one variable at a time, from the outside in, and let the domain decide whether you need a <span class="math inline">\(\rightarrow\)</span> guard.</p>
+<p>Quantify one variable at a time, from the outside in. When the domain is wider than the objects the sentence is about, the restriction becomes the hypothesis of a <span class="math inline">\(\rightarrow\)</span>.</p>
 </div>
 </section>
 <section id="negating-nested-quantifiers" class="slide level2">
@@ -3312,7 +3312,7 @@ S_1 \\ S_2 \\ \;\vdots \\ S_n \\ \hline \therefore\; C
 </div>
 </div></div>
 <div class="fragment">
-<p><strong>B</strong> — affirming the conclusion. Policy engines derive permissions by modus ponens over thousands of rules; a check written backwards is a privilege-escalation bug.</p>
+<p><strong>B</strong> — affirming the conclusion. Policy engines derive permissions by modus ponens over thousands of rules; a check that reasons from the conclusion is a privilege-escalation bug.</p>
 </div>
 </section>
 <section id="quantified-arguments" class="slide level2">
@@ -3346,7 +3346,7 @@ S_1 \\ S_2 \\ \;\vdots \\ S_n \\ \hline \therefore\; C
 <p><strong>UG</strong> is used often, and implicitly, in mathematical proofs: prove <span class="math inline">\(P(c)\)</span> for a <span class="math inline">\(c\)</span> about which you assumed <strong>nothing</strong> except that it is in the domain, and you have proved it for all <span class="math inline">\(x\)</span>.</p>
 </div></div>
 <div class="fragment">
-<p>The catch is <em>arbitrary</em>: if <span class="math inline">\(c\)</span> was chosen to satisfy something earlier, UG does not apply.</p>
+<p>UG applies only when <span class="math inline">\(c\)</span> is arbitrary. If <span class="math inline">\(c\)</span> was chosen to satisfy something earlier, it does not.</p>
 </div>
 </section>
 <section id="existential-instantiation" class="slide level2">
@@ -3466,7 +3466,7 @@ P(a), \text{ where } a \text{ is a particular element in the domain} \\ \hline
 \therefore\; Q(a)
 \end{array}\]</span></p>
 <div class="fragment">
-<p>This is the rule the Socrates example has been waiting for.</p>
+<p>This is the rule the Socrates argument uses.</p>
 </div>
 </section>
 <section id="returning-to-socrates" class="slide level2">
@@ -3503,7 +3503,7 @@ P(a), \text{ where } a \text{ is a particular element in the domain} \\ \hline
 </tbody>
 </table>
 <div class="fragment">
-<p>The warm-up vote from Section 1.4, now with the reasoning written down.</p>
+<p>This is the Section 1.4 warm-up, with the reasoning written out.</p>
 </div>
 </section>
 <section id="using-rules-of-inference-1" class="slide level2">
@@ -3614,7 +3614,7 @@ P(a), \text{ where } a \text{ is a particular element in the domain} \\ \hline
 <p>Line 6 then reads <span class="math inline">\(A(c) \wedge B(d)\)</span>, and EG cannot turn that into <span class="math inline">\(\exists x\, (A(x) \wedge B(x))\)</span>.</p>
 </div>
 <div class="fragment">
-<p>Someone is tall and someone is short does not make anyone both.</p>
+<p>Some person is tall and some person is short; nothing says the same person is both.</p>
 </div>
 
 </section>
