@@ -2029,7 +2029,7 @@ of anything
 <p>Infix is what we write and the only one that needs precedence rules to be read. <code>3 * 2 + 1</code> means <span class="math inline">\(7\)</span> only because we agreed <code>*</code> binds tighter.</p>
 </div>
 <div class="fragment">
-<p>Postfix needs no such agreement, and no parentheses. <strong><em>That is why machines use it.</em></strong></p>
+<p>Postfix needs no such agreement, and no parentheses. <strong><em>That is why machines use it</em></strong>: PostScript and the Java virtual machine both run it on one stack.</p>
 </div>
 </section>
 <section id="question-6" class="slide level2">
@@ -2459,25 +2459,6 @@ of anything
 </div>
 <div class="fragment">
 <p>Both routes cost <span class="math inline">\(O(n)\)</span>. Dijkstra needs the parentheses written in; the conversion needs the precedence table. Neither needs a second pass.</p>
-</div>
-</section>
-<section id="drop-the-parentheses" class="slide level2">
-<h2>Drop the Parentheses</h2>
-<p>Dijkstra’s algorithm gives the same answer if each operator is written <em>after</em> its two values:</p>
-<p><span class="math display">\[(\,1\,(\,(\,2\;3\;+\,)\;(\,4\;5\;*\,)\;*\,)\;+\,)\]</span></p>
-<div class="fragment">
-<p>And now nothing depends on the parentheses at all:</p>
-<p><span class="math display">\[1\;\;2\;\;3\;+\;4\;\;5\;*\;*\;+\]</span></p>
-</div>
-</section>
-<section id="drop-the-parentheses-1" class="slide level2">
-<h2>Drop the Parentheses</h2>
-<p><span class="lead-blue">Postfix</span>, or <strong>reverse Polish notation</strong>, after Jan Łukasiewicz.</p>
-<div class="fragment">
-<p>Used by PostScript, Forth, HP calculators, and the Java virtual machine — a machine with one stack evaluates it without ever looking ahead.</p>
-</div>
-<div class="fragment">
-<p><strong><em>A stack turned an expression into a language.</em></strong></p>
 </div>
 </section>
 <section id="the-question-reversed" class="slide level2">
