@@ -1,0 +1,3534 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="index_files/libs/clipboard/clipboard.min.js"></script>
+<script src="index_files/libs/quarto-html/tabby.min.js"></script>
+<script src="index_files/libs/quarto-html/popper.min.js"></script>
+<script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
+
+  <meta name="author" content="Zechun (Jacob) Cao">
+  <title>Chapter 2 — Application Layer</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/reveal.css">
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-df535a8c247f0b33f5318fe994680995.css">
+  <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+  <style>
+  @font-face {
+    font-family: 'Jost';
+    font-style: italic;
+    font-weight: 400;
+    font-display: swap;
+    src: url(fonts/jost-400-italic-latin-ext.woff2) format('woff2');
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
+  @font-face {
+    font-family: 'Jost';
+    font-style: italic;
+    font-weight: 400;
+    font-display: swap;
+    src: url(fonts/jost-400-italic-latin.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+  @font-face {
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(fonts/jost-400-normal-latin-ext.woff2) format('woff2');
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
+  @font-face {
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(fonts/jost-400-normal-latin.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+  @font-face {
+    font-family: 'Abhaya Libre';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(fonts/abhaya-libre-400-normal-latin-ext.woff2) format('woff2');
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
+  @font-face {
+    font-family: 'Abhaya Libre';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(fonts/abhaya-libre-400-normal-latin.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Chapter 2</h1>
+  <p class="subtitle">Application Layer</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Zechun (Jacob) Cao
+</div>
+        <p class="quarto-title-affiliation">
+            Adapted from J. F. Kurose and K. W. Ross, <em>Computer Networking: A Top-Down Approach</em>, 8th edition.<br>Original slides © 1996–2020 J. F. Kurose and K. W. Ross.
+          </p>
+    </div>
+</div>
+
+</section>
+<section id="warm-up-one-page" class="slide level2">
+<h2>Warm-Up: One Page</h2>
+<p>You open the front page of a news site. It shows text, a logo, a dozen photos, and two ads.</p>
+<p><span class="vote-prompt">Vote — how many HTTP requests did your browser send?</span></p>
+<div class="columns vote-row">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>A.</strong> One — the page is one file</p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>B.</strong> One per photo, about 15</p>
+</div>
+</div></div>
+<div class="columns vote-row">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>C.</strong> 50 to 100</p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>D.</strong> Several hundred</p>
+</div>
+</div></div>
+</section>
+<section id="warm-up-one-page-1" class="slide level2">
+<h2>Warm-Up: One Page</h2>
+<div class="fragment">
+<p><strong>C or D</strong> on most commercial sites. Each image, script, stylesheet, font, and tracking pixel is a separate <strong>object</strong> with its own URL, and each object is a separate request.</p>
+</div>
+<div class="fragment">
+<p>Every one of those requests waits for a round trip, and some wait for a new connection first. Section 2.2 counts what that costs.</p>
+</div>
+<div class="fragment">
+<p>Open your browser’s developer tools (F12), pick the <strong>Network</strong> tab, and reload any page. The number at the bottom is your answer for that page.</p>
+</div>
+</section>
+<section id="warm-up-the-phone-book" class="slide level2">
+<h2>Warm-Up: The Phone Book</h2>
+<p>You type <code>tamusa.edu</code>. Your laptop needs the server’s numeric IP address before it can send a single packet.</p>
+<p><span class="vote-prompt">Vote — where does it get the number?</span></p>
+<div class="columns vote-row">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>A.</strong> A list built into the OS</p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>B.</strong> One central directory server</p>
+</div>
+</div></div>
+<div class="columns vote-row">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>C.</strong> A chain of servers, asked in turn</p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>D.</strong> It asks <code>tamusa.edu</code> directly</p>
+</div>
+</div></div>
+</section>
+<section id="warm-up-the-phone-book-1" class="slide level2">
+<h2>Warm-Up: The Phone Book</h2>
+<div class="fragment">
+<p><strong>C.</strong> Nobody holds the whole list. Your laptop asks a nearby server, which asks a root server, a <code>.edu</code> server, and finally <code>tamusa.edu</code>’s own server, each of which knows only the next step.</p>
+</div>
+<div class="fragment">
+<p>Answer <strong>B</strong> was the design until 1983, and it stopped scaling. Section 2.4 shows the chain, and why caching makes it fast.</p>
+</div>
+</section>
+<section id="warm-up-upload-costs" class="slide level2">
+<h2>Warm-Up: Upload Costs</h2>
+<p>A 4 GB game update goes to <strong>one million</strong> players on launch day.</p>
+<p><span class="vote-prompt">Vote — how should the publisher deliver it?</span></p>
+<div class="columns vote-row">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>A.</strong> Rent servers big enough for launch day</p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>B.</strong> Let players send pieces to each other</p>
+</div>
+</div></div>
+<div class="fragment">
+<p>Both are used. With <strong>A</strong> the publisher’s upload capacity is the limit, and the cost grows with every player. With <strong>B</strong> each new player brings upload capacity of their own. Section 2.5 puts numbers on both.</p>
+</div>
+</section>
+<section id="where-this-chapter-goes" class="slide level2">
+<h2>Where This Chapter Goes</h2>
+<p><strong>Goal:</strong> learn how network applications are built, by reading the protocols you already use every day.</p>
+<ul>
+<li><strong>2.1</strong> Principles: architectures, sockets, what transport offers</li>
+<li><strong>2.2</strong> The Web and HTTP</li>
+<li><strong>2.3</strong> Electronic mail: SMTP, IMAP</li>
+<li><strong>2.4</strong> DNS, the Internet’s directory</li>
+<li><strong>2.5</strong> Peer-to-peer file distribution</li>
+<li><strong>2.6</strong> Video streaming and content distribution networks</li>
+<li><strong>2.7</strong> Socket programming with UDP and TCP</li>
+</ul>
+</section>
+<section id="how-to-read-this-deck" class="slide level2">
+<h2>How to Read This Deck</h2>
+<p>Every slide from here on carries one of three marks.</p>
+<div class="fragment">
+<p><strong><span class="ex-inline">Must Know</span> — we do it in class; expect it on the exam.</strong> The formula, the definition, or the worked problem a question is built from. Drill these first.</p>
+</div>
+<div class="fragment">
+<p><strong>Unmarked — we do it in class, and the exam can still ask about it.</strong> No mark does not mean off the exam. Understand it; just drill the Must Know slides first.</p>
+</div>
+<div class="fragment">
+<p><strong><span class="rd-inline">Reading</span> — you do it on your own.</strong> Supporting detail, collected at the end of each section. Read it before the next class.</p>
+</div>
+</section>
+<section id="section-2.1" class="slide level2 center section-divider">
+<h2>Section 2.1</h2>
+<p>Principles of Network Applications</p>
+</section>
+<section id="todays-plan" class="slide level2">
+<h2>Today’s Plan</h2>
+<div class="columns">
+<div class="column" style="width:58%;">
+<p><strong>In class</strong></p>
+<ul>
+<li>Client-server and P2P architectures <span class="ex-inline">Must Know</span></li>
+<li>Processes, sockets, and addressing</li>
+<li>What an application needs <span class="ex-inline">Must Know</span></li>
+<li>What TCP and UDP provide <span class="ex-inline">Must Know</span></li>
+</ul>
+</div><div class="column" style="width:42%;">
+<p><strong>After class</strong> <span class="rd-inline">Reading</span></p>
+<ul>
+<li>Securing TCP with TLS</li>
+<li>Applications and their protocols</li>
+</ul>
+</div></div>
+</section>
+<section id="creating-a-network-app" class="slide level2">
+<h2>Creating a Network App</h2>
+<div class="fragment" data-fragment-index="1">
+<p>You write programs that <strong>run on end systems</strong> and <strong>communicate over the network</strong>: a web server talks to a browser, a mail server to a mail reader.</p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p>You write <strong>nothing</strong> for the network core. Routers and switches do not run user applications.</p>
+</div>
+<div class="fragment" data-fragment-index="3">
+<p>That is the design choice from Chapter 1 paying off: a new application needs no permission from, and no change to, the network in the middle. The Web, BitTorrent, and Zoom were all deployed this way.</p>
+</div>
+</section>
+<section id="client-server-architecture" class="slide level2">
+<h2>Client-Server Architecture</h2>
+<div class="columns">
+<div class="column" style="width:58%;">
+<div class="fragment" data-fragment-index="1">
+<p><strong>Server:</strong> an always-on host with a permanent IP address, often in a data center so it can scale.</p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p><strong>Clients:</strong> contact the server; may be intermittently connected; may have dynamic IP addresses; <strong>do not talk to each other directly</strong>.</p>
+</div>
+<div class="fragment" data-fragment-index="3">
+<p>Examples: HTTP, IMAP, FTP.</p>
+</div>
+</div><div class="column" style="width:42%;">
+<p><img data-src="images/cs_arch.png" style="width:92.0%"></p>
+</div></div>
+</section>
+<section id="peer-to-peer-architecture" class="slide level2">
+<h2>Peer-to-Peer Architecture</h2>
+<div class="columns">
+<div class="column" style="width:58%;">
+<div class="fragment" data-fragment-index="1">
+<p><strong>No always-on server.</strong> Arbitrary end systems communicate directly. Peers request service from other peers and provide service in return.</p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p><strong>Self-scalability:</strong> a new peer brings new demand <em>and</em> new capacity.</p>
+</div>
+<div class="fragment" data-fragment-index="3">
+<p>Peers come and go and change IP addresses, so management is harder. Example: BitTorrent.</p>
+</div>
+</div><div class="column" style="width:42%;">
+<p><img data-src="images/p2p_arch.png" style="width:92.0%"></p>
+</div></div>
+</section>
+<section id="client-server-vs-p2p-must-know" class="slide level2">
+<h2>Client-Server vs P2P <span class="ex">Must Know</span></h2>
+<div class="fragment" data-fragment-index="0">
+<table class="caption-top">
+<colgroup>
+<col style="width: 47%">
+<col style="width: 26%">
+<col style="width: 26%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Property</th>
+<th style="text-align: left;">Client-server</th>
+<th style="text-align: left;">P2P</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Always-on host, fixed address</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="1">yes</span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="1">no</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Service provided by</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2">the server</span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2">the peers</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Capacity as users join</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="3">fixed; paid for peak</span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="3">grows per peer</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hosts come and go, change address</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="4">clients may</span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="4">constantly</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Examples</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="5">HTTP, IMAP, DNS</span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="5">BitTorrent</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="fragment" data-fragment-index="6">
+<p>A P2P <em>session</em> still has a client side: the peer that asks.</p>
+</div>
+</section>
+<section id="your-turn-which-one" class="slide level2">
+<h2>Your Turn: Which One?</h2>
+<p><span class="vote-prompt">Vote — client-server, P2P, or both?</span></p>
+<div class="fragment" data-fragment-index="0">
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Application</th>
+<th style="text-align: left;">Architecture</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Netflix streaming a movie to you</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="1">client-server</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BitTorrent downloading a Linux image</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2">P2P</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gmail in a browser</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="3">client-server</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">A Zoom call: login, then media between hosts</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="4">both</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Bitcoin nodes relaying transactions</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="5">P2P</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">A Google search</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="6">client-server</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="processes-communicating" class="slide level2">
+<h2>Processes Communicating</h2>
+<div class="fragment" data-fragment-index="1">
+<p>A <strong>process</strong> is a program running on a host. Two processes on the <em>same</em> host talk through inter-process communication, which the OS defines.</p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p>Processes on <em>different</em> hosts talk by exchanging <strong>messages</strong>.</p>
+</div>
+<div class="fragment" data-fragment-index="3">
+<ul>
+<li><strong>client process:</strong> the one that initiates the communication</li>
+<li><strong>server process:</strong> the one that waits to be contacted</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="4">
+<p>A P2P application has both kinds of process in the same program.</p>
+</div>
+</section>
+<section id="sockets" class="slide level2">
+<h2>Sockets</h2>
+<p><img data-src="images/socket_door.png" style="width:70.0%"></p>
+<div class="fragment">
+<p>A process sends and receives messages through its <strong>socket</strong>. The socket is a door: the sender pushes a message out, and relies on the transport service on the other side to deliver it to the socket at the receiver.</p>
+</div>
+<div class="fragment">
+<p>The application developer controls everything above the door. The OS controls everything below it.</p>
+</div>
+</section>
+<section id="addressing-a-process" class="slide level2">
+<h2>Addressing a Process</h2>
+<p>To receive messages, a process needs an <strong>identifier</strong>. Every host has a unique 32-bit <strong>IP address</strong>.</p>
+<p><span class="vote-prompt">Is the IP address of the host enough to identify the process?</span></p>
+<div class="fragment">
+<p><strong>No.</strong> Many processes run on the same host. The identifier is the IP address <strong>and</strong> a 16-bit <strong>port number</strong>.</p>
+</div>
+<div class="fragment">
+<p>To reach the web server at <code>gaia.cs.umass.edu</code>: IP <code>128.119.245.12</code>, port <code>80</code>.</p>
+</div>
+</section>
+<section id="well-known-ports" class="slide level2">
+<h2>Well-Known Ports</h2>
+<p>A server that anyone may contact listens on a port number that everyone knows.</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Server</th>
+<th style="text-align: left;">Port</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">HTTP</td>
+<td style="text-align: left;">80</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">HTTPS</td>
+<td style="text-align: left;">443</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SMTP</td>
+<td style="text-align: left;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">DNS</td>
+<td style="text-align: left;">53</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">IMAP</td>
+<td style="text-align: left;">143</td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<p>A client’s own port is picked by its OS at the moment it first sends; nobody needs to know it in advance, because the server reads it off the arriving packet.</p>
+</div>
+</section>
+<section id="what-a-protocol-defines" class="slide level2">
+<h2>What a Protocol Defines</h2>
+<div class="fragment" data-fragment-index="1">
+<ul>
+<li>the <strong>types of messages</strong> exchanged: request, response</li>
+<li>the <strong>syntax</strong>: which fields, and how they are delimited</li>
+<li>the <strong>semantics</strong>: what the information in each field means</li>
+<li>the <strong>rules</strong> for when and how a process sends and responds</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p><strong>Open protocols</strong> are defined in RFCs, so anyone can implement them and the implementations interoperate: HTTP, SMTP, DNS.</p>
+</div>
+<div class="fragment" data-fragment-index="3">
+<p><strong>Proprietary protocols</strong> are not published: Zoom, most games.</p>
+</div>
+</section>
+<section id="what-an-app-needs" class="slide level2">
+<h2>What an App Needs</h2>
+<div class="fragment" data-fragment-index="1">
+<p><strong>Data integrity.</strong> File transfer and web pages need every byte. Audio can lose some.</p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p><strong>Timing.</strong> Telephony and interactive games need low delay to be usable.</p>
+</div>
+<div class="fragment" data-fragment-index="3">
+<p><strong>Throughput.</strong> Video needs a minimum rate. <em>Elastic</em> apps use whatever they get.</p>
+</div>
+<div class="fragment" data-fragment-index="4">
+<p><strong>Security.</strong> Encryption, integrity, authentication.</p>
+</div>
+</section>
+<section id="app-requirements-must-know" class="slide level2">
+<h2>App Requirements <span class="ex">Must Know</span></h2>
+<div class="fragment" data-fragment-index="0">
+<table class="caption-top">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 12%">
+<col style="width: 35%">
+<col style="width: 24%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Application</th>
+<th style="text-align: left;">Loss</th>
+<th style="text-align: left;">Throughput</th>
+<th style="text-align: left;">Time-sensitive</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">File transfer</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="1">none</span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="1">elastic</span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="1">no</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">E-mail</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2">none</span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2">elastic</span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2">no</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Web documents</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="3">none</span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="3">elastic</span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="3">no</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Real-time audio/video</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="4">tolerant</span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="4">audio to 1 Mbps; video to 5 Mbps</span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="4">yes, tens of ms</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Streaming stored video</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="5">tolerant</span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="5">as above</span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="5">yes, a few seconds</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Interactive games</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="6">tolerant</span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="6">kbps and up</span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="6">yes, tens of ms</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="tcp-vs-udp-service-must-know" class="slide level2">
+<h2>TCP vs UDP Service <span class="ex">Must Know</span></h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>TCP</strong></p>
+<div class="fragment" data-fragment-index="1">
+<ul>
+<li><strong>reliable</strong> delivery between the two processes</li>
+<li><strong>flow control:</strong> the receiver is never overrun</li>
+<li><strong>congestion control:</strong> slow down when the network is overloaded</li>
+<li><strong>connection-oriented:</strong> setup first</li>
+</ul>
+</div>
+</div><div class="column" style="width:50%;">
+<p><strong>UDP</strong></p>
+<div class="fragment" data-fragment-index="2">
+<ul>
+<li><strong>unreliable</strong> datagrams</li>
+<li>no flow control, no congestion control, no setup</li>
+</ul>
+</div>
+</div></div>
+<div class="fragment" data-fragment-index="3">
+<p><strong>Neither</strong> provides timing, minimum throughput, or security.</p>
+</div>
+</section>
+<section id="why-is-there-a-udp" class="slide level2">
+<h2>Why Is There a UDP?</h2>
+<p><span class="vote-prompt">Vote — if TCP does more, why would an app ever choose UDP?</span></p>
+<div class="columns vote-row">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>A.</strong> Legacy; nobody chooses it anymore</p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>B.</strong> No handshake, no retransmission delay</p>
+</div>
+</div></div>
+<div class="fragment">
+<p><strong>B.</strong> A one-packet request gets its answer without first spending a round trip on connection setup, and a late packet is never held back to wait for a lost one. DNS, VoIP, and games pick UDP for exactly those reasons.</p>
+</div>
+<div class="fragment">
+<p>The app then handles loss itself: DNS simply asks again.</p>
+</div>
+</section>
+<section id="protocol-and-transport" class="slide level2">
+<h2>Protocol and Transport</h2>
+<div class="fragment" data-fragment-index="0">
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Application</th>
+<th style="text-align: left;">Application protocol</th>
+<th style="text-align: left;">Transport</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">File transfer</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="1">FTP</span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="1">TCP</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">E-mail</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2">SMTP</span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2">TCP</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Web</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="3">HTTP</span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="3">TCP</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Name lookup</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="4">DNS</span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="4">UDP</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Streaming video</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="5">HTTP, DASH</span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="5">TCP</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Internet telephony</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="6">SIP, RTP, or proprietary</span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="6">UDP or TCP</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="fragment" data-fragment-index="7">
+<p>HTTP, SMTP, and IMAP all chose TCP: a missing byte corrupts a page, a message, or a mailbox, and none of them cares about a few extra milliseconds.</p>
+</div>
+</section>
+<section id="read-after-class" class="slide level2 center reading-divider">
+<h2>Read After Class</h2>
+<p>Section 2.1 — supporting material</p>
+<ul>
+<li>Securing TCP with TLS</li>
+<li>Applications and their protocols, with RFC numbers</li>
+</ul>
+<p><a href="#/section-2.2">In class: skip ahead to Section 2.2</a></p>
+</section>
+<section id="securing-tcp-reading" class="slide level2">
+<h2>Securing TCP <span class="rd">Reading</span></h2>
+<p>Plain TCP and UDP sockets carry <strong>no encryption</strong>. A password typed into a plain socket crosses the Internet in cleartext.</p>
+<p><strong>Transport Layer Security (TLS)</strong> adds encryption, data integrity, and end-point authentication on top of TCP. It is implemented in the <strong>application layer</strong>: the app calls a TLS library, and the library calls TCP. Cleartext goes into the TLS socket; ciphertext goes onto the wire.</p>
+<p>HTTPS is HTTP over TLS, on port 443. Chapter 8 covers how the keys are agreed.</p>
+</section>
+<section id="apps-and-protocols-reading" class="slide level2">
+<h2>Apps and Protocols <span class="rd">Reading</span></h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Application</th>
+<th style="text-align: left;">Protocol</th>
+<th style="text-align: left;">RFC</th>
+<th style="text-align: left;">Transport</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">File transfer</td>
+<td style="text-align: left;">FTP</td>
+<td style="text-align: left;">959</td>
+<td style="text-align: left;">TCP</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">E-mail</td>
+<td style="text-align: left;">SMTP</td>
+<td style="text-align: left;">5321</td>
+<td style="text-align: left;">TCP</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Web</td>
+<td style="text-align: left;">HTTP/1.1</td>
+<td style="text-align: left;">7230</td>
+<td style="text-align: left;">TCP</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Web</td>
+<td style="text-align: left;">HTTP/2</td>
+<td style="text-align: left;">7540</td>
+<td style="text-align: left;">TCP</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Name lookup</td>
+<td style="text-align: left;">DNS</td>
+<td style="text-align: left;">1035</td>
+<td style="text-align: left;">UDP</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mail access</td>
+<td style="text-align: left;">IMAP</td>
+<td style="text-align: left;">3501</td>
+<td style="text-align: left;">TCP</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Telephony</td>
+<td style="text-align: left;">SIP, RTP</td>
+<td style="text-align: left;">3261, 3550</td>
+<td style="text-align: left;">UDP or TCP</td>
+</tr>
+</tbody>
+</table>
+<p>Every one of these documents is public and free. When a header line on a later slide looks arbitrary, the RFC says why it is there.</p>
+</section>
+<section id="section-2.2" class="slide level2 center section-divider">
+<h2>Section 2.2</h2>
+<p>The Web and HTTP</p>
+</section>
+<section id="todays-plan-1" class="slide level2">
+<h2>Today’s Plan</h2>
+<div class="columns">
+<div class="column" style="width:58%;">
+<p><strong>In class</strong></p>
+<ul>
+<li>Objects, URLs, HTTP over TCP</li>
+<li>Response time <span class="ex-inline">Must Know</span></li>
+<li>HTTP messages <span class="ex-inline">Must Know</span></li>
+<li>Cookies <span class="ex-inline">Must Know</span></li>
+<li>Caches, conditional GET <span class="ex-inline">Must Know</span></li>
+<li>HTTP/2 frames <span class="ex-inline">Must Know</span></li>
+</ul>
+</div><div class="column" style="width:42%;">
+<p><strong>After class</strong> <span class="rd-inline">Reading</span></p>
+<ul>
+<li>The Web’s origins</li>
+<li>Cookies and privacy</li>
+<li>Where caches are installed</li>
+<li>HTTP/3</li>
+</ul>
+</div></div>
+</section>
+<section id="a-page-is-a-set-of-objects" class="slide level2">
+<h2>A Page Is a Set of Objects</h2>
+<div class="fragment" data-fragment-index="1">
+<p>A web page consists of <strong>objects</strong>, each of which can live on a different server: an HTML file, a JPEG image, a script, a font, an audio clip.</p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p>The <strong>base HTML file</strong> references the other objects, each by its own <strong>URL</strong>:</p>
+</div>
+<div class="fragment" data-fragment-index="3">
+<pre><code>www.someschool.edu/someDept/pic.gif
+└─────────┬──────┘└──────┬──────┘
+      host name        path name</code></pre>
+</div>
+<div class="fragment" data-fragment-index="4">
+<p>The browser fetches the base file, parses it, and then fetches every referenced object. Your warm-up count was the number of objects.</p>
+</div>
+</section>
+<section id="your-turn-parse-a-url" class="slide level2">
+<h2>Your Turn: Parse a URL</h2>
+<p>Name each part of</p>
+<p><code>https://www.tamusa.edu:443/academics/index.html?dept=cs</code></p>
+<div class="fragment" data-fragment-index="0">
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Part</th>
+<th style="text-align: left;">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">scheme (protocol)</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="1"><code>https</code></span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">host name</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2"><code>www.tamusa.edu</code></span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">port</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="3"><code>443</code>, the default for HTTPS, usually omitted</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">path</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="4"><code>/academics/index.html</code></span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">query, sent to the server</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="5"><code>dept=cs</code></span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="http-overview" class="slide level2">
+<h2>HTTP Overview</h2>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p><strong>HTTP</strong>, the hypertext transfer protocol, is the Web’s application layer protocol.</p>
+<div class="fragment">
+<p><strong>Client:</strong> the browser. It requests, receives, and displays Web objects.</p>
+</div>
+<div class="fragment">
+<p><strong>Server:</strong> sends objects in response to requests.</p>
+</div>
+</div><div class="column" style="width:45%;">
+<p><img data-src="images/http_overview.png" style="width:90.0%"></p>
+</div></div>
+</section>
+<section id="http-uses-tcp" class="slide level2">
+<h2>HTTP Uses TCP</h2>
+<div class="fragment" data-fragment-index="1">
+<ol type="1">
+<li>The client opens a TCP connection to the server, port 80.</li>
+<li>The server accepts it.</li>
+<li>HTTP messages are exchanged between browser and server.</li>
+<li>The connection is closed.</li>
+</ol>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p><strong>HTTP is stateless.</strong> The server keeps no information about past client requests.</p>
+</div>
+<div class="fragment" data-fragment-index="3">
+<p>Protocols that keep state are harder: the history must be stored, and after a crash the two sides’ views must be reconciled. Cookies add state back on top of HTTP.</p>
+</div>
+</section>
+<section id="two-kinds-of-connection" class="slide level2">
+<h2>Two Kinds of Connection</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Non-persistent HTTP</strong></p>
+<div class="fragment" data-fragment-index="1">
+<ol type="1">
+<li>TCP connection opened</li>
+<li><strong>at most one object</strong> sent</li>
+<li>TCP connection closed</li>
+</ol>
+<p>Ten objects need ten connections.</p>
+</div>
+</div><div class="column" style="width:50%;">
+<p><strong>Persistent HTTP</strong></p>
+<div class="fragment" data-fragment-index="2">
+<ol type="1">
+<li>TCP connection opened</li>
+<li><strong>many objects</strong> sent over the one connection</li>
+<li>TCP connection closed</li>
+</ol>
+<p>HTTP/1.1’s default.</p>
+</div>
+</div></div>
+</section>
+<section id="non-persistent-http" class="slide level2">
+<h2>Non-Persistent HTTP</h2>
+<p>The user enters <code>www.someSchool.edu/someDepartment/home.index</code>, an HTML file that references <strong>10 JPEG images</strong>.</p>
+<div class="fragment" data-fragment-index="1">
+<p><strong>1a.</strong> The client opens a TCP connection to <code>www.someSchool.edu</code>, port 80. <strong>1b.</strong> The server, waiting on port 80, accepts and notifies the client.</p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p><strong>2.</strong> The client sends an HTTP request naming <code>someDepartment/home.index</code> into its socket.</p>
+</div>
+<div class="fragment" data-fragment-index="3">
+<p><strong>3.</strong> The server receives the request, builds a response containing the object, and sends it into its socket.</p>
+</div>
+</section>
+<section id="non-persistent-http-1" class="slide level2">
+<h2>Non-Persistent HTTP</h2>
+<div class="fragment" data-fragment-index="1">
+<p><strong>4.</strong> The server closes the TCP connection.</p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p><strong>5.</strong> The client receives the response, displays the HTML, and while parsing it finds the 10 referenced JPEG objects.</p>
+</div>
+<div class="fragment" data-fragment-index="3">
+<p><strong>6.</strong> Steps 1–5 are repeated for <strong>each</strong> of the 10 images.</p>
+</div>
+<div class="fragment" data-fragment-index="4">
+<p>Eleven objects, eleven connections. The next slide prices one of them.</p>
+</div>
+</section>
+<section id="response-time-must-know" class="slide level2">
+<h2>Response Time <span class="ex">Must Know</span></h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>RTT:</strong> a small packet’s time from client to server and back.</p>
+<div class="fragment" data-fragment-index="1">
+<ul>
+<li>one RTT to open the TCP connection</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="2">
+<ul>
+<li>one RTT for the request and the first bytes back</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="3">
+<ul>
+<li>then the transmission time</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="4">
+<p><span class="math display">\[\text{non-persistent} = 2\,RTT + \frac{L}{R}\]</span></p>
+</div>
+</div><div class="column" style="width:50%;">
+<svg viewbox="0 0 600 410" width="100%" style="max-height:56vh">
+  <defs>
+    <marker id="ar-rt" markerwidth="9" markerheight="9" refx="7" refy="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#006791"></path></marker>
+  </defs>
+  <text x="180" y="32" text-anchor="middle" font-size="24" class="lbl-blue">client</text>
+  <text x="500" y="32" text-anchor="middle" font-size="24" class="lbl-blue">server</text>
+  <path class="life" d="M 180 44 L 180 395"></path>
+  <path class="life" d="M 500 44 L 500 395"></path>
+  <g class="fragment" data-fragment-index="1">
+    <path class="msg" d="M 180 70 L 496 105" marker-end="url(#ar-rt)"></path>
+    <path class="msg" d="M 500 105 L 184 140" marker-end="url(#ar-rt)"></path>
+    <path class="brace" d="M 156 70 L 148 70 L 148 140 L 156 140"></path>
+    <text x="140" y="94" text-anchor="end" font-size="19" class="lbl-gold">open TCP</text>
+    <text x="140" y="120" text-anchor="end" font-size="22" class="lbl-gold">RTT</text>
+  </g>
+  <g class="fragment" data-fragment-index="2">
+    <path class="msg" d="M 180 140 L 496 175" marker-end="url(#ar-rt)"></path>
+    <path class="msg" d="M 500 175 L 184 210" marker-end="url(#ar-rt)"></path>
+    <path class="brace" d="M 156 140 L 148 140 L 148 210 L 156 210"></path>
+    <text x="140" y="164" text-anchor="end" font-size="19" class="lbl-gold">request</text>
+    <text x="140" y="190" text-anchor="end" font-size="22" class="lbl-gold">RTT</text>
+  </g>
+  <g class="fragment" data-fragment-index="3">
+    <polygon class="bar" points="500,175 500,255 180,290 180,210" opacity="0.8"></polygon>
+    <text x="512" y="222" font-size="18" class="lbl-gray">time to</text>
+    <text x="512" y="244" font-size="18" class="lbl-gray">transmit file</text>
+    <text x="168" y="298" text-anchor="end" font-size="18" class="lbl-gray">file received</text>
+  </g>
+  <text x="180" y="408" text-anchor="middle" font-size="16" class="lbl-gray">time</text>
+  <text x="500" y="408" text-anchor="middle" font-size="16" class="lbl-gray">time</text>
+</svg>
+</div></div>
+</section>
+<section id="persistent-http" class="slide level2">
+<h2>Persistent HTTP</h2>
+<div class="fragment" data-fragment-index="1">
+<p><strong>What non-persistent costs:</strong> 2 RTTs per object, plus OS overhead for every TCP connection. Browsers compensate by opening several <strong>parallel</strong> connections.</p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p><strong>Persistent HTTP (HTTP/1.1):</strong> the server leaves the connection open after a response; later requests to the same server reuse it. Each object then costs <strong>1 RTT</strong>.</p>
+</div>
+<div class="fragment" data-fragment-index="3">
+<p><strong>With pipelining</strong>, the client sends a request as soon as it sees a referenced object, without waiting for earlier responses. All the referenced objects can arrive after <strong>as little as one RTT</strong> total.</p>
+</div>
+</section>
+<section id="your-turn-rtt-count-must-know" class="slide level2">
+<h2>Your Turn: RTT Count <span class="ex">Must Know</span></h2>
+<p><strong><em>Example:</em></strong> You click a link. Your DNS cache is empty; resolving the name visits three DNS servers with round-trip times <strong>30, 50, and 20 ms</strong>. The RTT to the web server is <strong>40 ms</strong>. The page is a small HTML file that references <strong>four</strong> small images on the same server. Ignore transmission times.</p>
+<p><strong>(a)</strong> How long until the HTML file arrives?</p>
+<div class="fragment">
+<p><strong><em>Solution:</em></strong> DNS <span class="math inline">\(30 + 50 + 20 = 100\)</span> ms. TCP handshake <span class="math inline">\(40\)</span> ms. Request and response <span class="math inline">\(40\)</span> ms.</p>
+<p><span class="math display">\[100 + 40 + 40 = \mathbf{180\ ms}\]</span></p>
+</div>
+</section>
+<section id="your-turn-rtt-count-must-know-1" class="slide level2">
+<h2>Your Turn: RTT Count <span class="ex">Must Know</span></h2>
+<p><strong>(b)</strong> How long until all four images have also arrived?</p>
+<div class="fragment" data-fragment-index="0">
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Connection style</th>
+<th style="text-align: left;">Extra cost</th>
+<th style="text-align: left;">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">non-persistent, one at a time</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="1"><span class="math inline">\(4 \times 2 \times 40\)</span></span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="1"><strong>500 ms</strong></span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">non-persistent, four in parallel</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2"><span class="math inline">\(1 \times 2 \times 40\)</span></span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2"><strong>260 ms</strong></span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">persistent, no pipelining</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="3"><span class="math inline">\(4 \times 40\)</span></span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="3"><strong>340 ms</strong></span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">persistent, pipelined</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="4"><span class="math inline">\(1 \times 40\)</span></span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="4"><strong>220 ms</strong></span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="why-it-matters-parallel" class="slide level2">
+<h2>Why It Matters: Parallel</h2>
+<p>A browser behind a <strong>2 Mbps</strong> link fetches ten <strong>400,000-bit</strong> objects; RTT is <strong>20 ms</strong>. Each object takes <span class="math inline">\(0.2\)</span> s to transmit.</p>
+<p><span class="vote-prompt">Vote — do ten parallel connections make the page load ten times faster?</span></p>
+<div class="fragment" data-fragment-index="0">
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Style</th>
+<th style="text-align: left;">Time</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">non-persistent, one at a time</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="1"><span class="math inline">\(10 \times (0.04 + 0.2) = 2.40\ \text{s}\)</span></span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">non-persistent, ten in parallel</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2"><span class="math inline">\(0.04 + 10 \times 0.2 = 2.04\ \text{s}\)</span></span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">persistent, pipelined</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="3"><span class="math inline">\(0.02 + 10 \times 0.2 = 2.02\ \text{s}\)</span></span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="fragment" data-fragment-index="4">
+<p>Parallel connections hide <strong>round-trip</strong> waits. Here transmission dominates, and ten connections share the same 2 Mbps.</p>
+</div>
+</section>
+<section id="http-request-message-must-know" class="slide level2">
+<h2>HTTP Request Message <span class="ex">Must Know</span></h2>
+<p>Two message types, request and response, both in <strong>ASCII</strong>. A request:</p>
+<pre><code>GET /index.html HTTP/1.1\r\n
+Host: www-net.cs.umass.edu\r\n
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) Firefox/128.0\r\n
+Accept-Language: en-us,en;q=0.5\r\n
+Connection: keep-alive\r\n
+\r\n</code></pre>
+<div class="fragment">
+<p>The <strong>request line</strong> carries the method, the URL, and the version. Each <strong>header line</strong> is a name, a colon, and a value. <code>\r\n</code> is a carriage return and a line feed. A line holding only <code>\r\n</code> ends the headers.</p>
+</div>
+</section>
+<section id="request-format" class="slide level2">
+<h2>Request Format</h2>
+<p><img data-src="images/request_format.png" style="width:58.0%"></p>
+<div class="fragment">
+<p>The <strong>body</strong> follows the blank line. A <code>GET</code> has an empty body; a <code>POST</code> carries form input there.</p>
+</div>
+</section>
+<section id="request-methods" class="slide level2">
+<h2>Request Methods</h2>
+<div class="fragment" data-fragment-index="1">
+<p><strong>GET</strong> asks for the object at the URL. Form data can ride in the URL after a <code>?</code>: <code>www.somesite.com/animalsearch?monkeys&amp;banana</code></p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p><strong>POST</strong> sends the user’s input in the message <strong>body</strong>. Use it when the input is large or should not appear in the address bar.</p>
+</div>
+<div class="fragment" data-fragment-index="3">
+<p><strong>HEAD</strong> returns only the headers that a <code>GET</code> would return. Useful for checking whether an object exists or when it changed, without fetching it.</p>
+</div>
+<div class="fragment" data-fragment-index="4">
+<p><strong>PUT</strong> uploads an object to the URL, replacing what is there.</p>
+</div>
+</section>
+<section id="your-turn-read-it" class="slide level2">
+<h2>Your Turn: Read It</h2>
+<pre><code>GET /courses/cs4306/index.html HTTP/1.1\r\n
+Host: www.example.edu\r\n
+If-Modified-Since: Tue, 02 Sep 2026 14:10:00 GMT\r\n
+Connection: close\r\n
+\r\n</code></pre>
+<div class="fragment" data-fragment-index="0">
+<table class="caption-top">
+<colgroup>
+<col style="width: 29%">
+<col style="width: 70%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Question</th>
+<th style="text-align: left;">Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Full URL requested?</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="1"><code>http://www.example.edu</code> + <code>/courses/cs4306/index.html</code></span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Persistent connection wanted?</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2">no: <code>Connection: close</code></span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="your-turn-read-it-1" class="slide level2">
+<h2>Your Turn: Read It</h2>
+<pre><code>GET /courses/cs4306/index.html HTTP/1.1\r\n
+Host: www.example.edu\r\n
+If-Modified-Since: Tue, 02 Sep 2026 14:10:00 GMT\r\n
+Connection: close\r\n
+\r\n</code></pre>
+<div class="fragment" data-fragment-index="0">
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Question</th>
+<th style="text-align: left;">Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Does the browser have a cached copy?</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="1">yes: <code>If-Modified-Since</code> makes this conditional</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">The browser’s IP address?</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2">not here; it is in the IP header, not in HTTP</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="http-response-must-know" class="slide level2">
+<h2>HTTP Response <span class="ex">Must Know</span></h2>
+<pre><code>HTTP/1.1 200 OK\r\n
+Date: Sun, 26 Sep 2010 20:09:20 GMT\r\n
+Server: Apache/2.0.52 (CentOS)\r\n
+Last-Modified: Tue, 30 Oct 2007 17:00:02 GMT\r\n
+Content-Length: 2652\r\n
+Content-Type: text/html; charset=ISO-8859-1\r\n
+Connection: Keep-Alive\r\n
+\r\n
+data data data data data ...</code></pre>
+<div class="fragment">
+<p>The <strong>status line</strong> carries the version, a status code, and a phrase. <code>Date:</code> is when the response was generated; <code>Last-Modified:</code> is when the object last changed. <code>Content-Length:</code> counts the body’s bytes.</p>
+</div>
+</section>
+<section id="status-codes" class="slide level2">
+<h2>Status Codes</h2>
+<p>1xx info, 2xx success, 3xx redirect, 4xx client error, 5xx server error.</p>
+<div class="fragment" data-fragment-index="0">
+<table class="caption-top">
+<colgroup>
+<col style="width: 40%">
+<col style="width: 59%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Code</th>
+<th style="text-align: left;">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>200 OK</code></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="1">request succeeded; the object follows</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>301 Moved Permanently</code></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2">new URL in the <code>Location:</code> header</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>304 Not Modified</code></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="3">cached copy is still current; no body</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>400 Bad Request</code></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="4">the server could not parse the request</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>404 Not Found</code></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="5">no object at that URL</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>505 HTTP Version Not Supported</code></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="6">the server does not speak that version</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="activity-http-by-hand" class="slide level2">
+<h2>Activity: HTTP by Hand</h2>
+<div class="activity">
+<p><span class="activity-label">On your CloudLab VM — 8 minutes</span></p>
+<pre><code>nc -C example.com 80
+GET / HTTP/1.1
+Host: example.com
+Connection: close</code></pre>
+<ol type="1">
+<li>Type the four lines, then press Enter once more on an empty line.</li>
+<li>In the reply, find the status line, <code>Content-Length:</code>, and the blank line that ends the headers.</li>
+</ol>
+</div>
+</section>
+<section id="activity-http-by-hand-1" class="slide level2">
+<h2>Activity: HTTP by Hand</h2>
+<div class="activity">
+<p><span class="activity-label">On your CloudLab VM — continued</span></p>
+<ol start="3" type="1">
+<li>Change <code>/</code> to <code>/nothing.html</code>. What code comes back?</li>
+<li>Leave out the <code>Host:</code> line. What happens, and why would a server that hosts many sites need it?</li>
+</ol>
+</div>
+<div class="fragment">
+<p>One machine can serve many sites from one address; <code>Host:</code> is how the server knows which one you meant. Without it, HTTP/1.1 servers answer <code>400 Bad Request</code>.</p>
+</div>
+</section>
+<section id="cookies-must-know" class="slide level2">
+<h2>Cookies <span class="ex">Must Know</span></h2>
+<p><img data-src="images/cookies.png" style="width:74.0%"></p>
+<div class="fragment">
+<p>The first response carries <code>Set-cookie: 1678</code>. Every later request to that site carries <code>Cookie: 1678</code>, and the server looks 1678 up.</p>
+</div>
+</section>
+<section id="cookies-must-know-1" class="slide level2">
+<h2>Cookies <span class="ex">Must Know</span></h2>
+<p>Web sites and browsers use cookies to keep some <strong>state</strong> across requests. Four components:</p>
+<div class="fragment" data-fragment-index="1">
+<ol type="1">
+<li>a <code>Set-cookie:</code> header line in the HTTP <strong>response</strong></li>
+<li>a <code>Cookie:</code> header line in later HTTP <strong>requests</strong></li>
+<li>a <strong>cookie file</strong> on the user’s host, managed by the browser</li>
+<li>a <strong>back-end database</strong> at the web site, keyed by the cookie value</li>
+</ol>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p>Used for authorization, shopping carts, recommendations, and session state in web mail.</p>
+</div>
+<div class="fragment" data-fragment-index="3">
+<p>A cookie identifies a <strong>browser</strong>, not a person.</p>
+</div>
+</section>
+<section id="web-caches" class="slide level2">
+<h2>Web Caches</h2>
+<div class="columns">
+<div class="column" style="width:52%;">
+<p><strong>Goal:</strong> satisfy the client’s request without involving the origin server.</p>
+<div class="fragment">
+<p>The browser is configured to send every request to the <strong>cache</strong> (a proxy server). If the object is there, the cache returns it. If not, the cache fetches it from the origin, keeps a copy, and returns it.</p>
+</div>
+</div><div class="column" style="width:48%;">
+<p><img data-src="images/web_cache.png" style="width:100.0%"></p>
+</div></div>
+<div class="fragment">
+<p>The cache is a <strong>server</strong> to the browser and a <strong>client</strong> to the origin.</p>
+</div>
+</section>
+<section id="why-cache" class="slide level2">
+<h2>Why Cache?</h2>
+<div class="fragment" data-fragment-index="1">
+<p><strong>Shorter response time</strong> for the client: the cache is close.</p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p><strong>Less traffic</strong> on the institution’s access link, which is usually the expensive, congested one.</p>
+</div>
+<div class="fragment" data-fragment-index="3">
+<p>Caches are typically installed by the ISP: a university, a company, a residential provider. The Internet is dense with them, and they let a small content provider serve a large audience.</p>
+</div>
+</section>
+<section id="caching-example" class="slide level2">
+<h2>Caching Example</h2>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p><strong>Scenario</strong></p>
+<ul>
+<li>access link <strong>1.54 Mbps</strong>, LAN <strong>1 Gbps</strong></li>
+<li>RTT from the institution’s router to any origin server: <strong>2 s</strong></li>
+<li>objects average <strong>100 kbits</strong>, requested at <strong>15 per second</strong></li>
+</ul>
+</div><div class="column" style="width:45%;">
+<p><img data-src="images/cache_scenario.png" style="width:60.0%"></p>
+</div></div>
+<div class="fragment">
+<p>Data rate to the browsers: <span class="math inline">\(15 \times 100{,}000 = 1.5\)</span> Mbps. LAN intensity <span class="math inline">\(1.5 / 1000 = 0.0015\)</span>. Access link intensity <span class="math inline">\(1.5 / 1.54 = \mathbf{0.97}\)</span>.</p>
+</div>
+</section>
+<section id="caching-example-1" class="slide level2">
+<h2>Caching Example</h2>
+<div class="fragment" data-fragment-index="1">
+<p>Total delay <span class="math inline">\(=\)</span> Internet delay <span class="math inline">\(+\)</span> access delay <span class="math inline">\(+\)</span> LAN delay <span class="math inline">\(= 2\ \text{s} + \text{minutes} + \mu\text{s}\)</span>.</p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p>Intensity near 1 means queues that grow without bound (Section 1.4). The access link is the problem.</p>
+</div>
+<div class="fragment" data-fragment-index="3">
+<p><strong>Option 1: buy a 154 Mbps link.</strong> Intensity drops to <span class="math inline">\(0.0097\)</span> and the total delay to about <span class="math inline">\(2\)</span> s, all of it the Internet round trip. Expensive.</p>
+</div>
+</section>
+<section id="caching-example-2" class="slide level2">
+<h2>Caching Example</h2>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p><strong>Option 2: install a cache.</strong> Suppose the hit rate is <strong>0.4</strong>.</p>
+<div class="fragment">
+<p>Only 60% of requests cross the access link: <span class="math inline">\(0.6 \times 1.5 = 0.9\)</span> Mbps, intensity <span class="math inline">\(0.9 / 1.54 = \mathbf{0.58}\)</span>.</p>
+</div>
+</div><div class="column" style="width:45%;">
+<p><img data-src="images/cache_installed.png" style="width:60.0%"></p>
+</div></div>
+<div class="fragment">
+<p>Average delay <span class="math inline">\(= 0.6 \times (2.01\ \text{s}) + 0.4 \times (\sim 10\ \text{ms})
+\approx \mathbf{1.2\ s}\)</span>: better than the 154 Mbps link, and far cheaper.</p>
+</div>
+</section>
+<section id="your-turn-cache-it-must-know" class="slide level2">
+<h2>Your Turn: Cache It? <span class="ex">Must Know</span></h2>
+<p><strong><em>Example:</em></strong> An institution’s access link is <strong>20 Mbps</strong>. Browsers request objects at <strong>40 per second</strong>; the average object is <strong>400,000 bits</strong>. The Internet round trip beyond the access link is <strong>2 s</strong>. Model the access-link delay as <span class="math inline">\(\Delta / (1 - \Delta\beta)\)</span>, where <span class="math inline">\(\Delta\)</span> is the time to send one object over the link and <span class="math inline">\(\beta\)</span> is the request rate on it.</p>
+<p><strong>(a)</strong> Intensity and average response time today?</p>
+<div class="fragment">
+<p><strong><em>Solution:</em></strong> <span class="math inline">\(\Delta = 400{,}000 / (20 \times 10^{6}) = 0.02\)</span> s. Intensity <span class="math inline">\(\Delta\beta = 0.02 \times 40 = 0.8\)</span>. Access delay <span class="math inline">\(= 0.02 / (1 - 0.8) = 0.1\)</span> s. Total <span class="math inline">\(= 2 + 0.1 = \mathbf{2.1\ s}\)</span>.</p>
+</div>
+</section>
+<section id="your-turn-cache-it-must-know-1" class="slide level2">
+<h2>Your Turn: Cache It? <span class="ex">Must Know</span></h2>
+<p><strong>(b)</strong> Upgrade the link to <strong>100 Mbps</strong>?</p>
+<div class="fragment">
+<p><strong><em>Solution:</em></strong> <span class="math inline">\(\Delta = 0.004\)</span> s; intensity <span class="math inline">\(0.16\)</span>; access delay <span class="math inline">\(0.004 / 0.84 = 0.0048\)</span> s. Total <span class="math inline">\(\approx \mathbf{2.005\ s}\)</span>.</p>
+</div>
+<p><strong>(c)</strong> Instead, install a cache with a <strong>60%</strong> hit rate; hits take no time.</p>
+<div class="fragment">
+<p><strong><em>Solution:</em></strong> Only misses cross the link: intensity <span class="math inline">\(0.8 \times 0.4 = 0.32\)</span>; access delay <span class="math inline">\(0.02 / 0.68 = 0.029\)</span> s; a miss takes <span class="math inline">\(2.029\)</span> s. Average <span class="math inline">\(= 0.6 \times 0 + 0.4 \times 2.029 \approx
+\mathbf{0.81\ s}\)</span>.</p>
+</div>
+<div class="fragment">
+<p>The faster link only removes the <span class="math inline">\(0.1\)</span> s of access delay. The cache removes the <span class="math inline">\(2\)</span> s Internet delay for 60% of requests.</p>
+</div>
+</section>
+<section id="conditional-get" class="slide level2">
+<h2>Conditional GET</h2>
+<div class="columns">
+<div class="column" style="width:64%;">
+<p><strong>Goal:</strong> do not send the object if the cache’s copy is current.</p>
+<div class="fragment">
+<p>The cache puts the date of its copy in the request: <code>If-modified-since: &lt;date&gt;</code></p>
+</div>
+<div class="fragment">
+<p>Unchanged: the server answers <code>304 Not Modified</code> with <strong>no body</strong>. Changed: <code>200 OK</code> and the new object.</p>
+</div>
+<div class="fragment">
+<p>Browsers do the same with their own cache. A <code>304</code> costs one RTT and no transmission.</p>
+</div>
+</div><div class="column" style="width:36%;">
+<p><img data-src="images/conditional_get.png" style="width:100.0%"></p>
+</div></div>
+</section>
+<section id="head-of-line-blocking" class="slide level2">
+<h2>Head-of-Line Blocking</h2>
+<p><strong>Key goal of HTTP/2:</strong> less delay when a page has many objects.</p>
+<p><img data-src="images/hol_http11.png" style="width:70.0%"></p>
+<div class="fragment">
+<p>HTTP/1.1 pipelining sends the <code>GET</code>s on one connection, but the server answers <strong>in order</strong>. Objects 2, 3, and 4 wait behind the large object 1: <strong>head-of-line (HOL) blocking</strong>.</p>
+</div>
+</section>
+<section id="http2-frames-must-know" class="slide level2">
+<h2>HTTP/2 Frames <span class="ex">Must Know</span></h2>
+<p><img data-src="images/hol_http2.png" style="width:58.0%"></p>
+<div class="fragment">
+<p>HTTP/2 (RFC 7540, 2015) keeps the methods, status codes, and headers of 1.1, but the server <strong>divides each object into frames</strong> and <strong>interleaves</strong> them. The small objects finish early; the large one is barely delayed.</p>
+</div>
+<div class="fragment">
+<p>It can also follow a <strong>client-set priority</strong> and <strong>push</strong> objects not yet requested.</p>
+</div>
+</section>
+<section id="your-turn-frames-must-know" class="slide level2">
+<h2>Your Turn: Frames <span class="ex">Must Know</span></h2>
+<p><strong><em>Example:</em></strong> A page has one video clip of <strong>1200 frames</strong> and three images of <strong>4 frames</strong> each, all over one HTTP/2 connection. A <em>frame time</em> is the time to send one frame.</p>
+<div class="fragment" data-fragment-index="0">
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Server strategy</th>
+<th style="text-align: left;">Images complete after</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">video first, then the images</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="1"><span class="math inline">\(1200 + 12 = 1212\)</span> frame times</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">round-robin across the four objects</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2"><span class="math inline">\(4 \times 4 = 16\)</span> frame times</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">images given priority</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="3"><span class="math inline">\(12\)</span> frame times</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="fragment" data-fragment-index="4">
+<p>Round-robin: a round is one frame of each object, four frame times; the images need four rounds. The video finishes at 1212 in every case.</p>
+</div>
+</section>
+<section id="read-after-class-1" class="slide level2 center reading-divider">
+<h2>Read After Class</h2>
+<p>Section 2.2 — supporting material</p>
+<ul>
+<li>The Web’s origins</li>
+<li>Cookies and privacy</li>
+<li>Where caches are installed</li>
+<li>HTTP/3</li>
+</ul>
+<p><a href="#/section-2.3">In class: skip ahead to Section 2.3</a></p>
+</section>
+<section id="the-webs-origins-reading" class="slide level2">
+<h2>The Web’s Origins <span class="rd">Reading</span></h2>
+<p>In 1945 Vannevar Bush described the <em>memex</em>, a desk that would store all of a person’s books and records and link them by association. The idea got the name <em>hypertext</em> in the 1960s.</p>
+<p>Tim Berners-Lee, a physicist at CERN, needed distributed access to data and built the Web to get it: the first HTTP client and server in 1990, then <strong>HTTP/0.9</strong> (a bare <code>GET</code>), <strong>HTTP/1.0</strong> (headers, status codes, simple caching; written down as RFC 1945 in 1996), and <strong>HTTP/1.1</strong> (persistent connections, pipelining, the <code>Host:</code> header, conditional requests; RFC 2068 in 1997).</p>
+<p>HTTP/2 arrived in 2015 and HTTP/3 in 2022. The request line you typed in the activity is the HTTP/1.1 one.</p>
+</section>
+<section id="cookies-and-privacy-reading" class="slide level2">
+<h2>Cookies and Privacy <span class="rd">Reading</span></h2>
+<p>Cookies let a site learn a great deal about what you do <strong>on that site</strong>. That is what they are for.</p>
+<p><strong>Third-party cookies</strong> go further. When a page embeds an advertiser’s image, the advertiser’s server sets its own cookie in your browser. Every other page that embeds the same advertiser then sends that cookie back, so one identity is tracked across many unrelated sites.</p>
+<p>The protocol offers two ways to keep state: at the <strong>endpoints</strong>, where each side remembers the transaction so far, or in the <strong>messages</strong>, which is what cookies do. HTTP chose the second so that the server could stay stateless.</p>
+</section>
+<section id="where-caches-live-reading" class="slide level2">
+<h2>Where Caches Live <span class="rd">Reading</span></h2>
+<p>A university or company installs a cache at its access link, where a hit saves the link’s capacity and the Internet round trip. A residential ISP does the same for its subscribers.</p>
+<p>Content delivery networks (Section 2.6) are caches too, run by a third party and placed inside many ISPs at once. A small content provider that cannot afford a global set of servers rents room in one, and its objects are served from a cache near the reader.</p>
+<p>Two things a cache must handle: an object that changed at the origin (the conditional GET) and an object that must not be cached at all, which the origin marks with a <code>Cache-Control: no-store</code> header.</p>
+</section>
+<section id="http3-reading" class="slide level2">
+<h2>HTTP/3 <span class="rd">Reading</span></h2>
+<p>HTTP/2 runs over <strong>one</strong> TCP connection, so a single lost segment stalls every object on it while TCP retransmits. Browsers still open parallel connections to reduce the stalling, and plain TCP carries no security.</p>
+<p><strong>HTTP/3</strong> moves to <strong>QUIC</strong>, a transport built on <strong>UDP</strong>, with per-object error and congestion control and TLS built in. One lost packet delays only the object it belonged to. Chapter 3 returns to QUIC.</p>
+</section>
+<section id="section-2.3" class="slide level2 center section-divider">
+<h2>Section 2.3</h2>
+<p>Electronic Mail</p>
+</section>
+<section id="todays-plan-2" class="slide level2">
+<h2>Today’s Plan</h2>
+<div class="columns">
+<div class="column" style="width:58%;">
+<p><strong>In class</strong></p>
+<ul>
+<li>User agents, mail servers, SMTP</li>
+<li>The SMTP dialogue <span class="ex-inline">Must Know</span></li>
+<li>SMTP compared with HTTP <span class="ex-inline">Must Know</span></li>
+<li>Mail access: IMAP and web mail</li>
+</ul>
+</div><div class="column" style="width:42%;">
+<p><strong>After class</strong> <span class="rd-inline">Reading</span></p>
+<ul>
+<li>The message format and MIME</li>
+<li>Trying SMTP by hand</li>
+</ul>
+</div></div>
+</section>
+<section id="three-components" class="slide level2">
+<h2>Three Components</h2>
+<div class="columns">
+<div class="column" style="width:58%;">
+<div class="fragment" data-fragment-index="1">
+<p><strong>User agents</strong>, also called mail readers: Outlook, Thunderbird, the Gmail page. Compose, edit, read.</p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p><strong>Mail servers</strong>: each user’s <strong>mailbox</strong> of incoming messages, plus a <strong>queue</strong> of outgoing messages waiting to be sent.</p>
+</div>
+<div class="fragment" data-fragment-index="3">
+<p><strong>SMTP</strong>, the protocol between mail servers. The sending server is the <strong>client</strong>; the receiving server is the <strong>server</strong>.</p>
+</div>
+</div><div class="column" style="width:42%;">
+<p><img data-src="images/email_components.png" style="width:88.0%"></p>
+</div></div>
+</section>
+<section id="alice-sends-to-bob" class="slide level2">
+<h2>Alice Sends to Bob</h2>
+<p><img data-src="images/alice_bob.png" style="width:82.0%"></p>
+<div class="fragment" data-fragment-index="1">
+<p><strong>1.</strong> Alice composes a message to <code>bob@someschool.edu</code>. <strong>2.</strong> Her user agent hands it to her mail server, which queues it.</p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p><strong>3.</strong> The client side of SMTP on her server opens a TCP connection to Bob’s server. <strong>4.</strong> It sends the message over that connection.</p>
+</div>
+<div class="fragment" data-fragment-index="3">
+<p><strong>5.</strong> Bob’s server puts the message in Bob’s mailbox. <strong>6.</strong> Bob’s user agent fetches it.</p>
+</div>
+</section>
+<section id="smtp-rfc-5321" class="slide level2">
+<h2>SMTP: RFC 5321</h2>
+<div class="fragment" data-fragment-index="1">
+<ul>
+<li>uses <strong>TCP</strong>, port <strong>25</strong>, to move a message reliably from the sending server to the receiving server</li>
+<li><strong>direct</strong> transfer: no intermediate servers</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="2">
+<ul>
+<li>three phases: <strong>handshake</strong> (greeting), <strong>transfer</strong> of messages, <strong>closure</strong></li>
+<li>command/response interaction, as in HTTP: commands are ASCII text, responses are a status code and a phrase</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="3">
+<ul>
+<li>the message itself must be <strong>7-bit ASCII</strong></li>
+</ul>
+</div>
+</section>
+<section id="smtp-dialogue-must-know" class="slide level2">
+<h2>SMTP Dialogue <span class="ex">Must Know</span></h2>
+<p><code>alice@crepes.fr</code> writes to <code>bob@hamburger.edu</code>. <code>S:</code> is Bob’s server, <code>C:</code> is Alice’s server.</p>
+<div class="fragment" data-fragment-index="1">
+<pre><code>S: 220 hamburger.edu
+C: HELO crepes.fr
+S: 250 Hello crepes.fr, pleased to meet you</code></pre>
+</div>
+<div class="fragment" data-fragment-index="2">
+<pre><code>C: MAIL FROM: &lt;alice@crepes.fr&gt;
+S: 250 alice@crepes.fr... Sender ok
+C: RCPT TO: &lt;bob@hamburger.edu&gt;
+S: 250 bob@hamburger.edu ... Recipient ok</code></pre>
+</div>
+</section>
+<section id="smtp-dialogue-must-know-1" class="slide level2">
+<h2>SMTP Dialogue <span class="ex">Must Know</span></h2>
+<div class="fragment" data-fragment-index="1">
+<pre><code>C: DATA
+S: 354 Enter mail, end with "." on a line by itself
+C: Do you like ketchup?
+C: How about pickles?
+C: .
+S: 250 Message accepted for delivery</code></pre>
+</div>
+<div class="fragment" data-fragment-index="2">
+<pre><code>C: QUIT
+S: 221 hamburger.edu closing connection</code></pre>
+</div>
+<div class="fragment" data-fragment-index="3">
+<p>A line holding only a period ends the body. Counting the TCP handshake and each command/reply pair as one RTT, <strong>5 RTTs</strong> pass before the first byte of the body can be sent: handshake, <code>HELO</code>, <code>MAIL FROM</code>, <code>RCPT TO</code>, <code>DATA</code>.</p>
+</div>
+</section>
+<section id="smtp-vs-http-must-know" class="slide level2">
+<h2>SMTP vs HTTP <span class="ex">Must Know</span></h2>
+<div class="fragment" data-fragment-index="0">
+<table class="caption-top">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 36%">
+<col style="width: 36%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">HTTP</th>
+<th style="text-align: left;">SMTP</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Transport</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="1">TCP, port 80</span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="1">TCP, port 25</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Direction</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2"><strong>pull</strong>: the receiver asks</span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2"><strong>push</strong>: the sender initiates</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Body must be</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="4">anything; binary is fine</span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="4">7-bit ASCII</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">End of body marked by</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="5"><code>Content-Length:</code></span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="5">a line with only a period</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Several objects</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="6">one response message each</span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="6">one multipart message</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="fragment" data-fragment-index="7">
+<p>A binary body may contain a lone period; ASCII bodies escape it.</p>
+</div>
+</section>
+<section id="envelope-and-message" class="slide level2">
+<h2>Envelope and Message</h2>
+<div class="fragment" data-fragment-index="1">
+<p><code>MAIL FROM:</code> and <code>RCPT TO:</code> are SMTP <strong>commands</strong>: the envelope that Alice’s server hands to Bob’s. RFC 5321 defines them.</p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p><code>From:</code>, <code>To:</code>, and <code>Subject:</code> are <strong>header lines inside the message</strong>, which SMTP carries as data without reading. RFC 5322 defines them, the way HTML is defined separately from HTTP.</p>
+</div>
+<div class="fragment" data-fragment-index="3">
+<pre><code>From: alice@crepes.fr
+To: bob@hamburger.edu
+Subject: lunch
+                                   &lt;- blank line
+Do you like ketchup?</code></pre>
+</div>
+<div class="fragment" data-fragment-index="4">
+<p>The two need not agree. Spam relies on that.</p>
+</div>
+</section>
+<section id="mail-access-protocols" class="slide level2">
+<h2>Mail Access Protocols</h2>
+<p><img data-src="images/mail_access.png" style="width:80.0%"></p>
+<div class="fragment">
+<p>SMTP <strong>delivers</strong> a message to the receiver’s server and stores it there. Fetching it is a <strong>pull</strong>, so it needs a different protocol.</p>
+</div>
+<div class="fragment">
+<p><strong>IMAP</strong> (RFC 3501): messages stay on the server; the client reads, deletes, and files them into folders there. <strong>HTTP</strong>: Gmail and Outlook.com put a web page in front of SMTP (to send) and IMAP or their own store (to read).</p>
+</div>
+</section>
+<section id="your-turn-trace-the-path" class="slide level2">
+<h2>Your Turn: Trace the Path</h2>
+<p>Alice uses Gmail in a browser; Bob reads mail in Thunderbird over IMAP.</p>
+<div class="fragment" data-fragment-index="0">
+<table class="caption-top">
+<colgroup>
+<col style="width: 79%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Hop</th>
+<th style="text-align: left;">Protocol</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Alice’s browser <span class="math inline">\(\to\)</span> Gmail’s mail server</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="1">HTTP(S)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gmail’s server <span class="math inline">\(\to\)</span> Bob’s university server</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2">SMTP</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Bob’s Thunderbird <span class="math inline">\(\to\)</span> Bob’s server</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="3">IMAP</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="fragment" data-fragment-index="4">
+<p>Thunderbird cannot fetch with SMTP: SMTP is push, and a reader needs to pull.</p>
+</div>
+<div class="fragment" data-fragment-index="5">
+<p>Alice’s photo travels base64-encoded, with MIME headers saying so, because SMTP bodies must be 7-bit ASCII.</p>
+</div>
+</section>
+<section id="activity-read-the-headers" class="slide level2">
+<h2>Activity: Read the Headers</h2>
+<div class="activity">
+<p><span class="activity-label">On your own mail — 6 minutes</span></p>
+<p>Open any message you received this week and show its raw source (Gmail: the three-dot menu, <strong>Show original</strong>; Outlook: <strong>View message source</strong>).</p>
+<ol type="1">
+<li>Count the <code>Received:</code> lines, one per SMTP hop, newest on top. How many servers handled the message?</li>
+<li>Compare the <code>From:</code> header with the envelope sender in <code>Return-Path:</code>. Same address?</li>
+<li>Find <code>Content-Type:</code>. Plain text, HTML, or <code>multipart</code>?</li>
+</ol>
+</div>
+</section>
+<section id="read-after-class-2" class="slide level2 center reading-divider">
+<h2>Read After Class</h2>
+<p>Section 2.3 — supporting material</p>
+<ul>
+<li>The message format and MIME</li>
+<li>Trying SMTP by hand</li>
+</ul>
+<p><a href="#/section-2.4">In class: skip ahead to Section 2.4</a></p>
+</section>
+<section id="mime-reading" class="slide level2">
+<h2>MIME <span class="rd">Reading</span></h2>
+<p>RFC 5322 defines the message: header lines, a blank line, then the body. Every header line is <code>Name: value</code>, and the body is ASCII.</p>
+<p>Anything that is not ASCII text rides inside that body using <strong>MIME</strong> (RFC 2045). Two header lines do the work:</p>
+<pre><code>Content-Type: image/jpeg
+Content-Transfer-Encoding: base64</code></pre>
+<p>Base64 turns every 3 bytes into 4 ASCII characters, so an attachment grows by a third in transit. A message with text and a photo is a <code>multipart/mixed</code> body, with a boundary string separating the parts.</p>
+</section>
+<section id="trying-smtp-by-hand-reading" class="slide level2">
+<h2>Trying SMTP by Hand <span class="rd">Reading</span></h2>
+<p>You can type the SMTP dialogue yourself:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="" aria-label="1"></a><span class="ex">nc</span> <span class="op">&lt;</span>mail-server-name<span class="op">&gt;</span> 25</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>You will see the <code>220</code> greeting; then type <code>HELO</code>, <code>MAIL FROM:</code>, <code>RCPT TO:</code>, <code>DATA</code>, the message, a lone <code>.</code>, and <code>QUIT</code>. Nothing about the protocol checks that <code>MAIL FROM:</code> is you.</p>
+<p>Most servers now refuse port 25 from an unknown host, and campus and home ISPs often block it outright, because of what the previous sentence allows. Sending mail from a client today uses port 587 with authentication and TLS.</p>
+</section>
+<section id="section-2.4" class="slide level2 center section-divider">
+<h2>Section 2.4</h2>
+<p>DNS: The Internet’s Directory</p>
+</section>
+<section id="todays-plan-3" class="slide level2">
+<h2>Today’s Plan</h2>
+<div class="columns">
+<div class="column" style="width:58%;">
+<p><strong>In class</strong></p>
+<ul>
+<li>What DNS provides, and why it is distributed</li>
+<li>Root, TLD, authoritative, and local servers</li>
+<li>Iterated and recursive queries <span class="ex-inline">Must Know</span></li>
+<li>Caching and TTLs <span class="ex-inline">Must Know</span></li>
+<li>Resource records <span class="ex-inline">Must Know</span></li>
+</ul>
+</div><div class="column" style="width:42%;">
+<p><strong>After class</strong> <span class="rd-inline">Reading</span></p>
+<ul>
+<li>Before DNS: <code>hosts.txt</code></li>
+<li>The root servers</li>
+<li>DNS message format</li>
+<li>Registering a domain</li>
+<li>Reverse lookups</li>
+<li>Attacks on DNS</li>
+</ul>
+</div></div>
+</section>
+<section id="names-and-addresses" class="slide level2">
+<h2>Names and Addresses</h2>
+<div class="fragment" data-fragment-index="1">
+<p>People have several identifiers: a name, a passport number, a student ID. Internet hosts have two: a 32-bit <strong>IP address</strong>, which routers use to forward datagrams, and a <strong>hostname</strong> such as <code>cs.umass.edu</code>, which people use.</p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p>The <strong>Domain Name System</strong> maps between them. It is a <strong>distributed database</strong> implemented in a hierarchy of many name servers, plus an <strong>application-layer protocol</strong> by which hosts and servers talk to resolve names.</p>
+</div>
+<div class="fragment" data-fragment-index="3">
+<p>A core Internet function, implemented at the network’s <strong>edge</strong> as an ordinary application. Nothing in a router knows a hostname.</p>
+</div>
+</section>
+<section id="what-dns-provides" class="slide level2">
+<h2>What DNS Provides</h2>
+<div class="fragment" data-fragment-index="1">
+<p><strong>Hostname to IP address translation.</strong> The one everybody uses.</p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p><strong>Host aliasing.</strong> A <strong>canonical</strong> name such as <code>proxy-ext.tamusa.edu</code> can have friendlier aliases such as <code>www.tamusa.edu</code>.</p>
+</div>
+<div class="fragment" data-fragment-index="3">
+<p><strong>Mail server aliasing.</strong> Mail for <code>@tamusa.edu</code> is delivered to a server with a different name; DNS says which.</p>
+</div>
+<div class="fragment" data-fragment-index="4">
+<p><strong>Load distribution.</strong> A busy site has many replicated servers; one name maps to a set of addresses, and DNS rotates the order it returns them in.</p>
+</div>
+</section>
+<section id="why-not-centralize" class="slide level2">
+<h2>Why Not Centralize?</h2>
+<p><span class="vote-prompt">Vote — one big DNS server for the whole Internet. What goes wrong first?</span></p>
+<div class="columns vote-row">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>A.</strong> It fails, and everything stops</p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>B.</strong> It cannot handle the traffic</p>
+</div>
+</div></div>
+<div class="columns vote-row">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>C.</strong> Every lookup crosses the planet</p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>D.</strong> Nobody could keep it up to date</p>
+</div>
+</div></div>
+<div class="fragment">
+<p>All four. Single point of failure, traffic volume, distance, and maintenance of a database that changes every second. A centralized design does not scale, so DNS is distributed <strong>and</strong> hierarchical.</p>
+</div>
+</section>
+<section id="a-hierarchy-of-servers" class="slide level2">
+<h2>A Hierarchy of Servers</h2>
+<p><img data-src="images/dns_hierarchy.png" style="width:88.0%"></p>
+<div class="fragment">
+<p>A client wanting the address of <code>www.amazon.com</code>, to a first approximation:</p>
+<ol type="1">
+<li>asks a <strong>root</strong> server to find the <code>.com</code> DNS server</li>
+<li>asks the <strong><code>.com</code> TLD</strong> server to find the <code>amazon.com</code> DNS server</li>
+<li>asks the <strong><code>amazon.com</code> authoritative</strong> server for <code>www.amazon.com</code></li>
+</ol>
+</div>
+</section>
+<section id="three-kinds-of-server" class="slide level2">
+<h2>Three Kinds of Server</h2>
+<div class="fragment" data-fragment-index="1">
+<p><strong>Root servers.</strong> The contact of last resort for a name server that cannot resolve a name. 13 logical servers, each replicated many times around the world; ICANN manages the root.</p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p><strong>Top-level domain (TLD) servers.</strong> Responsible for <code>.com</code>, <code>.org</code>, <code>.net</code>, <code>.edu</code>, and the country domains <code>.uk</code>, <code>.fr</code>, <code>.jp</code>. Educause runs <code>.edu</code>; Verisign runs <code>.com</code>.</p>
+</div>
+<div class="fragment" data-fragment-index="3">
+<p><strong>Authoritative servers.</strong> An organization’s own DNS servers, holding the definitive name-to-address records for its hosts. Run by the organization or by a provider it pays.</p>
+</div>
+</section>
+<section id="the-local-dns-server" class="slide level2">
+<h2>The Local DNS Server</h2>
+<div class="fragment" data-fragment-index="1">
+<p>Not part of the hierarchy. Every ISP, company, and university runs one; your host learns its address when it joins the network, and sends every query there first. Also called the <strong>default name server</strong>.</p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p>It keeps a <strong>cache</strong> of recent name-to-address answers, which can be out of date.</p>
+</div>
+<div class="fragment" data-fragment-index="3">
+<p>When the answer is not cached, it acts as a <strong>proxy</strong> and forwards the query into the hierarchy on your behalf. The next two slides show how.</p>
+</div>
+</section>
+<section id="iterated-query-must-know" class="slide level2">
+<h2>Iterated Query <span class="ex">Must Know</span></h2>
+<p>A host at <code>engineering.nyu.edu</code> wants the address of <code>gaia.cs.umass.edu</code>.</p>
+<div class="columns">
+<div class="column" style="width:36%;">
+<div class="fragment" data-fragment-index="3">
+<p>Each server answers with the <strong>name of the next server to ask</strong>.</p>
+</div>
+<div class="fragment" data-fragment-index="8">
+<p><strong>8 messages</strong>, all through the local server.</p>
+</div>
+</div><div class="column" style="width:64%;">
+<svg viewbox="20 25 750 470" width="100%" style="max-height:54vh">
+  <defs>
+    <marker id="ar-dnsi" markerwidth="9" markerheight="9" refx="7" refy="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#c0392b"></path></marker>
+  </defs>
+  <rect class="node" x="30" y="225" width="130" height="50" rx="6"></rect>
+  <text x="95" y="258" text-anchor="middle" font-size="23">host</text>
+  <text x="95" y="297" text-anchor="middle" font-size="18" class="lbl-gray">engineering.nyu.edu</text>
+  <rect class="node" x="250" y="225" width="170" height="50" rx="6"></rect>
+  <text x="335" y="258" text-anchor="middle" font-size="23">local DNS</text>
+  <text x="335" y="297" text-anchor="middle" font-size="18" class="lbl-gray">dns.nyu.edu</text>
+  <rect class="node" x="475" y="35" width="170" height="50" rx="6"></rect>
+  <text x="560" y="68" text-anchor="middle" font-size="23">root DNS</text>
+  <rect class="node" x="585" y="225" width="180" height="50" rx="6"></rect>
+  <text x="675" y="258" text-anchor="middle" font-size="23">TLD DNS (.edu)</text>
+  <rect class="node" x="440" y="405" width="240" height="50" rx="6"></rect>
+  <text x="560" y="438" text-anchor="middle" font-size="23">authoritative DNS</text>
+  <text x="560" y="477" text-anchor="middle" font-size="18" class="lbl-gray">dns.cs.umass.edu</text>
+  <g class="fragment" data-fragment-index="1">
+    <path class="msg-r" d="M 164 241 L 244 241" marker-end="url(#ar-dnsi)"></path>
+    <text x="204" y="234" text-anchor="middle" font-size="30" class="lbl-red">1</text>
+  </g>
+  <g class="fragment" data-fragment-index="2">
+    <path class="msg-r" d="M 362 216 L 520 82" marker-end="url(#ar-dnsi)"></path>
+    <text x="430" y="146" text-anchor="middle" font-size="30" class="lbl-red">2</text>
+  </g>
+  <g class="fragment" data-fragment-index="3">
+    <path class="msg-r" d="M 533 94 L 375 228" marker-end="url(#ar-dnsi)"></path>
+    <text x="465" y="184" text-anchor="middle" font-size="30" class="lbl-red">3</text>
+  </g>
+  <g class="fragment" data-fragment-index="4">
+    <path class="msg-r" d="M 424 241 L 579 241" marker-end="url(#ar-dnsi)"></path>
+    <text x="502" y="234" text-anchor="middle" font-size="30" class="lbl-red">4</text>
+  </g>
+  <g class="fragment" data-fragment-index="5">
+    <path class="msg-r" d="M 581 259 L 426 259" marker-end="url(#ar-dnsi)"></path>
+    <text x="504" y="286" text-anchor="middle" font-size="30" class="lbl-red">5</text>
+  </g>
+  <g class="fragment" data-fragment-index="6">
+    <path class="msg-r" d="M 375 270 L 530 394" marker-end="url(#ar-dnsi)"></path>
+    <text x="463" y="329" text-anchor="middle" font-size="30" class="lbl-red">6</text>
+  </g>
+  <g class="fragment" data-fragment-index="7">
+    <path class="msg-r" d="M 520 410 L 365 286" marker-end="url(#ar-dnsi)"></path>
+    <text x="432" y="371" text-anchor="middle" font-size="30" class="lbl-red">7</text>
+  </g>
+  <g class="fragment" data-fragment-index="8">
+    <path class="msg-r" d="M 246 259 L 166 259" marker-end="url(#ar-dnsi)"></path>
+    <text x="206" y="286" text-anchor="middle" font-size="30" class="lbl-red">8</text>
+  </g>
+</svg>
+</div></div>
+</section>
+<section id="recursive-query" class="slide level2">
+<h2>Recursive Query</h2>
+<p>Same lookup, but each server <strong>resolves the name itself</strong> before answering.</p>
+<div class="columns">
+<div class="column" style="width:36%;">
+<div class="fragment" data-fragment-index="4">
+<p>The answer returns down the same chain.</p>
+</div>
+<div class="fragment" data-fragment-index="8">
+<p>Still <strong>8 messages</strong>, but root and TLD now work for every lookup, so recursion is used only from host to local server.</p>
+</div>
+</div><div class="column" style="width:64%;">
+<svg viewbox="20 25 750 470" width="100%" style="max-height:54vh">
+  <defs>
+    <marker id="ar-dnsr" markerwidth="9" markerheight="9" refx="7" refy="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#c0392b"></path></marker>
+  </defs>
+  <rect class="node" x="30" y="225" width="130" height="50" rx="6"></rect>
+  <text x="95" y="258" text-anchor="middle" font-size="23">host</text>
+  <text x="95" y="297" text-anchor="middle" font-size="18" class="lbl-gray">engineering.nyu.edu</text>
+  <rect class="node" x="250" y="225" width="170" height="50" rx="6"></rect>
+  <text x="335" y="258" text-anchor="middle" font-size="23">local DNS</text>
+  <text x="335" y="297" text-anchor="middle" font-size="18" class="lbl-gray">dns.nyu.edu</text>
+  <rect class="node" x="475" y="35" width="170" height="50" rx="6"></rect>
+  <text x="560" y="68" text-anchor="middle" font-size="23">root DNS</text>
+  <rect class="node" x="585" y="225" width="180" height="50" rx="6"></rect>
+  <text x="675" y="258" text-anchor="middle" font-size="23">TLD DNS (.edu)</text>
+  <rect class="node" x="440" y="405" width="240" height="50" rx="6"></rect>
+  <text x="560" y="438" text-anchor="middle" font-size="23">authoritative DNS</text>
+  <text x="560" y="477" text-anchor="middle" font-size="18" class="lbl-gray">dns.cs.umass.edu</text>
+  <g class="fragment" data-fragment-index="1">
+    <path class="msg-r" d="M 164 241 L 244 241" marker-end="url(#ar-dnsr)"></path>
+    <text x="204" y="234" text-anchor="middle" font-size="30" class="lbl-red">1</text>
+  </g>
+  <g class="fragment" data-fragment-index="2">
+    <path class="msg-r" d="M 362 216 L 520 82" marker-end="url(#ar-dnsr)"></path>
+    <text x="430" y="146" text-anchor="middle" font-size="30" class="lbl-red">2</text>
+  </g>
+  <g class="fragment" data-fragment-index="3">
+    <path class="msg-r" d="M 585 84 L 664 215" marker-end="url(#ar-dnsr)"></path>
+    <text x="639" y="151" text-anchor="middle" font-size="30" class="lbl-red">3</text>
+  </g>
+  <g class="fragment" data-fragment-index="4">
+    <path class="msg-r" d="M 664 283 L 587 405" marker-end="url(#ar-dnsr)"></path>
+    <text x="640" y="363" text-anchor="middle" font-size="30" class="lbl-red">4</text>
+  </g>
+  <g class="fragment" data-fragment-index="5">
+    <path class="msg-r" d="M 571 397 L 648 275" marker-end="url(#ar-dnsr)"></path>
+    <text x="595" y="337" text-anchor="middle" font-size="30" class="lbl-red">5</text>
+  </g>
+  <g class="fragment" data-fragment-index="6">
+    <path class="msg-r" d="M 650 226 L 571 95" marker-end="url(#ar-dnsr)"></path>
+    <text x="596" y="179" text-anchor="middle" font-size="30" class="lbl-red">6</text>
+  </g>
+  <g class="fragment" data-fragment-index="7">
+    <path class="msg-r" d="M 533 94 L 375 228" marker-end="url(#ar-dnsr)"></path>
+    <text x="465" y="184" text-anchor="middle" font-size="30" class="lbl-red">7</text>
+  </g>
+  <g class="fragment" data-fragment-index="8">
+    <path class="msg-r" d="M 246 259 L 166 259" marker-end="url(#ar-dnsr)"></path>
+    <text x="206" y="286" text-anchor="middle" font-size="30" class="lbl-red">8</text>
+  </g>
+</svg>
+</div></div>
+</section>
+<section id="caching" class="slide level2">
+<h2>Caching</h2>
+<div class="fragment" data-fragment-index="1">
+<p>Once <strong>any</strong> name server learns a mapping, it caches it. Each record carries a <strong>TTL</strong> set by the authoritative server; the cache discards it when the TTL expires.</p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p>TLD server addresses are almost always cached at the local server, so <strong>root servers are rarely visited</strong>.</p>
+</div>
+<div class="fragment" data-fragment-index="3">
+<p>A cached entry can be <strong>stale</strong>: if a host changes its address, the old mapping lingers until every cached copy expires. DNS is best-effort translation.</p>
+</div>
+<div class="fragment" data-fragment-index="4">
+<p>Caching also lets one user’s lookup speed up another’s: your neighbor resolved <code>tamusa.edu</code> a minute ago, so your query never leaves campus.</p>
+</div>
+</section>
+<section id="your-turn-dns-cache-must-know" class="slide level2">
+<h2>Your Turn: DNS Cache <span class="ex">Must Know</span></h2>
+<p><strong><em>Example:</em></strong> A local DNS server starts with an <strong>empty cache</strong> and caches every record it receives for <strong>30 time units</strong>. Every one-way message takes <strong>1 unit</strong>; queries into the hierarchy are iterative. Hosts ask the local server for <code>www.x.org</code> at <span class="math inline">\(t = 0\)</span>, <code>www.y.org</code> at <span class="math inline">\(t = 12\)</span>, <code>ftp.x.org</code> at <span class="math inline">\(t = 20\)</span>, and <code>www.x.org</code> again at <span class="math inline">\(t = 50\)</span>.</p>
+<p>For each request, which servers does the local server contact, and when does the host get its answer?</p>
+</section>
+<section id="your-turn-dns-cache-must-know-1" class="slide level2">
+<h2>Your Turn: DNS Cache <span class="ex">Must Know</span></h2>
+<p>A full resolution is 8 one-way messages, so 8 units.</p>
+<div class="fragment" data-fragment-index="0">
+<table class="caption-top">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 16%">
+<col style="width: 63%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><span class="math inline">\(t\)</span></th>
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Contacts</th>
+<th style="text-align: left;">Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">0</td>
+<td style="text-align: left;"><code>www.x.org</code></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="1">root, TLD, auth</span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="1"><span class="math inline">\(t = 8\)</span></span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">12</td>
+<td style="text-align: left;"><code>www.y.org</code></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2">TLD, auth (TLD cached at 3, to 33)</span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2"><span class="math inline">\(t = 18\)</span></span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">20</td>
+<td style="text-align: left;"><code>ftp.x.org</code></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="3">auth only (<code>x.org</code> NS cached at 5, to 35)</span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="3"><span class="math inline">\(t = 24\)</span></span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">50</td>
+<td style="text-align: left;"><code>www.x.org</code></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="4">root, TLD, auth (all expired by 37)</span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="4"><span class="math inline">\(t = 58\)</span></span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="dns-records-must-know" class="slide level2">
+<h2>DNS Records <span class="ex">Must Know</span></h2>
+<p>The database holds <strong>resource records</strong> <code>(name, value, type, ttl)</code>.</p>
+<div class="fragment" data-fragment-index="0">
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;"><code>name</code></th>
+<th style="text-align: left;"><code>value</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>A</strong></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="1">a hostname</span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="1">its IPv4 address</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>NS</strong></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2">a domain, e.g.&nbsp;<code>foo.com</code></span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2">hostname of an authoritative server for it</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>CNAME</strong></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="3">an alias</span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="3">the canonical (real) hostname</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>MX</strong></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="4">a domain</span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="4">canonical name of its mail server</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="two-records-per-referral" class="slide level2">
+<h2>Two Records per Referral</h2>
+<p>A TLD server answering for <code>gaia.cs.umass.edu</code> returns two records:</p>
+<div class="fragment" data-fragment-index="1">
+<pre><code>(umass.edu,      dns.umass.edu,   NS)
+(dns.umass.edu,  128.119.40.111,  A)</code></pre>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p>The NS record names the authoritative server. The A record gives that server’s address. Without the second, the local server would have to resolve <code>dns.umass.edu</code> before it could ask it anything.</p>
+</div>
+</section>
+<section id="your-turn-which-record" class="slide level2">
+<h2>Your Turn: Which Record?</h2>
+<p><span class="vote-prompt">Vote — which record type answers each need?</span></p>
+<div class="fragment" data-fragment-index="0">
+<table class="caption-top">
+<colgroup>
+<col style="width: 65%">
+<col style="width: 34%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Need</th>
+<th style="text-align: left;">Record</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">The IP address of a host</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="1">A</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>www.tamusa.edu</code> is an alias for another hostname</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2">CNAME</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Who accepts mail for <code>@tamusa.edu</code></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="3">MX</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">The <code>.edu</code> TLD’s referral for <code>tamusa.edu</code></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="4">NS, plus an A record</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Web and mail for <code>foo.com</code> on different machines</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="5">MX for mail; A or CNAME for web</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="activity-trace-a-name" class="slide level2">
+<h2>Activity: Trace a Name</h2>
+<div class="activity">
+<p><span class="activity-label">On your CloudLab VM — 8 minutes</span></p>
+<p>Watch an iterated resolution happen, one referral at a time:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="" aria-label="1"></a><span class="ex">dig</span> +trace www.tamusa.edu</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ol type="1">
+<li>Find the three referral stages: the root’s list of <code>.edu</code> servers, the <code>.edu</code> server’s list of <code>tamusa.edu</code> servers, and the final answer. Which TTL is largest, and why does that make sense?</li>
+</ol>
+</div>
+</section>
+<section id="activity-trace-a-name-1" class="slide level2">
+<h2>Activity: Trace a Name</h2>
+<div class="activity">
+<p><span class="activity-label">On your CloudLab VM — continued</span></p>
+<ol start="2" type="1">
+<li>Run <code>dig www.tamusa.edu</code> and read the <code>ANSWER SECTION</code>. Is there a <code>CNAME</code> line before the <code>A</code> line?</li>
+<li>Run <code>dig www.google.com</code> twice, a minute apart. Does the TTL on the <code>A</code> records count down between runs? Which server answered you (the <code>SERVER:</code> line at the bottom)?</li>
+</ol>
+</div>
+<div class="fragment">
+<p>The second run is answered from the local server’s cache, and the TTL you see is what is left of the authoritative server’s TTL.</p>
+</div>
+</section>
+<section id="read-after-class-3" class="slide level2 center reading-divider">
+<h2>Read After Class</h2>
+<p>Section 2.4 — supporting material</p>
+<ul>
+<li>Before DNS: <code>hosts.txt</code></li>
+<li>The root servers</li>
+<li>The DNS message</li>
+<li>Registering a domain</li>
+<li>Reverse lookups</li>
+<li>Attacks on DNS, and cache poisoning</li>
+</ul>
+<p><a href="#/section-2.5">In class: skip ahead to Section 2.5</a></p>
+</section>
+<section id="before-dns-reading" class="slide level2">
+<h2>Before DNS <span class="rd">Reading</span></h2>
+<p>Until 1983 the whole mapping lived in one file, <code>hosts.txt</code>, kept by the Network Information Center at SRI. To add a host you emailed the center; every site downloaded the new file every few days.</p>
+<p>The file was one flat namespace: two sites could not both have a host called <code>mail</code>. It was a single point of failure, and the download traffic grew with the square of the number of sites, since every site fetched a file whose size grew with every site.</p>
+<p>DNS kept two properties that make the problem easier than it looks: the database is <strong>read-mostly</strong> (lookups vastly outnumber updates), and it tolerates <strong>loose consistency</strong> (a new host that takes an hour to become visible everywhere is no disaster). Both point at aggressive caching.</p>
+</section>
+<section id="the-root-servers-reading" class="slide level2">
+<h2>The Root Servers <span class="rd">Reading</span></h2>
+<p><img data-src="images/root_servers.png" style="width:40.0%"></p>
+<p>Thirteen logical root servers, <code>a</code> through <code>m</code>, run by twelve organizations, exist as more than a thousand physical instances; a query reaches the nearest copy through <em>anycast</em> routing. A local DNS server learns their addresses from a built-in file, not from DNS.</p>
+</section>
+<section id="the-dns-message-reading" class="slide level2">
+<h2>The DNS Message <span class="rd">Reading</span></h2>
+<p><img data-src="images/dns_message.png" style="width:56.0%"></p>
+<p>Query and reply share one format. The <strong>identification</strong> field ties a reply to its query; the <strong>flags</strong> say query or reply, recursion desired, recursion available, and whether the answer is authoritative. The <strong>authority</strong> section carries NS records, and <strong>additional</strong> carries the A records that go with them.</p>
+</section>
+<section id="registering-a-domain-reading" class="slide level2">
+<h2>Registering a Domain <span class="rd">Reading</span></h2>
+<p>A new company, Network Utopia, registers <code>networkutopia.com</code> with a <strong>registrar</strong> (accredited by ICANN), giving the names and addresses of its authoritative servers. The registrar inserts two records into the <code>.com</code> TLD servers:</p>
+<pre><code>(networkutopia.com,       dns1.networkutopia.com,  NS)
+(dns1.networkutopia.com,  212.212.212.1,           A)</code></pre>
+<p>The company then runs <code>dns1.networkutopia.com</code> itself and puts into it an A record for <code>www.networkutopia.com</code> and an MX record for <code>networkutopia.com</code>. From that moment any local DNS server in the world can find the site: TLD referral, then the authoritative answer.</p>
+</section>
+<section id="reverse-lookups-reading" class="slide level2">
+<h2>Reverse Lookups <span class="rd">Reading</span></h2>
+<p>The other direction, address to name, uses the same tree. The address <code>129.7.240.18</code> is written with its octets reversed under a special domain, <code>18.240.7.129.in-addr.arpa</code>, and a <strong>PTR</strong> record there names the host. Reversing puts the most significant octet at the top of the tree, where delegation happens.</p>
+<p>Mail servers use reverse lookups to check that a connecting host’s name matches its address, and <code>traceroute</code> uses them to print names next to addresses. When <code>traceroute</code> prints only a number for a hop, that address has no PTR record.</p>
+</section>
+<section id="attacks-on-dns-reading" class="slide level2">
+<h2>Attacks on DNS <span class="rd">Reading</span></h2>
+<p><strong>DDoS on the root.</strong> In October 2002 a botnet flooded every root server with ping packets. The servers were protected by packet filters, and most local servers had the TLD addresses cached anyway, so users barely noticed. A flood aimed at TLD servers is harder to shrug off, since they cannot be bypassed.</p>
+<p><strong>Redirection.</strong> An attacker who can intercept queries, or feed a local server bogus replies that it caches (<strong>poisoning</strong>), sends users to a server of the attacker’s choice.</p>
+<p><strong>DNS as an amplifier.</strong> Small queries with a spoofed source address produce large replies at the victim’s address. DNSSEC (RFC 4033) adds signatures so a resolver can tell a forged answer from a real one.</p>
+</section>
+<section id="cache-poisoning-reading" class="slide level2">
+<h2>Cache Poisoning <span class="rd">Reading</span></h2>
+<p>A reply is accepted if its 16-bit identification field matches the query. If a local server issued IDs in sequence and always sent from the same port, an attacker could ask it to resolve <code>www.bank.com</code>, then fire a forged reply with the next ID before the real one arrived. The forgery, with a long TTL, would then be served to everyone behind that resolver until it expired.</p>
+<p>Kaminsky’s 2008 variant asked for <code>aaaa.bank.com</code>, <code>aaab.bank.com</code>, and so on, one race per name, so losing a race cost nothing. Each forged reply carried a bogus NS record for the whole zone. Resolvers now randomize the ID and the source port, which makes a guess one in billions, and check that extra records belong to the zone asked about.</p>
+</section>
+<section id="section-2.5" class="slide level2 center section-divider">
+<h2>Section 2.5</h2>
+<p>Peer-to-Peer File Distribution</p>
+</section>
+<section id="todays-plan-4" class="slide level2">
+<h2>Today’s Plan</h2>
+<div class="columns">
+<div class="column" style="width:58%;">
+<p><strong>In class</strong></p>
+<ul>
+<li>Distribution time: client-server vs P2P <span class="ex-inline">Must Know</span></li>
+<li>BitTorrent: chunks, rarest first</li>
+<li>Tit-for-tat and optimistic unchoking <span class="ex-inline">Must Know</span></li>
+</ul>
+</div><div class="column" style="width:42%;">
+<p><strong>After class</strong> <span class="rd-inline">Reading</span></p>
+<ul>
+<li>Before BitTorrent: Napster and Gnutella</li>
+<li>Download phases</li>
+</ul>
+</div></div>
+</section>
+<section id="distributing-a-file" class="slide level2">
+<h2>Distributing a File</h2>
+<p><img data-src="images/dist_setup.png" style="width:66.0%"></p>
+<div class="fragment">
+<p><strong>Question:</strong> how long does it take to get a file of <span class="math inline">\(F\)</span> bits from one server to <strong>all</strong> of <span class="math inline">\(N\)</span> peers? The server uploads at <span class="math inline">\(u_s\)</span>; peer <span class="math inline">\(i\)</span> uploads at <span class="math inline">\(u_i\)</span> and downloads at <span class="math inline">\(d_i\)</span>. The network core has plenty of capacity; the access links are the limit.</p>
+</div>
+</section>
+<section id="client-server-time" class="slide level2">
+<h2>Client-Server Time</h2>
+<div class="fragment" data-fragment-index="1">
+<p><strong>The server</strong> must upload <span class="math inline">\(N\)</span> copies, one per client. One copy takes <span class="math inline">\(F / u_s\)</span>; <span class="math inline">\(N\)</span> copies take at least <span class="math inline">\(NF / u_s\)</span>.</p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p><strong>The slowest client</strong> must download one copy. With <span class="math inline">\(d_{\min}\)</span> the smallest download rate, that takes at least <span class="math inline">\(F / d_{\min}\)</span>.</p>
+</div>
+<div class="fragment" data-fragment-index="3">
+<p>Both must finish, so the distribution time is at least the larger:</p>
+<p><span class="math display">\[D_{cs} \ge \max\!\left\{\frac{NF}{u_s},\ \frac{F}{d_{\min}}\right\}\]</span></p>
+</div>
+<div class="fragment" data-fragment-index="4">
+<p>For large <span class="math inline">\(N\)</span> the first term wins, and it grows <strong>linearly in <span class="math inline">\(N\)</span></strong>.</p>
+</div>
+</section>
+<section id="distribution-time-must-know" class="slide level2">
+<h2>Distribution Time <span class="ex">Must Know</span></h2>
+<div class="fragment" data-fragment-index="1">
+<p><strong>P2P.</strong> The server must upload at least <strong>one</strong> copy: <span class="math inline">\(F / u_s\)</span>. The slowest peer must still download one: <span class="math inline">\(F / d_{\min}\)</span>.</p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p><strong>All peers together</strong> must download <span class="math inline">\(NF\)</span> bits, and the total upload capacity in the system is <span class="math inline">\(u_s + \sum_i u_i\)</span>. So at least <span class="math inline">\(NF / (u_s + \sum_i u_i)\)</span>.</p>
+</div>
+<div class="fragment" data-fragment-index="3">
+<p><span class="math display">\[D_{P2P} \ge \max\left\{\tfrac{F}{u_s},\ \tfrac{F}{d_{\min}},\
+\tfrac{NF}{u_s + \sum_i u_i}\right\}
+\qquad
+D_{cs} \ge \max\left\{\tfrac{NF}{u_s},\ \tfrac{F}{d_{\min}}\right\}\]</span></p>
+</div>
+<div class="fragment" data-fragment-index="4">
+<p>The third term’s numerator grows with <span class="math inline">\(N\)</span>, but so does its denominator: every new peer brings upload capacity.</p>
+</div>
+</section>
+<section id="client-server-vs-p2p" class="slide level2">
+<h2>Client-Server vs P2P</h2>
+<div class="columns">
+<div class="column" style="width:42%;">
+<p>Every peer uploads at <span class="math inline">\(u\)</span>; the server at <span class="math inline">\(u_s = 10u\)</span>; <span class="math inline">\(F / u = 1\)</span> hour; <span class="math inline">\(d_{\min} \ge u_s\)</span>.</p>
+<div class="fragment">
+<p>At <span class="math inline">\(N = 32\)</span>: client-server needs <strong>3.2 hours</strong>, P2P <strong>0.76 hours</strong>.</p>
+</div>
+<div class="fragment">
+<p>As <span class="math inline">\(N\)</span> grows, client-server keeps climbing and P2P levels off just under <span class="math inline">\(F / u = 1\)</span> hour.</p>
+</div>
+</div><div class="column" style="width:58%;">
+<p><img data-src="images/dist_time.png" style="width:100.0%"></p>
+</div></div>
+</section>
+<section id="your-turn-20-peers-must-know" class="slide level2">
+<h2>Your Turn: 20 Peers <span class="ex">Must Know</span></h2>
+<p><strong><em>Example:</em></strong> <span class="math inline">\(F = 8\)</span> Gbits, server upload <span class="math inline">\(u_s = 20\)</span> Mbps, every peer downloads at <span class="math inline">\(d_{\min} = 4\)</span> Mbps and uploads at <span class="math inline">\(u = 2\)</span> Mbps. Find the minimum distribution time under client-server and under P2P for <span class="math inline">\(N = 20\)</span>.</p>
+<div class="fragment">
+<p><strong><em>Solution — client-server:</em></strong> <span class="math inline">\(NF / u_s = 20 \times 8 \times 10^{9} /
+(20 \times 10^{6}) = 8000\)</span> s; <span class="math inline">\(F / d_{\min} = 8 \times 10^{9} / (4
+\times 10^{6}) = 2000\)</span> s. <span class="math inline">\(D_{cs} = \mathbf{8000\ s}\)</span>; the server’s upload is the bottleneck.</p>
+</div>
+<div class="fragment">
+<p><strong><em>P2P:</em></strong> <span class="math inline">\(F / u_s = 400\)</span> s; <span class="math inline">\(F / d_{\min} = 2000\)</span> s; <span class="math inline">\(NF / (u_s + Nu) = 160 \times 10^{9} / (60 \times 10^{6}) = 2667\)</span> s. <span class="math inline">\(D_{P2P} = \mathbf{2667\ s}\)</span>; the aggregate upload is the bottleneck.</p>
+</div>
+</section>
+<section id="your-turn-20-peers-must-know-1" class="slide level2">
+<h2>Your Turn: 20 Peers <span class="ex">Must Know</span></h2>
+<p><strong><em>Example (continued):</em></strong> Now <span class="math inline">\(N = 100\)</span>.</p>
+<div class="fragment">
+<p><strong><em>Solution:</em></strong> <span class="math inline">\(D_{cs} = \max\{40{,}000,\ 2000\} = \mathbf{40{,}000\
+s}\)</span>, five times longer than before.</p>
+</div>
+<div class="fragment">
+<p>The third P2P term is now <span class="math inline">\(800 \times 10^{9} / (220 \times 10^{6}) =
+3636\)</span> s, so <span class="math inline">\(D_{P2P} = \max\{400,\ 2000,\ 3636\} = \mathbf{3636\ s}\)</span>.</p>
+</div>
+<div class="fragment">
+<p>Five times the peers cost P2P 36% more time, not 400%. As <span class="math inline">\(N\)</span> grows the third term approaches <span class="math inline">\(F / u = 4000\)</span> s and stays there.</p>
+</div>
+</section>
+<section id="bittorrent" class="slide level2">
+<h2>BitTorrent</h2>
+<p><img data-src="images/bittorrent.png" style="width:62.0%"></p>
+<div class="fragment">
+<p>A <strong>torrent</strong> is the group of peers exchanging chunks of one file; the file is cut into <strong>256 KB chunks</strong>. A <strong>tracker</strong> keeps the list of peers.</p>
+</div>
+<div class="fragment">
+<p>Alice arrives, gets a list of peers from the tracker, connects to a subset of them (her <strong>neighbors</strong>), and starts trading chunks.</p>
+</div>
+</section>
+<section id="joining-and-leaving" class="slide level2">
+<h2>Joining and Leaving</h2>
+<div class="fragment" data-fragment-index="1">
+<p>A new peer has <strong>no chunks</strong> and accumulates them over time from its neighbors.</p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p>While downloading, it <strong>uploads</strong> the chunks it has to others. It may change neighbors as it goes.</p>
+</div>
+<div class="fragment" data-fragment-index="3">
+<p><strong>Churn:</strong> peers come and go at will. A peer that has the whole file may leave, or stay and keep uploading.</p>
+</div>
+</section>
+<section id="requesting-chunks" class="slide level2">
+<h2>Requesting Chunks</h2>
+<div class="fragment" data-fragment-index="1">
+<p>At any moment different peers hold different subsets of the file. Periodically Alice asks each neighbor which chunks it has.</p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p>She requests the chunks she is missing <strong>rarest first</strong>: the ones the fewest of her neighbors hold.</p>
+</div>
+<div class="fragment" data-fragment-index="3">
+<p><span class="vote-prompt">Why rarest first, and not the chunk she needs next?</span></p>
+</div>
+<div class="fragment" data-fragment-index="4">
+<p>A chunk that only one peer holds disappears from the torrent if that peer leaves. Fetching rare chunks first spreads them, so the whole file stays available.</p>
+</div>
+</section>
+<section id="tit-for-tat-must-know" class="slide level2">
+<h2>Tit-for-Tat <span class="ex">Must Know</span></h2>
+<div class="columns">
+<div class="column" style="width:52%;">
+<div class="fragment" data-fragment-index="1">
+<p>Alice sends chunks to the <strong>four</strong> neighbors currently sending to her at the highest rate. Everyone else is <strong>choked</strong>: they get nothing from her.</p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p>Every <strong>10 seconds</strong> she re-ranks her neighbors and picks a new top four.</p>
+</div>
+<div class="fragment" data-fragment-index="3">
+<p>Every <strong>30 seconds</strong> she also picks one more neighbor <strong>at random</strong> and sends to it anyway: <strong>optimistic unchoking</strong>.</p>
+</div>
+</div><div class="column" style="width:48%;">
+<p><img data-src="images/tit_for_tat.png" style="width:100.0%"></p>
+</div></div>
+</section>
+<section id="tit-for-tat-must-know-1" class="slide level2">
+<h2>Tit-for-Tat <span class="ex">Must Know</span></h2>
+<p><img data-src="images/tit_for_tat.png" style="width:66.0%"></p>
+<div class="fragment" data-fragment-index="1">
+<p><strong>(1)</strong> Alice optimistically unchokes Bob. <strong>(2)</strong> Alice becomes one of Bob’s top-four providers, and Bob reciprocates. <strong>(3)</strong> Bob becomes one of Alice’s top four.</p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p>Peers that upload faster find better trading partners and finish sooner.</p>
+</div>
+</section>
+<section id="your-turn-free-rider" class="slide level2">
+<h2>Your Turn: Free Rider</h2>
+<p>Bob configures his client to <strong>never upload</strong>.</p>
+<p><span class="vote-prompt">Vote — can he still finish the download?</span></p>
+<div class="columns vote-row">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>A.</strong> No; nobody unchokes a peer that sends nothing</p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>B.</strong> Yes, but slowly</p>
+</div>
+</div></div>
+<div class="fragment">
+<p><strong>B.</strong> Every 30 seconds each neighbor picks someone at random, and sometimes that is Bob. He never enters anyone’s top four, so his download rate stays near that trickle. Uploading is not charity: it is how a peer earns its download rate.</p>
+</div>
+<div class="fragment">
+<p>Also: a brand-new peer with no chunks gets its first one the same way.</p>
+</div>
+</section>
+<section id="read-after-class-4" class="slide level2 center reading-divider">
+<h2>Read After Class</h2>
+<p>Section 2.5 — supporting material</p>
+<ul>
+<li>Before BitTorrent: Napster and Gnutella</li>
+<li>Download phases</li>
+</ul>
+<p><a href="#/section-2.6">In class: skip ahead to Section 2.6</a></p>
+</section>
+<section id="before-bittorrent-reading" class="slide level2">
+<h2>Before BitTorrent <span class="rd">Reading</span></h2>
+<p>A P2P file-sharing system has three jobs: <strong>search</strong> (what do I want), <strong>location</strong> (which peer has it), and <strong>download</strong>. The early systems differed in where they put the first two.</p>
+<p><strong>Napster (1999)</strong> kept search and location on a central server; only the download was peer to peer. Simple and searchable, but the server was a single point of failure, technically and legally.</p>
+<p><strong>Gnutella (2000)</strong> removed the server. A search <strong>flooded</strong> the overlay, each peer forwarding it to its neighbors up to a hop limit, so one query touched thousands of peers.</p>
+<p><strong>BitTorrent (2001)</strong> split the jobs: search on ordinary web sites, location at a tracker per file, download in chunks from many peers.</p>
+</section>
+<section id="download-phases-reading" class="slide level2">
+<h2>Download Phases <span class="rd">Reading</span></h2>
+<p>A BitTorrent client changes its chunk strategy as it goes.</p>
+<p><strong>Start.</strong> With no chunks, the peer has nothing to trade, so it takes whatever it can get and picks a <strong>random</strong> chunk first, to have something to offer as soon as possible.</p>
+<p><strong>Middle.</strong> It switches to <strong>rarest first</strong>, which keeps every chunk alive in the torrent and makes the peer a useful partner, since it holds what others lack.</p>
+<p><strong>End.</strong> The last few chunks are requested from <strong>several</strong> peers at once, so one slow neighbor cannot stall the finish. Duplicate arrivals are discarded.</p>
+</section>
+<section id="section-2.6" class="slide level2 center section-divider">
+<h2>Section 2.6</h2>
+<p>Video Streaming and Content Distribution Networks</p>
+</section>
+<section id="todays-plan-5" class="slide level2">
+<h2>Today’s Plan</h2>
+<div class="columns">
+<div class="column" style="width:58%;">
+<p><strong>In class</strong></p>
+<ul>
+<li>Why video is hard: scale and heterogeneity</li>
+<li>Playout buffering</li>
+<li>DASH</li>
+<li>CDNs, and how DNS finds a nearby copy <span class="ex-inline">Must Know</span></li>
+</ul>
+</div><div class="column" style="width:42%;">
+<p><strong>After class</strong> <span class="rd-inline">Reading</span></p>
+<ul>
+<li>Video coding: CBR and VBR</li>
+<li>Netflix</li>
+<li>Over-the-top challenges</li>
+</ul>
+</div></div>
+</section>
+<section id="video-is-the-big-consumer" class="slide level2">
+<h2>Video Is the Big Consumer</h2>
+<div class="fragment" data-fragment-index="1">
+<p>Streaming video is the major consumer of Internet bandwidth, and Netflix, YouTube, and Amazon Prime are its biggest sources.</p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p><strong>Scale.</strong> How do you reach a billion users? One giant video server cannot.</p>
+</div>
+<div class="fragment" data-fragment-index="3">
+<p><strong>Heterogeneity.</strong> Users differ: wired or mobile, fast or slow links, and their rates change minute to minute.</p>
+</div>
+<div class="fragment" data-fragment-index="4">
+<p>The solution is a <strong>distributed, application-level</strong> infrastructure. Nothing in the network core changed to make video work.</p>
+</div>
+</section>
+<section id="streaming-stored-video" class="slide level2">
+<h2>Streaming Stored Video</h2>
+<p><img data-src="images/streaming_scenario.png" style="width:60.0%"></p>
+<div class="fragment">
+<p><strong>Bandwidth from server to client varies</strong> over time as congestion changes: in the house, in the access network, in the core, at the server.</p>
+</div>
+<div class="fragment">
+<p><strong>Loss and delay</strong> from congestion delay playout or degrade quality.</p>
+</div>
+</section>
+<section id="continuous-playout" class="slide level2">
+<h2>Continuous Playout</h2>
+<p><img data-src="images/streaming_cumulative.png" style="width:66.0%"></p>
+<div class="fragment">
+<p><strong>Streaming</strong> means the client plays the early part of the video while the server is still sending the later part. The wait is a few seconds, not the whole download.</p>
+</div>
+</section>
+<section id="playout-buffering" class="slide level2">
+<h2>Playout Buffering</h2>
+<p><img data-src="images/playout_buffer.png" style="width:66.0%"></p>
+<div class="fragment">
+<p>Once playout begins it must match the original timing, but network delay varies (<strong>jitter</strong>). The client buffers a few seconds before starting; the buffer absorbs the variation.</p>
+</div>
+</section>
+<section id="dash" class="slide level2">
+<h2>DASH</h2>
+<p><strong>Dynamic Adaptive Streaming over HTTP</strong></p>
+<div class="fragment" data-fragment-index="1">
+<p><strong>Server:</strong> divides the video into <strong>chunks</strong> of a few seconds; stores each chunk encoded at <strong>several bit rates</strong>; a <strong>manifest file</strong> lists the URL of every chunk at every rate.</p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p><strong>Client:</strong> measures its current server-to-client bandwidth; consults the manifest; requests <strong>one chunk at a time</strong> at the highest rate the bandwidth can sustain; may pick a different rate for the next chunk.</p>
+</div>
+<div class="fragment" data-fragment-index="3">
+<p>The intelligence is at the client: it decides <strong>when</strong> to request (keep the buffer from emptying or overflowing), <strong>what rate</strong>, and <strong>where from</strong> (the closest or least-loaded server in the manifest).</p>
+</div>
+</section>
+<section id="your-turn-pick-the-rate" class="slide level2">
+<h2>Your Turn: Pick the Rate</h2>
+<p>A video is stored at <strong>300 kbps, 1 Mbps, and 3 Mbps</strong>. The client’s measured throughput over the last chunk was <strong>2.4 Mbps</strong>.</p>
+<p><span class="vote-prompt">Vote — which encoding does it request next?</span></p>
+<div class="columns vote-row">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>A.</strong> 3 Mbps; it is closest to 2.4</p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>B.</strong> 1 Mbps; the highest rate under 2.4</p>
+</div>
+</div></div>
+<div class="fragment">
+<p><strong>B.</strong> At 3 Mbps the chunk arrives slower than it plays, and the buffer drains until playback freezes. At 1 Mbps chunks arrive faster than they play, and the buffer grows. If it grows for long enough, the client can gamble on 3 Mbps for a chunk and drop back if the measurement falls.</p>
+</div>
+</section>
+<section id="why-not-one-big-server" class="slide level2">
+<h2>Why Not One Big Server?</h2>
+<p><strong>Challenge:</strong> stream millions of different videos to hundreds of thousands of simultaneous users.</p>
+<div class="fragment" data-fragment-index="1">
+<p><strong>Option 1, a single mega-server:</strong></p>
+<ul>
+<li>a single point of failure, and of congestion</li>
+<li>a long path to distant clients</li>
+<li>the same video sent over one link thousands of times</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p>It does not scale. <strong>Option 2:</strong> store copies at many geographically distributed sites: a <strong>content distribution network</strong>.</p>
+</div>
+</section>
+<section id="cdns-two-philosophies" class="slide level2">
+<h2>CDNs: Two Philosophies</h2>
+<div class="fragment" data-fragment-index="1">
+<p><strong>Enter deep</strong> (Akamai): push servers into <strong>many</strong> access networks, close to users. Lower delay, less backbone traffic, and a very large number of sites to manage.</p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p><strong>Bring home</strong> (Limelight): a <strong>smaller</strong> number of large clusters at IXPs, near but not inside access networks. Cheaper to run; a somewhat longer path.</p>
+</div>
+<div class="fragment" data-fragment-index="3">
+<p>Either way the CDN stores copies of content at its nodes, and a subscriber is directed to a <strong>nearby</strong> copy, or to a different copy if the path to the nearest one is congested.</p>
+</div>
+</section>
+<section id="finding-a-copy-must-know" class="slide level2">
+<h2>Finding a Copy <span class="ex">Must Know</span></h2>
+<div class="columns">
+<div class="column" style="width:42%;">
+<p>Bob wants <code>netcinema.com/6Y7B23V</code>, stored at KingCDN.</p>
+<div class="fragment" data-fragment-index="1">
+<p><strong>1–2.</strong> His browser asks the local DNS server for <code>netcinema.com</code>.</p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p><strong>3.</strong> NetCinema’s DNS returns a <strong>CNAME</strong> into the CDN: <code>a1105.kingcdn.com</code>.</p>
+</div>
+</div><div class="column" style="width:58%;">
+<p><img data-src="images/cdn_dns.png" style="width:100.0%"></p>
+</div></div>
+</section>
+<section id="finding-a-copy-must-know-1" class="slide level2">
+<h2>Finding a Copy <span class="ex">Must Know</span></h2>
+<div class="columns">
+<div class="column" style="width:42%;">
+<div class="fragment" data-fragment-index="1">
+<p><strong>4–5.</strong> The local server resolves <code>a1105.kingcdn.com</code> at KingCDN’s authoritative DNS, which returns the address of a nearby CDN node.</p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p><strong>6.</strong> Bob streams from that node over HTTP.</p>
+</div>
+<div class="fragment" data-fragment-index="3">
+<p>The hand-off from NetCinema to KingCDN is one CNAME record.</p>
+</div>
+</div><div class="column" style="width:58%;">
+<p><img data-src="images/cdn_dns.png" style="width:100.0%"></p>
+</div></div>
+</section>
+<section id="how-near-is-near" class="slide level2">
+<h2>How Near Is Near?</h2>
+<p><span class="vote-prompt">Vote — KingCDN’s DNS server never hears from Bob. How does it know where he is?</span></p>
+<div class="columns vote-row">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>A.</strong> The query carries Bob’s address</p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>B.</strong> It sees the local DNS server’s address</p>
+</div>
+</div></div>
+<div class="fragment">
+<p><strong>B.</strong> The query comes from Bob’s <strong>local DNS server</strong>, and the CDN assumes Bob is near it. Usually true; false when a laptop is configured to use a public resolver on another continent, which is one reason a video can stream from the wrong side of the world.</p>
+</div>
+</section>
+<section id="read-after-class-5" class="slide level2 center reading-divider">
+<h2>Read After Class</h2>
+<p>Section 2.6 — supporting material</p>
+<ul>
+<li>Video coding: CBR and VBR</li>
+<li>Netflix</li>
+<li>Over-the-top challenges</li>
+</ul>
+<p><a href="#/section-2.7">In class: skip ahead to Section 2.7</a></p>
+</section>
+<section id="video-coding-reading" class="slide level2">
+<h2>Video Coding <span class="rd">Reading</span></h2>
+<div class="columns">
+<div class="column" style="width:58%;">
+<p>A video is a sequence of images shown at 24 or 30 per second. Coding removes redundancy <strong>within</strong> an image (a run of purple pixels becomes “purple, times <span class="math inline">\(N\)</span>”) and <strong>between</strong> images (send only what changed since frame <span class="math inline">\(i\)</span>).</p>
+<p><strong>CBR</strong> encodes at a fixed rate; <strong>VBR</strong> lets the rate follow the redundancy. Internet video runs from about 100 kbps to over 4 Mbps for HD and above 10 Mbps for 4K.</p>
+</div><div class="column" style="width:42%;">
+<p><img data-src="images/video_coding.png" style="width:58.0%"></p>
+</div></div>
+</section>
+<section id="netflix-reading" class="slide level2">
+<h2>Netflix <span class="rd">Reading</span></h2>
+<p><img data-src="images/netflix.png" style="width:50.0%"></p>
+<p>Registration and billing run in the Amazon cloud, which also encodes each title at several rates and uploads the versions to Netflix’s own CDN servers. When Bob presses play, he receives a manifest, is pointed at a DASH server, and streams from it.</p>
+</section>
+<section id="over-the-top-reading" class="slide level2">
+<h2>Over the Top <span class="rd">Reading</span></h2>
+<p>Video providers run <strong>over the top</strong> of the ISPs: they use host-to-host Internet service and get no help from the network with congestion. Three decisions are theirs:</p>
+<ul>
+<li><strong>which</strong> CDN node a viewer fetches from, and when to switch</li>
+<li><strong>what</strong> the client does when the path congests: lower rate, rebuffer, or move</li>
+<li><strong>which</strong> content to place at <strong>which</strong> node; no node holds the whole catalog</li>
+</ul>
+<p>DASH answers the second at the client. The other two are the CDN’s steering and placement problems, solved by measurement.</p>
+</section>
+<section id="section-2.7" class="slide level2 center section-divider">
+<h2>Section 2.7</h2>
+<p>Socket Programming</p>
+</section>
+<section id="todays-plan-6" class="slide level2">
+<h2>Today’s Plan</h2>
+<div class="columns">
+<div class="column" style="width:58%;">
+<p><strong>In class</strong></p>
+<ul>
+<li>UDP sockets: client and server</li>
+<li>TCP sockets: welcoming and connection sockets</li>
+<li>How many sockets, and what breaks when <span class="ex-inline">Must Know</span></li>
+<li>Streams versus datagrams</li>
+</ul>
+</div><div class="column" style="width:42%;">
+<p><strong>After class</strong> <span class="rd-inline">Reading</span></p>
+<ul>
+<li>Serving many clients at once</li>
+<li>The same calls in C</li>
+</ul>
+</div></div>
+</section>
+<section id="sockets-again" class="slide level2">
+<h2>Sockets, Again</h2>
+<p><img data-src="images/socket_door.png" style="width:64.0%"></p>
+<div class="fragment">
+<p><strong>Goal:</strong> build a client and a server that talk through sockets. Two socket types for the two transport services: <strong>UDP</strong>, unreliable datagrams; <strong>TCP</strong>, a reliable byte stream.</p>
+</div>
+<div class="fragment">
+<p><strong>The example app:</strong> the client reads a line from the keyboard and sends it; the server converts it to upper case and sends it back; the client prints it.</p>
+</div>
+</section>
+<section id="udp-no-connection" class="slide level2">
+<h2>UDP: No Connection</h2>
+<div class="fragment" data-fragment-index="1">
+<p>No handshake before sending. The sender <strong>attaches the destination IP address and port to every packet</strong>; the receiver <strong>extracts the sender’s address and port</strong> from each packet it gets.</p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p>Data may be <strong>lost</strong> or arrive <strong>out of order</strong>.</p>
+</div>
+<div class="fragment" data-fragment-index="3">
+<p>From the application’s view: unreliable transfer of groups of bytes (<strong>datagrams</strong>) between client and server.</p>
+</div>
+</section>
+<section id="udp-interaction" class="slide level2">
+<h2>UDP Interaction</h2>
+<p><img data-src="images/udp_interaction.png" style="width:82.0%"></p>
+</section>
+<section id="udp-client" class="slide level2">
+<h2>UDP Client</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="" aria-label="1"></a><span class="im">from</span> socket <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb17-2"><a href="" aria-label="2"></a>serverName <span class="op">=</span> <span class="st">'hostname'</span></span>
+<span id="cb17-3"><a href="" aria-label="3"></a>serverPort <span class="op">=</span> <span class="dv">12000</span></span>
+<span id="cb17-4"><a href="" aria-label="4"></a>clientSocket <span class="op">=</span> socket(AF_INET, SOCK_DGRAM)</span>
+<span id="cb17-5"><a href="" aria-label="5"></a>message <span class="op">=</span> <span class="bu">input</span>(<span class="st">'Input lowercase sentence: '</span>)</span>
+<span id="cb17-6"><a href="" aria-label="6"></a>clientSocket.sendto(message.encode(), (serverName, serverPort))</span>
+<span id="cb17-7"><a href="" aria-label="7"></a>modifiedMessage, serverAddress <span class="op">=</span> clientSocket.recvfrom(<span class="dv">2048</span>)</span>
+<span id="cb17-8"><a href="" aria-label="8"></a><span class="bu">print</span>(modifiedMessage.decode())</span>
+<span id="cb17-9"><a href="" aria-label="9"></a>clientSocket.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment">
+<p><code>SOCK_DGRAM</code> means UDP. <code>sendto</code> names the destination on every call; the OS picks the client’s own port. <code>recvfrom</code> returns the data and who sent it.</p>
+</div>
+</section>
+<section id="udp-server" class="slide level2">
+<h2>UDP Server</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="" aria-label="1"></a><span class="im">from</span> socket <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb18-2"><a href="" aria-label="2"></a>serverPort <span class="op">=</span> <span class="dv">12000</span></span>
+<span id="cb18-3"><a href="" aria-label="3"></a>serverSocket <span class="op">=</span> socket(AF_INET, SOCK_DGRAM)</span>
+<span id="cb18-4"><a href="" aria-label="4"></a>serverSocket.bind((<span class="st">''</span>, serverPort))</span>
+<span id="cb18-5"><a href="" aria-label="5"></a><span class="bu">print</span>(<span class="st">'The server is ready to receive'</span>)</span>
+<span id="cb18-6"><a href="" aria-label="6"></a><span class="cf">while</span> <span class="va">True</span>:</span>
+<span id="cb18-7"><a href="" aria-label="7"></a>    message, clientAddress <span class="op">=</span> serverSocket.recvfrom(<span class="dv">2048</span>)</span>
+<span id="cb18-8"><a href="" aria-label="8"></a>    modifiedMessage <span class="op">=</span> message.decode().upper()</span>
+<span id="cb18-9"><a href="" aria-label="9"></a>    serverSocket.sendto(modifiedMessage.encode(), clientAddress)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment">
+<p><code>bind</code> attaches the socket to port 12000 so clients can find it. The reply goes to <code>clientAddress</code>, the IP and port that <code>recvfrom</code> handed back. One socket serves every client.</p>
+</div>
+</section>
+<section id="tcp-connect-first" class="slide level2">
+<h2>TCP: Connect First</h2>
+<div class="fragment" data-fragment-index="1">
+<p>The <strong>server must be running first</strong>, with a socket that welcomes contact.</p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p>The client creates a TCP socket naming the server’s IP and port. Creating it runs the <strong>handshake</strong>: the client’s TCP connects to the server’s TCP.</p>
+</div>
+<div class="fragment" data-fragment-index="3">
+<p>When contacted, the server’s TCP creates a <strong>new socket</strong> for that one client. The welcoming socket keeps listening, so the server can talk to many clients at once; source port numbers tell them apart (Chapter 3).</p>
+</div>
+<div class="fragment" data-fragment-index="4">
+<p>From the application’s view: a reliable, in-order <strong>byte stream</strong>, a pipe between client and server.</p>
+</div>
+</section>
+<section id="tcp-interaction" class="slide level2">
+<h2>TCP Interaction</h2>
+<p><img data-src="images/tcp_interaction.png" style="width:74.0%"></p>
+</section>
+<section id="tcp-client" class="slide level2">
+<h2>TCP Client</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="" aria-label="1"></a><span class="im">from</span> socket <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb19-2"><a href="" aria-label="2"></a>serverName <span class="op">=</span> <span class="st">'servername'</span></span>
+<span id="cb19-3"><a href="" aria-label="3"></a>serverPort <span class="op">=</span> <span class="dv">12000</span></span>
+<span id="cb19-4"><a href="" aria-label="4"></a>clientSocket <span class="op">=</span> socket(AF_INET, SOCK_STREAM)</span>
+<span id="cb19-5"><a href="" aria-label="5"></a>clientSocket.<span class="ex">connect</span>((serverName, serverPort))</span>
+<span id="cb19-6"><a href="" aria-label="6"></a>sentence <span class="op">=</span> <span class="bu">input</span>(<span class="st">'Input lowercase sentence: '</span>)</span>
+<span id="cb19-7"><a href="" aria-label="7"></a>clientSocket.send(sentence.encode())</span>
+<span id="cb19-8"><a href="" aria-label="8"></a>modifiedSentence <span class="op">=</span> clientSocket.recv(<span class="dv">1024</span>)</span>
+<span id="cb19-9"><a href="" aria-label="9"></a><span class="bu">print</span>(<span class="st">'From Server:'</span>, modifiedSentence.decode())</span>
+<span id="cb19-10"><a href="" aria-label="10"></a>clientSocket.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment">
+<p><code>SOCK_STREAM</code> means TCP. <code>connect</code> performs the handshake. After that, <code>send</code> needs no address: the socket already knows the other end.</p>
+</div>
+</section>
+<section id="tcp-server" class="slide level2">
+<h2>TCP Server</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="" aria-label="1"></a><span class="im">from</span> socket <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb20-2"><a href="" aria-label="2"></a>serverPort <span class="op">=</span> <span class="dv">12000</span></span>
+<span id="cb20-3"><a href="" aria-label="3"></a>serverSocket <span class="op">=</span> socket(AF_INET, SOCK_STREAM)</span>
+<span id="cb20-4"><a href="" aria-label="4"></a>serverSocket.bind((<span class="st">''</span>, serverPort))</span>
+<span id="cb20-5"><a href="" aria-label="5"></a>serverSocket.listen(<span class="dv">1</span>)</span>
+<span id="cb20-6"><a href="" aria-label="6"></a><span class="bu">print</span>(<span class="st">'The server is ready to receive'</span>)</span>
+<span id="cb20-7"><a href="" aria-label="7"></a><span class="cf">while</span> <span class="va">True</span>:</span>
+<span id="cb20-8"><a href="" aria-label="8"></a>    connectionSocket, addr <span class="op">=</span> serverSocket.accept()</span>
+<span id="cb20-9"><a href="" aria-label="9"></a>    sentence <span class="op">=</span> connectionSocket.recv(<span class="dv">1024</span>).decode()</span>
+<span id="cb20-10"><a href="" aria-label="10"></a>    capitalizedSentence <span class="op">=</span> sentence.upper()</span>
+<span id="cb20-11"><a href="" aria-label="11"></a>    connectionSocket.send(capitalizedSentence.encode())</span>
+<span id="cb20-12"><a href="" aria-label="12"></a>    connectionSocket.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment">
+<p><code>accept</code> blocks until a client connects, then returns a <strong>new</strong> socket for that client. The welcoming socket is never closed.</p>
+</div>
+</section>
+<section id="how-many-sockets-must-know" class="slide level2">
+<h2>How Many Sockets? <span class="ex">Must Know</span></h2>
+<div class="columns">
+<div class="column" style="width:46%;">
+<div class="fragment" data-fragment-index="1">
+<p><strong>TCP server with <span class="math inline">\(n\)</span> clients:</strong> <span class="math inline">\(n + 1\)</span> sockets. One welcoming socket, plus one connection socket per client, identified by the four-tuple (source IP, source port, destination IP, destination port).</p>
+</div>
+<div class="fragment" data-fragment-index="4">
+<p><strong>UDP server with <span class="math inline">\(n\)</span> clients:</strong> <strong>1</strong> socket. Every client’s datagrams arrive on it, each stamped with its sender.</p>
+</div>
+</div><div class="column" style="width:54%;">
+<svg viewbox="0 0 640 330" width="100%" style="max-height:52vh">
+  <defs>
+    <marker id="ar-sk" markerwidth="9" markerheight="9" refx="7" refy="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#006791"></path></marker>
+  </defs>
+  <rect class="box" x="20" y="20" width="260" height="290" rx="8"></rect>
+  <text x="150" y="50" text-anchor="middle" font-size="20" class="lbl-blue">TCP server</text>
+  <rect class="box-hdr" x="40" y="70" width="220" height="40" rx="5"></rect>
+  <text x="150" y="96" text-anchor="middle" font-size="17">welcoming socket :12000</text>
+  <g class="fragment" data-fragment-index="1">
+    <rect class="box-pay" x="40" y="130" width="220" height="38" rx="5"></rect>
+    <text x="150" y="155" text-anchor="middle" font-size="16">connection socket A</text>
+    <rect class="node" x="470" y="130" width="150" height="38" rx="5"></rect>
+    <text x="545" y="155" text-anchor="middle" font-size="16">client A</text>
+    <path class="msg" d="M 468 149 L 264 149" marker-end="url(#ar-sk)"></path>
+  </g>
+  <g class="fragment" data-fragment-index="2">
+    <rect class="box-pay" x="40" y="188" width="220" height="38" rx="5"></rect>
+    <text x="150" y="213" text-anchor="middle" font-size="16">connection socket B</text>
+    <rect class="node" x="470" y="188" width="150" height="38" rx="5"></rect>
+    <text x="545" y="213" text-anchor="middle" font-size="16">client B</text>
+    <path class="msg" d="M 468 207 L 264 207" marker-end="url(#ar-sk)"></path>
+  </g>
+  <g class="fragment" data-fragment-index="3">
+    <rect class="box-pay" x="40" y="246" width="220" height="38" rx="5"></rect>
+    <text x="150" y="271" text-anchor="middle" font-size="16">connection socket C</text>
+    <rect class="node" x="470" y="246" width="150" height="38" rx="5"></rect>
+    <text x="545" y="271" text-anchor="middle" font-size="16">client C</text>
+    <path class="msg" d="M 468 265 L 264 265" marker-end="url(#ar-sk)"></path>
+  </g>
+</svg>
+</div></div>
+</section>
+<section id="your-turn-what-happens" class="slide level2">
+<h2>Your Turn: What Happens?</h2>
+<p>The UDP pair from the earlier slides, with one change each time.</p>
+<div class="fragment" data-fragment-index="0">
+<table class="caption-top">
+<colgroup>
+<col style="width: 39%">
+<col style="width: 61%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Change</th>
+<th style="text-align: left;">Result</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Client started before the server</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="1">dropped at the server host; client blocks in <code>recvfrom</code> forever, no error</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>TCP</strong> client started before its server</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2"><code>connect</code> fails at once; the handshake gets no answer</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="fragment" data-fragment-index="3">
+<p>UDP has no handshake to fail, so a missing server looks like a lost packet.</p>
+</div>
+</section>
+<section id="your-turn-what-happens-1" class="slide level2">
+<h2>Your Turn: What Happens?</h2>
+<div class="fragment" data-fragment-index="0">
+<table class="caption-top">
+<colgroup>
+<col style="width: 39%">
+<col style="width: 61%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Change</th>
+<th style="text-align: left;">Result</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Client <code>sendto</code> uses port 12001</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="1">nothing listens there; dropped; the client waits forever</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Client adds <code>bind(('', 5432))</code></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2">works; the server replies to the port <code>recvfrom</code> reports</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Server’s <code>bind</code> port changed to 80</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="3"><code>bind</code> fails unless run as root: ports below 1024 are privileged</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="fragment" data-fragment-index="4">
+<p>The server never needs to know a client’s port in advance; the client must know the server’s.</p>
+</div>
+</section>
+<section id="streams-vs-datagrams" class="slide level2">
+<h2>Streams vs Datagrams</h2>
+<p>Application A calls <code>send()</code> ten times on a TCP socket, once per message.</p>
+<div class="fragment" data-fragment-index="1">
+<p>Can the data cross the network in <strong>more</strong> than ten segments? Yes: a send larger than the segment size is split, and lost segments are resent. In <strong>fewer</strong>? Also yes: TCP may pack several small sends into one segment.</p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p>On a UDP socket, ten <code>sendto()</code> calls are exactly ten datagrams. Never fewer.</p>
+</div>
+<div class="fragment" data-fragment-index="3">
+<p>So a TCP receiver that wants A’s messages <strong>one at a time</strong> needs a framing rule the two sides agree on: a length prefix, or a delimiter such as <code>\r\n</code>. HTTP and SMTP both use <code>\r\n</code>. UDP keeps the boundaries for free.</p>
+</div>
+</section>
+<section id="activity-run-the-pair" class="slide level2">
+<h2>Activity: Run the Pair</h2>
+<div class="activity">
+<p><span class="activity-label">On your CloudLab VM — 10 minutes</span></p>
+<p>Save the UDP server and client from the slides as <code>udpserver.py</code> and <code>udpclient.py</code>, with <code>serverName = 'localhost'</code>.</p>
+<ol type="1">
+<li>Open two terminals. Run the server in one and the client in the other. Send a sentence.</li>
+<li>Stop the server with Ctrl-C. Run the client again. What does it do? How long did you wait before you were sure?</li>
+<li>Swap in the TCP pair and repeat step 2. Compare what you see.</li>
+</ol>
+</div>
+</section>
+<section id="activity-run-the-pair-1" class="slide level2">
+<h2>Activity: Run the Pair</h2>
+<div class="activity">
+<p><span class="activity-label">In pairs — 5 minutes</span></p>
+<ol start="4" type="1">
+<li>Put your neighbor’s VM hostname in <code>serverName</code> and run your client against <strong>their</strong> server while theirs is running.</li>
+<li>If it does not answer, write down the first thing you would check, and then check it.</li>
+</ol>
+</div>
+<div class="fragment">
+<p>Between two VMs there is a real network: an address to get right, a port that must be open, and a server that must be up before the client. The same three things fail in every assignment this term.</p>
+</div>
+</section>
+<section id="read-after-class-6" class="slide level2 center reading-divider">
+<h2>Read After Class</h2>
+<p>Section 2.7 — supporting material</p>
+<ul>
+<li>Serving many clients at once</li>
+<li>The same calls in C</li>
+</ul>
+<p><a href="#/chapter-2-summary">In class: skip ahead to the summary</a></p>
+</section>
+<section id="serving-many-clients-reading" class="slide level2">
+<h2>Serving Many Clients <span class="rd">Reading</span></h2>
+<p>The TCP server you ran handles one client at a time: while it is inside <code>recv</code> for client A, client B’s connection waits in the welcoming socket’s queue.</p>
+<p>A real server does one of three things. It <strong>forks a process</strong> per connection, which is simple and isolates clients but costs a process each. It starts a <strong>thread</strong> per connection, which is cheaper and shares state, at the price of locks. Or it runs an <strong>event loop</strong>: one thread, non-blocking sockets, and a <code>select</code> call that says which sockets are ready. Web servers and browsers mostly take the third route.</p>
+</section>
+<section id="the-same-calls-in-c-reading" class="slide level2">
+<h2>The Same Calls in C <span class="rd">Reading</span></h2>
+<p>Python’s <code>socket</code> module is a thin wrapper over the BSD socket calls that every OS provides.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb21-1"><a href="" aria-label="1"></a><span class="dt">int</span> s <span class="op">=</span> socket<span class="op">(</span>AF_INET<span class="op">,</span> SOCK_STREAM<span class="op">,</span> <span class="dv">0</span><span class="op">);</span></span>
+<span id="cb21-2"><a href="" aria-label="2"></a>bind<span class="op">(</span>s<span class="op">,</span> <span class="op">(</span><span class="kw">struct</span> sockaddr <span class="op">*)</span> <span class="op">&amp;</span>addr<span class="op">,</span> <span class="kw">sizeof</span> addr<span class="op">);</span></span>
+<span id="cb21-3"><a href="" aria-label="3"></a>listen<span class="op">(</span>s<span class="op">,</span> <span class="dv">5</span><span class="op">);</span></span>
+<span id="cb21-4"><a href="" aria-label="4"></a><span class="dt">int</span> c <span class="op">=</span> accept<span class="op">(</span>s<span class="op">,</span> NULL<span class="op">,</span> NULL<span class="op">);</span>        <span class="co">/* new descriptor per client */</span></span>
+<span id="cb21-5"><a href="" aria-label="5"></a>n <span class="op">=</span> read<span class="op">(</span>c<span class="op">,</span> buf<span class="op">,</span> <span class="kw">sizeof</span> buf<span class="op">);</span></span>
+<span id="cb21-6"><a href="" aria-label="6"></a>write<span class="op">(</span>c<span class="op">,</span> buf<span class="op">,</span> n<span class="op">);</span></span>
+<span id="cb21-7"><a href="" aria-label="7"></a>close<span class="op">(</span>c<span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>A socket is a file descriptor, so <code>read</code> and <code>write</code> work on it. Port numbers in <code>addr</code> are stored in network byte order (<code>htons</code>). A UDP program uses <code>SOCK_DGRAM</code> with <code>sendto</code> and <code>recvfrom</code>, exactly as in Python.</p>
+</section>
+<section id="chapter-2-summary" class="slide level2">
+<h2>Chapter 2: Summary</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li>architectures: client-server, P2P</li>
+<li>what apps need: reliability, throughput, delay</li>
+<li>what transport offers: TCP and UDP</li>
+<li>HTTP: connections, messages, cookies, caches, HTTP/2</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<ul>
+<li>SMTP and IMAP</li>
+<li>DNS: hierarchy, queries, caching, records</li>
+<li>BitTorrent and distribution time</li>
+<li>DASH and CDNs</li>
+<li>UDP and TCP sockets</li>
+</ul>
+</div></div>
+<div class="fragment">
+<p>One pattern throughout: a client sends a <strong>request</strong>, the server returns <strong>data and a status code</strong>, and both agree on <strong>headers</strong> plus <strong>payload</strong>. The recurring choices: centralized or not, stateless or not, reliable or not.</p>
+</div>
+</section>
+<section id="whats-next" class="slide level2">
+<h2>What’s Next</h2>
+<p><strong>Chapter 3 — the Transport Layer.</strong> HTTP, SMTP, and IMAP all said “use TCP” and moved on. Chapter 3 opens TCP up: how a byte stream is made reliable over a network that promises nothing, and how a sender decides how fast to go.</p>
+<div class="fragment">
+<p>Two things to carry forward:</p>
+<ol type="1">
+<li>Count <strong>round trips</strong> before you count bytes. Most web delay is waiting, not transmitting.</li>
+<li>When a protocol needs state, decide <strong>where</strong> it lives. HTTP put it in the messages; DNS put it in caches; BitTorrent put it in the peers.</li>
+</ol>
+</div>
+
+</section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<p><img src="images/TAMUSA_final_logo-5.png" class="slide-logo"></p>
+<div class="footer footer-default">
+<p>CSCI 4306 Computer Networks</p>
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="index_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="index_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="index_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="index_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="index_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="index_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="index_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="index_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="index_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': true,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true,"width":"normal","numbers":true},
+'chalkboard': {"buttons":true,"theme":"whiteboard","boardmarkerWidth":3},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>
