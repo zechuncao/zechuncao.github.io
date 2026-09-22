@@ -1472,59 +1472,186 @@ Connection: close</code></pre>
 </div><div class="column" style="width:45%;">
 <p><img data-src="images/cache_scenario.png" style="width:60.0%"></p>
 </div></div>
-<div class="fragment">
-<p>Data rate to the browsers: <span class="math inline">\(15 \times 100{,}000 = 1.5\)</span> Mbps. LAN intensity <span class="math inline">\(1.5 / 1000 = 0.0015\)</span>. Access link intensity <span class="math inline">\(1.5 / 1.54 = \mathbf{0.97}\)</span>.</p>
+<div class="fragment" data-fragment-index="0">
+<p>Every object crosses both links, so each carries <span class="math inline">\(La = 15/\text{s} \times 100{,}000\ \text{bits} = 1.5\)</span> Mbps.</p>
 </div>
 </section>
 <section id="caching-example-1" class="slide level2">
 <h2>Caching Example</h2>
+<p>Traffic intensity on each link, with <span class="math inline">\(La = 1.5\)</span> Mbps:</p>
 <div class="fragment" data-fragment-index="1">
-<p>Total delay <span class="math inline">\(=\)</span> Internet delay <span class="math inline">\(+\)</span> access delay <span class="math inline">\(+\)</span> LAN delay <span class="math inline">\(= 2\ \text{s} + \text{minutes} + \mu\text{s}\)</span>.</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 22%">
+<col style="width: 37%">
+<col style="width: 40%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Link</th>
+<th style="text-align: left;">Rate <span class="math inline">\(R\)</span></th>
+<th style="text-align: left;">Intensity <span class="math inline">\(La/R\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">LAN</td>
+<td style="text-align: left;">1 Gbps <span class="math inline">\(=\)</span> 1,000 Mbps</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2"><span class="math inline">\(1.5 / 1{,}000 = 0.0015\)</span></span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">access link</td>
+<td style="text-align: left;">1.54 Mbps</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="3"><span class="math inline">\(1.5 / 1.54 = \mathbf{0.97}\)</span></span></td>
+</tr>
+</tbody>
+</table>
 </div>
-<div class="fragment" data-fragment-index="2">
-<p>Intensity near 1 means queues that grow without bound (Section 1.4). The access link is the problem.</p>
-</div>
-<div class="fragment" data-fragment-index="3">
-<p><strong>Option 1: buy a 154 Mbps link.</strong> Intensity drops to <span class="math inline">\(0.0097\)</span> and the total delay to about <span class="math inline">\(2\)</span> s, all of it the Internet round trip. Expensive.</p>
+<div class="fragment" data-fragment-index="4">
+<p>The LAN is almost idle. Intensity near 1 means the access-link queue grows without bound (Section 1.4), so the access link is the problem.</p>
 </div>
 </section>
 <section id="caching-example-2" class="slide level2">
 <h2>Caching Example</h2>
+<p>The delay of one request is the sum of three parts. Each link cell gives the intensity, then the delay it causes.</p>
+<div class="fragment" data-fragment-index="0">
+<table class="caption-top" style="width:100%;">
+<colgroup>
+<col style="width: 26%">
+<col style="width: 33%">
+<col style="width: 39%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Part</th>
+<th style="text-align: left;">Today</th>
+<th style="text-align: left;">154 Mbps link</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Internet RTT</td>
+<td style="text-align: left;">2 s</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2">2 s</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">access link</td>
+<td style="text-align: left;">0.97: minutes</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2"><span class="math inline">\(1.5/154 = 0.0097\)</span>: ms</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">LAN</td>
+<td style="text-align: left;">0.0015: <span class="math inline">\(\mu\)</span>s</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2">0.0015: <span class="math inline">\(\mu\)</span>s</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>total</strong></td>
+<td style="text-align: left;"><strong>minutes</strong></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2"><strong>about 2 s</strong></span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="fragment" data-fragment-index="1">
+<p><strong>Option 1: buy a 154 Mbps link.</strong></p>
+</div>
+<div class="fragment" data-fragment-index="3">
+<p>The total drops to the 2 s round trip, but the faster link is expensive.</p>
+</div>
+</section>
+<section id="caching-example-3" class="slide level2">
+<h2>Caching Example</h2>
 <div class="columns">
-<div class="column" style="width:55%;">
+<div class="column" style="width:58%;">
 <p><strong>Option 2: install a cache.</strong> Suppose the hit rate is <strong>0.4</strong>.</p>
 <div class="fragment">
-<p>Only 60% of requests cross the access link: <span class="math inline">\(0.6 \times 1.5 = 0.9\)</span> Mbps, intensity <span class="math inline">\(0.9 / 1.54 = \mathbf{0.58}\)</span>.</p>
+<ul>
+<li><strong>40% hits:</strong> the cache answers over the 1 Gbps LAN in about 10 ms.</li>
+</ul>
 </div>
-</div><div class="column" style="width:45%;">
-<p><img data-src="images/cache_installed.png" style="width:60.0%"></p>
+<div class="fragment">
+<ul>
+<li><strong>60% misses:</strong> the access link now carries <span class="math inline">\(0.6 \times 1.5\)</span> Mbps <span class="math inline">\(= 0.9\)</span> Mbps, so its intensity is <span class="math inline">\(0.9 / 1.54 = \mathbf{0.58}\)</span>.</li>
+</ul>
+</div>
+</div><div class="column" style="width:42%;">
+<p><img data-src="images/cache_installed.png" style="width:70.0%"></p>
 </div></div>
 <div class="fragment">
-<p>Average delay <span class="math inline">\(= 0.6 \times (2.01\ \text{s}) + 0.4 \times (\sim 10\ \text{ms})
-\approx \mathbf{1.2\ s}\)</span>: better than the 154 Mbps link, and far cheaper.</p>
+<p>Intensity <span class="math inline">\(0.58\)</span> is well below 1, so the access-link queue stays short.</p>
+</div>
+</section>
+<section id="caching-example-4" class="slide level2">
+<h2>Caching Example</h2>
+<p><strong>Average delay with the cache.</strong> Each request is either a hit or a miss.</p>
+<div class="fragment" data-fragment-index="0">
+<table class="caption-top">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 11%">
+<col style="width: 72%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Request</th>
+<th style="text-align: left;">Share</th>
+<th style="text-align: left;">Delay</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">hit</td>
+<td style="text-align: left;"><span class="math inline">\(0.4\)</span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="1">about 10 ms, served over the LAN</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">miss</td>
+<td style="text-align: left;"><span class="math inline">\(0.6\)</span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2">2 s Internet + about 10 ms access link <span class="math inline">\(= 2.01\)</span> s</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="fragment" data-fragment-index="3">
+<p><span class="math display">\[0.6 \times 2.01\ \text{s} + 0.4 \times 0.01\ \text{s} \approx \mathbf{1.2\ s}\]</span></p>
+</div>
+<div class="fragment" data-fragment-index="4">
+<p>The 154 Mbps link gives about 2 s: every request still makes the 2 s round trip. With the cache, 40% of requests skip it, at far lower cost.</p>
 </div>
 </section>
 <section id="your-turn-cache-it-must-know" class="slide level2">
 <h2>Your Turn: Cache It? <span class="ex">Must Know</span></h2>
-<p><strong><em>Example:</em></strong> An institution’s access link is <strong>20 Mbps</strong>. Browsers request objects at <strong>40 per second</strong>; the average object is <strong>400,000 bits</strong>. The Internet round trip beyond the access link is <strong>2 s</strong>. Model the access-link delay as <span class="math inline">\(\Delta / (1 - \Delta\beta)\)</span>, where <span class="math inline">\(\Delta\)</span> is the time to send one object over the link and <span class="math inline">\(\beta\)</span> is the request rate on it.</p>
+<p><strong><em>Example:</em></strong> An institution’s access link is <strong>20 Mbps</strong>. Browsers request objects at <strong>40 per second</strong>; the average object is <strong>400,000 bits</strong>. The Internet round trip is <strong>2 s</strong>. Access-link delay is <span class="math inline">\(\Delta / (1 - \Delta\beta)\)</span>: <span class="math inline">\(\Delta\)</span> is the time to send one object, <span class="math inline">\(\beta\)</span> the request rate on the link.</p>
 <p><strong>(a)</strong> Intensity and average response time today?</p>
-<div class="fragment">
-<p><strong><em>Solution:</em></strong> <span class="math inline">\(\Delta = 400{,}000 / (20 \times 10^{6}) = 0.02\)</span> s. Intensity <span class="math inline">\(\Delta\beta = 0.02 \times 40 = 0.8\)</span>. Access delay <span class="math inline">\(= 0.02 / (1 - 0.8) = 0.1\)</span> s. Total <span class="math inline">\(= 2 + 0.1 = \mathbf{2.1\ s}\)</span>.</p>
-</div>
+<ol type="1">
+<li class="fragment">Send one object: <span class="math inline">\(\Delta = 400{,}000\ \text{bits} / (20 \times 10^{6}\ \text{bits/s}) = 0.02\)</span> s.</li>
+<li class="fragment">Intensity: <span class="math inline">\(\Delta\beta = 0.02\ \text{s} \times 40/\text{s} = 0.8\)</span>.</li>
+<li class="fragment">Access delay: <span class="math inline">\(0.02 / (1 - 0.8) = 0.1\)</span> s.</li>
+<li class="fragment">Total: <span class="math inline">\(2\ \text{s} + 0.1\ \text{s} = \mathbf{2.1\ s}\)</span>.</li>
+</ol>
 </section>
 <section id="your-turn-cache-it-must-know-1" class="slide level2">
 <h2>Your Turn: Cache It? <span class="ex">Must Know</span></h2>
+<p>Same traffic: 40 objects/s of 400,000 bits, 2 s round trip.</p>
 <p><strong>(b)</strong> Upgrade the link to <strong>100 Mbps</strong>?</p>
+<ol type="1">
+<li class="fragment">Send one object: <span class="math inline">\(\Delta = 400{,}000 / (100 \times 10^{6}) = 0.004\)</span> s.</li>
+<li class="fragment">Intensity: <span class="math inline">\(\Delta\beta = 0.004 \times 40 = 0.16\)</span>.</li>
+<li class="fragment">Access delay: <span class="math inline">\(0.004 / (1 - 0.16) = 0.0048\)</span> s.</li>
+<li class="fragment">Total: <span class="math inline">\(2 + 0.0048 \approx \mathbf{2.005\ s}\)</span>.</li>
+</ol>
+</section>
+<section id="your-turn-cache-it-must-know-2" class="slide level2">
+<h2>Your Turn: Cache It? <span class="ex">Must Know</span></h2>
+<p><strong>(c)</strong> Keep the 20 Mbps link and install a cache with a <strong>60%</strong> hit rate; hits take no time.</p>
+<ol type="1">
+<li class="fragment">Only misses cross the link: <span class="math inline">\(\beta = 0.4 \times 40 = 16\)</span> per second.</li>
+<li class="fragment">Intensity: <span class="math inline">\(\Delta\beta = 0.02 \times 16 = 0.32\)</span>.</li>
+<li class="fragment">Access delay: <span class="math inline">\(0.02 / (1 - 0.32) = 0.029\)</span> s, so a miss takes <span class="math inline">\(2.029\)</span> s.</li>
+<li class="fragment">Average: <span class="math inline">\(0.6 \times 0 + 0.4 \times 2.029 \approx \mathbf{0.81\ s}\)</span>.</li>
+</ol>
 <div class="fragment">
-<p><strong><em>Solution:</em></strong> <span class="math inline">\(\Delta = 0.004\)</span> s; intensity <span class="math inline">\(0.16\)</span>; access delay <span class="math inline">\(0.004 / 0.84 = 0.0048\)</span> s. Total <span class="math inline">\(\approx \mathbf{2.005\ s}\)</span>.</p>
-</div>
-<p><strong>(c)</strong> Instead, install a cache with a <strong>60%</strong> hit rate; hits take no time.</p>
-<div class="fragment">
-<p><strong><em>Solution:</em></strong> Only misses cross the link: intensity <span class="math inline">\(0.8 \times 0.4 = 0.32\)</span>; access delay <span class="math inline">\(0.02 / 0.68 = 0.029\)</span> s; a miss takes <span class="math inline">\(2.029\)</span> s. Average <span class="math inline">\(= 0.6 \times 0 + 0.4 \times 2.029 \approx
-\mathbf{0.81\ s}\)</span>.</p>
-</div>
-<div class="fragment">
-<p>The faster link only removes the <span class="math inline">\(0.1\)</span> s of access delay. The cache removes the <span class="math inline">\(2\)</span> s Internet delay for 60% of requests.</p>
+<p>The faster link removes only the <span class="math inline">\(0.1\)</span> s of access delay. The cache removes the <span class="math inline">\(2\)</span> s Internet delay for 60% of requests.</p>
 </div>
 </section>
 <section id="conditional-get" class="slide level2">
