@@ -101,7 +101,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-df535a8c247f0b33f5318fe994680995.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-0d06088a64f6769623ee27146730e26b.css">
   <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -1384,13 +1384,12 @@ data data data data data ...</code></pre>
 <h2>Activity: HTTP by Hand</h2>
 <div class="activity">
 <p><span class="activity-label">On your CloudLab VM — 8 minutes</span></p>
-<pre><code>nc -C example.com 80
-GET / HTTP/1.1
-Host: example.com
-Connection: close</code></pre>
 <ol type="1">
-<li>Type the four lines, then press Enter once more on an empty line.</li>
-<li>In the reply, find the status line, <code>Content-Length:</code>, and the blank line that ends the headers.</li>
+<li><p>Run <code>nano req.txt</code> and type the request below. Press Enter twice after the last line, because an HTTP request ends with an empty line.</p>
+<pre><code>GET / HTTP/1.1
+Host: example.com
+Connection: close</code></pre></li>
+<li><p>Save with Ctrl+O, then Enter. Quit with Ctrl+X.</p></li>
 </ol>
 </div>
 </section>
@@ -1399,8 +1398,19 @@ Connection: close</code></pre>
 <div class="activity">
 <p><span class="activity-label">On your CloudLab VM — continued</span></p>
 <ol start="3" type="1">
-<li>Change <code>/</code> to <code>/nothing.html</code>. What code comes back?</li>
-<li>Leave out the <code>Host:</code> line. What happens, and why would a server that hosts many sites need it?</li>
+<li><p>Send the file to the server. <code>-C</code> ends each line with CR LF, as HTTP requires.</p>
+<pre><code>nc -C example.com 80 &lt; req.txt</code></pre></li>
+<li><p>In the reply, find the status line, <code>Content-Type:</code>, and the blank line that ends the headers.</p></li>
+</ol>
+</div>
+</section>
+<section id="activity-http-by-hand-2" class="slide level2">
+<h2>Activity: HTTP by Hand</h2>
+<div class="activity">
+<p><span class="activity-label">On your CloudLab VM — continued</span></p>
+<ol start="5" type="1">
+<li>In <code>req.txt</code>, change <code>/</code> to <code>/nothing.html</code> and run the <code>nc</code> command again. What code comes back?</li>
+<li>Delete the <code>Host:</code> line and run it again. What happens, and why would a server that hosts many sites need it?</li>
 </ol>
 </div>
 <div class="fragment">
@@ -2013,7 +2023,7 @@ Content-Transfer-Encoding: base64</code></pre>
 <section id="trying-smtp-by-hand-reading" class="slide level2">
 <h2>Trying SMTP by Hand <span class="rd">Reading</span></h2>
 <p>You can type the SMTP dialogue yourself:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="" aria-label="1"></a><span class="ex">nc</span> <span class="op">&lt;</span>mail-server-name<span class="op">&gt;</span> 25</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="" aria-label="1"></a><span class="ex">nc</span> <span class="op">&lt;</span>mail-server-name<span class="op">&gt;</span> 25</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>You will see the <code>220</code> greeting; then type <code>HELO</code>, <code>MAIL FROM:</code>, <code>RCPT TO:</code>, <code>DATA</code>, the message, a lone <code>.</code>, and <code>QUIT</code>. Nothing about the protocol checks that <code>MAIL FROM:</code> is you.</p>
 <p>Most servers now refuse port 25 from an unknown host, and campus and home ISPs often block it outright, because of what the previous sentence allows. Sending mail from a client today uses port 587 with authentication and TLS.</p>
 </section>
@@ -2291,20 +2301,72 @@ Content-Transfer-Encoding: base64</code></pre>
 </section>
 <section id="your-turn-dns-cache-must-know-1" class="slide level2">
 <h2>Your Turn: DNS Cache <span class="ex">Must Know</span></h2>
-<p>A full resolution is 8 one-way messages, so 8 units.</p>
+<p>The first request, <code>www.x.org</code> at <span class="math inline">\(t = 0\)</span>. Every reply is cached for 30 units.</p>
 <div class="fragment" data-fragment-index="0">
 <table class="caption-top">
 <colgroup>
-<col style="width: 8%">
-<col style="width: 16%">
-<col style="width: 63%">
-<col style="width: 12%">
+<col style="width: 11%">
+<col style="width: 40%">
+<col style="width: 47%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><span class="math inline">\(t\)</span></th>
+<th style="text-align: left;">Messages</th>
+<th style="text-align: left;">Local server caches</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">0–1</td>
+<td style="text-align: left;">host → local</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1–3</td>
+<td style="text-align: left;">local → root → local</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="1"><code>.org</code> TLD server, until 33</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3–5</td>
+<td style="text-align: left;">local → TLD → local</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2"><code>x.org</code> auth server, until 35</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">5–7</td>
+<td style="text-align: left;">local → auth → local</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="3"><code>www.x.org</code> address, until 37</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">7–8</td>
+<td style="text-align: left;">local → host</td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="fragment" data-fragment-index="4">
+<p>8 one-way messages, so the host has its answer at <span class="math inline">\(t = 8\)</span>.</p>
+</div>
+</section>
+<section id="your-turn-dns-cache-must-know-2" class="slide level2">
+<h2>Your Turn: DNS Cache <span class="ex">Must Know</span></h2>
+<p>The local server now holds the <code>.org</code> TLD server until 33 and the <code>x.org</code> auth server until 35. Each server it can skip saves 2 messages.</p>
+<div class="fragment" data-fragment-index="0">
+<table class="caption-top">
+<colgroup>
+<col style="width: 7%">
+<col style="width: 20%">
+<col style="width: 23%">
+<col style="width: 26%">
+<col style="width: 21%">
 </colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;"><span class="math inline">\(t\)</span></th>
 <th style="text-align: left;">Name</th>
-<th style="text-align: left;">Contacts</th>
+<th style="text-align: left;">Uses cached</th>
+<th style="text-align: left;">Asks</th>
 <th style="text-align: left;">Answer</th>
 </tr>
 </thead>
@@ -2312,29 +2374,36 @@ Content-Transfer-Encoding: base64</code></pre>
 <tr class="odd">
 <td style="text-align: left;">0</td>
 <td style="text-align: left;"><code>www.x.org</code></td>
-<td style="text-align: left;"><span class="fragment ans" data-fragment-index="1">root, TLD, auth</span></td>
-<td style="text-align: left;"><span class="fragment ans" data-fragment-index="1"><span class="math inline">\(t = 8\)</span></span></td>
+<td style="text-align: left;">nothing</td>
+<td style="text-align: left;">root, TLD, auth</td>
+<td style="text-align: left;"><span class="math inline">\(0 + 8 = 8\)</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">12</td>
 <td style="text-align: left;"><code>www.y.org</code></td>
-<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2">TLD, auth (TLD cached at 3, to 33)</span></td>
-<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2"><span class="math inline">\(t = 18\)</span></span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="1"><code>.org</code> TLD</span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="1">TLD, auth</span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="1"><span class="math inline">\(12 + 6 = 18\)</span></span></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">20</td>
 <td style="text-align: left;"><code>ftp.x.org</code></td>
-<td style="text-align: left;"><span class="fragment ans" data-fragment-index="3">auth only (<code>x.org</code> NS cached at 5, to 35)</span></td>
-<td style="text-align: left;"><span class="fragment ans" data-fragment-index="3"><span class="math inline">\(t = 24\)</span></span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2"><code>x.org</code> auth</span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2">auth</span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2"><span class="math inline">\(20 + 4 = 24\)</span></span></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">50</td>
 <td style="text-align: left;"><code>www.x.org</code></td>
-<td style="text-align: left;"><span class="fragment ans" data-fragment-index="4">root, TLD, auth (all expired by 37)</span></td>
-<td style="text-align: left;"><span class="fragment ans" data-fragment-index="4"><span class="math inline">\(t = 58\)</span></span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="3">nothing</span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="3">root, TLD, auth</span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="3"><span class="math inline">\(50 + 8 = 58\)</span></span></td>
 </tr>
 </tbody>
 </table>
+</div>
+<div class="fragment" data-fragment-index="3">
+<p>By <span class="math inline">\(t = 50\)</span> all three records from the first request have expired (at 33, 35, and 37), so the lookup starts again at root.</p>
 </div>
 </section>
 <section id="dns-records-must-know" class="slide level2">
@@ -2435,7 +2504,7 @@ Content-Transfer-Encoding: base64</code></pre>
 <div class="activity">
 <p><span class="activity-label">On your CloudLab VM — 8 minutes</span></p>
 <p>Watch an iterated resolution happen, one referral at a time:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="" aria-label="1"></a><span class="ex">dig</span> +trace www.tamusa.edu</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="" aria-label="1"></a><span class="ex">dig</span> +trace www.tamusa.edu</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ol type="1">
 <li>Find the three referral stages: the root’s list of <code>.edu</code> servers, the <code>.edu</code> server’s list of <code>tamusa.edu</code> servers, and the final answer. Which TTL is largest, and why does that make sense?</li>
 </ol>
@@ -2735,6 +2804,7 @@ s}\)</span>, five times longer than before.</p>
 <li>Playout buffering</li>
 <li>DASH</li>
 <li>CDNs, and how DNS finds a nearby copy <span class="ex-inline">Must Know</span></li>
+<li>Case study: troubleshoot a broken web page</li>
 </ul>
 </div><div class="column" style="width:42%;">
 <p><strong>After class</strong> <span class="rd-inline">Reading</span></p>
@@ -2742,6 +2812,7 @@ s}\)</span>, five times longer than before.</p>
 <li>Video coding: CBR and VBR</li>
 <li>Netflix</li>
 <li>Over-the-top challenges</li>
+<li>Case study: other schools, tools, the write-up</li>
 </ul>
 </div></div>
 </section>
@@ -2895,6 +2966,472 @@ s}\)</span>, five times longer than before.</p>
 <p><strong>B.</strong> The query comes from Bob’s <strong>local DNS server</strong>, and the CDN assumes Bob is near it. Usually true; false when a laptop is configured to use a public resolver on another continent, which is one reason a video can stream from the wrong side of the world.</p>
 </div>
 </section>
+<section id="case-study-a-broken-page" class="slide level2">
+<h2>Case Study: A Broken Page</h2>
+<div class="columns">
+<div class="column" style="width:52%;">
+<p><code>tamusasports.com</code>, the university’s athletics site, loaded from campus on the morning of September 24, 2026.</p>
+<div class="fragment">
+<p>From late August, visitors in Europe, then testers on VPNs, then staff on campus saw pages with no pictures and no styling. A broken image opened in its own tab would appear.</p>
+</div>
+</div><div class="column" style="width:48%;">
+<p><img data-src="images/case_broken.png" style="width:100.0%"></p>
+</div></div>
+</section>
+<section id="vote-where-is-the-fault" class="slide level2">
+<h2>Vote: Where Is the Fault?</h2>
+<p>The HTML of each page arrived. The pictures and the styling did not.</p>
+<p><span class="vote-prompt">Vote — where is the fault?</span></p>
+<div class="columns vote-row">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>A.</strong> The visitor’s browser</p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>B.</strong> The campus network</p>
+</div>
+</div></div>
+<div class="columns vote-row">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>C.</strong> The CDN in front of the site</p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>D.</strong> The site’s web server</p>
+</div>
+</div></div>
+</section>
+<section id="start-from-the-report" class="slide level2">
+<h2>Start From the Report</h2>
+<p>The coordinator’s report already held test results. Each one narrows the search.</p>
+<div class="fragment" data-fragment-index="0">
+<table class="caption-top">
+<colgroup>
+<col style="width: 53%">
+<col style="width: 46%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">What the report said</th>
+<th style="text-align: left;">What it points to</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Clearing the cache and changing browsers did not help</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="1">not stored state in one browser</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Fine from the US; broken through VPNs abroad</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2">where the request comes from matters</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Failed requests got <code>202</code> and HTML, not an image</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="3">a server answered, with the wrong kind of reply</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">A broken image opened in its own tab appeared</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="4">the file exists; how it is requested matters</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="where-could-it-fail" class="slide level2">
+<h2>Where Could It Fail?</h2>
+<p>Every part that one image request passes through is a suspect.</p>
+<svg viewbox="0 0 960 150" width="100%" style="max-height:22vh">
+  <defs>
+    <marker id="ar-path" markerwidth="9" markerheight="9" refx="7" refy="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#555"></path></marker>
+  </defs>
+  <rect class="node" x="10" y="20" width="170" height="70" rx="6"></rect>
+  <text x="95" y="63" text-anchor="middle" font-size="24">browser</text>
+  <rect class="node" x="250" y="20" width="200" height="70" rx="6"></rect>
+  <text x="350" y="63" text-anchor="middle" font-size="24">campus network</text>
+  <rect class="node" x="520" y="20" width="190" height="70" rx="6"></rect>
+  <text x="615" y="63" text-anchor="middle" font-size="24">asset host</text>
+  <rect class="node" x="780" y="20" width="170" height="70" rx="6"></rect>
+  <text x="865" y="50" text-anchor="middle" font-size="24">vendor's</text>
+  <text x="865" y="78" text-anchor="middle" font-size="24">servers</text>
+  <path class="wire" d="M 182 55 L 242 55" marker-end="url(#ar-path)"></path>
+  <path class="wire" d="M 452 55 L 512 55" marker-end="url(#ar-path)"></path>
+  <path class="wire" d="M 712 55 L 772 55" marker-end="url(#ar-path)"></path>
+  <g class="fragment" data-fragment-index="1">
+    <text x="95" y="130" text-anchor="middle" font-size="24" class="lbl-red">3</text>
+    <text x="350" y="130" text-anchor="middle" font-size="24" class="lbl-red">3</text>
+    <text x="615" y="130" text-anchor="middle" font-size="24" class="lbl-red">2</text>
+    <text x="865" y="130" text-anchor="middle" font-size="24" class="lbl-red">4</text>
+  </g>
+</svg>
+<div class="fragment" data-fragment-index="1">
+<div class="columns">
+<div class="column" style="width:50%;">
+<ol type="1">
+<li>Can you make it fail?</li>
+<li>What comes back, and from whom?</li>
+</ol>
+</div><div class="column" style="width:50%;">
+<ol start="3" type="1">
+<li>Is it the client or the place?</li>
+<li>What is behind the cache?</li>
+</ol>
+</div></div>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p>You answer each question with a test you run yourself. Keep every command and its reply in a text file, with the time.</p>
+</div>
+</section>
+<section id="activity-reproduce-it" class="slide level2">
+<h2>Activity: Reproduce It</h2>
+<div class="activity">
+<p><span class="activity-label">On your laptop, on campus Wi-Fi — 3 minutes</span></p>
+<ol type="1">
+<li>Open <code>tamusasports.com</code>. Does it look like the screenshot?</li>
+<li>Open the developer tools (F12; on a Mac, ⌥⌘I), choose the <strong>Network</strong> tab, type <code>cdn.prestosports</code> in the filter box, and reload. Which status codes do those files get?</li>
+<li>Click any image in the list and find <code>cf-ray:</code> in its response headers. Write it down.</li>
+</ol>
+</div>
+</section>
+<section id="vote-is-it-fixed" class="slide level2">
+<h2>Vote: Is It Fixed?</h2>
+<p>The page loads on your laptop, and its files come back <code>200</code>.</p>
+<p><span class="vote-prompt">Vote — is the problem fixed?</span></p>
+<div class="columns vote-row">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>A.</strong> Yes</p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>B.</strong> You cannot tell yet</p>
+</div>
+</div></div>
+<div class="fragment">
+<p><strong>B.</strong> A test that passes shows that the page works from one place. The reports came from Europe, from VPNs, and from campus. Ask for the same file from a machine on another network: your CloudLab VM.</p>
+</div>
+</section>
+<section id="activity-from-your-vm" class="slide level2">
+<h2>Activity: From Your VM</h2>
+<div class="activity">
+<p><span class="activity-label">On your CloudLab VM — 4 minutes</span></p>
+<p>Ask for one of those files, a team logo, and save what comes back:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="" aria-label="1"></a><span class="va">H</span><span class="op">=</span>https://cdn.prestosports.com</span>
+<span id="cb18-2"><a href="" aria-label="2"></a><span class="va">L</span><span class="op">=</span><span class="va">$H</span>/action/cdn/logos/id/0juz68q9njuf392w.png</span>
+<span id="cb18-3"><a href="" aria-label="3"></a><span class="ex">curl</span> <span class="at">-s</span> <span class="at">-D</span> <span class="at">-</span> <span class="at">-o</span> logo.png <span class="st">"</span><span class="va">$L</span><span class="st">"</span></span>
+<span id="cb18-4"><a href="" aria-label="4"></a><span class="fu">file</span> logo.png</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ol type="1">
+<li>Which status code came back? Is it the one your laptop got?</li>
+<li>What does <code>file</code> say <code>logo.png</code> is?</li>
+</ol>
+</div>
+</section>
+<section id="activity-read-the-reply" class="slide level2">
+<h2>Activity: Read the Reply</h2>
+<div class="activity">
+<p><span class="activity-label">On your CloudLab VM — 2 minutes</span></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="" aria-label="1"></a><span class="fu">grep</span> <span class="at">-o</span> <span class="st">'&lt;title&gt;[^&lt;]*'</span> logo.png</span>
+<span id="cb19-2"><a href="" aria-label="2"></a><span class="fu">grep</span> <span class="at">-o</span> <span class="st">'Enable JavaScript[^&lt;]*'</span> logo.png</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ol start="3" type="1">
+<li>What did you receive instead of a picture?</li>
+<li>What would a client have to do to get past it?</li>
+</ol>
+</div>
+</section>
+<section id="activity-who-answered" class="slide level2">
+<h2>Activity: Who Answered?</h2>
+<div class="activity">
+<p><span class="activity-label">On your CloudLab VM, then your laptop — 4 minutes</span></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="" aria-label="1"></a><span class="ex">dig</span> +short cdn.prestosports.com</span>
+<span id="cb20-2"><a href="" aria-label="2"></a><span class="ex">curl</span> <span class="at">-s</span> ipinfo.io/104.16.12.188/org</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ol start="5" type="1">
+<li>Who owns the addresses that <code>dig</code> printed? Try one of your own in the second line.</li>
+<li>On your laptop, run <code>nslookup cdn.prestosports.com</code>. Same addresses as the VM?</li>
+<li><code>cf-ray:</code> ends in an airport code. Which city answered your VM, and which answered your laptop?</li>
+</ol>
+</div>
+</section>
+<section id="what-came-back" class="slide level2">
+<h2>What Came Back</h2>
+<div class="fragment">
+<p>A <code>403</code> with <code>cf-mitigated: challenge</code>. The body is Cloudflare’s <em>Just a moment…</em> page. Its script tests whether the client is a browser, and a client that runs no script sees <em>Enable JavaScript and cookies to continue</em>.</p>
+</div>
+<div class="fragment">
+<p>The addresses belong to Cloudflare, a CDN, and DNS gives the same ones to your laptop and to your VM. Yet different cities answered: Dallas (<code>DFW</code>) for your laptop, and another city for the VM.</p>
+</div>
+<div class="fragment">
+<p><em>Finding a Copy</em> used DNS to send each client to a nearby cluster. Cloudflare announces the same addresses from all of its data centers, and routing delivers each packet to a nearby one (IP anycast, Section 5.4.4).</p>
+</div>
+</section>
+<section id="vote-an-image-gets-html" class="slide level2">
+<h2>Vote: An Image Gets HTML</h2>
+<p>A page asks for the logo with <code>&lt;img src="…png"&gt;</code>, and the reply is your <code>logo.png</code>.</p>
+<p><span class="vote-prompt">Vote — what does the page show?</span></p>
+<div class="columns vote-row">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>A.</strong> The logo, once the check passes</p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>B.</strong> A broken image</p>
+</div>
+</div></div>
+<div class="fragment">
+<p><strong>B.</strong> The script in the reply never runs, so the check is never passed.</p>
+</div>
+</section>
+<section id="why-the-page-breaks" class="slide level2">
+<h2>Why the Page Breaks</h2>
+<p>A challenge page is HTML with a script in it. The script runs only when the browser displays the reply as a page.</p>
+<div class="fragment">
+<p>An <code>&lt;img&gt;</code> expects image bytes. It gets HTML, cannot decode it, and shows nothing. The script never runs, so the check is never passed, and the next image fails the same way.</p>
+</div>
+<div class="fragment">
+<p>A stylesheet <code>&lt;link&gt;</code> gets HTML instead of CSS and ignores it, so the page falls back to the platform’s default blue.</p>
+</div>
+<div class="fragment">
+<p>Opening the image in its own tab is a page load. The browser runs the script, passes the check, and shows the image.</p>
+</div>
+</section>
+<section id="activity-change-one-thing" class="slide level2">
+<h2>Activity: Change One Thing</h2>
+<div class="activity">
+<p><span class="activity-label">On your CloudLab VM — 2 minutes</span></p>
+<p>Run these three lines. <code>-A</code> makes <code>curl</code> claim to be a browser.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="" aria-label="1"></a><span class="ex">curl</span> <span class="at">-s</span> <span class="at">-o</span> logo <span class="at">-w</span> <span class="st">'%{http_code}\n'</span> <span class="st">"</span><span class="va">$L</span><span class="st">"</span></span>
+<span id="cb21-2"><a href="" aria-label="2"></a><span class="ex">curl</span> <span class="at">-s</span> <span class="at">-o</span> logo <span class="at">-w</span> <span class="st">'%{http_code}\n'</span> <span class="at">-A</span> Mozilla/5.0 <span class="st">"</span><span class="va">$L</span><span class="st">"</span></span>
+<span id="cb21-3"><a href="" aria-label="3"></a><span class="ex">curl</span> <span class="at">-s</span> ipinfo.io</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Write down both status codes and the address.</p>
+</div>
+</section>
+<section id="activity-change-one-thing-1" class="slide level2">
+<h2>Activity: Change One Thing</h2>
+<div class="activity">
+<p><span class="activity-label">On your laptop — 3 minutes</span></p>
+<p>Set <code>H</code> and <code>L</code> as on <em>From Your VM</em>, then run the same three lines. On Windows PowerShell, write <code>$H="…"</code> and <code>$L="$H/…"</code>, and type <code>curl.exe</code> for <code>curl</code>.</p>
+<ol type="1">
+<li>Which change moved the status code: the User-Agent, or the machine?</li>
+<li>Compare the two addresses and who owns them.</li>
+</ol>
+</div>
+</section>
+<section id="activity-other-places" class="slide level2">
+<h2>Activity: Other Places</h2>
+<div class="activity">
+<p><span class="activity-label">Laptop and phone — 3 minutes</span></p>
+<ol type="1">
+<li>Open <code>check-host.net</code>, choose <strong>HTTP</strong>, and paste the logo URL (<code>echo $L</code> prints it). Which probes get a <code>200</code>?</li>
+<li>If you have mobile data, turn off Wi-Fi on your phone and open <code>tamusasports.com</code>. Are the pictures there?</li>
+</ol>
+</div>
+</section>
+<section id="ruling-things-out" class="slide level2">
+<h2>Ruling Things Out</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 39%">
+<col style="width: 60%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Suspect</th>
+<th style="text-align: left;">Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">The file</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="1">your laptop received it</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">The client program</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2">same <code>curl</code>: <code>200</code> on campus, <code>403</code> on the VM</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Distance</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="3">Sept.&nbsp;24, a.m.: Dallas <code>200</code>, campus <code>403</code></span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">The asset host’s check</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="4">sent a challenge page for an image</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Where the request comes from</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="5">the change that moved the code</span></td>
+</tr>
+</tbody>
+</table>
+<div class="fragment" data-fragment-index="6">
+<p><strong>The vote: C.</strong> One question is left: why did campus fail, until the afternoon of September 24?</p>
+</div>
+</section>
+<section id="activity-your-address" class="slide level2">
+<h2>Activity: Your Address</h2>
+<div class="activity">
+<p><span class="activity-label">On your laptop — 2 minutes</span></p>
+<ol type="1">
+<li>Find your laptop’s own address on the Wi-Fi: <code>ipconfig</code> on Windows, <code>ipconfig getifaddr en0</code> on a Mac.</li>
+<li>Is it the address that <code>ipinfo.io</code> reported?</li>
+<li>Compare the <code>ipinfo.io</code> address with your neighbors’.</li>
+</ol>
+</div>
+</section>
+<section id="why-campus-broke" class="slide level2">
+<h2>Why Campus Broke</h2>
+<p>The vendor’s engineers found the reason in their logs: more than <strong>230 requests in one minute</strong> from one campus address, which is over their rate limit.</p>
+<div class="fragment">
+<p>If your two addresses differ, your laptop has a private address that the Internet never sees. The campus router rewrites it to a public one (NAT, Section 4.3), and everyone who shares that public address counts against the same limit.</p>
+</div>
+<div class="fragment">
+<p>One load of the home page sends about <strong>90 requests</strong> to the site and its asset host. How many people loading it in the same minute put one address over the limit?</p>
+</div>
+<div class="fragment">
+<p>Three. Two loads send about 180 requests; three send about 270.</p>
+</div>
+</section>
+<section id="the-allow-list" class="slide level2">
+<h2>The Allow List</h2>
+<div class="columns">
+<div class="column" style="width:44%;">
+<p>On September 24 the vendor added the campus address range to an allow list.</p>
+<div class="fragment">
+<p>The same page from campus that afternoon: <strong>58 of 62</strong> requests to the asset host came back with the file.</p>
+</div>
+</div><div class="column" style="width:56%;">
+<div class="fragment">
+<p><img data-src="images/case_fixed.png" style="width:100.0%"></p>
+</div>
+</div></div>
+</section>
+<section id="vote-fixed-for-everyone" class="slide level2">
+<h2>Vote: Fixed for Everyone?</h2>
+<p>A parent opens the site from a hotel in Germany that afternoon.</p>
+<p><span class="vote-prompt">Vote — does the page load normally?</span></p>
+<div class="columns vote-row">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>A.</strong> Yes, the vendor fixed it</p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>B.</strong> No</p>
+</div>
+</div></div>
+<div class="fragment">
+<p><strong>B.</strong> Your VM is not on the allow list, and it got a <code>403</code>. That afternoon the logo also drew a <code>403</code> from all three probe sites in Germany. The lasting fix is on the vendor’s side: stop challenging image, stylesheet, and script requests, which a browser cannot answer, and count only page requests toward the rate limit.</p>
+</div>
+</section>
+<section id="activity-behind-the-cache" class="slide level2">
+<h2>Activity: Behind the Cache</h2>
+<div class="activity">
+<p><span class="activity-label">On your laptop, on campus — 5 minutes</span></p>
+<p>Your laptop gets past Cloudflare’s check. Put a five-digit number of your own in place of <code>4306</code> in all three lines, so that no cache has seen the URL.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="" aria-label="1"></a><span class="ex">curl</span> <span class="at">-s</span> <span class="at">-D</span> <span class="at">-</span> <span class="at">-o</span> logo.png <span class="st">"</span><span class="va">${L}</span><span class="st">?n=4306"</span></span>
+<span id="cb22-2"><a href="" aria-label="2"></a><span class="ex">curl</span> <span class="at">-s</span> <span class="at">-D</span> <span class="at">-</span> <span class="at">-o</span> logo.png <span class="at">-A</span> Mozilla/5.0 <span class="st">"</span><span class="va">${L}</span><span class="st">?n=4306"</span></span>
+<span id="cb22-3"><a href="" aria-label="3"></a><span class="ex">curl</span> <span class="at">-s</span> <span class="at">-D</span> <span class="at">-</span> <span class="at">-o</span> logo.png <span class="st">"</span><span class="va">${L}</span><span class="st">?n=4306"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ol type="1">
+<li>Read <code>x-cache:</code> and <code>cf-cache-status:</code>. Who sent the first reply?</li>
+<li>The third line repeats the first. Why is its answer different?</li>
+</ol>
+</div>
+</section>
+<section id="two-layers-in-front" class="slide level2">
+<h2>Two Layers in Front</h2>
+<svg viewbox="0 0 960 250" width="100%" style="max-height:38vh">
+  <defs>
+    <marker id="ar-case" markerwidth="9" markerheight="9" refx="7" refy="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#555"></path></marker>
+  </defs>
+  <rect class="node" x="10" y="40" width="140" height="80" rx="6"></rect>
+  <text x="80" y="88" text-anchor="middle" font-size="24">browser</text>
+  <rect class="node" x="220" y="40" width="200" height="80" rx="6"></rect>
+  <text x="320" y="75" text-anchor="middle" font-size="24">Cloudflare</text>
+  <text x="320" y="105" text-anchor="middle" font-size="20" class="lbl-gray">check, then cache</text>
+  <rect class="node" x="490" y="40" width="250" height="80" rx="6"></rect>
+  <text x="615" y="75" text-anchor="middle" font-size="24">CloudFront</text>
+  <text x="615" y="105" text-anchor="middle" font-size="20" class="lbl-gray">+ AWS WAF check</text>
+  <rect class="node" x="810" y="40" width="140" height="80" rx="6"></rect>
+  <text x="880" y="75" text-anchor="middle" font-size="24">vendor's</text>
+  <text x="880" y="105" text-anchor="middle" font-size="24">servers</text>
+  <path class="wire" d="M 152 80 L 212 80" marker-end="url(#ar-case)"></path>
+  <path class="wire" d="M 422 80 L 482 80" marker-end="url(#ar-case)"></path>
+  <path class="wire" d="M 742 80 L 802 80" marker-end="url(#ar-case)"></path>
+  <g class="fragment" data-fragment-index="1">
+    <text x="320" y="165" text-anchor="middle" font-size="22" class="lbl-red">every request</text>
+    <text x="320" y="195" text-anchor="middle" font-size="22" class="lbl-red">is checked here</text>
+  </g>
+  <g class="fragment" data-fragment-index="2">
+    <text x="615" y="165" text-anchor="middle" font-size="22" class="lbl-red">only a cache miss</text>
+    <text x="615" y="195" text-anchor="middle" font-size="22" class="lbl-red">is checked here</text>
+  </g>
+</svg>
+<div class="fragment" data-fragment-index="3">
+<p>Your first request was not in Cloudflare’s cache, so it went on to CloudFront, where AWS WAF blocked <code>curl</code>. The second passed as a browser, and Cloudflare kept the <code>200</code>. The third was answered from that copy and never reached AWS WAF.</p>
+</div>
+</section>
+<section id="your-turn-which-layer" class="slide level2">
+<h2>Your Turn: Which Layer?</h2>
+<p>Four replies to requests for the same logo on September 24. Which part of the chain sent each one?</p>
+<div class="fragment" data-fragment-index="0">
+<table class="caption-top">
+<colgroup>
+<col style="width: 63%">
+<col style="width: 36%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">What came back</th>
+<th style="text-align: left;">Who sent it</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>200</code>, <code>cf-cache-status: HIT</code></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="1">Cloudflare’s cache</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>403</code>, <code>cf-mitigated: challenge</code></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2">Cloudflare’s bot check</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>403</code>, <code>x-cache: Error from cloudfront</code></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="3">AWS WAF’s block, on a miss</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>202</code>, <code>x-amzn-waf-action: challenge</code></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="4">AWS WAF’s challenge, on a miss</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="fragment" data-fragment-index="5">
+<p><code>202 Accepted</code> looks like success and <code>403</code> looks like a permission error. The extra header is what names the layer.</p>
+</div>
+</section>
+<section id="approaching-a-problem" class="slide level2">
+<h2>Approaching a Problem</h2>
+<ol type="1">
+<li>Write down what is already known, including what the report has ruled out (<em>Start From the Report</em>).</li>
+<li>Draw the path a request takes. Every part on it is a suspect (<em>Where Could It Fail?</em>).</li>
+<li>Find one request that fails every time (<em>From Your VM</em>).</li>
+<li>Read the raw reply. The status code and headers name who answered (<em>Read the Reply</em>).</li>
+<li>Change one thing per test, and compare with a case that works (<em>Change One Thing</em>, <em>Behind the Cache</em>).</li>
+<li>Keep the evidence, with times, so someone else can check it.</li>
+</ol>
+</section>
 <section id="read-after-class-5" class="slide level2 center reading-divider">
 <h2>Read After Class</h2>
 <p>Section 2.6 — supporting material</p>
@@ -2902,6 +3439,7 @@ s}\)</span>, five times longer than before.</p>
 <li>Video coding: CBR and VBR</li>
 <li>Netflix</li>
 <li>Over-the-top challenges</li>
+<li>Case study: other schools, tools, and the write-up</li>
 </ul>
 <p><a href="#/section-2.7">In class: skip ahead to Section 2.7</a></p>
 </section>
@@ -2929,6 +3467,93 @@ s}\)</span>, five times longer than before.</p>
 <li><strong>which</strong> content to place at <strong>which</strong> node; no node holds the whole catalog</li>
 </ul>
 <p>DASH answers the second at the client. The other two are the CDN’s steering and placement problems, solved by measurement.</p>
+</section>
+<section id="other-schools-reading" class="slide level2">
+<h2>Other Schools <span class="rd">Reading</span></h2>
+<p>Could the fault be in this school’s own settings? On the morning of September 24, before the allow list, other schools’ athletics sites were loaded from the same campus network for comparison.</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Site, from campus</th>
+<th style="text-align: left;">Vendor</th>
+<th style="text-align: left;">Images broken</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Univ. of Houston–Victoria</td>
+<td style="text-align: left;">same vendor</td>
+<td style="text-align: left;">33 of 50</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Texas A&amp;M–Texarkana</td>
+<td style="text-align: left;">same vendor</td>
+<td style="text-align: left;">30 of 73</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">UT Tyler</td>
+<td style="text-align: left;">another vendor</td>
+<td style="text-align: left;">0 of 63</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">UTSA</td>
+<td style="text-align: left;">another vendor</td>
+<td style="text-align: left;">1 of 222</td>
+</tr>
+</tbody>
+</table>
+<p>Every site on the vendor’s asset host broke, and the others loaded normally from the same network. The rule sat on the asset host, not in one school’s settings or in the campus network alone.</p>
+</section>
+<section id="tools-for-the-case-reading" class="slide level2">
+<h2>Tools for the Case <span class="rd">Reading</span></h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 36%">
+<col style="width: 63%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Tool</th>
+<th style="text-align: left;">What it answered</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Browser DevTools, Network tab</td>
+<td style="text-align: left;">every request the page made; <em>Save all as HAR</em> exports them to a file</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>curl -D -</code>, <code>file</code>, <code>grep</code></td>
+<td style="text-align: left;">exactly what came back: status, headers, body type</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>dig</code>, <code>nslookup</code></td>
+<td style="text-align: left;">the addresses behind a name</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ipinfo.io</td>
+<td style="text-align: left;">who owns an address, and your own public address</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">check-host.net, globalping.io</td>
+<td style="text-align: left;">the same request from probes in other countries</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">The vendors’ documentation</td>
+<td style="text-align: left;">what <code>cf-mitigated</code> and a <code>202</code> with <code>x-amzn-waf-action</code> mean</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="writing-it-up-reading" class="slide level2">
+<h2>Writing It Up <span class="rd">Reading</span></h2>
+<p>The reply to the hosting vendor had four parts:</p>
+<ol type="1">
+<li>The fault as status codes and headers: image, stylesheet, and script requests answered with a challenge page (<code>403</code> with <code>cf-mitigated</code> from Cloudflare, <code>202</code> with <code>x-amzn-waf-action</code> from AWS WAF).</li>
+<li>The measurements, with links to the public probe reports so the vendor’s engineers could check the results themselves.</li>
+<li>The campus address block, so one allow-list entry covers the whole campus.</li>
+<li>The changes requested: stop challenging requests that a browser cannot answer, and count only page requests toward the rate limit.</li>
+</ol>
 </section>
 <section id="section-2.7" class="slide level2 center section-divider">
 <h2>Section 2.7</h2>
@@ -2981,30 +3606,30 @@ s}\)</span>, five times longer than before.</p>
 </section>
 <section id="udp-client" class="slide level2">
 <h2>UDP Client</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="" aria-label="1"></a><span class="im">from</span> socket <span class="im">import</span> <span class="op">*</span></span>
-<span id="cb17-2"><a href="" aria-label="2"></a>serverName <span class="op">=</span> <span class="st">'hostname'</span></span>
-<span id="cb17-3"><a href="" aria-label="3"></a>serverPort <span class="op">=</span> <span class="dv">12000</span></span>
-<span id="cb17-4"><a href="" aria-label="4"></a>clientSocket <span class="op">=</span> socket(AF_INET, SOCK_DGRAM)</span>
-<span id="cb17-5"><a href="" aria-label="5"></a>message <span class="op">=</span> <span class="bu">input</span>(<span class="st">'Input lowercase sentence: '</span>)</span>
-<span id="cb17-6"><a href="" aria-label="6"></a>clientSocket.sendto(message.encode(), (serverName, serverPort))</span>
-<span id="cb17-7"><a href="" aria-label="7"></a>modifiedMessage, serverAddress <span class="op">=</span> clientSocket.recvfrom(<span class="dv">2048</span>)</span>
-<span id="cb17-8"><a href="" aria-label="8"></a><span class="bu">print</span>(modifiedMessage.decode())</span>
-<span id="cb17-9"><a href="" aria-label="9"></a>clientSocket.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="" aria-label="1"></a><span class="im">from</span> socket <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb23-2"><a href="" aria-label="2"></a>serverName <span class="op">=</span> <span class="st">'hostname'</span></span>
+<span id="cb23-3"><a href="" aria-label="3"></a>serverPort <span class="op">=</span> <span class="dv">12000</span></span>
+<span id="cb23-4"><a href="" aria-label="4"></a>clientSocket <span class="op">=</span> socket(AF_INET, SOCK_DGRAM)</span>
+<span id="cb23-5"><a href="" aria-label="5"></a>message <span class="op">=</span> <span class="bu">input</span>(<span class="st">'Input lowercase sentence: '</span>)</span>
+<span id="cb23-6"><a href="" aria-label="6"></a>clientSocket.sendto(message.encode(), (serverName, serverPort))</span>
+<span id="cb23-7"><a href="" aria-label="7"></a>modifiedMessage, serverAddress <span class="op">=</span> clientSocket.recvfrom(<span class="dv">2048</span>)</span>
+<span id="cb23-8"><a href="" aria-label="8"></a><span class="bu">print</span>(modifiedMessage.decode())</span>
+<span id="cb23-9"><a href="" aria-label="9"></a>clientSocket.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
 <p><code>SOCK_DGRAM</code> means UDP. <code>sendto</code> names the destination on every call; the OS picks the client’s own port. <code>recvfrom</code> returns the data and who sent it.</p>
 </div>
 </section>
 <section id="udp-server" class="slide level2">
 <h2>UDP Server</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="" aria-label="1"></a><span class="im">from</span> socket <span class="im">import</span> <span class="op">*</span></span>
-<span id="cb18-2"><a href="" aria-label="2"></a>serverPort <span class="op">=</span> <span class="dv">12000</span></span>
-<span id="cb18-3"><a href="" aria-label="3"></a>serverSocket <span class="op">=</span> socket(AF_INET, SOCK_DGRAM)</span>
-<span id="cb18-4"><a href="" aria-label="4"></a>serverSocket.bind((<span class="st">''</span>, serverPort))</span>
-<span id="cb18-5"><a href="" aria-label="5"></a><span class="bu">print</span>(<span class="st">'The server is ready to receive'</span>)</span>
-<span id="cb18-6"><a href="" aria-label="6"></a><span class="cf">while</span> <span class="va">True</span>:</span>
-<span id="cb18-7"><a href="" aria-label="7"></a>    message, clientAddress <span class="op">=</span> serverSocket.recvfrom(<span class="dv">2048</span>)</span>
-<span id="cb18-8"><a href="" aria-label="8"></a>    modifiedMessage <span class="op">=</span> message.decode().upper()</span>
-<span id="cb18-9"><a href="" aria-label="9"></a>    serverSocket.sendto(modifiedMessage.encode(), clientAddress)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="" aria-label="1"></a><span class="im">from</span> socket <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb24-2"><a href="" aria-label="2"></a>serverPort <span class="op">=</span> <span class="dv">12000</span></span>
+<span id="cb24-3"><a href="" aria-label="3"></a>serverSocket <span class="op">=</span> socket(AF_INET, SOCK_DGRAM)</span>
+<span id="cb24-4"><a href="" aria-label="4"></a>serverSocket.bind((<span class="st">''</span>, serverPort))</span>
+<span id="cb24-5"><a href="" aria-label="5"></a><span class="bu">print</span>(<span class="st">'The server is ready to receive'</span>)</span>
+<span id="cb24-6"><a href="" aria-label="6"></a><span class="cf">while</span> <span class="va">True</span>:</span>
+<span id="cb24-7"><a href="" aria-label="7"></a>    message, clientAddress <span class="op">=</span> serverSocket.recvfrom(<span class="dv">2048</span>)</span>
+<span id="cb24-8"><a href="" aria-label="8"></a>    modifiedMessage <span class="op">=</span> message.decode().upper()</span>
+<span id="cb24-9"><a href="" aria-label="9"></a>    serverSocket.sendto(modifiedMessage.encode(), clientAddress)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
 <p><code>bind</code> attaches the socket to port 12000 so clients can find it. The reply goes to <code>clientAddress</code>, the IP and port that <code>recvfrom</code> handed back. One socket serves every client.</p>
 </div>
@@ -3030,34 +3655,34 @@ s}\)</span>, five times longer than before.</p>
 </section>
 <section id="tcp-client" class="slide level2">
 <h2>TCP Client</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="" aria-label="1"></a><span class="im">from</span> socket <span class="im">import</span> <span class="op">*</span></span>
-<span id="cb19-2"><a href="" aria-label="2"></a>serverName <span class="op">=</span> <span class="st">'servername'</span></span>
-<span id="cb19-3"><a href="" aria-label="3"></a>serverPort <span class="op">=</span> <span class="dv">12000</span></span>
-<span id="cb19-4"><a href="" aria-label="4"></a>clientSocket <span class="op">=</span> socket(AF_INET, SOCK_STREAM)</span>
-<span id="cb19-5"><a href="" aria-label="5"></a>clientSocket.<span class="ex">connect</span>((serverName, serverPort))</span>
-<span id="cb19-6"><a href="" aria-label="6"></a>sentence <span class="op">=</span> <span class="bu">input</span>(<span class="st">'Input lowercase sentence: '</span>)</span>
-<span id="cb19-7"><a href="" aria-label="7"></a>clientSocket.send(sentence.encode())</span>
-<span id="cb19-8"><a href="" aria-label="8"></a>modifiedSentence <span class="op">=</span> clientSocket.recv(<span class="dv">1024</span>)</span>
-<span id="cb19-9"><a href="" aria-label="9"></a><span class="bu">print</span>(<span class="st">'From Server:'</span>, modifiedSentence.decode())</span>
-<span id="cb19-10"><a href="" aria-label="10"></a>clientSocket.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="" aria-label="1"></a><span class="im">from</span> socket <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb25-2"><a href="" aria-label="2"></a>serverName <span class="op">=</span> <span class="st">'servername'</span></span>
+<span id="cb25-3"><a href="" aria-label="3"></a>serverPort <span class="op">=</span> <span class="dv">12000</span></span>
+<span id="cb25-4"><a href="" aria-label="4"></a>clientSocket <span class="op">=</span> socket(AF_INET, SOCK_STREAM)</span>
+<span id="cb25-5"><a href="" aria-label="5"></a>clientSocket.<span class="ex">connect</span>((serverName, serverPort))</span>
+<span id="cb25-6"><a href="" aria-label="6"></a>sentence <span class="op">=</span> <span class="bu">input</span>(<span class="st">'Input lowercase sentence: '</span>)</span>
+<span id="cb25-7"><a href="" aria-label="7"></a>clientSocket.send(sentence.encode())</span>
+<span id="cb25-8"><a href="" aria-label="8"></a>modifiedSentence <span class="op">=</span> clientSocket.recv(<span class="dv">1024</span>)</span>
+<span id="cb25-9"><a href="" aria-label="9"></a><span class="bu">print</span>(<span class="st">'From Server:'</span>, modifiedSentence.decode())</span>
+<span id="cb25-10"><a href="" aria-label="10"></a>clientSocket.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
 <p><code>SOCK_STREAM</code> means TCP. <code>connect</code> performs the handshake. After that, <code>send</code> needs no address: the socket already knows the other end.</p>
 </div>
 </section>
 <section id="tcp-server" class="slide level2">
 <h2>TCP Server</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="" aria-label="1"></a><span class="im">from</span> socket <span class="im">import</span> <span class="op">*</span></span>
-<span id="cb20-2"><a href="" aria-label="2"></a>serverPort <span class="op">=</span> <span class="dv">12000</span></span>
-<span id="cb20-3"><a href="" aria-label="3"></a>serverSocket <span class="op">=</span> socket(AF_INET, SOCK_STREAM)</span>
-<span id="cb20-4"><a href="" aria-label="4"></a>serverSocket.bind((<span class="st">''</span>, serverPort))</span>
-<span id="cb20-5"><a href="" aria-label="5"></a>serverSocket.listen(<span class="dv">1</span>)</span>
-<span id="cb20-6"><a href="" aria-label="6"></a><span class="bu">print</span>(<span class="st">'The server is ready to receive'</span>)</span>
-<span id="cb20-7"><a href="" aria-label="7"></a><span class="cf">while</span> <span class="va">True</span>:</span>
-<span id="cb20-8"><a href="" aria-label="8"></a>    connectionSocket, addr <span class="op">=</span> serverSocket.accept()</span>
-<span id="cb20-9"><a href="" aria-label="9"></a>    sentence <span class="op">=</span> connectionSocket.recv(<span class="dv">1024</span>).decode()</span>
-<span id="cb20-10"><a href="" aria-label="10"></a>    capitalizedSentence <span class="op">=</span> sentence.upper()</span>
-<span id="cb20-11"><a href="" aria-label="11"></a>    connectionSocket.send(capitalizedSentence.encode())</span>
-<span id="cb20-12"><a href="" aria-label="12"></a>    connectionSocket.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="" aria-label="1"></a><span class="im">from</span> socket <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb26-2"><a href="" aria-label="2"></a>serverPort <span class="op">=</span> <span class="dv">12000</span></span>
+<span id="cb26-3"><a href="" aria-label="3"></a>serverSocket <span class="op">=</span> socket(AF_INET, SOCK_STREAM)</span>
+<span id="cb26-4"><a href="" aria-label="4"></a>serverSocket.bind((<span class="st">''</span>, serverPort))</span>
+<span id="cb26-5"><a href="" aria-label="5"></a>serverSocket.listen(<span class="dv">1</span>)</span>
+<span id="cb26-6"><a href="" aria-label="6"></a><span class="bu">print</span>(<span class="st">'The server is ready to receive'</span>)</span>
+<span id="cb26-7"><a href="" aria-label="7"></a><span class="cf">while</span> <span class="va">True</span>:</span>
+<span id="cb26-8"><a href="" aria-label="8"></a>    connectionSocket, addr <span class="op">=</span> serverSocket.accept()</span>
+<span id="cb26-9"><a href="" aria-label="9"></a>    sentence <span class="op">=</span> connectionSocket.recv(<span class="dv">1024</span>).decode()</span>
+<span id="cb26-10"><a href="" aria-label="10"></a>    capitalizedSentence <span class="op">=</span> sentence.upper()</span>
+<span id="cb26-11"><a href="" aria-label="11"></a>    connectionSocket.send(capitalizedSentence.encode())</span>
+<span id="cb26-12"><a href="" aria-label="12"></a>    connectionSocket.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
 <p><code>accept</code> blocks until a client connects, then returns a <strong>new</strong> socket for that client. The welcoming socket is never closed.</p>
 </div>
@@ -3226,13 +3851,13 @@ s}\)</span>, five times longer than before.</p>
 <section id="the-same-calls-in-c-reading" class="slide level2">
 <h2>The Same Calls in C <span class="rd">Reading</span></h2>
 <p>Python’s <code>socket</code> module is a thin wrapper over the BSD socket calls that every OS provides.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb21-1"><a href="" aria-label="1"></a><span class="dt">int</span> s <span class="op">=</span> socket<span class="op">(</span>AF_INET<span class="op">,</span> SOCK_STREAM<span class="op">,</span> <span class="dv">0</span><span class="op">);</span></span>
-<span id="cb21-2"><a href="" aria-label="2"></a>bind<span class="op">(</span>s<span class="op">,</span> <span class="op">(</span><span class="kw">struct</span> sockaddr <span class="op">*)</span> <span class="op">&amp;</span>addr<span class="op">,</span> <span class="kw">sizeof</span> addr<span class="op">);</span></span>
-<span id="cb21-3"><a href="" aria-label="3"></a>listen<span class="op">(</span>s<span class="op">,</span> <span class="dv">5</span><span class="op">);</span></span>
-<span id="cb21-4"><a href="" aria-label="4"></a><span class="dt">int</span> c <span class="op">=</span> accept<span class="op">(</span>s<span class="op">,</span> NULL<span class="op">,</span> NULL<span class="op">);</span>        <span class="co">/* new descriptor per client */</span></span>
-<span id="cb21-5"><a href="" aria-label="5"></a>n <span class="op">=</span> read<span class="op">(</span>c<span class="op">,</span> buf<span class="op">,</span> <span class="kw">sizeof</span> buf<span class="op">);</span></span>
-<span id="cb21-6"><a href="" aria-label="6"></a>write<span class="op">(</span>c<span class="op">,</span> buf<span class="op">,</span> n<span class="op">);</span></span>
-<span id="cb21-7"><a href="" aria-label="7"></a>close<span class="op">(</span>c<span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb27-1"><a href="" aria-label="1"></a><span class="dt">int</span> s <span class="op">=</span> socket<span class="op">(</span>AF_INET<span class="op">,</span> SOCK_STREAM<span class="op">,</span> <span class="dv">0</span><span class="op">);</span></span>
+<span id="cb27-2"><a href="" aria-label="2"></a>bind<span class="op">(</span>s<span class="op">,</span> <span class="op">(</span><span class="kw">struct</span> sockaddr <span class="op">*)</span> <span class="op">&amp;</span>addr<span class="op">,</span> <span class="kw">sizeof</span> addr<span class="op">);</span></span>
+<span id="cb27-3"><a href="" aria-label="3"></a>listen<span class="op">(</span>s<span class="op">,</span> <span class="dv">5</span><span class="op">);</span></span>
+<span id="cb27-4"><a href="" aria-label="4"></a><span class="dt">int</span> c <span class="op">=</span> accept<span class="op">(</span>s<span class="op">,</span> NULL<span class="op">,</span> NULL<span class="op">);</span>        <span class="co">/* new descriptor per client */</span></span>
+<span id="cb27-5"><a href="" aria-label="5"></a>n <span class="op">=</span> read<span class="op">(</span>c<span class="op">,</span> buf<span class="op">,</span> <span class="kw">sizeof</span> buf<span class="op">);</span></span>
+<span id="cb27-6"><a href="" aria-label="6"></a>write<span class="op">(</span>c<span class="op">,</span> buf<span class="op">,</span> n<span class="op">);</span></span>
+<span id="cb27-7"><a href="" aria-label="7"></a>close<span class="op">(</span>c<span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>A socket is a file descriptor, so <code>read</code> and <code>write</code> work on it. Port numbers in <code>addr</code> are stored in network byte order (<code>htons</code>). A UDP program uses <code>SOCK_DGRAM</code> with <code>sendto</code> and <code>recvfrom</code>, exactly as in Python.</p>
 </section>
 <section id="chapter-2-summary" class="slide level2">
