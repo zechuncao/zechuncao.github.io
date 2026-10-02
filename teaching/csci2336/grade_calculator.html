@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CSCI 2336 Grade Calculator</title>
+<style>
+:root {
+  --bg: #060914;
+  --panel: rgba(16, 22, 42, 0.86);
+  --line: rgba(150, 170, 255, 0.18);
+  --text: #e9edf8;
+  --muted: #98a3c3;
+  --crawl: #ffe81f;
+  --bad: #ff6b6b;
+  --saber: #5cf28b;
+  color-scheme: dark;
+}
+[data-letter="A"] { --saber: #5cf28b; }
+[data-letter="B"] { --saber: #4fb3ff; }
+[data-letter="C"] { --saber: #b980ff; }
+[data-letter="D"] { --saber: #ffb547; }
+[data-letter="F"] { --saber: #ff4d4d; }
+
+* { box-sizing: border-box; }
+html { background: var(--bg); }
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  padding: calc(28px + env(safe-area-inset-top, 0px)) 16px calc(40px + env(safe-area-inset-bottom, 0px));
+}
+body::before, body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+body::before {
+  background-image:
+    radial-gradient(1px 1px at 23px 41px, #fff, transparent),
+    radial-gradient(1px 1px at 87px 133px, #cfd8ff, transparent),
+    radial-gradient(1.5px 1.5px at 151px 19px, #fff, transparent),
+    radial-gradient(1px 1px at 199px 171px, #fff, transparent),
+    radial-gradient(1px 1px at 61px 211px, #aab8ff, transparent),
+    radial-gradient(1.5px 1.5px at 233px 97px, #fff, transparent),
+    radial-gradient(1px 1px at 121px 251px, #fff, transparent);
+  background-size: 260px 270px;
+  opacity: 0.55;
+}
+body::after {
+  background-image:
+    radial-gradient(1px 1px at 47px 77px, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 173px 213px, #fff8d0, transparent),
+    radial-gradient(1px 1px at 311px 29px, #fff, transparent),
+    radial-gradient(1px 1px at 263px 301px, #cfd8ff, transparent);
+  background-size: 370px 340px;
+  animation: twinkle 5s ease-in-out infinite alternate;
+}
+@keyframes twinkle { from { opacity: 0.25; } to { opacity: 0.8; } }
+
+.wrap { max-width: 960px; margin: 0 auto; }
+
+header { text-align: center; margin-bottom: 24px; }
+.kicker {
+  margin: 0;
+  color: var(--crawl);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+h1 { margin: 4px 0 8px; font-size: clamp(1.9rem, 6vw, 2.8rem); line-height: 1.1; letter-spacing: -0.01em; }
+.lede { margin: 0 auto; max-width: 34em; color: var(--muted); }
+
+.grid { display: grid; gap: 18px; grid-template-columns: 1fr; }
+@media (min-width: 780px) { .grid { grid-template-columns: 1fr 1.15fr; align-items: start; } }
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 20px;
+  backdrop-filter: blur(4px);
+}
+.card h2 {
+  margin: 0 0 12px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Score inputs */
+.row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 4px 12px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--line);
+}
+.row:last-of-type { border-bottom: 0; }
+.row label { font-weight: 600; }
+.w {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 0 7px;
+  border-radius: 999px;
+  background: rgba(255, 232, 31, 0.12);
+  color: var(--crawl);
+  font-size: 0.75rem;
+  font-weight: 700;
+  vertical-align: 1px;
+}
+.hint { grid-column: 1 / -1; margin: -2px 0 0; color: var(--muted); font-size: 0.82rem; }
+.field { display: flex; align-items: center; gap: 6px; color: var(--muted); font-size: 0.9rem; }
+.field input {
+  width: 5.2em;
+  padding: 7px 9px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: rgba(0, 0, 0, 0.35);
+  color: var(--text);
+  font: inherit;
+  font-size: 1rem;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+.field input::placeholder { color: #59627f; }
+.field input.count { width: 3.6em; }
+.field input:focus { outline: 2px solid var(--crawl); outline-offset: 1px; }
+.field input[aria-invalid="true"] { border-color: var(--bad); outline-color: var(--bad); }
+.row.assumed .field input::placeholder { color: var(--crawl); opacity: 0.6; }
+
+.opts { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; justify-content: space-between; }
+.check { display: flex; gap: 8px; align-items: flex-start; font-size: 0.92rem; cursor: pointer; }
+.check input { margin-top: 4px; accent-color: var(--crawl); }
+button {
+  padding: 7px 14px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+button:hover { color: var(--text); border-color: var(--muted); }
+
+/* Result */
+.result { position: relative; overflow: hidden; }
+.big { display: flex; align-items: center; gap: 18px; }
+.letter {
+  min-width: 1.1em;
+  font-size: clamp(4.5rem, 16vw, 6.5rem);
+  font-weight: 800;
+  line-height: 1;
+  text-align: center;
+  color: #fff;
+  text-shadow: 0 0 6px var(--saber), 0 0 22px var(--saber), 0 0 48px var(--saber);
+  transition: text-shadow 0.4s;
+}
+.pct { font-size: 2rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.cap { color: var(--muted); font-size: 0.92rem; }
+
+.saber { display: flex; align-items: center; margin: 22px 0 6px; }
+.hilt {
+  flex: none;
+  width: 54px;
+  height: 18px;
+  border-radius: 4px;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 8px, rgba(0, 0, 0, 0.45) 8px 10px),
+    linear-gradient(180deg, #d9dde6, #7c8394 55%, #4b5160);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.5);
+}
+.track { position: relative; flex: 1; height: 10px; margin-left: 2px; }
+.blade {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 0;
+  border-radius: 0 6px 6px 0;
+  background: #fff;
+  box-shadow: 0 0 4px 1px var(--saber), 0 0 14px 4px var(--saber), 0 0 28px 6px var(--saber);
+  transition: width 0.55s cubic-bezier(.2, .8, .2, 1), box-shadow 0.4s;
+}
+.ticks { position: relative; height: 34px; margin-left: 56px; }
+.tick {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--muted);
+  line-height: 1.2;
+}
+.tick::before { content: ""; display: block; width: 1px; height: 7px; margin: 0 auto 2px; background: var(--muted); }
+.tick b { display: block; color: var(--text); }
+
+.msg { margin: 6px 0 0; font-style: italic; color: var(--crawl); }
+.gap { margin: 2px 0 0; color: var(--muted); font-size: 0.92rem; }
+
+.whatif { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line); }
+.slider-label { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; font-weight: 600; }
+.slider-label output { font-size: 1.4rem; font-variant-numeric: tabular-nums; color: var(--crawl); }
+input[type="range"] { width: 100%; margin: 10px 0 4px; accent-color: var(--crawl); }
+.left { margin: 0 0 14px; color: var(--muted); font-size: 0.92rem; }
+
+.need { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.need caption { text-align: left; font-weight: 600; padding-bottom: 6px; }
+.need td { padding: 7px 4px; border-top: 1px solid var(--line); }
+.need td:first-child { width: 3em; font-weight: 800; font-size: 1.1rem; }
+.need td:last-child { text-align: right; }
+.need .ok { color: #5cf28b; }
+.need .no { color: var(--muted); }
+.need tr.here td { background: rgba(255, 232, 31, 0.07); }
+
+.stat { margin: 14px 0 0; color: var(--muted); font-size: 0.92rem; }
+
+.mini {
+  position: fixed;
+  left: 50%;
+  bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 16px 6px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(10, 14, 30, 0.94);
+  color: var(--text);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  text-decoration: none;
+  box-shadow: 0 0 14px -2px var(--saber);
+}
+.mini[hidden] { display: none; }
+.mini-letter { font-size: 1.5rem; line-height: 1; color: #fff; text-shadow: 0 0 6px var(--saber), 0 0 16px var(--saber); }
+@media (min-width: 780px) { .mini { display: none; } }
+
+footer { margin-top: 22px; color: var(--muted); font-size: 0.85rem; text-align: center; }
+footer p { margin: 4px auto; max-width: 46em; }
+
+.spark {
+  position: absolute;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 8px 2px var(--saber);
+  pointer-events: none;
+  animation: spark 0.9s ease-out forwards;
+}
+@keyframes spark {
+  to { transform: translate(var(--dx), var(--dy)) scale(0.2); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body::after { animation: none; }
+  .blade, .letter { transition: none; }
+  .spark { display: none; }
+}
+</style>
+</head>
+<body data-letter="B">
+<div class="wrap">
+  <header>
+    <p class="kicker">CSCI 2336 &middot; Fall 2026</p>
+    <h1>Grade Calculator</h1>
+    <p class="lede">Enter the scores you have on Blackboard. Leave a box empty if that item is not graded yet, then move the slider to try different scores on the rest.</p>
+  </header>
+
+  <div class="grid">
+    <section class="card" aria-labelledby="in-h">
+      <h2 id="in-h">Your scores</h2>
+      <div id="rows"></div>
+      <div class="opts">
+        <label class="check"><input type="checkbox" id="assumeHw" checked> Count 100 for homework not graded yet</label>
+        <button type="button" id="clear">Clear all</button>
+      </div>
+    </section>
+
+    <section class="card result" id="result" aria-labelledby="out-h">
+      <h2 id="out-h">Where you are headed</h2>
+      <div class="big" aria-live="polite">
+        <div class="letter" id="letter">B</div>
+        <div>
+          <div class="pct" id="pct">0.00%</div>
+          <div class="cap" id="cap">projected final grade</div>
+        </div>
+      </div>
+      <div class="saber" aria-hidden="true">
+        <div class="hilt"></div>
+        <div class="track"><div class="blade" id="blade"></div></div>
+      </div>
+      <div class="ticks" id="ticks" aria-hidden="true"></div>
+      <p class="msg" id="msg"></p>
+      <p class="gap" id="gap"></p>
+
+      <div class="whatif" id="whatif">
+        <label class="slider-label" for="slider">
+          <span>If you average this on what is left</span>
+          <output id="sv" for="slider">80</output>
+        </label>
+        <input type="range" id="slider" min="0" max="100" step="1" value="80">
+        <p class="left" id="leftlist"></p>
+        <table class="need">
+          <caption>To finish with this grade, average at least</caption>
+          <tbody id="needs"></tbody>
+        </table>
+      </div>
+      <p class="stat" id="stat"></p>
+    </section>
+  </div>
+
+  <footer>
+    <p>A: 90 and above &middot; B: 80 to below 90 &middot; C: 70 to below 80 &middot; D: 60 to below 70 &middot; F: below 60. There is no rounding: 89.99 is a B. You need a C or better to complete the course.</p>
+    <p>The targets assume no curve on Exam 2 or the Final. What you type stays in this browser and is not sent anywhere.</p>
+  </footer>
+</div>
+<a class="mini" id="mini" href="#result" hidden><span class="mini-letter" id="miniLetter">B</span><span id="miniPct">0.00%</span></a>
+
+<script>
+// @calc-start
+const ITEMS = [
+  { id: "att", name: "Attendance", short: "attendance", weight: 10, counts: true },
+  { id: "hw1", name: "Homework 1", short: "Homework 1", weight: 10, hw: true },
+  { id: "hw2", name: "Homework 2", short: "Homework 2", weight: 10, hw: true },
+  { id: "hw3", name: "Homework 3", short: "Homework 3", weight: 10, hw: true },
+  { id: "ex1", name: "Exam 1", short: "Exam 1", weight: 20,
+    hint: "Use the Blackboard score. It already includes the curve and EC1." },
+  { id: "ex2", name: "Exam 2", short: "Exam 2", weight: 20 },
+  { id: "fin", name: "Final Exam", short: "the Final", weight: 20 },
+];
+const SCALE = [["A", 90], ["B", 80], ["C", 70], ["D", 60], ["F", 0]];
+const GRACE = 2;
+
+// Exact rationals as [numerator, denominator] BigInt pairs, denominator > 0,
+// so a total of 89.995 is a B and never rounds into an A.
+function q(n, d = 1) { return [BigInt(n), BigInt(d)]; }
+function add(a, b) { return [a[0] * b[1] + b[0] * a[1], a[1] * b[1]]; }
+function sub(a, b) { return [a[0] * b[1] - b[0] * a[1], a[1] * b[1]]; }
+function mul(a, b) { return [a[0] * b[0], a[1] * b[1]]; }
+function divInt(a, k) { return [a[0], a[1] * BigInt(k)]; }
+function cmp(a, b) { const x = a[0] * b[1] - b[0] * a[1]; return x > 0n ? 1 : x < 0n ? -1 : 0; }
+const HUNDRED = q(100);
+
+// Hundredths of a, rounded down or up, as a BigInt.
+function hundredths(a, up) {
+  const n = a[0] * 100n, d = a[1];
+  let f = n / d;
+  if (n % d !== 0n && n < 0n) f -= 1n;
+  return up && f * d !== n ? f + 1n : f;
+}
+function fmt2(h) {
+  const neg = h < 0n, m = neg ? -h : h;
+  return (neg ? "-" : "") + (m / 100n) + "." + String(m % 100n).padStart(2, "0");
+}
+
+// "78.5" -> 785/10. Returns undefined for anything that is not a plain decimal.
+function parseScore(raw) {
+  const m = /^(\d*)(?:\.(\d*))?$/.exec(raw);
+  if (!m || (m[1] + (m[2] || "")) === "") return undefined;
+  const frac = m[2] || "";
+  return [BigInt((m[1] || "0") + frac), 10n ** BigInt(frac.length)];
+}
+
+// Syllabus: min(100%, (A + 2) / N).
+function attendanceScore(attended, recorded) {
+  const s = q(100 * (attended + GRACE), recorded);
+  return cmp(s, HUNDRED) > 0 ? HUNDRED : s;
+}
+
+// scores: { id: rational or null }. Returns the projection when every
+// ungraded item comes in at `whatIf`, and the average needed for each letter.
+function calc(scores, assumeHw, whatIf) {
+  let banked = q(0), gradedSum = q(0), leftW = 0, gradedW = 0;
+  const left = [], assumed = [];
+  for (const it of ITEMS) {
+    const s = scores[it.id];
+    if (s) {
+      banked = add(banked, mul(q(it.weight, 100), s));
+      gradedSum = add(gradedSum, mul(q(it.weight), s));
+      gradedW += it.weight;
+    } else if (it.hw && assumeHw) {
+      banked = add(banked, q(it.weight));
+      assumed.push(it);
+    } else {
+      leftW += it.weight;
+      left.push(it);
+    }
+  }
+  const projected = add(banked, q(leftW * whatIf, 100));
+  const letter = SCALE.find(([, cut]) => cmp(projected, q(cut)) >= 0)[0];
+  const needs = SCALE.slice(0, 4).map(([L, cut]) =>
+    ({ letter: L, cut, need: leftW ? divInt(mul(sub(q(cut), banked), HUNDRED), leftW) : null }));
+  return { banked, leftW, left, assumed, projected, letter, needs,
+           gradedAvg: gradedW ? divInt(gradedSum, gradedW) : null };
+}
+// @calc-end
+
+const MSG = {
+  A: "The Force is strong with this one.",
+  B: "Impressive. Most impressive.",
+  C: "You pass. A C is the lowest grade that completes this course.",
+  D: "I have a bad feeling about this. A D does not complete the course; you need a C.",
+  F: "Help me, office hours. You're my only hope.",
+};
+const STORE = "csci2336-f26-grade-calculator-v2";
+const ATT_HINT = "Classes you attended, out of classes recorded so far. " +
+  "Your two grace absences are added for you: (attended + 2) ÷ recorded, up to 100.";
+
+const $ = (id) => document.getElementById(id);
+const rowsEl = $("rows");
+
+for (const it of ITEMS) {
+  const row = document.createElement("div");
+  row.className = "row";
+  row.id = "row-" + it.id;
+  const field = it.counts
+    ? `<input id="attA" class="count" type="number" inputmode="numeric" min="0" step="1" placeholder="&ndash;" autocomplete="off" aria-label="Classes attended"> of ` +
+      `<input id="attN" class="count" type="number" inputmode="numeric" min="1" step="1" placeholder="&ndash;" autocomplete="off" aria-label="Classes recorded so far">`
+    : `<input id="${it.id}" type="number" inputmode="decimal" min="0" max="100" step="any" placeholder="&ndash;" autocomplete="off"> / 100`;
+  const forId = it.counts ? "attA" : it.id;
+  row.innerHTML =
+    `<label for="${forId}">${it.name}<span class="w">${it.weight}%</span></label>` +
+    `<span class="field">${field}</span>` +
+    (it.counts ? `<p class="hint" id="attHint"></p>` : it.hint ? `<p class="hint">${it.hint}</p>` : "");
+  rowsEl.appendChild(row);
+}
+const SCORE_IDS = ITEMS.filter((it) => !it.counts).map((it) => it.id);
+const INPUT_IDS = ["attA", "attN", ...SCORE_IDS];
+
+const ticksEl = $("ticks");
+for (const [L, cut] of SCALE.slice(0, 4)) {
+  const t = document.createElement("div");
+  t.className = "tick";
+  t.style.left = cut + "%";
+  t.innerHTML = `<b>${L}</b>${cut}`;
+  ticksEl.appendChild(t);
+}
+
+function flag(el, bad) { el.setAttribute("aria-invalid", bad ? "true" : "false"); }
+
+function readAttendance() {
+  const a = $("attA"), n = $("attN");
+  const ra = a.value.trim(), rn = n.value.trim();
+  const okA = /^\d+$/.test(ra), okN = /^\d+$/.test(rn) && Number(rn) >= 1;
+  flag(a, a.validity.badInput || (ra !== "" && !okA) || (okA && okN && Number(ra) > Number(rn)));
+  flag(n, n.validity.badInput || (rn !== "" && !okN));
+  if (!okA || !okN || Number(ra) > Number(rn)) {
+    $("attHint").textContent = ATT_HINT;
+    return null;
+  }
+  const s = attendanceScore(Number(ra), Number(rn));
+  $("attHint").textContent = ATT_HINT + " Your score: " + fmt2(hundredths(s, false)) + ".";
+  return s;
+}
+
+function readScores() {
+  const scores = { att: readAttendance() };
+  for (const id of SCORE_IDS) {
+    const el = $(id);
+    const raw = el.value.trim();
+    const v = raw === "" ? null : parseScore(raw);
+    const bad = el.validity.badInput || v === undefined ||
+      (v !== null && (cmp(v, q(0)) < 0 || cmp(v, HUNDRED) > 0));
+    flag(el, bad);
+    scores[id] = bad ? null : v;
+  }
+  return scores;
+}
+
+function listNames(items) {
+  const n = items.map((it) => it.short);
+  if (n.length <= 1) return n.join("");
+  if (n.length === 2) return n.join(" and ");
+  return n.slice(0, -1).join(", ") + ", and " + n[n.length - 1];
+}
+
+// Needed averages are rounded up, so the number shown is always enough.
+function fmtNeed(r) {
+  return fmt2(hundredths(r, true)).replace(/\.00$/, "").replace(/(\.\d)0$/, "$1");
+}
+
+let lastLetter = null;
+
+function render() {
+  const scores = readScores();
+  const assumeHw = $("assumeHw").checked;
+  const whatIf = Number($("slider").value);
+  const r = calc(scores, assumeHw, whatIf);
+
+  for (const it of ITEMS) {
+    if (it.counts) continue;
+    const assumed = r.assumed.includes(it);
+    $("row-" + it.id).classList.toggle("assumed", assumed);
+    $(it.id).placeholder = assumed ? "100" : "–";
+  }
+
+  // Shown rounded down: rounding up could print 90.00% beside a B.
+  const pct = fmt2(hundredths(r.projected, false)) + "%";
+  $("sv").textContent = whatIf;
+  document.body.dataset.letter = r.letter;
+  $("letter").textContent = r.letter;
+  $("pct").textContent = pct;
+  $("miniLetter").textContent = r.letter;
+  $("miniPct").textContent = pct;
+  $("blade").style.width = Math.min(100, Number(r.projected[0]) / Number(r.projected[1])) + "%";
+  $("msg").textContent = MSG[r.letter];
+
+  const allGraded = r.leftW === 0;
+  $("cap").textContent = allGraded
+    ? (r.assumed.length ? "final grade, counting 100 for " + listNames(r.assumed) : "final grade")
+    : "projected final grade";
+
+  const i = SCALE.findIndex(([L]) => L === r.letter);
+  if (i > 0) {
+    const [nextL, cut] = SCALE[i - 1];
+    const article = nextL === "A" ? "an" : "a";
+    const gap = fmt2(hundredths(sub(q(cut), r.projected), true));
+    $("gap").textContent = `That is ${gap} points below ${article} ${nextL}.`;
+  } else {
+    $("gap").textContent = "";
+  }
+
+  $("whatif").hidden = allGraded;
+  if (!allGraded) {
+    $("leftlist").textContent =
+      `Still to come: ${listNames(r.left)}, worth ${r.leftW}% of your grade.`;
+    $("needs").innerHTML = r.needs.map(({ letter, need }) => {
+      let cell;
+      if (cmp(need, q(0)) <= 0) cell = `<span class="ok">already yours</span>`;
+      else if (cmp(need, HUNDRED) > 0) cell = `<span class="no">out of reach</span>`;
+      else cell = fmtNeed(need);
+      const here = letter === r.letter ? ' class="here"' : "";
+      return `<tr${here}><td>${letter}</td><td>${cell}</td></tr>`;
+    }).join("");
+  }
+
+  $("stat").hidden = allGraded;
+  $("stat").textContent = r.gradedAvg == null
+    ? "Enter a score to get started."
+    : `Your average on graded work so far: ${fmt2(hundredths(r.gradedAvg, false))}.`;
+
+  if (lastLetter && lastLetter !== "A" && r.letter === "A") burst();
+  lastLetter = r.letter;
+  save(assumeHw, whatIf);
+}
+
+function burst() {
+  const box = $("result");
+  const L = $("letter").getBoundingClientRect();
+  const B = box.getBoundingClientRect();
+  const cx = L.left - B.left + L.width / 2, cy = L.top - B.top + L.height / 2;
+  for (let k = 0; k < 18; k++) {
+    const s = document.createElement("span");
+    s.className = "spark";
+    const a = (k / 18) * Math.PI * 2, d = 60 + Math.random() * 50;
+    s.style.left = cx + "px";
+    s.style.top = cy + "px";
+    s.style.setProperty("--dx", Math.cos(a) * d + "px");
+    s.style.setProperty("--dy", Math.sin(a) * d + "px");
+    box.appendChild(s);
+    setTimeout(() => s.remove(), 1000);
+  }
+}
+
+function save(assumeHw, whatIf) {
+  const values = {};
+  for (const id of INPUT_IDS) values[id] = $(id).value;
+  try { localStorage.setItem(STORE, JSON.stringify({ values, assumeHw, whatIf })); } catch (e) {}
+}
+
+function load() {
+  try {
+    const d = JSON.parse(localStorage.getItem(STORE) || "null");
+    if (!d) return;
+    for (const id of INPUT_IDS) if (d.values && typeof d.values[id] === "string") $(id).value = d.values[id];
+    if (typeof d.assumeHw === "boolean") $("assumeHw").checked = d.assumeHw;
+    if (typeof d.whatIf === "number") $("slider").value = d.whatIf;
+  } catch (e) {}
+}
+
+document.addEventListener("input", render);
+$("assumeHw").addEventListener("change", render);
+$("clear").addEventListener("click", () => {
+  for (const id of INPUT_IDS) $(id).value = "";
+  $("assumeHw").checked = true;
+  $("slider").value = 80;
+  render();
+});
+
+// On a phone the result card sits below the inputs; show the pill while it is off screen.
+if ("IntersectionObserver" in window) {
+  new IntersectionObserver(([e]) => { $("mini").hidden = e.isIntersecting; }).observe($("result"));
+}
+
+load();
+render();
+</script>
+</body>
+</html>
