@@ -101,7 +101,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-6f859eb6fb948ce38687ab5d12876a14.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-101389ebcadca7a268ac21b0db15bb0e.css">
   <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -933,71 +933,6 @@ Zechun (Jacob) Cao
 <p>Without <code>lastNode</code>, <code>enqueue</code> would walk the whole chain to find the back. With it, both operations change a fixed number of references.</p>
 </div>
 </section>
-<section id="dequeue-step-by-step" class="slide level2">
-<h2>dequeue, Step by Step</h2>
-<div class="anim" id="lq_dequeue">
-<svg viewbox="0 0 1000 330" width="100%" xmlns="http://www.w3.org/2000/svg" role="img">
-<defs><marker id="ah-lq_dequeue" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="context-stroke"></path></marker></defs>
-<g data-id="n0" style="transform:translate(130px,130px);opacity:1" class="node"><rect x="-75.0" y="-27.0" width="150" height="54" rx="8"></rect><line x1="29.0" y1="-27.0" x2="29.0" y2="27.0"></line><text x="-23.0" y="1" text-anchor="middle" dominant-baseline="central">it</text><circle class="dot" cx="52.0" cy="0" r="5"></circle></g>
-<g data-id="n0n" style="transform:translate(182.0px,130px);opacity:0" class="nul"><rect x="-14" y="-22" width="28" height="44" fill="#e6f0f5"></rect><line x1="-18" y1="18" x2="18" y2="-18"></line></g>
-<path data-id="n0a" style="opacity:1" class="ptr" d="M182.0,130.0 L288.0,130.0" marker-end="url(#ah-lq_dequeue)"></path>
-<g data-id="n1" style="transform:translate(365px,130px);opacity:1" class="node"><rect x="-75.0" y="-27.0" width="150" height="54" rx="8"></rect><line x1="29.0" y1="-27.0" x2="29.0" y2="27.0"></line><text x="-23.0" y="1" text-anchor="middle" dominant-baseline="central">was</text><circle class="dot" cx="52.0" cy="0" r="5"></circle></g>
-<g data-id="n1n" style="transform:translate(417.0px,130px);opacity:0" class="nul"><rect x="-14" y="-22" width="28" height="44" fill="#e6f0f5"></rect><line x1="-18" y1="18" x2="18" y2="-18"></line></g>
-<path data-id="n1a" style="opacity:1" class="ptr" d="M417.0,130.0 L523.0,130.0" marker-end="url(#ah-lq_dequeue)"></path>
-<g data-id="n2" style="transform:translate(600px,130px);opacity:1" class="node"><rect x="-75.0" y="-27.0" width="150" height="54" rx="8"></rect><line x1="29.0" y1="-27.0" x2="29.0" y2="27.0"></line><text x="-23.0" y="1" text-anchor="middle" dominant-baseline="central">the</text><circle class="dot" cx="52.0" cy="0" r="5"></circle></g>
-<g data-id="n2n" style="transform:translate(652.0px,130px);opacity:0" class="nul"><rect x="-14" y="-22" width="28" height="44" fill="#e6f0f5"></rect><line x1="-18" y1="18" x2="18" y2="-18"></line></g>
-<path data-id="n2a" style="opacity:1" class="ptr" d="M652.0,130.0 L758.0,130.0" marker-end="url(#ah-lq_dequeue)"></path>
-<g data-id="n3" style="transform:translate(835px,130px);opacity:1" class="node"><rect x="-75.0" y="-27.0" width="150" height="54" rx="8"></rect><line x1="29.0" y1="-27.0" x2="29.0" y2="27.0"></line><text x="-23.0" y="1" text-anchor="middle" dominant-baseline="central">best</text><circle class="dot" cx="52.0" cy="0" r="5"></circle></g>
-<g data-id="n3n" style="transform:translate(887.0px,130px);opacity:1" class="nul"><rect x="-14" y="-22" width="28" height="44" fill="#e6f0f5"></rect><line x1="-18" y1="18" x2="18" y2="-18"></line></g>
-<path data-id="n3a" style="opacity:0" class="ptr" d="M887.0,130.0 L887.0,130.0" marker-end="url(#ah-lq_dequeue)"></path>
-<g data-id="fr" style="transform:translate(100px,245px);opacity:1" class="ref"><rect x="-22" y="-22" width="44" height="44" rx="4"></rect><circle cx="0" cy="0" r="5"></circle><text x="0" y="52" text-anchor="middle">firstNode</text></g>
-<path data-id="fra" style="opacity:1" class="ptr" d="M100.0,245.0 L100.0,160.0" marker-end="url(#ah-lq_dequeue)"></path>
-<g data-id="frn" style="transform:translate(100px,245px);opacity:0" class="nul"><rect x="-12" y="-20" width="24" height="40" fill="#fff"></rect><line x1="-16" y1="16" x2="16" y2="-16"></line></g>
-<g data-id="lr" style="transform:translate(805px,245px);opacity:1" class="ref"><rect x="-22" y="-22" width="44" height="44" rx="4"></rect><circle cx="0" cy="0" r="5"></circle><text x="0" y="52" text-anchor="middle">lastNode</text></g>
-<path data-id="lra" style="opacity:1" class="ptr" d="M805.0,245.0 L805.0,160.0" marker-end="url(#ah-lq_dequeue)"></path>
-<g data-id="lrn" style="transform:translate(805px,245px);opacity:0" class="nul"><rect x="-12" y="-20" width="24" height="40" fill="#fff"></rect><line x1="-16" y1="16" x2="16" y2="-16"></line></g>
-<text data-id="ret" style="opacity:0" class="big red" x="130" y="40" text-anchor="middle">x</text>
-</svg>
-<div class="anim-cap" data-id="cap"><code>dequeue()</code> takes the front: the node <code>firstNode</code> refers to.</div>
-<script type="application/json" class="anim-data">[{"cap":{"h":"<code>dequeue()<\/code> takes the front: the node <code>firstNode<\/code> refers to."},"n0":{"x":130,"y":130,"o":1,"c":""},"n0n":{"x":182.0,"y":130,"o":0},"n0a":{"d":"M182.0,130.0 L288.0,130.0","o":1},"n1":{"x":365,"y":130,"o":1,"c":""},"n1n":{"x":417.0,"y":130,"o":0},"n1a":{"d":"M417.0,130.0 L523.0,130.0","o":1},"n2":{"x":600,"y":130,"o":1,"c":""},"n2n":{"x":652.0,"y":130,"o":0},"n2a":{"d":"M652.0,130.0 L758.0,130.0","o":1},"n3":{"x":835,"y":130,"o":1,"c":""},"n3n":{"x":887.0,"y":130,"o":1},"n3a":{"d":"M887.0,130.0 L887.0,130.0","o":0},"fr":{"x":100,"y":245,"o":1,"c":""},"fra":{"d":"M100.0,245.0 L100.0,160.0","o":1,"c":""},"frn":{"x":100,"y":245,"o":0},"lr":{"x":805,"y":245,"o":1,"c":""},"lra":{"d":"M805.0,245.0 L805.0,160.0","o":1,"c":""},"lrn":{"x":805,"y":245,"o":0},"ret":{"t":"","o":0}},{"cap":{"h":"<code>T front = getFront();<\/code> saves the front entry before anything moves."},"ret":{"t":"front = \"it\"","o":1},"n0":{"c":"hot"}},{"cap":{"h":"<code>firstNode = firstNode.getNext();<\/code>"},"fr":{"x":335},"fra":{"d":"M335.0,245.0 L335.0,160.0"}},{"cap":{"h":"Nothing refers to the old node now, so Java reclaims it. <code>return front;<\/code>"},"n0":{"o":0.18,"c":"gone"},"n0a":{"o":0.18}}]</script>
-<span class="fragment anim-step" data-anim="lq_dequeue" data-step="1"></span>
-<span class="fragment anim-step" data-anim="lq_dequeue" data-step="2"></span>
-<span class="fragment anim-step" data-anim="lq_dequeue" data-step="3"></span>
-</div>
-</section>
-<section id="enqueue-step-by-step" class="slide level2">
-<h2>enqueue, Step by Step</h2>
-<div class="anim" id="lq_enqueue">
-<svg viewbox="0 0 1000 330" width="100%" xmlns="http://www.w3.org/2000/svg" role="img">
-<defs><marker id="ah-lq_enqueue" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="context-stroke"></path></marker></defs>
-<g data-id="n0" style="transform:translate(130px,130px);opacity:1" class="node"><rect x="-75.0" y="-27.0" width="150" height="54" rx="8"></rect><line x1="29.0" y1="-27.0" x2="29.0" y2="27.0"></line><text x="-23.0" y="1" text-anchor="middle" dominant-baseline="central">it</text><circle class="dot" cx="52.0" cy="0" r="5"></circle></g>
-<g data-id="n0n" style="transform:translate(182.0px,130px);opacity:0" class="nul"><rect x="-14" y="-22" width="28" height="44" fill="#e6f0f5"></rect><line x1="-18" y1="18" x2="18" y2="-18"></line></g>
-<path data-id="n0a" style="opacity:1" class="ptr" d="M182.0,130.0 L288.0,130.0" marker-end="url(#ah-lq_enqueue)"></path>
-<g data-id="n1" style="transform:translate(365px,130px);opacity:1" class="node"><rect x="-75.0" y="-27.0" width="150" height="54" rx="8"></rect><line x1="29.0" y1="-27.0" x2="29.0" y2="27.0"></line><text x="-23.0" y="1" text-anchor="middle" dominant-baseline="central">was</text><circle class="dot" cx="52.0" cy="0" r="5"></circle></g>
-<g data-id="n1n" style="transform:translate(417.0px,130px);opacity:0" class="nul"><rect x="-14" y="-22" width="28" height="44" fill="#e6f0f5"></rect><line x1="-18" y1="18" x2="18" y2="-18"></line></g>
-<path data-id="n1a" style="opacity:1" class="ptr" d="M417.0,130.0 L523.0,130.0" marker-end="url(#ah-lq_enqueue)"></path>
-<g data-id="n2" style="transform:translate(600px,130px);opacity:1" class="node"><rect x="-75.0" y="-27.0" width="150" height="54" rx="8"></rect><line x1="29.0" y1="-27.0" x2="29.0" y2="27.0"></line><text x="-23.0" y="1" text-anchor="middle" dominant-baseline="central">the</text><circle class="dot" cx="52.0" cy="0" r="5"></circle></g>
-<g data-id="n2n" style="transform:translate(652.0px,130px);opacity:1" class="nul"><rect x="-14" y="-22" width="28" height="44" fill="#e6f0f5"></rect><line x1="-18" y1="18" x2="18" y2="-18"></line></g>
-<path data-id="n2a" style="opacity:0" class="ptr" d="M652.0,130.0 L652.0,130.0" marker-end="url(#ah-lq_enqueue)"></path>
-<g data-id="fr" style="transform:translate(100px,245px);opacity:1" class="ref"><rect x="-22" y="-22" width="44" height="44" rx="4"></rect><circle cx="0" cy="0" r="5"></circle><text x="0" y="52" text-anchor="middle">firstNode</text></g>
-<path data-id="fra" style="opacity:1" class="ptr" d="M100.0,245.0 L100.0,160.0" marker-end="url(#ah-lq_enqueue)"></path>
-<g data-id="frn" style="transform:translate(100px,245px);opacity:0" class="nul"><rect x="-12" y="-20" width="24" height="40" fill="#fff"></rect><line x1="-16" y1="16" x2="16" y2="-16"></line></g>
-<g data-id="lr" style="transform:translate(570px,245px);opacity:1" class="ref"><rect x="-22" y="-22" width="44" height="44" rx="4"></rect><circle cx="0" cy="0" r="5"></circle><text x="0" y="52" text-anchor="middle">lastNode</text></g>
-<path data-id="lra" style="opacity:1" class="ptr" d="M570.0,245.0 L570.0,160.0" marker-end="url(#ah-lq_enqueue)"></path>
-<g data-id="lrn" style="transform:translate(570px,245px);opacity:0" class="nul"><rect x="-12" y="-20" width="24" height="40" fill="#fff"></rect><line x1="-16" y1="16" x2="16" y2="-16"></line></g>
-<g data-id="n3" style="transform:translate(835px,130px);opacity:0" class="node"><rect x="-75.0" y="-27.0" width="150" height="54" rx="8"></rect><line x1="29.0" y1="-27.0" x2="29.0" y2="27.0"></line><text x="-23.0" y="1" text-anchor="middle" dominant-baseline="central">best</text><circle class="dot" cx="52.0" cy="0" r="5"></circle></g>
-<g data-id="n3n" style="transform:translate(887.0px,130px);opacity:0" class="nul"><rect x="-14" y="-22" width="28" height="44" fill="#e6f0f5"></rect><line x1="-18" y1="18" x2="18" y2="-18"></line></g>
-<path data-id="n3a" style="opacity:0" class="ptr" d="M887.0,130.0 L887.0,130.0" marker-end="url(#ah-lq_enqueue)"></path>
-<g data-id="nr" style="transform:translate(805px,245px);opacity:0" class="ref"><rect x="-22" y="-22" width="44" height="44" rx="4"></rect><circle cx="0" cy="0" r="5"></circle><text x="0" y="52" text-anchor="middle">newNode</text></g>
-<path data-id="nra" style="opacity:0" class="ptr" d="M805.0,245.0 L805.0,245.0" marker-end="url(#ah-lq_enqueue)"></path>
-</svg>
-<div class="anim-cap" data-id="cap"><code>enqueue("best")</code> on a queue of three. The back is <code>lastNode</code>.</div>
-<script type="application/json" class="anim-data">[{"cap":{"h":"<code>enqueue(\"best\")<\/code> on a queue of three. The back is <code>lastNode<\/code>."},"n0":{"x":130,"y":130,"o":1,"c":""},"n0n":{"x":182.0,"y":130,"o":0},"n0a":{"d":"M182.0,130.0 L288.0,130.0","o":1},"n1":{"x":365,"y":130,"o":1,"c":""},"n1n":{"x":417.0,"y":130,"o":0},"n1a":{"d":"M417.0,130.0 L523.0,130.0","o":1},"n2":{"x":600,"y":130,"o":1,"c":""},"n2n":{"x":652.0,"y":130,"o":1},"n2a":{"d":"M652.0,130.0 L652.0,130.0","o":0},"fr":{"x":100,"y":245,"o":1,"c":""},"fra":{"d":"M100.0,245.0 L100.0,160.0","o":1,"c":""},"frn":{"x":100,"y":245,"o":0},"lr":{"x":570,"y":245,"o":1,"c":""},"lra":{"d":"M570.0,245.0 L570.0,160.0","o":1,"c":""},"lrn":{"x":570,"y":245,"o":0},"n3":{"x":835,"y":130,"o":0,"c":""},"n3n":{"x":887.0,"y":130,"o":0},"n3a":{"d":"M887.0,130.0 L887.0,130.0","o":0},"nr":{"x":805,"y":245,"o":0,"c":""},"nra":{"d":"M805.0,245.0 L805.0,245.0","o":0}},{"cap":{"h":"<code>Node newNode = new Node(newEntry, null);<\/code>"},"n3":{"o":1,"c":"hot"},"n3n":{"o":1},"nr":{"o":1},"nra":{"d":"M805.0,245.0 L805.0,160.0","o":1}},{"cap":{"h":"<code>lastNode.setNext(newNode);<\/code> links the old back to the new node."},"n2a":{"d":"M652.0,130.0 L758.0,130.0","o":1},"n2n":{"o":0}},{"cap":{"h":"<code>lastNode = newNode;<\/code> moves the back reference. No node moved."},"lr":{"x":805},"lra":{"d":"M805.0,245.0 L805.0,160.0"},"nr":{"o":0},"nra":{"o":0},"n3":{"c":""}}]</script>
-<span class="fragment anim-step" data-anim="lq_enqueue" data-step="1"></span>
-<span class="fragment anim-step" data-anim="lq_enqueue" data-step="2"></span>
-<span class="fragment anim-step" data-anim="lq_enqueue" data-step="3"></span>
-</div>
-</section>
 <section id="the-empty-queue" class="slide level2">
 <h2>The Empty Queue</h2>
 <p><code>enqueue</code> into an <strong>empty</strong> queue has no last node to link from.</p>
@@ -1071,27 +1006,83 @@ Zechun (Jacob) Cao
 <span id="cb8-19"><a href="" aria-label="19"></a>   <span class="co">// Node: the Chapter 2 class, plus setNext(Node nextNode)</span></span>
 <span id="cb8-20"><a href="" aria-label="20"></a><span class="op">}</span> <span class="co">// end LinkedQueue</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="write-the-linked-queue-must-know" class="slide level2 code-tight long-title">
-<h2>Write the Linked Queue <span class="ex">Must Know</span></h2>
-<p>Five lines are missing. Call each one before it appears.</p>
+<section id="write-enqueue-must-know" class="slide level2 code-tight">
+<h2>Write enqueue <span class="ex">Must Know</span></h2>
+<p>Three lines are missing. Call each one before it appears.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span><a href="" aria-label="1"></a><span class="kw">public</span> <span class="dt">void</span> <span class="fu">enqueue</span><span class="op">(</span>T newEntry<span class="op">)</span></span>
 <span><a href="" aria-label="2"></a><span class="op">{</span></span>
 <span><a href="" aria-label="3"></a>   Node newNode <span class="op">=</span> <span class="kw">new</span> <span class="fu">Node</span><span class="op">(</span>newEntry<span class="op">,</span> <span class="kw">null</span><span class="op">);</span></span>
 <span><a href="" aria-label="4"></a>   <span class="cf">if</span> <span class="op">(</span><span class="fu">isEmpty</span><span class="op">())</span></span>
-<span><a href="" aria-label="5"></a><span class="fragment">      firstNode <span class="op">=</span> newNode<span class="op">;</span></span></span>
+<span><a href="" aria-label="5"></a><span class="fragment fill" data-fragment-index="2">      firstNode <span class="op">=</span> newNode<span class="op">;</span></span></span>
 <span><a href="" aria-label="6"></a>   <span class="cf">else</span></span>
-<span><a href="" aria-label="7"></a><span class="fragment">      lastNode<span class="op">.</span><span class="fu">setNext</span><span class="op">(</span>newNode<span class="op">);</span></span></span>
-<span><a href="" aria-label="8"></a><span class="fragment">   lastNode <span class="op">=</span> newNode<span class="op">;</span></span></span>
-<span><a href="" aria-label="9"></a><span class="op">}</span> <span class="co">// end enqueue</span></span>
-<span><a href="" aria-label="10"></a></span>
-<span><a href="" aria-label="11"></a><span class="kw">public</span> T <span class="fu">dequeue</span><span class="op">()</span></span>
-<span><a href="" aria-label="12"></a><span class="op">{</span></span>
-<span><a href="" aria-label="13"></a>   T front <span class="op">=</span> <span class="fu">getFront</span><span class="op">();</span>          <span class="co">// might throw EmptyQueueException</span></span>
-<span><a href="" aria-label="14"></a><span class="fragment">   firstNode <span class="op">=</span> firstNode<span class="op">.</span><span class="fu">getNext</span><span class="op">();</span></span></span>
-<span><a href="" aria-label="15"></a>   <span class="cf">if</span> <span class="op">(</span>firstNode <span class="op">==</span> <span class="kw">null</span><span class="op">)</span></span>
-<span><a href="" aria-label="16"></a><span class="fragment">      lastNode <span class="op">=</span> <span class="kw">null</span><span class="op">;</span></span></span>
-<span><a href="" aria-label="17"></a>   <span class="cf">return</span> front<span class="op">;</span></span>
-<span><a href="" aria-label="18"></a><span class="op">}</span> <span class="co">// end dequeue</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span><a href="" aria-label="7"></a><span class="fragment fill" data-fragment-index="5">      lastNode<span class="op">.</span><span class="fu">setNext</span><span class="op">(</span>newNode<span class="op">);</span></span></span>
+<span><a href="" aria-label="8"></a><span class="fragment fill" data-fragment-index="3">   lastNode <span class="op">=</span> newNode<span class="op">;</span></span></span>
+<span><a href="" aria-label="9"></a><span class="op">}</span> <span class="co">// end enqueue</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="anim" id="lq_enqueue">
+<svg viewbox="0 0 1000 240" width="100%" xmlns="http://www.w3.org/2000/svg" role="img">
+<defs><marker id="ah-lq_enqueue" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="context-stroke"></path></marker></defs>
+<g data-id="n0" style="transform:translate(420px,76px);opacity:0" class="node"><rect x="-75.0" y="-27.0" width="150" height="54" rx="8"></rect><line x1="29.0" y1="-27.0" x2="29.0" y2="27.0"></line><text x="-23.0" y="1" text-anchor="middle" dominant-baseline="central">it</text><circle class="dot" cx="52.0" cy="0" r="5"></circle></g>
+<g data-id="n0n" style="transform:translate(472.0px,76px);opacity:0" class="nul"><rect x="-14" y="-22" width="28" height="44" fill="#e6f0f5"></rect><line x1="-18" y1="18" x2="18" y2="-18"></line></g>
+<path data-id="n0a" style="opacity:0" class="ptr" d="M472.0,76.0 L472.0,76.0" marker-end="url(#ah-lq_enqueue)"></path>
+<g data-id="n1" style="transform:translate(655px,76px);opacity:0" class="node"><rect x="-75.0" y="-27.0" width="150" height="54" rx="8"></rect><line x1="29.0" y1="-27.0" x2="29.0" y2="27.0"></line><text x="-23.0" y="1" text-anchor="middle" dominant-baseline="central">was</text><circle class="dot" cx="52.0" cy="0" r="5"></circle></g>
+<g data-id="n1n" style="transform:translate(707.0px,76px);opacity:0" class="nul"><rect x="-14" y="-22" width="28" height="44" fill="#e6f0f5"></rect><line x1="-18" y1="18" x2="18" y2="-18"></line></g>
+<path data-id="n1a" style="opacity:0" class="ptr" d="M707.0,76.0 L707.0,76.0" marker-end="url(#ah-lq_enqueue)"></path>
+<g data-id="fr" style="transform:translate(340px,172px);opacity:1" class="ref"><rect x="-22" y="-22" width="44" height="44" rx="4"></rect><circle cx="0" cy="0" r="5"></circle><text x="0" y="52" text-anchor="middle">firstNode</text></g>
+<path data-id="fra" style="opacity:0" class="ptr" d="M340.0,172.0 L340.0,172.0" marker-end="url(#ah-lq_enqueue)"></path>
+<g data-id="frn" style="transform:translate(340px,172px);opacity:1" class="nul"><rect x="-12" y="-20" width="24" height="40" fill="#fff"></rect><line x1="-16" y1="16" x2="16" y2="-16"></line></g>
+<g data-id="lr" style="transform:translate(560px,172px);opacity:1" class="ref"><rect x="-22" y="-22" width="44" height="44" rx="4"></rect><circle cx="0" cy="0" r="5"></circle><text x="0" y="52" text-anchor="middle">lastNode</text></g>
+<path data-id="lra" style="opacity:0" class="ptr" d="M560.0,172.0 L560.0,172.0" marker-end="url(#ah-lq_enqueue)"></path>
+<g data-id="lrn" style="transform:translate(560px,172px);opacity:1" class="nul"><rect x="-12" y="-20" width="24" height="40" fill="#fff"></rect><line x1="-16" y1="16" x2="16" y2="-16"></line></g>
+<g data-id="nr" style="transform:translate(790px,172px);opacity:0" class="ref"><rect x="-22" y="-22" width="44" height="44" rx="4"></rect><circle cx="0" cy="0" r="5"></circle><text x="0" y="52" text-anchor="middle">newNode</text></g>
+<path data-id="nra" style="opacity:0" class="ptr" d="M790.0,172.0 L790.0,172.0" marker-end="url(#ah-lq_enqueue)"></path>
+</svg>
+<div class="anim-cap" data-id="cap">An empty queue: <code>firstNode</code> and <code>lastNode</code> are both <code>null</code>.</div>
+<script type="application/json" class="anim-data">[{"cap":{"h":"An empty queue: <code>firstNode<\/code> and <code>lastNode<\/code> are both <code>null<\/code>."},"n0":{"x":420,"y":76,"o":0,"c":""},"n0n":{"x":472.0,"y":76,"o":0},"n0a":{"d":"M472.0,76.0 L472.0,76.0","o":0},"n1":{"x":655,"y":76,"o":0,"c":""},"n1n":{"x":707.0,"y":76,"o":0},"n1a":{"d":"M707.0,76.0 L707.0,76.0","o":0},"fr":{"x":340,"y":172,"o":1,"c":""},"fra":{"d":"M340.0,172.0 L340.0,172.0","o":0},"frn":{"x":340,"y":172,"o":1},"lr":{"x":560,"y":172,"o":1,"c":""},"lra":{"d":"M560.0,172.0 L560.0,172.0","o":0},"lrn":{"x":560,"y":172,"o":1},"nr":{"x":790,"y":172,"o":0,"c":""},"nra":{"d":"M790.0,172.0 L790.0,172.0","o":0}},{"cap":{"h":"<code>enqueue(\"it\")<\/code>. <code>Node newNode = new Node(newEntry, null);<\/code>"},"n0":{"o":1,"c":"hot"},"n0n":{"o":1},"nr":{"o":1},"nra":{"d":"M790.0,172.0 L450.0,106.0","o":1}},{"cap":{"h":"<code>isEmpty()<\/code> is true, so the <code>if<\/code> branch runs."},"frn":{"o":0},"fra":{"d":"M340.0,172.0 L370.0,106.0","o":1}},{"cap":{"h":"<code>lastNode = newNode;<\/code> The one node is both the front and the back."},"lrn":{"o":0},"lra":{"d":"M560.0,172.0 L410.0,106.0","o":1},"nr":{"o":0},"nra":{"o":0},"n0":{"c":""}},{"cap":{"h":"<code>enqueue(\"was\")<\/code> on that queue. <code>Node newNode = new Node(newEntry, null);<\/code>"},"n1":{"o":1,"c":"hot"},"n1n":{"o":1},"nr":{"o":1},"nra":{"d":"M790.0,172.0 L665.0,106.0","o":1}},{"cap":{"h":"<code>isEmpty()<\/code> is false now, so the <code>else<\/code> branch runs. No node moved; one link changed."},"n0a":{"d":"M472.0,76.0 L578.0,76.0","o":1},"n0n":{"o":0}},{"cap":{"h":"<code>lastNode = newNode;<\/code> again. This line runs on both branches, so it sits after the <code>if<\/code>."},"lra":{"d":"M560.0,172.0 L625.0,106.0"},"nr":{"o":0},"nra":{"o":0},"n1":{"c":""}}]</script>
+<span class="fragment anim-step" data-anim="lq_enqueue" data-step="1" data-fragment-index="1"></span>
+<span class="fragment anim-step" data-anim="lq_enqueue" data-step="2" data-fragment-index="2"></span>
+<span class="fragment anim-step" data-anim="lq_enqueue" data-step="3" data-fragment-index="3"></span>
+<span class="fragment anim-step" data-anim="lq_enqueue" data-step="4" data-fragment-index="4"></span>
+<span class="fragment anim-step" data-anim="lq_enqueue" data-step="5" data-fragment-index="5"></span>
+<span class="fragment anim-step" data-anim="lq_enqueue" data-step="6" data-fragment-index="6"></span>
+</div>
+</section>
+<section id="write-dequeue-must-know" class="slide level2 code-tight">
+<h2>Write dequeue <span class="ex">Must Know</span></h2>
+<p>Two lines are missing. Call each one before it appears.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span><a href="" aria-label="1"></a><span class="kw">public</span> T <span class="fu">dequeue</span><span class="op">()</span></span>
+<span><a href="" aria-label="2"></a><span class="op">{</span></span>
+<span><a href="" aria-label="3"></a>   T front <span class="op">=</span> <span class="fu">getFront</span><span class="op">();</span>          <span class="co">// might throw EmptyQueueException</span></span>
+<span><a href="" aria-label="4"></a><span class="fragment fill" data-fragment-index="2">   firstNode <span class="op">=</span> firstNode<span class="op">.</span><span class="fu">getNext</span><span class="op">();</span></span></span>
+<span><a href="" aria-label="5"></a>   <span class="cf">if</span> <span class="op">(</span>firstNode <span class="op">==</span> <span class="kw">null</span><span class="op">)</span></span>
+<span><a href="" aria-label="6"></a><span class="fragment fill" data-fragment-index="6">      lastNode <span class="op">=</span> <span class="kw">null</span><span class="op">;</span></span></span>
+<span><a href="" aria-label="7"></a>   <span class="cf">return</span> front<span class="op">;</span></span>
+<span><a href="" aria-label="8"></a><span class="op">}</span> <span class="co">// end dequeue</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="anim" id="lq_dequeue">
+<svg viewbox="0 0 1000 240" width="100%" xmlns="http://www.w3.org/2000/svg" role="img">
+<defs><marker id="ah-lq_dequeue" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="context-stroke"></path></marker></defs>
+<g data-id="n0" style="transform:translate(420px,76px);opacity:1" class="node"><rect x="-75.0" y="-27.0" width="150" height="54" rx="8"></rect><line x1="29.0" y1="-27.0" x2="29.0" y2="27.0"></line><text x="-23.0" y="1" text-anchor="middle" dominant-baseline="central">it</text><circle class="dot" cx="52.0" cy="0" r="5"></circle></g>
+<g data-id="n0n" style="transform:translate(472.0px,76px);opacity:0" class="nul"><rect x="-14" y="-22" width="28" height="44" fill="#e6f0f5"></rect><line x1="-18" y1="18" x2="18" y2="-18"></line></g>
+<path data-id="n0a" style="opacity:1" class="ptr" d="M472.0,76.0 L578.0,76.0" marker-end="url(#ah-lq_dequeue)"></path>
+<g data-id="n1" style="transform:translate(655px,76px);opacity:1" class="node"><rect x="-75.0" y="-27.0" width="150" height="54" rx="8"></rect><line x1="29.0" y1="-27.0" x2="29.0" y2="27.0"></line><text x="-23.0" y="1" text-anchor="middle" dominant-baseline="central">was</text><circle class="dot" cx="52.0" cy="0" r="5"></circle></g>
+<g data-id="n1n" style="transform:translate(707.0px,76px);opacity:1" class="nul"><rect x="-14" y="-22" width="28" height="44" fill="#e6f0f5"></rect><line x1="-18" y1="18" x2="18" y2="-18"></line></g>
+<path data-id="n1a" style="opacity:0" class="ptr" d="M707.0,76.0 L707.0,76.0" marker-end="url(#ah-lq_dequeue)"></path>
+<g data-id="fr" style="transform:translate(340px,172px);opacity:1" class="ref"><rect x="-22" y="-22" width="44" height="44" rx="4"></rect><circle cx="0" cy="0" r="5"></circle><text x="0" y="52" text-anchor="middle">firstNode</text></g>
+<path data-id="fra" style="opacity:1" class="ptr" d="M340.0,172.0 L390.0,106.0" marker-end="url(#ah-lq_dequeue)"></path>
+<g data-id="frn" style="transform:translate(340px,172px);opacity:0" class="nul"><rect x="-12" y="-20" width="24" height="40" fill="#fff"></rect><line x1="-16" y1="16" x2="16" y2="-16"></line></g>
+<g data-id="lr" style="transform:translate(720px,172px);opacity:1" class="ref"><rect x="-22" y="-22" width="44" height="44" rx="4"></rect><circle cx="0" cy="0" r="5"></circle><text x="0" y="52" text-anchor="middle">lastNode</text></g>
+<path data-id="lra" style="opacity:1" class="ptr" d="M720.0,172.0 L625.0,106.0" marker-end="url(#ah-lq_dequeue)"></path>
+<g data-id="lrn" style="transform:translate(720px,172px);opacity:0" class="nul"><rect x="-12" y="-20" width="24" height="40" fill="#fff"></rect><line x1="-16" y1="16" x2="16" y2="-16"></line></g>
+<text data-id="ret" style="opacity:0" class="big red" x="40" y="88" text-anchor="start">x</text>
+</svg>
+<div class="anim-cap" data-id="cap">A queue of two entries. <code>dequeue()</code> twice empties it.</div>
+<script type="application/json" class="anim-data">[{"cap":{"h":"A queue of two entries. <code>dequeue()<\/code> twice empties it."},"n0":{"x":420,"y":76,"o":1,"c":""},"n0n":{"x":472.0,"y":76,"o":0},"n0a":{"d":"M472.0,76.0 L578.0,76.0","o":1},"n1":{"x":655,"y":76,"o":1,"c":""},"n1n":{"x":707.0,"y":76,"o":1},"n1a":{"d":"M707.0,76.0 L707.0,76.0","o":0},"fr":{"x":340,"y":172,"o":1,"c":""},"fra":{"d":"M340.0,172.0 L390.0,106.0","o":1},"frn":{"x":340,"y":172,"o":0},"lr":{"x":720,"y":172,"o":1,"c":""},"lra":{"d":"M720.0,172.0 L625.0,106.0","o":1},"lrn":{"x":720,"y":172,"o":0},"ret":{"t":"","o":0}},{"cap":{"h":"<code>T front = getFront();<\/code> saves the front entry before anything moves."},"ret":{"t":"front = \"it\"","o":1},"n0":{"c":"hot"}},{"cap":{"h":"<code>firstNode = firstNode.getNext();<\/code> Nothing refers to the old node now, so Java reclaims it."},"fra":{"d":"M340.0,172.0 L605.0,106.0"},"n0":{"o":0.35,"c":"gone"},"n0a":{"o":0.35}},{"cap":{"h":"<code>firstNode<\/code> is not null, so the <code>if<\/code> body is skipped. <code>return front;<\/code> hands back <code>\"it\"<\/code>."},"n0":{"o":0},"n0a":{"o":0}},{"cap":{"h":"<code>dequeue()<\/code> again, on a queue of one. <code>T front = getFront();<\/code>"},"ret":{"t":"front = \"was\""},"n1":{"c":"hot"}},{"cap":{"h":"<code>firstNode<\/code> is null now, but <code>lastNode<\/code> still refers to the removed node."},"fra":{"o":0},"frn":{"o":1},"n1":{"o":0.35,"c":"gone"},"n1n":{"o":0.35},"lra":{"c":"bad"},"lr":{"c":"bad"}},{"cap":{"h":"<code>lastNode = null;<\/code> clears it. <code>return front;<\/code> hands back <code>\"was\"<\/code>, and the queue is empty."},"lra":{"o":0},"lrn":{"o":1},"lr":{"c":""},"n1":{"o":0.12},"n1n":{"o":0.12}}]</script>
+<span class="fragment anim-step" data-anim="lq_dequeue" data-step="1" data-fragment-index="1"></span>
+<span class="fragment anim-step" data-anim="lq_dequeue" data-step="2" data-fragment-index="2"></span>
+<span class="fragment anim-step" data-anim="lq_dequeue" data-step="3" data-fragment-index="3"></span>
+<span class="fragment anim-step" data-anim="lq_dequeue" data-step="4" data-fragment-index="4"></span>
+<span class="fragment anim-step" data-anim="lq_dequeue" data-step="5" data-fragment-index="5"></span>
+<span class="fragment anim-step" data-anim="lq_dequeue" data-step="6" data-fragment-index="6"></span>
+</div>
 </section>
 <section id="what-it-costs" class="slide level2">
 <h2>What It Costs</h2>
@@ -1160,23 +1151,68 @@ Zechun (Jacob) Cao
 </section>
 <section id="part-3" class="slide level2 center section-divider">
 <h2>Part 3</h2>
-<p>A Circular Array</p>
+<p>An Array with Two Ends</p>
 </section>
-<section id="where-do-the-entries-go" class="slide level2">
-<h2>Where Do the Entries Go?</h2>
-<p>Enqueue <code>it</code>, <code>was</code>, <code>the</code>, <code>best</code> into an array. The front has to be somewhere.</p>
-<p><span class="lead-blue">First try.</span> Keep the front at index <span class="math inline">\(0\)</span>, like the bottom of the Chapter 2 stack.</p>
-<div class="fragment">
-<p><code>enqueue</code> stores at the first empty index: <span class="math inline">\(O(1)\)</span>. <code>dequeue</code> removes index <span class="math inline">\(0\)</span>, and the other <span class="math inline">\(n - 1\)</span> entries shift left one place each: <span class="math inline">\(O(n)\)</span>.</p>
+<section id="first-try-front-at-index-0" class="slide level2 long-title">
+<h2>First Try: Front at Index 0</h2>
+<div class="anim" id="aq_shift">
+<svg viewbox="0 0 1000 256" width="100%" xmlns="http://www.w3.org/2000/svg" role="img">
+<defs><marker id="ah-aq_shift" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="context-stroke"></path></marker></defs>
+<rect class="cell" x="156.0" y="67.0" width="86" height="86"></rect>
+<text class="idx" x="199.0" y="55.0" text-anchor="middle">0</text>
+<rect class="cell" x="242.0" y="67.0" width="86" height="86"></rect>
+<text class="idx" x="285.0" y="55.0" text-anchor="middle">1</text>
+<rect class="cell" x="328.0" y="67.0" width="86" height="86"></rect>
+<text class="idx" x="371.0" y="55.0" text-anchor="middle">2</text>
+<rect class="cell" x="414.0" y="67.0" width="86" height="86"></rect>
+<text class="idx" x="457.0" y="55.0" text-anchor="middle">3</text>
+<rect class="cell" x="500.0" y="67.0" width="86" height="86"></rect>
+<text class="idx" x="543.0" y="55.0" text-anchor="middle">4</text>
+<rect class="cell" x="586.0" y="67.0" width="86" height="86"></rect>
+<text class="idx" x="629.0" y="55.0" text-anchor="middle">5</text>
+<rect class="cell" x="672.0" y="67.0" width="86" height="86"></rect>
+<text class="idx" x="715.0" y="55.0" text-anchor="middle">6</text>
+<rect class="cell" x="758.0" y="67.0" width="86" height="86"></rect>
+<text class="idx" x="801.0" y="55.0" text-anchor="middle">7</text>
+<g data-id="mf" style="transform:translate(199.0px,160px)" class="mk"><path d="M0,0 L-11,18 L11,18 z"></path><text x="0" y="42" text-anchor="middle">front</text></g>
+<g data-id="mb" style="transform:translate(199.0px,40px);opacity:0" class="mk"><path d="M0,0 L-11,-18 L11,-18 z"></path><text x="0" y="-26" text-anchor="middle">back</text></g>
+<text data-id="rd" style="" class="lbl" x="500" y="234" text-anchor="middle">x</text>
+<g data-id="v1" style="transform:translate(199.0px,10px);opacity:0" class="item"><rect x="-29.0" y="-29.0" width="58" height="58" rx="6"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">it</text></g>
+<g data-id="v2" style="transform:translate(285.0px,10px);opacity:0" class="item"><rect x="-29.0" y="-29.0" width="58" height="58" rx="6"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">was</text></g>
+<g data-id="v3" style="transform:translate(371.0px,10px);opacity:0" class="item"><rect x="-29.0" y="-29.0" width="58" height="58" rx="6"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">the</text></g>
+<g data-id="v4" style="transform:translate(457.0px,10px);opacity:0" class="item"><rect x="-29.0" y="-29.0" width="58" height="58" rx="6"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">best</text></g>
+</svg>
+<div class="anim-cap" data-id="cap">An empty array of eight slots. The front will stay at index 0, like the bottom of the Chapter 2 stack.</div>
+<script type="application/json" class="anim-data">[{"cap":{"h":"An empty array of eight slots. The front will stay at index 0, like the bottom of the Chapter 2 stack."},"mf":{"x":199.0,"y":160,"c":""},"mb":{"x":199.0,"y":40,"o":0,"c":""},"rd":{"t":"the front is index 0, always"},"v1":{"x":199.0,"y":10,"o":0,"c":""},"v2":{"x":285.0,"y":10,"o":0,"c":""},"v3":{"x":371.0,"y":10,"o":0,"c":""},"v4":{"x":457.0,"y":10,"o":0,"c":""}},{"cap":{"h":"<code>enqueue(it)<\/code> stores at index 0. No entry moves."},"v1":{"y":110,"o":1,"c":"hot"},"mb":{"x":199.0,"o":1},"rd":{"t":"frontIndex = 0\u2003\u2003backIndex = 0"},"v2":{"x":285.0,"y":10,"o":0,"c":""}},{"cap":{"h":"<code>enqueue(was)<\/code> stores at index 1. No entry moves."},"v2":{"y":110,"o":1,"c":"hot"},"mb":{"x":285.0,"o":1},"v1":{"c":""},"rd":{"t":"frontIndex = 0\u2003\u2003backIndex = 1"},"v3":{"x":371.0,"y":10,"o":0,"c":""}},{"cap":{"h":"<code>enqueue(the)<\/code> stores at index 2. No entry moves."},"v3":{"y":110,"o":1,"c":"hot"},"mb":{"x":371.0,"o":1},"v1":{"c":""},"v2":{"c":""},"rd":{"t":"frontIndex = 0\u2003\u2003backIndex = 2"},"v4":{"x":457.0,"y":10,"o":0,"c":""}},{"cap":{"h":"<code>enqueue(best)<\/code> stores at index 3. No entry moves."},"v4":{"y":110,"o":1,"c":"hot"},"mb":{"x":457.0,"o":1},"v1":{"c":""},"v2":{"c":""},"v3":{"c":""},"rd":{"t":"frontIndex = 0\u2003\u2003backIndex = 3"}},{"cap":{"h":"<code>dequeue()<\/code> returns it. The front stays at index 0, so the three entries behind it each shift left."},"_ph":[{"cap":{"h":"<code>dequeue()<\/code> returns it. The front stays at index 0, so the three entries behind it each shift left."},"v1":{"x":113.0,"y":210,"c":"gone"}},{"v2":{"x":199.0,"c":""},"v3":{"x":285.0,"c":""},"v4":{"x":371.0,"c":""},"mb":{"x":371.0,"o":1},"rd":{"t":"frontIndex = 0\u2003\u2003backIndex = 2"}}],"v1":{"x":113.0,"y":210,"c":"gone"},"v2":{"x":199.0,"c":""},"v3":{"x":285.0,"c":""},"v4":{"x":371.0,"c":""},"mb":{"x":371.0,"o":1},"rd":{"t":"frontIndex = 0\u2003\u2003backIndex = 2"}},{"cap":{"h":"<code>dequeue()<\/code> returns was. The front stays at index 0, so the two entries behind it each shift left."},"v1":{"o":0},"_ph":[{"cap":{"h":"<code>dequeue()<\/code> returns was. The front stays at index 0, so the two entries behind it each shift left."},"v1":{"o":0},"v2":{"x":113.0,"y":210,"c":"gone"}},{"v3":{"x":199.0,"c":""},"v4":{"x":285.0,"c":""},"mb":{"x":285.0,"o":1},"rd":{"t":"frontIndex = 0\u2003\u2003backIndex = 1"}}],"v2":{"x":113.0,"y":210,"c":"gone"},"v3":{"x":199.0,"c":""},"v4":{"x":285.0,"c":""},"mb":{"x":285.0,"o":1},"rd":{"t":"frontIndex = 0\u2003\u2003backIndex = 1"}}]</script>
+<span class="fragment anim-step" data-anim="aq_shift" data-step="1"></span>
+<span class="fragment anim-step" data-anim="aq_shift" data-step="2"></span>
+<span class="fragment anim-step" data-anim="aq_shift" data-step="3"></span>
+<span class="fragment anim-step" data-anim="aq_shift" data-step="4"></span>
+<span class="fragment anim-step" data-anim="aq_shift" data-step="5"></span>
+<span class="fragment anim-step" data-anim="aq_shift" data-step="6"></span>
 </div>
-<div class="fragment">
-<p><span class="lead-blue">Second try.</span> Leave the entries where they are. Keep two indices, <code>frontIndex</code> and <code>backIndex</code>, and move them instead.</p>
-</div>
+<p><strong><em>The queue holds <span class="math inline">\(n\)</span> entries. What does each operation cost?</em></strong></p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: center;"><code>enqueue</code></th>
+<th style="text-align: center;"><code>dequeue</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>first try</strong></td>
+<td style="text-align: center;"><span class="fragment"><span class="math inline">\(O(1)\)</span></span></td>
+<td style="text-align: center;"><span class="fragment"><span class="math inline">\(O(n)\)</span></span></td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="let-both-indices-move" class="slide level2">
-<h2>Let Both Indices Move</h2>
+<section id="second-try-let-both-indices-move" class="slide level2 long-title">
+<h2>Second Try: Let Both Indices Move</h2>
 <div class="anim" id="aq_march">
-<svg viewbox="0 0 1000 300" width="100%" xmlns="http://www.w3.org/2000/svg" role="img">
+<svg viewbox="0 0 1000 280" width="100%" xmlns="http://www.w3.org/2000/svg" role="img">
 <defs><marker id="ah-aq_march" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="context-stroke"></path></marker></defs>
 <rect class="cell" x="156.0" y="67.0" width="86" height="86"></rect>
 <text class="idx" x="199.0" y="55.0" text-anchor="middle">0</text>
@@ -1196,7 +1232,7 @@ Zechun (Jacob) Cao
 <text class="idx" x="801.0" y="55.0" text-anchor="middle">7</text>
 <g data-id="mf" style="transform:translate(199.0px,160px)" class="mk"><path d="M0,0 L-11,18 L11,18 z"></path><text x="0" y="42" text-anchor="middle">front</text></g>
 <g data-id="mb" style="transform:translate(113.0px,40px)" class="mk"><path d="M0,0 L-11,-18 L11,-18 z"></path><text x="0" y="-26" text-anchor="middle">back</text></g>
-<text data-id="rd" style="" class="lbl" x="500" y="278" text-anchor="middle">x</text>
+<text data-id="rd" style="" class="lbl" x="500" y="258" text-anchor="middle">x</text>
 <g data-id="v1" style="transform:translate(199.0px,10px);opacity:0" class="item"><rect x="-29.0" y="-29.0" width="58" height="58" rx="6"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">it</text></g>
 <g data-id="v2" style="transform:translate(285.0px,10px);opacity:0" class="item"><rect x="-29.0" y="-29.0" width="58" height="58" rx="6"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">was</text></g>
 <g data-id="v3" style="transform:translate(371.0px,10px);opacity:0" class="item"><rect x="-29.0" y="-29.0" width="58" height="58" rx="6"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">the</text></g>
@@ -1206,8 +1242,8 @@ Zechun (Jacob) Cao
 <g data-id="v7" style="transform:translate(715.0px,10px);opacity:0" class="item"><rect x="-29.0" y="-29.0" width="58" height="58" rx="6"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">it</text></g>
 <g data-id="v8" style="transform:translate(801.0px,10px);opacity:0" class="item"><rect x="-29.0" y="-29.0" width="58" height="58" rx="6"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">was</text></g>
 </svg>
-<div class="anim-cap" data-id="cap">Front at the lowest index, back at the highest. Neither end ever shifts an entry.</div>
-<script type="application/json" class="anim-data">[{"cap":{"h":"Front at the lowest index, back at the highest. Neither end ever shifts an entry."},"mf":{"x":199.0,"y":160,"c":""},"mb":{"x":113.0,"y":40,"c":""},"rd":{"t":"frontIndex = 0\u2003\u2003backIndex = -1"},"v1":{"x":199.0,"y":10,"o":0,"c":""},"v2":{"x":285.0,"y":10,"o":0,"c":""},"v3":{"x":371.0,"y":10,"o":0,"c":""},"v4":{"x":457.0,"y":10,"o":0,"c":""},"v5":{"x":543.0,"y":10,"o":0,"c":""},"v6":{"x":629.0,"y":10,"o":0,"c":""},"v7":{"x":715.0,"y":10,"o":0,"c":""},"v8":{"x":801.0,"y":10,"o":0,"c":""}},{"cap":{"h":"<code>enqueue(it)<\/code> stores at index 0."},"v1":{"y":110,"o":1,"c":"hot"},"mf":{"x":199.0,"c":""},"mb":{"x":199.0,"c":""},"rd":{"t":"frontIndex = 0\u2003\u2003backIndex = 0"},"v2":{"x":285.0,"y":10,"o":0,"c":""}},{"cap":{"h":"<code>enqueue(was)<\/code> stores at index 1."},"v2":{"y":110,"o":1,"c":"hot"},"v1":{"c":""},"mf":{"x":199.0,"c":""},"mb":{"x":285.0,"c":""},"rd":{"t":"frontIndex = 0\u2003\u2003backIndex = 1"},"v3":{"x":371.0,"y":10,"o":0,"c":""}},{"cap":{"h":"<code>enqueue(the)<\/code> stores at index 2."},"v3":{"y":110,"o":1,"c":"hot"},"v1":{"c":""},"v2":{"c":""},"mf":{"x":199.0,"c":""},"mb":{"x":371.0,"c":""},"rd":{"t":"frontIndex = 0\u2003\u2003backIndex = 2"},"v4":{"x":457.0,"y":10,"o":0,"c":""}},{"cap":{"h":"<code>enqueue(best)<\/code> stores at index 3."},"v4":{"y":110,"o":1,"c":"hot"},"v1":{"c":""},"v2":{"c":""},"v3":{"c":""},"mf":{"x":199.0,"c":""},"mb":{"x":457.0,"c":""},"rd":{"t":"frontIndex = 0\u2003\u2003backIndex = 3"},"v5":{"x":543.0,"y":10,"o":0,"c":""}},{"cap":{"h":"<code>enqueue(of)<\/code> stores at index 4."},"v5":{"y":110,"o":1,"c":"hot"},"v1":{"c":""},"v2":{"c":""},"v3":{"c":""},"v4":{"c":""},"mf":{"x":199.0,"c":""},"mb":{"x":543.0,"c":""},"rd":{"t":"frontIndex = 0\u2003\u2003backIndex = 4"},"v6":{"x":629.0,"y":10,"o":0,"c":""}},{"cap":{"h":"<code>enqueue(times)<\/code> stores at index 5."},"v6":{"y":110,"o":1,"c":"hot"},"v1":{"c":""},"v2":{"c":""},"v3":{"c":""},"v4":{"c":""},"v5":{"c":""},"mf":{"x":199.0,"c":""},"mb":{"x":629.0,"c":""},"rd":{"t":"frontIndex = 0\u2003\u2003backIndex = 5"}},{"cap":{"h":"<code>dequeue()<\/code> returns it and moves <code>frontIndex<\/code> right."},"v1":{"y":210,"c":"gone","o":1},"v2":{"c":""},"v3":{"c":""},"v4":{"c":""},"v5":{"c":""},"v6":{"c":""},"mf":{"x":285.0,"c":""},"mb":{"x":629.0,"c":""},"rd":{"t":"frontIndex = 1\u2003\u2003backIndex = 5"}},{"cap":{"h":"<code>dequeue()<\/code> returns was and moves <code>frontIndex<\/code> right."},"v1":{"o":0},"v2":{"y":210,"c":"gone","o":1},"v3":{"c":""},"v4":{"c":""},"v5":{"c":""},"v6":{"c":""},"mf":{"x":371.0,"c":""},"mb":{"x":629.0,"c":""},"rd":{"t":"frontIndex = 2\u2003\u2003backIndex = 5"}},{"cap":{"h":"<code>dequeue()<\/code> returns the and moves <code>frontIndex<\/code> right."},"v2":{"o":0},"v3":{"y":210,"c":"gone","o":1},"v4":{"c":""},"v5":{"c":""},"v6":{"c":""},"mf":{"x":457.0,"c":""},"mb":{"x":629.0,"c":""},"rd":{"t":"frontIndex = 3\u2003\u2003backIndex = 5"},"v7":{"x":715.0,"y":10,"o":0,"c":""}},{"cap":{"h":"<code>enqueue(it)<\/code> stores at index 6."},"v3":{"o":0},"v7":{"y":110,"o":1,"c":"hot"},"v4":{"c":""},"v5":{"c":""},"v6":{"c":""},"mf":{"x":457.0,"c":""},"mb":{"x":715.0,"c":""},"rd":{"t":"frontIndex = 3\u2003\u2003backIndex = 6"},"v8":{"x":801.0,"y":10,"o":0,"c":""}},{"cap":{"h":"<code>enqueue(was)<\/code> stores at index 7."},"v8":{"y":110,"o":1,"c":"hot"},"v4":{"c":""},"v5":{"c":""},"v6":{"c":""},"v7":{"c":""},"mf":{"x":457.0,"c":""},"mb":{"x":801.0,"c":""},"rd":{"t":"frontIndex = 3\u2003\u2003backIndex = 7"}},{"cap":{"h":"<code>enqueue(the)<\/code>: <code>backIndex + 1<\/code> is 8, past the end of the array."},"mb":{"c":"bad"}}]</script>
+<div class="anim-cap" data-id="cap">The same entries, but <code>frontIndex</code> and <code>backIndex</code> move instead of them.</div>
+<script type="application/json" class="anim-data">[{"cap":{"h":"The same entries, but <code>frontIndex<\/code> and <code>backIndex<\/code> move instead of them."},"mf":{"x":199.0,"y":160,"c":""},"mb":{"x":113.0,"y":40,"c":""},"rd":{"t":"frontIndex = 0\u2003\u2003backIndex = -1"},"v1":{"x":199.0,"y":10,"o":0,"c":""},"v2":{"x":285.0,"y":10,"o":0,"c":""},"v3":{"x":371.0,"y":10,"o":0,"c":""},"v4":{"x":457.0,"y":10,"o":0,"c":""},"v5":{"x":543.0,"y":10,"o":0,"c":""},"v6":{"x":629.0,"y":10,"o":0,"c":""},"v7":{"x":715.0,"y":10,"o":0,"c":""},"v8":{"x":801.0,"y":10,"o":0,"c":""}},{"cap":{"h":"<code>enqueue(it)<\/code> stores at index 0."},"v1":{"y":110,"o":1,"c":"hot"},"mf":{"x":199.0,"c":""},"mb":{"x":199.0,"c":""},"rd":{"t":"frontIndex = 0\u2003\u2003backIndex = 0"},"v2":{"x":285.0,"y":10,"o":0,"c":""}},{"cap":{"h":"<code>enqueue(was)<\/code> stores at index 1."},"v2":{"y":110,"o":1,"c":"hot"},"v1":{"c":""},"mf":{"x":199.0,"c":""},"mb":{"x":285.0,"c":""},"rd":{"t":"frontIndex = 0\u2003\u2003backIndex = 1"},"v3":{"x":371.0,"y":10,"o":0,"c":""}},{"cap":{"h":"<code>enqueue(the)<\/code> stores at index 2."},"v3":{"y":110,"o":1,"c":"hot"},"v1":{"c":""},"v2":{"c":""},"mf":{"x":199.0,"c":""},"mb":{"x":371.0,"c":""},"rd":{"t":"frontIndex = 0\u2003\u2003backIndex = 2"},"v4":{"x":457.0,"y":10,"o":0,"c":""}},{"cap":{"h":"<code>enqueue(best)<\/code> stores at index 3."},"v4":{"y":110,"o":1,"c":"hot"},"v1":{"c":""},"v2":{"c":""},"v3":{"c":""},"mf":{"x":199.0,"c":""},"mb":{"x":457.0,"c":""},"rd":{"t":"frontIndex = 0\u2003\u2003backIndex = 3"},"v5":{"x":543.0,"y":10,"o":0,"c":""}},{"cap":{"h":"<code>enqueue(of)<\/code> stores at index 4."},"v5":{"y":110,"o":1,"c":"hot"},"v1":{"c":""},"v2":{"c":""},"v3":{"c":""},"v4":{"c":""},"mf":{"x":199.0,"c":""},"mb":{"x":543.0,"c":""},"rd":{"t":"frontIndex = 0\u2003\u2003backIndex = 4"},"v6":{"x":629.0,"y":10,"o":0,"c":""}},{"cap":{"h":"<code>enqueue(times)<\/code> stores at index 5."},"v6":{"y":110,"o":1,"c":"hot"},"v1":{"c":""},"v2":{"c":""},"v3":{"c":""},"v4":{"c":""},"v5":{"c":""},"mf":{"x":199.0,"c":""},"mb":{"x":629.0,"c":""},"rd":{"t":"frontIndex = 0\u2003\u2003backIndex = 5"}},{"cap":{"h":"<code>dequeue()<\/code> returns it and moves <code>frontIndex<\/code> right."},"v1":{"y":210,"c":"gone","o":1},"v2":{"c":""},"v3":{"c":""},"v4":{"c":""},"v5":{"c":""},"v6":{"c":""},"mf":{"x":285.0,"c":""},"mb":{"x":629.0,"c":""},"rd":{"t":"frontIndex = 1\u2003\u2003backIndex = 5"}},{"cap":{"h":"<code>dequeue()<\/code> returns was and moves <code>frontIndex<\/code> right."},"v1":{"o":0},"v2":{"y":210,"c":"gone","o":1},"v3":{"c":""},"v4":{"c":""},"v5":{"c":""},"v6":{"c":""},"mf":{"x":371.0,"c":""},"mb":{"x":629.0,"c":""},"rd":{"t":"frontIndex = 2\u2003\u2003backIndex = 5"}},{"cap":{"h":"<code>dequeue()<\/code> returns the and moves <code>frontIndex<\/code> right."},"v2":{"o":0},"v3":{"y":210,"c":"gone","o":1},"v4":{"c":""},"v5":{"c":""},"v6":{"c":""},"mf":{"x":457.0,"c":""},"mb":{"x":629.0,"c":""},"rd":{"t":"frontIndex = 3\u2003\u2003backIndex = 5"},"v7":{"x":715.0,"y":10,"o":0,"c":""}},{"cap":{"h":"<code>enqueue(it)<\/code> stores at index 6."},"v3":{"o":0},"v7":{"y":110,"o":1,"c":"hot"},"v4":{"c":""},"v5":{"c":""},"v6":{"c":""},"mf":{"x":457.0,"c":""},"mb":{"x":715.0,"c":""},"rd":{"t":"frontIndex = 3\u2003\u2003backIndex = 6"},"v8":{"x":801.0,"y":10,"o":0,"c":""}},{"cap":{"h":"<code>enqueue(was)<\/code> stores at index 7."},"v8":{"y":110,"o":1,"c":"hot"},"v4":{"c":""},"v5":{"c":""},"v6":{"c":""},"v7":{"c":""},"mf":{"x":457.0,"c":""},"mb":{"x":801.0,"c":""},"rd":{"t":"frontIndex = 3\u2003\u2003backIndex = 7"}},{"cap":{"h":"<code>enqueue(the)<\/code>: <code>backIndex + 1<\/code> is 8, past the end of the array."},"mb":{"c":"bad"}}]</script>
 <span class="fragment anim-step" data-anim="aq_march" data-step="1"></span>
 <span class="fragment anim-step" data-anim="aq_march" data-step="2"></span>
 <span class="fragment anim-step" data-anim="aq_march" data-step="3"></span>
@@ -1221,19 +1257,68 @@ Zechun (Jacob) Cao
 <span class="fragment anim-step" data-anim="aq_march" data-step="11"></span>
 <span class="fragment anim-step" data-anim="aq_march" data-step="12"></span>
 </div>
+<p><strong><em>The same <span class="math inline">\(n\)</span> entries. What does each operation cost now?</em></strong></p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: center;"><code>enqueue</code></th>
+<th style="text-align: center;"><code>dequeue</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>second try</strong></td>
+<td style="text-align: center;"><span class="fragment"><span class="math inline">\(O(1)\)</span></span></td>
+<td style="text-align: center;"><span class="fragment"><span class="math inline">\(O(1)\)</span></span></td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="out-of-room-with-room-left" class="slide level2">
 <h2>Out of Room, with Room Left</h2>
-<p>After the last step <code>backIndex</code> is <span class="math inline">\(7\)</span>, the last index. Indices <span class="math inline">\(0\)</span>, <span class="math inline">\(1\)</span>, and <span class="math inline">\(2\)</span> are empty, and the next <code>enqueue</code> has nowhere to go.</p>
+<div class="anim" id="aq_stuck">
+<svg viewbox="0 0 1000 220" width="100%" xmlns="http://www.w3.org/2000/svg" role="img">
+<defs><marker id="ah-aq_stuck" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="context-stroke"></path></marker></defs>
+<rect class="cell" x="156.0" y="67.0" width="86" height="86"></rect>
+<text class="idx" x="199.0" y="55.0" text-anchor="middle">0</text>
+<rect class="cell" x="242.0" y="67.0" width="86" height="86"></rect>
+<text class="idx" x="285.0" y="55.0" text-anchor="middle">1</text>
+<rect class="cell" x="328.0" y="67.0" width="86" height="86"></rect>
+<text class="idx" x="371.0" y="55.0" text-anchor="middle">2</text>
+<rect class="cell" x="414.0" y="67.0" width="86" height="86"></rect>
+<text class="idx" x="457.0" y="55.0" text-anchor="middle">3</text>
+<rect class="cell" x="500.0" y="67.0" width="86" height="86"></rect>
+<text class="idx" x="543.0" y="55.0" text-anchor="middle">4</text>
+<rect class="cell" x="586.0" y="67.0" width="86" height="86"></rect>
+<text class="idx" x="629.0" y="55.0" text-anchor="middle">5</text>
+<rect class="cell" x="672.0" y="67.0" width="86" height="86"></rect>
+<text class="idx" x="715.0" y="55.0" text-anchor="middle">6</text>
+<rect class="cell" x="758.0" y="67.0" width="86" height="86"></rect>
+<text class="idx" x="801.0" y="55.0" text-anchor="middle">7</text>
+<g class="item" transform="translate(457.0,110)"><rect x="-29.0" y="-29.0" width="58" height="58" rx="6"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">best</text></g>
+<g class="item" transform="translate(543.0,110)"><rect x="-29.0" y="-29.0" width="58" height="58" rx="6"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">of</text></g>
+<g class="item" transform="translate(629.0,110)"><rect x="-29.0" y="-29.0" width="58" height="58" rx="6"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">times</text></g>
+<g class="item" transform="translate(715.0,110)"><rect x="-29.0" y="-29.0" width="58" height="58" rx="6"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">it</text></g>
+<g class="item" transform="translate(801.0,110)"><rect x="-29.0" y="-29.0" width="58" height="58" rx="6"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">was</text></g>
+<g class="mk" transform="translate(457.0,160)"><path d="M0,0 L-11,18 L11,18 z"></path><text x="0" y="42" text-anchor="middle">front</text></g>
+<g class="mk bad" transform="translate(801.0,40)"><path d="M0,0 L-11,-18 L11,-18 z"></path><text x="0" y="-26" text-anchor="middle">back</text></g>
+<path class="brace" d="M156.0,158 L156.0,167 L414.0,167 L414.0,158"></path>
+<text class="lbl" x="285.0" y="199" text-anchor="middle">3 empty slots</text>
+</svg>
+<div class="anim-cap" data-id="cap"><code>backIndex</code> is 7, the last index. The next <code>enqueue</code> has nowhere to go.</div>
+<script type="application/json" class="anim-data">[{"cap":{"h":"<code>backIndex<\/code> is 7, the last index. The next <code>enqueue<\/code> has nowhere to go."}}]</script>
+</div>
 <div class="fragment">
 <p>Every <code>dequeue</code> leaves an empty slot at the front that no later <code>enqueue</code> reaches. After <span class="math inline">\(n\)</span> enqueues in total, the array reports full, however many entries have left.</p>
 </div>
 <div class="fragment">
-<p><span class="lead-blue">The fix.</span> When <code>backIndex</code> passes the last index, send it back to <span class="math inline">\(0\)</span>. Treat index <span class="math inline">\(0\)</span> as the slot after index <span class="math inline">\(n - 1\)</span>.</p>
+<p><strong><em>Indices <span class="math inline">\(0\)</span>, <span class="math inline">\(1\)</span>, and <span class="math inline">\(2\)</span> are free. How would you change <code>backIndex</code> so the next <code>enqueue</code> can use one of them?</em></strong></p>
 </div>
 </section>
 <section id="wrap-around" class="slide level2">
 <h2>Wrap Around</h2>
+<p><span class="lead-blue">The fix.</span> When <code>backIndex</code> passes the last index, send it back to <span class="math inline">\(0\)</span>. Treat index <span class="math inline">\(0\)</span> as the slot after index <span class="math inline">\(n - 1\)</span>.</p>
 <div class="anim" id="aq_wrap">
 <svg viewbox="0 0 1000 300" width="100%" xmlns="http://www.w3.org/2000/svg" role="img">
 <defs><marker id="ah-aq_wrap" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="context-stroke"></path></marker></defs>
@@ -1383,16 +1468,55 @@ Zechun (Jacob) Cao
 <p>With <span class="math inline">\(11\)</span> entries, <code>backIndex</code> is two slots behind <code>frontIndex</code> and the full test holds.</p>
 </div>
 </section>
-<section id="counting-the-entries-must-know" class="slide level2 long-title">
+<section id="counting-the-entries-must-know" class="slide level2 code-tight long-title">
 <h2>Counting the Entries <span class="ex">Must Know</span></h2>
-<p>The entries run from <code>frontIndex</code> forward to <code>backIndex</code>, wrapping past the end when needed.</p>
-<p><span class="math display">\[\text{entries} \;=\; (\,\texttt{backIndex} - \texttt{frontIndex} + 1 + n\,) \bmod n\]</span></p>
-<div class="fragment">
-<p><span class="lead-blue">Example.</span> <span class="math inline">\(n = 8\)</span>, <code>frontIndex = 6</code>, <code>backIndex = 2</code>. The entries sit at indices <span class="math inline">\(6, 7, 0, 1, 2\)</span>: <span class="math inline">\((2 - 6 + 1 + 8) \bmod 8 = 5\)</span>.</p>
+<div class="anim" id="aq_count" data-gap="380">
+<svg viewbox="0 0 1000 260" width="100%" xmlns="http://www.w3.org/2000/svg" role="img">
+<defs><marker id="ah-aq_count" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="context-stroke"></path></marker></defs>
+<rect class="cell" x="156.0" y="77.0" width="86" height="86"></rect>
+<text class="idx" x="199.0" y="65.0" text-anchor="middle">0</text>
+<rect class="cell" x="242.0" y="77.0" width="86" height="86"></rect>
+<text class="idx" x="285.0" y="65.0" text-anchor="middle">1</text>
+<rect class="cell" x="328.0" y="77.0" width="86" height="86"></rect>
+<text class="idx" x="371.0" y="65.0" text-anchor="middle">2</text>
+<rect class="cell" x="414.0" y="77.0" width="86" height="86"></rect>
+<text class="idx" x="457.0" y="65.0" text-anchor="middle">3</text>
+<rect class="cell" x="500.0" y="77.0" width="86" height="86"></rect>
+<text class="idx" x="543.0" y="65.0" text-anchor="middle">4</text>
+<rect class="cell" x="586.0" y="77.0" width="86" height="86"></rect>
+<text class="idx" x="629.0" y="65.0" text-anchor="middle">5</text>
+<rect class="cell" x="672.0" y="77.0" width="86" height="86"></rect>
+<text class="idx" x="715.0" y="65.0" text-anchor="middle">6</text>
+<rect class="cell" x="758.0" y="77.0" width="86" height="86"></rect>
+<text class="idx" x="801.0" y="65.0" text-anchor="middle">7</text>
+<g class="mk" transform="translate(715.0,170)"><path d="M0,0 L-11,18 L11,18 z"></path><text x="0" y="42" text-anchor="middle">front</text></g>
+<g class="mk" transform="translate(371.0,50)"><path d="M0,0 L-11,-18 L11,-18 z"></path><text x="0" y="-26" text-anchor="middle">back</text></g>
+<g data-id="c0" style="transform:translate(199.0px,120px)" class="item"><rect x="-29.0" y="-29.0" width="58" height="58" rx="6"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">the</text></g>
+<g data-id="c1" style="transform:translate(285.0px,120px)" class="item"><rect x="-29.0" y="-29.0" width="58" height="58" rx="6"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">best</text></g>
+<g data-id="c2" style="transform:translate(371.0px,120px)" class="item"><rect x="-29.0" y="-29.0" width="58" height="58" rx="6"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">of</text></g>
+<g data-id="c6" style="transform:translate(715.0px,120px)" class="item"><rect x="-29.0" y="-29.0" width="58" height="58" rx="6"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">it</text></g>
+<g data-id="c7" style="transform:translate(801.0px,120px)" class="item"><rect x="-29.0" y="-29.0" width="58" height="58" rx="6"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">was</text></g>
+<g data-id="b6" style="transform:translate(745.0px,68px);opacity:0" class="badge"><circle r="16"></circle><text x="0" y="1" text-anchor="middle" dominant-baseline="central">x</text></g>
+<g data-id="b7" style="transform:translate(831.0px,68px);opacity:0" class="badge"><circle r="16"></circle><text x="0" y="1" text-anchor="middle" dominant-baseline="central">x</text></g>
+<g data-id="b0" style="transform:translate(229.0px,68px);opacity:0" class="badge"><circle r="16"></circle><text x="0" y="1" text-anchor="middle" dominant-baseline="central">x</text></g>
+<g data-id="b1" style="transform:translate(315.0px,68px);opacity:0" class="badge"><circle r="16"></circle><text x="0" y="1" text-anchor="middle" dominant-baseline="central">x</text></g>
+<g data-id="b2" style="transform:translate(401.0px,68px);opacity:0" class="badge"><circle r="16"></circle><text x="0" y="1" text-anchor="middle" dominant-baseline="central">x</text></g>
+<text data-id="rd" style="" class="lbl" x="500" y="242" text-anchor="middle">x</text>
+</svg>
+<div class="anim-cap" data-id="cap">The entries run from <code>frontIndex</code> forward to <code>backIndex</code>, wrapping past the end.</div>
+<script type="application/json" class="anim-data">[{"cap":{"h":"The entries run from <code>frontIndex<\/code> forward to <code>backIndex<\/code>, wrapping past the end."},"c0":{"x":199.0,"y":120,"c":""},"c1":{"x":285.0,"y":120,"c":""},"c2":{"x":371.0,"y":120,"c":""},"c6":{"x":715.0,"y":120,"c":""},"c7":{"x":801.0,"y":120,"c":""},"b6":{"x":745.0,"y":68,"o":0,"t":"1"},"b7":{"x":831.0,"y":68,"o":0,"t":"2"},"b0":{"x":229.0,"y":68,"o":0,"t":"3"},"b1":{"x":315.0,"y":68,"o":0,"t":"4"},"b2":{"x":401.0,"y":68,"o":0,"t":"5"},"rd":{"t":"frontIndex = 6\u2003\u2003backIndex = 2"}},{"cap":{"h":"Walk from the front to the back, counting as you go. The arithmetic below reaches the same number without walking."},"_ph":[{"cap":{"h":"Walk from the front to the back, counting as you go. The arithmetic below reaches the same number without walking."},"c6":{"c":"hot"},"b6":{"o":1},"rd":{"t":"counted 1"}},{"c7":{"c":"hot"},"b7":{"o":1},"rd":{"t":"counted 2"}},{"c0":{"c":"hot"},"b0":{"o":1},"rd":{"t":"counted 3"}},{"c1":{"c":"hot"},"b1":{"o":1},"rd":{"t":"counted 4"}},{"c2":{"c":"hot"},"b2":{"o":1},"rd":{"t":"counted 5"}}],"c6":{"c":"hot"},"b6":{"o":1},"rd":{"t":"counted 5"},"c7":{"c":"hot"},"b7":{"o":1},"c0":{"c":"hot"},"b0":{"o":1},"c1":{"c":"hot"},"b1":{"o":1},"c2":{"c":"hot"},"b2":{"o":1}},{"cap":{"h":"<code>backIndex - frontIndex<\/code> is the distance from the front to the back. It is negative whenever the queue wraps."},"rd":{"t":"2 - 6 = -4"}},{"cap":{"h":"<code>+ 1<\/code> counts both ends, not the gap between them."},"rd":{"t":"-4 + 1 = -3"}},{"cap":{"h":"<code>+ n<\/code> keeps the value non-negative when the queue wraps."},"rd":{"t":"-3 + 8 = 5"}},{"cap":{"h":"<code>% n<\/code> brings it back into range, and it is the 5 the walk counted. An empty queue gives 0, a full one gives <code>n - 1<\/code>."},"rd":{"t":"5 % 8 = 5"}}]</script>
+<span class="fragment anim-step" data-anim="aq_count" data-step="1" data-fragment-index="1"></span>
+<span class="fragment anim-step" data-anim="aq_count" data-step="2" data-fragment-index="2"></span>
+<span class="fragment anim-step" data-anim="aq_count" data-step="3" data-fragment-index="3"></span>
+<span class="fragment anim-step" data-anim="aq_count" data-step="4" data-fragment-index="4"></span>
+<span class="fragment anim-step" data-anim="aq_count" data-step="5" data-fragment-index="5"></span>
 </div>
-<div class="fragment">
-<p>The <span class="math inline">\(+\,n\)</span> keeps the value non-negative when the queue wraps. An empty queue gives <span class="math inline">\(0\)</span> and a full one gives <span class="math inline">\(n - 1\)</span>.</p>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span><a href="" aria-label="1"></a><span class="dt">int</span> n <span class="op">=</span> queue<span class="op">.</span><span class="fu">length</span><span class="op">;</span>                  <span class="co">// n = 8</span></span>
+<span><a href="" aria-label="2"></a><span class="fragment fill" data-fragment-index="2"><span class="dt">int</span> entries <span class="op">=</span> backIndex <span class="op">-</span> frontIndex<span class="op">;</span>    <span class="co">// 2 - 6 = -4</span></span></span>
+<span><a href="" aria-label="3"></a><span class="fragment fill" data-fragment-index="3">entries <span class="op">=</span> entries <span class="op">+</span> <span class="dv">1</span><span class="op">;</span>                 <span class="co">// both ends, not the gap: -3</span></span></span>
+<span><a href="" aria-label="4"></a><span class="fragment fill" data-fragment-index="4">entries <span class="op">=</span> entries <span class="op">+</span> n<span class="op">;</span>                 <span class="co">// never negative: 5</span></span></span>
+<span><a href="" aria-label="5"></a><span class="fragment fill" data-fragment-index="5">entries <span class="op">=</span> entries <span class="op">%</span> n<span class="op">;</span>                 <span class="co">// in range 0 to n - 1: 5</span></span></span>
+<span><a href="" aria-label="6"></a><span class="fragment fill" data-fragment-index="5"><span class="co">// all at once: (backIndex - frontIndex + 1 + n) % n</span></span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="question-3" class="slide level2">
 <h2>Question</h2>
@@ -1431,68 +1555,91 @@ Zechun (Jacob) Cao
 <span id="cb10-20"><a href="" aria-label="20"></a>   <span class="op">{</span> <span class="cf">return</span> frontIndex <span class="op">==</span> <span class="op">((</span>backIndex <span class="op">+</span> <span class="dv">1</span><span class="op">)</span> <span class="op">%</span> queue<span class="op">.</span><span class="fu">length</span><span class="op">);</span> <span class="op">}</span></span>
 <span id="cb10-21"><a href="" aria-label="21"></a><span class="op">}</span> <span class="co">// end ArrayQueue</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="write-enqueue-and-dequeue-must-know" class="slide level2 long-title">
-<h2>Write enqueue and dequeue <span class="ex">Must Know</span></h2>
-<p>Four lines are missing. Call each one before it appears.</p>
+<section id="write-enqueue-must-know-1" class="slide level2 code-tight">
+<h2>Write enqueue <span class="ex">Must Know</span></h2>
+<p>Two lines are missing. Call each one before it appears.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span><a href="" aria-label="1"></a><span class="kw">public</span> <span class="dt">void</span> <span class="fu">enqueue</span><span class="op">(</span>T newEntry<span class="op">)</span></span>
 <span><a href="" aria-label="2"></a><span class="op">{</span></span>
 <span><a href="" aria-label="3"></a>   <span class="fu">ensureCapacity</span><span class="op">();</span>                     <span class="co">// grows a full array</span></span>
-<span><a href="" aria-label="4"></a><span class="fragment">   backIndex <span class="op">=</span> <span class="op">(</span>backIndex <span class="op">+</span> <span class="dv">1</span><span class="op">)</span> <span class="op">%</span> queue<span class="op">.</span><span class="fu">length</span><span class="op">;</span></span></span>
-<span><a href="" aria-label="5"></a><span class="fragment">   queue<span class="op">[</span>backIndex<span class="op">]</span> <span class="op">=</span> newEntry<span class="op">;</span></span></span>
-<span><a href="" aria-label="6"></a><span class="op">}</span> <span class="co">// end enqueue</span></span>
-<span><a href="" aria-label="7"></a></span>
-<span><a href="" aria-label="8"></a><span class="kw">public</span> T <span class="fu">dequeue</span><span class="op">()</span></span>
-<span><a href="" aria-label="9"></a><span class="op">{</span></span>
-<span><a href="" aria-label="10"></a>   T front <span class="op">=</span> <span class="fu">getFront</span><span class="op">();</span>           <span class="co">// might throw EmptyQueueException</span></span>
-<span><a href="" aria-label="11"></a><span class="fragment">   queue<span class="op">[</span>frontIndex<span class="op">]</span> <span class="op">=</span> <span class="kw">null</span><span class="op">;</span>          <span class="co">// no loitering</span></span></span>
-<span><a href="" aria-label="12"></a><span class="fragment">   frontIndex <span class="op">=</span> <span class="op">(</span>frontIndex <span class="op">+</span> <span class="dv">1</span><span class="op">)</span> <span class="op">%</span> queue<span class="op">.</span><span class="fu">length</span><span class="op">;</span></span></span>
-<span><a href="" aria-label="13"></a>   <span class="cf">return</span> front<span class="op">;</span></span>
-<span><a href="" aria-label="14"></a><span class="op">}</span> <span class="co">// end dequeue</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="fragment">
-<p><code>getFront()</code> checks for an empty queue and returns <code>queue[frontIndex]</code>.</p>
+<span><a href="" aria-label="4"></a><span class="fragment fill" data-fragment-index="1">   backIndex <span class="op">=</span> <span class="op">(</span>backIndex <span class="op">+</span> <span class="dv">1</span><span class="op">)</span> <span class="op">%</span> queue<span class="op">.</span><span class="fu">length</span><span class="op">;</span></span></span>
+<span><a href="" aria-label="5"></a><span class="fragment fill" data-fragment-index="2">   queue<span class="op">[</span>backIndex<span class="op">]</span> <span class="op">=</span> newEntry<span class="op">;</span></span></span>
+<span><a href="" aria-label="6"></a><span class="op">}</span> <span class="co">// end enqueue</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="anim" id="aq_wr_enq">
+<svg viewbox="0 0 1000 285" width="100%" xmlns="http://www.w3.org/2000/svg" role="img">
+<defs><marker id="ah-aq_wr_enq" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="context-stroke"></path></marker></defs>
+<rect class="cell" x="242.0" y="75.0" width="86" height="86"></rect>
+<text class="idx" x="285.0" y="63.0" text-anchor="middle">0</text>
+<rect class="cell" x="328.0" y="75.0" width="86" height="86"></rect>
+<text class="idx" x="371.0" y="63.0" text-anchor="middle">1</text>
+<rect class="cell" x="414.0" y="75.0" width="86" height="86"></rect>
+<text class="idx" x="457.0" y="63.0" text-anchor="middle">2</text>
+<rect class="cell" x="500.0" y="75.0" width="86" height="86"></rect>
+<text class="idx" x="543.0" y="63.0" text-anchor="middle">3</text>
+<rect class="cell" x="586.0" y="75.0" width="86" height="86"></rect>
+<text class="idx" x="629.0" y="63.0" text-anchor="middle">4</text>
+<rect class="cell" x="672.0" y="75.0" width="86" height="86"></rect>
+<text class="idx" x="715.0" y="63.0" text-anchor="middle">5</text>
+<g data-id="mf" style="transform:translate(285.0px,168px)" class="mk"><path d="M0,0 L-11,18 L11,18 z"></path><text x="0" y="42" text-anchor="middle">front</text></g>
+<g data-id="mb" style="transform:translate(715.0px,48px)" class="mk"><path d="M0,0 L-11,-18 L11,-18 z"></path><text x="0" y="-26" text-anchor="middle">back</text></g>
+<text data-id="rd" style="" class="lbl" x="500" y="269" text-anchor="middle">x</text>
+<g data-id="v1" style="transform:translate(285.0px,18px);opacity:0" class="item"><rect x="-29.0" y="-29.0" width="58" height="58" rx="6"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">15</text></g>
+<g data-id="v2" style="transform:translate(371.0px,18px);opacity:0" class="item"><rect x="-29.0" y="-29.0" width="58" height="58" rx="6"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">25</text></g>
+<g data-id="v3" style="transform:translate(457.0px,18px);opacity:0" class="item"><rect x="-29.0" y="-29.0" width="58" height="58" rx="6"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">35</text></g>
+<g data-id="v4" style="transform:translate(543.0px,18px);opacity:0" class="item"><rect x="-29.0" y="-29.0" width="58" height="58" rx="6"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">45</text></g>
+</svg>
+<div class="anim-cap" data-id="cap">Length 6, one location unused. <code>frontIndex = 0</code>, <code>backIndex = 5</code>: the queue is empty.</div>
+<script type="application/json" class="anim-data">[{"cap":{"h":"Length 6, one location unused. <code>frontIndex = 0<\/code>, <code>backIndex = 5<\/code>: the queue is empty."},"mf":{"x":285.0,"y":168,"c":""},"mb":{"x":715.0,"y":48,"c":""},"rd":{"t":"frontIndex = 0\u2003\u2003backIndex = 5\u2003\u2003entries = 0"},"v1":{"x":285.0,"y":18,"o":0,"c":""},"v2":{"x":371.0,"y":18,"o":0,"c":""},"v3":{"x":457.0,"y":18,"o":0,"c":""},"v4":{"x":543.0,"y":18,"o":0,"c":""}},{"cap":{"h":"<code>backIndex = (backIndex + 1) % queue.length;<\/code> 5 + 1 is 6, and 6 % 6 is 0."},"mb":{"x":285.0,"c":"hot"},"rd":{"t":"frontIndex = 0\u2003\u2003backIndex = 0"}},{"cap":{"h":"<code>queue[backIndex] = newEntry;<\/code> 15 goes into index 0."},"v1":{"x":285.0,"y":118,"o":1,"c":"hot"},"mb":{"c":""},"rd":{"t":"frontIndex = 0\u2003\u2003backIndex = 0\u2003\u2003entries = 1"}},{"cap":{"h":"<code>enqueue(25)<\/code> runs both lines: <code>backIndex<\/code> moves to 1 and 25 goes there."},"mb":{"x":371.0,"c":""},"v2":{"x":371.0,"y":118,"o":1,"c":"hot"},"v1":{"c":""},"rd":{"t":"frontIndex = 0\u2003\u2003backIndex = 1\u2003\u2003entries = 2"}},{"cap":{"h":"<code>enqueue(35)<\/code> runs both lines: <code>backIndex<\/code> moves to 2 and 35 goes there."},"mb":{"x":457.0,"c":""},"v3":{"x":457.0,"y":118,"o":1,"c":"hot"},"v1":{"c":""},"v2":{"c":""},"rd":{"t":"frontIndex = 0\u2003\u2003backIndex = 2\u2003\u2003entries = 3"}},{"cap":{"h":"<code>enqueue(45)<\/code> runs both lines: <code>backIndex<\/code> moves to 3 and 45 goes there."},"mb":{"x":543.0,"c":""},"v4":{"x":543.0,"y":118,"o":1,"c":"hot"},"v1":{"c":""},"v2":{"c":""},"v3":{"c":""},"rd":{"t":"frontIndex = 0\u2003\u2003backIndex = 3\u2003\u2003entries = 4"}}]</script>
+<span class="fragment anim-step" data-anim="aq_wr_enq" data-step="1" data-fragment-index="1"></span>
+<span class="fragment anim-step" data-anim="aq_wr_enq" data-step="2" data-fragment-index="2"></span>
+<span class="fragment anim-step" data-anim="aq_wr_enq" data-step="3" data-fragment-index="3"></span>
+<span class="fragment anim-step" data-anim="aq_wr_enq" data-step="4" data-fragment-index="4"></span>
+<span class="fragment anim-step" data-anim="aq_wr_enq" data-step="5" data-fragment-index="5"></span>
 </div>
 </section>
-<section id="trace-it-must-know" class="slide level2">
-<h2>Trace It <span class="ex">Must Know</span></h2>
-<p><span class="doit">Call the next state</span></p>
-<p><code>enqueue</code> 15, 25, 35, 45; <code>dequeue</code> twice; <code>enqueue</code> 55, 65, 75.</p>
-<div class="anim" id="aq_trace">
-<svg viewbox="0 0 1000 300" width="100%" xmlns="http://www.w3.org/2000/svg" role="img">
-<defs><marker id="ah-aq_trace" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="context-stroke"></path></marker></defs>
-<rect class="cell" x="242.0" y="67.0" width="86" height="86"></rect>
-<text class="idx" x="285.0" y="55.0" text-anchor="middle">0</text>
-<rect class="cell" x="328.0" y="67.0" width="86" height="86"></rect>
-<text class="idx" x="371.0" y="55.0" text-anchor="middle">1</text>
-<rect class="cell" x="414.0" y="67.0" width="86" height="86"></rect>
-<text class="idx" x="457.0" y="55.0" text-anchor="middle">2</text>
-<rect class="cell" x="500.0" y="67.0" width="86" height="86"></rect>
-<text class="idx" x="543.0" y="55.0" text-anchor="middle">3</text>
-<rect class="cell" x="586.0" y="67.0" width="86" height="86"></rect>
-<text class="idx" x="629.0" y="55.0" text-anchor="middle">4</text>
-<rect class="cell" x="672.0" y="67.0" width="86" height="86"></rect>
-<text class="idx" x="715.0" y="55.0" text-anchor="middle">5</text>
-<g data-id="mf" style="transform:translate(285.0px,160px)" class="mk"><path d="M0,0 L-11,18 L11,18 z"></path><text x="0" y="42" text-anchor="middle">front</text></g>
-<g data-id="mb" style="transform:translate(715.0px,40px)" class="mk"><path d="M0,0 L-11,-18 L11,-18 z"></path><text x="0" y="-26" text-anchor="middle">back</text></g>
-<text data-id="rd" style="" class="lbl" x="500" y="278" text-anchor="middle">x</text>
-<g data-id="v1" style="transform:translate(285.0px,10px);opacity:0" class="item"><rect x="-29.0" y="-29.0" width="58" height="58" rx="6"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">15</text></g>
-<g data-id="v2" style="transform:translate(371.0px,10px);opacity:0" class="item"><rect x="-29.0" y="-29.0" width="58" height="58" rx="6"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">25</text></g>
-<g data-id="v3" style="transform:translate(457.0px,10px);opacity:0" class="item"><rect x="-29.0" y="-29.0" width="58" height="58" rx="6"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">35</text></g>
-<g data-id="v4" style="transform:translate(543.0px,10px);opacity:0" class="item"><rect x="-29.0" y="-29.0" width="58" height="58" rx="6"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">45</text></g>
-<g data-id="v5" style="transform:translate(629.0px,10px);opacity:0" class="item"><rect x="-29.0" y="-29.0" width="58" height="58" rx="6"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">55</text></g>
-<g data-id="v6" style="transform:translate(715.0px,10px);opacity:0" class="item"><rect x="-29.0" y="-29.0" width="58" height="58" rx="6"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">65</text></g>
-<g data-id="v7" style="transform:translate(285.0px,10px);opacity:0" class="item"><rect x="-29.0" y="-29.0" width="58" height="58" rx="6"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">75</text></g>
+<section id="write-dequeue-must-know-1" class="slide level2 code-tight">
+<h2>Write dequeue <span class="ex">Must Know</span></h2>
+<p>Two lines are missing. Call each one before it appears.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span><a href="" aria-label="1"></a><span class="kw">public</span> T <span class="fu">dequeue</span><span class="op">()</span></span>
+<span><a href="" aria-label="2"></a><span class="op">{</span></span>
+<span><a href="" aria-label="3"></a>   T front <span class="op">=</span> <span class="fu">getFront</span><span class="op">();</span>           <span class="co">// might throw EmptyQueueException</span></span>
+<span><a href="" aria-label="4"></a><span class="fragment fill" data-fragment-index="1">   queue<span class="op">[</span>frontIndex<span class="op">]</span> <span class="op">=</span> <span class="kw">null</span><span class="op">;</span>          <span class="co">// no loitering</span></span></span>
+<span><a href="" aria-label="5"></a><span class="fragment fill" data-fragment-index="2">   frontIndex <span class="op">=</span> <span class="op">(</span>frontIndex <span class="op">+</span> <span class="dv">1</span><span class="op">)</span> <span class="op">%</span> queue<span class="op">.</span><span class="fu">length</span><span class="op">;</span></span></span>
+<span><a href="" aria-label="6"></a>   <span class="cf">return</span> front<span class="op">;</span></span>
+<span><a href="" aria-label="7"></a><span class="op">}</span> <span class="co">// end dequeue</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="anim" id="aq_wr_deq">
+<svg viewbox="0 0 1000 285" width="100%" xmlns="http://www.w3.org/2000/svg" role="img">
+<defs><marker id="ah-aq_wr_deq" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="context-stroke"></path></marker></defs>
+<rect class="cell" x="242.0" y="75.0" width="86" height="86"></rect>
+<text class="idx" x="285.0" y="63.0" text-anchor="middle">0</text>
+<rect class="cell" x="328.0" y="75.0" width="86" height="86"></rect>
+<text class="idx" x="371.0" y="63.0" text-anchor="middle">1</text>
+<rect class="cell" x="414.0" y="75.0" width="86" height="86"></rect>
+<text class="idx" x="457.0" y="63.0" text-anchor="middle">2</text>
+<rect class="cell" x="500.0" y="75.0" width="86" height="86"></rect>
+<text class="idx" x="543.0" y="63.0" text-anchor="middle">3</text>
+<rect class="cell" x="586.0" y="75.0" width="86" height="86"></rect>
+<text class="idx" x="629.0" y="63.0" text-anchor="middle">4</text>
+<rect class="cell" x="672.0" y="75.0" width="86" height="86"></rect>
+<text class="idx" x="715.0" y="63.0" text-anchor="middle">5</text>
+<g data-id="v1" style="transform:translate(285.0px,118px);opacity:1" class="item"><rect x="-29.0" y="-29.0" width="58" height="58" rx="6"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">15</text></g>
+<g data-id="v2" style="transform:translate(371.0px,118px);opacity:1" class="item"><rect x="-29.0" y="-29.0" width="58" height="58" rx="6"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">25</text></g>
+<g data-id="v3" style="transform:translate(457.0px,118px);opacity:1" class="item"><rect x="-29.0" y="-29.0" width="58" height="58" rx="6"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">35</text></g>
+<g data-id="v4" style="transform:translate(543.0px,118px);opacity:1" class="item"><rect x="-29.0" y="-29.0" width="58" height="58" rx="6"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">45</text></g>
+<g data-id="mf" style="transform:translate(285.0px,168px)" class="mk"><path d="M0,0 L-11,18 L11,18 z"></path><text x="0" y="42" text-anchor="middle">front</text></g>
+<g data-id="mb" style="transform:translate(543.0px,48px)" class="mk"><path d="M0,0 L-11,-18 L11,-18 z"></path><text x="0" y="-26" text-anchor="middle">back</text></g>
+<text data-id="rd" style="" class="lbl" x="500" y="269" text-anchor="middle">x</text>
+<g data-id="v5" style="transform:translate(629.0px,18px);opacity:0" class="item"><rect x="-29.0" y="-29.0" width="58" height="58" rx="6"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">55</text></g>
+<g data-id="v6" style="transform:translate(715.0px,18px);opacity:0" class="item"><rect x="-29.0" y="-29.0" width="58" height="58" rx="6"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">65</text></g>
+<g data-id="v7" style="transform:translate(285.0px,18px);opacity:0" class="item"><rect x="-29.0" y="-29.0" width="58" height="58" rx="6"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">75</text></g>
 </svg>
-<div class="anim-cap" data-id="cap">Length 6, one location unused. Start: <code>frontIndex = 0</code>, <code>backIndex = 5</code>.</div>
-<script type="application/json" class="anim-data">[{"cap":{"h":"Length 6, one location unused. Start: <code>frontIndex = 0<\/code>, <code>backIndex = 5<\/code>."},"mf":{"x":285.0,"y":160,"c":""},"mb":{"x":715.0,"y":40,"c":""},"rd":{"t":"frontIndex = 0\u2003\u2003backIndex = 5"},"v1":{"x":285.0,"y":10,"o":0,"c":""},"v2":{"x":371.0,"y":10,"o":0,"c":""},"v3":{"x":457.0,"y":10,"o":0,"c":""},"v4":{"x":543.0,"y":10,"o":0,"c":""},"v5":{"x":629.0,"y":10,"o":0,"c":""},"v6":{"x":715.0,"y":10,"o":0,"c":""},"v7":{"x":285.0,"y":10,"o":0,"c":""}},{"cap":{"h":"<code>enqueue(15)<\/code>: <code>backIndex = (backIndex + 1) % 6<\/code>, then store at index 0."},"v1":{"y":110,"o":1,"c":"hot"},"mf":{"x":285.0,"c":""},"mb":{"x":285.0,"c":""},"rd":{"t":"frontIndex = 0\u2003\u2003backIndex = 0\u2003\u2003entries = 1"},"v2":{"x":371.0,"y":10,"o":0,"c":""}},{"cap":{"h":"<code>enqueue(25)<\/code>: <code>backIndex = (backIndex + 1) % 6<\/code>, then store at index 1."},"v2":{"y":110,"o":1,"c":"hot"},"v1":{"c":""},"mf":{"x":285.0,"c":""},"mb":{"x":371.0,"c":""},"rd":{"t":"frontIndex = 0\u2003\u2003backIndex = 1\u2003\u2003entries = 2"},"v3":{"x":457.0,"y":10,"o":0,"c":""}},{"cap":{"h":"<code>enqueue(35)<\/code>: <code>backIndex = (backIndex + 1) % 6<\/code>, then store at index 2."},"v3":{"y":110,"o":1,"c":"hot"},"v1":{"c":""},"v2":{"c":""},"mf":{"x":285.0,"c":""},"mb":{"x":457.0,"c":""},"rd":{"t":"frontIndex = 0\u2003\u2003backIndex = 2\u2003\u2003entries = 3"},"v4":{"x":543.0,"y":10,"o":0,"c":""}},{"cap":{"h":"<code>enqueue(45)<\/code>: <code>backIndex = (backIndex + 1) % 6<\/code>, then store at index 3."},"v4":{"y":110,"o":1,"c":"hot"},"v1":{"c":""},"v2":{"c":""},"v3":{"c":""},"mf":{"x":285.0,"c":""},"mb":{"x":543.0,"c":""},"rd":{"t":"frontIndex = 0\u2003\u2003backIndex = 3\u2003\u2003entries = 4"}},{"cap":{"h":"<code>dequeue()<\/code> returns 15, clears index 0, and sets <code>frontIndex = (frontIndex + 1) % 6<\/code>."},"v1":{"y":210,"c":"gone","o":1},"v2":{"c":""},"v3":{"c":""},"v4":{"c":""},"mf":{"x":371.0,"c":""},"mb":{"x":543.0,"c":""},"rd":{"t":"frontIndex = 1\u2003\u2003backIndex = 3\u2003\u2003entries = 3"}},{"cap":{"h":"<code>dequeue()<\/code> returns 25, clears index 1, and sets <code>frontIndex = (frontIndex + 1) % 6<\/code>."},"v1":{"o":0},"v2":{"y":210,"c":"gone","o":1},"v3":{"c":""},"v4":{"c":""},"mf":{"x":457.0,"c":""},"mb":{"x":543.0,"c":""},"rd":{"t":"frontIndex = 2\u2003\u2003backIndex = 3\u2003\u2003entries = 2"},"v5":{"x":629.0,"y":10,"o":0,"c":""}},{"cap":{"h":"<code>enqueue(55)<\/code>: <code>backIndex = (backIndex + 1) % 6<\/code>, then store at index 4."},"v2":{"o":0},"v5":{"y":110,"o":1,"c":"hot"},"v3":{"c":""},"v4":{"c":""},"mf":{"x":457.0,"c":""},"mb":{"x":629.0,"c":""},"rd":{"t":"frontIndex = 2\u2003\u2003backIndex = 4\u2003\u2003entries = 3"},"v6":{"x":715.0,"y":10,"o":0,"c":""}},{"cap":{"h":"<code>enqueue(65)<\/code>: <code>backIndex = (backIndex + 1) % 6<\/code>, then store at index 5."},"v6":{"y":110,"o":1,"c":"hot"},"v3":{"c":""},"v4":{"c":""},"v5":{"c":""},"mf":{"x":457.0,"c":""},"mb":{"x":715.0,"c":""},"rd":{"t":"frontIndex = 2\u2003\u2003backIndex = 5\u2003\u2003entries = 4"},"v7":{"x":285.0,"y":10,"o":0,"c":""}},{"cap":{"h":"<code>enqueue(75)<\/code>: <code>backIndex = (backIndex + 1) % 6<\/code>, then store at index 0."},"v7":{"y":110,"o":1,"c":"hot"},"v3":{"c":""},"v4":{"c":""},"v5":{"c":""},"v6":{"c":""},"mf":{"x":457.0,"c":""},"mb":{"x":285.0,"c":""},"rd":{"t":"frontIndex = 2\u2003\u2003backIndex = 0\u2003\u2003entries = 5"}}]</script>
-<span class="fragment anim-step" data-anim="aq_trace" data-step="1"></span>
-<span class="fragment anim-step" data-anim="aq_trace" data-step="2"></span>
-<span class="fragment anim-step" data-anim="aq_trace" data-step="3"></span>
-<span class="fragment anim-step" data-anim="aq_trace" data-step="4"></span>
-<span class="fragment anim-step" data-anim="aq_trace" data-step="5"></span>
-<span class="fragment anim-step" data-anim="aq_trace" data-step="6"></span>
-<span class="fragment anim-step" data-anim="aq_trace" data-step="7"></span>
-<span class="fragment anim-step" data-anim="aq_trace" data-step="8"></span>
-<span class="fragment anim-step" data-anim="aq_trace" data-step="9"></span>
+<div class="anim-cap" data-id="cap">Where the last slide left off: 15, 25, 35 and 45 at indices 0 to 3.</div>
+<script type="application/json" class="anim-data">[{"cap":{"h":"Where the last slide left off: 15, 25, 35 and 45 at indices 0 to 3."},"v1":{"x":285.0,"y":118,"o":1,"c":""},"v2":{"x":371.0,"y":118,"o":1,"c":""},"v3":{"x":457.0,"y":118,"o":1,"c":""},"v4":{"x":543.0,"y":118,"o":1,"c":""},"mf":{"x":285.0,"y":168,"c":""},"mb":{"x":543.0,"y":48,"c":""},"rd":{"t":"frontIndex = 0\u2003\u2003backIndex = 3\u2003\u2003entries = 4"},"v5":{"x":629.0,"y":18,"o":0,"c":""},"v6":{"x":715.0,"y":18,"o":0,"c":""},"v7":{"x":285.0,"y":18,"o":0,"c":""}},{"cap":{"h":"<code>getFront()<\/code> saves 15, and throws if the queue is empty. <code>queue[frontIndex] = null;<\/code> clears index 0."},"v1":{"c":"gone"},"rd":{"t":"frontIndex = 0\u2003\u2003backIndex = 3"}},{"cap":{"h":"<code>frontIndex = (frontIndex + 1) % queue.length;<\/code> 0 + 1 is 1, and 1 % 6 is 1."},"v1":{"o":0},"mf":{"x":371.0},"v2":{"c":""},"v3":{"c":""},"v4":{"c":""},"rd":{"t":"frontIndex = 1\u2003\u2003backIndex = 3\u2003\u2003entries = 3"}},{"cap":{"h":"<code>dequeue()<\/code> runs both lines: 25 leaves index 1 and <code>frontIndex<\/code> moves to 2."},"v2":{"c":"gone"},"mf":{"x":457.0},"v3":{"c":""},"v4":{"c":""},"rd":{"t":"frontIndex = 2\u2003\u2003backIndex = 3\u2003\u2003entries = 2"}},{"cap":{"h":"<code>enqueue(55)<\/code> runs both lines: <code>backIndex<\/code> moves to 4 and 55 goes there."},"v2":{"o":0},"mb":{"x":629.0,"c":""},"v5":{"x":629.0,"y":118,"o":1,"c":"hot"},"v3":{"c":""},"v4":{"c":""},"rd":{"t":"frontIndex = 2\u2003\u2003backIndex = 4\u2003\u2003entries = 3"}},{"cap":{"h":"<code>enqueue(65)<\/code> runs both lines: <code>backIndex<\/code> moves to 5 and 65 goes there."},"mb":{"x":715.0,"c":""},"v6":{"x":715.0,"y":118,"o":1,"c":"hot"},"v3":{"c":""},"v4":{"c":""},"v5":{"c":""},"rd":{"t":"frontIndex = 2\u2003\u2003backIndex = 5\u2003\u2003entries = 4"}},{"cap":{"h":"<code>enqueue(75)<\/code> runs both lines: <code>backIndex<\/code> moves to 0 and 75 goes there."},"mb":{"x":285.0,"c":""},"v7":{"x":285.0,"y":118,"o":1,"c":"hot"},"v3":{"c":""},"v4":{"c":""},"v5":{"c":""},"v6":{"c":""},"rd":{"t":"frontIndex = 2\u2003\u2003backIndex = 0\u2003\u2003entries = 5"}}]</script>
+<span class="fragment anim-step" data-anim="aq_wr_deq" data-step="1" data-fragment-index="1"></span>
+<span class="fragment anim-step" data-anim="aq_wr_deq" data-step="2" data-fragment-index="2"></span>
+<span class="fragment anim-step" data-anim="aq_wr_deq" data-step="3" data-fragment-index="3"></span>
+<span class="fragment anim-step" data-anim="aq_wr_deq" data-step="4" data-fragment-index="4"></span>
+<span class="fragment anim-step" data-anim="aq_wr_deq" data-step="5" data-fragment-index="5"></span>
+<span class="fragment anim-step" data-anim="aq_wr_deq" data-step="6" data-fragment-index="6"></span>
 </div>
 </section>
 <section id="is-it-full" class="slide level2">
