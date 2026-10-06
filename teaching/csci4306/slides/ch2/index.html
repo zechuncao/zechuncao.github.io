@@ -2031,27 +2031,57 @@ Content-Transfer-Encoding: base64</code></pre>
 <h2>Section 2.4</h2>
 <p>DNS: The Internet’s Directory</p>
 </section>
+<section id="warm-up-last-week" class="slide level2">
+<h2>Warm-Up: Last Week</h2>
+<div class="fragment" data-fragment-index="0">
+<table class="caption-top">
+<colgroup>
+<col style="width: 55%">
+<col style="width: 44%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Question</th>
+<th style="text-align: left;">Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">An HTML file and <strong>3</strong> images on one server; RTT <strong>50 ms</strong>; the name is already cached; ignore transmission. Persistent HTTP, no pipelining: when has everything arrived?</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="1"><span class="math inline">\(50 + 50 + 3 \times 50 = 250\)</span> ms</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">A cache’s conditional GET comes back <code>304 Not Modified</code>. What did it cost?</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2">one RTT; no object is sent</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">HTTP and SMTP: which one pushes, and which one pulls?</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="3">SMTP pushes; HTTP pulls</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
 <section id="todays-plan-3" class="slide level2">
 <h2>Today’s Plan</h2>
 <div class="columns">
-<div class="column" style="width:58%;">
+<div class="column" style="width:50%;">
 <p><strong>In class</strong></p>
 <ul>
-<li>What DNS provides, and why it is distributed</li>
-<li>Root, TLD, authoritative, and local servers</li>
-<li>Iterated and recursive queries <span class="ex-inline">Must Know</span></li>
+<li>What DNS provides; the server hierarchy</li>
+<li>Iterated, recursive queries <span class="ex-inline">Must Know</span></li>
 <li>Caching and TTLs <span class="ex-inline">Must Know</span></li>
 <li>Resource records <span class="ex-inline">Must Know</span></li>
 </ul>
-</div><div class="column" style="width:42%;">
+</div><div class="column" style="width:50%;">
 <p><strong>After class</strong> <span class="rd-inline">Reading</span></p>
 <ul>
-<li>Before DNS: <code>hosts.txt</code></li>
-<li>The root servers</li>
-<li>DNS message format</li>
+<li>Lab: resolve a name by hand</li>
+<li>Why not centralize; before DNS</li>
+<li>Referral records; record types</li>
+<li>Root servers; the DNS message</li>
 <li>Registering a domain</li>
-<li>Reverse lookups</li>
-<li>Attacks on DNS</li>
+<li>Reverse lookups; attacks on DNS</li>
 </ul>
 </div></div>
 </section>
@@ -2080,37 +2110,6 @@ Content-Transfer-Encoding: base64</code></pre>
 </div>
 <div class="fragment" data-fragment-index="4">
 <p><strong>Load distribution.</strong> A busy site has many replicated servers; one name maps to a set of addresses, and DNS rotates the order it returns them in.</p>
-</div>
-</section>
-<section id="why-not-centralize" class="slide level2">
-<h2>Why Not Centralize?</h2>
-<p><span class="vote-prompt">Vote — one big DNS server for the whole Internet. What goes wrong first?</span></p>
-<div class="columns vote-row">
-<div class="column" style="width:48%;">
-<div class="vote">
-<p><strong>A.</strong> It fails, and everything stops</p>
-</div>
-</div><div class="column" style="width:4%;">
-
-</div><div class="column" style="width:48%;">
-<div class="vote">
-<p><strong>B.</strong> It cannot handle the traffic</p>
-</div>
-</div></div>
-<div class="columns vote-row">
-<div class="column" style="width:48%;">
-<div class="vote">
-<p><strong>C.</strong> Every lookup crosses the planet</p>
-</div>
-</div><div class="column" style="width:4%;">
-
-</div><div class="column" style="width:48%;">
-<div class="vote">
-<p><strong>D.</strong> Nobody could keep it up to date</p>
-</div>
-</div></div>
-<div class="fragment">
-<p>All four. Single point of failure, traffic volume, distance, and maintenance of a database that changes every second. A centralized design does not scale, so DNS is distributed <strong>and</strong> hierarchical.</p>
 </div>
 </section>
 <section id="a-hierarchy-of-servers" class="slide level2">
@@ -2146,7 +2145,7 @@ Content-Transfer-Encoding: base64</code></pre>
 <p>It keeps a <strong>cache</strong> of recent name-to-address answers, which can be out of date.</p>
 </div>
 <div class="fragment" data-fragment-index="3">
-<p>When the answer is not cached, it acts as a <strong>proxy</strong> and forwards the query into the hierarchy on your behalf. The next two slides show how.</p>
+<p>When the answer is not cached, it acts as a <strong>proxy</strong> and forwards the query into the hierarchy on your behalf.</p>
 </div>
 </section>
 <section id="iterated-query-must-know" class="slide level2">
@@ -2448,21 +2447,115 @@ Content-Transfer-Encoding: base64</code></pre>
 </table>
 </div>
 </section>
-<section id="two-records-per-referral" class="slide level2">
-<h2>Two Records per Referral</h2>
-<p>A TLD server answering for <code>gaia.cs.umass.edu</code> returns two records:</p>
-<div class="fragment" data-fragment-index="1">
-<pre><code>(umass.edu,      dns.umass.edu,   NS)
-(dns.umass.edu,  128.119.40.111,  A)</code></pre>
-</div>
-<div class="fragment" data-fragment-index="2">
-<p>The NS record names the authoritative server. The A record gives that server’s address. Without the second, the local server would have to resolve <code>dns.umass.edu</code> before it could ask it anything.</p>
+<section id="lab-resolve-a-name-by-hand" class="slide level2">
+<h2>Lab: Resolve a Name by Hand</h2>
+<div class="activity">
+<p><span class="activity-label">On your own VM, after class — 20 minutes</span></p>
+<p>Your VM’s local DNS server usually does the asking. This time you do it: find the address of <code>gaia.cs.umass.edu</code> one server at a time, starting from a root server.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="" aria-label="1"></a><span class="ex">dig</span> <span class="at">-4</span> @a.root-servers.net gaia.cs.umass.edu +norecurse</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>+norecurse</code> asks a server to answer only from what it already knows; <code>-4</code> keeps <code>dig</code> on IPv4.</p>
 </div>
 </section>
-<section id="your-turn-which-record" class="slide level2">
-<h2>Your Turn: Which Record?</h2>
-<p><span class="vote-prompt">Vote — which record type answers each need?</span></p>
+<section id="lab-resolve-a-name-by-hand-1" class="slide level2">
+<h2>Lab: Resolve a Name by Hand</h2>
+<div class="activity">
+<p><span class="activity-label">On your CloudLab VM — continued</span></p>
+<ol type="1">
+<li>Send the same query to one server named in the root’s <code>AUTHORITY SECTION</code>: its name goes after the <code>@</code>.</li>
+<li>Repeat until a reply has an <code>ANSWER SECTION</code>. Write down each server you asked and what it told you.</li>
+<li>Compare the <code>flags:</code> line of the first reply and the last. What does the extra flag <code>aa</code> stand for?</li>
+<li>How many servers did you ask? Add the host’s question and the reply to the host: how many messages does one lookup take?</li>
+</ol>
+</div>
+</section>
+<section id="lab-resolve-a-name-by-hand-2" class="slide level2">
+<h2>Lab: Resolve a Name by Hand</h2>
+<div class="activity">
+<p><span class="activity-label">On your CloudLab VM — continued</span></p>
+<ol start="5" type="1">
+<li>Run <code>dig -4 +trace gaia.cs.umass.edu</code>. Does it ask the same chain? Why do the <code>umass.edu</code> NS records have a longer TTL than <code>gaia</code>?</li>
+<li>Run <code>dig gaia.cs.umass.edu</code> twice, a minute apart. What happens to the TTL?</li>
+</ol>
+<p><strong>Done early?</strong> In <code>dig www.tamusa.edu</code>, what comes before the <code>A</code> line?</p>
+</div>
+</section>
+<section id="what-the-lab-found" class="slide level2">
+<h2>What the Lab Found</h2>
 <div class="fragment" data-fragment-index="0">
+<table class="caption-top">
+<colgroup>
+<col style="width: 45%">
+<col style="width: 54%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">You asked</th>
+<th style="text-align: left;">Reply</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>a.root-servers.net</code></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="1">referral: 13 <code>.edu</code> servers, NS and A</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">an <code>.edu</code> server</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2">referral: <code>ns1</code>–<code>ns3.umass.edu</code>, TTL 172,800 s</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">a <code>umass.edu</code> server</td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="3"><code>128.119.245.12</code>, TTL 3,600 s, <code>aa</code></span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="fragment" data-fragment-index="4">
+<p>Three servers, six messages, plus the host’s question and the reply: <strong>8</strong>, the iterated query. <code>aa</code> means <strong>authoritative answer</strong>.</p>
+</div>
+<div class="fragment" data-fragment-index="5">
+<p>A delegation rarely changes, so it is cached for two days; a host’s address, for an hour. The second <code>dig</code> came from the local server’s cache, so its TTL had counted down.</p>
+</div>
+</section>
+<section id="read-after-class-3" class="slide level2 center reading-divider">
+<h2>Read After Class</h2>
+<p>Section 2.4 — supporting material</p>
+<ul>
+<li>Why not centralize, and before DNS: <code>hosts.txt</code></li>
+<li>Referral records and record types</li>
+<li>The root servers and the DNS message</li>
+<li>Registering a domain</li>
+<li>Reverse lookups</li>
+<li>Attacks on DNS, and cache poisoning</li>
+</ul>
+<p><a href="#/section-2.5">In class: skip ahead to Section 2.5</a></p>
+</section>
+<section id="why-not-centralize-reading" class="slide level2">
+<h2>Why Not Centralize? <span class="rd">Reading</span></h2>
+<p>Picture one DNS server for the whole Internet. It fails four ways:</p>
+<ul>
+<li><strong>Single point of failure.</strong> If it goes down, every lookup stops.</li>
+<li><strong>Traffic volume.</strong> Every lookup in the world lands on one machine.</li>
+<li><strong>Distance.</strong> A user far from it waits a long round trip per lookup.</li>
+<li><strong>Maintenance.</strong> One database takes every change to every name.</li>
+</ul>
+<p>A centralized design does not scale, so DNS is distributed <strong>and</strong> hierarchical.</p>
+</section>
+<section id="before-dns-reading" class="slide level2">
+<h2>Before DNS <span class="rd">Reading</span></h2>
+<p>Until 1983 the whole mapping lived in one file, <code>hosts.txt</code>, kept by the Network Information Center at SRI. To add a host you emailed the center; every site downloaded the new file every few days.</p>
+<p>The file was one flat namespace: two sites could not both have a host called <code>mail</code>. It was a single point of failure, and the download traffic grew with the square of the number of sites, since every site fetched a file whose size grew with every site.</p>
+<p>DNS kept two properties that make the problem easier than it looks: the database is <strong>read-mostly</strong> (lookups vastly outnumber updates), and it tolerates <strong>loose consistency</strong> (a new host that takes an hour to become visible everywhere is no disaster). Both point at aggressive caching.</p>
+</section>
+<section id="referral-records-reading" class="slide level2">
+<h2>Referral Records <span class="rd">Reading</span></h2>
+<p>A TLD server answering for <code>gaia.cs.umass.edu</code> returns two records:</p>
+<pre><code>(umass.edu,      dns.umass.edu,   NS)
+(dns.umass.edu,  128.119.40.111,  A)</code></pre>
+<p>The NS record names the authoritative server. The A record gives that server’s address. Without the second, the local server would have to resolve <code>dns.umass.edu</code> before it could ask it anything.</p>
+</section>
+<section id="which-record-reading" class="slide level2">
+<h2>Which Record? <span class="rd">Reading</span></h2>
+<p>Which record type answers each need? Decide before you read the right column.</p>
 <table class="caption-top">
 <colgroup>
 <col style="width: 65%">
@@ -2477,70 +2570,26 @@ Content-Transfer-Encoding: base64</code></pre>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">The IP address of a host</td>
-<td style="text-align: left;"><span class="fragment ans" data-fragment-index="1">A</span></td>
+<td style="text-align: left;">A</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>www.tamusa.edu</code> is an alias for another hostname</td>
-<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2">CNAME</span></td>
+<td style="text-align: left;">CNAME</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Who accepts mail for <code>@tamusa.edu</code></td>
-<td style="text-align: left;"><span class="fragment ans" data-fragment-index="3">MX</span></td>
+<td style="text-align: left;">MX</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">The <code>.edu</code> TLD’s referral for <code>tamusa.edu</code></td>
-<td style="text-align: left;"><span class="fragment ans" data-fragment-index="4">NS, plus an A record</span></td>
+<td style="text-align: left;">NS, plus an A record</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Web and mail for <code>foo.com</code> on different machines</td>
-<td style="text-align: left;"><span class="fragment ans" data-fragment-index="5">MX for mail; A or CNAME for web</span></td>
+<td style="text-align: left;">MX for mail; A or CNAME for web</td>
 </tr>
 </tbody>
 </table>
-</div>
-</section>
-<section id="activity-trace-a-name" class="slide level2">
-<h2>Activity: Trace a Name</h2>
-<div class="activity">
-<p><span class="activity-label">On your CloudLab VM — 8 minutes</span></p>
-<p>Watch an iterated resolution happen, one referral at a time:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="" aria-label="1"></a><span class="ex">dig</span> +trace www.tamusa.edu</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<ol type="1">
-<li>Find the three referral stages: the root’s list of <code>.edu</code> servers, the <code>.edu</code> server’s list of <code>tamusa.edu</code> servers, and the final answer. Which TTL is largest, and why does that make sense?</li>
-</ol>
-</div>
-</section>
-<section id="activity-trace-a-name-1" class="slide level2">
-<h2>Activity: Trace a Name</h2>
-<div class="activity">
-<p><span class="activity-label">On your CloudLab VM — continued</span></p>
-<ol start="2" type="1">
-<li>Run <code>dig www.tamusa.edu</code> and read the <code>ANSWER SECTION</code>. Is there a <code>CNAME</code> line before the <code>A</code> line?</li>
-<li>Run <code>dig www.google.com</code> twice, a minute apart. Does the TTL on the <code>A</code> records count down between runs? Which server answered you (the <code>SERVER:</code> line at the bottom)?</li>
-</ol>
-</div>
-<div class="fragment">
-<p>The second run is answered from the local server’s cache, and the TTL you see is what is left of the authoritative server’s TTL.</p>
-</div>
-</section>
-<section id="read-after-class-3" class="slide level2 center reading-divider">
-<h2>Read After Class</h2>
-<p>Section 2.4 — supporting material</p>
-<ul>
-<li>Before DNS: <code>hosts.txt</code></li>
-<li>The root servers</li>
-<li>The DNS message</li>
-<li>Registering a domain</li>
-<li>Reverse lookups</li>
-<li>Attacks on DNS, and cache poisoning</li>
-</ul>
-<p><a href="#/section-2.5">In class: skip ahead to Section 2.5</a></p>
-</section>
-<section id="before-dns-reading" class="slide level2">
-<h2>Before DNS <span class="rd">Reading</span></h2>
-<p>Until 1983 the whole mapping lived in one file, <code>hosts.txt</code>, kept by the Network Information Center at SRI. To add a host you emailed the center; every site downloaded the new file every few days.</p>
-<p>The file was one flat namespace: two sites could not both have a host called <code>mail</code>. It was a single point of failure, and the download traffic grew with the square of the number of sites, since every site fetched a file whose size grew with every site.</p>
-<p>DNS kept two properties that make the problem easier than it looks: the database is <strong>read-mostly</strong> (lookups vastly outnumber updates), and it tolerates <strong>loose consistency</strong> (a new host that takes an hour to become visible everywhere is no disaster). Both point at aggressive caching.</p>
 </section>
 <section id="the-root-servers-reading" class="slide level2">
 <h2>The Root Servers <span class="rd">Reading</span></h2>
@@ -2585,15 +2634,17 @@ Content-Transfer-Encoding: base64</code></pre>
 <div class="column" style="width:58%;">
 <p><strong>In class</strong></p>
 <ul>
-<li>Distribution time: client-server vs P2P <span class="ex-inline">Must Know</span></li>
-<li>BitTorrent: chunks, rarest first</li>
-<li>Tit-for-tat and optimistic unchoking <span class="ex-inline">Must Know</span></li>
+<li>Distribution time <span class="ex-inline">Must Know</span></li>
+<li>20 peers, then 100 <span class="ex-inline">Must Know</span></li>
 </ul>
 </div><div class="column" style="width:42%;">
 <p><strong>After class</strong> <span class="rd-inline">Reading</span></p>
 <ul>
-<li>Before BitTorrent: Napster and Gnutella</li>
+<li>BitTorrent: chunks, rarest first</li>
+<li>Tit-for-tat <span class="ex-inline">Must Know</span></li>
+<li>Free riders</li>
 <li>Download phases</li>
+<li>Before BitTorrent</li>
 </ul>
 </div></div>
 </section>
@@ -2680,108 +2731,57 @@ s}\)</span>, five times longer than before.</p>
 <p>Five times the peers cost P2P 36% more time, not 400%. As <span class="math inline">\(N\)</span> grows the third term approaches <span class="math inline">\(F / u = 4000\)</span> s and stays there.</p>
 </div>
 </section>
-<section id="bittorrent" class="slide level2">
-<h2>BitTorrent</h2>
-<p><img data-src="images/bittorrent.png" style="width:62.0%"></p>
-<div class="fragment">
-<p>A <strong>torrent</strong> is the group of peers exchanging chunks of one file; the file is cut into <strong>256 KB chunks</strong>. A <strong>tracker</strong> keeps the list of peers.</p>
-</div>
-<div class="fragment">
-<p>Alice arrives, gets a list of peers from the tracker, connects to a subset of them (her <strong>neighbors</strong>), and starts trading chunks.</p>
-</div>
-</section>
-<section id="joining-and-leaving" class="slide level2">
-<h2>Joining and Leaving</h2>
-<div class="fragment" data-fragment-index="1">
-<p>A new peer has <strong>no chunks</strong> and accumulates them over time from its neighbors.</p>
-</div>
-<div class="fragment" data-fragment-index="2">
-<p>While downloading, it <strong>uploads</strong> the chunks it has to others. It may change neighbors as it goes.</p>
-</div>
-<div class="fragment" data-fragment-index="3">
-<p><strong>Churn:</strong> peers come and go at will. A peer that has the whole file may leave, or stay and keep uploading.</p>
-</div>
-</section>
-<section id="requesting-chunks" class="slide level2">
-<h2>Requesting Chunks</h2>
-<div class="fragment" data-fragment-index="1">
-<p>At any moment different peers hold different subsets of the file. Periodically Alice asks each neighbor which chunks it has.</p>
-</div>
-<div class="fragment" data-fragment-index="2">
-<p>She requests the chunks she is missing <strong>rarest first</strong>: the ones the fewest of her neighbors hold.</p>
-</div>
-<div class="fragment" data-fragment-index="3">
-<p><span class="vote-prompt">Why rarest first, and not the chunk she needs next?</span></p>
-</div>
-<div class="fragment" data-fragment-index="4">
-<p>A chunk that only one peer holds disappears from the torrent if that peer leaves. Fetching rare chunks first spreads them, so the whole file stays available.</p>
-</div>
-</section>
-<section id="tit-for-tat-must-know" class="slide level2">
-<h2>Tit-for-Tat <span class="ex">Must Know</span></h2>
-<div class="columns">
-<div class="column" style="width:52%;">
-<div class="fragment" data-fragment-index="1">
-<p>Alice sends chunks to the <strong>four</strong> neighbors currently sending to her at the highest rate. Everyone else is <strong>choked</strong>: they get nothing from her.</p>
-</div>
-<div class="fragment" data-fragment-index="2">
-<p>Every <strong>10 seconds</strong> she re-ranks her neighbors and picks a new top four.</p>
-</div>
-<div class="fragment" data-fragment-index="3">
-<p>Every <strong>30 seconds</strong> she also picks one more neighbor <strong>at random</strong> and sends to it anyway: <strong>optimistic unchoking</strong>.</p>
-</div>
-</div><div class="column" style="width:48%;">
-<p><img data-src="images/tit_for_tat.png" style="width:100.0%"></p>
-</div></div>
-</section>
-<section id="tit-for-tat-must-know-1" class="slide level2">
-<h2>Tit-for-Tat <span class="ex">Must Know</span></h2>
-<p><img data-src="images/tit_for_tat.png" style="width:66.0%"></p>
-<div class="fragment" data-fragment-index="1">
-<p><strong>(1)</strong> Alice optimistically unchokes Bob. <strong>(2)</strong> Alice becomes one of Bob’s top-four providers, and Bob reciprocates. <strong>(3)</strong> Bob becomes one of Alice’s top four.</p>
-</div>
-<div class="fragment" data-fragment-index="2">
-<p>Peers that upload faster find better trading partners and finish sooner.</p>
-</div>
-</section>
-<section id="your-turn-free-rider" class="slide level2">
-<h2>Your Turn: Free Rider</h2>
-<p>Bob configures his client to <strong>never upload</strong>.</p>
-<p><span class="vote-prompt">Vote — can he still finish the download?</span></p>
-<div class="columns vote-row">
-<div class="column" style="width:48%;">
-<div class="vote">
-<p><strong>A.</strong> No; nobody unchokes a peer that sends nothing</p>
-</div>
-</div><div class="column" style="width:4%;">
-
-</div><div class="column" style="width:48%;">
-<div class="vote">
-<p><strong>B.</strong> Yes, but slowly</p>
-</div>
-</div></div>
-<div class="fragment">
-<p><strong>B.</strong> Every 30 seconds each neighbor picks someone at random, and sometimes that is Bob. He never enters anyone’s top four, so his download rate stays near that trickle. Uploading is not charity: it is how a peer earns its download rate.</p>
-</div>
-<div class="fragment">
-<p>Also: a brand-new peer with no chunks gets its first one the same way.</p>
-</div>
-</section>
 <section id="read-after-class-4" class="slide level2 center reading-divider">
 <h2>Read After Class</h2>
 <p>Section 2.5 — supporting material</p>
 <ul>
+<li>BitTorrent: chunks and rarest first</li>
+<li>Tit-for-tat and optimistic unchoking <span class="ex-inline">Must Know</span></li>
+<li>Free riders and download phases</li>
 <li>Before BitTorrent: Napster and Gnutella</li>
-<li>Download phases</li>
 </ul>
 <p><a href="#/section-2.6">In class: skip ahead to Section 2.6</a></p>
 </section>
-<section id="before-bittorrent-reading" class="slide level2">
-<h2>Before BitTorrent <span class="rd">Reading</span></h2>
-<p>A P2P file-sharing system has three jobs: <strong>search</strong> (what do I want), <strong>location</strong> (which peer has it), and <strong>download</strong>. The early systems differed in where they put the first two.</p>
-<p><strong>Napster (1999)</strong> kept search and location on a central server; only the download was peer to peer. Simple and searchable, but the server was a single point of failure, technically and legally.</p>
-<p><strong>Gnutella (2000)</strong> removed the server. A search <strong>flooded</strong> the overlay, each peer forwarding it to its neighbors up to a hop limit, so one query touched thousands of peers.</p>
-<p><strong>BitTorrent (2001)</strong> split the jobs: search on ordinary web sites, location at a tracker per file, download in chunks from many peers.</p>
+<section id="bittorrent-reading" class="slide level2">
+<h2>BitTorrent <span class="rd">Reading</span></h2>
+<p><img data-src="images/bittorrent.png" style="width:62.0%"></p>
+<p>A <strong>torrent</strong> is the group of peers exchanging chunks of one file; the file is cut into <strong>256 KB chunks</strong>. A <strong>tracker</strong> keeps the list of peers.</p>
+<p>Alice arrives, gets a list of peers from the tracker, connects to a subset of them (her <strong>neighbors</strong>), and starts trading chunks.</p>
+</section>
+<section id="joining-and-leaving-reading" class="slide level2">
+<h2>Joining and Leaving <span class="rd">Reading</span></h2>
+<p>A new peer has <strong>no chunks</strong> and accumulates them over time from its neighbors.</p>
+<p>While downloading, it <strong>uploads</strong> the chunks it has to others. It may change neighbors as it goes.</p>
+<p><strong>Churn:</strong> peers come and go at will. A peer that has the whole file may leave, or stay and keep uploading.</p>
+</section>
+<section id="requesting-chunks-reading" class="slide level2">
+<h2>Requesting Chunks <span class="rd">Reading</span></h2>
+<p>At any moment different peers hold different subsets of the file. Periodically Alice asks each neighbor which chunks it has.</p>
+<p>She requests the chunks she is missing <strong>rarest first</strong>: the ones the fewest of her neighbors hold.</p>
+<p><strong>Why rarest first, and not the chunk she needs next?</strong> A chunk that only one peer holds disappears from the torrent if that peer leaves. Fetching rare chunks first spreads them, so the whole file stays available.</p>
+</section>
+<section id="tit-for-tat-reading-must-know" class="slide level2">
+<h2>Tit-for-Tat <span class="rd">Reading</span> <span class="ex">Must Know</span></h2>
+<div class="columns">
+<div class="column" style="width:52%;">
+<p>Alice sends chunks to the <strong>four</strong> neighbors currently sending to her at the highest rate. Everyone else is <strong>choked</strong>: they get nothing from her.</p>
+<p>Every <strong>10 seconds</strong> she re-ranks her neighbors and picks a new top four.</p>
+<p>Every <strong>30 seconds</strong> she also picks one more neighbor <strong>at random</strong> and sends to it anyway: <strong>optimistic unchoking</strong>.</p>
+</div><div class="column" style="width:48%;">
+<p><img data-src="images/tit_for_tat.png" style="width:100.0%"></p>
+</div></div>
+</section>
+<section id="tit-for-tat-reading-must-know-1" class="slide level2">
+<h2>Tit-for-Tat <span class="rd">Reading</span> <span class="ex">Must Know</span></h2>
+<p><img data-src="images/tit_for_tat.png" style="width:66.0%"></p>
+<p><strong>(1)</strong> Alice optimistically unchokes Bob. <strong>(2)</strong> Alice becomes one of Bob’s top-four providers, and Bob reciprocates. <strong>(3)</strong> Bob becomes one of Alice’s top four.</p>
+<p>Peers that upload faster find better trading partners and finish sooner.</p>
+</section>
+<section id="free-riders-reading" class="slide level2">
+<h2>Free Riders <span class="rd">Reading</span></h2>
+<p>Bob configures his client to <strong>never upload</strong>. Can he still finish the download?</p>
+<p><strong>Yes, but slowly.</strong> Every 30 seconds each of his neighbors unchokes one peer at random, and sometimes that peer is Bob. He never enters anyone’s top four, so his download rate stays near that trickle. A peer’s download rate depends on what it uploads.</p>
+<p>A brand-new peer with no chunks gets its first one the same way.</p>
 </section>
 <section id="download-phases-reading" class="slide level2">
 <h2>Download Phases <span class="rd">Reading</span></h2>
@@ -2789,6 +2789,13 @@ s}\)</span>, five times longer than before.</p>
 <p><strong>Start.</strong> With no chunks, the peer has nothing to trade, so it takes whatever it can get and picks a <strong>random</strong> chunk first, to have something to offer as soon as possible.</p>
 <p><strong>Middle.</strong> It switches to <strong>rarest first</strong>, which keeps every chunk alive in the torrent and makes the peer a useful partner, since it holds what others lack.</p>
 <p><strong>End.</strong> The last few chunks are requested from <strong>several</strong> peers at once, so one slow neighbor cannot stall the finish. Duplicate arrivals are discarded.</p>
+</section>
+<section id="before-bittorrent-reading" class="slide level2">
+<h2>Before BitTorrent <span class="rd">Reading</span></h2>
+<p>A P2P file-sharing system has three jobs: <strong>search</strong> (what do I want), <strong>location</strong> (which peer has it), and <strong>download</strong>. The early systems differed in where they put the first two.</p>
+<p><strong>Napster (1999)</strong> kept search and location on a central server; only the download was peer to peer. Simple and searchable, but the server was a single point of failure, technically and legally.</p>
+<p><strong>Gnutella (2000)</strong> removed the server. A search <strong>flooded</strong> the overlay, each peer forwarding it to its neighbors up to a hop limit, so one query touched thousands of peers.</p>
+<p><strong>BitTorrent (2001)</strong> split the jobs: search on ordinary web sites, location at a tracker per file, download in chunks from many peers.</p>
 </section>
 <section id="section-2.6" class="slide level2 center section-divider">
 <h2>Section 2.6</h2>
@@ -2800,53 +2807,21 @@ s}\)</span>, five times longer than before.</p>
 <div class="column" style="width:58%;">
 <p><strong>In class</strong></p>
 <ul>
-<li>Why video is hard: scale and heterogeneity</li>
 <li>Playout buffering</li>
 <li>DASH</li>
+<li>Why not one big server</li>
 <li>CDNs, and how DNS finds a nearby copy <span class="ex-inline">Must Know</span></li>
-<li>Case study: troubleshoot a broken web page</li>
 </ul>
 </div><div class="column" style="width:42%;">
 <p><strong>After class</strong> <span class="rd-inline">Reading</span></p>
 <ul>
+<li>Why video is hard; continuous playout</li>
+<li>Picking a DASH rate</li>
+<li>Two CDN designs; how near is near</li>
 <li>Video coding: CBR and VBR</li>
-<li>Netflix</li>
-<li>Over-the-top challenges</li>
-<li>Case study: other schools, tools, the write-up</li>
+<li>Netflix; over-the-top challenges</li>
 </ul>
 </div></div>
-</section>
-<section id="video-is-the-big-consumer" class="slide level2">
-<h2>Video Is the Big Consumer</h2>
-<div class="fragment" data-fragment-index="1">
-<p>Streaming video is the major consumer of Internet bandwidth, and Netflix, YouTube, and Amazon Prime are its biggest sources.</p>
-</div>
-<div class="fragment" data-fragment-index="2">
-<p><strong>Scale.</strong> How do you reach a billion users? One giant video server cannot.</p>
-</div>
-<div class="fragment" data-fragment-index="3">
-<p><strong>Heterogeneity.</strong> Users differ: wired or mobile, fast or slow links, and their rates change minute to minute.</p>
-</div>
-<div class="fragment" data-fragment-index="4">
-<p>The solution is a <strong>distributed, application-level</strong> infrastructure. Nothing in the network core changed to make video work.</p>
-</div>
-</section>
-<section id="streaming-stored-video" class="slide level2">
-<h2>Streaming Stored Video</h2>
-<p><img data-src="images/streaming_scenario.png" style="width:60.0%"></p>
-<div class="fragment">
-<p><strong>Bandwidth from server to client varies</strong> over time as congestion changes: in the house, in the access network, in the core, at the server.</p>
-</div>
-<div class="fragment">
-<p><strong>Loss and delay</strong> from congestion delay playout or degrade quality.</p>
-</div>
-</section>
-<section id="continuous-playout" class="slide level2">
-<h2>Continuous Playout</h2>
-<p><img data-src="images/streaming_cumulative.png" style="width:66.0%"></p>
-<div class="fragment">
-<p><strong>Streaming</strong> means the client plays the early part of the video while the server is still sending the later part. The wait is a few seconds, not the whole download.</p>
-</div>
 </section>
 <section id="playout-buffering" class="slide level2">
 <h2>Playout Buffering</h2>
@@ -2868,26 +2843,6 @@ s}\)</span>, five times longer than before.</p>
 <p>The intelligence is at the client: it decides <strong>when</strong> to request (keep the buffer from emptying or overflowing), <strong>what rate</strong>, and <strong>where from</strong> (the closest or least-loaded server in the manifest).</p>
 </div>
 </section>
-<section id="your-turn-pick-the-rate" class="slide level2">
-<h2>Your Turn: Pick the Rate</h2>
-<p>A video is stored at <strong>300 kbps, 1 Mbps, and 3 Mbps</strong>. The client’s measured throughput over the last chunk was <strong>2.4 Mbps</strong>.</p>
-<p><span class="vote-prompt">Vote — which encoding does it request next?</span></p>
-<div class="columns vote-row">
-<div class="column" style="width:48%;">
-<div class="vote">
-<p><strong>A.</strong> 3 Mbps; it is closest to 2.4</p>
-</div>
-</div><div class="column" style="width:4%;">
-
-</div><div class="column" style="width:48%;">
-<div class="vote">
-<p><strong>B.</strong> 1 Mbps; the highest rate under 2.4</p>
-</div>
-</div></div>
-<div class="fragment">
-<p><strong>B.</strong> At 3 Mbps the chunk arrives slower than it plays, and the buffer drains until playback freezes. At 1 Mbps chunks arrive faster than they play, and the buffer grows. If it grows for long enough, the client can gamble on 3 Mbps for a chunk and drop back if the measurement falls.</p>
-</div>
-</section>
 <section id="why-not-one-big-server" class="slide level2">
 <h2>Why Not One Big Server?</h2>
 <p><strong>Challenge:</strong> stream millions of different videos to hundreds of thousands of simultaneous users.</p>
@@ -2901,18 +2856,6 @@ s}\)</span>, five times longer than before.</p>
 </div>
 <div class="fragment" data-fragment-index="2">
 <p>It does not scale. <strong>Option 2:</strong> store copies at many geographically distributed sites: a <strong>content distribution network</strong>.</p>
-</div>
-</section>
-<section id="cdns-two-philosophies" class="slide level2">
-<h2>CDNs: Two Philosophies</h2>
-<div class="fragment" data-fragment-index="1">
-<p><strong>Enter deep</strong> (Akamai): push servers into <strong>many</strong> access networks, close to users. Lower delay, less backbone traffic, and a very large number of sites to manage.</p>
-</div>
-<div class="fragment" data-fragment-index="2">
-<p><strong>Bring home</strong> (Limelight): a <strong>smaller</strong> number of large clusters at IXPs, near but not inside access networks. Cheaper to run; a somewhat longer path.</p>
-</div>
-<div class="fragment" data-fragment-index="3">
-<p>Either way the CDN stores copies of content at its nodes, and a subscriber is directed to a <strong>nearby</strong> copy, or to a different copy if the path to the nearest one is congested.</p>
 </div>
 </section>
 <section id="finding-a-copy-must-know" class="slide level2">
@@ -2947,501 +2890,52 @@ s}\)</span>, five times longer than before.</p>
 <p><img data-src="images/cdn_dns.png" style="width:100.0%"></p>
 </div></div>
 </section>
-<section id="how-near-is-near" class="slide level2">
-<h2>How Near Is Near?</h2>
-<p><span class="vote-prompt">Vote — KingCDN’s DNS server never hears from Bob. How does it know where he is?</span></p>
-<div class="columns vote-row">
-<div class="column" style="width:48%;">
-<div class="vote">
-<p><strong>A.</strong> The query carries Bob’s address</p>
-</div>
-</div><div class="column" style="width:4%;">
-
-</div><div class="column" style="width:48%;">
-<div class="vote">
-<p><strong>B.</strong> It sees the local DNS server’s address</p>
-</div>
-</div></div>
-<div class="fragment">
-<p><strong>B.</strong> The query comes from Bob’s <strong>local DNS server</strong>, and the CDN assumes Bob is near it. Usually true; false when a laptop is configured to use a public resolver on another continent, which is one reason a video can stream from the wrong side of the world.</p>
-</div>
-</section>
-<section id="case-study-a-broken-page" class="slide level2">
-<h2>Case Study: A Broken Page</h2>
-<div class="columns">
-<div class="column" style="width:52%;">
-<p><code>tamusasports.com</code>, the university’s athletics site, loaded from campus on the morning of September 24, 2026.</p>
-<div class="fragment">
-<p>From late August, visitors in Europe, then testers on VPNs, then staff on campus saw pages with no pictures and no styling. A broken image opened in its own tab would appear.</p>
-</div>
-</div><div class="column" style="width:48%;">
-<p><img data-src="images/case_broken.png" style="width:100.0%"></p>
-</div></div>
-</section>
-<section id="vote-where-is-the-fault" class="slide level2">
-<h2>Vote: Where Is the Fault?</h2>
-<p>The HTML of each page arrived. The pictures and the styling did not.</p>
-<p><span class="vote-prompt">Vote — where is the fault?</span></p>
-<div class="columns vote-row">
-<div class="column" style="width:48%;">
-<div class="vote">
-<p><strong>A.</strong> The visitor’s browser</p>
-</div>
-</div><div class="column" style="width:4%;">
-
-</div><div class="column" style="width:48%;">
-<div class="vote">
-<p><strong>B.</strong> The campus network</p>
-</div>
-</div></div>
-<div class="columns vote-row">
-<div class="column" style="width:48%;">
-<div class="vote">
-<p><strong>C.</strong> The CDN in front of the site</p>
-</div>
-</div><div class="column" style="width:4%;">
-
-</div><div class="column" style="width:48%;">
-<div class="vote">
-<p><strong>D.</strong> The site’s web server</p>
-</div>
-</div></div>
-</section>
-<section id="start-from-the-report" class="slide level2">
-<h2>Start From the Report</h2>
-<p>The coordinator’s report already held test results. Each one narrows the search.</p>
-<div class="fragment" data-fragment-index="0">
-<table class="caption-top">
-<colgroup>
-<col style="width: 53%">
-<col style="width: 46%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">What the report said</th>
-<th style="text-align: left;">What it points to</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Clearing the cache and changing browsers did not help</td>
-<td style="text-align: left;"><span class="fragment ans" data-fragment-index="1">not stored state in one browser</span></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Fine from the US; broken through VPNs abroad</td>
-<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2">where the request comes from matters</span></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Failed requests got <code>202</code> and HTML, not an image</td>
-<td style="text-align: left;"><span class="fragment ans" data-fragment-index="3">a server answered, with the wrong kind of reply</span></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">A broken image opened in its own tab appeared</td>
-<td style="text-align: left;"><span class="fragment ans" data-fragment-index="4">the file exists; how it is requested matters</span></td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
-<section id="where-could-it-fail" class="slide level2">
-<h2>Where Could It Fail?</h2>
-<p>Every part that one image request passes through is a suspect.</p>
-<svg viewbox="0 0 960 150" width="100%" style="max-height:22vh">
-  <defs>
-    <marker id="ar-path" markerwidth="9" markerheight="9" refx="7" refy="3" orient="auto">
-      <path d="M0,0 L0,6 L8,3 z" fill="#555"></path></marker>
-  </defs>
-  <rect class="node" x="10" y="20" width="170" height="70" rx="6"></rect>
-  <text x="95" y="63" text-anchor="middle" font-size="24">browser</text>
-  <rect class="node" x="250" y="20" width="200" height="70" rx="6"></rect>
-  <text x="350" y="63" text-anchor="middle" font-size="24">campus network</text>
-  <rect class="node" x="520" y="20" width="190" height="70" rx="6"></rect>
-  <text x="615" y="63" text-anchor="middle" font-size="24">asset host</text>
-  <rect class="node" x="780" y="20" width="170" height="70" rx="6"></rect>
-  <text x="865" y="50" text-anchor="middle" font-size="24">vendor's</text>
-  <text x="865" y="78" text-anchor="middle" font-size="24">servers</text>
-  <path class="wire" d="M 182 55 L 242 55" marker-end="url(#ar-path)"></path>
-  <path class="wire" d="M 452 55 L 512 55" marker-end="url(#ar-path)"></path>
-  <path class="wire" d="M 712 55 L 772 55" marker-end="url(#ar-path)"></path>
-  <g class="fragment" data-fragment-index="1">
-    <text x="95" y="130" text-anchor="middle" font-size="24" class="lbl-red">3</text>
-    <text x="350" y="130" text-anchor="middle" font-size="24" class="lbl-red">3</text>
-    <text x="615" y="130" text-anchor="middle" font-size="24" class="lbl-red">2</text>
-    <text x="865" y="130" text-anchor="middle" font-size="24" class="lbl-red">4</text>
-  </g>
-</svg>
-<div class="fragment" data-fragment-index="1">
-<div class="columns">
-<div class="column" style="width:50%;">
-<ol type="1">
-<li>Can you make it fail?</li>
-<li>What comes back, and from whom?</li>
-</ol>
-</div><div class="column" style="width:50%;">
-<ol start="3" type="1">
-<li>Is it the client or the place?</li>
-<li>What is behind the cache?</li>
-</ol>
-</div></div>
-</div>
-<div class="fragment" data-fragment-index="2">
-<p>You answer each question with a test you run yourself. Keep every command and its reply in a text file, with the time.</p>
-</div>
-</section>
-<section id="activity-reproduce-it" class="slide level2">
-<h2>Activity: Reproduce It</h2>
-<div class="activity">
-<p><span class="activity-label">On your laptop, on campus Wi-Fi — 3 minutes</span></p>
-<ol type="1">
-<li>Open <code>tamusasports.com</code>. Does it look like the screenshot?</li>
-<li>Open the developer tools (F12; on a Mac, ⌥⌘I), choose the <strong>Network</strong> tab, type <code>cdn.prestosports</code> in the filter box, and reload. Which status codes do those files get?</li>
-<li>Click any image in the list and find <code>cf-ray:</code> in its response headers. Write it down.</li>
-</ol>
-</div>
-</section>
-<section id="vote-is-it-fixed" class="slide level2">
-<h2>Vote: Is It Fixed?</h2>
-<p>The page loads on your laptop, and its files come back <code>200</code>.</p>
-<p><span class="vote-prompt">Vote — is the problem fixed?</span></p>
-<div class="columns vote-row">
-<div class="column" style="width:48%;">
-<div class="vote">
-<p><strong>A.</strong> Yes</p>
-</div>
-</div><div class="column" style="width:4%;">
-
-</div><div class="column" style="width:48%;">
-<div class="vote">
-<p><strong>B.</strong> You cannot tell yet</p>
-</div>
-</div></div>
-<div class="fragment">
-<p><strong>B.</strong> A test that passes shows that the page works from one place. The reports came from Europe, from VPNs, and from campus. Ask for the same file from a machine on another network: your CloudLab VM.</p>
-</div>
-</section>
-<section id="activity-from-your-vm" class="slide level2">
-<h2>Activity: From Your VM</h2>
-<div class="activity">
-<p><span class="activity-label">On your CloudLab VM — 4 minutes</span></p>
-<p>Ask for one of those files, a team logo, and save what comes back:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="" aria-label="1"></a><span class="va">H</span><span class="op">=</span>https://cdn.prestosports.com</span>
-<span id="cb18-2"><a href="" aria-label="2"></a><span class="va">L</span><span class="op">=</span><span class="va">$H</span>/action/cdn/logos/id/0juz68q9njuf392w.png</span>
-<span id="cb18-3"><a href="" aria-label="3"></a><span class="ex">curl</span> <span class="at">-s</span> <span class="at">-D</span> <span class="at">-</span> <span class="at">-o</span> logo.png <span class="st">"</span><span class="va">$L</span><span class="st">"</span></span>
-<span id="cb18-4"><a href="" aria-label="4"></a><span class="fu">file</span> logo.png</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<ol type="1">
-<li>Which status code came back? Is it the one your laptop got?</li>
-<li>What does <code>file</code> say <code>logo.png</code> is?</li>
-</ol>
-</div>
-</section>
-<section id="activity-read-the-reply" class="slide level2">
-<h2>Activity: Read the Reply</h2>
-<div class="activity">
-<p><span class="activity-label">On your CloudLab VM — 2 minutes</span></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="" aria-label="1"></a><span class="fu">grep</span> <span class="at">-o</span> <span class="st">'&lt;title&gt;[^&lt;]*'</span> logo.png</span>
-<span id="cb19-2"><a href="" aria-label="2"></a><span class="fu">grep</span> <span class="at">-o</span> <span class="st">'Enable JavaScript[^&lt;]*'</span> logo.png</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<ol start="3" type="1">
-<li>What did you receive instead of a picture?</li>
-<li>What would a client have to do to get past it?</li>
-</ol>
-</div>
-</section>
-<section id="activity-who-answered" class="slide level2">
-<h2>Activity: Who Answered?</h2>
-<div class="activity">
-<p><span class="activity-label">On your CloudLab VM, then your laptop — 4 minutes</span></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="" aria-label="1"></a><span class="ex">dig</span> +short cdn.prestosports.com</span>
-<span id="cb20-2"><a href="" aria-label="2"></a><span class="ex">curl</span> <span class="at">-s</span> ipinfo.io/104.16.12.188/org</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<ol start="5" type="1">
-<li>Who owns the addresses that <code>dig</code> printed? Try one of your own in the second line.</li>
-<li>On your laptop, run <code>nslookup cdn.prestosports.com</code>. Same addresses as the VM?</li>
-<li><code>cf-ray:</code> ends in an airport code. Which city answered your VM, and which answered your laptop?</li>
-</ol>
-</div>
-</section>
-<section id="what-came-back" class="slide level2">
-<h2>What Came Back</h2>
-<div class="fragment">
-<p>A <code>403</code> with <code>cf-mitigated: challenge</code>. The body is Cloudflare’s <em>Just a moment…</em> page. Its script tests whether the client is a browser, and a client that runs no script sees <em>Enable JavaScript and cookies to continue</em>.</p>
-</div>
-<div class="fragment">
-<p>The addresses belong to Cloudflare, a CDN, and DNS gives the same ones to your laptop and to your VM. Yet different cities answered: Dallas (<code>DFW</code>) for your laptop, and another city for the VM.</p>
-</div>
-<div class="fragment">
-<p><em>Finding a Copy</em> used DNS to send each client to a nearby cluster. Cloudflare announces the same addresses from all of its data centers, and routing delivers each packet to a nearby one (IP anycast, Section 5.4.4).</p>
-</div>
-</section>
-<section id="vote-an-image-gets-html" class="slide level2">
-<h2>Vote: An Image Gets HTML</h2>
-<p>A page asks for the logo with <code>&lt;img src="…png"&gt;</code>, and the reply is your <code>logo.png</code>.</p>
-<p><span class="vote-prompt">Vote — what does the page show?</span></p>
-<div class="columns vote-row">
-<div class="column" style="width:48%;">
-<div class="vote">
-<p><strong>A.</strong> The logo, once the check passes</p>
-</div>
-</div><div class="column" style="width:4%;">
-
-</div><div class="column" style="width:48%;">
-<div class="vote">
-<p><strong>B.</strong> A broken image</p>
-</div>
-</div></div>
-<div class="fragment">
-<p><strong>B.</strong> The script in the reply never runs, so the check is never passed.</p>
-</div>
-</section>
-<section id="why-the-page-breaks" class="slide level2">
-<h2>Why the Page Breaks</h2>
-<p>A challenge page is HTML with a script in it. The script runs only when the browser displays the reply as a page.</p>
-<div class="fragment">
-<p>An <code>&lt;img&gt;</code> expects image bytes. It gets HTML, cannot decode it, and shows nothing. The script never runs, so the check is never passed, and the next image fails the same way.</p>
-</div>
-<div class="fragment">
-<p>A stylesheet <code>&lt;link&gt;</code> gets HTML instead of CSS and ignores it, so the page falls back to the platform’s default blue.</p>
-</div>
-<div class="fragment">
-<p>Opening the image in its own tab is a page load. The browser runs the script, passes the check, and shows the image.</p>
-</div>
-</section>
-<section id="activity-change-one-thing" class="slide level2">
-<h2>Activity: Change One Thing</h2>
-<div class="activity">
-<p><span class="activity-label">On your CloudLab VM — 2 minutes</span></p>
-<p>Run these three lines. <code>-A</code> makes <code>curl</code> claim to be a browser.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="" aria-label="1"></a><span class="ex">curl</span> <span class="at">-s</span> <span class="at">-o</span> logo <span class="at">-w</span> <span class="st">'%{http_code}\n'</span> <span class="st">"</span><span class="va">$L</span><span class="st">"</span></span>
-<span id="cb21-2"><a href="" aria-label="2"></a><span class="ex">curl</span> <span class="at">-s</span> <span class="at">-o</span> logo <span class="at">-w</span> <span class="st">'%{http_code}\n'</span> <span class="at">-A</span> Mozilla/5.0 <span class="st">"</span><span class="va">$L</span><span class="st">"</span></span>
-<span id="cb21-3"><a href="" aria-label="3"></a><span class="ex">curl</span> <span class="at">-s</span> ipinfo.io</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Write down both status codes and the address.</p>
-</div>
-</section>
-<section id="activity-change-one-thing-1" class="slide level2">
-<h2>Activity: Change One Thing</h2>
-<div class="activity">
-<p><span class="activity-label">On your laptop — 3 minutes</span></p>
-<p>Set <code>H</code> and <code>L</code> as on <em>From Your VM</em>, then run the same three lines. On Windows PowerShell, write <code>$H="…"</code> and <code>$L="$H/…"</code>, and type <code>curl.exe</code> for <code>curl</code>.</p>
-<ol type="1">
-<li>Which change moved the status code: the User-Agent, or the machine?</li>
-<li>Compare the two addresses and who owns them.</li>
-</ol>
-</div>
-</section>
-<section id="activity-other-places" class="slide level2">
-<h2>Activity: Other Places</h2>
-<div class="activity">
-<p><span class="activity-label">Laptop and phone — 3 minutes</span></p>
-<ol type="1">
-<li>Open <code>check-host.net</code>, choose <strong>HTTP</strong>, and paste the logo URL (<code>echo $L</code> prints it). Which probes get a <code>200</code>?</li>
-<li>If you have mobile data, turn off Wi-Fi on your phone and open <code>tamusasports.com</code>. Are the pictures there?</li>
-</ol>
-</div>
-</section>
-<section id="ruling-things-out" class="slide level2">
-<h2>Ruling Things Out</h2>
-<table class="caption-top">
-<colgroup>
-<col style="width: 39%">
-<col style="width: 60%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Suspect</th>
-<th style="text-align: left;">Verdict</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">The file</td>
-<td style="text-align: left;"><span class="fragment ans" data-fragment-index="1">your laptop received it</span></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">The client program</td>
-<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2">same <code>curl</code>: <code>200</code> on campus, <code>403</code> on the VM</span></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Distance</td>
-<td style="text-align: left;"><span class="fragment ans" data-fragment-index="3">Sept.&nbsp;24, a.m.: Dallas <code>200</code>, campus <code>403</code></span></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">The asset host’s check</td>
-<td style="text-align: left;"><span class="fragment ans" data-fragment-index="4">sent a challenge page for an image</span></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Where the request comes from</td>
-<td style="text-align: left;"><span class="fragment ans" data-fragment-index="5">the change that moved the code</span></td>
-</tr>
-</tbody>
-</table>
-<div class="fragment" data-fragment-index="6">
-<p><strong>The vote: C.</strong> One question is left: why did campus fail, until the afternoon of September 24?</p>
-</div>
-</section>
-<section id="activity-your-address" class="slide level2">
-<h2>Activity: Your Address</h2>
-<div class="activity">
-<p><span class="activity-label">On your laptop — 2 minutes</span></p>
-<ol type="1">
-<li>Find your laptop’s own address on the Wi-Fi: <code>ipconfig</code> on Windows, <code>ipconfig getifaddr en0</code> on a Mac.</li>
-<li>Is it the address that <code>ipinfo.io</code> reported?</li>
-<li>Compare the <code>ipinfo.io</code> address with your neighbors’.</li>
-</ol>
-</div>
-</section>
-<section id="why-campus-broke" class="slide level2">
-<h2>Why Campus Broke</h2>
-<p>The vendor’s engineers found the reason in their logs: more than <strong>230 requests in one minute</strong> from one campus address, which is over their rate limit.</p>
-<div class="fragment">
-<p>If your two addresses differ, your laptop has a private address that the Internet never sees. The campus router rewrites it to a public one (NAT, Section 4.3), and everyone who shares that public address counts against the same limit.</p>
-</div>
-<div class="fragment">
-<p>One load of the home page sends about <strong>90 requests</strong> to the site and its asset host. How many people loading it in the same minute put one address over the limit?</p>
-</div>
-<div class="fragment">
-<p>Three. Two loads send about 180 requests; three send about 270.</p>
-</div>
-</section>
-<section id="the-allow-list" class="slide level2">
-<h2>The Allow List</h2>
-<div class="columns">
-<div class="column" style="width:44%;">
-<p>On September 24 the vendor added the campus address range to an allow list.</p>
-<div class="fragment">
-<p>The same page from campus that afternoon: <strong>58 of 62</strong> requests to the asset host came back with the file.</p>
-</div>
-</div><div class="column" style="width:56%;">
-<div class="fragment">
-<p><img data-src="images/case_fixed.png" style="width:100.0%"></p>
-</div>
-</div></div>
-</section>
-<section id="vote-fixed-for-everyone" class="slide level2">
-<h2>Vote: Fixed for Everyone?</h2>
-<p>A parent opens the site from a hotel in Germany that afternoon.</p>
-<p><span class="vote-prompt">Vote — does the page load normally?</span></p>
-<div class="columns vote-row">
-<div class="column" style="width:48%;">
-<div class="vote">
-<p><strong>A.</strong> Yes, the vendor fixed it</p>
-</div>
-</div><div class="column" style="width:4%;">
-
-</div><div class="column" style="width:48%;">
-<div class="vote">
-<p><strong>B.</strong> No</p>
-</div>
-</div></div>
-<div class="fragment">
-<p><strong>B.</strong> Your VM is not on the allow list, and it got a <code>403</code>. That afternoon the logo also drew a <code>403</code> from all three probe sites in Germany. The lasting fix is on the vendor’s side: stop challenging image, stylesheet, and script requests, which a browser cannot answer, and count only page requests toward the rate limit.</p>
-</div>
-</section>
-<section id="activity-behind-the-cache" class="slide level2">
-<h2>Activity: Behind the Cache</h2>
-<div class="activity">
-<p><span class="activity-label">On your laptop, on campus — 5 minutes</span></p>
-<p>Your laptop gets past Cloudflare’s check. Put a five-digit number of your own in place of <code>4306</code> in all three lines, so that no cache has seen the URL.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="" aria-label="1"></a><span class="ex">curl</span> <span class="at">-s</span> <span class="at">-D</span> <span class="at">-</span> <span class="at">-o</span> logo.png <span class="st">"</span><span class="va">${L}</span><span class="st">?n=4306"</span></span>
-<span id="cb22-2"><a href="" aria-label="2"></a><span class="ex">curl</span> <span class="at">-s</span> <span class="at">-D</span> <span class="at">-</span> <span class="at">-o</span> logo.png <span class="at">-A</span> Mozilla/5.0 <span class="st">"</span><span class="va">${L}</span><span class="st">?n=4306"</span></span>
-<span id="cb22-3"><a href="" aria-label="3"></a><span class="ex">curl</span> <span class="at">-s</span> <span class="at">-D</span> <span class="at">-</span> <span class="at">-o</span> logo.png <span class="st">"</span><span class="va">${L}</span><span class="st">?n=4306"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<ol type="1">
-<li>Read <code>x-cache:</code> and <code>cf-cache-status:</code>. Who sent the first reply?</li>
-<li>The third line repeats the first. Why is its answer different?</li>
-</ol>
-</div>
-</section>
-<section id="two-layers-in-front" class="slide level2">
-<h2>Two Layers in Front</h2>
-<svg viewbox="0 0 960 250" width="100%" style="max-height:38vh">
-  <defs>
-    <marker id="ar-case" markerwidth="9" markerheight="9" refx="7" refy="3" orient="auto">
-      <path d="M0,0 L0,6 L8,3 z" fill="#555"></path></marker>
-  </defs>
-  <rect class="node" x="10" y="40" width="140" height="80" rx="6"></rect>
-  <text x="80" y="88" text-anchor="middle" font-size="24">browser</text>
-  <rect class="node" x="220" y="40" width="200" height="80" rx="6"></rect>
-  <text x="320" y="75" text-anchor="middle" font-size="24">Cloudflare</text>
-  <text x="320" y="105" text-anchor="middle" font-size="20" class="lbl-gray">check, then cache</text>
-  <rect class="node" x="490" y="40" width="250" height="80" rx="6"></rect>
-  <text x="615" y="75" text-anchor="middle" font-size="24">CloudFront</text>
-  <text x="615" y="105" text-anchor="middle" font-size="20" class="lbl-gray">+ AWS WAF check</text>
-  <rect class="node" x="810" y="40" width="140" height="80" rx="6"></rect>
-  <text x="880" y="75" text-anchor="middle" font-size="24">vendor's</text>
-  <text x="880" y="105" text-anchor="middle" font-size="24">servers</text>
-  <path class="wire" d="M 152 80 L 212 80" marker-end="url(#ar-case)"></path>
-  <path class="wire" d="M 422 80 L 482 80" marker-end="url(#ar-case)"></path>
-  <path class="wire" d="M 742 80 L 802 80" marker-end="url(#ar-case)"></path>
-  <g class="fragment" data-fragment-index="1">
-    <text x="320" y="165" text-anchor="middle" font-size="22" class="lbl-red">every request</text>
-    <text x="320" y="195" text-anchor="middle" font-size="22" class="lbl-red">is checked here</text>
-  </g>
-  <g class="fragment" data-fragment-index="2">
-    <text x="615" y="165" text-anchor="middle" font-size="22" class="lbl-red">only a cache miss</text>
-    <text x="615" y="195" text-anchor="middle" font-size="22" class="lbl-red">is checked here</text>
-  </g>
-</svg>
-<div class="fragment" data-fragment-index="3">
-<p>Your first request was not in Cloudflare’s cache, so it went on to CloudFront, where AWS WAF blocked <code>curl</code>. The second passed as a browser, and Cloudflare kept the <code>200</code>. The third was answered from that copy and never reached AWS WAF.</p>
-</div>
-</section>
-<section id="your-turn-which-layer" class="slide level2">
-<h2>Your Turn: Which Layer?</h2>
-<p>Four replies to requests for the same logo on September 24. Which part of the chain sent each one?</p>
-<div class="fragment" data-fragment-index="0">
-<table class="caption-top">
-<colgroup>
-<col style="width: 63%">
-<col style="width: 36%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">What came back</th>
-<th style="text-align: left;">Who sent it</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;"><code>200</code>, <code>cf-cache-status: HIT</code></td>
-<td style="text-align: left;"><span class="fragment ans" data-fragment-index="1">Cloudflare’s cache</span></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><code>403</code>, <code>cf-mitigated: challenge</code></td>
-<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2">Cloudflare’s bot check</span></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><code>403</code>, <code>x-cache: Error from cloudfront</code></td>
-<td style="text-align: left;"><span class="fragment ans" data-fragment-index="3">AWS WAF’s block, on a miss</span></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><code>202</code>, <code>x-amzn-waf-action: challenge</code></td>
-<td style="text-align: left;"><span class="fragment ans" data-fragment-index="4">AWS WAF’s challenge, on a miss</span></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="fragment" data-fragment-index="5">
-<p><code>202 Accepted</code> looks like success and <code>403</code> looks like a permission error. The extra header is what names the layer.</p>
-</div>
-</section>
-<section id="approaching-a-problem" class="slide level2">
-<h2>Approaching a Problem</h2>
-<ol type="1">
-<li>Write down what is already known, including what the report has ruled out (<em>Start From the Report</em>).</li>
-<li>Draw the path a request takes. Every part on it is a suspect (<em>Where Could It Fail?</em>).</li>
-<li>Find one request that fails every time (<em>From Your VM</em>).</li>
-<li>Read the raw reply. The status code and headers name who answered (<em>Read the Reply</em>).</li>
-<li>Change one thing per test, and compare with a case that works (<em>Change One Thing</em>, <em>Behind the Cache</em>).</li>
-<li>Keep the evidence, with times, so someone else can check it.</li>
-</ol>
-</section>
 <section id="read-after-class-5" class="slide level2 center reading-divider">
 <h2>Read After Class</h2>
 <p>Section 2.6 — supporting material</p>
 <ul>
+<li>Why video is hard, and continuous playout</li>
+<li>Picking a DASH rate</li>
+<li>Two CDN designs, and how near is near</li>
 <li>Video coding: CBR and VBR</li>
-<li>Netflix</li>
-<li>Over-the-top challenges</li>
-<li>Case study: other schools, tools, and the write-up</li>
+<li>Netflix, and over-the-top challenges</li>
 </ul>
 <p><a href="#/section-2.7">In class: skip ahead to Section 2.7</a></p>
+</section>
+<section id="why-video-is-hard-reading" class="slide level2">
+<h2>Why Video Is Hard <span class="rd">Reading</span></h2>
+<p>Streaming video is the major consumer of Internet bandwidth, and Netflix, YouTube, and Amazon Prime are its biggest sources. Two problems make it hard:</p>
+<ul>
+<li><strong>Scale.</strong> How do you reach a billion users? One giant video server cannot.</li>
+<li><strong>Heterogeneity.</strong> Users differ: wired or mobile, fast or slow links, and their rates change minute to minute.</li>
+</ul>
+<p>The solution is a <strong>distributed, application-level</strong> infrastructure. Nothing in the network core changed to make video work.</p>
+</section>
+<section id="streaming-video-reading" class="slide level2">
+<h2>Streaming Video <span class="rd">Reading</span></h2>
+<p><img data-src="images/streaming_scenario.png" style="width:60.0%"></p>
+<p><strong>Bandwidth from server to client varies</strong> over time as congestion changes: in the house, in the access network, in the core, at the server. <strong>Loss and delay</strong> from congestion delay playout or degrade quality.</p>
+</section>
+<section id="continuous-playout-reading" class="slide level2">
+<h2>Continuous Playout <span class="rd">Reading</span></h2>
+<p><img data-src="images/streaming_cumulative.png" style="width:66.0%"></p>
+<p><strong>Streaming</strong> means the client plays the early part of the video while the server is still sending the later part. The wait is a few seconds, not the whole download.</p>
+</section>
+<section id="picking-a-rate-reading" class="slide level2">
+<h2>Picking a Rate <span class="rd">Reading</span></h2>
+<p>A video is stored at <strong>300 kbps, 1 Mbps, and 3 Mbps</strong>. The client’s measured throughput over the last chunk was <strong>2.4 Mbps</strong>. Which encoding does it request next?</p>
+<p><strong>1 Mbps</strong>, the highest rate under the measurement, and not 3 Mbps, the closest one. At 3 Mbps a chunk arrives slower than it plays, and the buffer drains until playback freezes. At 1 Mbps chunks arrive faster than they play, and the buffer grows. Once it has grown for long enough, the client can try 3 Mbps for one chunk and drop back if the measurement falls.</p>
+</section>
+<section id="two-cdn-designs-reading" class="slide level2">
+<h2>Two CDN Designs <span class="rd">Reading</span></h2>
+<p><strong>Enter deep</strong> (Akamai): push servers into <strong>many</strong> access networks, close to users. Lower delay, less backbone traffic, and a very large number of sites to manage.</p>
+<p><strong>Bring home</strong> (Limelight): a <strong>smaller</strong> number of large clusters at IXPs, near but not inside access networks. Cheaper to run; a somewhat longer path.</p>
+<p>Either way the CDN stores copies of content at its nodes, and a subscriber is directed to a <strong>nearby</strong> copy, or to a different copy if the path to the nearest one is congested.</p>
+</section>
+<section id="how-near-is-near-reading" class="slide level2">
+<h2>How Near Is Near? <span class="rd">Reading</span></h2>
+<p>KingCDN’s DNS server never hears from Bob. How does it know where he is?</p>
+<p>It does not. The query comes from Bob’s <strong>local DNS server</strong>, and the CDN assumes Bob is near that server. Usually that is true. It is false when a laptop is set to use a public resolver in another region, which is one reason a video can stream from a distant server.</p>
 </section>
 <section id="video-coding-reading" class="slide level2">
 <h2>Video Coding <span class="rd">Reading</span></h2>
@@ -3468,93 +2962,6 @@ s}\)</span>, five times longer than before.</p>
 </ul>
 <p>DASH answers the second at the client. The other two are the CDN’s steering and placement problems, solved by measurement.</p>
 </section>
-<section id="other-schools-reading" class="slide level2">
-<h2>Other Schools <span class="rd">Reading</span></h2>
-<p>Could the fault be in this school’s own settings? On the morning of September 24, before the allow list, other schools’ athletics sites were loaded from the same campus network for comparison.</p>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: left;">Site, from campus</th>
-<th style="text-align: left;">Vendor</th>
-<th style="text-align: left;">Images broken</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Univ. of Houston–Victoria</td>
-<td style="text-align: left;">same vendor</td>
-<td style="text-align: left;">33 of 50</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Texas A&amp;M–Texarkana</td>
-<td style="text-align: left;">same vendor</td>
-<td style="text-align: left;">30 of 73</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">UT Tyler</td>
-<td style="text-align: left;">another vendor</td>
-<td style="text-align: left;">0 of 63</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">UTSA</td>
-<td style="text-align: left;">another vendor</td>
-<td style="text-align: left;">1 of 222</td>
-</tr>
-</tbody>
-</table>
-<p>Every site on the vendor’s asset host broke, and the others loaded normally from the same network. The rule sat on the asset host, not in one school’s settings or in the campus network alone.</p>
-</section>
-<section id="tools-for-the-case-reading" class="slide level2">
-<h2>Tools for the Case <span class="rd">Reading</span></h2>
-<table class="caption-top">
-<colgroup>
-<col style="width: 36%">
-<col style="width: 63%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Tool</th>
-<th style="text-align: left;">What it answered</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Browser DevTools, Network tab</td>
-<td style="text-align: left;">every request the page made; <em>Save all as HAR</em> exports them to a file</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><code>curl -D -</code>, <code>file</code>, <code>grep</code></td>
-<td style="text-align: left;">exactly what came back: status, headers, body type</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><code>dig</code>, <code>nslookup</code></td>
-<td style="text-align: left;">the addresses behind a name</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">ipinfo.io</td>
-<td style="text-align: left;">who owns an address, and your own public address</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">check-host.net, globalping.io</td>
-<td style="text-align: left;">the same request from probes in other countries</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">The vendors’ documentation</td>
-<td style="text-align: left;">what <code>cf-mitigated</code> and a <code>202</code> with <code>x-amzn-waf-action</code> mean</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="writing-it-up-reading" class="slide level2">
-<h2>Writing It Up <span class="rd">Reading</span></h2>
-<p>The reply to the hosting vendor had four parts:</p>
-<ol type="1">
-<li>The fault as status codes and headers: image, stylesheet, and script requests answered with a challenge page (<code>403</code> with <code>cf-mitigated</code> from Cloudflare, <code>202</code> with <code>x-amzn-waf-action</code> from AWS WAF).</li>
-<li>The measurements, with links to the public probe reports so the vendor’s engineers could check the results themselves.</li>
-<li>The campus address block, so one allow-list entry covers the whole campus.</li>
-<li>The changes requested: stop challenging requests that a browser cannot answer, and count only page requests toward the rate limit.</li>
-</ol>
-</section>
 <section id="section-2.7" class="slide level2 center section-divider">
 <h2>Section 2.7</h2>
 <p>Socket Programming</p>
@@ -3568,11 +2975,11 @@ s}\)</span>, five times longer than before.</p>
 <li>UDP sockets: client and server</li>
 <li>TCP sockets: welcoming and connection sockets</li>
 <li>How many sockets, and what breaks when <span class="ex-inline">Must Know</span></li>
-<li>Streams versus datagrams</li>
 </ul>
 </div><div class="column" style="width:42%;">
 <p><strong>After class</strong> <span class="rd-inline">Reading</span></p>
 <ul>
+<li>Streams versus datagrams</li>
 <li>Serving many clients at once</li>
 <li>The same calls in C</li>
 </ul>
@@ -3606,30 +3013,30 @@ s}\)</span>, five times longer than before.</p>
 </section>
 <section id="udp-client" class="slide level2">
 <h2>UDP Client</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="" aria-label="1"></a><span class="im">from</span> socket <span class="im">import</span> <span class="op">*</span></span>
-<span id="cb23-2"><a href="" aria-label="2"></a>serverName <span class="op">=</span> <span class="st">'hostname'</span></span>
-<span id="cb23-3"><a href="" aria-label="3"></a>serverPort <span class="op">=</span> <span class="dv">12000</span></span>
-<span id="cb23-4"><a href="" aria-label="4"></a>clientSocket <span class="op">=</span> socket(AF_INET, SOCK_DGRAM)</span>
-<span id="cb23-5"><a href="" aria-label="5"></a>message <span class="op">=</span> <span class="bu">input</span>(<span class="st">'Input lowercase sentence: '</span>)</span>
-<span id="cb23-6"><a href="" aria-label="6"></a>clientSocket.sendto(message.encode(), (serverName, serverPort))</span>
-<span id="cb23-7"><a href="" aria-label="7"></a>modifiedMessage, serverAddress <span class="op">=</span> clientSocket.recvfrom(<span class="dv">2048</span>)</span>
-<span id="cb23-8"><a href="" aria-label="8"></a><span class="bu">print</span>(modifiedMessage.decode())</span>
-<span id="cb23-9"><a href="" aria-label="9"></a>clientSocket.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="" aria-label="1"></a><span class="im">from</span> socket <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb18-2"><a href="" aria-label="2"></a>serverName <span class="op">=</span> <span class="st">'hostname'</span></span>
+<span id="cb18-3"><a href="" aria-label="3"></a>serverPort <span class="op">=</span> <span class="dv">12000</span></span>
+<span id="cb18-4"><a href="" aria-label="4"></a>clientSocket <span class="op">=</span> socket(AF_INET, SOCK_DGRAM)</span>
+<span id="cb18-5"><a href="" aria-label="5"></a>message <span class="op">=</span> <span class="bu">input</span>(<span class="st">'Input lowercase sentence: '</span>)</span>
+<span id="cb18-6"><a href="" aria-label="6"></a>clientSocket.sendto(message.encode(), (serverName, serverPort))</span>
+<span id="cb18-7"><a href="" aria-label="7"></a>modifiedMessage, serverAddress <span class="op">=</span> clientSocket.recvfrom(<span class="dv">2048</span>)</span>
+<span id="cb18-8"><a href="" aria-label="8"></a><span class="bu">print</span>(modifiedMessage.decode())</span>
+<span id="cb18-9"><a href="" aria-label="9"></a>clientSocket.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
 <p><code>SOCK_DGRAM</code> means UDP. <code>sendto</code> names the destination on every call; the OS picks the client’s own port. <code>recvfrom</code> returns the data and who sent it.</p>
 </div>
 </section>
 <section id="udp-server" class="slide level2">
 <h2>UDP Server</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="" aria-label="1"></a><span class="im">from</span> socket <span class="im">import</span> <span class="op">*</span></span>
-<span id="cb24-2"><a href="" aria-label="2"></a>serverPort <span class="op">=</span> <span class="dv">12000</span></span>
-<span id="cb24-3"><a href="" aria-label="3"></a>serverSocket <span class="op">=</span> socket(AF_INET, SOCK_DGRAM)</span>
-<span id="cb24-4"><a href="" aria-label="4"></a>serverSocket.bind((<span class="st">''</span>, serverPort))</span>
-<span id="cb24-5"><a href="" aria-label="5"></a><span class="bu">print</span>(<span class="st">'The server is ready to receive'</span>)</span>
-<span id="cb24-6"><a href="" aria-label="6"></a><span class="cf">while</span> <span class="va">True</span>:</span>
-<span id="cb24-7"><a href="" aria-label="7"></a>    message, clientAddress <span class="op">=</span> serverSocket.recvfrom(<span class="dv">2048</span>)</span>
-<span id="cb24-8"><a href="" aria-label="8"></a>    modifiedMessage <span class="op">=</span> message.decode().upper()</span>
-<span id="cb24-9"><a href="" aria-label="9"></a>    serverSocket.sendto(modifiedMessage.encode(), clientAddress)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="" aria-label="1"></a><span class="im">from</span> socket <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb19-2"><a href="" aria-label="2"></a>serverPort <span class="op">=</span> <span class="dv">12000</span></span>
+<span id="cb19-3"><a href="" aria-label="3"></a>serverSocket <span class="op">=</span> socket(AF_INET, SOCK_DGRAM)</span>
+<span id="cb19-4"><a href="" aria-label="4"></a>serverSocket.bind((<span class="st">''</span>, serverPort))</span>
+<span id="cb19-5"><a href="" aria-label="5"></a><span class="bu">print</span>(<span class="st">'The server is ready to receive'</span>)</span>
+<span id="cb19-6"><a href="" aria-label="6"></a><span class="cf">while</span> <span class="va">True</span>:</span>
+<span id="cb19-7"><a href="" aria-label="7"></a>    message, clientAddress <span class="op">=</span> serverSocket.recvfrom(<span class="dv">2048</span>)</span>
+<span id="cb19-8"><a href="" aria-label="8"></a>    modifiedMessage <span class="op">=</span> message.decode().upper()</span>
+<span id="cb19-9"><a href="" aria-label="9"></a>    serverSocket.sendto(modifiedMessage.encode(), clientAddress)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
 <p><code>bind</code> attaches the socket to port 12000 so clients can find it. The reply goes to <code>clientAddress</code>, the IP and port that <code>recvfrom</code> handed back. One socket serves every client.</p>
 </div>
@@ -3655,34 +3062,34 @@ s}\)</span>, five times longer than before.</p>
 </section>
 <section id="tcp-client" class="slide level2">
 <h2>TCP Client</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="" aria-label="1"></a><span class="im">from</span> socket <span class="im">import</span> <span class="op">*</span></span>
-<span id="cb25-2"><a href="" aria-label="2"></a>serverName <span class="op">=</span> <span class="st">'servername'</span></span>
-<span id="cb25-3"><a href="" aria-label="3"></a>serverPort <span class="op">=</span> <span class="dv">12000</span></span>
-<span id="cb25-4"><a href="" aria-label="4"></a>clientSocket <span class="op">=</span> socket(AF_INET, SOCK_STREAM)</span>
-<span id="cb25-5"><a href="" aria-label="5"></a>clientSocket.<span class="ex">connect</span>((serverName, serverPort))</span>
-<span id="cb25-6"><a href="" aria-label="6"></a>sentence <span class="op">=</span> <span class="bu">input</span>(<span class="st">'Input lowercase sentence: '</span>)</span>
-<span id="cb25-7"><a href="" aria-label="7"></a>clientSocket.send(sentence.encode())</span>
-<span id="cb25-8"><a href="" aria-label="8"></a>modifiedSentence <span class="op">=</span> clientSocket.recv(<span class="dv">1024</span>)</span>
-<span id="cb25-9"><a href="" aria-label="9"></a><span class="bu">print</span>(<span class="st">'From Server:'</span>, modifiedSentence.decode())</span>
-<span id="cb25-10"><a href="" aria-label="10"></a>clientSocket.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="" aria-label="1"></a><span class="im">from</span> socket <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb20-2"><a href="" aria-label="2"></a>serverName <span class="op">=</span> <span class="st">'servername'</span></span>
+<span id="cb20-3"><a href="" aria-label="3"></a>serverPort <span class="op">=</span> <span class="dv">12000</span></span>
+<span id="cb20-4"><a href="" aria-label="4"></a>clientSocket <span class="op">=</span> socket(AF_INET, SOCK_STREAM)</span>
+<span id="cb20-5"><a href="" aria-label="5"></a>clientSocket.<span class="ex">connect</span>((serverName, serverPort))</span>
+<span id="cb20-6"><a href="" aria-label="6"></a>sentence <span class="op">=</span> <span class="bu">input</span>(<span class="st">'Input lowercase sentence: '</span>)</span>
+<span id="cb20-7"><a href="" aria-label="7"></a>clientSocket.send(sentence.encode())</span>
+<span id="cb20-8"><a href="" aria-label="8"></a>modifiedSentence <span class="op">=</span> clientSocket.recv(<span class="dv">1024</span>)</span>
+<span id="cb20-9"><a href="" aria-label="9"></a><span class="bu">print</span>(<span class="st">'From Server:'</span>, modifiedSentence.decode())</span>
+<span id="cb20-10"><a href="" aria-label="10"></a>clientSocket.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
 <p><code>SOCK_STREAM</code> means TCP. <code>connect</code> performs the handshake. After that, <code>send</code> needs no address: the socket already knows the other end.</p>
 </div>
 </section>
 <section id="tcp-server" class="slide level2">
 <h2>TCP Server</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="" aria-label="1"></a><span class="im">from</span> socket <span class="im">import</span> <span class="op">*</span></span>
-<span id="cb26-2"><a href="" aria-label="2"></a>serverPort <span class="op">=</span> <span class="dv">12000</span></span>
-<span id="cb26-3"><a href="" aria-label="3"></a>serverSocket <span class="op">=</span> socket(AF_INET, SOCK_STREAM)</span>
-<span id="cb26-4"><a href="" aria-label="4"></a>serverSocket.bind((<span class="st">''</span>, serverPort))</span>
-<span id="cb26-5"><a href="" aria-label="5"></a>serverSocket.listen(<span class="dv">1</span>)</span>
-<span id="cb26-6"><a href="" aria-label="6"></a><span class="bu">print</span>(<span class="st">'The server is ready to receive'</span>)</span>
-<span id="cb26-7"><a href="" aria-label="7"></a><span class="cf">while</span> <span class="va">True</span>:</span>
-<span id="cb26-8"><a href="" aria-label="8"></a>    connectionSocket, addr <span class="op">=</span> serverSocket.accept()</span>
-<span id="cb26-9"><a href="" aria-label="9"></a>    sentence <span class="op">=</span> connectionSocket.recv(<span class="dv">1024</span>).decode()</span>
-<span id="cb26-10"><a href="" aria-label="10"></a>    capitalizedSentence <span class="op">=</span> sentence.upper()</span>
-<span id="cb26-11"><a href="" aria-label="11"></a>    connectionSocket.send(capitalizedSentence.encode())</span>
-<span id="cb26-12"><a href="" aria-label="12"></a>    connectionSocket.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="" aria-label="1"></a><span class="im">from</span> socket <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb21-2"><a href="" aria-label="2"></a>serverPort <span class="op">=</span> <span class="dv">12000</span></span>
+<span id="cb21-3"><a href="" aria-label="3"></a>serverSocket <span class="op">=</span> socket(AF_INET, SOCK_STREAM)</span>
+<span id="cb21-4"><a href="" aria-label="4"></a>serverSocket.bind((<span class="st">''</span>, serverPort))</span>
+<span id="cb21-5"><a href="" aria-label="5"></a>serverSocket.listen(<span class="dv">1</span>)</span>
+<span id="cb21-6"><a href="" aria-label="6"></a><span class="bu">print</span>(<span class="st">'The server is ready to receive'</span>)</span>
+<span id="cb21-7"><a href="" aria-label="7"></a><span class="cf">while</span> <span class="va">True</span>:</span>
+<span id="cb21-8"><a href="" aria-label="8"></a>    connectionSocket, addr <span class="op">=</span> serverSocket.accept()</span>
+<span id="cb21-9"><a href="" aria-label="9"></a>    sentence <span class="op">=</span> connectionSocket.recv(<span class="dv">1024</span>).decode()</span>
+<span id="cb21-10"><a href="" aria-label="10"></a>    capitalizedSentence <span class="op">=</span> sentence.upper()</span>
+<span id="cb21-11"><a href="" aria-label="11"></a>    connectionSocket.send(capitalizedSentence.encode())</span>
+<span id="cb21-12"><a href="" aria-label="12"></a>    connectionSocket.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
 <p><code>accept</code> blocks until a client connects, then returns a <strong>new</strong> socket for that client. The welcoming socket is never closed.</p>
 </div>
@@ -3753,7 +3160,7 @@ s}\)</span>, five times longer than before.</p>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><strong>TCP</strong> client started before its server</td>
-<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2"><code>connect</code> fails at once; the handshake gets no answer</span></td>
+<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2"><code>ConnectionRefusedError</code> at once: the host answers the SYN with a reset</span></td>
 </tr>
 </tbody>
 </table>
@@ -3796,52 +3203,22 @@ s}\)</span>, five times longer than before.</p>
 <p>The server never needs to know a client’s port in advance; the client must know the server’s.</p>
 </div>
 </section>
-<section id="streams-vs-datagrams" class="slide level2">
-<h2>Streams vs Datagrams</h2>
-<p>Application A calls <code>send()</code> ten times on a TCP socket, once per message.</p>
-<div class="fragment" data-fragment-index="1">
-<p>Can the data cross the network in <strong>more</strong> than ten segments? Yes: a send larger than the segment size is split, and lost segments are resent. In <strong>fewer</strong>? Also yes: TCP may pack several small sends into one segment.</p>
-</div>
-<div class="fragment" data-fragment-index="2">
-<p>On a UDP socket, ten <code>sendto()</code> calls are exactly ten datagrams. Never fewer.</p>
-</div>
-<div class="fragment" data-fragment-index="3">
-<p>So a TCP receiver that wants A’s messages <strong>one at a time</strong> needs a framing rule the two sides agree on: a length prefix, or a delimiter such as <code>\r\n</code>. HTTP and SMTP both use <code>\r\n</code>. UDP keeps the boundaries for free.</p>
-</div>
-</section>
-<section id="activity-run-the-pair" class="slide level2">
-<h2>Activity: Run the Pair</h2>
-<div class="activity">
-<p><span class="activity-label">On your CloudLab VM — 10 minutes</span></p>
-<p>Save the UDP server and client from the slides as <code>udpserver.py</code> and <code>udpclient.py</code>, with <code>serverName = 'localhost'</code>.</p>
-<ol type="1">
-<li>Open two terminals. Run the server in one and the client in the other. Send a sentence.</li>
-<li>Stop the server with Ctrl-C. Run the client again. What does it do? How long did you wait before you were sure?</li>
-<li>Swap in the TCP pair and repeat step 2. Compare what you see.</li>
-</ol>
-</div>
-</section>
-<section id="activity-run-the-pair-1" class="slide level2">
-<h2>Activity: Run the Pair</h2>
-<div class="activity">
-<p><span class="activity-label">In pairs — 5 minutes</span></p>
-<ol start="4" type="1">
-<li>Put your neighbor’s VM hostname in <code>serverName</code> and run your client against <strong>their</strong> server while theirs is running.</li>
-<li>If it does not answer, write down the first thing you would check, and then check it.</li>
-</ol>
-</div>
-<div class="fragment">
-<p>Between two VMs there is a real network: an address to get right, a port that must be open, and a server that must be up before the client. The same three things fail in every assignment this term.</p>
-</div>
-</section>
 <section id="read-after-class-6" class="slide level2 center reading-divider">
 <h2>Read After Class</h2>
 <p>Section 2.7 — supporting material</p>
 <ul>
+<li>Streams versus datagrams</li>
 <li>Serving many clients at once</li>
 <li>The same calls in C</li>
 </ul>
 <p><a href="#/chapter-2-summary">In class: skip ahead to the summary</a></p>
+</section>
+<section id="streams-vs-datagrams-reading" class="slide level2">
+<h2>Streams vs Datagrams <span class="rd">Reading</span></h2>
+<p>Application A calls <code>send()</code> ten times on a TCP socket, once per message.</p>
+<p>Can the data cross the network in <strong>more</strong> than ten segments? Yes: a send larger than the segment size is split, and lost segments are resent. In <strong>fewer</strong>? Also yes: TCP may pack several small sends into one segment.</p>
+<p>On a UDP socket, ten <code>sendto()</code> calls are exactly ten datagrams.</p>
+<p>So a TCP receiver that wants A’s messages <strong>one at a time</strong> needs a framing rule the two sides agree on: a length prefix, or a delimiter such as <code>\r\n</code>. HTTP and SMTP both use <code>\r\n</code>. UDP keeps the boundaries for free.</p>
 </section>
 <section id="serving-many-clients-reading" class="slide level2">
 <h2>Serving Many Clients <span class="rd">Reading</span></h2>
@@ -3851,13 +3228,13 @@ s}\)</span>, five times longer than before.</p>
 <section id="the-same-calls-in-c-reading" class="slide level2">
 <h2>The Same Calls in C <span class="rd">Reading</span></h2>
 <p>Python’s <code>socket</code> module is a thin wrapper over the BSD socket calls that every OS provides.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb27-1"><a href="" aria-label="1"></a><span class="dt">int</span> s <span class="op">=</span> socket<span class="op">(</span>AF_INET<span class="op">,</span> SOCK_STREAM<span class="op">,</span> <span class="dv">0</span><span class="op">);</span></span>
-<span id="cb27-2"><a href="" aria-label="2"></a>bind<span class="op">(</span>s<span class="op">,</span> <span class="op">(</span><span class="kw">struct</span> sockaddr <span class="op">*)</span> <span class="op">&amp;</span>addr<span class="op">,</span> <span class="kw">sizeof</span> addr<span class="op">);</span></span>
-<span id="cb27-3"><a href="" aria-label="3"></a>listen<span class="op">(</span>s<span class="op">,</span> <span class="dv">5</span><span class="op">);</span></span>
-<span id="cb27-4"><a href="" aria-label="4"></a><span class="dt">int</span> c <span class="op">=</span> accept<span class="op">(</span>s<span class="op">,</span> NULL<span class="op">,</span> NULL<span class="op">);</span>        <span class="co">/* new descriptor per client */</span></span>
-<span id="cb27-5"><a href="" aria-label="5"></a>n <span class="op">=</span> read<span class="op">(</span>c<span class="op">,</span> buf<span class="op">,</span> <span class="kw">sizeof</span> buf<span class="op">);</span></span>
-<span id="cb27-6"><a href="" aria-label="6"></a>write<span class="op">(</span>c<span class="op">,</span> buf<span class="op">,</span> n<span class="op">);</span></span>
-<span id="cb27-7"><a href="" aria-label="7"></a>close<span class="op">(</span>c<span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb22-1"><a href="" aria-label="1"></a><span class="dt">int</span> s <span class="op">=</span> socket<span class="op">(</span>AF_INET<span class="op">,</span> SOCK_STREAM<span class="op">,</span> <span class="dv">0</span><span class="op">);</span></span>
+<span id="cb22-2"><a href="" aria-label="2"></a>bind<span class="op">(</span>s<span class="op">,</span> <span class="op">(</span><span class="kw">struct</span> sockaddr <span class="op">*)</span> <span class="op">&amp;</span>addr<span class="op">,</span> <span class="kw">sizeof</span> addr<span class="op">);</span></span>
+<span id="cb22-3"><a href="" aria-label="3"></a>listen<span class="op">(</span>s<span class="op">,</span> <span class="dv">5</span><span class="op">);</span></span>
+<span id="cb22-4"><a href="" aria-label="4"></a><span class="dt">int</span> c <span class="op">=</span> accept<span class="op">(</span>s<span class="op">,</span> NULL<span class="op">,</span> NULL<span class="op">);</span>        <span class="co">/* new descriptor per client */</span></span>
+<span id="cb22-5"><a href="" aria-label="5"></a>n <span class="op">=</span> read<span class="op">(</span>c<span class="op">,</span> buf<span class="op">,</span> <span class="kw">sizeof</span> buf<span class="op">);</span></span>
+<span id="cb22-6"><a href="" aria-label="6"></a>write<span class="op">(</span>c<span class="op">,</span> buf<span class="op">,</span> n<span class="op">);</span></span>
+<span id="cb22-7"><a href="" aria-label="7"></a>close<span class="op">(</span>c<span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>A socket is a file descriptor, so <code>read</code> and <code>write</code> work on it. Port numbers in <code>addr</code> are stored in network byte order (<code>htons</code>). A UDP program uses <code>SOCK_DGRAM</code> with <code>sendto</code> and <code>recvfrom</code>, exactly as in Python.</p>
 </section>
 <section id="chapter-2-summary" class="slide level2">
@@ -3893,6 +3270,17 @@ s}\)</span>, five times longer than before.</p>
 <li>When a protocol needs state, decide <strong>where</strong> it lives. HTTP put it in the messages; DNS put it in caches; BitTorrent put it in the peers.</li>
 </ol>
 </div>
+</section>
+<section id="midterm-and-assignment-2" class="slide level2">
+<h2>Midterm and Assignment 2</h2>
+<p><strong>Midterm:</strong> Tuesday, October 13, 5:30–6:50 PM, in STEC 105.</p>
+<ul>
+<li>It covers Chapters 1 and 2 and Assignment 1.</li>
+<li>Drill the <span class="ex-inline">Must Know</span> slides first. Unmarked slides can appear too.</li>
+<li>Practice set: on Blackboard now, answers on Friday, October 9.</li>
+</ul>
+<p><strong>Assignment 2</strong> (socket programming) is on Blackboard, due Sunday, October 18.</p>
+<p>After the midterm the term project starts: teams of one to three, signed up by October 20.</p>
 
 </section>
     </div>
