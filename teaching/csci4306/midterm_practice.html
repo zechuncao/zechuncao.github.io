@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-10-05">
+<meta name="dcterms.date" content="2026-10-07">
 
 <title>Midterm Practice Set</title>
 <style>
@@ -2442,7 +2442,7 @@ document.addEventListener('DOMContentLoaded', function () {
     <div>
     <div class="quarto-title-meta-heading">Updated</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 5, 2026</p>
+      <p class="date">October 7, 2026</p>
     </div>
   </div>
   
@@ -3184,7 +3184,7 @@ D_{P2P} = \max\!\left\{\frac{F}{u_s},\ \frac{F}{d_{\min}},\
 </section>
 <section id="problem-15.-throughput-and-the-bottleneck-link" class="level2">
 <h2 class="anchored" data-anchor-id="problem-15.-throughput-and-the-bottleneck-link">Problem 15. Throughput and the bottleneck link</h2>
-<p><em>§1.4.3 · deck slides “The Bottleneck Link”, “Your Turn: Movie Night” · <strong>Must Know</strong></em></p>
+<p><em>§1.4.3 · deck slides “The Bottleneck Link”, “Your Turn: Movies” · <strong>Must Know</strong></em></p>
 <p>A server with a 200 Mbps access link sends a file to a client with a 40 Mbps access link. The path crosses one 2 Gbps backbone link that is shared <strong>equally</strong> by 20 such server–client pairs, all sending at once. No other link is a bottleneck.</p>
 <p>(a) What throughput does one pair get?</p>
 <p>(b) How long does a 2 GB file take?</p>
@@ -3267,7 +3267,7 @@ D_{P2P} = \max\!\left\{\frac{F}{u_s},\ \frac{F}{d_{\min}},\
 <p>The data below came from a VM on the Utah cluster, measured against the Linode speedtest hosts in Dallas, London, and Sydney. Your own figures will differ.</p>
 <section id="problem-21.-the-propagation-bound-and-a-measured-ping" class="level2">
 <h2 class="anchored" data-anchor-id="problem-21.-the-propagation-bound-and-a-measured-ping">Problem 21. The propagation bound and a measured ping</h2>
-<p><em>§1.4.1 · deck slides “Four Sources of Delay”, “Your Turn: Which Wins?” · <strong>Must Know</strong> · Assignment 1 B1</em></p>
+<p><em>§1.4.1 · deck slides “Four Sources of Delay”, “Your Turn: Dominates” · <strong>Must Know</strong> · Assignment 1 B1</em></p>
 <p>A VM on the Utah cluster pinged each of the three servers ten times and recorded the minimum round-trip time. The great-circle distances from Salt Lake City are in the second column.</p>
 <table class="caption-top table">
 <thead>
@@ -3322,7 +3322,7 @@ D_{P2P} = \max\!\left\{\frac{F}{u_s},\ \frac{F}{d_{\min}},\
 </section>
 <section id="problem-23.-encapsulation-in-a-capture" class="level2">
 <h2 class="anchored" data-anchor-id="problem-23.-encapsulation-in-a-capture">Problem 23. Encapsulation in a capture</h2>
-<p><em>§1.5.2 · deck slides “Encapsulation”, “Your Turn: Header Cost” · <strong>Must Know</strong> · Assignment 1 B4</em></p>
+<p><em>§1.5.2 · deck slides “Encapsulation”, “Your Turn: Headers” · <strong>Must Know</strong> · Assignment 1 B4</em></p>
 <p>A <code>tshark</code> capture of one small web request printed the rows below. The columns are the frame number, the frame length, the IP total length, the IP header length, the TCP header length, the TCP payload length, and a description. All lengths are in <strong>bytes</strong>.</p>
 <pre><code>no. frame.len ip.len ip.hdr_len tcp.hdr_len tcp.len  info
   1        74     60         20          40       0  [SYN]

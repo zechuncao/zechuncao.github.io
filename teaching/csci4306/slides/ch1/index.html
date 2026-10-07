@@ -1055,8 +1055,8 @@ d_{\text{end-end}} = 3 \times 4 = 12\ \text{ms}\]</span></p>
 </ul>
 </div>
 </section>
-<section id="your-turn-in-the-queue-must-know" class="slide level2">
-<h2>Your Turn: In the Queue <span class="ex">Must Know</span></h2>
+<section id="your-turn-queueing-must-know" class="slide level2">
+<h2>Your Turn: Queueing <span class="ex">Must Know</span></h2>
 <p><strong><em>Example:</em></strong> A packet arrives at an output link. One packet is <strong>half</strong> transmitted and <strong>two</strong> more are waiting ahead of it. All packets are 1500 bytes; the link is 10 Mbps. How long does it wait?</p>
 <div class="fragment">
 <p><strong><em>Solution:</em></strong> Bits still ahead of it: <span class="math inline">\(0.5 \times 12{,}000 + 2 \times 12{,}000 = 30{,}000\)</span> bits.</p>
@@ -1216,8 +1216,8 @@ d_{\text{end-end}} = 3 \times 4 = 12\ \text{ms}\]</span></p>
 <p><strong>35 is the last <span class="math inline">\(N\)</span> under the line:</strong> 0.04% passes, 40 users would be 0.15%. A looser tolerance buys more users — at 1%, <span class="math inline">\(N = 50\)</span> just fits.</p>
 </div>
 </section>
-<section id="your-turn-size-the-link-must-know" class="slide level2">
-<h2>Your Turn: Size the Link <span class="ex">Must Know</span></h2>
+<section id="your-turn-how-many-must-know" class="slide level2">
+<h2>Your Turn: How Many? <span class="ex">Must Know</span></h2>
 <p><strong><em>Example:</em></strong> A 10 Mbps link. Each user needs 1 Mbps <strong>when active</strong> and is active 20% of the time. Overload is acceptable <strong>1%</strong> of the time. How many users can we serve?</p>
 <div class="fragment">
 <p><strong><em>Solution — Step 1:</em></strong> the link holds <span class="math inline">\(10 / 1 = \mathbf{10}\)</span> active users. Circuit switching stops there.</p>
@@ -1229,8 +1229,8 @@ d_{\text{end-end}} = 3 \times 4 = 12\ \text{ms}\]</span></p>
 <p><span class="math display">\[P(X &gt; 10) = 1 - \sum_{k=0}^{10} \binom{N}{k}\,(0.2)^{k}\,(0.8)^{N-k}\]</span></p>
 </div>
 </section>
-<section id="your-turn-size-the-link-must-know-1" class="slide level2">
-<h2>Your Turn: Size the Link <span class="ex">Must Know</span></h2>
+<section id="your-turn-how-many-must-know-1" class="slide level2">
+<h2>Your Turn: How Many? <span class="ex">Must Know</span></h2>
 <p><strong><em>Step 3:</em></strong> the tolerance is <strong>1%</strong>. The table is given; pick the largest <span class="math inline">\(N\)</span> under the line:</p>
 <div class="fragment">
 <table class="caption-top">
@@ -1349,7 +1349,7 @@ d_{\text{end-end}} = 3 \times 4 = 12\ \text{ms}\]</span></p>
 </section>
 <section id="behind-the-0.0004-reading" class="slide level2">
 <h2>Behind the 0.0004 <span class="rd">Reading</span></h2>
-<p>The tables on <em>Finding the 35</em> and <em>Size the Link</em> come from this function. <code>cap</code> is the circuit-switching ceiling, <span class="math inline">\(R/r\)</span>:</p>
+<p>The tables on <em>Finding the 35</em> and <em>How Many?</em> come from this function. <code>cap</code> is the circuit-switching ceiling, <span class="math inline">\(R/r\)</span>:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="" aria-label="1"></a><span class="im">from</span> math <span class="im">import</span> comb</span>
 <span id="cb1-2"><a href="" aria-label="2"></a></span>
 <span id="cb1-3"><a href="" aria-label="3"></a><span class="kw">def</span> p_overload(N, p, cap):</span>
@@ -1452,8 +1452,8 @@ d_{\text{end-end}} = 3 \times 4 = 12\ \text{ms}\]</span></p>
 <p>Very different: <span class="math inline">\(d_{\text{trans}}\)</span> depends on the packet, <span class="math inline">\(d_{\text{prop}}\)</span> does not.</p>
 </div>
 </section>
-<section id="your-turn-which-wins-must-know" class="slide level2">
-<h2>Your Turn: Which Wins? <span class="ex">Must Know</span></h2>
+<section id="your-turn-dominates-must-know" class="slide level2">
+<h2>Your Turn: Dominates <span class="ex">Must Know</span></h2>
 <p><strong><em>Example:</em></strong> A 1500-byte packet on a 100 Mbps link that is 3,000 km long, with <span class="math inline">\(s = 2 \times 10^{8}\)</span> m/s. Which delay dominates?</p>
 <div class="fragment">
 <p><strong><em>Solution:</em></strong></p>
@@ -1615,8 +1615,8 @@ d_{\text{prop}} = \frac{3 \times 10^{6}}{2 \times 10^{8}} = 15\ \text{ms}\]</spa
 </div>
 </div></div>
 </section>
-<section id="your-turn-movie-night-must-know" class="slide level2">
-<h2>Your Turn: Movie Night <span class="ex">Must Know</span></h2>
+<section id="your-turn-movies-must-know" class="slide level2">
+<h2>Your Turn: Movies <span class="ex">Must Know</span></h2>
 <p><strong><em>Example:</em></strong> Server link <span class="math inline">\(R_s = 100\)</span> Mbps, your link <span class="math inline">\(R_c = 25\)</span> Mbps, backbone <span class="math inline">\(R = 1\)</span> Gbps shared by 10 connections. How long to download a 5 GB movie?</p>
 <div class="fragment">
 <p><strong><em>Solution:</em></strong> <span class="math inline">\(\min(100,\ 25,\ 1000/10) = \mathbf{25}\)</span> Mbps.</p>
@@ -1880,8 +1880,8 @@ d_{\text{prop}} = \frac{3 \times 10^{6}}{2 \times 10^{8}} = 15\ \text{ms}\]</spa
 <p>A <strong>switch</strong> touches only the link layer; a <strong>router</strong> goes up to the network layer. Neither ever opens <span class="math inline">\(M\)</span>.</p>
 </div>
 </section>
-<section id="your-turn-header-cost-must-know" class="slide level2">
-<h2>Your Turn: Header Cost <span class="ex">Must Know</span></h2>
+<section id="your-turn-headers-must-know" class="slide level2">
+<h2>Your Turn: Headers <span class="ex">Must Know</span></h2>
 <p><strong><em>Example:</em></strong> TCP adds 20 bytes, IP adds 20 bytes, Ethernet adds 18. What fraction of the frame is overhead for a 1000-byte payload? For a 40-byte one?</p>
 <div class="fragment">
 <p><strong><em>Solution:</em></strong> Total header <span class="math inline">\(= 20 + 20 + 18 = 58\)</span> bytes.</p>

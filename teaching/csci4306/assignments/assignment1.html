@@ -2544,7 +2544,7 @@ TShark (Wireshark) 3.6.2 (Git v3.6.2 packaged as 3.6.2-2)</code></pre>
 <p>The targets are three servers run by the same hosting company in three cities: Dallas, London, and Sydney. All three answer <code>ping</code>, and each one serves a 100 MB test file. Because they are the same kind of machine on the same kind of network, the thing that differs between them is the path.</p>
 <section id="b1-propagation-delay-is-real" class="level2">
 <h2 class="anchored" data-anchor-id="b1-propagation-delay-is-real">B1 — Propagation delay is real</h2>
-<p><em>Slides: Four Sources of Delay · Your Turn: Which Wins?</em></p>
+<p><em>Slides: Four Sources of Delay · Your Turn: Dominates</em></p>
 <p>Ping each server ten times and write down the minimum round-trip time, the <code>min</code> value in the last line. Use the minimum rather than the average. The minimum is the sample that ran into the least queueing, so it is the closest you can get to propagation plus the fixed costs.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ping</span> <span class="at">-4</span> <span class="at">-c</span> 10 <span class="at">-n</span> speedtest.dallas.linode.com</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ping</span> <span class="at">-4</span> <span class="at">-c</span> 10 <span class="at">-n</span> speedtest.london.linode.com</span>
@@ -2708,7 +2708,7 @@ TShark (Wireshark) 3.6.2 (Git v3.6.2 packaged as 3.6.2-2)</code></pre>
 </div>
 <p><strong>Answer:</strong></p>
 <ol type="a">
-<li><p>This is the <em>Which Wins?</em> example from the slides, with your own numbers. Suppose a 1500-byte packet is pushed onto the Dallas path at <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>R</mi><mtext mathvariant="normal">Dallas</mtext></msub><annotation encoding="application/x-tex">R_{\text{Dallas}}</annotation></semantics></math>. Compute its transmission delay <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>d</mi><mtext mathvariant="normal">trans</mtext></msub><mo>=</mo><mi>L</mi><mi>/</mi><mi>R</mi></mrow><annotation encoding="application/x-tex">d_{\text{trans}} = L/R</annotation></semantics></math>, remembering that <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>L</mi><annotation encoding="application/x-tex">L</annotation></semantics></math> has to be in bits. Then compare it with the one-way propagation delay, which is about half your Dallas RTT. By what factor does propagation win?</p></li>
+<li><p>This is the <em>Dominates</em> example from the slides, with your own numbers. Suppose a 1500-byte packet is pushed onto the Dallas path at <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>R</mi><mtext mathvariant="normal">Dallas</mtext></msub><annotation encoding="application/x-tex">R_{\text{Dallas}}</annotation></semantics></math>. Compute its transmission delay <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>d</mi><mtext mathvariant="normal">trans</mtext></msub><mo>=</mo><mi>L</mi><mi>/</mi><mi>R</mi></mrow><annotation encoding="application/x-tex">d_{\text{trans}} = L/R</annotation></semantics></math>, remembering that <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>L</mi><annotation encoding="application/x-tex">L</annotation></semantics></math> has to be in bits. Then compare it with the one-way propagation delay, which is about half your Dallas RTT. By what factor does propagation win?</p></li>
 <li><p>This is the <em>Bits in Flight</em> question. How much data is in the air between you and London at any instant during the download? Compute <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>R</mi><mtext mathvariant="normal">London</mtext></msub><mo>×</mo><msub><mtext mathvariant="normal">RTT</mtext><mtext mathvariant="normal">London</mtext></msub></mrow><annotation encoding="application/x-tex">R_{\text{London}} \times \text{RTT}_{\text{London}}</annotation></semantics></math> and give the result in bits and in MB.</p></li>
 <li><p>You downloaded the same file to the same VM from the same kind of server, and London was slower than Dallas, probably by a lot. Chapter 1 says throughput is set by the bottleneck link. Do you think there is a slower link on the London path? If not, what else is different about that path that could slow a transfer down? A sentence or two is enough here. We will work out the exact mechanism in Chapter 3.</p></li>
 </ol>
@@ -2716,7 +2716,7 @@ TShark (Wireshark) 3.6.2 (Git v3.6.2 packaged as 3.6.2-2)</code></pre>
 </section>
 <section id="b4-encapsulation-captured" class="level2">
 <h2 class="anchored" data-anchor-id="b4-encapsulation-captured">B4 — Encapsulation, captured</h2>
-<p><em>Slides: Encapsulation · Your Turn: Header Cost</em></p>
+<p><em>Slides: Encapsulation · Your Turn: Headers</em></p>
 <p>Capture the packets of one small web request. The first line below finds your network interface. The second starts <code>tshark</code> listening on it for ten seconds and printing one row per packet. The third makes the request while <code>tshark</code> is listening.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="va">IF</span><span class="op">=</span><span class="va">$(</span><span class="ex">ip</span> route <span class="kw">|</span> <span class="fu">awk</span> <span class="st">&#39;/^default/ {print $5; exit}&#39;</span><span class="va">)</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> tshark <span class="at">-i</span> <span class="va">$IF</span> <span class="at">-f</span> <span class="st">&quot;tcp port 80&quot;</span> <span class="at">-a</span> duration:10 <span class="at">-T</span> fields <span class="dt">\</span></span>
@@ -2785,7 +2785,7 @@ TShark (Wireshark) 3.6.2 (Git v3.6.2 packaged as 3.6.2-2)</code></pre>
 </div>
 <p><strong>Answer:</strong></p>
 <ol type="a">
-<li><p>Fill in the four Chapter 1 names. Then compute the overhead, header bytes divided by frame length, as a percentage, and compare it with the <em>Header Cost</em> example on the slides.</p></li>
+<li><p>Fill in the four Chapter 1 names. Then compute the overhead, header bytes divided by frame length, as a percentage, and compare it with the <em>Headers</em> example on the slides.</p></li>
 <li><p>The slide said Ethernet adds 18 bytes and TCP adds 20. Your capture says 14 and, most likely, 32. Explain both differences.</p></li>
 <li><p>Find the row for the server’s reply, the one with the largest TCP payload. Its overhead percentage is much lower. Why does the same stack of headers cost so much less there?</p></li>
 </ol>
