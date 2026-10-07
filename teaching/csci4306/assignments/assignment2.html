@@ -2537,6 +2537,48 @@ quoted in the instructor answers come from those runs on localhost.
 <section id="part-a-run-the-pair" class="level1">
 <h1>Part A — Run the pair</h1>
 <p>Twenty points, graded on completion: the outputs are in the boxes and the short answers are filled in.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="You did most of this in Tuesday&#39;s lab">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>You did most of this in Tuesday’s lab
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The in-class lab covered the same ground, step for step:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>In the lab</th>
+<th>Here</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Round 1, both pairs on <code>localhost</code></td>
+<td>Steps <strong>A2</strong> and <strong>A3</strong></td>
+</tr>
+<tr class="even">
+<td>Round 2, the relay to a partner’s VM</td>
+<td>Step <strong>A5</strong></td>
+</tr>
+<tr class="odd">
+<td>Round 3, the clients with no server running</td>
+<td>the first experiment in Step <strong>A4</strong></td>
+</tr>
+</tbody>
+</table>
+<p>If you saved or downloaded that page, those outputs paste straight in — they are the same runs, and you do not have to do them again.</p>
+<p>What is new here: <strong>Step A1</strong>, which puts your code in a repository so it survives the experiment ending; the other two experiments in Step A4, the wrong port and the privileged port; and the written answers. The <code>settimeout</code> line from Round 3 comes back in Part B, where it is the point rather than a preview.</p>
+<p>Nothing below assumes you were in class.</p>
+</div>
+</div>
 <section id="a1-the-vm-and-a-repository" class="level2">
 <h2 class="anchored" data-anchor-id="a1-the-vm-and-a-repository">A1 — The VM and a repository</h2>
 <p>Start your VM the same way as in Assignment 1: <strong>Experiments → Start Experiment → Change Profile →</strong> <code>network-vm</code>, then <strong>Next</strong> three times and <strong>Create</strong>. Name the experiment <code>a2</code>. Leave <em>Number of VMs</em> at 1. When the status is green, copy the <code>ssh</code> command from <strong>List View</strong> and log in.</p>
@@ -2682,7 +2724,7 @@ quoted in the instructor answers come from those runs on localhost.
 <li><strong>The server was not started first.</strong> UDP gives you no sign of this. Start the server, confirm it with <code>ss</code>, and only then run the client.</li>
 </ol>
 <div class="callout callout-style-default callout-note callout-titled" title="If you have no partner">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -2691,7 +2733,7 @@ quoted in the instructor answers come from those runs on localhost.
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Start a <strong>second experiment of your own on a different cluster</strong>. On the <em>Finalize</em> page, open the <strong>Cluster</strong> dropdown and pick one that is not the cluster your first VM is on: Utah, Wisconsin, and Clemson are the usual three. You now have two VMs on opposite ends of a real wide-area path, which is what Part C needs. Terminate both when you are done, and do not leave two experiments running overnight.</p>
 <p>The second choice, if your cluster is the only one available, is to set <em>Number of VMs</em> to 2 in one experiment. The second VM is called <code>server</code> and <code>ping server</code> reaches it. That gives you a working cross-machine run, but both VMs sit in the same building, so the round-trip times in Part C will be a fraction of a millisecond and question C2 becomes less interesting. Say in your answer that this is what you did.</p>
@@ -2994,7 +3036,7 @@ udpping_server.py   udpping_client.py   tcpping_server.py   tcpping_client.py</c
 <h3 class="anchored" data-anchor-id="addrinuse"><code>OSError: [Errno 98] Address already in use</code></h3>
 <p>A server will not start. The message comes from the <code>bind</code> line.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Fix">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -3003,7 +3045,7 @@ udpping_server.py   udpping_client.py   tcpping_server.py   tcpping_client.py</c
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Either another server is still running on port 12000, or one you stopped has left the port behind for a minute.</p>
 <p>First check whether something is listening:</p>
@@ -3022,7 +3064,7 @@ udpping_server.py   udpping_client.py   tcpping_server.py   tcpping_client.py</c
 <h3 class="anchored" data-anchor-id="connectionrefusederror-errno-111-connection-refused"><code>ConnectionRefusedError: [Errno 111] Connection refused</code></h3>
 <p>A TCP client stops immediately on the <code>connect</code> line.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Fix">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -3031,7 +3073,7 @@ udpping_server.py   udpping_client.py   tcpping_server.py   tcpping_client.py</c
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Nothing is listening at that address and port. The server host answered, and its answer was a refusal, so the address is reachable and the problem is the port or the server.</p>
 <p>On the server machine, <code>ss -tlnp | grep 12000</code> should print a <code>LISTEN</code> line. If it prints nothing, the server is not running: start it and look for <code>The server is ready to receive</code>. If it prints a line showing <code>127.0.0.1:12000</code> and you are connecting from another VM, the server bound to the loopback address; see the cross-VM entry below.</p>
@@ -3044,7 +3086,7 @@ udpping_server.py   udpping_client.py   tcpping_server.py   tcpping_client.py</c
 <h3 class="anchored" data-anchor-id="a-client-prints-nothing-and-never-comes-back">A client prints nothing and never comes back</h3>
 <p>You ran a UDP client and the terminal has been sitting there.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Fix">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -3053,7 +3095,7 @@ udpping_server.py   udpping_client.py   tcpping_server.py   tcpping_client.py</c
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>It is inside <code>recvfrom</code>, waiting for a reply that is not coming. UDP has nothing to tell it otherwise, which is the behaviour Step A4 asked you to observe. Press Ctrl-C.</p>
 <p>Then find the reason. On the server machine, <code>ss -ulnp | grep 12000</code> tells you whether a server has the port. If it does, compare <code>serverPort</code> in your client with the port in that line, and <code>serverName</code> in your client with <code>hostname -f</code> on the server machine. If the server is on another VM, check the server’s own output: a server that received your probe prints a line for it, and a server that printed nothing never got it.</p>
@@ -3066,7 +3108,7 @@ udpping_server.py   udpping_client.py   tcpping_server.py   tcpping_client.py</c
 <h3 class="anchored" data-anchor-id="permissionerror-errno-13-permission-denied"><code>PermissionError: [Errno 13] Permission denied</code></h3>
 <p>A server stops on the <code>bind</code> line, and the port you chose is below 1024.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Fix">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -3075,7 +3117,7 @@ udpping_server.py   udpping_client.py   tcpping_server.py   tcpping_client.py</c
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Ports 0 through 1023 are reserved for the services the machine itself offers, and only root may bind them. That is what keeps an ordinary user from putting their own program on port 80 or 443 and collecting other people’s traffic.</p>
 <p>Use 12000, or anything else above 1024. If you were deliberately testing port 80, as Step A4 asks, <code>sudo python3 udpserver.py</code> works, and you have <code>sudo</code> on the VM. Do not leave a server running as root once you are done looking.</p>
@@ -3087,7 +3129,7 @@ udpping_server.py   udpping_client.py   tcpping_server.py   tcpping_client.py</c
 <h3 class="anchored" data-anchor-id="the-cross-vm-run-times-out-and-the-local-one-works">The cross-VM run times out and the local one works</h3>
 <p>Your client works against <code>localhost</code> and gets nothing from your partner’s VM.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Fix">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -3096,7 +3138,7 @@ udpping_server.py   udpping_client.py   tcpping_server.py   tcpping_client.py</c
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Work through the three causes from Step A5 in this order.</p>
 <p><strong>Is the server running, and on which address?</strong> On the server VM:</p>
@@ -3113,7 +3155,7 @@ udpping_server.py   udpping_client.py   tcpping_server.py   tcpping_client.py</c
 <h3 class="anchored" data-anchor-id="socket.gaierror-errno--2-name-or-service-not-known"><code>socket.gaierror: [Errno -2] Name or service not known</code></h3>
 <p>The client stops before sending anything.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Fix">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -3122,7 +3164,7 @@ udpping_server.py   udpping_client.py   tcpping_server.py   tcpping_client.py</c
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The name in <code>serverName</code> does not resolve. This is a DNS failure, not a socket failure: the client never got as far as sending a packet.</p>
 <p>Copy the name from <code>hostname -f</code> on the server VM rather than typing it. The usual mistakes are a missing <code>-pg0</code>, the wrong cluster, and a leftover <code>a1</code> where the experiment is now called <code>a2</code>. Check it with <code>getent hosts &lt;the name&gt;</code>, which prints the IP address if the name resolves and nothing if it does not.</p>
@@ -3134,7 +3176,7 @@ udpping_server.py   udpping_client.py   tcpping_server.py   tcpping_client.py</c
 <h3 class="anchored" data-anchor-id="typeerror-a-bytes-like-object-is-required-not-str"><code>TypeError: a bytes-like object is required, not &#39;str&#39;</code></h3>
 <p>Raised by <code>sendto</code> or <code>send</code>.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Fix">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -3143,7 +3185,7 @@ udpping_server.py   udpping_client.py   tcpping_server.py   tcpping_client.py</c
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Sockets carry bytes, and Python strings are not bytes. Call <code>.encode()</code> on everything you send and <code>.decode()</code> on everything you receive:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>clientSocket.sendto(message.encode(), (serverName, serverPort))</span>
@@ -3158,7 +3200,7 @@ udpping_server.py   udpping_client.py   tcpping_server.py   tcpping_client.py</c
 <h3 class="anchored" data-anchor-id="the-tcp-replies-run-together-or-the-wrong-one-lines-up">The TCP replies run together, or the wrong one lines up</h3>
 <p>Your TCP ping client prints one line with two replies in it, or every line after the first shows the previous probe’s text.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Fix">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -3167,7 +3209,7 @@ udpping_server.py   udpping_client.py   tcpping_server.py   tcpping_client.py</c
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>A <code>recv</code> returns whatever bytes have arrived, which is not necessarily one reply. With five probes sent back to back and a single <code>recv(1024)</code>, the reference server’s replies come back as one lump:</p>
 <pre><code>b&#39;PING 1\nPING 2\nPING 3\nPING 4\nPING 5\n&#39;</code></pre>
@@ -3181,7 +3223,7 @@ udpping_server.py   udpping_client.py   tcpping_server.py   tcpping_client.py</c
 <section id="my-vm-is-gone-and-so-is-my-code" class="level3">
 <h3 class="anchored" data-anchor-id="my-vm-is-gone-and-so-is-my-code">My VM is gone and so is my code</h3>
 <div class="callout callout-style-default callout-tip callout-titled" title="Fix">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -3190,7 +3232,7 @@ udpping_server.py   udpping_client.py   tcpping_server.py   tcpping_client.py</c
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The experiment expired or was terminated, and the disk went with it. Nothing on it can be recovered, by you or by me.</p>
 <p>If you copied the directory off with <code>scp</code>, start a new experiment and copy it back the other way: <code>scp -P &lt;port&gt; -r a2 yourlogin@&lt;host&gt;:</code>. If you pushed to GitHub, <code>git clone</code> it. If you did neither, the code is gone and you write it again. Start a new experiment now and do Step A1 first this time.</p>
