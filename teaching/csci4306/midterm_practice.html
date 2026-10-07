@@ -24,41 +24,6 @@ ul.task-list li input[type="checkbox"] {
 width: 0.8em;
 margin: 0 0.8em 0.2em -1em;  vertical-align: middle;
 }
-
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-{ counter-reset: source-line 0; }
-pre.numberSource code > span
-{ position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-{ content: counter(source-line);
-position: relative; left: -1em; text-align: right; vertical-align: baseline;
-border: none; display: inline-block;
--webkit-touch-callout: none; -webkit-user-select: none;
--khtml-user-select: none; -moz-user-select: none;
--ms-user-select: none; user-select: none;
-padding: 0 4px; width: 4em;
-}
-pre.numberSource { margin-left: 3em; padding-left: 4px; }
-div.sourceCode
-{ }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -2367,8 +2332,8 @@ document.addEventListener('DOMContentLoaded', function () {
   <ul class="collapse">
   <li><a href="#about-the-exam" id="toc-about-the-exam" class="nav-link active" data-scroll-target="#about-the-exam">About the exam</a>
   <ul class="collapse">
-  <li><a href="#how-this-practice-set-lines-up-with-the-exam" id="toc-how-this-practice-set-lines-up-with-the-exam" class="nav-link" data-scroll-target="#how-this-practice-set-lines-up-with-the-exam">How this practice set lines up with the exam</a></li>
-  <li><a href="#working-the-problems-on-this-page" id="toc-working-the-problems-on-this-page" class="nav-link" data-scroll-target="#working-the-problems-on-this-page">Working the problems on this page</a></li>
+  <li><a href="#how-to-use-this-page" id="toc-how-to-use-this-page" class="nav-link" data-scroll-target="#how-to-use-this-page">How to use this page</a></li>
+  <li><a href="#typing-your-answers" id="toc-typing-your-answers" class="nav-link" data-scroll-target="#typing-your-answers">Typing your answers</a></li>
   </ul></li>
   <li><a href="#formulas-and-conventions" id="toc-formulas-and-conventions" class="nav-link" data-scroll-target="#formulas-and-conventions">Formulas and conventions</a>
   <ul class="collapse">
@@ -2376,53 +2341,67 @@ document.addEventListener('DOMContentLoaded', function () {
   <li><a href="#the-four-delay-components" id="toc-the-four-delay-components" class="nav-link" data-scroll-target="#the-four-delay-components">The four delay components</a></li>
   <li><a href="#store-and-forward" id="toc-store-and-forward" class="nav-link" data-scroll-target="#store-and-forward">Store and forward</a></li>
   <li><a href="#traffic-intensity" id="toc-traffic-intensity" class="nav-link" data-scroll-target="#traffic-intensity">Traffic intensity</a></li>
-  <li><a href="#statistical-multiplexing" id="toc-statistical-multiplexing" class="nav-link" data-scroll-target="#statistical-multiplexing">Statistical multiplexing</a></li>
   <li><a href="#throughput" id="toc-throughput" class="nav-link" data-scroll-target="#throughput">Throughput</a></li>
   <li><a href="#bandwidthdelay-product" id="toc-bandwidthdelay-product" class="nav-link" data-scroll-target="#bandwidthdelay-product">Bandwidth–delay product</a></li>
-  <li><a href="#counting-round-trip-times-for-a-web-page" id="toc-counting-round-trip-times-for-a-web-page" class="nav-link" data-scroll-target="#counting-round-trip-times-for-a-web-page">Counting round-trip times for a web page</a></li>
-  <li><a href="#the-web-cache-model" id="toc-the-web-cache-model" class="nav-link" data-scroll-target="#the-web-cache-model">The web cache model</a></li>
+  <li><a href="#round-trips-for-a-web-page" id="toc-round-trips-for-a-web-page" class="nav-link" data-scroll-target="#round-trips-for-a-web-page">Round trips for a web page</a></li>
   <li><a href="#distributing-a-file-to-n-peers" id="toc-distributing-a-file-to-n-peers" class="nav-link" data-scroll-target="#distributing-a-file-to-n-peers">Distributing a file to <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math> peers</a></li>
-  <li><a href="#names-by-layer" id="toc-names-by-layer" class="nav-link" data-scroll-target="#names-by-layer">Names by layer</a></li>
   </ul></li>
-  <li><a href="#part-1-quick-answers" id="toc-part-1-quick-answers" class="nav-link" data-scroll-target="#part-1-quick-answers">Part 1 — Quick answers</a>
+  <li><a href="#part-1-multiple-choice" id="toc-part-1-multiple-choice" class="nav-link" data-scroll-target="#part-1-multiple-choice">Part 1 — Multiple choice</a>
   <ul class="collapse">
-  <li><a href="#problem-1.-what-a-protocol-defines" id="toc-problem-1.-what-a-protocol-defines" class="nav-link" data-scroll-target="#problem-1.-what-a-protocol-defines">Problem 1. What a protocol defines</a></li>
-  <li><a href="#problem-2.-classify-the-access-network" id="toc-problem-2.-classify-the-access-network" class="nav-link" data-scroll-target="#problem-2.-classify-the-access-network">Problem 2. Classify the access network</a></li>
-  <li><a href="#problem-3.-packet-switching-and-circuit-switching" id="toc-problem-3.-packet-switching-and-circuit-switching" class="nav-link" data-scroll-target="#problem-3.-packet-switching-and-circuit-switching">Problem 3. Packet switching and circuit switching</a></li>
-  <li><a href="#problem-4.-the-four-delay-components" id="toc-problem-4.-the-four-delay-components" class="nav-link" data-scroll-target="#problem-4.-the-four-delay-components">Problem 4. The four delay components</a></li>
-  <li><a href="#problem-5.-which-layer-and-what-the-unit-is-called" id="toc-problem-5.-which-layer-and-what-the-unit-is-called" class="nav-link" data-scroll-target="#problem-5.-which-layer-and-what-the-unit-is-called">Problem 5. Which layer, and what the unit is called</a></li>
-  <li><a href="#problem-6.-networks-under-attack" id="toc-problem-6.-networks-under-attack" class="nav-link" data-scroll-target="#problem-6.-networks-under-attack">Problem 6. Networks under attack</a></li>
-  <li><a href="#problem-7.-what-the-transport-layer-can-and-cannot-promise" id="toc-problem-7.-what-the-transport-layer-can-and-cannot-promise" class="nav-link" data-scroll-target="#problem-7.-what-the-transport-layer-can-and-cannot-promise">Problem 7. What the transport layer can and cannot promise</a></li>
-  <li><a href="#problem-8.-http-methods-and-status-codes" id="toc-problem-8.-http-methods-and-status-codes" class="nav-link" data-scroll-target="#problem-8.-http-methods-and-status-codes">Problem 8. HTTP methods and status codes</a></li>
-  <li><a href="#problem-9.-smtp-and-http-compared" id="toc-problem-9.-smtp-and-http-compared" class="nav-link" data-scroll-target="#problem-9.-smtp-and-http-compared">Problem 9. SMTP and HTTP compared</a></li>
-  <li><a href="#problem-10.-dns-resource-records" id="toc-problem-10.-dns-resource-records" class="nav-link" data-scroll-target="#problem-10.-dns-resource-records">Problem 10. DNS resource records</a></li>
-  <li><a href="#problem-11.-streaming-video-and-cdns" id="toc-problem-11.-streaming-video-and-cdns" class="nav-link" data-scroll-target="#problem-11.-streaming-video-and-cdns">Problem 11. Streaming video and CDNs</a></li>
-  <li><a href="#problem-12.-streams-and-datagrams" id="toc-problem-12.-streams-and-datagrams" class="nav-link" data-scroll-target="#problem-12.-streams-and-datagrams">Problem 12. Streams and datagrams</a></li>
+  <li><a href="#problem-1.-what-a-protocol-pins-down" id="toc-problem-1.-what-a-protocol-pins-down" class="nav-link" data-scroll-target="#problem-1.-what-a-protocol-pins-down">Problem 1. What a protocol pins down</a></li>
+  <li><a href="#problem-2.-edge-or-core" id="toc-problem-2.-edge-or-core" class="nav-link" data-scroll-target="#problem-2.-edge-or-core">Problem 2. Edge or core</a></li>
+  <li><a href="#problem-3.-shared-or-dedicated-access" id="toc-problem-3.-shared-or-dedicated-access" class="nav-link" data-scroll-target="#problem-3.-shared-or-dedicated-access">Problem 3. Shared or dedicated access</a></li>
+  <li><a href="#problem-4.-pushing-bits-onto-a-link" id="toc-problem-4.-pushing-bits-onto-a-link" class="nav-link" data-scroll-target="#problem-4.-pushing-bits-onto-a-link">Problem 4. Pushing bits onto a link</a></li>
+  <li><a href="#problem-5.-guided-and-unguided-media" id="toc-problem-5.-guided-and-unguided-media" class="nav-link" data-scroll-target="#problem-5.-guided-and-unguided-media">Problem 5. Guided and unguided media</a></li>
+  <li><a href="#problem-6.-why-the-router-waits" id="toc-problem-6.-why-the-router-waits" class="nav-link" data-scroll-target="#problem-6.-why-the-router-waits">Problem 6. Why the router waits</a></li>
+  <li><a href="#problem-7.-three-links-one-packet" id="toc-problem-7.-three-links-one-packet" class="nav-link" data-scroll-target="#problem-7.-three-links-one-packet">Problem 7. Three links, one packet</a></li>
+  <li><a href="#problem-8.-what-circuit-switching-buys-and-costs" id="toc-problem-8.-what-circuit-switching-buys-and-costs" class="nav-link" data-scroll-target="#problem-8.-what-circuit-switching-buys-and-costs">Problem 8. What circuit switching buys and costs</a></li>
+  <li><a href="#problem-9.-forwarding-and-routing" id="toc-problem-9.-forwarding-and-routing" class="nav-link" data-scroll-target="#problem-9.-forwarding-and-routing">Problem 9. Forwarding and routing</a></li>
+  <li><a href="#problem-10.-the-shape-of-the-internet" id="toc-problem-10.-the-shape-of-the-internet" class="nav-link" data-scroll-target="#problem-10.-the-shape-of-the-internet">Problem 10. The shape of the Internet</a></li>
+  <li><a href="#problem-11.-the-delay-that-varies" id="toc-problem-11.-the-delay-that-varies" class="nav-link" data-scroll-target="#problem-11.-the-delay-that-varies">Problem 11. The delay that varies</a></li>
+  <li><a href="#problem-12.-what-propagation-delay-depends-on" id="toc-problem-12.-what-propagation-delay-depends-on" class="nav-link" data-scroll-target="#problem-12.-what-propagation-delay-depends-on">Problem 12. What propagation delay depends on</a></li>
+  <li><a href="#problem-13.-reading-traffic-intensity" id="toc-problem-13.-reading-traffic-intensity" class="nav-link" data-scroll-target="#problem-13.-reading-traffic-intensity">Problem 13. Reading traffic intensity</a></li>
+  <li><a href="#problem-14.-the-bottleneck-link" id="toc-problem-14.-the-bottleneck-link" class="nav-link" data-scroll-target="#problem-14.-the-bottleneck-link">Problem 14. The bottleneck link</a></li>
+  <li><a href="#problem-15.-reading-a-traceroute-line" id="toc-problem-15.-reading-a-traceroute-line" class="nav-link" data-scroll-target="#problem-15.-reading-a-traceroute-line">Problem 15. Reading a traceroute line</a></li>
+  <li><a href="#problem-16.-the-five-layer-stack" id="toc-problem-16.-the-five-layer-stack" class="nav-link" data-scroll-target="#problem-16.-the-five-layer-stack">Problem 16. The five-layer stack</a></li>
+  <li><a href="#problem-17.-naming-the-unit-at-each-layer" id="toc-problem-17.-naming-the-unit-at-each-layer" class="nav-link" data-scroll-target="#problem-17.-naming-the-unit-at-each-layer">Problem 17. Naming the unit at each layer</a></li>
+  <li><a href="#problem-18.-what-encapsulation-adds" id="toc-problem-18.-what-encapsulation-adds" class="nav-link" data-scroll-target="#problem-18.-what-encapsulation-adds">Problem 18. What encapsulation adds</a></li>
+  <li><a href="#problem-19.-telling-the-attacks-apart" id="toc-problem-19.-telling-the-attacks-apart" class="nav-link" data-scroll-target="#problem-19.-telling-the-attacks-apart">Problem 19. Telling the attacks apart</a></li>
+  <li><a href="#problem-20.-why-spoofing-is-possible" id="toc-problem-20.-why-spoofing-is-possible" class="nav-link" data-scroll-target="#problem-20.-why-spoofing-is-possible">Problem 20. Why spoofing is possible</a></li>
+  <li><a href="#problem-21.-cerf-and-kahns-choices" id="toc-problem-21.-cerf-and-kahns-choices" class="nav-link" data-scroll-target="#problem-21.-cerf-and-kahns-choices">Problem 21. Cerf and Kahn’s choices</a></li>
+  <li><a href="#problem-22.-client-server-and-p2p" id="toc-problem-22.-client-server-and-p2p" class="nav-link" data-scroll-target="#problem-22.-client-server-and-p2p">Problem 22. Client-server and P2P</a></li>
+  <li><a href="#problem-23.-addressing-a-process" id="toc-problem-23.-addressing-a-process" class="nav-link" data-scroll-target="#problem-23.-addressing-a-process">Problem 23. Addressing a process</a></li>
+  <li><a href="#problem-24.-what-tcp-does-not-promise" id="toc-problem-24.-what-tcp-does-not-promise" class="nav-link" data-scroll-target="#problem-24.-what-tcp-does-not-promise">Problem 24. What TCP does not promise</a></li>
+  <li><a href="#problem-25.-response-time-without-persistence" id="toc-problem-25.-response-time-without-persistence" class="nav-link" data-scroll-target="#problem-25.-response-time-without-persistence">Problem 25. Response time without persistence</a></li>
+  <li><a href="#problem-26.-the-http-request-line" id="toc-problem-26.-the-http-request-line" class="nav-link" data-scroll-target="#problem-26.-the-http-request-line">Problem 26. The HTTP request line</a></li>
+  <li><a href="#problem-27.-where-cookie-state-lives" id="toc-problem-27.-where-cookie-state-lives" class="nav-link" data-scroll-target="#problem-27.-where-cookie-state-lives">Problem 27. Where cookie state lives</a></li>
+  <li><a href="#problem-28.-a-conditional-get" id="toc-problem-28.-a-conditional-get" class="nav-link" data-scroll-target="#problem-28.-a-conditional-get">Problem 28. A conditional GET</a></li>
+  <li><a href="#problem-29.-push-and-pull" id="toc-problem-29.-push-and-pull" class="nav-link" data-scroll-target="#problem-29.-push-and-pull">Problem 29. Push and pull</a></li>
+  <li><a href="#problem-30.-getting-mail-off-the-server" id="toc-problem-30.-getting-mail-off-the-server" class="nav-link" data-scroll-target="#problem-30.-getting-mail-off-the-server">Problem 30. Getting mail off the server</a></li>
+  <li><a href="#problem-31.-an-iterated-dns-query" id="toc-problem-31.-an-iterated-dns-query" class="nav-link" data-scroll-target="#problem-31.-an-iterated-dns-query">Problem 31. An iterated DNS query</a></li>
+  <li><a href="#problem-32.-why-the-root-is-rarely-visited" id="toc-problem-32.-why-the-root-is-rarely-visited" class="nav-link" data-scroll-target="#problem-32.-why-the-root-is-rarely-visited">Problem 32. Why the root is rarely visited</a></li>
+  <li><a href="#problem-33.-picking-a-dns-record-type" id="toc-problem-33.-picking-a-dns-record-type" class="nav-link" data-scroll-target="#problem-33.-picking-a-dns-record-type">Problem 33. Picking a DNS record type</a></li>
+  <li><a href="#problem-34.-distribution-time-as-peers-arrive" id="toc-problem-34.-distribution-time-as-peers-arrive" class="nav-link" data-scroll-target="#problem-34.-distribution-time-as-peers-arrive">Problem 34. Distribution time as peers arrive</a></li>
+  <li><a href="#problem-35.-how-a-cdn-hands-you-a-nearby-copy" id="toc-problem-35.-how-a-cdn-hands-you-a-nearby-copy" class="nav-link" data-scroll-target="#problem-35.-how-a-cdn-hands-you-a-nearby-copy">Problem 35. How a CDN hands you a nearby copy</a></li>
+  <li><a href="#problem-36.-what-udp-skips" id="toc-problem-36.-what-udp-skips" class="nav-link" data-scroll-target="#problem-36.-what-udp-skips">Problem 36. What UDP skips</a></li>
+  <li><a href="#problem-37.-counting-sockets-at-a-tcp-server" id="toc-problem-37.-counting-sockets-at-a-tcp-server" class="nav-link" data-scroll-target="#problem-37.-counting-sockets-at-a-tcp-server">Problem 37. Counting sockets at a TCP server</a></li>
   </ul></li>
-  <li><a href="#part-2-worked-problems" id="toc-part-2-worked-problems" class="nav-link" data-scroll-target="#part-2-worked-problems">Part 2 — Worked problems</a>
+  <li><a href="#part-2-short-answers" id="toc-part-2-short-answers" class="nav-link" data-scroll-target="#part-2-short-answers">Part 2 — Short answers</a>
   <ul class="collapse">
-  <li><a href="#problem-13.-how-many-users-fit-on-the-link" id="toc-problem-13.-how-many-users-fit-on-the-link" class="nav-link" data-scroll-target="#problem-13.-how-many-users-fit-on-the-link">Problem 13. How many users fit on the link</a></li>
-  <li><a href="#problem-14.-store-and-forward-across-three-links" id="toc-problem-14.-store-and-forward-across-three-links" class="nav-link" data-scroll-target="#problem-14.-store-and-forward-across-three-links">Problem 14. Store and forward across three links</a></li>
-  <li><a href="#problem-15.-throughput-and-the-bottleneck-link" id="toc-problem-15.-throughput-and-the-bottleneck-link" class="nav-link" data-scroll-target="#problem-15.-throughput-and-the-bottleneck-link">Problem 15. Throughput and the bottleneck link</a></li>
-  <li><a href="#problem-16.-traffic-intensity" id="toc-problem-16.-traffic-intensity" class="nav-link" data-scroll-target="#problem-16.-traffic-intensity">Problem 16. Traffic intensity</a></li>
-  <li><a href="#problem-17.-bandwidthdelay-product" id="toc-problem-17.-bandwidthdelay-product" class="nav-link" data-scroll-target="#problem-17.-bandwidthdelay-product">Problem 17. Bandwidth–delay product</a></li>
-  <li><a href="#problem-18.-counting-round-trip-times" id="toc-problem-18.-counting-round-trip-times" class="nav-link" data-scroll-target="#problem-18.-counting-round-trip-times">Problem 18. Counting round-trip times</a></li>
-  <li><a href="#problem-19.-dns-caching-over-time" id="toc-problem-19.-dns-caching-over-time" class="nav-link" data-scroll-target="#problem-19.-dns-caching-over-time">Problem 19. DNS caching over time</a></li>
-  <li><a href="#problem-20.-clientserver-and-p2p-distribution-time" id="toc-problem-20.-clientserver-and-p2p-distribution-time" class="nav-link" data-scroll-target="#problem-20.-clientserver-and-p2p-distribution-time">Problem 20. Client–server and P2P distribution time</a></li>
+  <li><a href="#problem-38.-what-a-protocol-defines" id="toc-problem-38.-what-a-protocol-defines" class="nav-link" data-scroll-target="#problem-38.-what-a-protocol-defines">Problem 38. What a protocol defines</a></li>
+  <li><a href="#problem-39.-store-and-forward-over-three-links" id="toc-problem-39.-store-and-forward-over-three-links" class="nav-link" data-scroll-target="#problem-39.-store-and-forward-over-three-links">Problem 39. Store and forward over three links</a></li>
+  <li><a href="#problem-40.-the-four-delay-components" id="toc-problem-40.-the-four-delay-components" class="nav-link" data-scroll-target="#problem-40.-the-four-delay-components">Problem 40. The four delay components</a></li>
+  <li><a href="#problem-41.-throughput-and-bits-in-flight" id="toc-problem-41.-throughput-and-bits-in-flight" class="nav-link" data-scroll-target="#problem-41.-throughput-and-bits-in-flight">Problem 41. Throughput and bits in flight</a></li>
+  <li><a href="#problem-42.-layers-and-encapsulation" id="toc-problem-42.-layers-and-encapsulation" class="nav-link" data-scroll-target="#problem-42.-layers-and-encapsulation">Problem 42. Layers and encapsulation</a></li>
+  <li><a href="#problem-43.-two-attacks" id="toc-problem-43.-two-attacks" class="nav-link" data-scroll-target="#problem-43.-two-attacks">Problem 43. Two attacks</a></li>
+  <li><a href="#problem-44.-choosing-a-transport-protocol" id="toc-problem-44.-choosing-a-transport-protocol" class="nav-link" data-scroll-target="#problem-44.-choosing-a-transport-protocol">Problem 44. Choosing a transport protocol</a></li>
+  <li><a href="#problem-45.-counting-round-trips-for-a-page" id="toc-problem-45.-counting-round-trips-for-a-page" class="nav-link" data-scroll-target="#problem-45.-counting-round-trips-for-a-page">Problem 45. Counting round trips for a page</a></li>
+  <li><a href="#problem-46.-walking-an-iterated-dns-query" id="toc-problem-46.-walking-an-iterated-dns-query" class="nav-link" data-scroll-target="#problem-46.-walking-an-iterated-dns-query">Problem 46. Walking an iterated DNS query</a></li>
+  <li><a href="#problem-47.-sockets-at-a-tcp-server" id="toc-problem-47.-sockets-at-a-tcp-server" class="nav-link" data-scroll-target="#problem-47.-sockets-at-a-tcp-server">Problem 47. Sockets at a TCP server</a></li>
+  <li><a href="#problem-48.-your-ping-against-the-propagation-bound" id="toc-problem-48.-your-ping-against-the-propagation-bound" class="nav-link" data-scroll-target="#problem-48.-your-ping-against-the-propagation-bound">Problem 48. Your ping against the propagation bound</a></li>
+  <li><a href="#problem-49.-headers-on-the-wire" id="toc-problem-49.-headers-on-the-wire" class="nav-link" data-scroll-target="#problem-49.-headers-on-the-wire">Problem 49. Headers on the wire</a></li>
   </ul></li>
-  <li><a href="#part-3-from-assignment-1" id="toc-part-3-from-assignment-1" class="nav-link" data-scroll-target="#part-3-from-assignment-1">Part 3 — From Assignment 1</a>
-  <ul class="collapse">
-  <li><a href="#problem-21.-the-propagation-bound-and-a-measured-ping" id="toc-problem-21.-the-propagation-bound-and-a-measured-ping" class="nav-link" data-scroll-target="#problem-21.-the-propagation-bound-and-a-measured-ping">Problem 21. The propagation bound and a measured ping</a></li>
-  <li><a href="#problem-22.-reading-a-traceroute" id="toc-problem-22.-reading-a-traceroute" class="nav-link" data-scroll-target="#problem-22.-reading-a-traceroute">Problem 22. Reading a traceroute</a></li>
-  <li><a href="#problem-23.-encapsulation-in-a-capture" id="toc-problem-23.-encapsulation-in-a-capture" class="nav-link" data-scroll-target="#problem-23.-encapsulation-in-a-capture">Problem 23. Encapsulation in a capture</a></li>
-  </ul></li>
-  <li><a href="#part-4-stretch" id="toc-part-4-stretch" class="nav-link" data-scroll-target="#part-4-stretch">Part 4 — Stretch</a>
-  <ul class="collapse">
-  <li><a href="#problem-24.-design-a-protocol" id="toc-problem-24.-design-a-protocol" class="nav-link" data-scroll-target="#problem-24.-design-a-protocol">Problem 24. Design a protocol</a></li>
-  <li><a href="#problem-25.-is-a-web-cache-worth-it" id="toc-problem-25.-is-a-web-cache-worth-it" class="nav-link" data-scroll-target="#problem-25.-is-a-web-cache-worth-it">Problem 25. Is a web cache worth it?</a></li>
-  <li><a href="#problem-26.-reading-socket-code" id="toc-problem-26.-reading-socket-code" class="nav-link" data-scroll-target="#problem-26.-reading-socket-code">Problem 26. Reading socket code</a></li>
-  </ul></li>
-  <li><a href="#a-suggested-order-of-work" id="toc-a-suggested-order-of-work" class="nav-link" data-scroll-target="#a-suggested-order-of-work">A suggested order of work</a></li>
+  <li><a href="#where-each-section-appears" id="toc-where-each-section-appears" class="nav-link" data-scroll-target="#where-each-section-appears">Where each section appears</a></li>
   </ul>
 </nav>
 </div>
@@ -2431,7 +2410,7 @@ document.addEventListener('DOMContentLoaded', function () {
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Midterm Practice Set</h1>
-<p class="subtitle lead">CSCI 4306 · Twenty-six problems on Chapters 1 and 2 and Assignment 1</p>
+<p class="subtitle lead">CSCI 4306 · Multiple choice and short answers on Chapters 1 and 2 and Assignment 1</p>
 </div>
 
 
@@ -2460,70 +2439,74 @@ _quarto-<profile>.yml sets it. Do NOT use .
 
 Three builds from this one source:
   study_guide.html            student. Flowing page, typed in place, no
-                              answer text in the HTML. Publish Oct 6.
+                              answer text in the HTML. Published as
+                              midterm_practice.html.
   study_guide_instructor.html answers open, Paged.js, work boxes hidden.
                               Never published.
-  study_guide_review.html     answers behind a click. Publish Oct 9.
+  study_guide_review.html     answers behind a click. Publishes over the
+                              student build on Tuesday, October 13.
 
 Every answer appears twice, once in the instructor sibling and once in
-the review sibling. Edit both copies or they drift; the student build
-has neither, which is what keeps its HTML free of answer text.
+the review sibling. verify/answers_match.py compares the two copies of
+every answer and fails if they drift; run it after any edit.
 
-Numbers: Parts 1, 2 and 4 use the exam bank's own values, verified by
-exams/question_bank/verify/ch1.py and ch2.py. Part 3 is new to this set
-and is verified by verify/study_guide.py, whose output is saved in
-verify/verify_output.txt.
+The exam is 25 multiple choice at 2 points and 10 short answers at 5,
+and is built from the shapes below with different numbers. The paper
+itself is exams/overleaf_networks_exams/26F_4306_Midterm/.
+
+Every number is recomputed by verify/study_guide.py, whose output is
+saved in verify/verify_output.txt. Slide numbers in the citations are
+positions in the rendered decks (slides/chapter_1/index.html and
+chapter_2/index.html, counting the title slide as 1); they were read off
+those files, not estimated, and they move if a deck gains or loses a
+slide before this chapter.
 -->
 <section id="about-the-exam" class="level1">
 <h1>About the exam</h1>
-<p>The midterm is on <strong>Tuesday, October 13</strong>, from <strong>5:30 to 6:50 PM</strong>, in <strong>STEC 105</strong>. You have 80 minutes, and the paper is worth 100 points.</p>
-<p>It covers Kurose &amp; Ross chapters 1 and 2 and Assignment 1. Chapter 3 is not on it.</p>
-<p>The paper has three parts, in this order.</p>
+<p>The midterm is on <strong>Tuesday, October 20</strong>, from <strong>5:30 to 6:50 PM</strong>, in <strong>STEC 105</strong>. You have 80 minutes and the paper is worth 100 points.</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
 </colgroup>
 <thead>
 <tr class="header">
 <th>Part</th>
 <th>Questions</th>
-<th>What they ask for</th>
+<th>Points</th>
+<th>What each asks for</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>1</td>
-<td>12 short answers</td>
-<td>a definition, a classification, a filled-in table, two or three sentences</td>
+<td>I</td>
+<td>25 multiple choice</td>
+<td>2 each, 50 total</td>
+<td>one right answer out of four</td>
 </tr>
 <tr class="even">
-<td>2</td>
-<td>6 worked problems</td>
-<td>a formula, the substitution, a number with units</td>
-</tr>
-<tr class="odd">
-<td>3</td>
-<td>3 questions from Assignment 1</td>
-<td>the measurements you made on your CloudLab VM</td>
+<td>II</td>
+<td>10 short answers</td>
+<td>5 each, 50 total</td>
+<td>two or three sentences, or one substitution into a formula</td>
 </tr>
 </tbody>
 </table>
+<p>It covers Kurose &amp; Ross chapters 1 and 2 and Assignment 1. <strong>Chapter 3 is not on it</strong>, including whatever we cover on October 13. Assignment 2 is not on it either, though socket programming from §2.7 of the deck is fair game as chapter 2 material.</p>
+<p><strong>The paper is meant to be straightforward.</strong> Most of it asks you to recognize a definition, classify something, or explain an idea you have already explained out loud in class. Where a number is wanted, it is one substitution into a formula — convert bytes to bits, divide, write the unit — and nothing on the paper runs several steps deep. The unit conventions and every formula in the next section are reprinted on the exam cover sheet, so none of them has to be memorized.</p>
 <p>The exam is closed book. Bring a basic or scientific calculator. A phone is not a calculator and has to be put away. No notes, no textbook, no laptop.</p>
-<p>The unit conventions below are reprinted on the exam cover sheet. The formulas are not, so the formula section is the part of this page to know by heart.</p>
-<section id="how-this-practice-set-lines-up-with-the-exam" class="level2">
-<h2 class="anchored" data-anchor-id="how-this-practice-set-lines-up-with-the-exam">How this practice set lines up with the exam</h2>
-<p>Parts 1 through 3 below follow the exam’s three parts in order: twelve short answers, then worked problems, then three questions from Assignment 1. Part 2 here holds eight problems where the exam holds six, because two of them work out Chapter 1 topics that the slides mark Must Know and that the paper itself reaches in a shorter form.</p>
-<p><strong>Twenty-one of the twenty-six problems here have a counterpart on the exam</strong> — the same structure with different numbers. Work a problem here and you have worked its exam version.</p>
-<p>Part 4 is three longer problems. <strong>None of the three has a counterpart on the exam.</strong> They are here because the ideas in them are worth your time and because each one makes you put several pieces together. Nothing on the exam runs that long, so a hard time with Part 4 says nothing about how Tuesday will go.</p>
-<p>Each problem names the textbook section it comes from and the deck slide it is built on. A problem marked <strong>Must Know</strong> sits behind a red-pill slide, and that is where to start if you are short on time. The pill is a priority mark, not a boundary: unmarked material is examinable too.</p>
-<p>Answers go up on Blackboard on <strong>Friday, October 9</strong>.</p>
+<section id="how-to-use-this-page" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-use-this-page">How to use this page</h2>
+<p>Part 1 here is 37 multiple-choice questions and Part 2 is 12 short answers — more than the paper holds, and in the same two shapes, so working this page is working the exam.</p>
+<p>Each problem names the textbook section it comes from and the deck slides it is built on, so a problem you miss points straight at the slides to reread. A problem marked <strong>Must Know</strong> sits behind a red-pill slide; those are where to start if you are short of time. The pill is a priority mark, not a boundary — unmarked material is examinable too.</p>
+<p>Answers go up on Blackboard and on the course page on <strong>Tuesday, October 13</strong>.</p>
 </section>
-<section id="working-the-problems-on-this-page" class="level2">
-<h2 class="anchored" data-anchor-id="working-the-problems-on-this-page">Working the problems on this page</h2>
+<section id="typing-your-answers" class="level2">
+<h2 class="anchored" data-anchor-id="typing-your-answers">Typing your answers</h2>
 <div class="typing-help">
-<p>This page is also your answer sheet. Click into any dashed box or any empty table cell and type. What you type is saved in this browser, so you can close the tab and come back to it. It is saved only in this browser, so work on one computer and keep a copy.</p>
+<p>This page is also your answer sheet. Click into any dashed box and type. What you type is saved in this browser, so you can close the tab and come back to it. It is saved only in this browser, so work on one computer and keep a copy.</p>
 </div>
 <p><strong>Name:</strong> <span class="fill" data-label="Name"></span></p>
 <div class="answers-toolbar">
@@ -2539,14 +2522,15 @@ verify/verify_output.txt.
 </section>
 <section id="formulas-and-conventions" class="level1">
 <h1>Formulas and conventions</h1>
+<p>These are reprinted on the exam cover sheet.</p>
 <section id="units" class="level2">
 <h2 class="anchored" data-anchor-id="units">Units</h2>
-<p>Rates are decimal. 1 kbps <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>=</mo><msup><mn>10</mn><mn>3</mn></msup></mrow><annotation encoding="application/x-tex">= 10^{3}</annotation></semantics></math> bits/s, 1 Mbps <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>=</mo><msup><mn>10</mn><mn>6</mn></msup></mrow><annotation encoding="application/x-tex">= 10^{6}</annotation></semantics></math> bits/s, 1 Gbps <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>=</mo><msup><mn>10</mn><mn>9</mn></msup></mrow><annotation encoding="application/x-tex">= 10^{9}</annotation></semantics></math> bits/s, 1 GB <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>=</mo><msup><mn>10</mn><mn>9</mn></msup></mrow><annotation encoding="application/x-tex">= 10^{9}</annotation></semantics></math> bytes, 1 TB <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>=</mo><msup><mn>10</mn><mn>12</mn></msup></mrow><annotation encoding="application/x-tex">= 10^{12}</annotation></semantics></math> bytes. Binary prefixes do not appear in a delay or throughput problem in this course.</p>
+<p>Rates are decimal: 1 kbps <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>=</mo><msup><mn>10</mn><mn>3</mn></msup></mrow><annotation encoding="application/x-tex">= 10^{3}</annotation></semantics></math> bits/s, 1 Mbps <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>=</mo><msup><mn>10</mn><mn>6</mn></msup></mrow><annotation encoding="application/x-tex">= 10^{6}</annotation></semantics></math> bits/s, 1 Gbps <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>=</mo><msup><mn>10</mn><mn>9</mn></msup></mrow><annotation encoding="application/x-tex">= 10^{9}</annotation></semantics></math> bits/s, 1 MB <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>=</mo><msup><mn>10</mn><mn>6</mn></msup></mrow><annotation encoding="application/x-tex">= 10^{6}</annotation></semantics></math> bytes, 1 GB <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>=</mo><msup><mn>10</mn><mn>9</mn></msup></mrow><annotation encoding="application/x-tex">= 10^{9}</annotation></semantics></math> bytes. Binary prefixes do not appear in a delay or throughput problem in this course.</p>
 <p>Packet and file sizes are given in bytes; link rates are given in bits per second. Almost every numeric problem therefore opens with a conversion, and you should write it down:</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1500</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">bytes</mtext><mo>×</mo><mn>8</mn><mo>=</mo><mn>12</mn><mo>,</mo><mn>000</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">bits</mtext></mrow><annotation encoding="application/x-tex">1500\ \text{bytes} \times 8 = 12{,}000\ \text{bits}</annotation></semantics></math></p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">GB</mtext><mo>=</mo><mn>2</mn><mo>×</mo><msup><mn>10</mn><mn>9</mn></msup><mspace width="0.222em"></mspace><mtext mathvariant="normal">bytes</mtext><mo>×</mo><mn>8</mn><mo>=</mo><mn>1.6</mn><mo>×</mo><msup><mn>10</mn><mn>10</mn></msup><mspace width="0.222em"></mspace><mtext mathvariant="normal">bits</mtext></mrow><annotation encoding="application/x-tex">2\ \text{GB} = 2 \times 10^{9}\ \text{bytes} \times 8
-= 1.6 \times 10^{10}\ \text{bits}</annotation></semantics></math></p>
-<p>Propagation speed in fibre is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi><mo>=</mo><mn>2</mn><mo>×</mo><msup><mn>10</mn><mn>8</mn></msup></mrow><annotation encoding="application/x-tex">s = 2 \times 10^{8}</annotation></semantics></math> m/s unless a problem gives a different value, and some do. Distances are given in kilometres and have to become metres: 1,600 km <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>=</mo><mn>1.6</mn><mo>×</mo><msup><mn>10</mn><mn>6</mn></msup></mrow><annotation encoding="application/x-tex">= 1.6 \times 10^{6}</annotation></semantics></math> m.</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>,</mo><mn>500</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">bytes</mtext><mo>×</mo><mn>8</mn><mo>=</mo><mn>12</mn><mo>,</mo><mn>000</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">bits</mtext></mrow><annotation encoding="application/x-tex">1{,}500\ \text{bytes} \times 8 = 12{,}000\ \text{bits}</annotation></semantics></math></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>50</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">MB</mtext><mo>=</mo><mn>50</mn><mo>×</mo><msup><mn>10</mn><mn>6</mn></msup><mspace width="0.222em"></mspace><mtext mathvariant="normal">bytes</mtext><mo>×</mo><mn>8</mn><mo>=</mo><mn>4</mn><mo>×</mo><msup><mn>10</mn><mn>8</mn></msup><mspace width="0.222em"></mspace><mtext mathvariant="normal">bits</mtext></mrow><annotation encoding="application/x-tex">50\ \text{MB} = 50 \times 10^{6}\ \text{bytes} \times 8
+= 4 \times 10^{8}\ \text{bits}</annotation></semantics></math></p>
+<p>Propagation speed in fibre is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi><mo>=</mo><mn>2</mn><mo>×</mo><msup><mn>10</mn><mn>8</mn></msup></mrow><annotation encoding="application/x-tex">s = 2 \times 10^{8}</annotation></semantics></math> m/s unless a problem says otherwise. Distances come in kilometres and have to become metres: 1,600 km <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>=</mo><mn>1.6</mn><mo>×</mo><msup><mn>10</mn><mn>6</mn></msup></mrow><annotation encoding="application/x-tex">= 1.6 \times 10^{6}</annotation></semantics></math> m.</p>
 <p>Put a unit on every number you write. A rate without <em>Mbps</em>, a delay without <em>ms</em>, or a size without <em>bits</em> or <em>bytes</em> is not an answer.</p>
 </section>
 <section id="the-four-delay-components" class="level2">
@@ -2599,11 +2583,9 @@ verify/verify_output.txt.
 </section>
 <section id="store-and-forward" class="level2">
 <h2 class="anchored" data-anchor-id="store-and-forward">Store and forward</h2>
-<p>A router must receive a whole packet before it can start sending it on, so a path of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math> links costs <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math> transmission delays, not one:</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>d</mi><mtext mathvariant="normal">end-end</mtext></msub><mo>=</mo><mi>n</mi><mspace width="0.167em"></mspace><mfrac><mi>L</mi><mi>R</mi></mfrac><mo>+</mo><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mfrac><msub><mi>d</mi><mi>i</mi></msub><mi>s</mi></mfrac><mo>+</mo><mo stretchy="false" form="prefix">(</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo><mspace width="0.167em"></mspace><msub><mi>d</mi><mtext mathvariant="normal">proc</mtext></msub></mrow><annotation encoding="application/x-tex">d_{\text{end-end}} = n\,\frac{L}{R}
-+ \sum_{i=1}^{n} \frac{d_i}{s}
+<p>A router receives a whole packet before it starts sending it on, so a path of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math> links costs <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math> transmission delays rather than one:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>d</mi><mtext mathvariant="normal">end-end</mtext></msub><mo>=</mo><mi>n</mi><mspace width="0.167em"></mspace><mfrac><mi>L</mi><mi>R</mi></mfrac><mo>+</mo><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mfrac><msub><mi>d</mi><mi>i</mi></msub><mi>s</mi></mfrac><mo>+</mo><mo stretchy="false" form="prefix">(</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo><mspace width="0.167em"></mspace><msub><mi>d</mi><mtext mathvariant="normal">proc</mtext></msub></mrow><annotation encoding="application/x-tex">d_{\text{end-end}} = n\,\frac{L}{R} + \sum_{i=1}^{n} \frac{d_i}{s}
 + (n-1)\,d_{\text{proc}}</annotation></semantics></math></p>
-<p>with <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">n - 1</annotation></semantics></math> routers between the <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math> links. If the links have different rates, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mo>∑</mo><mi>i</mi></msub><mi>L</mi><mi>/</mi><msub><mi>R</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">\sum_i L/R_i</annotation></semantics></math> replaces <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mi>L</mi><mi>/</mi><mi>R</mi></mrow><annotation encoding="application/x-tex">nL/R</annotation></semantics></math>.</p>
 </section>
 <section id="traffic-intensity" class="level2">
 <h2 class="anchored" data-anchor-id="traffic-intensity">Traffic intensity</h2>
@@ -2611,790 +2593,684 @@ verify/verify_output.txt.
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="normal">traffic intensity</mtext><mo>=</mo><mfrac><mrow><mi>L</mi><mi>a</mi></mrow><mi>R</mi></mfrac></mrow><annotation encoding="application/x-tex">\text{traffic intensity} = \frac{La}{R}</annotation></semantics></math></p>
 <p>Below 1 the queue is finite; at 1 and above, work arrives faster than the link can serve it and the queue grows without bound. Average queueing delay rises roughly like <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mi>/</mi><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>L</mi><mi>a</mi><mi>/</mi><mi>R</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">1/(1 - La/R)</annotation></semantics></math>, which is nearly vertical as the intensity approaches 1.</p>
 </section>
-<section id="statistical-multiplexing" class="level2">
-<h2 class="anchored" data-anchor-id="statistical-multiplexing">Statistical multiplexing</h2>
-<p>Circuit switching reserves a user’s peak rate for as long as the user is connected, so a link of rate <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>R</mi><annotation encoding="application/x-tex">R</annotation></semantics></math> holds</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mi>R</mi><mtext mathvariant="normal">peak rate per user</mtext></mfrac><mspace width="0.222em"></mspace><mtext mathvariant="normal">users</mtext></mrow><annotation encoding="application/x-tex">\frac{R}{\text{peak rate per user}}\ \text{users}</annotation></semantics></math></p>
-<p>Packet switching reserves nothing, so more users can share the link and the question becomes how often they collide. If each of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math> users is active with probability <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>p</mi><annotation encoding="application/x-tex">p</annotation></semantics></math>, independently, the number active at one moment is binomial:</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mrow><mtext mathvariant="normal">exactly </mtext><mspace width="0.333em"></mspace></mrow><mi>n</mi><mrow><mspace width="0.333em"></mspace><mtext mathvariant="normal"> active</mtext></mrow><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mfrac linethickness="0"><mi>N</mi><mi>n</mi></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><msup><mi>p</mi><mi>n</mi></msup><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>p</mi><msup><mo stretchy="false" form="postfix">)</mo><mrow><mi>N</mi><mo>−</mo><mi>n</mi></mrow></msup></mrow><annotation encoding="application/x-tex">P(\text{exactly } n \text{ active})
-= \binom{N}{n} p^{n} (1-p)^{N-n}</annotation></semantics></math></p>
-<p>The link is oversubscribed when more users are active than it can carry, and the probability of that is the tail of this distribution.</p>
-</section>
 <section id="throughput" class="level2">
 <h2 class="anchored" data-anchor-id="throughput">Throughput</h2>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="normal">throughput</mtext><mo>=</mo><mrow><mi mathvariant="normal">min</mi><mo>⁡</mo></mrow><mo stretchy="false" form="prefix">(</mo><msub><mi>R</mi><mi>s</mi></msub><mo>,</mo><mspace width="0.222em"></mspace><msub><mi>R</mi><mi>c</mi></msub><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\text{throughput} = \min(R_s,\ R_c)</annotation></semantics></math></p>
-<p>and, with a shared middle link,</p>
+<p>and, with <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>M</mi><annotation encoding="application/x-tex">M</annotation></semantics></math> connections sharing a middle link of capacity <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>R</mi><annotation encoding="application/x-tex">R</annotation></semantics></math>,</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="normal">throughput</mtext><mo>=</mo><mrow><mi mathvariant="normal">min</mi><mo>⁡</mo></mrow><mspace width="-0.167em"></mspace><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>R</mi><mi>s</mi></msub><mo>,</mo><mspace width="0.222em"></mspace><msub><mi>R</mi><mi>c</mi></msub><mo>,</mo><mspace width="0.222em"></mspace><mfrac><mi>R</mi><mi>M</mi></mfrac><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\text{throughput} = \min\!\left(R_s,\ R_c,\ \frac{R}{M}\right)</annotation></semantics></math></p>
-<p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>R</mi><mi>s</mi></msub><annotation encoding="application/x-tex">R_s</annotation></semantics></math> is the server’s access rate, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>R</mi><mi>c</mi></msub><annotation encoding="application/x-tex">R_c</annotation></semantics></math> the client’s, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>R</mi><annotation encoding="application/x-tex">R</annotation></semantics></math> the capacity of the shared link, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>M</mi><annotation encoding="application/x-tex">M</annotation></semantics></math> the number of connections sharing it equally. The smallest of the three is the bottleneck. Transfer time for a file of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>F</mi><annotation encoding="application/x-tex">F</annotation></semantics></math> bits is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>F</mi><annotation encoding="application/x-tex">F</annotation></semantics></math> divided by the throughput.</p>
+<p>The smallest of the three is the bottleneck. Transfer time for a file of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>F</mi><annotation encoding="application/x-tex">F</annotation></semantics></math> bits is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>F</mi><annotation encoding="application/x-tex">F</annotation></semantics></math> divided by the throughput.</p>
 </section>
 <section id="bandwidthdelay-product" class="level2">
 <h2 class="anchored" data-anchor-id="bandwidthdelay-product">Bandwidth–delay product</h2>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>R</mi><mo>×</mo><msub><mi>d</mi><mtext mathvariant="normal">prop</mtext></msub></mrow><annotation encoding="application/x-tex">R \times d_{\text{prop}}</annotation></semantics></math></p>
-<p>is the number of bits that fit on the link at one instant: sent but not yet received. One bit occupies <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi><mi>/</mi><mi>R</mi></mrow><annotation encoding="application/x-tex">s/R</annotation></semantics></math> metres of fibre, and the link length divided by the bandwidth–delay product gives the same figure. Using the round-trip time in place of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>d</mi><mtext mathvariant="normal">prop</mtext></msub><annotation encoding="application/x-tex">d_{\text{prop}}</annotation></semantics></math> gives the data in flight over a round trip, which is the number Chapter 3 is built on.</p>
+<p>is the number of bits on the link at one instant: sent but not yet received. Using the round-trip time in place of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>d</mi><mtext mathvariant="normal">prop</mtext></msub><annotation encoding="application/x-tex">d_{\text{prop}}</annotation></semantics></math> gives the data in flight over a round trip.</p>
 </section>
-<section id="counting-round-trip-times-for-a-web-page" class="level2">
-<h2 class="anchored" data-anchor-id="counting-round-trip-times-for-a-web-page">Counting round-trip times for a web page</h2>
-<p>An RTT is the time for a small packet to reach the server and come back. Resolving the name costs one RTT per DNS server visited. After that:</p>
+<section id="round-trips-for-a-web-page" class="level2">
+<h2 class="anchored" data-anchor-id="round-trips-for-a-web-page">Round trips for a web page</h2>
+<p>An RTT is the time for a small packet to reach the server and come back. For a base file plus <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math> referenced objects on one server, ignoring transmission time:</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
+<col style="width: 50%">
+<col style="width: 50%">
 </colgroup>
 <thead>
 <tr class="header">
 <th>Connection style</th>
-<th>Cost of the base HTML</th>
-<th>Cost of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math> referenced objects</th>
+<th>Total RTTs</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>non-persistent, one at a time</td>
-<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mspace width="0.167em"></mspace><mi>R</mi><mi>T</mi><mi>T</mi></mrow><annotation encoding="application/x-tex">2\,RTT</annotation></semantics></math></td>
-<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mspace width="0.167em"></mspace><mi>R</mi><mi>T</mi><mi>T</mi></mrow><annotation encoding="application/x-tex">2\,RTT</annotation></semantics></math> each, so <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mi>k</mi><mspace width="0.167em"></mspace><mi>R</mi><mi>T</mi><mi>T</mi></mrow><annotation encoding="application/x-tex">2k\,RTT</annotation></semantics></math></td>
+<td>Non-persistent, one connection at a time</td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mo stretchy="false" form="prefix">(</mo><mi>k</mi><mo>+</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">2(k+1)</annotation></semantics></math></td>
 </tr>
 <tr class="even">
-<td>non-persistent, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>p</mi><annotation encoding="application/x-tex">p</annotation></semantics></math> in parallel</td>
-<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mspace width="0.167em"></mspace><mi>R</mi><mi>T</mi><mi>T</mi></mrow><annotation encoding="application/x-tex">2\,RTT</annotation></semantics></math></td>
-<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mspace width="0.167em"></mspace><mi>R</mi><mi>T</mi><mi>T</mi></mrow><annotation encoding="application/x-tex">2\,RTT</annotation></semantics></math> per round, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">⌈</mo><mi>k</mi><mi>/</mi><mi>p</mi><mo stretchy="false" form="postfix">⌉</mo></mrow><annotation encoding="application/x-tex">\lceil k/p \rceil</annotation></semantics></math> rounds</td>
+<td>Non-persistent, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>p</mi><annotation encoding="application/x-tex">p</annotation></semantics></math> parallel connections</td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>+</mo><mo stretchy="false" form="prefix">⌈</mo><mi>k</mi><mi>/</mi><mi>p</mi><mo stretchy="false" form="postfix">⌉</mo><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">2\left(1 + \lceil k/p \rceil\right)</annotation></semantics></math></td>
 </tr>
 <tr class="odd">
-<td>persistent, no pipelining</td>
-<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mspace width="0.167em"></mspace><mi>R</mi><mi>T</mi><mi>T</mi></mrow><annotation encoding="application/x-tex">2\,RTT</annotation></semantics></math></td>
-<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mspace width="0.167em"></mspace><mi>R</mi><mi>T</mi><mi>T</mi></mrow><annotation encoding="application/x-tex">1\,RTT</annotation></semantics></math> each, so <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mspace width="0.167em"></mspace><mi>R</mi><mi>T</mi><mi>T</mi></mrow><annotation encoding="application/x-tex">k\,RTT</annotation></semantics></math></td>
+<td>Persistent without pipelining</td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mo>+</mo><mi>k</mi></mrow><annotation encoding="application/x-tex">2 + k</annotation></semantics></math></td>
 </tr>
 <tr class="even">
-<td>persistent, pipelined</td>
-<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mspace width="0.167em"></mspace><mi>R</mi><mi>T</mi><mi>T</mi></mrow><annotation encoding="application/x-tex">2\,RTT</annotation></semantics></math></td>
-<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mspace width="0.167em"></mspace><mi>R</mi><mi>T</mi><mi>T</mi></mrow><annotation encoding="application/x-tex">1\,RTT</annotation></semantics></math> for all <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math> together</td>
+<td>Persistent with pipelining</td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">2 + 1</annotation></semantics></math></td>
 </tr>
 </tbody>
 </table>
-<p>The <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mspace width="0.167em"></mspace><mi>R</mi><mi>T</mi><mi>T</mi></mrow><annotation encoding="application/x-tex">2\,RTT</annotation></semantics></math> is one round trip for the TCP handshake and one for the request and the first bytes of the reply. Add the transmission time <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mi>/</mi><mi>R</mi></mrow><annotation encoding="application/x-tex">L/R</annotation></semantics></math> of each object unless the problem says to ignore it.</p>
-</section>
-<section id="the-web-cache-model" class="level2">
-<h2 class="anchored" data-anchor-id="the-web-cache-model">The web cache model</h2>
-<p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi mathvariant="normal">Δ</mi><annotation encoding="application/x-tex">\Delta</annotation></semantics></math> is the time to put one average object onto the access link, and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>β</mi><annotation encoding="application/x-tex">\beta</annotation></semantics></math> is the rate of requests that actually cross that link. The average delay on the access link is</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>d</mi><mtext mathvariant="normal">access</mtext></msub><mo>=</mo><mfrac><mi mathvariant="normal">Δ</mi><mrow><mn>1</mn><mo>−</mo><mi mathvariant="normal">Δ</mi><mi>β</mi></mrow></mfrac><mo>,</mo><mspace width="2.0em"></mspace><mtext mathvariant="normal">average response time</mtext><mo>=</mo><msub><mi>d</mi><mtext mathvariant="normal">access</mtext></msub><mo>+</mo><msub><mi>d</mi><mtext mathvariant="normal">Internet</mtext></msub></mrow><annotation encoding="application/x-tex">d_{\text{access}} = \frac{\Delta}{1 - \Delta\beta},
-\qquad
-\text{average response time} = d_{\text{access}} + d_{\text{Internet}}</annotation></semantics></math></p>
-<p>A cache with hit rate <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>h</mi><annotation encoding="application/x-tex">h</annotation></semantics></math> serves <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>h</mi><annotation encoding="application/x-tex">h</annotation></semantics></math> of the requests locally in negligible time, so only <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>h</mi><mo stretchy="false" form="postfix">)</mo><mi>β</mi></mrow><annotation encoding="application/x-tex">(1-h)\beta</annotation></semantics></math> requests cross the link. Recompute <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">Δ</mi><mi>β</mi></mrow><annotation encoding="application/x-tex">\Delta\beta</annotation></semantics></math> with the reduced rate, then average over hits and misses: <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>h</mi><mo>×</mo><mn>0</mn><mo>+</mo><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>h</mi><mo stretchy="false" form="postfix">)</mo><mo>×</mo><mo stretchy="false" form="prefix">(</mo><mtext mathvariant="normal">miss response time</mtext><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">h \times 0 + (1-h) \times (\text{miss response time})</annotation></semantics></math>.</p>
 </section>
 <section id="distributing-a-file-to-n-peers" class="level2">
 <h2 class="anchored" data-anchor-id="distributing-a-file-to-n-peers">Distributing a file to <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math> peers</h2>
-<p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>F</mi><annotation encoding="application/x-tex">F</annotation></semantics></math> is the file size in bits, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>u</mi><mi>s</mi></msub><annotation encoding="application/x-tex">u_s</annotation></semantics></math> the server’s upload rate, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>d</mi><mi mathvariant="normal">min</mi></msub><annotation encoding="application/x-tex">d_{\min}</annotation></semantics></math> the slowest peer’s download rate, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>u</mi><annotation encoding="application/x-tex">u</annotation></semantics></math> each peer’s upload rate.</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>D</mi><mrow><mi>c</mi><mi>s</mi></mrow></msub><mo>=</mo><mrow><mi mathvariant="normal">max</mi><mo>⁡</mo></mrow><mspace width="-0.167em"></mspace><mrow><mo stretchy="true" form="prefix">{</mo><mfrac><mrow><mi>N</mi><mi>F</mi></mrow><msub><mi>u</mi><mi>s</mi></msub></mfrac><mo>,</mo><mspace width="0.222em"></mspace><mfrac><mi>F</mi><msub><mi>d</mi><mi mathvariant="normal">min</mi></msub></mfrac><mo stretchy="true" form="postfix">}</mo></mrow><mspace width="2.0em"></mspace><msub><mi>D</mi><mrow><mi>P</mi><mn>2</mn><mi>P</mi></mrow></msub><mo>=</mo><mrow><mi mathvariant="normal">max</mi><mo>⁡</mo></mrow><mspace width="-0.167em"></mspace><mrow><mo stretchy="true" form="prefix">{</mo><mfrac><mi>F</mi><msub><mi>u</mi><mi>s</mi></msub></mfrac><mo>,</mo><mspace width="0.222em"></mspace><mfrac><mi>F</mi><msub><mi>d</mi><mi mathvariant="normal">min</mi></msub></mfrac><mo>,</mo><mspace width="0.222em"></mspace><mfrac><mrow><mi>N</mi><mi>F</mi></mrow><mrow><msub><mi>u</mi><mi>s</mi></msub><mo>+</mo><mi>N</mi><mi>u</mi></mrow></mfrac><mo stretchy="true" form="postfix">}</mo></mrow></mrow><annotation encoding="application/x-tex">D_{cs} = \max\!\left\{\frac{NF}{u_s},\ \frac{F}{d_{\min}}\right\}
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>D</mi><mrow><mi>c</mi><mi>s</mi></mrow></msub><mo>≥</mo><mrow><mi mathvariant="normal">max</mi><mo>⁡</mo></mrow><mrow><mo stretchy="true" form="prefix">{</mo><mfrac><mrow><mi>N</mi><mi>F</mi></mrow><msub><mi>u</mi><mi>s</mi></msub></mfrac><mo>,</mo><mspace width="0.222em"></mspace><mfrac><mi>F</mi><msub><mi>d</mi><mi mathvariant="normal">min</mi></msub></mfrac><mo stretchy="true" form="postfix">}</mo></mrow><mspace width="2.0em"></mspace><msub><mi>D</mi><mrow><mi>P</mi><mn>2</mn><mi>P</mi></mrow></msub><mo>≥</mo><mrow><mi mathvariant="normal">max</mi><mo>⁡</mo></mrow><mrow><mo stretchy="true" form="prefix">{</mo><mfrac><mi>F</mi><msub><mi>u</mi><mi>s</mi></msub></mfrac><mo>,</mo><mspace width="0.222em"></mspace><mfrac><mi>F</mi><msub><mi>d</mi><mi mathvariant="normal">min</mi></msub></mfrac><mo>,</mo><mspace width="0.222em"></mspace><mfrac><mrow><mi>N</mi><mi>F</mi></mrow><mrow><msub><mi>u</mi><mi>s</mi></msub><mo>+</mo><munder><mo>∑</mo><mi>i</mi></munder><msub><mi>u</mi><mi>i</mi></msub></mrow></mfrac><mo stretchy="true" form="postfix">}</mo></mrow></mrow><annotation encoding="application/x-tex">D_{cs} \ge \max\left\{\frac{NF}{u_s},\ \frac{F}{d_{\min}}\right\}
 \qquad
-D_{P2P} = \max\!\left\{\frac{F}{u_s},\ \frac{F}{d_{\min}},\
-\frac{NF}{u_s + Nu}\right\}</annotation></semantics></math></p>
-<p>Name the term that wins the maximum; that term is the bottleneck, and saying which it is is part of the answer. <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>D</mi><mrow><mi>c</mi><mi>s</mi></mrow></msub><annotation encoding="application/x-tex">D_{cs}</annotation></semantics></math> grows linearly in <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math>. <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>D</mi><mrow><mi>P</mi><mn>2</mn><mi>P</mi></mrow></msub><annotation encoding="application/x-tex">D_{P2P}</annotation></semantics></math> approaches <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>F</mi><mi>/</mi><mi>u</mi></mrow><annotation encoding="application/x-tex">F/u</annotation></semantics></math> and stays there, because each new peer brings upload capacity as well as demand.</p>
+D_{P2P} \ge \max\left\{\frac{F}{u_s},\ \frac{F}{d_{\min}},\
+\frac{NF}{u_s + \sum_i u_i}\right\}</annotation></semantics></math></p>
+<p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>F</mi><annotation encoding="application/x-tex">F</annotation></semantics></math> is the file size, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>u</mi><mi>s</mi></msub><annotation encoding="application/x-tex">u_s</annotation></semantics></math> the server’s upload rate, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>u</mi><mi>i</mi></msub><annotation encoding="application/x-tex">u_i</annotation></semantics></math> a peer’s upload rate, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>d</mi><mi mathvariant="normal">min</mi></msub><annotation encoding="application/x-tex">d_{\min}</annotation></semantics></math> the slowest peer’s download rate.</p>
 </section>
-<section id="names-by-layer" class="level2">
-<h2 class="anchored" data-anchor-id="names-by-layer">Names by layer</h2>
+</section>
+<section id="part-1-multiple-choice" class="level1">
+<h1>Part 1 — Multiple choice</h1>
+<p>Thirty-seven questions, one right answer each. Write the letter in the box. If two options look right, the sentence that decides between them is in the answer.</p>
+<section id="problem-1.-what-a-protocol-pins-down" class="level2">
+<h2 class="anchored" data-anchor-id="problem-1.-what-a-protocol-pins-down">Problem 1. What a protocol pins down</h2>
+<p><em>§1.1 · Chapter 1, slides 15–16 · not marked</em></p>
+<p>Two machines agree on a protocol. What does the protocol specify?</p>
+<p>(a) The programming language each side is written in.<br>
+(b) The format and order of the messages, and the actions taken when a message is sent or received.<br>
+(c) The physical medium the messages travel over.<br>
+(d) The rate of the link between the two machines.<br>
+</p>
+<div class="workbox" style="min-height:0.4in" data-placeholder="(Problem 1)"></div>
+</section>
+<section id="problem-2.-edge-or-core" class="level2">
+<h2 class="anchored" data-anchor-id="problem-2.-edge-or-core">Problem 2. Edge or core</h2>
+<p><em>§1.1–1.3 · Chapter 1, slides 26–27 and 44 · not marked</em></p>
+<p>Which of these belongs to the network <strong>edge</strong> rather than the network core?</p>
+<p>(a) A packet switch inside an ISP’s backbone.<br>
+(b) A fibre link joining two routers.<br>
+(c) A laptop running a web browser.<br>
+(d) The routing algorithm that fills in forwarding tables.<br>
+</p>
+<div class="workbox" style="min-height:0.4in" data-placeholder="(Problem 2)"></div>
+</section>
+<section id="problem-3.-shared-or-dedicated-access" class="level2">
+<h2 class="anchored" data-anchor-id="problem-3.-shared-or-dedicated-access">Problem 3. Shared or dedicated access</h2>
+<p><em>§1.2 · Chapter 1, slides 29–31 · not marked</em></p>
+<p>Your neighbour starts a large download in the evening and your own speed drops. Which access technology does that behaviour point to?</p>
+<p>(a) DSL.<br>
+(b) Cable (HFC).<br>
+(c) Switched Ethernet in an enterprise.<br>
+(d) A dedicated leased line.<br>
+</p>
+<div class="workbox" style="min-height:0.4in" data-placeholder="(Problem 3)"></div>
+</section>
+<section id="problem-4.-pushing-bits-onto-a-link" class="level2">
+<h2 class="anchored" data-anchor-id="problem-4.-pushing-bits-onto-a-link">Problem 4. Pushing bits onto a link</h2>
+<p><em>§1.2 · Chapter 1, slides 36 and 74 · Must Know</em></p>
+<p>A 1,500-byte packet is sent on a 10 Mbps link. How long does it take to push all of its bits onto the link?</p>
+<p>(a) 0.15 ms.<br>
+(b) 1.2 ms.<br>
+(c) 12 ms.<br>
+(d) 150 ms.<br>
+</p>
+<div class="workbox" style="min-height:0.4in" data-placeholder="(Problem 4)"></div>
+</section>
+<section id="problem-5.-guided-and-unguided-media" class="level2">
+<h2 class="anchored" data-anchor-id="problem-5.-guided-and-unguided-media">Problem 5. Guided and unguided media</h2>
+<p><em>§1.2 · Chapter 1, slides 38–39 · not marked</em></p>
+<p>Which of these is an <strong>unguided</strong> medium?</p>
+<p>(a) Twisted-pair copper.<br>
+(b) Coaxial cable.<br>
+(c) Single-mode fibre.<br>
+(d) Terrestrial radio.<br>
+</p>
+<div class="workbox" style="min-height:0.4in" data-placeholder="(Problem 5)"></div>
+</section>
+<section id="problem-6.-why-the-router-waits" class="level2">
+<h2 class="anchored" data-anchor-id="problem-6.-why-the-router-waits">Problem 6. Why the router waits</h2>
+<p><em>§1.3 · Chapter 1, slides 45–46 · Must Know</em></p>
+<p>Under store-and-forward, a router must receive the entire packet before it starts transmitting it on the next link. Why?</p>
+<p>(a) The outgoing link is reserved by the previous packet until then.<br>
+(b) It has to read the destination address in the header and error-check the packet before sending it on.<br>
+(c) The packet is encrypted and must be decrypted first.<br>
+(d) TCP requires the router to acknowledge the packet first.<br>
+</p>
+<div class="workbox" style="min-height:0.4in" data-placeholder="(Problem 6)"></div>
+</section>
+<section id="problem-7.-three-links-one-packet" class="level2">
+<h2 class="anchored" data-anchor-id="problem-7.-three-links-one-packet">Problem 7. Three links, one packet</h2>
+<p><em>§1.3 · Chapter 1, slides 45–47 · Must Know</em></p>
+<p>A packet of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>L</mi><annotation encoding="application/x-tex">L</annotation></semantics></math> bits travels over three links, each of rate <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>R</mi><annotation encoding="application/x-tex">R</annotation></semantics></math>. Ignoring propagation, processing, and queueing, what is the end-to-end delay?</p>
+<p>(a) <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mi>/</mi><mi>R</mi></mrow><annotation encoding="application/x-tex">L/R</annotation></semantics></math>.<br>
+(b) <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mi>L</mi><mi>/</mi><mi>R</mi></mrow><annotation encoding="application/x-tex">2L/R</annotation></semantics></math>.<br>
+(c) <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn><mi>L</mi><mi>/</mi><mi>R</mi></mrow><annotation encoding="application/x-tex">3L/R</annotation></semantics></math>.<br>
+(d) <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mi>/</mi><mn>3</mn><mi>R</mi></mrow><annotation encoding="application/x-tex">L/3R</annotation></semantics></math>.<br>
+</p>
+<div class="workbox" style="min-height:0.4in" data-placeholder="(Problem 7)"></div>
+</section>
+<section id="problem-8.-what-circuit-switching-buys-and-costs" class="level2">
+<h2 class="anchored" data-anchor-id="problem-8.-what-circuit-switching-buys-and-costs">Problem 8. What circuit switching buys and costs</h2>
+<p><em>§1.3 · Chapter 1, slides 51–54 · Must Know</em></p>
+<p>Which statement describes <strong>circuit</strong> switching?</p>
+<p>(a) Resources are reserved for the call, so performance is guaranteed and the circuit sits idle when the call is silent.<br>
+(b) Resources are shared on demand, so a burst can use the whole link when nobody else is sending.<br>
+(c) Each packet carries a destination address and is routed independently.<br>
+(d) The link is divided among users only while they have data to send.<br>
+</p>
+<div class="workbox" style="min-height:0.4in" data-placeholder="(Problem 8)"></div>
+</section>
+<section id="problem-9.-forwarding-and-routing" class="level2">
+<h2 class="anchored" data-anchor-id="problem-9.-forwarding-and-routing">Problem 9. Forwarding and routing</h2>
+<p><em>§1.3 · Chapter 1, slide 50 · not marked</em></p>
+<p>Which function is local to a single router and takes microseconds?</p>
+<p>(a) Routing.<br>
+(b) Forwarding.<br>
+(c) Both, equally.<br>
+(d) Neither; both take seconds to minutes.<br>
+</p>
+<div class="workbox" style="min-height:0.4in" data-placeholder="(Problem 9)"></div>
+</section>
+<section id="problem-10.-the-shape-of-the-internet" class="level2">
+<h2 class="anchored" data-anchor-id="problem-10.-the-shape-of-the-internet">Problem 10. The shape of the Internet</h2>
+<p><em>§1.3 · Chapter 1, slides 60–63 · not marked</em></p>
+<p>Which best describes how today’s Internet is interconnected?</p>
+<p>(a) Every access ISP connects directly to every other access ISP.<br>
+(b) One global ISP carries all traffic between access ISPs.<br>
+(c) Access ISPs connect through regional and tier-1 ISPs, with Internet exchange points and content-provider networks alongside.<br>
+(d) Access ISPs connect only through the root DNS servers.<br>
+</p>
+<div class="workbox" style="min-height:0.4in" data-placeholder="(Problem 10)"></div>
+</section>
+<section id="problem-11.-the-delay-that-varies" class="level2">
+<h2 class="anchored" data-anchor-id="problem-11.-the-delay-that-varies">Problem 11. The delay that varies</h2>
+<p><em>§1.4 · Chapter 1, slides 73–75 · Must Know</em></p>
+<p>On a fixed path, which of the four delay components varies most from one packet to the next?</p>
+<p>(a) Processing delay.<br>
+(b) Queueing delay.<br>
+(c) Transmission delay.<br>
+(d) Propagation delay.<br>
+</p>
+<div class="workbox" style="min-height:0.4in" data-placeholder="(Problem 11)"></div>
+</section>
+<section id="problem-12.-what-propagation-delay-depends-on" class="level2">
+<h2 class="anchored" data-anchor-id="problem-12.-what-propagation-delay-depends-on">Problem 12. What propagation delay depends on</h2>
+<p><em>§1.4 · Chapter 1, slide 74 · Must Know</em></p>
+<p>Propagation delay <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mi>/</mi><mi>s</mi></mrow><annotation encoding="application/x-tex">d/s</annotation></semantics></math> depends on which of the following?</p>
+<p>(a) The length of the packet.<br>
+(b) The rate of the link.<br>
+(c) The physical length of the link.<br>
+(d) The number of packets queued ahead.<br>
+</p>
+<div class="workbox" style="min-height:0.4in" data-placeholder="(Problem 12)"></div>
+</section>
+<section id="problem-13.-reading-traffic-intensity" class="level2">
+<h2 class="anchored" data-anchor-id="problem-13.-reading-traffic-intensity">Problem 13. Reading traffic intensity</h2>
+<p><em>§1.4 · Chapter 1, slides 76–78 · Must Know</em></p>
+<p>A link has traffic intensity <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mi>a</mi><mi>/</mi><mi>R</mi></mrow><annotation encoding="application/x-tex">La/R</annotation></semantics></math> just under 1. What does that tell you?</p>
+<p>(a) The queue is empty and packets never wait.<br>
+(b) Average queueing delay is large and rises steeply with any further traffic.<br>
+(c) The link is broken.<br>
+(d) Packets are arriving faster than the link can serve them, so the queue grows without bound.<br>
+</p>
+<div class="workbox" style="min-height:0.4in" data-placeholder="(Problem 13)"></div>
+</section>
+<section id="problem-14.-the-bottleneck-link" class="level2">
+<h2 class="anchored" data-anchor-id="problem-14.-the-bottleneck-link">Problem 14. The bottleneck link</h2>
+<p><em>§1.4 · Chapter 1, slides 82–83 · Must Know</em></p>
+<p>A server with a 100 Mbps access link sends a file to a client with a 20 Mbps access link, across a core that is not congested. What average throughput does the transfer get?</p>
+<p>(a) 120 Mbps.<br>
+(b) 100 Mbps.<br>
+(c) 60 Mbps.<br>
+(d) 20 Mbps.<br>
+</p>
+<div class="workbox" style="min-height:0.4in" data-placeholder="(Problem 14)"></div>
+</section>
+<section id="problem-15.-reading-a-traceroute-line" class="level2">
+<h2 class="anchored" data-anchor-id="problem-15.-reading-a-traceroute-line">Problem 15. Reading a traceroute line</h2>
+<p><em>§1.4 · Chapter 1, slides 79–81 · not marked</em></p>
+<p>A line of <code>traceroute</code> output reads <code>7  * * *</code>. What happened?</p>
+<p>(a) Hop 7 does not exist and the path ended there.<br>
+(b) All three probes to hop 7 were lost, or that router declines to reply.<br>
+(c) Hop 7 answered three times with a delay too small to print.<br>
+(d) The destination was reached at hop 7.<br>
+</p>
+<div class="workbox" style="min-height:0.4in" data-placeholder="(Problem 15)"></div>
+</section>
+<section id="problem-16.-the-five-layer-stack" class="level2">
+<h2 class="anchored" data-anchor-id="problem-16.-the-five-layer-stack">Problem 16. The five-layer stack</h2>
+<p><em>§1.5 · Chapter 1, slide 95 · Must Know</em></p>
+<p>In the five-layer Internet stack, which layer sits directly <strong>below</strong> the transport layer?</p>
+<p>(a) The application layer.<br>
+(b) The network layer.<br>
+(c) The link layer.<br>
+(d) The physical layer.<br>
+</p>
+<div class="workbox" style="min-height:0.4in" data-placeholder="(Problem 16)"></div>
+</section>
+<section id="problem-17.-naming-the-unit-at-each-layer" class="level2">
+<h2 class="anchored" data-anchor-id="problem-17.-naming-the-unit-at-each-layer">Problem 17. Naming the unit at each layer</h2>
+<p><em>§1.5 · Chapter 1, slides 95–99 · Must Know</em></p>
+<p>What is the name of the unit of data handled at the <strong>transport</strong> layer?</p>
+<p>(a) Message.<br>
+(b) Segment.<br>
+(c) Datagram.<br>
+(d) Frame.<br>
+</p>
+<div class="workbox" style="min-height:0.4in" data-placeholder="(Problem 17)"></div>
+</section>
+<section id="problem-18.-what-encapsulation-adds" class="level2">
+<h2 class="anchored" data-anchor-id="problem-18.-what-encapsulation-adds">Problem 18. What encapsulation adds</h2>
+<p><em>§1.5 · Chapter 1, slides 97–99 · Must Know</em></p>
+<p>As data travels down the stack at the sender, what does each layer do?</p>
+<p>(a) Adds its own header to the unit it received from the layer above.<br>
+(b) Removes the header added by the layer above.<br>
+(c) Re-encrypts the whole packet.<br>
+(d) Splits the unit into bits and sends them individually.<br>
+</p>
+<div class="workbox" style="min-height:0.4in" data-placeholder="(Problem 18)"></div>
+</section>
+<section id="problem-19.-telling-the-attacks-apart" class="level2">
+<h2 class="anchored" data-anchor-id="problem-19.-telling-the-attacks-apart">Problem 19. Telling the attacks apart</h2>
+<p><em>§1.6 · Chapter 1, slide 109 · Must Know</em></p>
+<p>Thousands of compromised hosts flood a server with traffic until legitimate requests cannot get through. What is this?</p>
+<p>(a) Packet sniffing.<br>
+(b) IP spoofing.<br>
+(c) A distributed denial-of-service attack.<br>
+(d) A worm.<br>
+</p>
+<div class="workbox" style="min-height:0.4in" data-placeholder="(Problem 19)"></div>
+</section>
+<section id="problem-20.-why-spoofing-is-possible" class="level2">
+<h2 class="anchored" data-anchor-id="problem-20.-why-spoofing-is-possible">Problem 20. Why spoofing is possible</h2>
+<p><em>§1.6 · Chapter 1, slide 109 · Must Know</em></p>
+<p>Why can a host put a source IP address it does not own into a packet?</p>
+<p>(a) Because IP encrypts the source address, so it cannot be checked.<br>
+(b) Because nothing in IP checks that the source address in a packet belongs to the sender.<br>
+(c) Because routers discard the source address and recompute it.<br>
+(d) Because only TCP packets carry a source address.<br>
+</p>
+<div class="workbox" style="min-height:0.4in" data-placeholder="(Problem 20)"></div>
+</section>
+<section id="problem-21.-cerf-and-kahns-choices" class="level2">
+<h2 class="anchored" data-anchor-id="problem-21.-cerf-and-kahns-choices">Problem 21. Cerf and Kahn’s choices</h2>
+<p><em>§1.7 · Chapter 1, slide 121 · not marked</em></p>
+<p>Which of these is <strong>not</strong> one of the architectural principles Cerf and Kahn set out in 1974?</p>
+<p>(a) Best-effort service: the network promises nothing.<br>
+(b) Stateless routers: no per-connection state in the core.<br>
+(c) Decentralized control: no single administrative entity.<br>
+(d) Guaranteed delivery: the network retransmits what it loses.<br>
+</p>
+<div class="workbox" style="min-height:0.4in" data-placeholder="(Problem 21)"></div>
+</section>
+<section id="problem-22.-client-server-and-p2p" class="level2">
+<h2 class="anchored" data-anchor-id="problem-22.-client-server-and-p2p">Problem 22. Client-server and P2P</h2>
+<p><em>§2.1 · Chapter 2, slide 14 · Must Know</em></p>
+<p>What happens to the capacity of a pure P2P application as more users join?</p>
+<p>(a) It stays fixed, because it was bought for peak demand.<br>
+(b) It grows, because each new peer brings its own upload capacity.<br>
+(c) It falls, because the server has more clients to serve.<br>
+(d) It is unaffected; capacity depends only on the tracker.<br>
+</p>
+<div class="workbox" style="min-height:0.4in" data-placeholder="(Problem 22)"></div>
+</section>
+<section id="problem-23.-addressing-a-process" class="level2">
+<h2 class="anchored" data-anchor-id="problem-23.-addressing-a-process">Problem 23. Addressing a process</h2>
+<p><em>§2.1 · Chapter 2, slides 18–19 · not marked</em></p>
+<p>What identifies the particular process that should receive an arriving message?</p>
+<p>(a) The host’s IP address alone.<br>
+(b) The host’s IP address together with a port number.<br>
+(c) The process’s name in the operating system.<br>
+(d) The MAC address of the host’s network interface.<br>
+</p>
+<div class="workbox" style="min-height:0.4in" data-placeholder="(Problem 23)"></div>
+</section>
+<section id="problem-24.-what-tcp-does-not-promise" class="level2">
+<h2 class="anchored" data-anchor-id="problem-24.-what-tcp-does-not-promise">Problem 24. What TCP does not promise</h2>
+<p><em>§2.1 · Chapter 2, slide 23 · Must Know</em></p>
+<p>Which of these does TCP <strong>not</strong> provide?</p>
+<p>(a) Reliable delivery between the two processes.<br>
+(b) Flow control, so the receiver is never overrun.<br>
+(c) Congestion control, so the sender slows down when the network is overloaded.<br>
+(d) A guaranteed minimum throughput.<br>
+</p>
+<div class="workbox" style="min-height:0.4in" data-placeholder="(Problem 24)"></div>
+</section>
+<section id="problem-25.-response-time-without-persistence" class="level2">
+<h2 class="anchored" data-anchor-id="problem-25.-response-time-without-persistence">Problem 25. Response time without persistence</h2>
+<p><em>§2.2 · Chapter 2, slide 38 · Must Know</em></p>
+<p>Using non-persistent HTTP, how long after the click does a small page arrive, counting from the moment the TCP connection is started?</p>
+<p>(a) One RTT plus the transmission time of the file.<br>
+(b) Two RTTs plus the transmission time of the file.<br>
+(c) Three RTTs plus the transmission time of the file.<br>
+(d) Only the transmission time of the file.<br>
+</p>
+<div class="workbox" style="min-height:0.4in" data-placeholder="(Problem 25)"></div>
+</section>
+<section id="problem-26.-the-http-request-line" class="level2">
+<h2 class="anchored" data-anchor-id="problem-26.-the-http-request-line">Problem 26. The HTTP request line</h2>
+<p><em>§2.2 · Chapter 2, slides 43–45 · Must Know</em></p>
+<p>What does the first line of an HTTP request carry?</p>
+<p>(a) The method, the URL, and the HTTP version.<br>
+(b) The status code and a phrase.<br>
+(c) The host name and the port number.<br>
+(d) The length of the body in bytes.<br>
+</p>
+<div class="workbox" style="min-height:0.4in" data-placeholder="(Problem 26)"></div>
+</section>
+<section id="problem-27.-where-cookie-state-lives" class="level2">
+<h2 class="anchored" data-anchor-id="problem-27.-where-cookie-state-lives">Problem 27. Where cookie state lives</h2>
+<p><em>§2.2 · Chapter 2, slides 50–51 · Must Know</em></p>
+<p>A site sets a cookie in its first response. Where is the user’s state actually kept?</p>
+<p>(a) Entirely in the browser; the server keeps nothing.<br>
+(b) In a database at the site, looked up by the identifier the browser returns in each later request.<br>
+(c) In the DNS record for the site.<br>
+(d) In the TCP connection, which is kept open for the session.<br>
+</p>
+<div class="workbox" style="min-height:0.4in" data-placeholder="(Problem 27)"></div>
+</section>
+<section id="problem-28.-a-conditional-get" class="level2">
+<h2 class="anchored" data-anchor-id="problem-28.-a-conditional-get">Problem 28. A conditional GET</h2>
+<p><em>§2.2 · Chapter 2, slide 62 · not marked</em></p>
+<p>A cache sends <code>If-modified-since:</code> with a date and the object has not changed. What does the server send back?</p>
+<p>(a) <code>200 OK</code> with the object.<br>
+(b) <code>304 Not Modified</code> with no body.<br>
+(c) <code>404 Not Found</code>.<br>
+(d) Nothing; silence means unchanged.<br>
+</p>
+<div class="workbox" style="min-height:0.4in" data-placeholder="(Problem 28)"></div>
+</section>
+<section id="problem-29.-push-and-pull" class="level2">
+<h2 class="anchored" data-anchor-id="problem-29.-push-and-pull">Problem 29. Push and pull</h2>
+<p><em>§2.3 · Chapter 2, slide 78 · Must Know</em></p>
+<p>Which pair of descriptions is right?</p>
+<p>(a) HTTP is a push protocol; SMTP is a pull protocol.<br>
+(b) HTTP is a pull protocol; SMTP is a push protocol.<br>
+(c) Both are push protocols.<br>
+(d) Both are pull protocols.<br>
+</p>
+<div class="workbox" style="min-height:0.4in" data-placeholder="(Problem 29)"></div>
+</section>
+<section id="problem-30.-getting-mail-off-the-server" class="level2">
+<h2 class="anchored" data-anchor-id="problem-30.-getting-mail-off-the-server">Problem 30. Getting mail off the server</h2>
+<p><em>§2.3 · Chapter 2, slide 80 · not marked</em></p>
+<p>SMTP has delivered Bob’s mail to his mail server. What does Bob’s client use to read it?</p>
+<p>(a) SMTP, run in the other direction.<br>
+(b) IMAP, or a web interface over HTTP.<br>
+(c) DNS.<br>
+(d) FTP.<br>
+</p>
+<div class="workbox" style="min-height:0.4in" data-placeholder="(Problem 30)"></div>
+</section>
+<section id="problem-31.-an-iterated-dns-query" class="level2">
+<h2 class="anchored" data-anchor-id="problem-31.-an-iterated-dns-query">Problem 31. An iterated DNS query</h2>
+<p><em>§2.4 · Chapter 2, slide 93 · Must Know</em></p>
+<p>In an iterated query, what does the root server send back to the local DNS server?</p>
+<p>(a) The IP address of the requested host.<br>
+(b) The name of a TLD server to ask next.<br>
+(c) An error, because root servers do not answer queries.<br>
+(d) The query, forwarded to the authoritative server.<br>
+</p>
+<div class="workbox" style="min-height:0.4in" data-placeholder="(Problem 31)"></div>
+</section>
+<section id="problem-32.-why-the-root-is-rarely-visited" class="level2">
+<h2 class="anchored" data-anchor-id="problem-32.-why-the-root-is-rarely-visited">Problem 32. Why the root is rarely visited</h2>
+<p><em>§2.4 · Chapter 2, slide 95 · not marked</em></p>
+<p>Why does a typical lookup never reach a root server?</p>
+<p>(a) Root servers answer only authoritative queries.<br>
+(b) The local DNS server almost always has the TLD servers’ addresses cached.<br>
+(c) Browsers skip the root by default.<br>
+(d) Root servers are only used for reverse lookups.<br>
+</p>
+<div class="workbox" style="min-height:0.4in" data-placeholder="(Problem 32)"></div>
+</section>
+<section id="problem-33.-picking-a-dns-record-type" class="level2">
+<h2 class="anchored" data-anchor-id="problem-33.-picking-a-dns-record-type">Problem 33. Picking a DNS record type</h2>
+<p><em>§2.4 · Chapter 2, slide 99 · Must Know</em></p>
+<p>Which record type gives the name of the mail server for a domain?</p>
+<p>(a) A.<br>
+(b) NS.<br>
+(c) CNAME.<br>
+(d) MX.<br>
+</p>
+<div class="workbox" style="min-height:0.4in" data-placeholder="(Problem 33)"></div>
+</section>
+<section id="problem-34.-distribution-time-as-peers-arrive" class="level2">
+<h2 class="anchored" data-anchor-id="problem-34.-distribution-time-as-peers-arrive">Problem 34. Distribution time as peers arrive</h2>
+<p><em>§2.5 · Chapter 2, slides 115–118 · Must Know</em></p>
+<p>In the client-server bound <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>D</mi><mrow><mi>c</mi><mi>s</mi></mrow></msub><mo>≥</mo><mrow><mi mathvariant="normal">max</mi><mo>⁡</mo></mrow><mo stretchy="false" form="prefix">{</mo><mi>N</mi><mi>F</mi><mi>/</mi><msub><mi>u</mi><mi>s</mi></msub><mo>,</mo><mspace width="0.222em"></mspace><mi>F</mi><mi>/</mi><msub><mi>d</mi><mi mathvariant="normal">min</mi></msub><mo stretchy="false" form="postfix">}</mo></mrow><annotation encoding="application/x-tex">D_{cs} \ge \max\{NF/u_s,\ F/d_{\min}\}</annotation></semantics></math>, what happens as the number of peers <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math> grows?</p>
+<p>(a) Nothing; both terms are independent of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math>.<br>
+(b) The first term grows in proportion to <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math>, so distribution time grows with <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math>.<br>
+(c) The second term grows in proportion to <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math>.<br>
+(d) Both terms shrink, because more peers help.<br>
+</p>
+<div class="workbox" style="min-height:0.4in" data-placeholder="(Problem 34)"></div>
+</section>
+<section id="problem-35.-how-a-cdn-hands-you-a-nearby-copy" class="level2">
+<h2 class="anchored" data-anchor-id="problem-35.-how-a-cdn-hands-you-a-nearby-copy">Problem 35. How a CDN hands you a nearby copy</h2>
+<p><em>§2.6 · Chapter 2, slides 132–134 · Must Know</em></p>
+<p>You request a video from <code>netcinema.com</code>, which uses a CDN. What does NetCinema’s DNS server return?</p>
+<p>(a) The IP address of NetCinema’s own origin server.<br>
+(b) A CNAME pointing into the CDN’s domain, which the CDN then resolves to a nearby cluster.<br>
+(c) An error, so the browser retries at the CDN.<br>
+(d) The video file itself, inside the DNS response.<br>
+</p>
+<div class="workbox" style="min-height:0.4in" data-placeholder="(Problem 35)"></div>
+</section>
+<section id="problem-36.-what-udp-skips" class="level2">
+<h2 class="anchored" data-anchor-id="problem-36.-what-udp-skips">Problem 36. What UDP skips</h2>
+<p><em>§2.7 · Chapter 2, slides 148 and 152 · not marked</em></p>
+<p>What must a UDP client do that a TCP client does not?</p>
+<p>(a) Run a handshake before the first message.<br>
+(b) Attach the destination IP address and port to every datagram it sends.<br>
+(c) Wait for the server to accept the connection.<br>
+(d) Number its bytes so the receiver can reorder them.<br>
+</p>
+<div class="workbox" style="min-height:0.4in" data-placeholder="(Problem 36)"></div>
+</section>
+<section id="problem-37.-counting-sockets-at-a-tcp-server" class="level2">
+<h2 class="anchored" data-anchor-id="problem-37.-counting-sockets-at-a-tcp-server">Problem 37. Counting sockets at a TCP server</h2>
+<p><em>§2.7 · Chapter 2, slide 156 · Must Know</em></p>
+<p>A TCP server is talking to 4 clients at once. How many sockets does it have open?</p>
+<p>(a) 1.<br>
+(b) 4.<br>
+(c) 5.<br>
+(d) 8.<br>
+</p>
+<div class="workbox" style="min-height:0.4in" data-placeholder="(Problem 37)"></div>
+</section>
+</section>
+<section id="part-2-short-answers" class="level1">
+<h1>Part 2 — Short answers</h1>
+<p>Twelve questions of the kind that make up the second half of the paper. Two or three sentences, or one substitution into a formula, is a full answer to each.</p>
+<section id="problem-38.-what-a-protocol-defines" class="level2">
+<h2 class="anchored" data-anchor-id="problem-38.-what-a-protocol-defines">Problem 38. What a protocol defines</h2>
+<p><em>§1.1 · Chapter 1, slides 15–16 · not marked</em></p>
+<p>Name the three things every protocol has to pin down, and give one example of something a protocol does <strong>not</strong> control.</p>
+<div class="workbox" style="min-height:1.6in" data-placeholder="(Problem 38)"></div>
+</section>
+<section id="problem-39.-store-and-forward-over-three-links" class="level2">
+<h2 class="anchored" data-anchor-id="problem-39.-store-and-forward-over-three-links">Problem 39. Store and forward over three links</h2>
+<p><em>§1.3 · Chapter 1, slides 45–47 · Must Know</em></p>
+<p>A packet of 1,000 bytes crosses three links, each running at 2 Mbps. Ignore propagation, processing, and queueing.</p>
+<ol type="a">
+<li><p>Say in one sentence why the path costs three transmission delays rather than one.</p></li>
+<li><p>Compute the end-to-end delay. Show the conversion to bits.</p></li>
+</ol>
+<div class="workbox" style="min-height:2in" data-placeholder="(Problem 39)"></div>
+</section>
+<section id="problem-40.-the-four-delay-components" class="level2">
+<h2 class="anchored" data-anchor-id="problem-40.-the-four-delay-components">Problem 40. The four delay components</h2>
+<p><em>§1.4 · Chapter 1, slides 73–75 · Must Know</em></p>
+<p>Name the four components of nodal delay, give the formula for the two that have one, and say which component varies from packet to packet on a fixed path and why.</p>
+<div class="workbox" style="min-height:2in" data-placeholder="(Problem 40)"></div>
+</section>
+<section id="problem-41.-throughput-and-bits-in-flight" class="level2">
+<h2 class="anchored" data-anchor-id="problem-41.-throughput-and-bits-in-flight">Problem 41. Throughput and bits in flight</h2>
+<p><em>§1.4 · Chapter 1, slides 82–86 · Must Know</em></p>
+<p>A server on a 100 Mbps access link sends a 50 MB file to a client on a 20 Mbps access link. The core carries both comfortably, and the round-trip time between them is 20 ms.</p>
+<ol type="a">
+<li><p>What throughput does the transfer get, and why?</p></li>
+<li><p>How long does the file take?</p></li>
+<li><p>How many bits are in flight on the path at one instant, using the round-trip time?</p></li>
+</ol>
+<div class="workbox" style="min-height:2.4in" data-placeholder="(Problem 41)"></div>
+</section>
+<section id="problem-42.-layers-and-encapsulation" class="level2">
+<h2 class="anchored" data-anchor-id="problem-42.-layers-and-encapsulation">Problem 42. Layers and encapsulation</h2>
+<p><em>§1.5 · Chapter 1, slides 95–99 · Must Know</em></p>
+<ol type="a">
+<li><p>List the five layers of the Internet stack, top to bottom.</p></li>
+<li><p>Give the name of the unit of data at the application, transport, network, and link layers.</p></li>
+<li><p>In one sentence, say what a layer does to the unit it receives from the layer above.</p></li>
+</ol>
+<div class="workbox" style="min-height:2.2in" data-placeholder="(Problem 42)"></div>
+</section>
+<section id="problem-43.-two-attacks" class="level2">
+<h2 class="anchored" data-anchor-id="problem-43.-two-attacks">Problem 43. Two attacks</h2>
+<p><em>§1.6 · Chapter 1, slides 108–109 · Must Know</em></p>
+<p>Describe a distributed denial-of-service attack and packet sniffing in one or two sentences each, and say which of the two a victim can detect while it is happening.</p>
+<div class="workbox" style="min-height:2in" data-placeholder="(Problem 43)"></div>
+</section>
+<section id="problem-44.-choosing-a-transport-protocol" class="level2">
+<h2 class="anchored" data-anchor-id="problem-44.-choosing-a-transport-protocol">Problem 44. Choosing a transport protocol</h2>
+<p><em>§2.1 · Chapter 2, slides 23–24 · Must Know</em></p>
+<p>A DNS lookup is one small request and one small reply. DNS runs over UDP, not TCP.</p>
+<ol type="a">
+<li><p>Name two things TCP provides that UDP does not.</p></li>
+<li><p>Give two reasons DNS chooses UDP anyway.</p></li>
+<li><p>What does DNS have to do itself as a result?</p></li>
+</ol>
+<div class="workbox" style="min-height:2.2in" data-placeholder="(Problem 44)"></div>
+</section>
+<section id="problem-45.-counting-round-trips-for-a-page" class="level2">
+<h2 class="anchored" data-anchor-id="problem-45.-counting-round-trips-for-a-page">Problem 45. Counting round trips for a page</h2>
+<p><em>§2.2 · Chapter 2, slides 38–41 · Must Know</em></p>
+<p>A page is one base HTML file that references 4 small objects, all on the same server. The name is already resolved and transmission times are negligible.</p>
+<ol type="a">
+<li><p>How many RTTs does non-persistent HTTP take, with no parallel connections?</p></li>
+<li><p>How many does persistent HTTP take, without pipelining?</p></li>
+<li><p>In one sentence, where did the difference go?</p></li>
+</ol>
+<div class="workbox" style="min-height:2in" data-placeholder="(Problem 45)"></div>
+</section>
+<section id="problem-46.-walking-an-iterated-dns-query" class="level2">
+<h2 class="anchored" data-anchor-id="problem-46.-walking-an-iterated-dns-query">Problem 46. Walking an iterated DNS query</h2>
+<p><em>§2.4 · Chapter 2, slides 93–95 · Must Know</em></p>
+<p>A host asks its local DNS server for <code>gaia.cs.umass.edu</code>, and the local server has nothing cached.</p>
+<ol type="a">
+<li><p>List, in order, the servers the local server contacts and say what each one returns.</p></li>
+<li><p>The same lookup from the host next to you returns far faster a minute later. Why?</p></li>
+</ol>
+<div class="workbox" style="min-height:2.2in" data-placeholder="(Problem 46)"></div>
+</section>
+<section id="problem-47.-sockets-at-a-tcp-server" class="level2">
+<h2 class="anchored" data-anchor-id="problem-47.-sockets-at-a-tcp-server">Problem 47. Sockets at a TCP server</h2>
+<p><em>§2.7 · Chapter 2, slides 152 and 156 · Must Know</em></p>
+<ol type="a">
+<li><p>What must the server have running before any client can connect, and what does it create when a client does connect?</p></li>
+<li><p>How many sockets does the server hold while serving 4 clients?</p></li>
+<li><p>How many would a UDP server hold with the same 4 clients, and why?</p></li>
+</ol>
+<div class="workbox" style="min-height:2in" data-placeholder="(Problem 47)"></div>
+</section>
+<section id="problem-48.-your-ping-against-the-propagation-bound" class="level2">
+<h2 class="anchored" data-anchor-id="problem-48.-your-ping-against-the-propagation-bound">Problem 48. Your ping against the propagation bound</h2>
+<p><em>Assignment 1, Part B1 · Chapter 1, slides 73–75 · Must Know</em></p>
+<p>In Assignment 1 you pinged Dallas, London, and Sydney and compared the minimum round-trip time with the physical lower bound <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mi>d</mi><mi>/</mi><mi>s</mi></mrow><annotation encoding="application/x-tex">2d/s</annotation></semantics></math>, with <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi><mo>=</mo><mn>2</mn><mo>×</mo><msup><mn>10</mn><mn>8</mn></msup></mrow><annotation encoding="application/x-tex">s = 2 \times 10^{8}</annotation></semantics></math> m/s.</p>
+<ol type="a">
+<li><p>Compute the bound for a server 1,600 km away.</p></li>
+<li><p>Your measured minimum was 38 ms. Give two reasons a real round trip is longer than the bound.</p></li>
+<li><p>Why did the assignment ask for the <strong>minimum</strong> of ten pings rather than the average?</p></li>
+</ol>
+<div class="workbox" style="min-height:2.4in" data-placeholder="(Problem 48)"></div>
+</section>
+<section id="problem-49.-headers-on-the-wire" class="level2">
+<h2 class="anchored" data-anchor-id="problem-49.-headers-on-the-wire">Problem 49. Headers on the wire</h2>
+<p><em>Assignment 1, Part B4 · Chapter 1, slides 97–99 · Must Know</em></p>
+<p>Your <code>tshark</code> capture of one <code>GET</code> request gives: frame length 503 bytes, IP total length 489 bytes, IP header 20 bytes, TCP header 32 bytes.</p>
+<ol type="a">
+<li><p>How many bytes is the link-layer header, and how did you get it?</p></li>
+<li><p>How many bytes did the application actually hand down?</p></li>
+<li><p>What fraction of the frame is header?</p></li>
+</ol>
+<div class="workbox" style="min-height:2.2in" data-placeholder="(Problem 49)"></div>
+</section>
+</section>
+<section id="where-each-section-appears" class="level1">
+<h1>Where each section appears</h1>
+<p>If a section of the reading feels thin, this is which problems to work and which slides to reread.</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Layer</th>
-<th>Job</th>
-<th>Unit it hands down</th>
-<th>Example protocols</th>
+<th>Section</th>
+<th>Deck slides</th>
+<th>Problems here</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>application</td>
-<td>network applications</td>
-<td><strong>message</strong></td>
-<td>HTTP, SMTP, IMAP, DNS</td>
+<td>§1.1 The Internet, protocols</td>
+<td>ch 1, 9–23</td>
+<td>1, 2, 38</td>
 </tr>
 <tr class="even">
-<td>transport</td>
-<td>process to process</td>
-<td><strong>segment</strong></td>
-<td>TCP, UDP</td>
+<td>§1.2 The network edge</td>
+<td>ch 1, 26–40</td>
+<td>3, 4, 5</td>
 </tr>
 <tr class="odd">
-<td>network</td>
-<td>host to host</td>
-<td><strong>datagram</strong></td>
-<td>IP</td>
+<td>§1.3 The network core</td>
+<td>ch 1, 44–70</td>
+<td>6, 7, 8, 9, 10, 39</td>
 </tr>
 <tr class="even">
-<td>link</td>
-<td>across one link</td>
-<td><strong>frame</strong></td>
-<td>Ethernet, Wi-Fi</td>
+<td>§1.4 Delay, loss, throughput</td>
+<td>ch 1, 73–91</td>
+<td>11, 12, 13, 14, 15, 40, 41</td>
 </tr>
 <tr class="odd">
-<td>physical</td>
-<td>bits onto the medium</td>
-<td>bits</td>
-<td>—</td>
+<td>§1.5 Layers and encapsulation</td>
+<td>ch 1, 94–105</td>
+<td>16, 17, 18, 42</td>
+</tr>
+<tr class="even">
+<td>§1.6 Networks under attack</td>
+<td>ch 1, 108–118</td>
+<td>19, 20, 43</td>
+</tr>
+<tr class="odd">
+<td>§1.7 History</td>
+<td>ch 1, 121–128</td>
+<td>21</td>
+</tr>
+<tr class="even">
+<td>§2.1 Application architectures</td>
+<td>ch 2, 11–28</td>
+<td>22, 23, 24, 44</td>
+</tr>
+<tr class="odd">
+<td>§2.2 Web and HTTP</td>
+<td>ch 2, 31–70</td>
+<td>25, 26, 27, 28, 45</td>
+</tr>
+<tr class="even">
+<td>§2.3 E-mail</td>
+<td>ch 2, 73–84</td>
+<td>29, 30</td>
+</tr>
+<tr class="odd">
+<td>§2.4 DNS</td>
+<td>ch 2, 88–110</td>
+<td>31, 32, 33, 46</td>
+</tr>
+<tr class="even">
+<td>§2.5 P2P file distribution</td>
+<td>ch 2, 113–127</td>
+<td>34</td>
+</tr>
+<tr class="odd">
+<td>§2.6 Video streaming and CDNs</td>
+<td>ch 2, 130–144</td>
+<td>35</td>
+</tr>
+<tr class="even">
+<td>§2.7 Socket programming</td>
+<td>ch 2, 147–162</td>
+<td>36, 37, 47</td>
+</tr>
+<tr class="odd">
+<td>Assignment 1</td>
+<td>your own measurements</td>
+<td>48, 49</td>
 </tr>
 </tbody>
 </table>
-<p>A host runs all five layers, a router the bottom three, a link-layer switch the bottom two. The four unit names are not interchangeable, and using the wrong one costs marks.</p>
-</section>
-</section>
-<section id="part-1-quick-answers" class="level1">
-<h1>Part 1 — Quick answers</h1>
-<p>Twelve problems of the kind that open the exam. Each should take two to four minutes. Where a problem asks for a table, fill the table in; where it asks for a sentence, write a sentence.</p>
-<section id="problem-1.-what-a-protocol-defines" class="level2">
-<h2 class="anchored" data-anchor-id="problem-1.-what-a-protocol-defines">Problem 1. What a protocol defines</h2>
-<p><em>§1.1 · deck slides “What’s a Protocol?” · not marked</em></p>
-<p>A network protocol defines which of the following? Select <strong>all</strong> that apply.</p>
-<p>(a) The format of the messages exchanged between two or more communicating entities. (b) The order in which those messages are sent and received. (c) The physical medium (copper, fibre, radio) the messages travel over. (d) The actions taken on the transmission or receipt of a message or other event. (e) The programming language in which the communicating software is written.</p>
-<div class="workbox" style="min-height:1.2in" data-placeholder="(Problem 1)"></div>
-</section>
-<section id="problem-2.-classify-the-access-network" class="level2">
-<h2 class="anchored" data-anchor-id="problem-2.-classify-the-access-network">Problem 2. Classify the access network</h2>
-<p><em>§1.2 · deck slides “Access Networks”, “Cable: Shared or Not?”, “DSL Access” · not marked</em></p>
-<p>For each access technology, give (i) its usual setting — <em>home</em>, <em>enterprise</em>, or <em>wide-area wireless</em> — and (ii) whether the transmission capacity between the subscriber and the provider is <em>dedicated</em> to that subscriber or <em>shared</em> with neighbours.</p>
-<div class="record">
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Technology</th>
-<th>Setting</th>
-<th>Dedicated or shared?</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>DSL</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td>Cable (HFC)</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>Fibre to the home (PON)</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td>Switched Ethernet (100 Mbps–10 Gbps)</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>4G/5G cellular</td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="workbox" style="min-height:1.0in" data-placeholder="(Problem 2)"></div>
-</section>
-<section id="problem-3.-packet-switching-and-circuit-switching" class="level2">
-<h2 class="anchored" data-anchor-id="problem-3.-packet-switching-and-circuit-switching">Problem 3. Packet switching and circuit switching</h2>
-<p><em>§1.3 · deck slides “Circuit Switching”, “FDM and TDM”, “Packet or Circuit?” · not marked</em></p>
-<p>Which of the following are true of <strong>packet switching</strong> as used in the Internet, as opposed to circuit switching? Select all that apply.</p>
-<p>(a) Link resources are reserved for a session before data flows. (b) A packet may wait in a router buffer behind packets from other users. (c) FDM and TDM are two ways to implement it. (d) End-to-end delay is variable and packets can be lost to congestion. (e) It was the basis of the 20th-century telephone network. (f) Link resources are used on demand, with no admission control.</p>
-<div class="workbox" style="min-height:1.2in" data-placeholder="(Problem 3)"></div>
-</section>
-<section id="problem-4.-the-four-delay-components" class="level2">
-<h2 class="anchored" data-anchor-id="problem-4.-the-four-delay-components">Problem 4. The four delay components</h2>
-<p><em>§1.4.1 · deck slide “Four Sources of Delay” · <strong>Must Know</strong></em></p>
-<p>Name the delay each description refers to: <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>d</mi><mtext mathvariant="normal">proc</mtext></msub><annotation encoding="application/x-tex">d_{\text{proc}}</annotation></semantics></math>, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>d</mi><mtext mathvariant="normal">queue</mtext></msub><annotation encoding="application/x-tex">d_{\text{queue}}</annotation></semantics></math>, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>d</mi><mtext mathvariant="normal">trans</mtext></msub><annotation encoding="application/x-tex">d_{\text{trans}}</annotation></semantics></math>, or <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>d</mi><mtext mathvariant="normal">prop</mtext></msub><annotation encoding="application/x-tex">d_{\text{prop}}</annotation></semantics></math>.</p>
-<div class="record">
-<table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Description</th>
-<th>Delay</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>(a) Time for the bits to travel from one end of the link to the other</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>(b) Time waiting in the buffer for the link to become free</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>(c) Time to push all the packet’s bits onto the link</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>(d) Time to check the header for bit errors and look up the output link</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="workbox" style="min-height:1.0in" data-placeholder="(Problem 4)"></div>
-</section>
-<section id="problem-5.-which-layer-and-what-the-unit-is-called" class="level2">
-<h2 class="anchored" data-anchor-id="problem-5.-which-layer-and-what-the-unit-is-called">Problem 5. Which layer, and what the unit is called</h2>
-<p><em>§1.5.1 · deck slides “The Internet Stack”, “Spot the Layer” · <strong>Must Know</strong></em></p>
-<p>For each protocol, name the layer of the five-layer Internet stack at which it operates, and the name of that layer’s packet.</p>
-<div class="record">
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Item</th>
-<th>Layer</th>
-<th>Packet name</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>HTTP</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td>TCP</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>IP</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td>Ethernet</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>DNS</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td>UDP</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>Wi-Fi (802.11)</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td>SMTP</td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="workbox" style="min-height:1.0in" data-placeholder="(Problem 5)"></div>
-</section>
-<section id="problem-6.-networks-under-attack" class="level2">
-<h2 class="anchored" data-anchor-id="problem-6.-networks-under-attack">Problem 6. Networks under attack</h2>
-<p><em>§1.6 · deck slide “Four Ways In” · <strong>Must Know</strong></em></p>
-<p>Match each description to one of the terms <em>worm</em>, <em>virus</em>, <em>botnet</em>, <em>packet sniffer</em>, <em>IP spoofing</em>.</p>
-<div class="record">
-<table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Description</th>
-<th>Term</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>1. Malware that requires a user action, such as opening an attachment, to infect a host</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>2. Malware that enters a host with no user involvement and spreads itself to other hosts</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>3. A collection of compromised hosts under one attacker’s control</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>4. A passive receiver that records every frame passing by on a broadcast medium</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>5. Injecting packets that carry a false source address</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="workbox" style="min-height:1.0in" data-placeholder="(Problem 6)"></div>
-</section>
-<section id="problem-7.-what-the-transport-layer-can-and-cannot-promise" class="level2">
-<h2 class="anchored" data-anchor-id="problem-7.-what-the-transport-layer-can-and-cannot-promise">Problem 7. What the transport layer can and cannot promise</h2>
-<p><em>§2.1.3 · deck slide “TCP vs UDP Service” · <strong>Must Know</strong></em></p>
-<p>For each service, write <strong>TCP</strong>, <strong>UDP</strong>, <strong>both</strong>, or <strong>neither</strong> to say which Internet transport protocol provides it.</p>
-<div class="record">
-<table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Service</th>
-<th>TCP, UDP, both, or neither</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>(a) Reliable, in-order delivery of all data</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>(b) A guaranteed minimum throughput</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>(c) A bound on end-to-end delay</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>(d) Flow control, so the sender cannot overrun the receiver’s buffer</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>(e) Congestion control</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>(f) Encryption of the application data</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>(g) Preserving message boundaries, one send call per delivered message</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="workbox" style="min-height:1.0in" data-placeholder="(Problem 7)"></div>
-</section>
-<section id="problem-8.-http-methods-and-status-codes" class="level2">
-<h2 class="anchored" data-anchor-id="problem-8.-http-methods-and-status-codes">Problem 8. HTTP methods and status codes</h2>
-<p><em>§2.2.3 · deck slides “HTTP Request Message”, “HTTP Response” · <strong>Must Know</strong></em></p>
-<p>(a) Match each status code to its meaning. The codes to choose from are <code>200</code>, <code>301</code>, <code>304</code>, <code>400</code>, <code>404</code>, and <code>505</code>.</p>
-<div class="record">
-<table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Meaning</th>
-<th>Code</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>1. The server does not support the requested HTTP version</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>2. Request succeeded; the object follows</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>3. The object has not changed since the date the client gave</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>4. The object was not found on this server</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>5. The object has moved permanently to the URL in the <code>Location:</code> header</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>6. The server could not understand the request</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>(b) Which request method does a browser use to submit a form whose data is carried in the message <em>body</em>? Which method fetches only the headers of an object, and what is it useful for?</p>
-<p>(c) Name two pieces of information that appear in an HTTP response message and two that do not, because they belong to lower layers.</p>
-<div class="workbox" style="min-height:2.0in" data-placeholder="(Problem 8)"></div>
-</section>
-<section id="problem-9.-smtp-and-http-compared" class="level2">
-<h2 class="anchored" data-anchor-id="problem-9.-smtp-and-http-compared">Problem 9. SMTP and HTTP compared</h2>
-<p><em>§2.3 · deck slide “SMTP vs HTTP” · <strong>Must Know</strong></em></p>
-<p>For each characteristic, write <strong>SMTP</strong>, <strong>HTTP</strong>, or <strong>both</strong>.</p>
-<div class="record">
-<table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Characteristic</th>
-<th>SMTP, HTTP, or both</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>1. Runs over TCP</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>2. Is mainly a <em>push</em> protocol</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>3. Is mainly a <em>pull</em> protocol</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>4. Marks the end of a message body with a line containing only a period</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>5. Uses a <code>Content-Length</code> header to delimit the body</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>6. Requires the message body to be 7-bit ASCII</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>7. Uses server port 25</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="workbox" style="min-height:1.0in" data-placeholder="(Problem 9)"></div>
-</section>
-<section id="problem-10.-dns-resource-records" class="level2">
-<h2 class="anchored" data-anchor-id="problem-10.-dns-resource-records">Problem 10. DNS resource records</h2>
-<p><em>§2.4.3 · deck slide “DNS Records” · <strong>Must Know</strong></em></p>
-<p>Match each record type — <strong>A</strong>, <strong>NS</strong>, <strong>CNAME</strong>, <strong>MX</strong> — to its <code>(Name, Value)</code> meaning.</p>
-<div class="record">
-<table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th><code>(Name, Value)</code> meaning</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>1. <code>Name</code> is a domain; <code>Value</code> is the hostname of an authoritative server for it</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>2. <code>Name</code> is a hostname; <code>Value</code> is its IPv4 address</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>3. <code>Name</code> is an alias; <code>Value</code> is the canonical name of a mail server</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>4. <code>Name</code> is an alias; <code>Value</code> is the canonical hostname</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="workbox" style="min-height:1.0in" data-placeholder="(Problem 10)"></div>
-</section>
-<section id="problem-11.-streaming-video-and-cdns" class="level2">
-<h2 class="anchored" data-anchor-id="problem-11.-streaming-video-and-cdns">Problem 11. Streaming video and CDNs</h2>
-<p><em>§2.6 · deck slides “Finding a Copy” · <strong>Must Know</strong></em></p>
-<p>(a) In DASH, what does the server store for each video, what is the <em>manifest file</em>, and what decision does the client make every few seconds?</p>
-<p>(b) Name the two CDN server-placement philosophies and give one advantage of each.</p>
-<p>(c) A user in Texas requests a video from <code>video.netcinema.com</code>. Explain how the CDN uses DNS to steer that user to a nearby CDN server, naming the record type involved.</p>
-<div class="workbox" style="min-height:2.4in" data-placeholder="(Problem 11)"></div>
-</section>
-<section id="problem-12.-streams-and-datagrams" class="level2">
-<h2 class="anchored" data-anchor-id="problem-12.-streams-and-datagrams">Problem 12. Streams and datagrams</h2>
-<p><em>§2.7 · deck slide “How Many Sockets?” · <strong>Must Know</strong></em></p>
-<p>Application A sends data to application B on another host.</p>
-<p>(a) A uses a TCP socket and calls <code>send()</code> ten times, once per message. Can the network carry the data in <strong>more</strong> than ten segments? In <strong>fewer</strong> than ten? Give a reason for each answer.</p>
-<p>(b) A uses a UDP socket and calls <code>sendto()</code> ten times. Answer the same two questions.</p>
-<p>(c) B, reading from the TCP socket, wants to process A’s ten messages one at a time. What must A and B agree on that they would not need with UDP?</p>
-<div class="workbox" style="min-height:2.4in" data-placeholder="(Problem 12)"></div>
-</section>
-</section>
-<section id="part-2-worked-problems" class="level1">
-<h1>Part 2 — Worked problems</h1>
-<p>Eight problems, each turning on a different formula. Plan on six to eight minutes each. Show the conversion, the formula, the substitution, and the result with its unit. On the exam, an answer with no working gets little credit even when the number is right, and working with an arithmetic slip in it gets most of the credit.</p>
-<section id="problem-13.-how-many-users-fit-on-the-link" class="level2">
-<h2 class="anchored" data-anchor-id="problem-13.-how-many-users-fit-on-the-link">Problem 13. How many users fit on the link</h2>
-<p><em>§1.3 · deck slides “Packet Beats Circuit”, “Finding the 35” · <strong>Must Know</strong></em></p>
-<div class="callout callout-style-default callout-note callout-titled" title="Why this one is here">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Why this one is here
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The slides mark this topic Must Know, so it is worth drilling. This practice set works it out in full even though the paper itself spends only a short question on packet switching against circuit switching. The pill marks what to study first; unmarked material is examinable too.</p>
-</div>
-</div>
-<p>Users share a 4 Mbps link. Each user needs 400 kbps when active and is active 25% of the time, independently of the others.</p>
-<p>(a) Under circuit switching, how many users can the link support?</p>
-<p>(b) Under packet switching, what is the probability that a particular user is active?</p>
-<p>(c) Under packet switching with 20 users, write an expression for the probability that exactly <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math> users are active at once.</p>
-<p>(d) With 20 users, the probability that <strong>more than 10</strong> are active is about 0.004. In one sentence, what does that number say about packet switching compared with your answer to (a)?</p>
-<div class="workbox" style="min-height:3.0in" data-placeholder="(Problem 13)"></div>
-</section>
-<section id="problem-14.-store-and-forward-across-three-links" class="level2">
-<h2 class="anchored" data-anchor-id="problem-14.-store-and-forward-across-three-links">Problem 14. Store and forward across three links</h2>
-<p><em>§1.3–1.4 · deck slides “Store and Forward”, “Your Turn: Three Hops” · <strong>Must Know</strong></em></p>
-<p>A 1500-byte packet travels from host A to host B over three links joined by two store-and-forward routers. Every link runs at 4 Mbps. The links are 1000 km, 2000 km, and 500 km long, propagation speed is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi><mo>=</mo><mn>2</mn><mo>×</mo><msup><mn>10</mn><mn>8</mn></msup></mrow><annotation encoding="application/x-tex">s = 2 \times 10^{8}</annotation></semantics></math> m/s, and each router adds 1 ms of processing delay. There is no queueing.</p>
-<p>(a) Write the end-to-end delay symbolically in terms of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>L</mi><annotation encoding="application/x-tex">L</annotation></semantics></math>, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>R</mi><annotation encoding="application/x-tex">R</annotation></semantics></math>, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>d</mi><mi>i</mi></msub><annotation encoding="application/x-tex">d_i</annotation></semantics></math>, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>s</mi><annotation encoding="application/x-tex">s</annotation></semantics></math>, and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>d</mi><mtext mathvariant="normal">proc</mtext></msub><annotation encoding="application/x-tex">d_{\text{proc}}</annotation></semantics></math>.</p>
-<p>(b) Compute it.</p>
-<p>(c) Suppose the routers instead forwarded each bit the instant it arrived, with zero processing delay. What would the end-to-end delay be?</p>
-<div class="workbox" style="min-height:3.0in" data-placeholder="(Problem 14)"></div>
-</section>
-<section id="problem-15.-throughput-and-the-bottleneck-link" class="level2">
-<h2 class="anchored" data-anchor-id="problem-15.-throughput-and-the-bottleneck-link">Problem 15. Throughput and the bottleneck link</h2>
-<p><em>§1.4.3 · deck slides “The Bottleneck Link”, “Your Turn: Movies” · <strong>Must Know</strong></em></p>
-<p>A server with a 200 Mbps access link sends a file to a client with a 40 Mbps access link. The path crosses one 2 Gbps backbone link that is shared <strong>equally</strong> by 20 such server–client pairs, all sending at once. No other link is a bottleneck.</p>
-<p>(a) What throughput does one pair get?</p>
-<p>(b) How long does a 2 GB file take?</p>
-<p>(c) The client upgrades to a 200 Mbps link. What is the throughput now?</p>
-<p>(d) Unrelated to (a) through (c): you have to move 20 TB from one campus to another over a dedicated 1 Gbps link. How long does it take, and would an overnight courier with a box of disks be faster?</p>
-<div class="workbox" style="min-height:3.0in" data-placeholder="(Problem 15)"></div>
-</section>
-<section id="problem-16.-traffic-intensity" class="level2">
-<h2 class="anchored" data-anchor-id="problem-16.-traffic-intensity">Problem 16. Traffic intensity</h2>
-<p><em>§1.4.2 · deck slide “Your Turn: How Busy?” · <strong>Must Know</strong></em></p>
-<p>Packets of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mo>=</mo><mn>2000</mn></mrow><annotation encoding="application/x-tex">L = 2000</annotation></semantics></math> bits arrive at a 2 Mbps link at an average rate of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>a</mi><annotation encoding="application/x-tex">a</annotation></semantics></math> packets per second.</p>
-<p>(a) Compute the traffic intensity <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mi>a</mi><mi>/</mi><mi>R</mi></mrow><annotation encoding="application/x-tex">La/R</annotation></semantics></math> for <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo>=</mo><mn>400</mn></mrow><annotation encoding="application/x-tex">a = 400</annotation></semantics></math>, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>900</mn><annotation encoding="application/x-tex">900</annotation></semantics></math>, and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1100</mn><annotation encoding="application/x-tex">1100</annotation></semantics></math> packets/s, and describe the queue in each case.</p>
-<p>(b) At what arrival rate does the intensity reach 1?</p>
-<p>(c) A network engineer says “the link is only 90% utilized, so there is plenty of room.” Explain in one sentence why the queueing-delay curve makes this a risky statement.</p>
-<div class="workbox" style="min-height:3.0in" data-placeholder="(Problem 16)"></div>
-</section>
-<section id="problem-17.-bandwidthdelay-product" class="level2">
-<h2 class="anchored" data-anchor-id="problem-17.-bandwidthdelay-product">Problem 17. Bandwidth–delay product</h2>
-<p><em>§1.4 · deck slide “Bits in Flight” · <strong>Must Know</strong></em></p>
-<div class="callout callout-style-default callout-note callout-titled" title="Why this one is here">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Why this one is here
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The slides mark this topic Must Know, and you measured it on a real path in Assignment 1 B3, so it is worth drilling. This practice set works it out in full even though the paper itself spends only a short question on it. The pill marks what to study first; unmarked material is examinable too.</p>
-</div>
-</div>
-<p>Hosts A and B are 10,000 km apart on a direct 20 Mbps link, with propagation speed <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi><mo>=</mo><mn>2.5</mn><mo>×</mo><msup><mn>10</mn><mn>8</mn></msup></mrow><annotation encoding="application/x-tex">s = 2.5 \times 10^{8}</annotation></semantics></math> m/s.</p>
-<p>(a) Compute <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>d</mi><mtext mathvariant="normal">prop</mtext></msub><annotation encoding="application/x-tex">d_{\text{prop}}</annotation></semantics></math> and the bandwidth–delay product <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>R</mi><mo>⋅</mo><msub><mi>d</mi><mtext mathvariant="normal">prop</mtext></msub></mrow><annotation encoding="application/x-tex">R \cdot d_{\text{prop}}</annotation></semantics></math>.</p>
-<p>(b) What does the bandwidth–delay product represent physically?</p>
-<p>(c) How wide, in metres, is one bit on this link? Give a general formula in terms of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>s</mi><annotation encoding="application/x-tex">s</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>R</mi><annotation encoding="application/x-tex">R</annotation></semantics></math>.</p>
-<p>(d) A sends a 500,000-bit file as one continuous transmission. What is the maximum number of bits in the link at any instant?</p>
-<div class="workbox" style="min-height:3.0in" data-placeholder="(Problem 17)"></div>
-</section>
-<section id="problem-18.-counting-round-trip-times" class="level2">
-<h2 class="anchored" data-anchor-id="problem-18.-counting-round-trip-times">Problem 18. Counting round-trip times</h2>
-<p><em>§2.2.2, §2.4 · deck slides “Response Time”, “Your Turn: RTT Count” · <strong>Must Know</strong></em></p>
-<p>You click a link. Your host’s DNS cache is empty; resolving the name visits three DNS servers in turn, with round-trip times 40 ms, 60 ms, and 20 ms. The RTT between your host and the web server is 50 ms. The page is a small HTML file that references six small images on the same server. Ignore transmission times.</p>
-<p>(a) How long from the click until the HTML file arrives?</p>
-<p>(b) How long until all six images have also arrived, using</p>
-<ul>
-<li>(i) non-persistent HTTP, one connection at a time</li>
-<li>(ii) non-persistent HTTP with three parallel connections</li>
-<li>(iii) persistent HTTP without pipelining</li>
-<li>(iv) persistent HTTP with pipelining</li>
-</ul>
-<div class="workbox" style="min-height:3.0in" data-placeholder="(Problem 18)"></div>
-</section>
-<section id="problem-19.-dns-caching-over-time" class="level2">
-<h2 class="anchored" data-anchor-id="problem-19.-dns-caching-over-time">Problem 19. DNS caching over time</h2>
-<p><em>§2.4.2 · deck slides “Your Turn: DNS Cache” · <strong>Must Know</strong></em></p>
-<p>A local DNS server starts with an empty cache and caches every record it receives for 20 time units. Every one-way message — host to local server, local server to any other server, or the reverse — takes exactly 1 time unit, and servers answer instantly. All queries into the hierarchy are iterative, and no two resolutions overlap in time. Hosts in the network ask the local server to resolve:</p>
-<ul>
-<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">t = 0</annotation></semantics></math>: <code>www.a.com</code></li>
-<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mn>10</mn></mrow><annotation encoding="application/x-tex">t = 10</annotation></semantics></math>: <code>www.b.com</code></li>
-<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mn>15</mn></mrow><annotation encoding="application/x-tex">t = 15</annotation></semantics></math>: <code>mail.a.com</code></li>
-<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mn>40</mn></mrow><annotation encoding="application/x-tex">t = 40</annotation></semantics></math>: <code>www.a.com</code></li>
-</ul>
-<p>For each request, list the servers the local server contacts (root, <code>.com</code> TLD, authoritative) and the time at which the host receives its answer.</p>
-<div class="workbox" style="min-height:3.0in" data-placeholder="(Problem 19)"></div>
-</section>
-<section id="problem-20.-clientserver-and-p2p-distribution-time" class="level2">
-<h2 class="anchored" data-anchor-id="problem-20.-clientserver-and-p2p-distribution-time">Problem 20. Client–server and P2P distribution time</h2>
-<p><em>§2.5.1 · deck slides “Distribution Time”, “Your Turn: 20 Peers” · <strong>Must Know</strong></em></p>
-<p>A file of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>F</mi><mo>=</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">F = 4</annotation></semantics></math> Gbits must be delivered to <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math> peers. The server’s upload rate is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>u</mi><mi>s</mi></msub><mo>=</mo><mn>40</mn></mrow><annotation encoding="application/x-tex">u_s = 40</annotation></semantics></math> Mbps, every peer’s download rate is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>d</mi><mi mathvariant="normal">min</mi></msub><mo>=</mo><mn>10</mn></mrow><annotation encoding="application/x-tex">d_{\min} = 10</annotation></semantics></math> Mbps, and every peer’s upload rate is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi><mo>=</mo><mn>5</mn></mrow><annotation encoding="application/x-tex">u = 5</annotation></semantics></math> Mbps.</p>
-<p>(a) For <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mo>=</mo><mn>16</mn></mrow><annotation encoding="application/x-tex">N = 16</annotation></semantics></math>, compute the minimum distribution time under client–server and under P2P. Say which term is the bottleneck in each.</p>
-<p>(b) Repeat for <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mo>=</mo><mn>8</mn></mrow><annotation encoding="application/x-tex">N = 8</annotation></semantics></math>.</p>
-<p>(c) In one sentence each: how does each architecture’s distribution time behave as <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math> grows large?</p>
-<div class="workbox" style="min-height:3.2in" data-placeholder="(Problem 20)"></div>
-</section>
-</section>
-<section id="part-3-from-assignment-1" class="level1">
-<h1>Part 3 — From Assignment 1</h1>
-<p>Three problems on the measurements you made on your CloudLab VM. The exam versions use the same three measurements with different output, so what matters is that you can read the output and do the arithmetic, not that you remember your own numbers.</p>
-<p>The data below came from a VM on the Utah cluster, measured against the Linode speedtest hosts in Dallas, London, and Sydney. Your own figures will differ.</p>
-<section id="problem-21.-the-propagation-bound-and-a-measured-ping" class="level2">
-<h2 class="anchored" data-anchor-id="problem-21.-the-propagation-bound-and-a-measured-ping">Problem 21. The propagation bound and a measured ping</h2>
-<p><em>§1.4.1 · deck slides “Four Sources of Delay”, “Your Turn: Dominates” · <strong>Must Know</strong> · Assignment 1 B1</em></p>
-<p>A VM on the Utah cluster pinged each of the three servers ten times and recorded the minimum round-trip time. The great-circle distances from Salt Lake City are in the second column.</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Server</th>
-<th>Great-circle distance</th>
-<th>Measured minimum RTT</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Dallas</td>
-<td>1,600 km</td>
-<td>29.4 ms</td>
-</tr>
-<tr class="even">
-<td>London</td>
-<td>7,800 km</td>
-<td>128.0 ms</td>
-</tr>
-<tr class="odd">
-<td>Sydney</td>
-<td>12,900 km</td>
-<td>183.0 ms</td>
-</tr>
-</tbody>
-</table>
-<p>Take <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi><mo>=</mo><mn>2</mn><mo>×</mo><msup><mn>10</mn><mn>8</mn></msup></mrow><annotation encoding="application/x-tex">s = 2 \times 10^{8}</annotation></semantics></math> m/s.</p>
-<p>(a) For each server, compute the propagation lower bound on the round trip and the ratio of the measured minimum to that bound. Show the distance conversion.</p>
-<p>(b) The ratio is largest for Dallas and smallest for Sydney. Account for the gap between measurement and bound, and explain why the ratio falls as the distance grows.</p>
-<p>(c) Could a measured minimum RTT ever come in <em>below</em> the bound? If you saw one, what would you conclude about the server?</p>
-<div class="workbox" style="min-height:3.2in" data-placeholder="(Problem 21)"></div>
-</section>
-<section id="problem-22.-reading-a-traceroute" class="level2">
-<h2 class="anchored" data-anchor-id="problem-22.-reading-a-traceroute">Problem 22. Reading a traceroute</h2>
-<p><em>§1.4.4 · deck slide “Using traceroute” · not marked · Assignment 1 B2</em></p>
-<p>A <code>traceroute</code> from the same VM to <code>speedtest.london.linode.com</code> printed the following. Each line is one router, with three round-trip probes in milliseconds. Use the first probe on each line.</p>
-<pre><code> 1  10.10.1.1          0.312    0.288    0.301
- 2  155.98.36.1        0.584    0.571    0.602
- 3  155.98.0.1         1.142    1.108    1.121
- 4  198.32.11.52       9.874    9.901    9.860
- 5  * * *
- 6  162.252.70.138    31.442   31.387   31.455
- 7  173.205.57.86     52.118   52.260   52.071
- 8  173.205.57.78    128.904  129.117  128.842
- 9  109.74.207.33    129.455  129.380  129.512
-10  176.58.107.39    130.012  129.884  130.106</code></pre>
-<p>(a) Between which two hops does the path cross the Atlantic? Say what in the numbers tells you, and work out how long the fibre on that one link must be.</p>
-<p>(b) Hop 5 printed three asterisks. Does that mean the probes were lost and the path is broken? Explain what the line means.</p>
-<p>(c) Routers do not normally reply to the packets they forward. How does <code>traceroute</code> get each one to identify itself?</p>
-<div class="workbox" style="min-height:3.0in" data-placeholder="(Problem 22)"></div>
-</section>
-<section id="problem-23.-encapsulation-in-a-capture" class="level2">
-<h2 class="anchored" data-anchor-id="problem-23.-encapsulation-in-a-capture">Problem 23. Encapsulation in a capture</h2>
-<p><em>§1.5.2 · deck slides “Encapsulation”, “Your Turn: Headers” · <strong>Must Know</strong> · Assignment 1 B4</em></p>
-<p>A <code>tshark</code> capture of one small web request printed the rows below. The columns are the frame number, the frame length, the IP total length, the IP header length, the TCP header length, the TCP payload length, and a description. All lengths are in <strong>bytes</strong>.</p>
-<pre><code>no. frame.len ip.len ip.hdr_len tcp.hdr_len tcp.len  info
-  1        74     60         20          40       0  [SYN]
-  2        74     60         20          40       0  [SYN, ACK]
-  3        66     52         20          32       0  [ACK]
-  4       141    127         20          32      75  GET / HTTP/1.1
-  5        66     52         20          32       0  [ACK]
-  6      1514   1500         20          32    1448  HTTP/1.1 200 OK</code></pre>
-<p>(a) For <strong>frame 4</strong>, give the Chapter 1 name of the unit at each of the four layers and the number of header bytes each layer adds. The link header is <code>frame.len</code> minus <code>ip.len</code>.</p>
-<p>(b) Compute the header overhead of frame 4, as header bytes over frame length, as a percentage. Do the same for frame 6, and account for the difference in one sentence.</p>
-<p>(c) The slides said Ethernet adds 18 bytes and a TCP header is 20 bytes. This capture shows 14 and 32. Explain both differences.</p>
-<div class="workbox" style="min-height:3.0in" data-placeholder="(Problem 23)"></div>
-</section>
-</section>
-<section id="part-4-stretch" class="level1">
-<h1>Part 4 — Stretch</h1>
-<div class="callout callout-style-default callout-important callout-titled" title="These three are not on the exam">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>These three are not on the exam
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The three problems below are longer and harder than anything the midterm will ask. <strong>None of them has a counterpart on the exam.</strong> They are here because the ideas are worth your time and because each one makes you put several pieces together, which is how the material sticks. Work them if you have time after Parts 1 through 3.</p>
-</div>
-</div>
-<section id="problem-24.-design-a-protocol" class="level2">
-<h2 class="anchored" data-anchor-id="problem-24.-design-a-protocol">Problem 24. Design a protocol</h2>
-<p><em>§1.1 · deck slides “Activity: Design a Protocol” · not marked · no exam counterpart</em></p>
-<p>Design an application-layer protocol between a parking-garage pay station and the garage’s central server. The protocol must let the station (i) submit a ticket number and receive the amount due, (ii) submit a card payment and learn whether it was approved, and (iii) handle the case where the ticket number is unknown to the server. Assume the underlying transport delivers messages reliably and in order.</p>
-<p>(a) List the messages in each direction, with their fields.</p>
-<p>(b) Sketch a timeline, station on the left and server on the right, for a successful payment.</p>
-<p>(c) Sketch the timeline for an unknown ticket number.</p>
-<p>(d) Suppose the transport were unreliable instead, and the station retransmitted a <code>PAY</code> message whose reply was lost. What could go wrong, and what single field would you add to prevent it?</p>
-<div class="workbox" style="min-height:3.2in" data-placeholder="(Problem 24)"></div>
-</section>
-<section id="problem-25.-is-a-web-cache-worth-it" class="level2">
-<h2 class="anchored" data-anchor-id="problem-25.-is-a-web-cache-worth-it">Problem 25. Is a web cache worth it?</h2>
-<p><em>§2.2.5 · deck slides “Your Turn: Cache It?” · <strong>Must Know</strong> · no exam counterpart</em></p>
-<p>An institution connects to the Internet through a 10 Mbps access link. Its browsers request objects from origin servers at an average rate of 20 requests per second, and the average object is 400,000 bits. The delay from the institution’s router across the Internet and back averages 2 s. Delay inside the institution’s LAN is negligible. Model the average access-link delay as <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">Δ</mi><mi>/</mi><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi mathvariant="normal">Δ</mi><mi>β</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\Delta / (1 - \Delta\beta)</annotation></semantics></math>, where <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi mathvariant="normal">Δ</mi><annotation encoding="application/x-tex">\Delta</annotation></semantics></math> is the time to send one average object over the access link and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>β</mi><annotation encoding="application/x-tex">\beta</annotation></semantics></math> is the request rate on that link.</p>
-<p>(a) Compute the traffic intensity on the access link and the average total response time.</p>
-<p>(b) The IT department proposes upgrading the access link to 100 Mbps. Compute the new average response time.</p>
-<p>(c) Instead, a web cache is installed with a 50% hit rate; hits are served in negligible time. Compute the new average response time.</p>
-<p>(d) Which option would you recommend, and why?</p>
-<div class="workbox" style="min-height:3.2in" data-placeholder="(Problem 25)"></div>
-</section>
-<section id="problem-26.-reading-socket-code" class="level2">
-<h2 class="anchored" data-anchor-id="problem-26.-reading-socket-code">Problem 26. Reading socket code</h2>
-<p><em>§2.7 · deck slide “How Many Sockets?” · <strong>Must Know</strong> · no exam counterpart</em></p>
-<p>The chapter’s UDP server contains</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>serverSocket <span class="op">=</span> socket(AF_INET, SOCK_DGRAM)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>serverSocket.bind((<span class="st">&#39;&#39;</span>, <span class="dv">12000</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>and the client contains</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>clientSocket <span class="op">=</span> socket(AF_INET, SOCK_DGRAM)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>clientSocket.sendto(message.encode(), (serverName, <span class="dv">12000</span>))</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>modifiedMessage, serverAddress <span class="op">=</span> clientSocket.recvfrom(<span class="dv">2048</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>(a) The client never calls <code>bind()</code>. What port number does its socket have, and who chose it?</p>
-<p>(b) The line <code>clientSocket.bind((&#39;&#39;, 5432))</code> is added to the client right after the socket is created. Must the server program change? Explain.</p>
-<p>(c) The client is started before the server. What happens when the user types a message?</p>
-<p>(d) The client’s <code>sendto()</code> is changed to use port 12001. What happens?</p>
-<div class="workbox" style="min-height:3.2in" data-placeholder="(Problem 26)"></div>
-</section>
-</section>
-<section id="a-suggested-order-of-work" class="level1">
-<h1>A suggested order of work</h1>
-<p>If you have one evening, work Part 2 first. Eight formulas and eight worked problems, and the middle section of the exam is six problems of the same kind.</p>
-<p>Then go through Part 1, filling in the tables and checking them against the answers rather than writing long prose. Those twelve are quick, and so is the exam’s first section.</p>
-<p>Then Part 3, with Assignment 1 open beside you. The exam version of those three gives you output to read rather than output you produced, so the thing to practise is reading the output in this set, not recalling your own numbers.</p>
-<p>Part 4 last, and only if there is time left. Whatever order you work in, bring a calculator on Tuesday.</p>
+<p>The slide ranges include the <em>Read After Class</em> blocks at the end of each section. Those slides are examinable, and they are written to be read on your own.</p>
 </section>
 
 </main>
