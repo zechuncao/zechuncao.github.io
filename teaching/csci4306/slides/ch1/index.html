@@ -101,7 +101,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-bacd66df58427b0c9d32c2ffc4cb0031.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-5875e0939afc05b061d4d3f195c3e50a.css">
   <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -194,6 +194,56 @@
       margin-left: auto;
       margin-right: 0; 
     }
+  </style>
+  <style>
+  @font-face {
+    font-family: 'Jost';
+    font-style: italic;
+    font-weight: 400;
+    font-display: swap;
+    src: url(fonts/jost-400-italic-latin-ext.woff2) format('woff2');
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
+  @font-face {
+    font-family: 'Jost';
+    font-style: italic;
+    font-weight: 400;
+    font-display: swap;
+    src: url(fonts/jost-400-italic-latin.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+  @font-face {
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(fonts/jost-400-normal-latin-ext.woff2) format('woff2');
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
+  @font-face {
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(fonts/jost-400-normal-latin.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+  @font-face {
+    font-family: 'Abhaya Libre';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(fonts/abhaya-libre-400-normal-latin-ext.woff2) format('woff2');
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
+  @font-face {
+    font-family: 'Abhaya Libre';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(fonts/abhaya-libre-400-normal-latin.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
   </style>
 </head>
 <body class="quarto-light">
@@ -517,21 +567,6 @@ Zechun (Jacob) Cao
 </div></div>
 <div class="fragment">
 <p>Same shape: <strong>greet, establish, request, respond.</strong> The difference is that a machine cannot improvise when the other side says something unexpected — so the rules must be written down exactly.</p>
-</div>
-</section>
-<section id="activity-design-a-protocol" class="slide level2">
-<h2>Activity: Design a Protocol</h2>
-<div class="activity">
-<p><span class="activity-label">In pairs — 6 minutes</span></p>
-<p>Design a protocol for a <strong>vending machine</strong> and a <strong>phone</strong> paying for a drink. Write down:</p>
-<ol type="1">
-<li>the <strong>messages</strong> (names and fields), in order</li>
-<li>what each side <strong>does</strong> on receiving each message</li>
-<li>what happens if a message is <strong>lost</strong></li>
-</ol>
-</div>
-<div class="fragment">
-<p><span class="vote-prompt">Then we build one together — and find the bug in it.</span></p>
 </div>
 </section>
 <section id="a-first-attempt" class="slide level2">
@@ -911,20 +946,6 @@ Zechun (Jacob) Cao
 <p><strong>B.</strong> That delay is <em>distance divided by the speed of light</em>. No engineering removes it — which is exactly why Starlink flies at 550 km instead of 35,786 km.</p>
 </div>
 </section>
-<section id="activity-rate-your-link" class="slide level2">
-<h2>Activity: Rate Your Link</h2>
-<div class="activity">
-<p><span class="activity-label">Everyone — 5 minutes, phone or laptop</span></p>
-<ol type="1">
-<li>Run a speed test on <strong>campus Wi-Fi</strong>. Record down/up in Mbps.</li>
-<li>Turn Wi-Fi off and repeat on <strong>cellular</strong>.</li>
-<li>Post both numbers.</li>
-</ol>
-</div>
-<div class="fragment">
-<p>Then, as a room: which link is <strong>shared</strong>, and how can you tell from the numbers alone? Whose number is the outlier, and where are they sitting?</p>
-</div>
-</section>
 <section id="how-to-read-this-deck" class="slide level2">
 <h2>How to Read This Deck</h2>
 <p>From here on, every slide carries one of three marks.</p>
@@ -932,10 +953,10 @@ Zechun (Jacob) Cao
 <p><strong><span class="ex-inline">Must Know</span> — we do it in class; expect it on the exam.</strong> The formula, the definition, or the worked problem a question is built from. Drill these first.</p>
 </div>
 <div class="fragment">
-<p><strong>Unmarked — we do it in class, and the exam can still ask about it.</strong> No mark does not mean off the exam. Understand it; just drill the tagged slides first.</p>
+<p><strong>Unmarked — we do it in class, and the exam can still ask about it.</strong> No mark does not mean off the exam. Understand it; just drill the Must Know slides first.</p>
 </div>
 <div class="fragment">
-<p><strong><span class="rd-inline">Reading</span> — you do it on your own.</strong> Supporting detail, collected at the end of each section. Nothing is click-to-reveal there.</p>
+<p><strong><span class="rd-inline">Reading</span> — you do it on your own.</strong> Supporting detail, collected at the end of each section. Read it before the next class.</p>
 </div>
 </section>
 <section id="section-1.3" class="slide level2 center section-divider">
@@ -1260,39 +1281,6 @@ d_{\text{end-end}} = 3 \times 4 = 12\ \text{ms}\]</span></p>
 <p><span class="vote-prompt">So how do we get circuit-like guarantees on a packet network?</span></p>
 </div>
 </section>
-<section id="activity-human-network" class="slide level2">
-<h2>Activity: Human Network</h2>
-<div class="activity">
-<p><span class="activity-label">Whole room — 8 minutes</span></p>
-<ol type="1">
-<li>Four students stand in a line: <strong>source, R1, R2, destination</strong>.</li>
-<li>The source writes a message on <strong>four sticky notes</strong>, numbered 1–4.</li>
-<li>Rule: a router may pass a note along only <strong>after</strong> it has fully read it. Count “one-thousand-one” while reading. That is <span class="math inline">\(L/R\)</span>.</li>
-</ol>
-</div>
-</section>
-<section id="activity-human-network-1" class="slide level2">
-<h2>Activity: Human Network</h2>
-<p>Now break it, one change at a time:</p>
-<div class="fragment" data-fragment-index="1">
-<ul>
-<li>Give R1 <strong>two</strong> sources at once. Watch the queue form in their hand.</li>
-</ul>
-</div>
-<div class="fragment" data-fragment-index="2">
-<ul>
-<li>Cap R1’s hand at <strong>two</strong> notes. The third one dropped is <strong>loss</strong>.</li>
-</ul>
-</div>
-<div class="fragment" data-fragment-index="3">
-<ul>
-<li>Deliver note 3 before note 2. Who has to fix that, and where?</li>
-</ul>
-</div>
-<div class="fragment" data-fragment-index="4">
-<p>You have now demonstrated queueing delay, packet loss, and reordering — the three things Chapter 3 spends a hundred pages repairing.</p>
-</div>
-</section>
 <section id="network-of-networks" class="slide level2">
 <h2>Network of Networks</h2>
 <p><strong>Question:</strong> given <em>millions</em> of access ISPs, how do we connect them? Wiring every pair directly needs <span class="math inline">\(O(N^{2})\)</span> links.</p>
@@ -1587,30 +1575,6 @@ d_{\text{prop}} = \frac{3 \times 10^{6}}{2 \times 10^{8}} = 15\ \text{ms}\]</spa
 </div>
 <div class="fragment">
 <p>Hop 8 shows it too: 104, 109, 106 ms for the same router, three different queues.</p>
-</div>
-</section>
-<section id="activity-trace-your-path" class="slide level2">
-<h2>Activity: Trace Your Path</h2>
-<div class="activity">
-<p><span class="activity-label">Everyone — 6 minutes, terminal</span></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="" aria-label="1"></a><span class="fu">ping</span> <span class="at">-c</span> 5 tamusa.edu</span>
-<span id="cb2-2"><a href="" aria-label="2"></a><span class="ex">traceroute</span> tamusa.edu                    <span class="co"># tracert on Windows</span></span>
-<span id="cb2-3"><a href="" aria-label="3"></a><span class="ex">traceroute</span> speedtest.sydney.linode.com</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Record the <strong>hop count</strong> and <strong>minimum RTT</strong> for each destination.</p>
-<p>Then compute the propagation-only round trip to Sydney (about 14,000 km at <span class="math inline">\(2\times10^{8}\)</span> m/s) and compare it with your minimum RTT.</p>
-</div>
-</section>
-<section id="activity-trace-your-path-1" class="slide level2">
-<h2>Activity: Trace Your Path</h2>
-<p><strong>Debrief.</strong> Smallest Sydney RTT in the room goes on the board.</p>
-<div class="fragment">
-<p>Propagation alone, there and back: <span class="math inline">\(2 \times 14{,}000 \text{ km} \;/\; (2 \times 10^{8} \text{ m/s}) = \mathbf{140\ ms}\)</span>. Nobody gets under it.</p>
-</div>
-<div class="fragment">
-<p>Typical is <strong>180–220 ms</strong>: fiber follows the cables, not the great circle (about <span class="math inline">\(1.3\)</span>–<span class="math inline">\(1.5\times\)</span> the distance), and each of the 15–25 hops adds processing and queueing.</p>
-</div>
-<div class="fragment">
-<p>Far <em>below</em> 140 ms? You reached an <strong>anycast</strong> or CDN address, not Sydney — which is why the target is the Linode host, not a university home page. Assignment 1 repeats this measurement on the same hosts.</p>
 </div>
 </section>
 <section id="throughput" class="slide level2">
@@ -1950,34 +1914,6 @@ d_{\text{prop}} = \frac{3 \times 10^{6}}{2 \times 10^{8}} = 15\ \text{ms}\]</spa
 <p>That substitution works only because the interface between layers is narrow and written down.</p>
 </div>
 </section>
-<section id="activity-layer-relay" class="slide level2">
-<h2>Activity: Layer Relay</h2>
-<div class="activity">
-<p><span class="activity-label">Five volunteers — 8 minutes</span></p>
-<p>Each student <em>is</em> one layer. Pass a folded paper down the stack; each layer staples on a slip with its own header before passing it on.</p>
-<ul>
-<li><strong>application</strong> writes the message</li>
-<li><strong>transport</strong> adds a port number</li>
-<li><strong>network</strong> adds source and destination IP</li>
-<li><strong>link</strong> adds a MAC address</li>
-<li><strong>physical</strong> walks it across the room</li>
-</ul>
-</div>
-</section>
-<section id="activity-layer-relay-1" class="slide level2">
-<h2>Activity: Layer Relay</h2>
-<p>Then run it <strong>up</strong> the receiving stack, stripping one slip per layer.</p>
-<div class="fragment">
-<p>Ask each student the same two questions:</p>
-<ol type="1">
-<li>What did you have to <strong>read</strong>?</li>
-<li>What did you deliberately <strong>ignore</strong>?</li>
-</ol>
-</div>
-<div class="fragment">
-<p>Answer 2 is the point. The network layer never looked at the port number, and the link layer never looked at the IP address.</p>
-</div>
-</section>
 <section id="read-after-class-2" class="slide level2 center reading-divider">
 <h2>Read After Class</h2>
 <p>Section 1.5 — supporting material</p>
@@ -2252,17 +2188,6 @@ d_{\text{prop}} = \frac{3 \times 10^{6}}{2 \times 10^{8}} = 15\ \text{ms}\]</spa
 </div>
 <div class="fragment" data-fragment-index="5">
 <p>Every problem in Chapters 3–7 is the price of one of these.</p>
-</div>
-</section>
-<section id="activity-predict-2035" class="slide level2">
-<h2>Activity: Predict 2035</h2>
-<div class="activity">
-<p><span class="activity-label">In pairs — 5 minutes, then share</span></p>
-<p>Each decade of the Internet was driven by one dominant force: research funding, then commercialization, then mobility, then content.</p>
-<p>Name <strong>one</strong> force you think reshapes the Internet by 2035, and <strong>one</strong> property of today’s architecture it will strain.</p>
-</div>
-<div class="fragment">
-<p>Keep your answer. We will come back to it in Chapter 8 and see whether the architecture you named actually bends.</p>
 </div>
 </section>
 <section id="read-after-class-4" class="slide level2 center reading-divider">

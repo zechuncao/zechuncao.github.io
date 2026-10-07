@@ -1380,43 +1380,6 @@ data data data data data ...</code></pre>
 </table>
 </div>
 </section>
-<section id="activity-http-by-hand" class="slide level2">
-<h2>Activity: HTTP by Hand</h2>
-<div class="activity">
-<p><span class="activity-label">On your CloudLab VM — 8 minutes</span></p>
-<ol type="1">
-<li><p>Run <code>nano req.txt</code> and type the request below. Press Enter twice after the last line, because an HTTP request ends with an empty line.</p>
-<pre><code>GET / HTTP/1.1
-Host: example.com
-Connection: close</code></pre></li>
-<li><p>Save with Ctrl+O, then Enter. Quit with Ctrl+X.</p></li>
-</ol>
-</div>
-</section>
-<section id="activity-http-by-hand-1" class="slide level2">
-<h2>Activity: HTTP by Hand</h2>
-<div class="activity">
-<p><span class="activity-label">On your CloudLab VM — continued</span></p>
-<ol start="3" type="1">
-<li><p>Send the file to the server. <code>-C</code> ends each line with CR LF, as HTTP requires.</p>
-<pre><code>nc -C example.com 80 &lt; req.txt</code></pre></li>
-<li><p>In the reply, find the status line, <code>Content-Type:</code>, and the blank line that ends the headers.</p></li>
-</ol>
-</div>
-</section>
-<section id="activity-http-by-hand-2" class="slide level2">
-<h2>Activity: HTTP by Hand</h2>
-<div class="activity">
-<p><span class="activity-label">On your CloudLab VM — continued</span></p>
-<ol start="5" type="1">
-<li>In <code>req.txt</code>, change <code>/</code> to <code>/nothing.html</code> and run the <code>nc</code> command again. What code comes back?</li>
-<li>Delete the <code>Host:</code> line and run it again. What happens, and why would a server that hosts many sites need it?</li>
-</ol>
-</div>
-<div class="fragment">
-<p>One machine can serve many sites from one address; <code>Host:</code> is how the server knows which one you meant. Without it, HTTP/1.1 servers answer <code>400 Bad Request</code>.</p>
-</div>
-</section>
 <section id="cookies-must-know" class="slide level2">
 <h2>Cookies <span class="ex">Must Know</span></h2>
 <p><img data-src="images/cookies.png" style="width:74.0%"></p>
@@ -1750,7 +1713,7 @@ Connection: close</code></pre></li>
 <h2>The Web’s Origins <span class="rd">Reading</span></h2>
 <p>In 1945 Vannevar Bush described the <em>memex</em>, a desk that would store all of a person’s books and records and link them by association. The idea got the name <em>hypertext</em> in the 1960s.</p>
 <p>Tim Berners-Lee, a physicist at CERN, needed distributed access to data and built the Web to get it: the first HTTP client and server in 1990, then <strong>HTTP/0.9</strong> (a bare <code>GET</code>), <strong>HTTP/1.0</strong> (headers, status codes, simple caching; written down as RFC 1945 in 1996), and <strong>HTTP/1.1</strong> (persistent connections, pipelining, the <code>Host:</code> header, conditional requests; RFC 2068 in 1997).</p>
-<p>HTTP/2 arrived in 2015 and HTTP/3 in 2022. The request line you typed in the activity is the HTTP/1.1 one.</p>
+<p>HTTP/2 arrived in 2015 and HTTP/3 in 2022. A request line written <code>GET /path HTTP/1.1</code> is, as the version says, the 1.1 one.</p>
 </section>
 <section id="cookies-and-privacy-reading" class="slide level2">
 <h2>Cookies and Privacy <span class="rd">Reading</span></h2>
@@ -1991,18 +1954,6 @@ Do you like ketchup?</code></pre>
 <p>Alice’s photo travels base64-encoded, with MIME headers saying so, because SMTP bodies must be 7-bit ASCII.</p>
 </div>
 </section>
-<section id="activity-read-the-headers" class="slide level2">
-<h2>Activity: Read the Headers</h2>
-<div class="activity">
-<p><span class="activity-label">On your own mail — 6 minutes</span></p>
-<p>Open any message you received this week and show its raw source (Gmail: the three-dot menu, <strong>Show original</strong>; Outlook: <strong>View message source</strong>).</p>
-<ol type="1">
-<li>Count the <code>Received:</code> lines, one per SMTP hop, newest on top. How many servers handled the message?</li>
-<li>Compare the <code>From:</code> header with the envelope sender in <code>Return-Path:</code>. Same address?</li>
-<li>Find <code>Content-Type:</code>. Plain text, HTML, or <code>multipart</code>?</li>
-</ol>
-</div>
-</section>
 <section id="read-after-class-2" class="slide level2 center reading-divider">
 <h2>Read After Class</h2>
 <p>Section 2.3 — supporting material</p>
@@ -2023,7 +1974,7 @@ Content-Transfer-Encoding: base64</code></pre>
 <section id="trying-smtp-by-hand-reading" class="slide level2">
 <h2>Trying SMTP by Hand <span class="rd">Reading</span></h2>
 <p>You can type the SMTP dialogue yourself:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="" aria-label="1"></a><span class="ex">nc</span> <span class="op">&lt;</span>mail-server-name<span class="op">&gt;</span> 25</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="" aria-label="1"></a><span class="ex">nc</span> <span class="op">&lt;</span>mail-server-name<span class="op">&gt;</span> 25</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>You will see the <code>220</code> greeting; then type <code>HELO</code>, <code>MAIL FROM:</code>, <code>RCPT TO:</code>, <code>DATA</code>, the message, a lone <code>.</code>, and <code>QUIT</code>. Nothing about the protocol checks that <code>MAIL FROM:</code> is you.</p>
 <p>Most servers now refuse port 25 from an unknown host, and campus and home ISPs often block it outright, because of what the previous sentence allows. Sending mail from a client today uses port 587 with authentication and TLS.</p>
 </section>
@@ -2076,7 +2027,6 @@ Content-Transfer-Encoding: base64</code></pre>
 </div><div class="column" style="width:50%;">
 <p><strong>After class</strong> <span class="rd-inline">Reading</span></p>
 <ul>
-<li>Lab: resolve a name by hand</li>
 <li>Why not centralize; before DNS</li>
 <li>Referral records; record types</li>
 <li>Root servers; the DNS message</li>
@@ -2445,75 +2395,6 @@ Content-Transfer-Encoding: base64</code></pre>
 </tr>
 </tbody>
 </table>
-</div>
-</section>
-<section id="lab-resolve-a-name-by-hand" class="slide level2">
-<h2>Lab: Resolve a Name by Hand</h2>
-<div class="activity">
-<p><span class="activity-label">On your own VM, after class — 20 minutes</span></p>
-<p>Your VM’s local DNS server usually does the asking. This time you do it: find the address of <code>gaia.cs.umass.edu</code> one server at a time, starting from a root server.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="" aria-label="1"></a><span class="ex">dig</span> <span class="at">-4</span> @a.root-servers.net gaia.cs.umass.edu +norecurse</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><code>+norecurse</code> asks a server to answer only from what it already knows; <code>-4</code> keeps <code>dig</code> on IPv4.</p>
-</div>
-</section>
-<section id="lab-resolve-a-name-by-hand-1" class="slide level2">
-<h2>Lab: Resolve a Name by Hand</h2>
-<div class="activity">
-<p><span class="activity-label">On your CloudLab VM — continued</span></p>
-<ol type="1">
-<li>Send the same query to one server named in the root’s <code>AUTHORITY SECTION</code>: its name goes after the <code>@</code>.</li>
-<li>Repeat until a reply has an <code>ANSWER SECTION</code>. Write down each server you asked and what it told you.</li>
-<li>Compare the <code>flags:</code> line of the first reply and the last. What does the extra flag <code>aa</code> stand for?</li>
-<li>How many servers did you ask? Add the host’s question and the reply to the host: how many messages does one lookup take?</li>
-</ol>
-</div>
-</section>
-<section id="lab-resolve-a-name-by-hand-2" class="slide level2">
-<h2>Lab: Resolve a Name by Hand</h2>
-<div class="activity">
-<p><span class="activity-label">On your CloudLab VM — continued</span></p>
-<ol start="5" type="1">
-<li>Run <code>dig -4 +trace gaia.cs.umass.edu</code>. Does it ask the same chain? Why do the <code>umass.edu</code> NS records have a longer TTL than <code>gaia</code>?</li>
-<li>Run <code>dig gaia.cs.umass.edu</code> twice, a minute apart. What happens to the TTL?</li>
-</ol>
-<p><strong>Done early?</strong> In <code>dig www.tamusa.edu</code>, what comes before the <code>A</code> line?</p>
-</div>
-</section>
-<section id="what-the-lab-found" class="slide level2">
-<h2>What the Lab Found</h2>
-<div class="fragment" data-fragment-index="0">
-<table class="caption-top">
-<colgroup>
-<col style="width: 45%">
-<col style="width: 54%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">You asked</th>
-<th style="text-align: left;">Reply</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;"><code>a.root-servers.net</code></td>
-<td style="text-align: left;"><span class="fragment ans" data-fragment-index="1">referral: 13 <code>.edu</code> servers, NS and A</span></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">an <code>.edu</code> server</td>
-<td style="text-align: left;"><span class="fragment ans" data-fragment-index="2">referral: <code>ns1</code>–<code>ns3.umass.edu</code>, TTL 172,800 s</span></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">a <code>umass.edu</code> server</td>
-<td style="text-align: left;"><span class="fragment ans" data-fragment-index="3"><code>128.119.245.12</code>, TTL 3,600 s, <code>aa</code></span></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="fragment" data-fragment-index="4">
-<p>Three servers, six messages, plus the host’s question and the reply: <strong>8</strong>, the iterated query. <code>aa</code> means <strong>authoritative answer</strong>.</p>
-</div>
-<div class="fragment" data-fragment-index="5">
-<p>A delegation rarely changes, so it is cached for two days; a host’s address, for an hour. The second <code>dig</code> came from the local server’s cache, so its TTL had counted down.</p>
 </div>
 </section>
 <section id="read-after-class-3" class="slide level2 center reading-divider">
@@ -3013,30 +2894,30 @@ s}\)</span>, five times longer than before.</p>
 </section>
 <section id="udp-client" class="slide level2">
 <h2>UDP Client</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="" aria-label="1"></a><span class="im">from</span> socket <span class="im">import</span> <span class="op">*</span></span>
-<span id="cb18-2"><a href="" aria-label="2"></a>serverName <span class="op">=</span> <span class="st">'hostname'</span></span>
-<span id="cb18-3"><a href="" aria-label="3"></a>serverPort <span class="op">=</span> <span class="dv">12000</span></span>
-<span id="cb18-4"><a href="" aria-label="4"></a>clientSocket <span class="op">=</span> socket(AF_INET, SOCK_DGRAM)</span>
-<span id="cb18-5"><a href="" aria-label="5"></a>message <span class="op">=</span> <span class="bu">input</span>(<span class="st">'Input lowercase sentence: '</span>)</span>
-<span id="cb18-6"><a href="" aria-label="6"></a>clientSocket.sendto(message.encode(), (serverName, serverPort))</span>
-<span id="cb18-7"><a href="" aria-label="7"></a>modifiedMessage, serverAddress <span class="op">=</span> clientSocket.recvfrom(<span class="dv">2048</span>)</span>
-<span id="cb18-8"><a href="" aria-label="8"></a><span class="bu">print</span>(modifiedMessage.decode())</span>
-<span id="cb18-9"><a href="" aria-label="9"></a>clientSocket.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="" aria-label="1"></a><span class="im">from</span> socket <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb15-2"><a href="" aria-label="2"></a>serverName <span class="op">=</span> <span class="st">'hostname'</span></span>
+<span id="cb15-3"><a href="" aria-label="3"></a>serverPort <span class="op">=</span> <span class="dv">12000</span></span>
+<span id="cb15-4"><a href="" aria-label="4"></a>clientSocket <span class="op">=</span> socket(AF_INET, SOCK_DGRAM)</span>
+<span id="cb15-5"><a href="" aria-label="5"></a>message <span class="op">=</span> <span class="bu">input</span>(<span class="st">'Input lowercase sentence: '</span>)</span>
+<span id="cb15-6"><a href="" aria-label="6"></a>clientSocket.sendto(message.encode(), (serverName, serverPort))</span>
+<span id="cb15-7"><a href="" aria-label="7"></a>modifiedMessage, serverAddress <span class="op">=</span> clientSocket.recvfrom(<span class="dv">2048</span>)</span>
+<span id="cb15-8"><a href="" aria-label="8"></a><span class="bu">print</span>(modifiedMessage.decode())</span>
+<span id="cb15-9"><a href="" aria-label="9"></a>clientSocket.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
 <p><code>SOCK_DGRAM</code> means UDP. <code>sendto</code> names the destination on every call; the OS picks the client’s own port. <code>recvfrom</code> returns the data and who sent it.</p>
 </div>
 </section>
 <section id="udp-server" class="slide level2">
 <h2>UDP Server</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="" aria-label="1"></a><span class="im">from</span> socket <span class="im">import</span> <span class="op">*</span></span>
-<span id="cb19-2"><a href="" aria-label="2"></a>serverPort <span class="op">=</span> <span class="dv">12000</span></span>
-<span id="cb19-3"><a href="" aria-label="3"></a>serverSocket <span class="op">=</span> socket(AF_INET, SOCK_DGRAM)</span>
-<span id="cb19-4"><a href="" aria-label="4"></a>serverSocket.bind((<span class="st">''</span>, serverPort))</span>
-<span id="cb19-5"><a href="" aria-label="5"></a><span class="bu">print</span>(<span class="st">'The server is ready to receive'</span>)</span>
-<span id="cb19-6"><a href="" aria-label="6"></a><span class="cf">while</span> <span class="va">True</span>:</span>
-<span id="cb19-7"><a href="" aria-label="7"></a>    message, clientAddress <span class="op">=</span> serverSocket.recvfrom(<span class="dv">2048</span>)</span>
-<span id="cb19-8"><a href="" aria-label="8"></a>    modifiedMessage <span class="op">=</span> message.decode().upper()</span>
-<span id="cb19-9"><a href="" aria-label="9"></a>    serverSocket.sendto(modifiedMessage.encode(), clientAddress)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="" aria-label="1"></a><span class="im">from</span> socket <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb16-2"><a href="" aria-label="2"></a>serverPort <span class="op">=</span> <span class="dv">12000</span></span>
+<span id="cb16-3"><a href="" aria-label="3"></a>serverSocket <span class="op">=</span> socket(AF_INET, SOCK_DGRAM)</span>
+<span id="cb16-4"><a href="" aria-label="4"></a>serverSocket.bind((<span class="st">''</span>, serverPort))</span>
+<span id="cb16-5"><a href="" aria-label="5"></a><span class="bu">print</span>(<span class="st">'The server is ready to receive'</span>)</span>
+<span id="cb16-6"><a href="" aria-label="6"></a><span class="cf">while</span> <span class="va">True</span>:</span>
+<span id="cb16-7"><a href="" aria-label="7"></a>    message, clientAddress <span class="op">=</span> serverSocket.recvfrom(<span class="dv">2048</span>)</span>
+<span id="cb16-8"><a href="" aria-label="8"></a>    modifiedMessage <span class="op">=</span> message.decode().upper()</span>
+<span id="cb16-9"><a href="" aria-label="9"></a>    serverSocket.sendto(modifiedMessage.encode(), clientAddress)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
 <p><code>bind</code> attaches the socket to port 12000 so clients can find it. The reply goes to <code>clientAddress</code>, the IP and port that <code>recvfrom</code> handed back. One socket serves every client.</p>
 </div>
@@ -3062,34 +2943,34 @@ s}\)</span>, five times longer than before.</p>
 </section>
 <section id="tcp-client" class="slide level2">
 <h2>TCP Client</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="" aria-label="1"></a><span class="im">from</span> socket <span class="im">import</span> <span class="op">*</span></span>
-<span id="cb20-2"><a href="" aria-label="2"></a>serverName <span class="op">=</span> <span class="st">'servername'</span></span>
-<span id="cb20-3"><a href="" aria-label="3"></a>serverPort <span class="op">=</span> <span class="dv">12000</span></span>
-<span id="cb20-4"><a href="" aria-label="4"></a>clientSocket <span class="op">=</span> socket(AF_INET, SOCK_STREAM)</span>
-<span id="cb20-5"><a href="" aria-label="5"></a>clientSocket.<span class="ex">connect</span>((serverName, serverPort))</span>
-<span id="cb20-6"><a href="" aria-label="6"></a>sentence <span class="op">=</span> <span class="bu">input</span>(<span class="st">'Input lowercase sentence: '</span>)</span>
-<span id="cb20-7"><a href="" aria-label="7"></a>clientSocket.send(sentence.encode())</span>
-<span id="cb20-8"><a href="" aria-label="8"></a>modifiedSentence <span class="op">=</span> clientSocket.recv(<span class="dv">1024</span>)</span>
-<span id="cb20-9"><a href="" aria-label="9"></a><span class="bu">print</span>(<span class="st">'From Server:'</span>, modifiedSentence.decode())</span>
-<span id="cb20-10"><a href="" aria-label="10"></a>clientSocket.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="" aria-label="1"></a><span class="im">from</span> socket <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb17-2"><a href="" aria-label="2"></a>serverName <span class="op">=</span> <span class="st">'servername'</span></span>
+<span id="cb17-3"><a href="" aria-label="3"></a>serverPort <span class="op">=</span> <span class="dv">12000</span></span>
+<span id="cb17-4"><a href="" aria-label="4"></a>clientSocket <span class="op">=</span> socket(AF_INET, SOCK_STREAM)</span>
+<span id="cb17-5"><a href="" aria-label="5"></a>clientSocket.<span class="ex">connect</span>((serverName, serverPort))</span>
+<span id="cb17-6"><a href="" aria-label="6"></a>sentence <span class="op">=</span> <span class="bu">input</span>(<span class="st">'Input lowercase sentence: '</span>)</span>
+<span id="cb17-7"><a href="" aria-label="7"></a>clientSocket.send(sentence.encode())</span>
+<span id="cb17-8"><a href="" aria-label="8"></a>modifiedSentence <span class="op">=</span> clientSocket.recv(<span class="dv">1024</span>)</span>
+<span id="cb17-9"><a href="" aria-label="9"></a><span class="bu">print</span>(<span class="st">'From Server:'</span>, modifiedSentence.decode())</span>
+<span id="cb17-10"><a href="" aria-label="10"></a>clientSocket.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
 <p><code>SOCK_STREAM</code> means TCP. <code>connect</code> performs the handshake. After that, <code>send</code> needs no address: the socket already knows the other end.</p>
 </div>
 </section>
 <section id="tcp-server" class="slide level2">
 <h2>TCP Server</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="" aria-label="1"></a><span class="im">from</span> socket <span class="im">import</span> <span class="op">*</span></span>
-<span id="cb21-2"><a href="" aria-label="2"></a>serverPort <span class="op">=</span> <span class="dv">12000</span></span>
-<span id="cb21-3"><a href="" aria-label="3"></a>serverSocket <span class="op">=</span> socket(AF_INET, SOCK_STREAM)</span>
-<span id="cb21-4"><a href="" aria-label="4"></a>serverSocket.bind((<span class="st">''</span>, serverPort))</span>
-<span id="cb21-5"><a href="" aria-label="5"></a>serverSocket.listen(<span class="dv">1</span>)</span>
-<span id="cb21-6"><a href="" aria-label="6"></a><span class="bu">print</span>(<span class="st">'The server is ready to receive'</span>)</span>
-<span id="cb21-7"><a href="" aria-label="7"></a><span class="cf">while</span> <span class="va">True</span>:</span>
-<span id="cb21-8"><a href="" aria-label="8"></a>    connectionSocket, addr <span class="op">=</span> serverSocket.accept()</span>
-<span id="cb21-9"><a href="" aria-label="9"></a>    sentence <span class="op">=</span> connectionSocket.recv(<span class="dv">1024</span>).decode()</span>
-<span id="cb21-10"><a href="" aria-label="10"></a>    capitalizedSentence <span class="op">=</span> sentence.upper()</span>
-<span id="cb21-11"><a href="" aria-label="11"></a>    connectionSocket.send(capitalizedSentence.encode())</span>
-<span id="cb21-12"><a href="" aria-label="12"></a>    connectionSocket.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="" aria-label="1"></a><span class="im">from</span> socket <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb18-2"><a href="" aria-label="2"></a>serverPort <span class="op">=</span> <span class="dv">12000</span></span>
+<span id="cb18-3"><a href="" aria-label="3"></a>serverSocket <span class="op">=</span> socket(AF_INET, SOCK_STREAM)</span>
+<span id="cb18-4"><a href="" aria-label="4"></a>serverSocket.bind((<span class="st">''</span>, serverPort))</span>
+<span id="cb18-5"><a href="" aria-label="5"></a>serverSocket.listen(<span class="dv">1</span>)</span>
+<span id="cb18-6"><a href="" aria-label="6"></a><span class="bu">print</span>(<span class="st">'The server is ready to receive'</span>)</span>
+<span id="cb18-7"><a href="" aria-label="7"></a><span class="cf">while</span> <span class="va">True</span>:</span>
+<span id="cb18-8"><a href="" aria-label="8"></a>    connectionSocket, addr <span class="op">=</span> serverSocket.accept()</span>
+<span id="cb18-9"><a href="" aria-label="9"></a>    sentence <span class="op">=</span> connectionSocket.recv(<span class="dv">1024</span>).decode()</span>
+<span id="cb18-10"><a href="" aria-label="10"></a>    capitalizedSentence <span class="op">=</span> sentence.upper()</span>
+<span id="cb18-11"><a href="" aria-label="11"></a>    connectionSocket.send(capitalizedSentence.encode())</span>
+<span id="cb18-12"><a href="" aria-label="12"></a>    connectionSocket.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
 <p><code>accept</code> blocks until a client connects, then returns a <strong>new</strong> socket for that client. The welcoming socket is never closed.</p>
 </div>
@@ -3228,13 +3109,13 @@ s}\)</span>, five times longer than before.</p>
 <section id="the-same-calls-in-c-reading" class="slide level2">
 <h2>The Same Calls in C <span class="rd">Reading</span></h2>
 <p>Python’s <code>socket</code> module is a thin wrapper over the BSD socket calls that every OS provides.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb22-1"><a href="" aria-label="1"></a><span class="dt">int</span> s <span class="op">=</span> socket<span class="op">(</span>AF_INET<span class="op">,</span> SOCK_STREAM<span class="op">,</span> <span class="dv">0</span><span class="op">);</span></span>
-<span id="cb22-2"><a href="" aria-label="2"></a>bind<span class="op">(</span>s<span class="op">,</span> <span class="op">(</span><span class="kw">struct</span> sockaddr <span class="op">*)</span> <span class="op">&amp;</span>addr<span class="op">,</span> <span class="kw">sizeof</span> addr<span class="op">);</span></span>
-<span id="cb22-3"><a href="" aria-label="3"></a>listen<span class="op">(</span>s<span class="op">,</span> <span class="dv">5</span><span class="op">);</span></span>
-<span id="cb22-4"><a href="" aria-label="4"></a><span class="dt">int</span> c <span class="op">=</span> accept<span class="op">(</span>s<span class="op">,</span> NULL<span class="op">,</span> NULL<span class="op">);</span>        <span class="co">/* new descriptor per client */</span></span>
-<span id="cb22-5"><a href="" aria-label="5"></a>n <span class="op">=</span> read<span class="op">(</span>c<span class="op">,</span> buf<span class="op">,</span> <span class="kw">sizeof</span> buf<span class="op">);</span></span>
-<span id="cb22-6"><a href="" aria-label="6"></a>write<span class="op">(</span>c<span class="op">,</span> buf<span class="op">,</span> n<span class="op">);</span></span>
-<span id="cb22-7"><a href="" aria-label="7"></a>close<span class="op">(</span>c<span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb19-1"><a href="" aria-label="1"></a><span class="dt">int</span> s <span class="op">=</span> socket<span class="op">(</span>AF_INET<span class="op">,</span> SOCK_STREAM<span class="op">,</span> <span class="dv">0</span><span class="op">);</span></span>
+<span id="cb19-2"><a href="" aria-label="2"></a>bind<span class="op">(</span>s<span class="op">,</span> <span class="op">(</span><span class="kw">struct</span> sockaddr <span class="op">*)</span> <span class="op">&amp;</span>addr<span class="op">,</span> <span class="kw">sizeof</span> addr<span class="op">);</span></span>
+<span id="cb19-3"><a href="" aria-label="3"></a>listen<span class="op">(</span>s<span class="op">,</span> <span class="dv">5</span><span class="op">);</span></span>
+<span id="cb19-4"><a href="" aria-label="4"></a><span class="dt">int</span> c <span class="op">=</span> accept<span class="op">(</span>s<span class="op">,</span> NULL<span class="op">,</span> NULL<span class="op">);</span>        <span class="co">/* new descriptor per client */</span></span>
+<span id="cb19-5"><a href="" aria-label="5"></a>n <span class="op">=</span> read<span class="op">(</span>c<span class="op">,</span> buf<span class="op">,</span> <span class="kw">sizeof</span> buf<span class="op">);</span></span>
+<span id="cb19-6"><a href="" aria-label="6"></a>write<span class="op">(</span>c<span class="op">,</span> buf<span class="op">,</span> n<span class="op">);</span></span>
+<span id="cb19-7"><a href="" aria-label="7"></a>close<span class="op">(</span>c<span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>A socket is a file descriptor, so <code>read</code> and <code>write</code> work on it. Port numbers in <code>addr</code> are stored in network byte order (<code>htons</code>). A UDP program uses <code>SOCK_DGRAM</code> with <code>sendto</code> and <code>recvfrom</code>, exactly as in Python.</p>
 </section>
 <section id="chapter-2-summary" class="slide level2">
