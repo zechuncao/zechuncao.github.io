@@ -2388,16 +2388,16 @@ document.addEventListener('DOMContentLoaded', function () {
   </ul></li>
   <li><a href="#part-2-short-answers" id="toc-part-2-short-answers" class="nav-link" data-scroll-target="#part-2-short-answers">Part 2 — Short answers</a>
   <ul class="collapse">
-  <li><a href="#problem-38.-what-a-protocol-defines" id="toc-problem-38.-what-a-protocol-defines" class="nav-link" data-scroll-target="#problem-38.-what-a-protocol-defines">Problem 38. What a protocol defines</a></li>
+  <li><a href="#problem-38.-pushing-packets-onto-a-link" id="toc-problem-38.-pushing-packets-onto-a-link" class="nav-link" data-scroll-target="#problem-38.-pushing-packets-onto-a-link">Problem 38. Pushing packets onto a link</a></li>
   <li><a href="#problem-39.-store-and-forward-over-three-links" id="toc-problem-39.-store-and-forward-over-three-links" class="nav-link" data-scroll-target="#problem-39.-store-and-forward-over-three-links">Problem 39. Store and forward over three links</a></li>
   <li><a href="#problem-40.-the-four-delay-components" id="toc-problem-40.-the-four-delay-components" class="nav-link" data-scroll-target="#problem-40.-the-four-delay-components">Problem 40. The four delay components</a></li>
   <li><a href="#problem-41.-throughput-and-bits-in-flight" id="toc-problem-41.-throughput-and-bits-in-flight" class="nav-link" data-scroll-target="#problem-41.-throughput-and-bits-in-flight">Problem 41. Throughput and bits in flight</a></li>
-  <li><a href="#problem-42.-layers-and-encapsulation" id="toc-problem-42.-layers-and-encapsulation" class="nav-link" data-scroll-target="#problem-42.-layers-and-encapsulation">Problem 42. Layers and encapsulation</a></li>
-  <li><a href="#problem-43.-two-attacks" id="toc-problem-43.-two-attacks" class="nav-link" data-scroll-target="#problem-43.-two-attacks">Problem 43. Two attacks</a></li>
-  <li><a href="#problem-44.-choosing-a-transport-protocol" id="toc-problem-44.-choosing-a-transport-protocol" class="nav-link" data-scroll-target="#problem-44.-choosing-a-transport-protocol">Problem 44. Choosing a transport protocol</a></li>
+  <li><a href="#problem-42.-headers-added-going-down-the-stack" id="toc-problem-42.-headers-added-going-down-the-stack" class="nav-link" data-scroll-target="#problem-42.-headers-added-going-down-the-stack">Problem 42. Headers added going down the stack</a></li>
+  <li><a href="#problem-43.-a-flood-that-fills-the-queue" id="toc-problem-43.-a-flood-that-fills-the-queue" class="nav-link" data-scroll-target="#problem-43.-a-flood-that-fills-the-queue">Problem 43. A flood that fills the queue</a></li>
+  <li><a href="#problem-44.-what-the-handshake-costs" id="toc-problem-44.-what-the-handshake-costs" class="nav-link" data-scroll-target="#problem-44.-what-the-handshake-costs">Problem 44. What the handshake costs</a></li>
   <li><a href="#problem-45.-counting-round-trips-for-a-page" id="toc-problem-45.-counting-round-trips-for-a-page" class="nav-link" data-scroll-target="#problem-45.-counting-round-trips-for-a-page">Problem 45. Counting round trips for a page</a></li>
-  <li><a href="#problem-46.-walking-an-iterated-dns-query" id="toc-problem-46.-walking-an-iterated-dns-query" class="nav-link" data-scroll-target="#problem-46.-walking-an-iterated-dns-query">Problem 46. Walking an iterated DNS query</a></li>
-  <li><a href="#problem-47.-sockets-at-a-tcp-server" id="toc-problem-47.-sockets-at-a-tcp-server" class="nav-link" data-scroll-target="#problem-47.-sockets-at-a-tcp-server">Problem 47. Sockets at a TCP server</a></li>
+  <li><a href="#problem-46.-what-a-dns-lookup-costs-and-what-the-cache-saves" id="toc-problem-46.-what-a-dns-lookup-costs-and-what-the-cache-saves" class="nav-link" data-scroll-target="#problem-46.-what-a-dns-lookup-costs-and-what-the-cache-saves">Problem 46. What a DNS lookup costs, and what the cache saves</a></li>
+  <li><a href="#problem-47.-counting-sockets-at-a-server" id="toc-problem-47.-counting-sockets-at-a-server" class="nav-link" data-scroll-target="#problem-47.-counting-sockets-at-a-server">Problem 47. Counting sockets at a server</a></li>
   <li><a href="#problem-48.-your-ping-against-the-propagation-bound" id="toc-problem-48.-your-ping-against-the-propagation-bound" class="nav-link" data-scroll-target="#problem-48.-your-ping-against-the-propagation-bound">Problem 48. Your ping against the propagation bound</a></li>
   <li><a href="#problem-49.-headers-on-the-wire" id="toc-problem-49.-headers-on-the-wire" class="nav-link" data-scroll-target="#problem-49.-headers-on-the-wire">Problem 49. Headers on the wire</a></li>
   </ul></li>
@@ -2493,13 +2493,13 @@ slide before this chapter.
 <td>II</td>
 <td>10 short answers</td>
 <td>5 each, 50 total</td>
-<td>two or three sentences, or one substitution into a formula</td>
+<td>a calculation, with the formula given, and a sentence on what the number means</td>
 </tr>
 </tbody>
 </table>
 <p>Twenty questions, every one worth 5 points. A careless circle in Part I costs the same as a missed short answer, so read the four options to the end before you mark one.</p>
 <p>It covers Kurose &amp; Ross chapters 1 and 2 and Assignment 1. <strong>Chapter 3 is not on it</strong>, including whatever we cover on October 13. Assignment 2 is not on it either, though socket programming from §2.7 of the deck is fair game as chapter 2 material.</p>
-<p><strong>The paper is meant to be straightforward.</strong> Most of it asks you to recognize a definition, classify something, or explain an idea you have already explained out loud in class. Where a number is wanted, it is one substitution into a formula — convert bytes to bits, divide, write the unit — and nothing on the paper runs several steps deep. The unit conventions and every formula in the next section are reprinted on the exam cover sheet, so none of them has to be memorized.</p>
+<p><strong>The paper is meant to be straightforward.</strong> Part I asks you to recognize a definition or classify something. Part II is short calculations: the formula you need is printed in the question, and the work is to convert bytes to bits, substitute, write the unit, and say in a sentence what the number means. Nothing runs several steps deep. The unit conventions and every formula in the next section are reprinted on the exam cover sheet, so none of them has to be memorized.</p>
 <p>The exam is closed book. Bring a basic or scientific calculator. A phone is not a calculator and has to be put away. No notes, no textbook, no laptop.</p>
 <section id="how-to-use-this-page" class="level2">
 <h2 class="anchored" data-anchor-id="how-to-use-this-page">How to use this page</h2>
@@ -3065,12 +3065,18 @@ D_{P2P} \ge \max\left\{\frac{F}{u_s},\ \frac{F}{d_{\min}},\
 </section>
 <section id="part-2-short-answers" class="level1">
 <h1>Part 2 — Short answers</h1>
-<p>Twelve questions of the kind that make up the second half of the paper. Two or three sentences, or one substitution into a formula, is a full answer to each.</p>
-<section id="problem-38.-what-a-protocol-defines" class="level2">
-<h2 class="anchored" data-anchor-id="problem-38.-what-a-protocol-defines">Problem 38. What a protocol defines</h2>
-<p><em>§1.1 · Chapter 1, slides 15–16</em></p>
-<p>Name the three things every protocol has to pin down, and give one example of something a protocol does <strong>not</strong> control.</p>
-<div class="workbox" style="min-height:1.6in" data-placeholder="(Problem 38)"></div>
+<p>Twelve questions of the kind that make up the second half of the paper. Every one is a calculation and every one gives you the formula. Show the conversion, put a unit on the number, and answer the sentence of reasoning that goes with it.</p>
+<section id="problem-38.-pushing-packets-onto-a-link" class="level2">
+<h2 class="anchored" data-anchor-id="problem-38.-pushing-packets-onto-a-link">Problem 38. Pushing packets onto a link</h2>
+<p><em>§1.2 · Chapter 1, slides 36 and 74</em></p>
+<p>Transmission delay is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>d</mi><mtext mathvariant="normal">trans</mtext></msub><mo>=</mo><mi>L</mi><mi>/</mi><mi>R</mi></mrow><annotation encoding="application/x-tex">d_{\text{trans}} = L/R</annotation></semantics></math>, with <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>L</mi><annotation encoding="application/x-tex">L</annotation></semantics></math> in bits and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>R</mi><annotation encoding="application/x-tex">R</annotation></semantics></math> in bits per second.</p>
+<p>A 1,200-byte packet is sent on a 3 Mbps link.</p>
+<ol type="a">
+<li><p>How long does it take to push the packet onto the link? Show the conversion to bits.</p></li>
+<li><p>A file is broken into 100 packets of that size. How long does the last one finish, if the link sends them back to back?</p></li>
+<li><p>The link rate doubles to 6 Mbps. What happens to each of your two answers, and why?</p></li>
+</ol>
+<div class="workbox" style="min-height:2.4in" data-placeholder="(Problem 38)"></div>
 </section>
 <section id="problem-39.-store-and-forward-over-three-links" class="level2">
 <h2 class="anchored" data-anchor-id="problem-39.-store-and-forward-over-three-links">Problem 39. Store and forward over three links</h2>
@@ -3108,32 +3114,41 @@ D_{P2P} \ge \max\left\{\frac{F}{u_s},\ \frac{F}{d_{\min}},\
 </ol>
 <div class="workbox" style="min-height:2.4in" data-placeholder="(Problem 41)"></div>
 </section>
-<section id="problem-42.-layers-and-encapsulation" class="level2">
-<h2 class="anchored" data-anchor-id="problem-42.-layers-and-encapsulation">Problem 42. Layers and encapsulation</h2>
+<section id="problem-42.-headers-added-going-down-the-stack" class="level2">
+<h2 class="anchored" data-anchor-id="problem-42.-headers-added-going-down-the-stack">Problem 42. Headers added going down the stack</h2>
 <p><em>§1.5 · Chapter 1, slides 95–99</em></p>
+<p>Each layer adds its own header to the unit it receives from the layer above. A TCP header is 20 bytes, an IP header is 20 bytes, and an Ethernet header is 14 bytes.</p>
+<p>An application hands down a 900-byte message.</p>
 <ol type="a">
-<li><p>List the five layers of the Internet stack, top to bottom.</p></li>
-<li><p>Give the name of the unit of data at the application, transport, network, and link layers.</p></li>
-<li><p>In one sentence, say what a layer does to the unit it receives from the layer above.</p></li>
+<li><p>Give the size of the unit at the transport, network, and link layers, and name the unit at each of those three layers.</p></li>
+<li><p>What fraction of the frame on the wire is header?</p></li>
+<li><p>The message is 90 bytes instead of 900. Recompute that fraction, and say in one sentence why it moved.</p></li>
 </ol>
-<div class="workbox" style="min-height:2.2in" data-placeholder="(Problem 42)"></div>
+<div class="workbox" style="min-height:2.6in" data-placeholder="(Problem 42)"></div>
 </section>
-<section id="problem-43.-two-attacks" class="level2">
-<h2 class="anchored" data-anchor-id="problem-43.-two-attacks">Problem 43. Two attacks</h2>
-<p><em>§1.6 · Chapter 1, slides 108–109</em></p>
-<p>Describe a distributed denial-of-service attack and packet sniffing in one or two sentences each, and say which of the two a victim can detect while it is happening.</p>
-<div class="workbox" style="min-height:2in" data-placeholder="(Problem 43)"></div>
+<section id="problem-43.-a-flood-that-fills-the-queue" class="level2">
+<h2 class="anchored" data-anchor-id="problem-43.-a-flood-that-fills-the-queue">Problem 43. A flood that fills the queue</h2>
+<p><em>§1.6 and §1.4 · Chapter 1, slides 109 and 76–78</em></p>
+<p>Traffic intensity is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mi>a</mi><mi>/</mi><mi>R</mi></mrow><annotation encoding="application/x-tex">La/R</annotation></semantics></math>, with <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>L</mi><annotation encoding="application/x-tex">L</annotation></semantics></math> the packet length in bits, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>a</mi><annotation encoding="application/x-tex">a</annotation></semantics></math> the arrival rate in packets per second, and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>R</mi><annotation encoding="application/x-tex">R</annotation></semantics></math> the link rate.</p>
+<p>A server sits behind a 100 Mbps link. In a denial-of-service attack it receives 1,500-byte packets at 50,000 packets per second.</p>
+<ol type="a">
+<li><p>Compute the traffic intensity.</p></li>
+<li><p>Say what that number means for the queue at that link, and for a legitimate request arriving during the attack.</p></li>
+<li><p>Below what arrival rate would the same packets leave the link usable?</p></li>
+</ol>
+<div class="workbox" style="min-height:2.4in" data-placeholder="(Problem 43)"></div>
 </section>
-<section id="problem-44.-choosing-a-transport-protocol" class="level2">
-<h2 class="anchored" data-anchor-id="problem-44.-choosing-a-transport-protocol">Problem 44. Choosing a transport protocol</h2>
+<section id="problem-44.-what-the-handshake-costs" class="level2">
+<h2 class="anchored" data-anchor-id="problem-44.-what-the-handshake-costs">Problem 44. What the handshake costs</h2>
 <p><em>§2.1 · Chapter 2, slides 23–24</em></p>
-<p>A DNS lookup is one small request and one small reply. DNS runs over UDP, not TCP.</p>
+<p>A one-packet request and its one-packet reply cost 1 RTT over UDP, because nothing is sent first. Over TCP they cost 2 RTT: one round trip to set up the connection, then one for the request and reply.</p>
+<p>A DNS lookup is exactly that exchange, and the RTT to the local DNS server is 30 ms.</p>
 <ol type="a">
-<li><p>Name two things TCP provides that UDP does not.</p></li>
-<li><p>Give two reasons DNS chooses UDP anyway.</p></li>
-<li><p>What does DNS have to do itself as a result?</p></li>
+<li><p>How long does the lookup take over UDP, and over TCP?</p></li>
+<li><p>A page needs 4 such lookups, one after another. What does the choice of transport cost in total?</p></li>
+<li><p>UDP can lose the request with no retransmission. Say in one sentence why DNS accepts that.</p></li>
 </ol>
-<div class="workbox" style="min-height:2.2in" data-placeholder="(Problem 44)"></div>
+<div class="workbox" style="min-height:2.4in" data-placeholder="(Problem 44)"></div>
 </section>
 <section id="problem-45.-counting-round-trips-for-a-page" class="level2">
 <h2 class="anchored" data-anchor-id="problem-45.-counting-round-trips-for-a-page">Problem 45. Counting round trips for a page</h2>
@@ -3147,25 +3162,28 @@ D_{P2P} \ge \max\left\{\frac{F}{u_s},\ \frac{F}{d_{\min}},\
 </ol>
 <div class="workbox" style="min-height:2in" data-placeholder="(Problem 45)"></div>
 </section>
-<section id="problem-46.-walking-an-iterated-dns-query" class="level2">
-<h2 class="anchored" data-anchor-id="problem-46.-walking-an-iterated-dns-query">Problem 46. Walking an iterated DNS query</h2>
+<section id="problem-46.-what-a-dns-lookup-costs-and-what-the-cache-saves" class="level2">
+<h2 class="anchored" data-anchor-id="problem-46.-what-a-dns-lookup-costs-and-what-the-cache-saves">Problem 46. What a DNS lookup costs, and what the cache saves</h2>
 <p><em>§2.4 · Chapter 2, slides 93–95</em></p>
-<p>A host asks its local DNS server for <code>gaia.cs.umass.edu</code>, and the local server has nothing cached.</p>
+<p>In an iterated query the local DNS server contacts the root server, then a TLD server, then the authoritative server, one round trip each, and the host pays one round trip to its local server.</p>
+<p>The round-trip times are 2 ms to the local server, 30 ms to the root, 20 ms to the TLD server, and 40 ms to the authoritative server.</p>
 <ol type="a">
-<li><p>List, in order, the servers the local server contacts and say what each one returns.</p></li>
-<li><p>The same lookup from the host next to you returns far faster a minute later. Why?</p></li>
+<li><p>How long does the lookup take with nothing cached?</p></li>
+<li><p>The host next to you asks for the same name a minute later. How long does that lookup take, and why?</p></li>
+<li><p>The local server has the TLD server’s address cached but not the name itself. What does the lookup cost then?</p></li>
 </ol>
-<div class="workbox" style="min-height:2.2in" data-placeholder="(Problem 46)"></div>
+<div class="workbox" style="min-height:2.4in" data-placeholder="(Problem 46)"></div>
 </section>
-<section id="problem-47.-sockets-at-a-tcp-server" class="level2">
-<h2 class="anchored" data-anchor-id="problem-47.-sockets-at-a-tcp-server">Problem 47. Sockets at a TCP server</h2>
+<section id="problem-47.-counting-sockets-at-a-server" class="level2">
+<h2 class="anchored" data-anchor-id="problem-47.-counting-sockets-at-a-server">Problem 47. Counting sockets at a server</h2>
 <p><em>§2.7 · Chapter 2, slides 152 and 156</em></p>
+<p>A TCP server holds one welcoming socket plus one connection socket per connected client, so <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math> clients means <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">n + 1</annotation></semantics></math> sockets. A UDP server holds one socket however many clients it has.</p>
 <ol type="a">
-<li><p>What must the server have running before any client can connect, and what does it create when a client does connect?</p></li>
-<li><p>How many sockets does the server hold while serving 4 clients?</p></li>
-<li><p>How many would a UDP server hold with the same 4 clients, and why?</p></li>
+<li><p>How many sockets does a TCP server hold with 4 clients? With 250?</p></li>
+<li><p>How many does a UDP server hold in each case?</p></li>
+<li><p>The TCP server’s sockets all share the same port. Say what tells the four connections apart, and why the UDP server needs nothing equivalent.</p></li>
 </ol>
-<div class="workbox" style="min-height:2in" data-placeholder="(Problem 47)"></div>
+<div class="workbox" style="min-height:2.2in" data-placeholder="(Problem 47)"></div>
 </section>
 <section id="problem-48.-your-ping-against-the-propagation-bound" class="level2">
 <h2 class="anchored" data-anchor-id="problem-48.-your-ping-against-the-propagation-bound">Problem 48. Your ping against the propagation bound</h2>
@@ -3210,12 +3228,12 @@ D_{P2P} \ge \max\left\{\frac{F}{u_s},\ \frac{F}{d_{\min}},\
 <tr class="odd">
 <td>§1.1 The Internet, protocols</td>
 <td>ch 1, 9–23</td>
-<td>1, 2, 38</td>
+<td>1, 2</td>
 </tr>
 <tr class="even">
 <td>§1.2 The network edge</td>
 <td>ch 1, 26–40</td>
-<td>3, 4, 5</td>
+<td>3, 4, 5, 38</td>
 </tr>
 <tr class="odd">
 <td>§1.3 The network core</td>
