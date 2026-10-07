@@ -2601,7 +2601,7 @@ quoted in the instructor answers come from those runs on localhost.
 </section>
 <section id="a2-the-udp-pair" class="level2">
 <h2 class="anchored" data-anchor-id="a2-the-udp-pair">A2 — The UDP pair</h2>
-<p>Save these two as <code>udpserver.py</code> and <code>udpclient.py</code> in <code>~/a2</code>. They are the programs from the Section 2.7 slides, with <code>serverName</code> set to <code>localhost</code>.</p>
+<p>Save these two as <code>udpserver.py</code> and <code>udpclient.py</code> in <code>~/a2</code>. They are the programs from the Section 2.7 slides, with <code>serverName</code> set to <code>localhost</code> and one line added to the server: the slide’s version replies without printing anything, so whoever is running it sees an idle terminal. The <code>print</code> line shows the address it heard from and the sentence it received, which is what makes Step A5 readable from the server’s end.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># udpserver.py</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> socket <span class="im">import</span> <span class="op">*</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>serverPort <span class="op">=</span> <span class="dv">12000</span></span>
@@ -2610,8 +2610,9 @@ quoted in the instructor answers come from those runs on localhost.
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&#39;The server is ready to receive&#39;</span>)</span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="va">True</span>:</span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    message, clientAddress <span class="op">=</span> serverSocket.recvfrom(<span class="dv">2048</span>)</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    modifiedMessage <span class="op">=</span> message.decode().upper()</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    serverSocket.sendto(modifiedMessage.encode(), clientAddress)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&#39;From&#39;</span>, clientAddress[<span class="dv">0</span>], <span class="st">&#39;:&#39;</span>, message.decode())</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    modifiedMessage <span class="op">=</span> message.decode().upper()</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    serverSocket.sendto(modifiedMessage.encode(), clientAddress)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># udpclient.py</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> socket <span class="im">import</span> <span class="op">*</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>serverName <span class="op">=</span> <span class="st">&#39;localhost&#39;</span></span>
@@ -2644,9 +2645,10 @@ quoted in the instructor answers come from those runs on localhost.
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="va">True</span>:</span>
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    connectionSocket, addr <span class="op">=</span> serverSocket.accept()</span>
 <span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    sentence <span class="op">=</span> connectionSocket.recv(<span class="dv">1024</span>).decode()</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    capitalizedSentence <span class="op">=</span> sentence.upper()</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    connectionSocket.send(capitalizedSentence.encode())</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    connectionSocket.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&#39;From&#39;</span>, addr[<span class="dv">0</span>], <span class="st">&#39;:&#39;</span>, sentence)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    capitalizedSentence <span class="op">=</span> sentence.upper()</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    connectionSocket.send(capitalizedSentence.encode())</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    connectionSocket.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># tcpclient.py</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> socket <span class="im">import</span> <span class="op">*</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>serverName <span class="op">=</span> <span class="st">&#39;localhost&#39;</span></span>
@@ -2658,7 +2660,7 @@ quoted in the instructor answers come from those runs on localhost.
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>modifiedSentence <span class="op">=</span> clientSocket.recv(<span class="dv">1024</span>)</span>
 <span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&#39;From Server:&#39;</span>, modifiedSentence.decode())</span>
 <span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>clientSocket.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The <code>setsockopt</code> line is the one addition to the slide version. Leave it in every TCP server you write this term. Without it, a server you stop with Ctrl-C leaves the port unusable for about a minute, and the next run fails with <code>Address already in use</code>. The entry under <a href="#addrinuse">When things go wrong</a> explains why adding the line afterwards does not help.</p>
+<p>The <code>setsockopt</code> line and the <code>print</code> line are the two additions to the slide version. Leave the <code>setsockopt</code> one in every TCP server you write this term. Without it, a server you stop with Ctrl-C leaves the port unusable for about a minute, and the next run fails with <code>Address already in use</code>. The entry under <a href="#addrinuse">When things go wrong</a> explains why adding the line afterwards does not help.</p>
 <p>Stop the UDP server first, since both servers want port 12000. Then run the TCP pair the same way. Check the listening socket with <code>ss -tlnp | grep 12000</code> this time: TCP sockets do not show up under <code>-u</code>.</p>
 <p><strong>Record</strong> the <code>ss</code> line and the client’s output:</p>
 <div class="workbox paste" style="min-height:1.2in" data-placeholder="(the ss line and the client&#39;s output)"></div>
@@ -2740,8 +2742,8 @@ quoted in the instructor answers come from those runs on localhost.
 </div>
 </div>
 </div>
-<p><strong>Record</strong> the client’s output, and the <code>ss</code> line from the server VM:</p>
-<div class="workbox paste" style="min-height:1.4in" data-placeholder="(remote run: the ss line from the server VM and the client&#39;s output)"></div>
+<p><strong>Record</strong> the client’s output, the <code>ss</code> line from the server VM, and the line the server printed when your partner’s datagram reached it — that line is the proof it crossed the network, and it names the address it came from:</p>
+<div class="workbox paste" style="min-height:1.6in" data-placeholder="(remote run: the ss line, the client&#39;s output, and the server&#39;s From line)"></div>
 <p><strong>Answer:</strong> did it work on the first try? If not, which of the three causes was it, and what did you see before you found it? Two or three sentences.</p>
 <div class="workbox" style="min-height:1.2in" data-placeholder="(A5 answer)"></div>
 <p><strong>Done when:</strong> a client on one VM has printed a sentence capitalized by a server on another VM.</p>
