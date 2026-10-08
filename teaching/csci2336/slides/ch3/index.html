@@ -101,7 +101,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-101389ebcadca7a268ac21b0db15bb0e.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-6bd6f746b11db51549b88f21880f90e9.css">
   <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -1738,6 +1738,87 @@ Zechun (Jacob) Cao
 <span id="cb11-18"><a href="" aria-label="18"></a><span class="op">}</span> <span class="co">// end ensureCapacity</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
 <p>The loop copies <span class="math inline">\(\texttt{oldSize} - 1\)</span> entries, one per used slot. The same copy without changing <code>frontIndex</code> inside the loop reads <code>oldQueue[(frontIndex + index) % oldSize]</code>.</p>
+</div>
+</section>
+<section id="write-the-copy-loop-must-know" class="slide level2 code-tight">
+<h2>Write the Copy Loop <span class="ex">Must Know</span></h2>
+<p>Two lines are missing. Call each one before it appears.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span><a href="" aria-label="1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> index <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> index <span class="op">&lt;</span> oldSize <span class="op">-</span> <span class="dv">1</span><span class="op">;</span> index<span class="op">++)</span></span>
+<span><a href="" aria-label="2"></a><span class="op">{</span></span>
+<span><a href="" aria-label="3"></a><span class="fragment fill" data-fragment-index="1">   queue<span class="op">[</span>index<span class="op">]</span> <span class="op">=</span> oldQueue<span class="op">[</span>frontIndex<span class="op">];</span></span></span>
+<span><a href="" aria-label="4"></a><span class="fragment fill" data-fragment-index="2">   frontIndex <span class="op">=</span> <span class="op">(</span>frontIndex <span class="op">+</span> <span class="dv">1</span><span class="op">)</span> <span class="op">%</span> oldSize<span class="op">;</span></span></span>
+<span><a href="" aria-label="5"></a><span class="op">}</span> <span class="co">// end for</span></span>
+<span><a href="" aria-label="6"></a>frontIndex <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span><a href="" aria-label="7"></a>backIndex <span class="op">=</span> oldSize <span class="op">-</span> <span class="dv">2</span><span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="anim" id="aq_copy">
+<svg viewbox="0 0 1000 338" width="84%" xmlns="http://www.w3.org/2000/svg" role="img">
+<defs><marker id="ah-aq_copy" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="context-stroke"></path></marker></defs>
+<rect class="cell" x="318.0" y="38.0" width="52" height="52"></rect>
+<text class="idx" x="344.0" y="28.0" text-anchor="middle">0</text>
+<rect class="cell" x="370.0" y="38.0" width="52" height="52"></rect>
+<text class="idx" x="396.0" y="28.0" text-anchor="middle">1</text>
+<rect class="cell" x="422.0" y="38.0" width="52" height="52"></rect>
+<text class="idx" x="448.0" y="28.0" text-anchor="middle">2</text>
+<rect class="cell" x="474.0" y="38.0" width="52" height="52"></rect>
+<text class="idx" x="500.0" y="28.0" text-anchor="middle">3</text>
+<rect class="cell" x="526.0" y="38.0" width="52" height="52"></rect>
+<text class="idx" x="552.0" y="28.0" text-anchor="middle">4</text>
+<rect class="cell" x="578.0" y="38.0" width="52" height="52"></rect>
+<text class="idx" x="604.0" y="28.0" text-anchor="middle">5</text>
+<rect class="cell" x="630.0" y="38.0" width="52" height="52"></rect>
+<text class="idx" x="656.0" y="28.0" text-anchor="middle">6</text>
+<rect class="cell" x="136.0" y="214.0" width="52" height="52"></rect>
+<text class="idx" x="162.0" y="288.0" text-anchor="middle">0</text>
+<rect class="cell" x="188.0" y="214.0" width="52" height="52"></rect>
+<text class="idx" x="214.0" y="288.0" text-anchor="middle">1</text>
+<rect class="cell" x="240.0" y="214.0" width="52" height="52"></rect>
+<text class="idx" x="266.0" y="288.0" text-anchor="middle">2</text>
+<rect class="cell" x="292.0" y="214.0" width="52" height="52"></rect>
+<text class="idx" x="318.0" y="288.0" text-anchor="middle">3</text>
+<rect class="cell" x="344.0" y="214.0" width="52" height="52"></rect>
+<text class="idx" x="370.0" y="288.0" text-anchor="middle">4</text>
+<rect class="cell" x="396.0" y="214.0" width="52" height="52"></rect>
+<text class="idx" x="422.0" y="288.0" text-anchor="middle">5</text>
+<rect class="cell" x="448.0" y="214.0" width="52" height="52"></rect>
+<text class="idx" x="474.0" y="288.0" text-anchor="middle">6</text>
+<rect class="cell" x="500.0" y="214.0" width="52" height="52"></rect>
+<text class="idx" x="526.0" y="288.0" text-anchor="middle">7</text>
+<rect class="cell" x="552.0" y="214.0" width="52" height="52"></rect>
+<text class="idx" x="578.0" y="288.0" text-anchor="middle">8</text>
+<rect class="cell" x="604.0" y="214.0" width="52" height="52"></rect>
+<text class="idx" x="630.0" y="288.0" text-anchor="middle">9</text>
+<rect class="cell" x="656.0" y="214.0" width="52" height="52"></rect>
+<text class="idx" x="682.0" y="288.0" text-anchor="middle">10</text>
+<rect class="cell" x="708.0" y="214.0" width="52" height="52"></rect>
+<text class="idx" x="734.0" y="288.0" text-anchor="middle">11</text>
+<rect class="cell" x="760.0" y="214.0" width="52" height="52"></rect>
+<text class="idx" x="786.0" y="288.0" text-anchor="middle">12</text>
+<rect class="cell" x="812.0" y="214.0" width="52" height="52"></rect>
+<text class="idx" x="838.0" y="288.0" text-anchor="middle">13</text>
+<text class="lbl" x="304.0" y="72" text-anchor="end">oldQueue</text>
+<text class="lbl" x="124.0" y="248" text-anchor="end">queue</text>
+<g data-id="o0" style="transform:translate(344.0px,64px)" class="item"><rect x="-23.0" y="-23.0" width="46" height="46" rx="6"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">60</text></g>
+<g data-id="o1" style="transform:translate(396.0px,64px)" class="item"><rect x="-23.0" y="-23.0" width="46" height="46" rx="6"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">72</text></g>
+<g data-id="o3" style="transform:translate(500.0px,64px)" class="item"><rect x="-23.0" y="-23.0" width="46" height="46" rx="6"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">12</text></g>
+<g data-id="o4" style="transform:translate(552.0px,64px)" class="item"><rect x="-23.0" y="-23.0" width="46" height="46" rx="6"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">24</text></g>
+<g data-id="o5" style="transform:translate(604.0px,64px)" class="item"><rect x="-23.0" y="-23.0" width="46" height="46" rx="6"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">36</text></g>
+<g data-id="o6" style="transform:translate(656.0px,64px)" class="item"><rect x="-23.0" y="-23.0" width="46" height="46" rx="6"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">48</text></g>
+<g data-id="mf" style="transform:translate(500.0px,96.0px)" class="mk"><path d="M0,0 L-11,18 L11,18 z"></path><text x="0" y="42" text-anchor="middle">frontIndex</text></g>
+<g data-id="mi" style="transform:translate(162.0px,208.0px);opacity:0" class="mk"><path d="M0,0 L-11,-18 L11,-18 z"></path><text x="0" y="-26" text-anchor="middle">index</text></g>
+<g data-id="mf2" style="transform:translate(162.0px,208.0px);opacity:0" class="mk"><path d="M0,0 L-11,-18 L11,-18 z"></path><text x="0" y="-26" text-anchor="middle">frontIndex</text></g>
+<g data-id="mb" style="transform:translate(422.0px,208.0px);opacity:0" class="mk"><path d="M0,0 L-11,-18 L11,-18 z"></path><text x="0" y="-26" text-anchor="middle">backIndex</text></g>
+<text data-id="rd" style="" class="lbl" x="500" y="324" text-anchor="middle">x</text>
+</svg>
+<div class="anim-cap" data-id="cap"><code>queue</code> is the new array of length 14, and <code>oldSize</code> is 7: the loop runs for <code>index</code> = 0 to 5.</div>
+<script type="application/json" class="anim-data">[{"cap":{"h":"<code>queue<\/code> is the new array of length 14, and <code>oldSize<\/code> is 7: the loop runs for <code>index<\/code> = 0 to 5."},"o0":{"x":344.0,"y":64,"c":""},"o1":{"x":396.0,"y":64,"c":""},"o3":{"x":500.0,"y":64,"c":""},"o4":{"x":552.0,"y":64,"c":""},"o5":{"x":604.0,"y":64,"c":""},"o6":{"x":656.0,"y":64,"c":""},"mf":{"x":500.0,"y":96.0,"c":""},"mi":{"x":162.0,"y":208.0,"o":0,"c":""},"mf2":{"x":162.0,"y":208.0,"o":0,"c":""},"mb":{"x":422.0,"y":208.0,"o":0,"c":""},"rd":{"t":"oldSize = 7\u2003\u2003frontIndex = 3"}},{"cap":{"h":"<code>queue[index] = oldQueue[frontIndex];<\/code> copies 12 from <code>oldQueue[3]<\/code> into <code>queue[0]<\/code>."},"mi":{"x":162.0,"o":1},"o3":{"x":162.0,"y":240,"c":"hot"},"rd":{"t":"index = 0\u2003\u2003frontIndex = 3"}},{"cap":{"h":"<code>frontIndex = (frontIndex + 1) % oldSize;<\/code> 3 + 1 is 4, and 4 % 7 is 4."},"o3":{"c":""},"mf":{"x":552.0},"rd":{"t":"index = 0\u2003\u2003frontIndex = 4"}},{"cap":{"h":"<code>index<\/code> is 1: 24 moves from <code>oldQueue[4]<\/code> into <code>queue[1]<\/code>, and <code>frontIndex<\/code> moves to 5."},"mi":{"x":214.0},"o4":{"x":214.0,"y":240,"c":"hot"},"mf":{"x":604.0,"c":""},"rd":{"t":"index = 1\u2003\u2003frontIndex = 5"}},{"cap":{"h":"<code>index<\/code> is 2: 36 moves from <code>oldQueue[5]<\/code> into <code>queue[2]<\/code>, and <code>frontIndex<\/code> moves to 6."},"o4":{"c":""},"mf":{"c":"","x":656.0},"mi":{"x":266.0},"o5":{"x":266.0,"y":240,"c":"hot"},"rd":{"t":"index = 2\u2003\u2003frontIndex = 6"}},{"cap":{"h":"<code>index<\/code> is 3: 48 moves from <code>oldQueue[6]<\/code> into <code>queue[3]<\/code>; 6 + 1 is 7, so <code>frontIndex<\/code> wraps to 0."},"o5":{"c":""},"mf":{"c":"hot","x":344.0},"mi":{"x":318.0},"o6":{"x":318.0,"y":240,"c":"hot"},"rd":{"t":"index = 3\u2003\u2003frontIndex = 0"}},{"cap":{"h":"<code>index<\/code> is 4: 60 moves from <code>oldQueue[0]<\/code> into <code>queue[4]<\/code>, and <code>frontIndex<\/code> moves to 1."},"o6":{"c":""},"mf":{"c":"","x":396.0},"mi":{"x":370.0},"o0":{"x":370.0,"y":240,"c":"hot"},"rd":{"t":"index = 4\u2003\u2003frontIndex = 1"}},{"cap":{"h":"<code>index<\/code> is 5: 72 moves from <code>oldQueue[1]<\/code> into <code>queue[5]<\/code>, and <code>frontIndex<\/code> moves to 2."},"o0":{"c":""},"mf":{"c":"","x":448.0},"mi":{"x":422.0},"o1":{"x":422.0,"y":240,"c":"hot"},"rd":{"t":"index = 5\u2003\u2003frontIndex = 2"}},{"cap":{"h":"The loop ends: 6 &lt; 6 is false. <code>frontIndex = 0;<\/code> and <code>backIndex = oldSize - 2;<\/code> finish the resize."},"o1":{"c":""},"mf":{"c":"","o":0},"mi":{"o":0},"mf2":{"o":1},"mb":{"o":1},"rd":{"t":"frontIndex = 0\u2003\u2003backIndex = 5\u2003\u2003entries = 6"}}]</script>
+<span class="fragment anim-step" data-anim="aq_copy" data-step="1" data-fragment-index="1"></span>
+<span class="fragment anim-step" data-anim="aq_copy" data-step="2" data-fragment-index="2"></span>
+<span class="fragment anim-step" data-anim="aq_copy" data-step="3" data-fragment-index="3"></span>
+<span class="fragment anim-step" data-anim="aq_copy" data-step="4" data-fragment-index="4"></span>
+<span class="fragment anim-step" data-anim="aq_copy" data-step="5" data-fragment-index="5"></span>
+<span class="fragment anim-step" data-anim="aq_copy" data-step="6" data-fragment-index="6"></span>
+<span class="fragment anim-step" data-anim="aq_copy" data-step="7" data-fragment-index="7"></span>
+<span class="fragment anim-step" data-anim="aq_copy" data-step="8" data-fragment-index="8"></span>
 </div>
 </section>
 <section id="your-turn-1" class="slide level2">
