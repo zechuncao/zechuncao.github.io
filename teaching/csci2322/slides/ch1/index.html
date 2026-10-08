@@ -101,7 +101,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-d53af2059e28f4441804089f10099310.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-2da83237b37da30bca3bba3f1aa5ba3b.css">
   <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -194,6 +194,56 @@
       margin-left: auto;
       margin-right: 0; 
     }
+  </style>
+  <style>
+  @font-face {
+    font-family: 'Jost';
+    font-style: italic;
+    font-weight: 400;
+    font-display: swap;
+    src: url(fonts/jost-400-italic-latin-ext.woff2) format('woff2');
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
+  @font-face {
+    font-family: 'Jost';
+    font-style: italic;
+    font-weight: 400;
+    font-display: swap;
+    src: url(fonts/jost-400-italic-latin.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+  @font-face {
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(fonts/jost-400-normal-latin-ext.woff2) format('woff2');
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
+  @font-face {
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(fonts/jost-400-normal-latin.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+  @font-face {
+    font-family: 'Abhaya Libre';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(fonts/abhaya-libre-400-normal-latin-ext.woff2) format('woff2');
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
+  @font-face {
+    font-family: 'Abhaya Libre';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(fonts/abhaya-libre-400-normal-latin.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
   </style>
 </head>
 <body class="quarto-light">
@@ -325,10 +375,11 @@ Zechun (Jacob) Cao
 </ul>
 </div><div class="column" style="width:50%;">
 <ul>
-<li>Proofs (1.6–1.7)
+<li>Proofs (1.6–1.8)
 <ul>
 <li>Rules of Inference</li>
-<li>Proof Methods</li>
+<li>Introduction to Proofs</li>
+<li>Proof Methods and Strategy</li>
 </ul></li>
 </ul>
 </div></div>
@@ -341,6 +392,9 @@ Zechun (Jacob) Cao
 </div>
 <div class="fragment">
 <p><strong>Unmarked — we do it in class, and the exam can still ask about it.</strong> No mark does not mean off the exam. Understand it; just drill the marked slides first.</p>
+</div>
+<div class="fragment">
+<p>A topic that takes several slides carries the mark on every one of them. A run of marked slides is one thing to learn, not five.</p>
 </div>
 </section>
 <section id="section-1.1" class="slide level2 center section-divider">
@@ -804,8 +858,8 @@ Zechun (Jacob) Cao
 <li><span class="math inline">\(\neg p \rightarrow \neg q\)</span> is the <strong>inverse</strong> of <span class="math inline">\(p \rightarrow q\)</span></li>
 </ul>
 </section>
-<section id="related-conditionals" class="slide level2">
-<h2>Related Conditionals</h2>
+<section id="related-conditionals-must-know-1" class="slide level2">
+<h2>Related Conditionals <span class="ex">Must Know</span></h2>
 <p><strong><em>Example:</em></strong> Find the converse, inverse, and contrapositive of “It is raining is a sufficient condition for me not going to town.”</p>
 <p><strong><em>Solution:</em></strong></p>
 <div class="fragment">
@@ -1161,8 +1215,8 @@ Zechun (Jacob) Cao
 <li>“If the diagnostic message is stored in the buffer, then it is retransmitted.”</li>
 </ul>
 </section>
-<section id="consistent-specifications" class="slide level2">
-<h2>Consistent Specifications</h2>
+<section id="consistent-specifications-must-know-1" class="slide level2 long-title">
+<h2>Consistent Specifications <span class="ex">Must Know</span></h2>
 <div class="fragment">
 <p><strong><em>Solution:</em></strong> Let <span class="math inline">\(p\)</span> denote “The diagnostic message is stored in the buffer.” Let <span class="math inline">\(q\)</span> denote “The diagnostic message is retransmitted.” The specification can be written as <span class="math inline">\(p \vee q\)</span>, <span class="math inline">\(\neg p\)</span>, <span class="math inline">\(p \rightarrow q\)</span>. When <span class="math inline">\(p\)</span> is false and <span class="math inline">\(q\)</span> is true all three statements are true. So the specification is <strong>consistent</strong>.</p>
 </div>
@@ -1527,8 +1581,8 @@ Zechun (Jacob) Cao
 <li>Keep in mind that whenever a proposition (represented by a propositional variable) occurs in the equivalences listed earlier, it may be replaced by an arbitrarily complex compound proposition.</li>
 </ul>
 </section>
-<section id="equivalence-proofs" class="slide level2">
-<h2>Equivalence Proofs</h2>
+<section id="equivalence-proofs-must-know" class="slide level2">
+<h2>Equivalence Proofs <span class="ex">Must Know</span></h2>
 <p><strong><em>Example:</em></strong> Show that <span class="math inline">\(\neg(p \vee (\neg p \wedge q))\)</span> is logically equivalent to <span class="math inline">\(\neg p \wedge \neg q\)</span>.</p>
 <div class="fragment" data-fragment-index="0">
 <p><strong><em>Solution:</em></strong></p>
@@ -1568,8 +1622,8 @@ Zechun (Jacob) Cao
 </table>
 </div>
 </section>
-<section id="equivalence-proofs-1" class="slide level2">
-<h2>Equivalence Proofs</h2>
+<section id="equivalence-proofs-must-know-1" class="slide level2">
+<h2>Equivalence Proofs <span class="ex">Must Know</span></h2>
 <p><strong><em>Solution (continued):</em></strong> Show that <span class="math inline">\(\neg(p \vee (\neg p \wedge q))\)</span> is logically equivalent to <span class="math inline">\(\neg p \wedge \neg q\)</span>.</p>
 <table class="caption-top">
 <colgroup>
@@ -1602,7 +1656,7 @@ Zechun (Jacob) Cao
 </tbody>
 </table>
 </section>
-<section id="equivalence-proofs-must-know" class="slide level2">
+<section id="equivalence-proofs-must-know-2" class="slide level2">
 <h2>Equivalence Proofs <span class="ex">Must Know</span></h2>
 <p><strong><em>Example:</em></strong> Show that <span class="math inline">\((p \wedge q) \rightarrow (p \vee q)\)</span> is a tautology.</p>
 <div class="fragment" data-fragment-index="0">
@@ -2015,15 +2069,15 @@ Downloading opencv_python-4.11.0.86 ...   &lt;-- numpy 1.26.4 works</code></pre>
 <li>Variables can be replaced by elements from their <strong>domain</strong>.</li>
 </ul>
 </section>
-<section id="propositional-functions" class="slide level2">
-<h2>Propositional Functions</h2>
+<section id="propositional-functions-must-know" class="slide level2 long-title">
+<h2>Propositional Functions <span class="ex">Must Know</span></h2>
 <ul>
 <li>Propositional functions become propositions (and have truth values) when their variables are each replaced by a value from the domain (or bound by a quantifier, as we will see later).</li>
 <li>The statement <span class="math inline">\(P(x)\)</span> is said to be the value of the propositional function <span class="math inline">\(P\)</span> at <span class="math inline">\(x\)</span>.</li>
 <li>Often the domain is denoted by <span class="math inline">\(U\)</span>.</li>
 </ul>
 </section>
-<section id="propositional-functions-must-know" class="slide level2 long-title">
+<section id="propositional-functions-must-know-1" class="slide level2 long-title">
 <h2>Propositional Functions <span class="ex">Must Know</span></h2>
 <div class="columns">
 <div class="column" style="width:46%;">
@@ -2044,8 +2098,8 @@ Downloading opencv_python-4.11.0.86 ...   &lt;-- numpy 1.26.4 works</code></pre>
 </div>
 </div></div>
 </section>
-<section id="propositional-functions-1" class="slide level2">
-<h2>Propositional Functions</h2>
+<section id="propositional-functions-must-know-2" class="slide level2 long-title">
+<h2>Propositional Functions <span class="ex">Must Know</span></h2>
 <p><strong><em>Your turn:</em></strong> Now let “<span class="math inline">\(x - y = z\)</span>” be denoted by <span class="math inline">\(Q(x, y, z)\)</span>, with <span class="math inline">\(U\)</span> as the integers.</p>
 <p><span class="vote-prompt">Call out each truth value.</span></p>
 <ul>
@@ -2319,8 +2373,8 @@ Downloading opencv_python-4.11.0.86 ...   &lt;-- numpy 1.26.4 works</code></pre>
 <li>Even if the domain is infinite, you can still think of the quantifiers in this fashion, but the equivalent expressions will be infinitely long.</li>
 </ul>
 </section>
-<section id="quantifiers-as-wedge-and-vee" class="slide level2">
-<h2>Quantifiers as <span class="math inline">\(\wedge\)</span> and <span class="math inline">\(\vee\)</span></h2>
+<section id="quantifiers-as-wedge-and-vee-must-know-1" class="slide level2 long-title">
+<h2>Quantifiers as <span class="math inline">\(\wedge\)</span> and <span class="math inline">\(\vee\)</span> <span class="ex">Must Know</span></h2>
 <p><strong><em>Your turn:</em></strong> Let <span class="math inline">\(U = \{2, 4, 6\}\)</span>.</p>
 <ul>
 <li>Write <span class="math inline">\(\exists x\, P(x)\)</span> without quantifiers. <span class="fragment ans"><span class="math inline">\(P(2) \vee P(4) \vee P(6)\)</span></span></li>
@@ -2342,8 +2396,8 @@ Downloading opencv_python-4.11.0.86 ...   &lt;-- numpy 1.26.4 works</code></pre>
 <p>Over an empty domain the conjunction for <span class="math inline">\(\forall x\, P(x)\)</span> has no terms and is <span class="math inline">\(\mathbf{T}\)</span>; the disjunction for <span class="math inline">\(\exists x\, P(x)\)</span> is <span class="math inline">\(\mathbf{F}\)</span>. “Every student passed” is <strong>vacuously true</strong> of an empty class — and “all checks passed” with zero checks is a classic bug.</p>
 </div>
 </section>
-<section id="negating-quantifiers" class="slide level2">
-<h2>Negating Quantifiers</h2>
+<section id="negating-quantifiers-must-know" class="slide level2 long-title">
+<h2>Negating Quantifiers <span class="ex">Must Know</span></h2>
 <p>Consider <span class="math inline">\(\forall x\, J(x)\)</span>: “Every student in your class has taken a course in Java.” Here <span class="math inline">\(J(x)\)</span> is “<span class="math inline">\(x\)</span> has taken a course in Java” and the domain is students in your class.</p>
 <p><span class="vote-prompt">Vote — which sentence is the negation?</span></p>
 <div class="columns vote-row">
@@ -2371,8 +2425,8 @@ Downloading opencv_python-4.11.0.86 ...   &lt;-- numpy 1.26.4 works</code></pre>
 </div>
 </div></div>
 </section>
-<section id="negating-quantifiers-1" class="slide level2">
-<h2>Negating Quantifiers</h2>
+<section id="negating-quantifiers-must-know-1" class="slide level2 long-title">
+<h2>Negating Quantifiers <span class="ex">Must Know</span></h2>
 <div class="fragment">
 <p><strong><em>Solution:</em></strong> Negating the original statement gives “It is not the case that every student in your class has taken Java.” This implies that “There is a student in your class who has not taken Java” — choice <strong>B</strong>.</p>
 </div>
@@ -2383,8 +2437,8 @@ Downloading opencv_python-4.11.0.86 ...   &lt;-- numpy 1.26.4 works</code></pre>
 <p>Watch the trap: choices <strong>A</strong> and <strong>D</strong> both say <span class="math inline">\(\forall x\, \neg J(x)\)</span> — much stronger than the negation.</p>
 </div>
 </section>
-<section id="negating-quantifiers-2" class="slide level2">
-<h2>Negating Quantifiers</h2>
+<section id="negating-quantifiers-must-know-2" class="slide level2 long-title">
+<h2>Negating Quantifiers <span class="ex">Must Know</span></h2>
 <p>Now consider <span class="math inline">\(\exists x\, J(x)\)</span>: “There is a student in this class who has taken a course in Java,” where <span class="math inline">\(J(x)\)</span> is “<span class="math inline">\(x\)</span> has taken a course in Java.”</p>
 <div class="fragment">
 <p>Negating the original statement gives “It is not the case that there is a student in this class who has taken Java.” This implies that “Every student in this class has not taken Java.”</p>
@@ -2625,8 +2679,8 @@ Downloading opencv_python-4.11.0.86 ...   &lt;-- numpy 1.26.4 works</code></pre>
 <p>When both quantifiers are the same kind, the order does not matter. When they are mixed, it does: <span class="math inline">\(\forall x\, \exists y\)</span> lets <span class="math inline">\(y\)</span> depend on <span class="math inline">\(x\)</span>, while <span class="math inline">\(\exists y\, \forall x\)</span> requires one <span class="math inline">\(y\)</span> that works for every <span class="math inline">\(x\)</span>.</p>
 </div>
 </section>
-<section id="order-of-quantifiers" class="slide level2">
-<h2>Order of Quantifiers</h2>
+<section id="order-of-quantifiers-must-know-1" class="slide level2">
+<h2>Order of Quantifiers <span class="ex">Must Know</span></h2>
 <p>Back to the warm-up. Let <span class="math inline">\(L(x, y)\)</span> be “<span class="math inline">\(x\)</span> loves <span class="math inline">\(y\)</span>,” <span class="math inline">\(U\)</span> all people.</p>
 <ul>
 <li>“Everybody loves somebody.” <span class="fragment ans"><span class="math inline">\(\forall x\, \exists y\, L(x, y)\)</span></span></li>
@@ -2675,8 +2729,8 @@ Downloading opencv_python-4.11.0.86 ...   &lt;-- numpy 1.26.4 works</code></pre>
 </tbody>
 </table>
 </section>
-<section id="your-turn-1" class="slide level2">
-<h2>Your Turn</h2>
+<section id="your-turn-must-know-1" class="slide level2">
+<h2>Your Turn <span class="ex">Must Know</span></h2>
 <p>Let <span class="math inline">\(U\)</span> be the real numbers and <span class="math inline">\(P(x, y)\)</span> be “<span class="math inline">\(x \cdot y = 0\)</span>.”</p>
 <p><span class="vote-prompt">Call out each truth value.</span></p>
 <ol type="1">
@@ -2686,7 +2740,7 @@ Downloading opencv_python-4.11.0.86 ...   &lt;-- numpy 1.26.4 works</code></pre>
 <li><span class="math inline">\(\exists x\, \exists y\, P(x, y)\)</span> <span class="fragment ans">T</span></li>
 </ol>
 </section>
-<section id="your-turn-must-know-1" class="slide level2">
+<section id="your-turn-must-know-2" class="slide level2">
 <h2>Your Turn <span class="ex">Must Know</span></h2>
 <p>Let <span class="math inline">\(U\)</span> be the real numbers and <span class="math inline">\(P(x, y)\)</span> be “<span class="math inline">\(x / y = 1\)</span>.”</p>
 <p><span class="vote-prompt">Call out each truth value.</span></p>
@@ -2776,7 +2830,7 @@ Downloading opencv_python-4.11.0.86 ...   &lt;-- numpy 1.26.4 works</code></pre>
 <p>“Some real number has no multiplicative inverse” — true, because of <span class="math inline">\(0\)</span>.</p>
 </div>
 </section>
-<section id="your-turn-2" class="slide level2">
+<section id="your-turn-1" class="slide level2">
 <h2>Your Turn</h2>
 <p>Let <span class="math inline">\(F(x, y)\)</span> be “<span class="math inline">\(x\)</span> has finished task <span class="math inline">\(y\)</span>,” <span class="math inline">\(x\)</span> over teammates and <span class="math inline">\(y\)</span> over tasks.</p>
 <blockquote>
@@ -3029,7 +3083,7 @@ Downloading opencv_python-4.11.0.86 ...   &lt;-- numpy 1.26.4 works</code></pre>
 <li><span class="math inline">\(p \vee q,\;\; \neg p \vee r \;\;\therefore\; q \vee r\)</span> <span class="fragment ans">resolution</span></li>
 </ol>
 </section>
-<section id="your-turn-3" class="slide level2">
+<section id="your-turn-2" class="slide level2">
 <h2>Your Turn</h2>
 <p><span class="vote-prompt">Vote — which conclusion follows from the premises <span class="math inline">\(p \vee (q \wedge r)\)</span> and <span class="math inline">\(\neg p\)</span>?</span></p>
 <div class="columns vote-row">
@@ -3101,8 +3155,8 @@ Downloading opencv_python-4.11.0.86 ...   &lt;-- numpy 1.26.4 works</code></pre>
 S_1 \\ S_2 \\ \;\vdots \\ S_n \\ \hline \therefore\; C
 \end{array}\]</span></p>
 </section>
-<section id="valid-arguments-1" class="slide level2">
-<h2>Valid Arguments</h2>
+<section id="valid-arguments-must-know" class="slide level2">
+<h2>Valid Arguments <span class="ex">Must Know</span></h2>
 <p><strong><em>Example:</em></strong> From the single proposition <span class="math inline">\(p \wedge (p \rightarrow q)\)</span>, show that <span class="math inline">\(q\)</span> is a conclusion.</p>
 <div class="fragment" data-fragment-index="0">
 <p><strong><em>Solution:</em></strong></p>
@@ -3138,8 +3192,8 @@ S_1 \\ S_2 \\ \;\vdots \\ S_n \\ \hline \therefore\; C
 </table>
 </div>
 </section>
-<section id="valid-arguments-2" class="slide level2">
-<h2>Valid Arguments</h2>
+<section id="valid-arguments-must-know-1" class="slide level2">
+<h2>Valid Arguments <span class="ex">Must Know</span></h2>
 <p><strong><em>Example:</em></strong> Show that the premises “It is not sunny this afternoon and it is colder than yesterday,” “We will go swimming only if it is sunny,” “If we do not go swimming, then we will take a canoe trip,” and “If we take a canoe trip, then we will be home by sunset” lead to the conclusion “We will be home by sunset.”</p>
 <div class="fragment">
 <ul>
@@ -3152,7 +3206,7 @@ S_1 \\ S_2 \\ \;\vdots \\ S_n \\ \hline \therefore\; C
 <p><strong>Premises:</strong> <span class="math inline">\(\neg p \wedge q\)</span>, <span class="math inline">\(\quad r \rightarrow p\)</span>, <span class="math inline">\(\quad \neg r \rightarrow s\)</span>, <span class="math inline">\(\quad s \rightarrow t\)</span>. <span class="math inline">\(\qquad\)</span> <strong>Conclusion:</strong> <span class="math inline">\(t\)</span>.</p>
 </div>
 </section>
-<section id="valid-arguments-must-know" class="slide level2">
+<section id="valid-arguments-must-know-2" class="slide level2">
 <h2>Valid Arguments <span class="ex">Must Know</span></h2>
 <div class="fragment" data-fragment-index="0">
 <table class="caption-top">
@@ -3203,8 +3257,8 @@ S_1 \\ S_2 \\ \;\vdots \\ S_n \\ \hline \therefore\; C
 </table>
 </div>
 </section>
-<section id="valid-arguments-3" class="slide level2">
-<h2>Valid Arguments</h2>
+<section id="valid-arguments-must-know-3" class="slide level2">
+<h2>Valid Arguments <span class="ex">Must Know</span></h2>
 <p><strong><em>Example:</em></strong> Show that the premises <span class="math inline">\((p \wedge q) \vee r\)</span> and <span class="math inline">\(r \rightarrow s\)</span> imply <span class="math inline">\(p \vee s\)</span>.</p>
 <div class="fragment" data-fragment-index="0">
 <p><strong><em>Solution:</em></strong></p>
@@ -3313,6 +3367,29 @@ S_1 \\ S_2 \\ \;\vdots \\ S_n \\ \hline \therefore\; C
 </div></div>
 <div class="fragment">
 <p><strong>B</strong> — affirming the conclusion. Policy engines derive permissions by modus ponens over thousands of rules; a check that reasons from the conclusion is a privilege-escalation bug.</p>
+</div>
+</section>
+<section id="beyond-propositional-rules" class="slide level2">
+<h2>Beyond Propositional Rules</h2>
+<p>The Socrates argument that opened this section is still unproved. Propositional logic can only name its sentences — <span class="math inline">\(p\)</span>: all men are mortal; <span class="math inline">\(q\)</span>: Socrates is a man; <span class="math inline">\(r\)</span>: Socrates is mortal.</p>
+<p><span class="vote-prompt">Vote — is <span class="math inline">\((p \wedge q) \rightarrow r\)</span> a tautology?</span></p>
+<div class="columns">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>A.</strong> Yes</p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>B.</strong> No</p>
+</div>
+</div></div>
+<div class="fragment">
+<p><strong>B.</strong> <span class="math inline">\(p = q = \mathbf{T}\)</span> with <span class="math inline">\(r = \mathbf{F}\)</span> is a row of the table.</p>
+</div>
+<div class="fragment">
+<p>The link is inside the sentences, and using it needs two moves we do not have: take a quantifier off a premise, and put one back on.</p>
 </div>
 </section>
 <section id="quantified-arguments" class="slide level2">
@@ -3506,8 +3583,8 @@ P(a), \text{ where } a \text{ is a particular element in the domain} \\ \hline
 <p>This is the Section 1.4 warm-up, with the reasoning written out.</p>
 </div>
 </section>
-<section id="using-rules-of-inference-1" class="slide level2">
-<h2>Using Rules of Inference</h2>
+<section id="using-rules-of-inference-must-know" class="slide level2 long-title">
+<h2>Using Rules of Inference <span class="ex">Must Know</span></h2>
 <p><strong><em>Example:</em></strong> Use the rules of inference to construct a valid argument showing that the conclusion “Someone who passed the first exam has not read the book” follows from the premises “A student in this class has not read the book” and “Everyone in this class passed the first exam.”</p>
 <div class="fragment">
 <p><strong><em>Solution:</em></strong> Let <span class="math inline">\(C(x)\)</span> denote “<span class="math inline">\(x\)</span> is in this class,” <span class="math inline">\(B(x)\)</span> “<span class="math inline">\(x\)</span> has read the book,” and <span class="math inline">\(P(x)\)</span> “<span class="math inline">\(x\)</span> passed the first exam.”</p>
@@ -3605,8 +3682,8 @@ P(a), \text{ where } a \text{ is a particular element in the domain} \\ \hline
 </table>
 <p><span class="vote-prompt">Vote — which line is wrong?</span></p>
 </section>
-<section id="spot-the-error" class="slide level2">
-<h2>Spot the Error</h2>
+<section id="spot-the-error-must-know-1" class="slide level2">
+<h2>Spot the Error <span class="ex">Must Know</span></h2>
 <div class="fragment">
 <p><strong>Line 5.</strong> EI must introduce a <strong>new</strong> name. Line 3 already spent <span class="math inline">\(c\)</span> on a witness for <span class="math inline">\(A\)</span>; the witness for <span class="math inline">\(B\)</span> may be a different element, so line 5 can only say <span class="math inline">\(B(d)\)</span>.</p>
 </div>
@@ -3615,6 +3692,784 @@ P(a), \text{ where } a \text{ is a particular element in the domain} \\ \hline
 </div>
 <div class="fragment">
 <p>Some person is tall and some person is short; nothing says the same person is both.</p>
+</div>
+</section>
+<section id="section-1.7" class="slide level2 center section-divider">
+<h2>Section 1.7</h2>
+<p>Introduction to Proofs</p>
+</section>
+<section id="todays-plan-5" class="slide level2">
+<h2>Today’s Plan</h2>
+<ul>
+<li>What a proof is, and the words that go with it</li>
+<li>Direct proofs</li>
+<li>Proof by contraposition</li>
+<li>Proof by contradiction</li>
+<li>Proofs that look right and are not</li>
+</ul>
+</section>
+<section id="warm-up-a-prime-formula" class="slide level2">
+<h2>Warm-Up: A Prime Formula</h2>
+<p><strong><em>Claim:</em></strong> <span class="math inline">\(n^2 + n + 41\)</span> is prime for every integer <span class="math inline">\(n \geq 0\)</span>.</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;"><span class="math inline">\(n\)</span></th>
+<th style="text-align: right;">0</th>
+<th style="text-align: right;">1</th>
+<th style="text-align: right;">2</th>
+<th style="text-align: right;">3</th>
+<th style="text-align: right;">10</th>
+<th style="text-align: right;">39</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(n^2 + n + 41\)</span></td>
+<td style="text-align: right;">41</td>
+<td style="text-align: right;">43</td>
+<td style="text-align: right;">47</td>
+<td style="text-align: right;">53</td>
+<td style="text-align: right;">151</td>
+<td style="text-align: right;">1601</td>
+</tr>
+</tbody>
+</table>
+<p>Every value in that row is prime.</p>
+<p><span class="vote-prompt">Vote — is the claim true?</span></p>
+<div class="columns">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>A.</strong> True</p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>B.</strong> False</p>
+</div>
+</div></div>
+</section>
+<section id="warm-up-a-prime-formula-1" class="slide level2">
+<h2>Warm-Up: A Prime Formula</h2>
+<div class="fragment">
+<p><strong>B.</strong> The formula gives a prime for <span class="math inline">\(n = 0\)</span> through <span class="math inline">\(n = 39\)</span>. Then <span class="math display">\[40^2 + 40 + 41 = 1681 = 41 \cdot 41 .\]</span></p>
+</div>
+<div class="fragment">
+<p>Forty values of <span class="math inline">\(n\)</span> confirmed it, and the statement is still false. Examples can refute a statement about every <span class="math inline">\(n\)</span>; they cannot establish one.</p>
+</div>
+<div class="fragment">
+<p>To establish <span class="math inline">\(\forall x\, P(x)\)</span> you need an argument that covers every <span class="math inline">\(x\)</span> at once. That argument is a <strong>proof</strong>.</p>
+</div>
+</section>
+<section id="what-is-a-proof" class="slide level2">
+<h2>What Is a Proof?</h2>
+<p>A <strong>proof</strong> is a valid argument that establishes the truth of a statement.</p>
+<ul>
+<li>The arguments of Section 1.6 are <strong>formal</strong> proofs: every step names the rule of inference that justifies it.</li>
+<li>Published proofs are <strong>informal</strong>: steps get combined, routine steps get skipped, and the rules are not named.</li>
+<li>Informal proofs are shorter and easier to read. They are also easier to get wrong.</li>
+</ul>
+<div class="fragment">
+<p>Proofs are how we claim that a program returns the right answer, that a protocol is secure, or that a specification is consistent — for every input, not for the ones we tried.</p>
+</div>
+</section>
+<section id="vocabulary-of-proofs-must-know" class="slide level2 long-title">
+<h2>Vocabulary of Proofs <span class="ex">Must Know</span></h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Word</th>
+<th style="text-align: left;">What it means</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Theorem</strong></td>
+<td style="text-align: left;">a statement shown to be true</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Axiom</strong></td>
+<td style="text-align: left;">a statement accepted as true without proof</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Lemma</strong></td>
+<td style="text-align: left;">a small result proved in order to be used inside a theorem</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Corollary</strong></td>
+<td style="text-align: left;">a result that follows directly from a theorem just proved</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Conjecture</strong></td>
+<td style="text-align: left;">a statement proposed as true, with no proof yet</td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<p>A conjecture that gets proved becomes a theorem. A conjecture can also turn out to be false.</p>
+</div>
+</section>
+<section id="name-that-word" class="slide level2">
+<h2>Name That Word</h2>
+<p><span class="vote-prompt">Call out the word for each description.</span></p>
+<ol type="1">
+<li>Accepted as true with no proof <span class="fragment ans">axiom</span></li>
+<li>Proved only so it can be used in a bigger proof <span class="fragment ans">lemma</span></li>
+<li>Falls out of a theorem with almost no extra work <span class="fragment ans">corollary</span></li>
+<li>Believed true, still unproved <span class="fragment ans">conjecture</span></li>
+</ol>
+<div class="fragment">
+<p>The Collatz conjecture: halve <span class="math inline">\(n\)</span> when it is even, replace it by <span class="math inline">\(3n + 1\)</span> when it is odd, and you always reach 1. Every starting value that has ever been tested reaches 1. That is still not a proof, so it stays a conjecture.</p>
+</div>
+</section>
+<section id="forms-of-theorems" class="slide level2">
+<h2>Forms of Theorems</h2>
+<p>Most theorems say that something holds for <strong>every</strong> element of a domain, and the universal quantifier is left out.</p>
+<div class="fragment">
+<blockquote>
+<p>“If <span class="math inline">\(x &gt; y\)</span>, where <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> are positive real numbers, then <span class="math inline">\(x^2 &gt; y^2\)</span>.”</p>
+</blockquote>
+</div>
+<div class="fragment">
+<p>really means <span class="math display">\[\forall x\, \forall y\, \big((x &gt; 0 \wedge y &gt; 0 \wedge x &gt; y)
+\rightarrow x^2 &gt; y^2 \big).\]</span></p>
+</div>
+<div class="fragment">
+<p>When a theorem names a variable without quantifying it, read a <span class="math inline">\(\forall\)</span> in front of it.</p>
+</div>
+</section>
+<section id="proving-theorems" class="slide level2">
+<h2>Proving Theorems</h2>
+<p>To prove <span class="math inline">\(\forall x\, (P(x) \rightarrow Q(x))\)</span>:</p>
+<ul>
+<li>let <span class="math inline">\(c\)</span> be an <strong>arbitrary</strong> element of the domain,</li>
+<li>prove <span class="math inline">\(P(c) \rightarrow Q(c)\)</span>,</li>
+<li>conclude <span class="math inline">\(\forall x\, (P(x) \rightarrow Q(x))\)</span> by universal generalization.</li>
+</ul>
+<div class="fragment">
+<p>So each method below is a way to prove one conditional statement <span class="math inline">\(p \rightarrow q\)</span>, where <span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span> say something about an element that could have been any element.</p>
+</div>
+</section>
+<section id="even-and-odd-integers-must-know" class="slide level2 long-title">
+<h2>Even and Odd Integers <span class="ex">Must Know</span></h2>
+<p><strong><em>Definition:</em></strong> The integer <span class="math inline">\(n\)</span> is <strong>even</strong> if there is an integer <span class="math inline">\(k\)</span> with <span class="math inline">\(n = 2k\)</span>, and <strong>odd</strong> if there is an integer <span class="math inline">\(k\)</span> with <span class="math inline">\(n = 2k + 1\)</span>.</p>
+<div class="fragment">
+<p>Every integer is one or the other, and no integer is both.</p>
+</div>
+<div class="fragment">
+<p>Every proof in this section uses only those two equations. The hypothesis “<span class="math inline">\(n\)</span> is odd” lets you write <span class="math inline">\(n = 2k + 1\)</span>; the conclusion “<span class="math inline">\(m\)</span> is even” means you must produce an integer <span class="math inline">\(r\)</span> with <span class="math inline">\(m = 2r\)</span>.</p>
+</div>
+</section>
+<section id="trivial-and-vacuous-proofs" class="slide level2">
+<h2>Trivial and Vacuous Proofs</h2>
+<p>Two conditionals are true for reasons that have nothing to do with any connection between <span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span>.</p>
+<ul>
+<li><strong>Trivial proof:</strong> <span class="math inline">\(q\)</span> is true, so <span class="math inline">\(p \rightarrow q\)</span> is true. <em>“If it is raining, then <span class="math inline">\(1 = 1\)</span>.”</em></li>
+<li><strong>Vacuous proof:</strong> <span class="math inline">\(p\)</span> is false, so <span class="math inline">\(p \rightarrow q\)</span> is true. <em>“If I am both rich and poor, then <span class="math inline">\(2 + 2 = 5\)</span>.”</em></li>
+</ul>
+<div class="fragment">
+<p>They read as jokes here, and they are the standard base cases in proofs by mathematical induction, which is Chapter 5.</p>
+</div>
+</section>
+<section id="direct-proofs-must-know" class="slide level2">
+<h2>Direct Proofs <span class="ex">Must Know</span></h2>
+<p><strong><em>Method:</em></strong> Assume <span class="math inline">\(p\)</span> is true. Use definitions, axioms, and rules of inference to show that <span class="math inline">\(q\)</span> must be true.</p>
+<p><strong><em>Example:</em></strong> Prove that if <span class="math inline">\(n\)</span> is an odd integer, then <span class="math inline">\(n^2\)</span> is odd.</p>
+<div class="fragment">
+<p><strong><em>Solution:</em></strong> Assume <span class="math inline">\(n\)</span> is odd, so <span class="math inline">\(n = 2k + 1\)</span> for some integer <span class="math inline">\(k\)</span>. Then <span class="math display">\[n^2 = (2k+1)^2 = 4k^2 + 4k + 1 = 2(2k^2 + 2k) + 1 = 2r + 1,\]</span> where <span class="math inline">\(r = 2k^2 + 2k\)</span> is an integer. So <span class="math inline">\(n^2\)</span> is odd. <span class="math inline">\(\blacksquare\)</span></p>
+</div>
+</section>
+<section id="direct-proofs-must-know-1" class="slide level2">
+<h2>Direct Proofs <span class="ex">Must Know</span></h2>
+<p><strong><em>Definition:</em></strong> A real number <span class="math inline">\(r\)</span> is <strong>rational</strong> if there are integers <span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span> with <span class="math inline">\(q \neq 0\)</span> and <span class="math inline">\(r = p/q\)</span>.</p>
+<p><strong><em>Example:</em></strong> Prove that the sum of two rational numbers is rational.</p>
+<div class="fragment">
+<p><strong><em>Solution:</em></strong> Assume <span class="math inline">\(r\)</span> and <span class="math inline">\(s\)</span> are rational: <span class="math inline">\(r = p/q\)</span> and <span class="math inline">\(s = t/u\)</span> for integers <span class="math inline">\(p, q, t, u\)</span> with <span class="math inline">\(q \neq 0\)</span> and <span class="math inline">\(u \neq 0\)</span>. Then <span class="math display">\[r + s = \frac{p}{q} + \frac{t}{u} = \frac{pu + qt}{qu} = \frac{v}{w},\]</span> with <span class="math inline">\(v = pu + qt\)</span> and <span class="math inline">\(w = qu \neq 0\)</span> both integers. So <span class="math inline">\(r + s\)</span> is rational. <span class="math inline">\(\blacksquare\)</span></p>
+</div>
+</section>
+<section id="your-turn-must-know-3" class="slide level2">
+<h2>Your Turn <span class="ex">Must Know</span></h2>
+<p><strong><em>Prove:</em></strong> if <span class="math inline">\(m\)</span> and <span class="math inline">\(n\)</span> are odd integers, then <span class="math inline">\(m + n\)</span> is even.</p>
+<p><span class="vote-prompt">Write each line before it appears.</span></p>
+<ol type="1">
+<li>Use the hypothesis. <span class="fragment ans"><span class="math inline">\(m = 2a + 1\)</span> and <span class="math inline">\(n = 2b + 1\)</span> for integers <span class="math inline">\(a, b\)</span></span></li>
+<li>Add. <span class="fragment ans"><span class="math inline">\(m + n = 2a + 2b + 2\)</span></span></li>
+<li>Factor out the 2. <span class="fragment ans"><span class="math inline">\(m + n = 2(a + b + 1)\)</span></span></li>
+<li>Name the integer. <span class="fragment ans"><span class="math inline">\(r = a + b + 1\)</span>, and <span class="math inline">\(m + n = 2r\)</span> is even</span></li>
+</ol>
+</section>
+<section id="proof-by-contraposition-must-know" class="slide level2 long-title">
+<h2>Proof by Contraposition <span class="ex">Must Know</span></h2>
+<p>A direct proof can stall: you assume <span class="math inline">\(p\)</span> and it gives you nothing to compute with.</p>
+<div class="fragment">
+<p><strong><em>Method:</em></strong> Prove <span class="math inline">\(\neg q \rightarrow \neg p\)</span> instead. Section 1.3 gave us <span class="math display">\[p \rightarrow q \equiv \neg q \rightarrow \neg p,\]</span> so a direct proof of the contrapositive is a proof of the original.</p>
+</div>
+<div class="fragment">
+<p>In practice: assume <span class="math inline">\(q\)</span> is false, and show that <span class="math inline">\(p\)</span> must be false too.</p>
+</div>
+</section>
+<section id="proof-by-contraposition-must-know-1" class="slide level2 long-title">
+<h2>Proof by Contraposition <span class="ex">Must Know</span></h2>
+<p><strong><em>Example:</em></strong> Prove that if <span class="math inline">\(n\)</span> is an integer and <span class="math inline">\(3n + 2\)</span> is odd, then <span class="math inline">\(n\)</span> is odd.</p>
+<div class="fragment">
+<p><strong><em>Solution:</em></strong> We prove the contrapositive: if <span class="math inline">\(n\)</span> is even, then <span class="math inline">\(3n + 2\)</span> is even.</p>
+</div>
+<div class="fragment">
+<p>Assume <span class="math inline">\(n\)</span> is even, so <span class="math inline">\(n = 2k\)</span> for some integer <span class="math inline">\(k\)</span>. Then <span class="math display">\[3n + 2 = 3(2k) + 2 = 6k + 2 = 2(3k + 1) = 2j,\]</span> where <span class="math inline">\(j = 3k + 1\)</span> is an integer. So <span class="math inline">\(3n + 2\)</span> is even. <span class="math inline">\(\blacksquare\)</span></p>
+</div>
+</section>
+<section id="proof-by-contraposition-must-know-2" class="slide level2 long-title">
+<h2>Proof by Contraposition <span class="ex">Must Know</span></h2>
+<p>A direct proof of the same theorem would start from <span class="math inline">\(3n + 2 = 2k + 1\)</span> and have to dig information about <span class="math inline">\(n\)</span> out of it. The contrapositive starts from <span class="math inline">\(n = 2k\)</span>, which is immediately usable.</p>
+<div class="fragment">
+<p><strong><em>Your turn:</em></strong> Prove that if <span class="math inline">\(n^2\)</span> is odd, then <span class="math inline">\(n\)</span> is odd.</p>
+</div>
+<div class="fragment">
+<p><strong><em>Solution:</em></strong> Prove the contrapositive: if <span class="math inline">\(n\)</span> is even, then <span class="math inline">\(n^2\)</span> is even. Assume <span class="math inline">\(n = 2k\)</span>. Then <span class="math inline">\(n^2 = 4k^2 = 2(2k^2)\)</span>, which is even. <span class="math inline">\(\blacksquare\)</span></p>
+</div>
+</section>
+<section id="why-it-matters-crash-logs" class="slide level2">
+<h2>Why It Matters: Crash Logs</h2>
+<p>A reviewer tells you: <em>“If a connection is open, its socket is non-null.”</em> Tonight’s crash log shows a connection with a <strong>null socket</strong>.</p>
+<p><span class="vote-prompt">Vote — taking the reviewer at their word, what follows?</span></p>
+<div class="columns vote-row">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>A.</strong> That connection was not open.</p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>B.</strong> That connection was open.</p>
+</div>
+</div></div>
+<div class="columns vote-row">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>C.</strong> The reviewer’s claim is false.</p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>D.</strong> Nothing follows.</p>
+</div>
+</div></div>
+</section>
+<section id="why-it-matters-crash-logs-1" class="slide level2">
+<h2>Why It Matters: Crash Logs</h2>
+<div class="fragment">
+<p><strong>A.</strong> The reviewer asserted <span class="math inline">\(p \rightarrow q\)</span> and you observed <span class="math inline">\(\neg q\)</span>. Modus tollens gives <span class="math inline">\(\neg p\)</span>: that connection was not open.</p>
+</div>
+<div class="fragment">
+<p>The contrapositive is the form you can act on, and code checks it constantly. A guard that rejects any request without a valid token is the contrapositive of “every authenticated request carries a valid token.”</p>
+</div>
+</section>
+<section id="proof-by-contradiction-must-know" class="slide level2 long-title">
+<h2>Proof by Contradiction <span class="ex">Must Know</span></h2>
+<p><strong><em>Method:</em></strong> To prove <span class="math inline">\(q\)</span>, assume <span class="math inline">\(\neg q\)</span> and derive a contradiction — a statement <span class="math inline">\(r \wedge \neg r\)</span>, which is false no matter what <span class="math inline">\(r\)</span> is.</p>
+<div class="fragment">
+<p>If <span class="math inline">\(\neg q \rightarrow \mathbf{F}\)</span> is true, then <span class="math inline">\(\neg q\)</span> is false, so <span class="math inline">\(q\)</span> is true.</p>
+</div>
+<div class="fragment">
+<p>For a conditional <span class="math inline">\(p \rightarrow q\)</span>, assume <span class="math inline">\(p \wedge \neg q\)</span> and derive the contradiction from that pair. Contradiction is the method to reach for when the statement has no usable hypothesis at all.</p>
+</div>
+</section>
+<section id="proof-by-contradiction-must-know-1" class="slide level2 long-title">
+<h2>Proof by Contradiction <span class="ex">Must Know</span></h2>
+<p><strong><em>Example:</em></strong> Prove that if you pick 22 days from the calendar, at least 4 of them fall on the same day of the week.</p>
+<div class="fragment">
+<p><strong><em>Solution:</em></strong> Suppose not — suppose at most 3 of the 22 days fall on any one day of the week.</p>
+</div>
+<div class="fragment">
+<p>There are 7 days of the week, so you picked at most <span class="math inline">\(3 \cdot 7 = 21\)</span> days. You picked 22. <span class="math inline">\(\blacksquare\)</span></p>
+</div>
+<div class="fragment">
+<p>Nothing in the proof names a weekday that repeats. It only shows that avoiding the repeat is impossible.</p>
+</div>
+</section>
+<section id="proof-by-contradiction-must-know-2" class="slide level2 long-title">
+<h2>Proof by Contradiction <span class="ex">Must Know</span></h2>
+<p><strong><em>Example:</em></strong> Prove that <span class="math inline">\(\sqrt{2}\)</span> is irrational.</p>
+<div class="fragment">
+<p><strong><em>Solution:</em></strong> Suppose <span class="math inline">\(\sqrt{2}\)</span> is rational. Then <span class="math inline">\(\sqrt{2} = a/b\)</span> for integers <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> with <span class="math inline">\(b \neq 0\)</span> and <strong>no common factors</strong>.</p>
+</div>
+<div class="fragment">
+<p>Square both sides and clear the denominator: <span class="math display">\[2 = \frac{a^2}{b^2}, \qquad a^2 = 2b^2 .\]</span></p>
+</div>
+<div class="fragment">
+<p>So <span class="math inline">\(a^2\)</span> is even, and therefore <span class="math inline">\(a\)</span> is even: if <span class="math inline">\(a\)</span> were odd, <span class="math inline">\(a^2\)</span> would be odd, and that was the first direct proof in this section.</p>
+</div>
+</section>
+<section id="proof-by-contradiction-must-know-3" class="slide level2 long-title">
+<h2>Proof by Contradiction <span class="ex">Must Know</span></h2>
+<p><strong><em>Example (continued):</em></strong> <span class="math inline">\(a\)</span> is even, so <span class="math inline">\(a = 2c\)</span> for some integer <span class="math inline">\(c\)</span>. Substituting into <span class="math inline">\(a^2 = 2b^2\)</span>: <span class="math display">\[4c^2 = 2b^2, \qquad b^2 = 2c^2 .\]</span></p>
+<div class="fragment">
+<p>So <span class="math inline">\(b^2\)</span> is even, and therefore <span class="math inline">\(b\)</span> is even.</p>
+</div>
+<div class="fragment">
+<p>Now 2 divides both <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>, which contradicts “no common factors.” The assumption fails, so <span class="math inline">\(\sqrt{2}\)</span> is irrational. <span class="math inline">\(\blacksquare\)</span></p>
+</div>
+</section>
+<section id="name-that-method" class="slide level2">
+<h2>Name That Method</h2>
+<p><span class="vote-prompt">For each claim, vote: direct, contraposition, or contradiction?</span></p>
+<ol type="1">
+<li>If <span class="math inline">\(n\)</span> is even, then <span class="math inline">\(n + 4\)</span> is even. <span class="fragment ans">direct — the hypothesis hands you <span class="math inline">\(n = 2k\)</span></span></li>
+<li>If <span class="math inline">\(n^3 + 5\)</span> is odd, then <span class="math inline">\(n\)</span> is even. <span class="fragment ans">contraposition — “<span class="math inline">\(n\)</span> is odd” is usable, “<span class="math inline">\(n^3 + 5\)</span> is odd” is not</span></li>
+<li>There is no largest prime. <span class="fragment ans">contradiction — there is no hypothesis to start from</span></li>
+</ol>
+<div class="fragment">
+<p>No rule picks for you. Try direct first, and if assuming <span class="math inline">\(p\)</span> leaves you with nothing to compute, move to contraposition or contradiction.</p>
+</div>
+</section>
+<section id="what-is-wrong-with-this-must-know" class="slide level2 long-title">
+<h2>What Is Wrong With This? <span class="ex">Must Know</span></h2>
+<p>“Proof” that <span class="math inline">\(1 = 2\)</span>, where <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are equal positive integers. <span class="vote-prompt">Vote — which step is wrong?</span></p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">Step</th>
+<th style="text-align: left;">Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1.</td>
+<td style="text-align: left;"><span class="math inline">\(a = b\)</span></td>
+<td style="text-align: left;">premise</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2.</td>
+<td style="text-align: left;"><span class="math inline">\(a^2 = ab\)</span></td>
+<td style="text-align: left;">multiply both sides by <span class="math inline">\(a\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3.</td>
+<td style="text-align: left;"><span class="math inline">\(a^2 - b^2 = ab - b^2\)</span></td>
+<td style="text-align: left;">subtract <span class="math inline">\(b^2\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">4.</td>
+<td style="text-align: left;"><span class="math inline">\((a-b)(a+b) = b(a-b)\)</span></td>
+<td style="text-align: left;">factor both sides</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">5.</td>
+<td style="text-align: left;"><span class="math inline">\(a + b = b\)</span></td>
+<td style="text-align: left;">divide both sides by <span class="math inline">\(a - b\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">6.</td>
+<td style="text-align: left;"><span class="math inline">\(2b = b\)</span></td>
+<td style="text-align: left;">replace <span class="math inline">\(a\)</span> by <span class="math inline">\(b\)</span>, from step 1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">7.</td>
+<td style="text-align: left;"><span class="math inline">\(2 = 1\)</span></td>
+<td style="text-align: left;">divide both sides by <span class="math inline">\(b\)</span></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="what-is-wrong-with-this-must-know-1" class="slide level2 long-title">
+<h2>What Is Wrong With This? <span class="ex">Must Know</span></h2>
+<div class="fragment">
+<p><strong>Step 5.</strong> Step 1 says <span class="math inline">\(a = b\)</span>, so <span class="math inline">\(a - b = 0\)</span>, and division by zero is undefined.</p>
+</div>
+<div class="fragment">
+<p>Every other step applies a legal operation to both sides. One illegal step among seven is enough to reach <span class="math inline">\(2 = 1\)</span>, which is why a step in a proof has to name a rule that actually applies to it.</p>
+</div>
+</section>
+<section id="what-is-wrong-with-this-must-know-2" class="slide level2 long-title">
+<h2>What Is Wrong With This? <span class="ex">Must Know</span></h2>
+<p><strong><em>Claim:</em></strong> <span class="math inline">\(n\)</span> is even whenever <span class="math inline">\(n^2\)</span> is even.</p>
+<blockquote>
+<p><strong><em>“Proof”:</em></strong> Suppose <span class="math inline">\(n^2\)</span> is even. Then <span class="math inline">\(n^2 = 2k\)</span> for some integer <span class="math inline">\(k\)</span>. Let <span class="math inline">\(n = 2l\)</span> for some integer <span class="math inline">\(l\)</span>. This shows <span class="math inline">\(n\)</span> is even.</p>
+</blockquote>
+<p><span class="vote-prompt">Vote — is this a proof?</span></p>
+<div class="fragment">
+<p><strong>No.</strong> “Let <span class="math inline">\(n = 2l\)</span>” assumes <span class="math inline">\(n\)</span> is even, and that is what the claim asks you to prove. Assuming the conclusion is called <strong>begging the question</strong>.</p>
+</div>
+<div class="fragment">
+<p>The claim itself is true — we proved it by contraposition. A true statement can have a broken proof.</p>
+</div>
+</section>
+<section id="section-1.8" class="slide level2 center section-divider">
+<h2>Section 1.8</h2>
+<p>Proof Methods and Strategy</p>
+</section>
+<section id="todays-plan-6" class="slide level2">
+<h2>Today’s Plan</h2>
+<ul>
+<li>Proof by cases</li>
+<li>Existence proofs, constructive and nonconstructive</li>
+<li>Disproof by counterexample</li>
+<li>Uniqueness proofs</li>
+<li>Choosing a strategy: forward and backward reasoning</li>
+</ul>
+</section>
+<section id="warm-up-squares" class="slide level2">
+<h2>Warm-Up: Squares</h2>
+<p><span class="vote-prompt">Vote — is <span class="math inline">\(x^2 \geq x\)</span> true for every integer <span class="math inline">\(x\)</span>?</span></p>
+<div class="columns">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>A.</strong> Yes</p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>B.</strong> No</p>
+</div>
+</div></div>
+</section>
+<section id="warm-up-squares-1" class="slide level2">
+<h2>Warm-Up: Squares</h2>
+<div class="fragment">
+<p><strong>A.</strong> It holds for every integer. Over the real numbers it fails: <span class="math inline">\(x = \tfrac{1}{2}\)</span> gives <span class="math inline">\(x^2 = \tfrac{1}{4} &lt; \tfrac{1}{2}\)</span>.</p>
+</div>
+<div class="fragment">
+<p>The numbers that break it are the ones strictly between 0 and 1, and there are no integers there.</p>
+</div>
+<div class="fragment">
+<p>One calculation will not prove it, because <span class="math inline">\(x = 0\)</span>, <span class="math inline">\(x \geq 1\)</span>, and <span class="math inline">\(x \leq -1\)</span> each work for a different reason. Split the domain into cases and prove each case separately.</p>
+</div>
+</section>
+<section id="proof-by-cases-must-know" class="slide level2 long-title">
+<h2>Proof by Cases <span class="ex">Must Know</span></h2>
+<p>To prove <span class="math inline">\((p_1 \vee p_2 \vee \cdots \vee p_n) \rightarrow q\)</span>, use the equivalence <span class="math display">\[\big((p_1 \vee \cdots \vee p_n) \rightarrow q\big) \equiv
+\big((p_1 \rightarrow q) \wedge \cdots \wedge (p_n \rightarrow q)\big).\]</span></p>
+<ul>
+<li>Each <span class="math inline">\(p_i \rightarrow q\)</span> is one <strong>case</strong>.</li>
+<li>The cases must cover every possibility. If one case is missing, the proof is not finished.</li>
+<li>Cases may overlap.</li>
+</ul>
+</section>
+<section id="proof-by-cases-must-know-1" class="slide level2 long-title">
+<h2>Proof by Cases <span class="ex">Must Know</span></h2>
+<p><strong><em>Example:</em></strong> Prove that <span class="math inline">\(n^2 \geq n\)</span> for every integer <span class="math inline">\(n\)</span>.</p>
+<div class="fragment">
+<p><strong>Case 1: <span class="math inline">\(n = 0\)</span>.</strong> Then <span class="math inline">\(n^2 = 0 = n\)</span>, so <span class="math inline">\(n^2 \geq n\)</span>.</p>
+</div>
+<div class="fragment">
+<p><strong>Case 2: <span class="math inline">\(n \geq 1\)</span>.</strong> Multiply both sides of <span class="math inline">\(n \geq 1\)</span> by the positive number <span class="math inline">\(n\)</span>, which gives <span class="math inline">\(n^2 \geq n\)</span>.</p>
+</div>
+<div class="fragment">
+<p><strong>Case 3: <span class="math inline">\(n \leq -1\)</span>.</strong> Then <span class="math inline">\(n^2 &gt; 0\)</span> and <span class="math inline">\(n &lt; 0\)</span>, so <span class="math inline">\(n^2 \geq n\)</span>. Every integer falls in exactly one of the three cases. <span class="math inline">\(\blacksquare\)</span></p>
+</div>
+</section>
+<section id="proof-by-cases-must-know-2" class="slide level2 long-title">
+<h2>Proof by Cases <span class="ex">Must Know</span></h2>
+<p><strong><em>Example:</em></strong> Show that if <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> are integers and both <span class="math inline">\(x \cdot y\)</span> and <span class="math inline">\(x + y\)</span> are even, then both <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> are even.</p>
+<div class="fragment">
+<p><strong><em>Solution:</em></strong> Prove the contrapositive. Suppose <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> are not both even, so at least one is odd. <strong>Without loss of generality</strong> (WLOG) say <span class="math inline">\(x\)</span> is odd, <span class="math inline">\(x = 2m + 1\)</span>.</p>
+</div>
+<div class="fragment">
+<p><strong>Case 1: <span class="math inline">\(y\)</span> is even</strong>, <span class="math inline">\(y = 2n\)</span>. Then <span class="math inline">\(x + y = (2m + 1) + 2n = 2(m + n) + 1\)</span> is odd.</p>
+</div>
+<div class="fragment">
+<p><strong>Case 2: <span class="math inline">\(y\)</span> is odd</strong>, <span class="math inline">\(y = 2n + 1\)</span>. Then <span class="math inline">\(x \cdot y = (2m+1)(2n+1) = 2(2mn + m + n) + 1\)</span> is odd. <span class="math inline">\(\blacksquare\)</span></p>
+</div>
+</section>
+<section id="proof-by-cases-must-know-3" class="slide level2 long-title">
+<h2>Proof by Cases <span class="ex">Must Know</span></h2>
+<p>WLOG is allowed here because <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> play identical roles in both <span class="math inline">\(x \cdot y\)</span> and <span class="math inline">\(x + y\)</span>. The case “<span class="math inline">\(y\)</span> is odd” is the same argument with the two names swapped, so writing it out adds nothing.</p>
+<div class="fragment">
+<p>Claiming WLOG when the two situations are <em>not</em> symmetric skips a real case, and the proof is then incomplete.</p>
+</div>
+</section>
+<section id="your-turn-must-know-4" class="slide level2">
+<h2>Your Turn <span class="ex">Must Know</span></h2>
+<p><strong><em>Prove:</em></strong> <span class="math inline">\(n^2 + n\)</span> is even for every integer <span class="math inline">\(n\)</span>.</p>
+<p><span class="vote-prompt">Which cases do you need?</span></p>
+<div class="fragment">
+<p>Rewrite it first: <span class="math inline">\(n^2 + n = n(n + 1)\)</span>.</p>
+</div>
+<div class="fragment">
+<p><strong>Case 1: <span class="math inline">\(n\)</span> is even</strong>, <span class="math inline">\(n = 2k\)</span>. Then <span class="math inline">\(n(n+1) = 2k(2k+1)\)</span>, which is 2 times an integer.</p>
+</div>
+<div class="fragment">
+<p><strong>Case 2: <span class="math inline">\(n\)</span> is odd</strong>, <span class="math inline">\(n = 2k + 1\)</span>. Then <span class="math inline">\(n(n+1) = (2k+1)(2k+2) = 2(2k+1)(k+1)\)</span>. <span class="math inline">\(\blacksquare\)</span></p>
+</div>
+</section>
+<section id="existence-proofs-must-know" class="slide level2 long-title">
+<h2>Existence Proofs <span class="ex">Must Know</span></h2>
+<p>To prove <span class="math inline">\(\exists x\, P(x)\)</span> <strong>constructively</strong>, exhibit one specific <span class="math inline">\(c\)</span> and check <span class="math inline">\(P(c)\)</span>. Existential generalization does the rest.</p>
+<p><strong><em>Example:</em></strong> Show that some positive integer is the sum of two cubes of positive integers in two different ways.</p>
+<div class="fragment">
+<p><strong><em>Solution:</em></strong> <span class="math inline">\(1729\)</span> is such a number: <span class="math display">\[1729 = 10^3 + 9^3 = 12^3 + 1^3 .\]</span></p>
+</div>
+<div class="fragment">
+<p>It is also the smallest one. Hardy rode to Ramanujan’s hospital in taxi number 1729 and called the number dull; Ramanujan answered with that equation.</p>
+</div>
+</section>
+<section id="nonconstructive-existence" class="slide level2">
+<h2>Nonconstructive Existence</h2>
+<p>A <strong>nonconstructive</strong> existence proof shows that some <span class="math inline">\(x\)</span> with <span class="math inline">\(P(x)\)</span> exists without producing one.</p>
+<p><strong><em>Example:</em></strong> Show that there are irrational numbers <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> such that <span class="math inline">\(x^y\)</span> is rational.</p>
+<div class="fragment">
+<p><strong><em>Solution:</em></strong> <span class="math inline">\(\sqrt{2}\)</span> is irrational. Consider the number <span class="math inline">\(\sqrt{2}^{\,\sqrt{2}}\)</span>. It is either rational or irrational.</p>
+</div>
+<div class="fragment">
+<p><strong>If it is rational,</strong> take <span class="math inline">\(x = \sqrt{2}\)</span> and <span class="math inline">\(y = \sqrt{2}\)</span>, and we are done.</p>
+</div>
+</section>
+<section id="nonconstructive-existence-1" class="slide level2">
+<h2>Nonconstructive Existence</h2>
+<p><strong>If <span class="math inline">\(\sqrt{2}^{\,\sqrt{2}}\)</span> is irrational,</strong> take <span class="math inline">\(x = \sqrt{2}^{\,\sqrt{2}}\)</span> and <span class="math inline">\(y = \sqrt{2}\)</span>: <span class="math display">\[x^y = \left(\sqrt{2}^{\,\sqrt{2}}\right)^{\sqrt{2}}
+= \sqrt{2}^{\,\left(\sqrt{2} \cdot \sqrt{2}\right)}
+= \sqrt{2}^{\,2} = 2 .\]</span></p>
+<div class="fragment">
+<p>One of the two cases holds, so the pair exists. <span class="math inline">\(\blacksquare\)</span></p>
+</div>
+<div class="fragment">
+<p>The proof never settles which of the two cases we are in, so it establishes that a pair exists without identifying one.</p>
+</div>
+</section>
+<section id="why-it-matters-hash-collisions" class="slide level2">
+<h2>Why It Matters: Hash Collisions</h2>
+<p>You store 1,000 keys in a hash table with 999 buckets.</p>
+<p><span class="vote-prompt">Vote — can you promise that two keys share a bucket?</span></p>
+<div class="columns vote-row">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>A.</strong> Yes, and I can name them.</p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>B.</strong> Yes, but I cannot name them.</p>
+</div>
+</div></div>
+<div class="columns vote-row">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>C.</strong> Only if the hash function is bad.</p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>D.</strong> No.</p>
+</div>
+</div></div>
+</section>
+<section id="why-it-matters-hash-collisions-1" class="slide level2">
+<h2>Why It Matters: Hash Collisions</h2>
+<div class="fragment">
+<p><strong>B.</strong> It is the 22-days proof with different numbers: if every bucket held at most one key, the table would hold at most 999 keys.</p>
+</div>
+<div class="fragment">
+<p>The argument holds for every hash function, including a perfect one, and it names no pair of keys. That is why every hash table implementation includes collision handling.</p>
+</div>
+</section>
+<section id="counterexamples-must-know" class="slide level2">
+<h2>Counterexamples <span class="ex">Must Know</span></h2>
+<p>To show that <span class="math inline">\(\forall x\, P(x)\)</span> is <strong>false</strong>, find one <span class="math inline">\(c\)</span> for which <span class="math inline">\(P(c)\)</span> is false. That <span class="math inline">\(c\)</span> is a <strong>counterexample</strong>.</p>
+<p><strong><em>Example:</em></strong> “Every positive integer is the sum of the squares of three integers.”</p>
+<div class="fragment">
+<p><span class="math inline">\(7\)</span> is a counterexample. The only squares in range are <span class="math inline">\(0\)</span>, <span class="math inline">\(1\)</span>, and <span class="math inline">\(4\)</span>, and no three of them (repeats allowed) add to <span class="math inline">\(7\)</span> — the nearest sums are <span class="math inline">\(4 + 1 + 1 = 6\)</span> and <span class="math inline">\(4 + 4 + 0 = 8\)</span>.</p>
+</div>
+<div class="fragment">
+<p>One counterexample settles it. The claim is false.</p>
+</div>
+</section>
+<section id="your-turn-must-know-5" class="slide level2">
+<h2>Your Turn <span class="ex">Must Know</span></h2>
+<p><span class="vote-prompt">Call out a counterexample for each claim.</span></p>
+<ol type="1">
+<li>Every prime number is odd. <span class="fragment ans"><span class="math inline">\(2\)</span></span></li>
+<li>For every real <span class="math inline">\(x\)</span>, <span class="math inline">\(x^2 &gt; x\)</span>. <span class="fragment ans">any <span class="math inline">\(x\)</span> with <span class="math inline">\(0 \leq x \leq 1\)</span>, say <span class="math inline">\(x = \tfrac{1}{2}\)</span></span></li>
+<li><span class="math inline">\(n^2 + n + 41\)</span> is prime for every integer <span class="math inline">\(n \geq 0\)</span>. <span class="fragment ans"><span class="math inline">\(n = 40\)</span>, from the Section 1.7 warm-up</span></li>
+</ol>
+<div class="fragment">
+<p>A counterexample has to be an element of the domain and it has to make the statement false. One of them is enough.</p>
+</div>
+</section>
+<section id="why-it-matters-failing-tests" class="slide level2">
+<h2>Why It Matters: Failing Tests</h2>
+<p>Your test suite runs 500 cases against a function and they all pass.</p>
+<p><span class="vote-prompt">Vote — what has that established?</span></p>
+<div class="columns vote-row">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>A.</strong> The function is correct.</p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>B.</strong> Nothing at all.</p>
+</div>
+</div></div>
+<div class="columns vote-row">
+<div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>C.</strong> It is correct on 500 inputs.</p>
+</div>
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:48%;">
+<div class="vote">
+<p><strong>D.</strong> It is correct on all but 500 inputs.</p>
+</div>
+</div></div>
+</section>
+<section id="why-it-matters-failing-tests-1" class="slide level2">
+<h2>Why It Matters: Failing Tests</h2>
+<div class="fragment">
+<p><strong>C.</strong> Passing tests are confirming examples. The prime formula survived forty of those and was still false.</p>
+</div>
+<div class="fragment">
+<p>A failing test is a counterexample, and one of those settles the question for good.</p>
+</div>
+<div class="fragment">
+<p>A claim about every input is refuted by one counterexample and proved by no number of examples. Covering every input takes a proof.</p>
+</div>
+</section>
+<section id="uniqueness-proofs-must-know" class="slide level2 long-title">
+<h2>Uniqueness Proofs <span class="ex">Must Know</span></h2>
+<p>Some theorems claim that exactly one element has a property: <span class="math inline">\(\exists !x\, P(x)\)</span>. Such a proof has two parts.</p>
+<ul>
+<li><strong>Existence:</strong> produce an <span class="math inline">\(x\)</span> with the property.</li>
+<li><strong>Uniqueness:</strong> show that if <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> both have it, then <span class="math inline">\(x = y\)</span>.</li>
+</ul>
+<p><strong><em>Example:</em></strong> If <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are real numbers and <span class="math inline">\(a \neq 0\)</span>, there is a unique real <span class="math inline">\(r\)</span> with <span class="math inline">\(ar + b = 0\)</span>.</p>
+</section>
+<section id="uniqueness-proofs-must-know-1" class="slide level2 long-title">
+<h2>Uniqueness Proofs <span class="ex">Must Know</span></h2>
+<div class="fragment">
+<p><strong>Existence:</strong> <span class="math inline">\(r = -b/a\)</span> is a solution, since <span class="math inline">\(a\left(-\tfrac{b}{a}\right) + b = -b + b = 0\)</span>.</p>
+</div>
+<div class="fragment">
+<p><strong>Uniqueness:</strong> suppose <span class="math inline">\(s\)</span> also satisfies <span class="math inline">\(as + b = 0\)</span>. Then <span class="math inline">\(ar + b = as + b\)</span>, so <span class="math inline">\(ar = as\)</span>, and dividing by <span class="math inline">\(a \neq 0\)</span> gives <span class="math inline">\(r = s\)</span>. <span class="math inline">\(\blacksquare\)</span></p>
+</div>
+<div class="fragment">
+<p>Without the second part you have shown only that a solution exists. Without the first you have shown only that there are not two of them.</p>
+</div>
+</section>
+<section id="proof-strategy" class="slide level2">
+<h2>Proof Strategy</h2>
+<p>Facing <span class="math inline">\(p \rightarrow q\)</span> with no idea where to start:</p>
+<ol type="1">
+<li>Try a <strong>direct</strong> proof. Assume <span class="math inline">\(p\)</span> and see what the definitions give you.</li>
+<li>If assuming <span class="math inline">\(p\)</span> gives you nothing usable, try <strong>contraposition</strong>.</li>
+<li>If there is no useful hypothesis at all, try <strong>contradiction</strong>.</li>
+<li>If the domain splits into kinds of elements, use <strong>cases</strong>.</li>
+</ol>
+<div class="fragment">
+<p>Inside a method you can reason <strong>forward</strong> from what you know, or <strong>backward</strong> from what you want.</p>
+</div>
+</section>
+<section id="backward-reasoning" class="slide level2">
+<h2>Backward Reasoning</h2>
+<p><strong><em>Example:</em></strong> For distinct positive reals <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, prove that the arithmetic mean beats the geometric mean: <span class="math inline">\(\dfrac{x+y}{2} &gt; \sqrt{xy}\)</span>.</p>
+<div class="fragment">
+<p>Work backward from the conclusion until you reach something known: <span class="math display">\[\frac{x+y}{2} &gt; \sqrt{xy}
+\;\Leftarrow\; \frac{(x+y)^2}{4} &gt; xy
+\;\Leftarrow\; x^2 + 2xy + y^2 &gt; 4xy\]</span> <span class="math display">\[\Leftarrow\; x^2 - 2xy + y^2 &gt; 0
+\;\Leftarrow\; (x - y)^2 &gt; 0,\]</span> which is true because <span class="math inline">\(x \neq y\)</span>.</p>
+</div>
+</section>
+<section id="backward-reasoning-1" class="slide level2">
+<h2>Backward Reasoning</h2>
+<p>The proof you hand in runs <strong>forward</strong>: start from <span class="math inline">\((x-y)^2 &gt; 0\)</span> and reverse the chain.</p>
+<div class="fragment">
+<p>Every step has to be reversible for that to work. Here each one is: both sides are positive, so squaring and taking square roots do not change the direction of the inequality.</p>
+</div>
+<div class="fragment">
+<p>Finding a proof backward and writing it forward is normal. The finished proof does not record which direction you worked in.</p>
+</div>
+</section>
+<section id="proving-a-biconditional-must-know" class="slide level2 long-title">
+<h2>Proving a Biconditional <span class="ex">Must Know</span></h2>
+<p><strong><em>Example:</em></strong> An integer <span class="math inline">\(x\)</span> is even if and only if <span class="math inline">\(x^2\)</span> is even.</p>
+<div class="fragment">
+<p>The statement is <span class="math inline">\(\forall x\, \big[x \text{ is even} \leftrightarrow x^2 \text{ is even}\big]\)</span>. Take <span class="math inline">\(x\)</span> arbitrary; universal generalization handles the <span class="math inline">\(\forall\)</span> at the end.</p>
+</div>
+<div class="fragment">
+<p>Section 1.3 gives <span class="math inline">\(p \leftrightarrow q \equiv (p \rightarrow q) \wedge (q \rightarrow p)\)</span>, so there are two proofs to write, one in each direction.</p>
+</div>
+</section>
+<section id="proving-a-biconditional-must-know-1" class="slide level2 long-title">
+<h2>Proving a Biconditional <span class="ex">Must Know</span></h2>
+<p><strong>If <span class="math inline">\(x\)</span> is even, then <span class="math inline">\(x^2\)</span> is even.</strong> Direct proof: <span class="math inline">\(x = 2k\)</span>, so <span class="math inline">\(x^2 = 4k^2 = 2(2k^2)\)</span>, which is even.</p>
+<div class="fragment">
+<p><strong>If <span class="math inline">\(x^2\)</span> is even, then <span class="math inline">\(x\)</span> is even.</strong> By contraposition: if <span class="math inline">\(x\)</span> is odd then <span class="math inline">\(x = 2k + 1\)</span> and <span class="math display">\[x^2 = 4k^2 + 4k + 1 = 2(2k^2 + 2k) + 1,\]</span> which is odd.</p>
+</div>
+<div class="fragment">
+<p><span class="math inline">\(x\)</span> was arbitrary, so this holds for every integer. <span class="math inline">\(\blacksquare\)</span></p>
+</div>
+<div class="fragment">
+<p>The two directions used different methods. Nothing requires both halves of a biconditional to be proved the same way.</p>
+</div>
+</section>
+<section id="why-it-matters-verification" class="slide level2">
+<h2>Why It Matters: Verification</h2>
+<p>Testing checks the inputs you tried. A proof covers all of them, and a few systems are built to that second standard.</p>
+<ul>
+<li>The <strong>seL4</strong> microkernel ships with a machine-checked proof that its C implementation matches its specification.</li>
+<li>The <strong>CompCert</strong> C compiler ships with a proof that compiling a program preserves what the program means.</li>
+</ul>
+<div class="fragment">
+<p>Those proofs are built from the pieces in this chapter: definitions, cases, contraposition, contradiction, and quantifiers ranging over every input.</p>
+</div>
+</section>
+<section id="revisiting-the-warm-ups" class="slide level2">
+<h2>Revisiting the Warm-Ups</h2>
+<p>The three claims that opened the chapter, in the notation we now have:</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Claim</th>
+<th style="text-align: left;">In logic</th>
+<th style="text-align: left;">What we can say now</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">“Soup or salad comes with it.”</td>
+<td style="text-align: left;"><span class="math inline">\(s \vee d\)</span></td>
+<td style="text-align: left;">the menu means <span class="math inline">\(s \oplus d\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">“Turn in every lab and you pass.” Dana passed.</td>
+<td style="text-align: left;"><span class="math inline">\(\ell \rightarrow p\)</span>, <span class="math inline">\(\; p\)</span></td>
+<td style="text-align: left;">nothing follows about <span class="math inline">\(\ell\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">“Not both hard and boring.”</td>
+<td style="text-align: left;"><span class="math inline">\(\neg(h \wedge b)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\equiv \neg h \vee \neg b\)</span>: at least one fails</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="chapter-1-summary" class="slide level2">
+<h2>Chapter 1 Summary</h2>
+<ul>
+<li><strong>1.1–1.3 Propositional logic.</strong> Connectives, truth tables, logical equivalence, satisfiability.</li>
+<li><strong>1.4–1.5 Predicate logic.</strong> Predicates, quantifiers, nested quantifiers, negation.</li>
+<li><strong>1.6 Rules of inference.</strong> Valid arguments, for propositions and for quantified statements.</li>
+<li><strong>1.7–1.8 Proofs.</strong> Direct, contraposition, contradiction, cases, existence, counterexample, uniqueness.</li>
+</ul>
+<div class="fragment">
+<p>Chapter 2 is sets and functions, written in exactly this notation.</p>
 </div>
 
 </section>
