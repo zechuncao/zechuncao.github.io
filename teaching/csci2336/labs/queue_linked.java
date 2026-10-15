@@ -1,141 +1,143 @@
-/* CSCI 2336 -- Queue Implementations, Round 2: the linked chain.
+/* CSCI 2336 -- Chapter 3 Companion Lab, Exercise 1 of 4: the linked queue.
  *
- * Fill in the four blanks below. Press Run after each one and read the
- * console: every operation prints lastNode and then the chain from front
- * to back, and says ok or WRONG.
+ * Write the five lines marked "Your line goes here". Nothing else in this
+ * file needs changing. main() holds the example run: one line per
+ * operation, with what the queue should look like afterwards written
+ * beside it.
  *
- * Watch the lastNode column when the queue empties. That column is the
- * whole point of this round -- enqueue quietly repairs a lastNode that
- * dequeue left behind, so nothing else would ever show you the bug.
+ * Press Run before you type anything. Every operation reports WRONG.
+ * Fill in one blank, press Run again, and watch the WRONG lines turn into
+ * ok from the top down. The first WRONG line is the one to fix.
  */
-public class LinkedQueuePractice
+public class Exercise1
 {
-    /* What lastNode and the chain should be after each operation. */
-    static final String[] EXPECTED =
-    {
-        "null | (empty)",      // start
-        "A | A",               // enqueue A
-        "B | A -> B",          // enqueue B
-        "B | B",               // dequeue -> A
-        "null | (empty)",      // dequeue -> B, the last entry leaves
-        "C | C"                // enqueue C
-    };
-
-    static int step = 0;
-    static int wrong = 0;
-    static boolean threw = false;       // an operation that crashed is never "ok"
-    static boolean staleLast = false;   // emptied, but lastNode still pointed at a node
-    static boolean nullLast = false;    // nodes in the chain, but lastNode was null
-    static boolean lostBack = false;    // lastNode not reachable from firstNode
-
+    /* ===== The example run ==============================================
+       Each line performs one operation and then says what the queue should
+       be afterwards: what lastNode refers to, and the entries read from the
+       front to the back.
+       =================================================================== */
     public static void main(String[] args)
     {
-        LinkedQueue<String> q = new LinkedQueue<>();
+        LinkedQueue<String> q = new LinkedQueue<String>();
 
-        System.out.println("Linked queue: firstNode is the front, lastNode is the back.");
+        header();
+        show(q, "start", "null", "(empty)");
+
+        //         entry   lastNode   front .. back
+        enqueue(q, "A",    "A",       "A");
+        enqueue(q, "B",    "B",       "A -> B");
+        dequeue(q, "A",    "B",       "B");
+        dequeue(q, "B",    "null",    "(empty)");
+        enqueue(q, "C",    "C",       "C");
+
+        summary();
+    }
+
+
+    /* ===== The driver: printing and checking. Nothing to change. ======== */
+
+    static int rows = 0;        // operations reported
+    static int wrong = 0;
+    static int keptEntry = 0;   // a dequeue that handed back the front entry
+                                // without removing it
+
+    static void header()
+    {
+        System.out.println("Linked queue: firstNode is the front, lastNode the back.");
         System.out.println();
         System.out.println("operation      lastNode  ok?   front .. back");
         System.out.println("---------      --------  ---   -------------");
-
-        report(q, "start");
-
-        enqueue(q, "A");
-        enqueue(q, "B");
-        dequeue(q);
-        dequeue(q);        // this one empties the queue
-        enqueue(q, "C");
-
-        summary(q);
     }
 
-
-    /* ---- the driver -------------------------------------------------- */
-
-    static void report(LinkedQueue<String> q, String label)
-    {
-        String actual = q.lastLabel() + " | " + q.frontToBack();
-        String want = (step < EXPECTED.length) ? EXPECTED[step] : "";
-        boolean ok = want.equals(actual) && !threw;
-        threw = false;
-
-        if (q.hasStaleLast())
-            staleLast = true;
-        else if (!q.isEmpty() && q.lastLabel().equals("null"))
-            nullLast = true;
-        else if (!q.isEmpty() && !q.backIsReachable())
-            lostBack = true;
-
-        if (!ok)
-            wrong++;
-
-        System.out.printf("%-14s %-9s %-5s %s%n",
-                          label, q.lastLabel(), ok ? "ok" : "WRONG", q.frontToBack());
-
-        if (!ok)
-            System.out.printf("%-14s %s%n", "", "should be:  " + want.replace(" | ", "   "));
-
-        step++;
-    }
-
-    static void enqueue(LinkedQueue<String> q, String entry)
+    static void enqueue(LinkedQueue<String> q, String entry,
+                        String wantLast, String wantChain)
     {
         try
         {
             q.enqueue(entry);
-            report(q, "enqueue " + entry);
         }
-        catch (NullPointerException e)
+        catch (RuntimeException e)
         {
-            threw = true;
-            report(q, "enqueue " + entry);
-            System.out.printf("%-14s %s%n", "",
-                              "crashed: lastNode is null, so there is nothing to link to");
+            broke("enqueue " + entry, "it threw " + e.getClass().getSimpleName()
+                  + ", so lastNode was never assigned");
+            return;
         }
+
+        show(q, "enqueue " + entry, wantLast, wantChain);
     }
 
-    static void dequeue(LinkedQueue<String> q)
+    static void dequeue(LinkedQueue<String> q, String wantEntry,
+                        String wantLast, String wantChain)
     {
+        String label = "dequeue -> " + wantEntry;
+
         try
         {
-            String front = q.dequeue();
-            report(q, "dequeue -> " + front);
+            String before = q.frontToBack();
+            String got = q.dequeue();
+
+            if (!wantEntry.equals(got))
+            {
+                broke(label, "it returned " + got + ", not " + wantEntry);
+                return;
+            }
+
+            if (before.equals(q.frontToBack()))
+                keptEntry++;
         }
-        catch (EmptyQueueException e)
+        catch (RuntimeException e)
         {
-            threw = true;
-            report(q, "dequeue -> ??");
-            System.out.printf("%-14s %s%n", "",
-                              "the chain is empty, so enqueue is not linking anything in");
+            broke(label, "the queue says it is empty, so enqueue stored nothing");
+            return;
         }
+
+        show(q, label, wantLast, wantChain);
     }
 
-    static void summary(LinkedQueue<String> q)
+    static void show(LinkedQueue<String> q, String label,
+                     String wantLast, String wantChain)
+    {
+        String last = q.lastRef();
+        String chain = q.frontToBack();
+        boolean ok = last.equals(wantLast) && chain.equals(wantChain);
+        rows++;
+
+        if (!ok)
+            wrong++;
+
+        System.out.printf("%-14s %-9s %-5s %s%n", label, last,
+                          ok ? "ok" : "WRONG", chain);
+
+        if (!ok)
+            System.out.printf("%-14s %-9s %-5s %s%n", "", wantLast, "", wantChain);
+    }
+
+    /* An operation that could not even be compared with what it should be. */
+    static void broke(String label, String why)
+    {
+        rows++;
+        wrong++;
+        System.out.printf("%-14s %-9s %-5s %s%n", label, "-", "WRONG", why);
+    }
+
+    static void summary()
     {
         System.out.println();
 
-        if (wrong == 0 && !staleLast && !nullLast && !lostBack)
+        if (wrong == 0)
         {
             System.out.println("RESULT: PASS -- enqueue and dequeue are both right.");
             return;
         }
 
-        System.out.println("RESULT: FAIL on " + wrong + " of " + EXPECTED.length + " operations.");
+        System.out.println("RESULT: FAIL on " + wrong + " of " + rows + " operations.");
 
-        if (q.isEmpty() && q.lastLabel().equals("null") && wrong > 1)
-            System.out.println("  - the chain never grew, so enqueue is not linking a node in.");
-        else if (nullLast)
-            System.out.println("  - the chain had nodes while lastNode was still null, so enqueue"
-                               + " is not setting lastNode to the new node.");
-        else if (lostBack)
-            System.out.println("  - lastNode could not be reached by following next from"
-                               + " firstNode, so enqueue is not linking the old back to the new"
-                               + " node.");
-        else if (staleLast)
-            System.out.println("  - the queue emptied but lastNode still pointed at a node, so"
-                               + " dequeue is not clearing lastNode when the last entry leaves.");
-        else
-            System.out.println("  - look at the first WRONG line above: that is the operation to"
-                               + " fix.");
+        if (keptEntry > 0)
+            System.out.println("  - a dequeue returned the front entry without removing it,"
+                               + " so firstNode is not moving.");
+
+        System.out.println("  - the second line under a WRONG operation is what it should"
+                           + " have printed.");
     }
 }
 
@@ -161,8 +163,8 @@ class EmptyQueueException extends RuntimeException
 
 final class LinkedQueue<T> implements QueueInterface<T>
 {
-    private Node firstNode;   // front of the queue
-    private Node lastNode;    // back of the queue
+    private Node firstNode;     // the front entry
+    private Node lastNode;      // the back entry
 
     public LinkedQueue()
     {
@@ -189,8 +191,6 @@ final class LinkedQueue<T> implements QueueInterface<T>
             return firstNode.getData();
     } // end getFront
 
-    /* The exam writes both if/else below without braces. The braces are
-       here only so the file compiles while the blanks are still empty. */
     public void enqueue(T newEntry)
     {
         Node newNode = new Node(newEntry, null);
@@ -212,7 +212,7 @@ final class LinkedQueue<T> implements QueueInterface<T>
 
     public T dequeue()
     {
-        T front = getFront();              // might throw EmptyQueueException
+        T front = getFront();   // might throw EmptyQueueException
 
         // Your line goes here: unlink the front node  (1)
 
@@ -225,7 +225,6 @@ final class LinkedQueue<T> implements QueueInterface<T>
 
         return front;
     } // end dequeue
-
 
     private class Node
     {
@@ -255,25 +254,18 @@ final class LinkedQueue<T> implements QueueInterface<T>
     } // end Node
 
 
-    /* ===== For this lab only =============================================
-       None of this is part of the queue ADT. It exists so the console can
-       show lastNode, which the public API hides: enqueue takes the
-       isEmpty() branch and overwrites a stale lastNode on its own, so a
-       dequeue that forgets to clear it still behaves correctly from the
-       outside. It is a dangling reference, not a wrong answer.
+    /* ===== For this lab only ============================================
+       Not part of the queue ADT. The console needs to see lastNode, which
+       is the one field a wrong answer here can leave stale.
+       =================================================================== */
 
-       Every walk stops after WALK_LIMIT nodes, so a node accidentally
-       linked to itself prints (cycle?) instead of hanging the tab.
-       ===================================================================== */
+    static final int WALK_LIMIT = 20;       // a chain this short cannot be
+                                            // longer, so an unfinished blank
+                                            // cannot send the walk on forever
 
-    private static final int WALK_LIMIT = 50;
-
-    String lastLabel()
+    String lastRef()
     {
-        if (lastNode == null)
-            return "null";
-
-        return String.valueOf(lastNode.getData()) + (hasStaleLast() ? " (!)" : "");
+        return lastNode == null ? "null" : lastNode.getData().toString();
     }
 
     String frontToBack()
@@ -287,43 +279,14 @@ final class LinkedQueue<T> implements QueueInterface<T>
             if (steps > 0)
                 sb.append(" -> ");
 
-            sb.append(String.valueOf(current.getData()));
+            sb.append(current.getData().toString());
             current = current.getNext();
             steps++;
         }
 
-        if (current != null)
-            sb.append(" (cycle?)");
+        if (steps == WALK_LIMIT)
+            return "(a chain that loops back on itself)";
 
         return sb.length() == 0 ? "(empty)" : sb.toString();
-    }
-
-    /* True when following next from firstNode actually arrives at lastNode.
-       False when enqueue forgot to link the old back to the new node. */
-    boolean backIsReachable()
-    {
-        if (firstNode == null)
-            return lastNode == null;
-
-        Node current = firstNode;
-        int steps = 0;
-
-        while (current != null && steps < WALK_LIMIT)
-        {
-            if (current == lastNode)
-                return current.getNext() == null;
-
-            current = current.getNext();
-            steps++;
-        }
-
-        return false;
-    }
-
-    /* True when the queue is empty but lastNode still refers to a node --
-       the dangling reference that dequeue's lastNode = null prevents. */
-    boolean hasStaleLast()
-    {
-        return firstNode == null && lastNode != null;
     }
 } // end LinkedQueue
