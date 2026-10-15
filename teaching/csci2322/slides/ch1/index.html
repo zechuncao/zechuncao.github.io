@@ -4273,6 +4273,37 @@ P(a), \text{ where } a \text{ is a particular element in the domain} \\ \hline
 <p>The argument holds for every hash function, including a perfect one, and it names no pair of keys. That is why every hash table implementation includes collision handling.</p>
 </div>
 </section>
+<section id="how-long-is-a-proof" class="slide level2">
+<h2>How Long Is a Proof?</h2>
+<p>Andrew Wiles proved Fermat’s Last Theorem in 1995: no positive integers satisfy <span class="math inline">\(a^n + b^n = c^n\)</span> for <span class="math inline">\(n &gt; 2\)</span>. The paper runs from page 443 to page 551 of the <em>Annals of Mathematics</em>.</p>
+<div class="fragment">
+<p>Euler had guessed something more general in 1769. Summing <span class="math inline">\(n\)</span>th powers to an <span class="math inline">\(n\)</span>th power takes at least <span class="math inline">\(n\)</span> of them, so for <span class="math inline">\(n = 5\)</span>, <span class="math display">\[a^5 + b^5 + c^5 + d^5 = e^5\]</span> has no solution in positive integers.</p>
+</div>
+<div class="fragment">
+<p>That conjecture stood for 197 years. The paper that settled it is two sentences long.</p>
+</div>
+</section>
+<section id="a-two-sentence-paper" class="slide level2">
+<h2>A Two-Sentence Paper</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/lander_parkin_1966.png" class="quarto-figure quarto-figure-center" style="width:70.0%"></p>
+</figure>
+</div>
+<p><em>That is the entire paper — Bulletin of the AMS, 1966.</em></p>
+</section>
+<section id="a-two-sentence-paper-1" class="slide level2">
+<h2>A Two-Sentence Paper</h2>
+<p><span class="vote-prompt">Check the line on your phone.</span></p>
+<p><span class="math display">\[27^5 + 84^5 + 110^5 + 133^5 = 144^5\]</span></p>
+<p><span class="fragment ans">Both sides are <span class="math inline">\(61{,}917{,}364{,}224\)</span>.</span></p>
+<div class="fragment">
+<p>The search ran on a CDC 6600, the fastest computer in the world at the time. Checking what it found takes five fifth powers and three additions.</p>
+</div>
+<div class="fragment">
+<p>Euler’s conjecture is a claim about every choice of <span class="math inline">\(a, b, c, d, e\)</span>, and one choice refutes it.</p>
+</div>
+</section>
 <section id="counterexamples-must-know" class="slide level2">
 <h2>Counterexamples <span class="ex">Must Know</span></h2>
 <p>To show that <span class="math inline">\(\forall x\, P(x)\)</span> is <strong>false</strong>, find one <span class="math inline">\(c\)</span> for which <span class="math inline">\(P(c)\)</span> is false. That <span class="math inline">\(c\)</span> is a <strong>counterexample</strong>.</p>
