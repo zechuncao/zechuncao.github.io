@@ -2010,17 +2010,44 @@ Zechun (Jacob) Cao
 <p><span class="lead-blue">Your turn.</span> <code>q u u ← e u e ← ← u e</code> prints <span class="fragment"><code>queue</code></span>.</p>
 </div>
 </section>
-<section id="palindromes" class="slide level2">
-<h2>Palindromes</h2>
-<p>Put the characters of a word into a deque. Then remove one from each end and compare, until fewer than two remain.</p>
-<div class="fragment">
-<p><code>level</code>: <code>l</code> = <code>l</code>, <code>e</code> = <code>e</code>, then only <code>v</code> is left. Two comparisons; it is a palindrome.</p>
+<section id="palindromes-must-know" class="slide level2">
+<h2>Palindromes <span class="ex">Must Know</span></h2>
+<p>A word is a palindrome when it reads the same backwards. Put every character at the back of a deque, then take one off each end and compare, until fewer than two are left.</p>
+<div class="anim" id="dq_palin">
+<svg viewbox="0 0 1000 250" width="100%" xmlns="http://www.w3.org/2000/svg" role="img">
+<defs><marker id="ah-dq_palin" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="context-stroke"></path></marker></defs>
+<g data-id="c0" style="transform:translate(308.0px,92px);opacity:0" class="item"><rect x="-33.0" y="-33.0" width="66" height="66" rx="6"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">l</text></g>
+<g data-id="c1" style="transform:translate(404.0px,92px);opacity:0" class="item"><rect x="-33.0" y="-33.0" width="66" height="66" rx="6"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">e</text></g>
+<g data-id="c2" style="transform:translate(500.0px,92px);opacity:0" class="item"><rect x="-33.0" y="-33.0" width="66" height="66" rx="6"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">v</text></g>
+<g data-id="c3" style="transform:translate(596.0px,92px);opacity:0" class="item"><rect x="-33.0" y="-33.0" width="66" height="66" rx="6"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">e</text></g>
+<g data-id="c4" style="transform:translate(692.0px,92px);opacity:0" class="item"><rect x="-33.0" y="-33.0" width="66" height="66" rx="6"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">l</text></g>
+<g data-id="mf" style="transform:translate(308.0px,132.0px);opacity:0" class="mk"><path d="M0,0 L-11,18 L11,18 z"></path><text x="0" y="42" text-anchor="middle">front</text></g>
+<g data-id="mb" style="transform:translate(692.0px,52.0px);opacity:0" class="mk"><path d="M0,0 L-11,-18 L11,-18 z"></path><text x="0" y="-26" text-anchor="middle">back</text></g>
+</svg>
+<div class="anim-cap" data-id="cap">An empty deque, and the word <code>level</code>.</div>
+<script type="application/json" class="anim-data">[{"cap":{"h":"An empty deque, and the word <code>level<\/code>."},"c0":{"x":308.0,"y":92,"o":0,"c":""},"c1":{"x":404.0,"y":92,"o":0,"c":""},"c2":{"x":500.0,"y":92,"o":0,"c":""},"c3":{"x":596.0,"y":92,"o":0,"c":""},"c4":{"x":692.0,"y":92,"o":0,"c":""},"mf":{"x":308.0,"y":132.0,"o":0,"c":""},"mb":{"x":692.0,"y":52.0,"o":0,"c":""}},{"cap":{"h":"<code>addToBack<\/code>, 5 times. The front holds the first character and the back holds the last."},"c0":{"o":1},"c1":{"o":1},"c2":{"o":1},"c3":{"o":1},"c4":{"o":1},"mf":{"o":1},"mb":{"o":1}},{"cap":{"h":"<code>k = 0<\/code>: <code>removeFront()<\/code> gives <b>l<\/b> and <code>removeBack()<\/code> gives <b>l<\/b>. They match."},"c0":{"x":278.0,"y":14,"c":"gone"},"c4":{"x":722.0,"y":14,"c":"gone"},"mf":{"x":404.0},"mb":{"x":596.0}},{"cap":{"h":"<code>k = 1<\/code>: <code>removeFront()<\/code> gives <b>e<\/b> and <code>removeBack()<\/code> gives <b>e<\/b>. They match."},"c0":{"o":0},"c4":{"o":0},"c1":{"x":374.0,"y":14,"c":"gone"},"c3":{"x":626.0,"y":14,"c":"gone"},"mf":{"x":500.0},"mb":{"x":500.0}},{"cap":{"h":"<code>5 / 2<\/code> is 2, so the loop stops after 2. <code>v<\/code> is still in the deque and is never compared. <code>return true<\/code> runs."},"c1":{"o":0},"c3":{"o":0}}]</script>
+<span class="fragment anim-step" data-anim="dq_palin" data-step="1"></span>
+<span class="fragment anim-step" data-anim="dq_palin" data-step="2"></span>
+<span class="fragment anim-step" data-anim="dq_palin" data-step="3"></span>
+<span class="fragment anim-step" data-anim="dq_palin" data-step="4"></span>
 </div>
-<div class="fragment">
-<p><code>loops</code>: <code>l</code> ≠ <code>s</code>. One comparison; it is not.</p>
-</div>
-<div class="fragment">
-<p>A word of <span class="math inline">\(n\)</span> characters needs at most <span class="math inline">\(\lfloor n/2 \rfloor\)</span> comparisons: <span class="math inline">\(O(n)\)</span> for the check, after <span class="math inline">\(O(n)\)</span> to fill the deque.</p>
+</section>
+<section id="palindromes-in-java" class="slide level2">
+<h2>Palindromes, in Java</h2>
+<p>Six lines of the method are missing. Call each one before it appears.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode"><pre class="sourceCode numberSource java number-lines code-with-copy"><code class="sourceCode java"><span><a href="" aria-label="1"></a>DequeInterface<span class="op">&lt;</span><span class="bu">Character</span><span class="op">&gt;</span> d <span class="op">=</span> <span class="kw">new</span> LinkedDeque<span class="op">&lt;&gt;();</span></span>
+<span><a href="" aria-label="2"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> word<span class="op">.</span><span class="fu">length</span><span class="op">();</span> i<span class="op">++)</span></span>
+<span><a href="" aria-label="3"></a>   <span class="fragment fill" data-fragment-index="1">d<span class="op">.</span><span class="fu">addToBack</span><span class="op">(</span>word<span class="op">.</span><span class="fu">charAt</span><span class="op">(</span>i<span class="op">));</span></span></span>
+<span><a href="" aria-label="4"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> k <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> k <span class="op">&lt;</span> word<span class="op">.</span><span class="fu">length</span><span class="op">()</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span> k<span class="op">++)</span></span>
+<span><a href="" aria-label="5"></a><span class="op">{</span></span>
+<span><a href="" aria-label="6"></a>   <span class="fragment fill" data-fragment-index="2"><span class="dt">char</span> front <span class="op">=</span> d<span class="op">.</span><span class="fu">removeFront</span><span class="op">();</span></span></span>
+<span><a href="" aria-label="7"></a>   <span class="fragment fill" data-fragment-index="2"><span class="dt">char</span> back <span class="op">=</span> d<span class="op">.</span><span class="fu">removeBack</span><span class="op">();</span></span></span>
+<span><a href="" aria-label="8"></a>   <span class="fragment fill" data-fragment-index="2"><span class="cf">if</span> <span class="op">(</span>front <span class="op">!=</span> back<span class="op">)</span></span></span>
+<span><a href="" aria-label="9"></a>      <span class="fragment fill" data-fragment-index="2"><span class="cf">return</span> <span class="kw">false</span><span class="op">;</span></span></span>
+<span><a href="" aria-label="10"></a><span class="op">}</span></span>
+<span><a href="" aria-label="11"></a><span class="fragment fill" data-fragment-index="3"><span class="cf">return</span> <span class="kw">true</span><span class="op">;</span></span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment" data-fragment-index="4">
+<p>Filling the deque is <span class="math inline">\(O(n)\)</span> and the loop runs at most <span class="math inline">\(\lfloor n/2 \rfloor\)</span> times, so the test is <span class="math inline">\(O(n)\)</span> in all.</p>
 </div>
 </section>
 <section id="question-5" class="slide level2">
