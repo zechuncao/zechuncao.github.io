@@ -2362,7 +2362,7 @@ text-decoration: none;
 </section>
 <section id="exercise-1-the-linked-queue" class="level2">
 <h2 class="anchored" data-anchor-id="exercise-1-the-linked-queue">Exercise 1 — The linked queue</h2>
-<p><a class="livecode" href="https://v49.livecodes.io/?x=https://zechuncao.github.io/teaching/csci2336/labs/queue_linked.java&amp;raw=java" target="_blank" rel="noopener">live code</a></p>
+<p><a class="livecode" href="https://v49.livecodes.io/?x=https://zechuncao.com/teaching/csci2336/labs/queue_linked.java&amp;raw=java" target="_blank" rel="noopener">live code</a></p>
 <p><code>firstNode</code> refers to the front of the chain and <code>lastNode</code> to the back. The <code>Node</code> class is written for you: it holds <code>data</code> and <code>next</code>, takes <code>Node(T entry, Node nextNode)</code>, and provides <code>getData()</code>, <code>getNext()</code> and <code>setNext(Node nextNode)</code>.</p>
 <p>Five lines are blank across the two methods.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">void</span> <span class="fu">enqueue</span><span class="op">(</span>T newEntry<span class="op">)</span></span>
@@ -2417,7 +2417,7 @@ text-decoration: none;
 </section>
 <section id="exercise-2-the-circular-array" class="level2">
 <h2 class="anchored" data-anchor-id="exercise-2-the-circular-array">Exercise 2 — The circular array</h2>
-<p><a class="livecode" href="https://v49.livecodes.io/?x=https://zechuncao.github.io/teaching/csci2336/labs/queue_array.java&amp;raw=java" target="_blank" rel="noopener">live code</a></p>
+<p><a class="livecode" href="https://v49.livecodes.io/?x=https://zechuncao.com/teaching/csci2336/labs/queue_array.java&amp;raw=java" target="_blank" rel="noopener">live code</a></p>
 <p>The queue holds 5 entries in an array of 6 slots, because one slot is always left unused. <code>frontIndex</code> starts at 0 and <code>backIndex</code> at <code>queue.length - 1</code>, so the queue starts empty. <code>ensureCapacity()</code> is written for you and doubles the array when it is full.</p>
 <p>Write the two lines in each method.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">void</span> <span class="fu">enqueue</span><span class="op">(</span>T newEntry<span class="op">)</span></span>
@@ -2463,7 +2463,7 @@ text-decoration: none;
 </section>
 <section id="exercise-3-the-deque" class="level2">
 <h2 class="anchored" data-anchor-id="exercise-3-the-deque">Exercise 3 — The deque</h2>
-<p><a class="livecode" href="https://v49.livecodes.io/?x=https://zechuncao.github.io/teaching/csci2336/labs/deque_linked.java&amp;raw=java" target="_blank" rel="noopener">live code</a></p>
+<p><a class="livecode" href="https://v49.livecodes.io/?x=https://zechuncao.com/teaching/csci2336/labs/deque_linked.java&amp;raw=java" target="_blank" rel="noopener">live code</a></p>
 <p>Every node now refers to the node <em>before</em> it as well as the node after it. <code>DLNode</code> takes <code>DLNode(DLNode previousNode, T entry, DLNode nextNode)</code> and provides <code>getNext</code>, <code>setNext</code>, <code>getPrevious</code> and <code>setPrevious</code>.</p>
 <p><code>addToBack</code> and <code>removeFront</code> are written for you, directly above the two methods you write. The two you write are their mirror image: <code>firstNode</code> and <code>previous</code> in place of <code>lastNode</code> and <code>next</code>. Six lines are blank.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">void</span> <span class="fu">addToFront</span><span class="op">(</span>T newEntry<span class="op">)</span></span>
@@ -2525,7 +2525,7 @@ text-decoration: none;
 </section>
 <section id="exercise-4-a-palindrome-test" class="level2">
 <h2 class="anchored" data-anchor-id="exercise-4-a-palindrome-test">Exercise 4 — A palindrome test</h2>
-<p><a class="livecode" href="https://v49.livecodes.io/?x=https://zechuncao.github.io/teaching/csci2336/labs/deque_palindrome.java&amp;raw=java" target="_blank" rel="noopener">live code</a></p>
+<p><a class="livecode" href="https://v49.livecodes.io/?x=https://zechuncao.com/teaching/csci2336/labs/deque_palindrome.java&amp;raw=java" target="_blank" rel="noopener">live code</a></p>
 <p>This file hands you the finished deque — the one Exercise 3 asked you to write — and leaves the method that uses it blank. A word is a palindrome when it reads the same backwards. Put every character into the deque, then take one character off each end and compare them, until fewer than two are left.</p>
 <p>Five lines are blank: one to fill the deque, and four for one comparison.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="dt">static</span> <span class="dt">boolean</span> <span class="fu">isPalindrome</span><span class="op">(</span><span class="bu">String</span> word<span class="op">)</span></span>
