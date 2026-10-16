@@ -9,8 +9,9 @@
  * compare them, until fewer than two are left.
  *
  * Nothing outside isPalindrome needs changing. main() holds the example
- * run: six words, with the answer and the number of comparisons each one
- * should take written beside it.
+ * run -- six words, with the answer and the number of comparisons each one
+ * should take written beside it -- and the Driver class at the end of the
+ * file only prints and checks.
  */
 public class Exercise4
 {
@@ -38,7 +39,6 @@ public class Exercise4
         return true;
     } // end isPalindrome
 
-
     /* ===== The example run ==============================================
        word.length() / 2 is how many comparisons a word of that length
        needs, so "level" takes 2 and the middle v is never compared. A
@@ -46,89 +46,17 @@ public class Exercise4
        =================================================================== */
     public static void main(String[] args)
     {
-        header();
+        Driver run = new Driver();
 
-        //     word      palindrome?  comparisons
-        check("level",   true,        2);
-        check("stats",   true,        2);
-        check("deed",    true,        2);
-        check("sales",   false,       2);
-        check("data",    false,       1);
-        check("x",       true,        0);
+        //        word        palindrome?    comparisons
+        run.check("level",    true,          2);
+        run.check("stats",    true,          2);
+        run.check("deed",     true,          2);
+        run.check("sales",    false,         2);
+        run.check("data",     false,         1);
+        run.check("x",        true,          0);
 
-        summary();
-    }
-
-
-    /* ===== The driver: printing and checking. Nothing to change. ======== */
-
-    static int rows = 0;
-    static int wrong = 0;
-    static int neverUsed = 0;       // a word that made no deque calls at all
-
-    static void header()
-    {
-        System.out.println("A palindrome reads the same backwards. One comparison per pair"
-                           + " of characters.");
-        System.out.println();
-        System.out.println("word     palindrome?  comparisons  ok?");
-        System.out.println("----     -----------  -----------  ---");
-    }
-
-    static void check(String word, boolean wantAnswer, int wantComparisons)
-    {
-        LinkedDeque.comparisons = 0;
-        rows++;
-
-        boolean answer;
-
-        try
-        {
-            answer = isPalindrome(word);
-        }
-        catch (EmptyQueueException e)
-        {
-            wrong++;
-            System.out.printf("%-8s %-12s %-12s %s   %s%n", word, "--", "--", "WRONG",
-                              "it removed from an empty deque, so nothing was added to it");
-            return;
-        }
-
-        int comparisons = LinkedDeque.comparisons;
-
-        if (comparisons == 0 && word.length() > 1)
-            neverUsed++;
-
-        boolean ok = answer == wantAnswer && comparisons == wantComparisons;
-
-        if (!ok)
-            wrong++;
-
-        System.out.printf("%-8s %-12s %-12d %s%s%n", word, answer ? "yes" : "no",
-                          comparisons, ok ? "ok" : "WRONG",
-                          ok ? "" : "   should be " + (wantAnswer ? "yes" : "no")
-                               + ", in " + wantComparisons);
-    }
-
-    static void summary()
-    {
-        System.out.println();
-
-        if (wrong == 0)
-        {
-            System.out.println("RESULT: PASS -- isPalindrome is right on all " + rows
-                               + " words.");
-            return;
-        }
-
-        System.out.println("RESULT: FAIL on " + wrong + " of " + rows + " words.");
-
-        if (neverUsed > 0)
-            System.out.println("  - the comparison column is 0, so the second loop is not"
-                               + " taking anything off the deque yet.");
-
-        System.out.println("  - a word reported yes with 0 comparisons was never actually"
-                           + " checked.");
+        run.summary();
     }
 }
 
@@ -292,3 +220,81 @@ final class LinkedDeque<T> implements DequeInterface<T>
        is one per comparison the loop in isPalindrome performs. */
     static int comparisons = 0;
 } // end LinkedDeque
+
+
+/* ===== The driver: printing and checking. Nothing to change. ============
+   Driver is not a deque. It calls the isPalindrome you wrote -- which
+   makes a deque of its own -- counts what the deque was asked to do, and
+   prints one row per word.
+   ======================================================================= */
+final class Driver
+{
+    private int rows = 0;
+    private int wrong = 0;
+    private int neverUsed = 0;      // a word that made no deque calls at all
+
+    Driver()
+    {
+        System.out.println("A palindrome reads the same backwards. One comparison per pair"
+                           + " of characters.");
+        System.out.println();
+        System.out.println("word     palindrome?  comparisons  ok?");
+        System.out.println("----     -----------  -----------  ---");
+    }
+
+    void check(String word, boolean wantAnswer, int wantComparisons)
+    {
+        LinkedDeque.comparisons = 0;
+        rows++;
+
+        boolean answer;
+
+        try
+        {
+            answer = Exercise4.isPalindrome(word);
+        }
+        catch (EmptyQueueException e)
+        {
+            wrong++;
+            System.out.printf("%-8s %-12s %-12s %s   %s%n", word, "--", "--", "WRONG",
+                              "it removed from an empty deque, so nothing was added to it");
+            return;
+        }
+
+        int comparisons = LinkedDeque.comparisons;
+
+        if (comparisons == 0 && word.length() > 1)
+            neverUsed++;
+
+        boolean ok = answer == wantAnswer && comparisons == wantComparisons;
+
+        if (!ok)
+            wrong++;
+
+        System.out.printf("%-8s %-12s %-12d %s%s%n", word, answer ? "yes" : "no",
+                          comparisons, ok ? "ok" : "WRONG",
+                          ok ? "" : "   should be " + (wantAnswer ? "yes" : "no")
+                               + ", in " + wantComparisons);
+    }
+
+    void summary()
+    {
+        System.out.println();
+
+        if (wrong == 0)
+        {
+            System.out.println("RESULT: PASS -- isPalindrome is right on all " + rows
+                               + " words.");
+            return;
+        }
+
+        System.out.println("RESULT: FAIL on " + wrong + " of " + rows + " words.");
+
+        if (neverUsed > 0)
+            System.out.println("  - the comparison column is 0, so the second loop is not"
+                               + " taking anything off the deque yet.");
+
+        System.out.println("  - a word reported yes with 0 comparisons was never actually"
+                           + " checked.");
+    }
+} // end Driver
