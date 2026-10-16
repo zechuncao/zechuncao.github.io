@@ -35559,8 +35559,8 @@ text-decoration: none;
 <section id="how-this-works" class="level2">
 <h2 class="anchored" data-anchor-id="how-this-works">How this works</h2>
 <p>Four exercises, four browser tabs. Each one holds a structure that is finished except for the lines you have been tracing on the slides, and each one is small enough to read in a minute: the interface, the constructor, the <code>Node</code> class, <code>getFront</code>, <code>isEmpty</code> and the printing are all written for you.</p>
-<p>Everything that feeds the structure lives in <code>main</code>, and <strong>nothing in <code>main</code> needs changing.</strong> It makes one object of the class you are finishing, performs one operation per line on that object, and writes beside it the state the structure should be in afterwards, so the console can say <code>ok</code> or <code>WRONG</code> for every operation without you having to compare anything by hand. The printing is a separate <code>Driver</code> class at the end of the file.</p>
-<p>Each file <strong>runs before you have typed anything.</strong> Press Run first and watch the operations report <code>WRONG</code>. Then fill in one blank, press Run again, and watch the <code>WRONG</code> turn into <code>ok</code> from the top down. The first <code>WRONG</code> line is always the operation to fix, and the line printed under it is what that operation should have printed.</p>
+<p>Everything that feeds the structure lives in <code>main</code>, and <strong>nothing in <code>main</code> needs changing.</strong> It makes one object of the class you are finishing, performs one operation per line on that object, and prints what the structure holds afterwards. The console that run prints when the structure works is printed below for each exercise: compare it with yours line by line, and the first row that differs is the operation to fix.</p>
+<p>Each file <strong>runs before you have typed anything.</strong> Press Run first: with every blank still empty the structure never stores anything, so the rows come out wrong, and an operation that cannot proceed at all stops the run with a line saying so. Fill in one blank, press Run again, and the rows start matching from the top down.</p>
 <p>A blank is an empty line under a comment that says how many lines belong there:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Your two lines go here  (2)</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -35611,14 +35611,14 @@ text-decoration: none;
 <section id="what-the-console-should-say" class="level3">
 <h3 class="anchored" data-anchor-id="what-the-console-should-say">What the console should say</h3>
 <p>Every operation prints what <code>lastNode</code> refers to, then the chain read from front to back.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="linked-run"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="linked-run-1"><a href="#linked-run-1" aria-hidden="true" tabindex="-1"></a>operation      lastNode  ok?   front .. back</span>
-<span id="linked-run-2"><a href="#linked-run-2" aria-hidden="true" tabindex="-1"></a>---------      --------  ---   -------------</span>
-<span id="linked-run-3"><a href="#linked-run-3" aria-hidden="true" tabindex="-1"></a>start          null      ok    (empty)</span>
-<span id="linked-run-4"><a href="#linked-run-4" aria-hidden="true" tabindex="-1"></a>enqueue A      A         ok    A</span>
-<span id="linked-run-5"><a href="#linked-run-5" aria-hidden="true" tabindex="-1"></a>enqueue B      B         ok    A -&gt; B</span>
-<span id="linked-run-6"><a href="#linked-run-6" aria-hidden="true" tabindex="-1"></a>dequeue -&gt; A   B         ok    B</span>
-<span id="linked-run-7"><a href="#linked-run-7" aria-hidden="true" tabindex="-1"></a>dequeue -&gt; B   null      ok    (empty)</span>
-<span id="linked-run-8"><a href="#linked-run-8" aria-hidden="true" tabindex="-1"></a>enqueue C      C         ok    C</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="linked-run"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="linked-run-1"><a href="#linked-run-1" aria-hidden="true" tabindex="-1"></a>operation      lastNode  front .. back</span>
+<span id="linked-run-2"><a href="#linked-run-2" aria-hidden="true" tabindex="-1"></a>---------      --------  -------------</span>
+<span id="linked-run-3"><a href="#linked-run-3" aria-hidden="true" tabindex="-1"></a>start          null      (empty)</span>
+<span id="linked-run-4"><a href="#linked-run-4" aria-hidden="true" tabindex="-1"></a>enqueue A      A         A</span>
+<span id="linked-run-5"><a href="#linked-run-5" aria-hidden="true" tabindex="-1"></a>enqueue B      B         A -&gt; B</span>
+<span id="linked-run-6"><a href="#linked-run-6" aria-hidden="true" tabindex="-1"></a>dequeue -&gt; A   B         B</span>
+<span id="linked-run-7"><a href="#linked-run-7" aria-hidden="true" tabindex="-1"></a>dequeue -&gt; B   null      (empty)</span>
+<span id="linked-run-8"><a href="#linked-run-8" aria-hidden="true" tabindex="-1"></a>enqueue C      C         C</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The <code>lastNode</code> column is the reason this run prints it at all. Follow it down to <code>dequeue -&gt; B</code>, the operation that removes the last entry. The chain is empty, so <code>firstNode</code> is <code>null</code> — and <code>lastNode</code> has to be set to <code>null</code> as well, or it goes on referring to a node that is no longer in the queue.</p>
 <p>That one is worth being stubborn about, because it is the blank you can skip without the queue ever giving a wrong answer. The next <code>enqueue</code> finds <code>isEmpty()</code> true, takes the <code>firstNode = newNode</code> branch, and assigns <code>lastNode</code> on its way out, repairing the damage. Only the <code>lastNode</code> column shows it.</p>
 </section>
@@ -35650,19 +35650,19 @@ text-decoration: none;
 <section id="what-the-console-should-say-1" class="level3">
 <h3 class="anchored" data-anchor-id="what-the-console-should-say-1">What the console should say</h3>
 <p>Every operation prints <code>frontIndex</code>, <code>backIndex</code>, the number of entries, and every slot in the array. A slot shown as <code>_</code> is <code>null</code>.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="array-run"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="array-run-1"><a href="#array-run-1" aria-hidden="true" tabindex="-1"></a>operation      f  b  cnt  ok?   slots</span>
-<span id="array-run-2"><a href="#array-run-2" aria-hidden="true" tabindex="-1"></a>---------      -  -  ---  ---   -----</span>
-<span id="array-run-3"><a href="#array-run-3" aria-hidden="true" tabindex="-1"></a>start          0  5  0    ok    [_, _, _, _, _, _]</span>
-<span id="array-run-4"><a href="#array-run-4" aria-hidden="true" tabindex="-1"></a>enqueue A      0  0  1    ok    [A, _, _, _, _, _]</span>
-<span id="array-run-5"><a href="#array-run-5" aria-hidden="true" tabindex="-1"></a>enqueue B      0  1  2    ok    [A, B, _, _, _, _]</span>
-<span id="array-run-6"><a href="#array-run-6" aria-hidden="true" tabindex="-1"></a>enqueue C      0  2  3    ok    [A, B, C, _, _, _]</span>
-<span id="array-run-7"><a href="#array-run-7" aria-hidden="true" tabindex="-1"></a>dequeue -&gt; A   1  2  2    ok    [_, B, C, _, _, _]</span>
-<span id="array-run-8"><a href="#array-run-8" aria-hidden="true" tabindex="-1"></a>dequeue -&gt; B   2  2  1    ok    [_, _, C, _, _, _]</span>
-<span id="array-run-9"><a href="#array-run-9" aria-hidden="true" tabindex="-1"></a>enqueue D      2  3  2    ok    [_, _, C, D, _, _]</span>
-<span id="array-run-10"><a href="#array-run-10" aria-hidden="true" tabindex="-1"></a>enqueue E      2  4  3    ok    [_, _, C, D, E, _]</span>
-<span id="array-run-11"><a href="#array-run-11" aria-hidden="true" tabindex="-1"></a>enqueue F      2  5  4    ok    [_, _, C, D, E, F]</span>
-<span id="array-run-12"><a href="#array-run-12" aria-hidden="true" tabindex="-1"></a>enqueue G      2  0  5    ok    [G, _, C, D, E, F]</span>
-<span id="array-run-13"><a href="#array-run-13" aria-hidden="true" tabindex="-1"></a>enqueue H      0  5  6    ok    [C, D, E, F, G, H, _, _, _, _, _, _]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="array-run"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="array-run-1"><a href="#array-run-1" aria-hidden="true" tabindex="-1"></a>operation      f  b  cnt  slots</span>
+<span id="array-run-2"><a href="#array-run-2" aria-hidden="true" tabindex="-1"></a>---------      -  -  ---  -----</span>
+<span id="array-run-3"><a href="#array-run-3" aria-hidden="true" tabindex="-1"></a>start          0  5  0    [_, _, _, _, _, _]</span>
+<span id="array-run-4"><a href="#array-run-4" aria-hidden="true" tabindex="-1"></a>enqueue A      0  0  1    [A, _, _, _, _, _]</span>
+<span id="array-run-5"><a href="#array-run-5" aria-hidden="true" tabindex="-1"></a>enqueue B      0  1  2    [A, B, _, _, _, _]</span>
+<span id="array-run-6"><a href="#array-run-6" aria-hidden="true" tabindex="-1"></a>enqueue C      0  2  3    [A, B, C, _, _, _]</span>
+<span id="array-run-7"><a href="#array-run-7" aria-hidden="true" tabindex="-1"></a>dequeue -&gt; A   1  2  2    [_, B, C, _, _, _]</span>
+<span id="array-run-8"><a href="#array-run-8" aria-hidden="true" tabindex="-1"></a>dequeue -&gt; B   2  2  1    [_, _, C, _, _, _]</span>
+<span id="array-run-9"><a href="#array-run-9" aria-hidden="true" tabindex="-1"></a>enqueue D      2  3  2    [_, _, C, D, _, _]</span>
+<span id="array-run-10"><a href="#array-run-10" aria-hidden="true" tabindex="-1"></a>enqueue E      2  4  3    [_, _, C, D, E, _]</span>
+<span id="array-run-11"><a href="#array-run-11" aria-hidden="true" tabindex="-1"></a>enqueue F      2  5  4    [_, _, C, D, E, F]</span>
+<span id="array-run-12"><a href="#array-run-12" aria-hidden="true" tabindex="-1"></a>enqueue G      2  0  5    [G, _, C, D, E, F]</span>
+<span id="array-run-13"><a href="#array-run-13" aria-hidden="true" tabindex="-1"></a>enqueue H      0  5  6    [C, D, E, F, G, H, _, _, _, _, _, _]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Three lines in that run are worth stopping on.</p>
 <p><code>dequeue -&gt; A</code> puts a <code>_</code> back in slot 0. That is the first of your two lines in <code>dequeue</code> doing its job. Leave it out and the letter stays in the array after the entry has left the queue, which the <code>slots</code> column reports.</p>
 <p><code>enqueue G</code> wraps. <code>backIndex</code> was 5, the last slot, and the next entry goes to slot 0 rather than off the end. Five entries are now in the queue and the array is full, because <code>frontIndex == (backIndex + 2) % 6</code>.</p>
@@ -35717,16 +35717,16 @@ text-decoration: none;
 <section id="what-the-console-should-say-2" class="level3">
 <h3 class="anchored" data-anchor-id="what-the-console-should-say-2">What the console should say</h3>
 <p>The deque is read twice: front to back along the <code>next</code> references, and back to front along the <code>previous</code> references.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="deque-run"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="deque-run-1"><a href="#deque-run-1" aria-hidden="true" tabindex="-1"></a>operation        ok?   front .. back    back .. front</span>
-<span id="deque-run-2"><a href="#deque-run-2" aria-hidden="true" tabindex="-1"></a>---------        ---   -------------    -------------</span>
-<span id="deque-run-3"><a href="#deque-run-3" aria-hidden="true" tabindex="-1"></a>start            ok    (empty)          (empty)</span>
-<span id="deque-run-4"><a href="#deque-run-4" aria-hidden="true" tabindex="-1"></a>addToBack B      ok    B                B</span>
-<span id="deque-run-5"><a href="#deque-run-5" aria-hidden="true" tabindex="-1"></a>addToFront A     ok    A B              B A</span>
-<span id="deque-run-6"><a href="#deque-run-6" aria-hidden="true" tabindex="-1"></a>addToBack C      ok    A B C            C B A</span>
-<span id="deque-run-7"><a href="#deque-run-7" aria-hidden="true" tabindex="-1"></a>removeBack -&gt; C  ok    A B              B A</span>
-<span id="deque-run-8"><a href="#deque-run-8" aria-hidden="true" tabindex="-1"></a>removeFront -&gt; A ok    B                B</span>
-<span id="deque-run-9"><a href="#deque-run-9" aria-hidden="true" tabindex="-1"></a>removeBack -&gt; B  ok    (empty)          (empty)</span>
-<span id="deque-run-10"><a href="#deque-run-10" aria-hidden="true" tabindex="-1"></a>addToFront D     ok    D                D</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="deque-run"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="deque-run-1"><a href="#deque-run-1" aria-hidden="true" tabindex="-1"></a>operation        front .. back    back .. front</span>
+<span id="deque-run-2"><a href="#deque-run-2" aria-hidden="true" tabindex="-1"></a>---------        -------------    -------------</span>
+<span id="deque-run-3"><a href="#deque-run-3" aria-hidden="true" tabindex="-1"></a>start            (empty)          (empty)</span>
+<span id="deque-run-4"><a href="#deque-run-4" aria-hidden="true" tabindex="-1"></a>addToBack B      B                B</span>
+<span id="deque-run-5"><a href="#deque-run-5" aria-hidden="true" tabindex="-1"></a>addToFront A     A B              B A</span>
+<span id="deque-run-6"><a href="#deque-run-6" aria-hidden="true" tabindex="-1"></a>addToBack C      A B C            C B A</span>
+<span id="deque-run-7"><a href="#deque-run-7" aria-hidden="true" tabindex="-1"></a>removeBack -&gt; C  A B              B A</span>
+<span id="deque-run-8"><a href="#deque-run-8" aria-hidden="true" tabindex="-1"></a>removeFront -&gt; A B                B</span>
+<span id="deque-run-9"><a href="#deque-run-9" aria-hidden="true" tabindex="-1"></a>removeBack -&gt; B  (empty)          (empty)</span>
+<span id="deque-run-10"><a href="#deque-run-10" aria-hidden="true" tabindex="-1"></a>addToFront D     D                D</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Two columns rather than one, because half a correct answer looks right in one of them. An <code>addToFront</code> that assigns <code>firstNode</code> and forgets <code>firstNode.setPrevious(newNode)</code> leaves a chain you can read front to back and cannot read back to front, and back to front is the direction <code>removeBack</code> depends on.</p>
 <p>The last two operations are the ones to watch. <code>removeBack -&gt; B</code> empties the deque, so <code>firstNode</code> has to become <code>null</code> as well; then <code>addToFront D</code> adds to an empty deque, which is the case that has to assign <code>lastNode</code>.</p>
 </section>
@@ -35760,14 +35760,14 @@ text-decoration: none;
 <p>Declare the two characters you remove as <code>char</code>, not <code>Character</code>, so that <code>!=</code> compares the characters rather than the two objects holding them.</p>
 <section id="what-the-console-should-say-3" class="level3">
 <h3 class="anchored" data-anchor-id="what-the-console-should-say-3">What the console should say</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="palindrome-run"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="palindrome-run-1"><a href="#palindrome-run-1" aria-hidden="true" tabindex="-1"></a>word     palindrome?  comparisons  ok?</span>
-<span id="palindrome-run-2"><a href="#palindrome-run-2" aria-hidden="true" tabindex="-1"></a>----     -----------  -----------  ---</span>
-<span id="palindrome-run-3"><a href="#palindrome-run-3" aria-hidden="true" tabindex="-1"></a>level    yes          2            ok</span>
-<span id="palindrome-run-4"><a href="#palindrome-run-4" aria-hidden="true" tabindex="-1"></a>stats    yes          2            ok</span>
-<span id="palindrome-run-5"><a href="#palindrome-run-5" aria-hidden="true" tabindex="-1"></a>deed     yes          2            ok</span>
-<span id="palindrome-run-6"><a href="#palindrome-run-6" aria-hidden="true" tabindex="-1"></a>sales    no           2            ok</span>
-<span id="palindrome-run-7"><a href="#palindrome-run-7" aria-hidden="true" tabindex="-1"></a>data     no           1            ok</span>
-<span id="palindrome-run-8"><a href="#palindrome-run-8" aria-hidden="true" tabindex="-1"></a>x        yes          0            ok</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="palindrome-run"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="palindrome-run-1"><a href="#palindrome-run-1" aria-hidden="true" tabindex="-1"></a>word     palindrome?  comparisons</span>
+<span id="palindrome-run-2"><a href="#palindrome-run-2" aria-hidden="true" tabindex="-1"></a>----     -----------  -----------</span>
+<span id="palindrome-run-3"><a href="#palindrome-run-3" aria-hidden="true" tabindex="-1"></a>level    true         2</span>
+<span id="palindrome-run-4"><a href="#palindrome-run-4" aria-hidden="true" tabindex="-1"></a>stats    true         2</span>
+<span id="palindrome-run-5"><a href="#palindrome-run-5" aria-hidden="true" tabindex="-1"></a>deed     true         2</span>
+<span id="palindrome-run-6"><a href="#palindrome-run-6" aria-hidden="true" tabindex="-1"></a>sales    false        2</span>
+<span id="palindrome-run-7"><a href="#palindrome-run-7" aria-hidden="true" tabindex="-1"></a>data     false        1</span>
+<span id="palindrome-run-8"><a href="#palindrome-run-8" aria-hidden="true" tabindex="-1"></a>x        true         0</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The comparison column is the one to read. <code>word.length() / 2</code> is how many comparisons a word of that length needs: <code>level</code> takes 2 and its middle <code>v</code> is never compared, and <code>x</code> takes none at all, because <code>1 / 2</code> is 0 and a one-character word is a palindrome without being looked at.</p>
 <p>A mismatch ends the loop early, which is why <code>data</code> takes 1 comparison and <code>sales</code> takes 2: <code>s</code> and <code>s</code> match before <code>a</code> and <code>e</code> do not.</p>
 <p>If the column reads 0 for every word, the second loop is not taking anything off the deque, and every word is being reported a palindrome without being checked.</p>

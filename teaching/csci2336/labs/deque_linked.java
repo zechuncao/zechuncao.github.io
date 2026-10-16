@@ -5,39 +5,59 @@
  * and removeFront, are written for you: the ones you write are their
  * mirror image, with firstNode and previous in place of lastNode and next.
  *
- * Nothing else in this file needs changing: main() makes a LinkedDeque
- * object of that class and runs the example on it, and the Driver class at
- * the end of the file only prints and checks. Press Run before you type
- * anything, then fill in one blank at a time.
+ * Nothing else in this file needs changing. main() makes a LinkedDeque and
+ * performs seven operations on it. The lab page shows the console this run
+ * prints when the deque works; compare it with what you get, line by line.
  *
- * The console reads the deque twice: front to back along the next
- * references, and back to front along the previous references. A deque
- * whose next links are right and whose previous links are not looks
- * correct in one column and wrong in the other.
+ * Each row reads the deque twice: front to back along the next references,
+ * and back to front along the previous references. A deque whose next
+ * references are right and whose previous references are not is correct in
+ * one column and wrong in the other.
  */
 public class Exercise3
 {
-    /* ===== The example run ==============================================
-       main() makes a LinkedDeque -- an object of the class you are about to
-       finish -- and hands it to the Driver. Each line below performs one
-       operation on that object and then says how the deque should read
-       afterwards, front to back and back to front.
-       =================================================================== */
     public static void main(String[] args)
     {
         LinkedDeque<String> d = new LinkedDeque<String>();
-        Driver run = new Driver(d);
 
-        //                      front .. back    back .. front
-        run.addToBack("B",      "B",             "B");
-        run.addToFront("A",     "A B",           "B A");
-        run.addToBack("C",      "A B C",         "C B A");
-        run.removeBack("C",     "A B",           "B A");
-        run.removeFront("A",    "B",             "B");
-        run.removeBack("B",     "(empty)",       "(empty)");
-        run.addToFront("D",     "D",             "D");
+        System.out.println("Doubly linked deque: every node refers to the node before"
+                           + " it and the node after it.");
+        System.out.println();
+        System.out.println("operation        front .. back    back .. front");
+        System.out.println("---------        -------------    -------------");
+        System.out.println("start            " + d.state());
 
-        run.summary();
+        try
+        {
+            d.addToBack("B");
+            System.out.println("addToBack B      " + d.state());
+
+            d.addToFront("A");
+            System.out.println("addToFront A     " + d.state());
+
+            d.addToBack("C");
+            System.out.println("addToBack C      " + d.state());
+
+            String back = d.removeBack();
+            System.out.println("removeBack -> " + back + "  " + d.state());
+
+            String front = d.removeFront();
+            System.out.println("removeFront -> " + front + " " + d.state());
+
+            back = d.removeBack();
+            System.out.println("removeBack -> " + back + "  " + d.state());
+
+            d.addToFront("D");              // the deque is empty again here
+            System.out.println("addToFront D     " + d.state());
+        }
+        catch (RuntimeException e)
+        {
+            System.out.println();
+            System.out.println("The run stopped after the row above: "
+                               + e.getClass().getSimpleName()
+                               + ". A blank that is still empty is the usual"
+                               + " reason.");
+        }
     }
 }
 
@@ -221,7 +241,13 @@ final class LinkedDeque<T> implements DequeInterface<T>
                                             // longer, so an unfinished blank
                                             // cannot send the walk on forever
 
-    String frontToBack()
+    /* The two columns main() prints after each operation. */
+    String state()
+    {
+        return String.format("%-16s %s", frontToBack(), backToFront());
+    }
+
+    private String frontToBack()
     {
         StringBuilder sb = new StringBuilder();
         DLNode current = firstNode;
@@ -243,7 +269,7 @@ final class LinkedDeque<T> implements DequeInterface<T>
         return sb.length() == 0 ? "(empty)" : sb.toString();
     }
 
-    String backToFront()
+    private String backToFront()
     {
         StringBuilder sb = new StringBuilder();
         DLNode current = lastNode;
@@ -265,151 +291,3 @@ final class LinkedDeque<T> implements DequeInterface<T>
         return sb.length() == 0 ? "(empty)" : sb.toString();
     }
 } // end LinkedDeque
-
-
-/* ===== The driver: printing and checking. Nothing to change. ============
-   Driver is not a deque. It holds the LinkedDeque object main() made,
-   calls the four methods you and the file wrote between you, catches what
-   an unfinished blank throws, and prints one row per operation.
-   ======================================================================= */
-final class Driver
-{
-    private final LinkedDeque<String> d;
-
-    private int rows = 0;          // operations reported
-    private int wrong = 0;
-    private int backwardOnly = 0;  // the next links agreed, the previous did not
-
-    Driver(LinkedDeque<String> deque)
-    {
-        d = deque;
-
-        System.out.println("Doubly linked deque: every node refers to the node before"
-                           + " it and the node after it.");
-        System.out.println();
-        System.out.println("operation        ok?   front .. back    back .. front");
-        System.out.println("---------        ---   -------------    -------------");
-
-        show("start", "(empty)", "(empty)");
-    }
-
-    void addToFront(String entry, String f2b, String b2f)
-    {
-        add(true, entry, f2b, b2f);
-    }
-
-    void addToBack(String entry, String f2b, String b2f)
-    {
-        add(false, entry, f2b, b2f);
-    }
-
-    void removeFront(String wantEntry, String f2b, String b2f)
-    {
-        remove(true, wantEntry, f2b, b2f);
-    }
-
-    void removeBack(String wantEntry, String f2b, String b2f)
-    {
-        remove(false, wantEntry, f2b, b2f);
-    }
-
-    private void add(boolean atFront, String entry, String f2b, String b2f)
-    {
-        String label = (atFront ? "addToFront " : "addToBack ") + entry;
-
-        try
-        {
-            if (atFront)
-                d.addToFront(entry);
-            else
-                d.addToBack(entry);
-        }
-        catch (RuntimeException e)
-        {
-            broke(label, "it threw " + e.getClass().getSimpleName()
-                  + " on a reference that was never assigned");
-            return;
-        }
-
-        show(label, f2b, b2f);
-    }
-
-    private void remove(boolean atFront, String wantEntry, String f2b, String b2f)
-    {
-        String label = (atFront ? "removeFront -> " : "removeBack -> ") + wantEntry;
-
-        try
-        {
-            String got = atFront ? d.removeFront() : d.removeBack();
-
-            if (!wantEntry.equals(got))
-            {
-                broke(label, "it returned " + got + ", not " + wantEntry);
-                return;
-            }
-        }
-        catch (EmptyQueueException e)
-        {
-            broke(label, "the deque says it is empty, so the add did not store anything");
-            return;
-        }
-        catch (RuntimeException e)
-        {
-            broke(label, "it threw " + e.getClass().getSimpleName()
-                  + " on a reference that was never assigned");
-            return;
-        }
-
-        show(label, f2b, b2f);
-    }
-
-    private void show(String label, String f2b, String b2f)
-    {
-        String forward = d.frontToBack();
-        String backward = d.backToFront();
-        boolean ok = forward.equals(f2b) && backward.equals(b2f);
-        rows++;
-
-        if (!ok)
-            wrong++;
-
-        if (forward.equals(f2b) && !backward.equals(b2f))
-            backwardOnly++;
-
-        System.out.printf("%-16s %-5s %-16s %s%n", label, ok ? "ok" : "WRONG",
-                          forward, backward);
-
-        if (!ok)
-            System.out.printf("%-16s %-5s %-16s %s%n", "", "", f2b, b2f);
-    }
-
-    /* An operation that could not even be compared with what it should be. */
-    private void broke(String label, String why)
-    {
-        rows++;
-        wrong++;
-        System.out.printf("%-16s %-5s %s%n", label, "WRONG", why);
-    }
-
-    void summary()
-    {
-        System.out.println();
-
-        if (wrong == 0)
-        {
-            System.out.println("RESULT: PASS -- addToFront and removeBack are both right.");
-            return;
-        }
-
-        System.out.println("RESULT: FAIL on " + wrong + " of " + rows + " operations.");
-
-        if (backwardOnly > 0)
-            System.out.println("  - front to back was right and back to front was not, so the"
-                               + " next references are being kept up to date and the previous"
-                               + " references are not. Back to front is the walk removeBack"
-                               + " depends on.");
-
-        System.out.println("  - the second line under a WRONG operation is what it should"
-                           + " have printed.");
-    }
-} // end Driver

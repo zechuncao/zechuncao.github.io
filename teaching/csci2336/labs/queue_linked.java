@@ -1,36 +1,52 @@
 /* CSCI 2336 -- Chapter 3 Companion Lab, Exercise 1 of 4: the linked queue.
  *
  * Write the five lines marked "Your line goes here", in the LinkedQueue
- * class below. Nothing else in this file needs changing: main() makes a
- * LinkedQueue object of that class and runs the example on it, and the
- * Driver class at the end of the file only prints and checks.
+ * class below. Nothing else in this file needs changing.
  *
- * Press Run before you type anything. Every operation reports WRONG.
- * Fill in one blank, press Run again, and watch the WRONG lines turn into
- * ok from the top down. The first WRONG line is the one to fix.
+ * main() makes a LinkedQueue and performs five operations on it, printing
+ * the queue after each one. The lab page shows the console this run prints
+ * when the queue works; compare it with what you get, line by line.
+ *
+ * Press Run before you type anything: the file compiles and runs with the
+ * blanks empty, and the queue stays empty because enqueue stores nothing.
  */
 public class Exercise1
 {
-    /* ===== The example run ==============================================
-       main() makes a LinkedQueue -- an object of the class you are about to
-       finish -- and hands it to the Driver. Each line below performs one
-       operation on that object and then says what the queue should be
-       afterwards: what lastNode refers to, and the entries read from the
-       front to the back.
-       =================================================================== */
     public static void main(String[] args)
     {
         LinkedQueue<String> q = new LinkedQueue<String>();
-        Driver run = new Driver(q);
 
-        //          entry    lastNode    front .. back
-        run.enqueue("A",     "A",        "A");
-        run.enqueue("B",     "B",        "A -> B");
-        run.dequeue("A",     "B",        "B");
-        run.dequeue("B",     "null",     "(empty)");
-        run.enqueue("C",     "C",        "C");
+        System.out.println("Linked queue: firstNode is the front, lastNode the back.");
+        System.out.println();
+        System.out.println("operation      lastNode  front .. back");
+        System.out.println("---------      --------  -------------");
+        System.out.println("start          " + q.state());
 
-        run.summary();
+        try
+        {
+            q.enqueue("A");
+            System.out.println("enqueue A      " + q.state());
+
+            q.enqueue("B");
+            System.out.println("enqueue B      " + q.state());
+
+            String first = q.dequeue();
+            System.out.println("dequeue -> " + first + "   " + q.state());
+
+            String second = q.dequeue();
+            System.out.println("dequeue -> " + second + "   " + q.state());
+
+            q.enqueue("C");
+            System.out.println("enqueue C      " + q.state());
+        }
+        catch (RuntimeException e)
+        {
+            System.out.println();
+            System.out.println("The run stopped after the row above: "
+                               + e.getClass().getSimpleName()
+                               + ". A blank that is still empty is the usual"
+                               + " reason.");
+        }
     }
 }
 
@@ -148,20 +164,27 @@ final class LinkedQueue<T> implements QueueInterface<T>
 
 
     /* ===== For this lab only ============================================
-       Not part of the queue ADT. The console needs to see lastNode, which
-       is the one field a wrong answer here can leave stale.
+       Not part of the queue ADT. main() has to see lastNode, the one field
+       a wrong answer here can leave stale, and the chain read from the
+       front.
        =================================================================== */
 
     static final int WALK_LIMIT = 20;       // a chain this short cannot be
                                             // longer, so an unfinished blank
                                             // cannot send the walk on forever
 
-    String lastRef()
+    /* The two columns main() prints after each operation. */
+    String state()
+    {
+        return String.format("%-9s %s", lastRef(), frontToBack());
+    }
+
+    private String lastRef()
     {
         return lastNode == null ? "null" : lastNode.getData().toString();
     }
 
-    String frontToBack()
+    private String frontToBack()
     {
         StringBuilder sb = new StringBuilder();
         Node current = firstNode;
@@ -183,119 +206,3 @@ final class LinkedQueue<T> implements QueueInterface<T>
         return sb.length() == 0 ? "(empty)" : sb.toString();
     }
 } // end LinkedQueue
-
-
-/* ===== The driver: printing and checking. Nothing to change. ============
-   Driver is not a queue. It holds the LinkedQueue object main() made,
-   calls the enqueue and dequeue you wrote, catches what an unfinished
-   blank throws, and prints one row per operation.
-   ======================================================================= */
-final class Driver
-{
-    private final LinkedQueue<String> q;
-
-    private int rows = 0;       // operations reported
-    private int wrong = 0;
-    private int keptEntry = 0;  // a dequeue that handed back the front entry
-                                // without removing it
-
-    Driver(LinkedQueue<String> queue)
-    {
-        q = queue;
-
-        System.out.println("Linked queue: firstNode is the front, lastNode the back.");
-        System.out.println();
-        System.out.println("operation      lastNode  ok?   front .. back");
-        System.out.println("---------      --------  ---   -------------");
-
-        show("start", "null", "(empty)");
-    }
-
-    void enqueue(String entry, String wantLast, String wantChain)
-    {
-        try
-        {
-            q.enqueue(entry);
-        }
-        catch (RuntimeException e)
-        {
-            broke("enqueue " + entry, "it threw " + e.getClass().getSimpleName()
-                  + ", so lastNode was never assigned");
-            return;
-        }
-
-        show("enqueue " + entry, wantLast, wantChain);
-    }
-
-    void dequeue(String wantEntry, String wantLast, String wantChain)
-    {
-        String label = "dequeue -> " + wantEntry;
-
-        try
-        {
-            String before = q.frontToBack();
-            String got = q.dequeue();
-
-            if (!wantEntry.equals(got))
-            {
-                broke(label, "it returned " + got + ", not " + wantEntry);
-                return;
-            }
-
-            if (before.equals(q.frontToBack()))
-                keptEntry++;
-        }
-        catch (RuntimeException e)
-        {
-            broke(label, "the queue says it is empty, so enqueue stored nothing");
-            return;
-        }
-
-        show(label, wantLast, wantChain);
-    }
-
-    private void show(String label, String wantLast, String wantChain)
-    {
-        String last = q.lastRef();
-        String chain = q.frontToBack();
-        boolean ok = last.equals(wantLast) && chain.equals(wantChain);
-        rows++;
-
-        if (!ok)
-            wrong++;
-
-        System.out.printf("%-14s %-9s %-5s %s%n", label, last,
-                          ok ? "ok" : "WRONG", chain);
-
-        if (!ok)
-            System.out.printf("%-14s %-9s %-5s %s%n", "", wantLast, "", wantChain);
-    }
-
-    /* An operation that could not even be compared with what it should be. */
-    private void broke(String label, String why)
-    {
-        rows++;
-        wrong++;
-        System.out.printf("%-14s %-9s %-5s %s%n", label, "-", "WRONG", why);
-    }
-
-    void summary()
-    {
-        System.out.println();
-
-        if (wrong == 0)
-        {
-            System.out.println("RESULT: PASS -- enqueue and dequeue are both right.");
-            return;
-        }
-
-        System.out.println("RESULT: FAIL on " + wrong + " of " + rows + " operations.");
-
-        if (keptEntry > 0)
-            System.out.println("  - a dequeue returned the front entry without removing it,"
-                               + " so firstNode is not moving.");
-
-        System.out.println("  - the second line under a WRONG operation is what it should"
-                           + " have printed.");
-    }
-} // end Driver
