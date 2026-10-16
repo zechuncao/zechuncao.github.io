@@ -23,18 +23,21 @@ public class Exercise1
         header();
         show(q, "start", "null", "(empty)");
 
-        //         entry   lastNode   front .. back
-        enqueue(q, "A",    "A",       "A");
-        enqueue(q, "B",    "B",       "A -> B");
-        dequeue(q, "A",    "B",       "B");
-        dequeue(q, "B",    "null",    "(empty)");
-        enqueue(q, "C",    "C",       "C");
+        //            entry   lastNode   front .. back
+        tryEnqueue(q, "A",    "A",       "A");
+        tryEnqueue(q, "B",    "B",       "A -> B");
+        tryDequeue(q, "A",    "B",       "B");
+        tryDequeue(q, "B",    "null",    "(empty)");
+        tryEnqueue(q, "C",    "C",       "C");
 
         summary();
     }
 
 
-    /* ===== The driver: printing and checking. Nothing to change. ======== */
+    /* ===== The driver: printing and checking. Nothing to change. ========
+       tryEnqueue and tryDequeue are not the queue's methods. They call
+       them, catch what an unfinished blank throws, and print one row.
+       =================================================================== */
 
     static int rows = 0;        // operations reported
     static int wrong = 0;
@@ -49,8 +52,8 @@ public class Exercise1
         System.out.println("---------      --------  ---   -------------");
     }
 
-    static void enqueue(LinkedQueue<String> q, String entry,
-                        String wantLast, String wantChain)
+    static void tryEnqueue(LinkedQueue<String> q, String entry,
+                           String wantLast, String wantChain)
     {
         try
         {
@@ -66,8 +69,8 @@ public class Exercise1
         show(q, "enqueue " + entry, wantLast, wantChain);
     }
 
-    static void dequeue(LinkedQueue<String> q, String wantEntry,
-                        String wantLast, String wantChain)
+    static void tryDequeue(LinkedQueue<String> q, String wantEntry,
+                           String wantLast, String wantChain)
     {
         String label = "dequeue -> " + wantEntry;
 

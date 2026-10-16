@@ -24,23 +24,26 @@ public class Exercise2
         header();
         show(q, "start", 0, 5, 0, "[_, _, _, _, _, _]");
 
-        //         entry   f  b  cnt  slots
-        enqueue(q, "A",    0, 0, 1,   "[A, _, _, _, _, _]");
-        enqueue(q, "B",    0, 1, 2,   "[A, B, _, _, _, _]");
-        enqueue(q, "C",    0, 2, 3,   "[A, B, C, _, _, _]");
-        dequeue(q, "A",    1, 2, 2,   "[_, B, C, _, _, _]");
-        dequeue(q, "B",    2, 2, 1,   "[_, _, C, _, _, _]");
-        enqueue(q, "D",    2, 3, 2,   "[_, _, C, D, _, _]");
-        enqueue(q, "E",    2, 4, 3,   "[_, _, C, D, E, _]");
-        enqueue(q, "F",    2, 5, 4,   "[_, _, C, D, E, F]");
-        enqueue(q, "G",    2, 0, 5,   "[G, _, C, D, E, F]");
-        enqueue(q, "H",    0, 5, 6,   "[C, D, E, F, G, H, _, _, _, _, _, _]");
+        //            entry   f  b  cnt  slots
+        tryEnqueue(q, "A",    0, 0, 1,   "[A, _, _, _, _, _]");
+        tryEnqueue(q, "B",    0, 1, 2,   "[A, B, _, _, _, _]");
+        tryEnqueue(q, "C",    0, 2, 3,   "[A, B, C, _, _, _]");
+        tryDequeue(q, "A",    1, 2, 2,   "[_, B, C, _, _, _]");
+        tryDequeue(q, "B",    2, 2, 1,   "[_, _, C, _, _, _]");
+        tryEnqueue(q, "D",    2, 3, 2,   "[_, _, C, D, _, _]");
+        tryEnqueue(q, "E",    2, 4, 3,   "[_, _, C, D, E, _]");
+        tryEnqueue(q, "F",    2, 5, 4,   "[_, _, C, D, E, F]");
+        tryEnqueue(q, "G",    2, 0, 5,   "[G, _, C, D, E, F]");
+        tryEnqueue(q, "H",    0, 5, 6,   "[C, D, E, F, G, H, _, _, _, _, _, _]");
 
         summary(q);
     }
 
 
-    /* ===== The driver: printing and checking. Nothing to change. ======== */
+    /* ===== The driver: printing and checking. Nothing to change. ========
+       tryEnqueue and tryDequeue are not the queue's methods. They call
+       them, catch what an unfinished blank throws, and print one row.
+       =================================================================== */
 
     static int rows = 0;        // operations reported
     static int wrong = 0;
@@ -53,8 +56,8 @@ public class Exercise2
         System.out.println("---------      -  -  ---  ---   -----");
     }
 
-    static void enqueue(ArrayQueue<String> q, String entry,
-                        int f, int b, int cnt, String slots)
+    static void tryEnqueue(ArrayQueue<String> q, String entry,
+                           int f, int b, int cnt, String slots)
     {
         try
         {
@@ -70,8 +73,8 @@ public class Exercise2
         show(q, "enqueue " + entry, f, b, cnt, slots);
     }
 
-    static void dequeue(ArrayQueue<String> q, String wantEntry,
-                        int f, int b, int cnt, String slots)
+    static void tryDequeue(ArrayQueue<String> q, String wantEntry,
+                           int f, int b, int cnt, String slots)
     {
         String label = "dequeue -> " + wantEntry;
 

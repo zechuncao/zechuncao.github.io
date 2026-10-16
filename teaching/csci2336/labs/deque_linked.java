@@ -23,20 +23,23 @@ public class Exercise3
         header();
         show(d, "start", "(empty)", "(empty)");
 
-        //        end     entry   front .. back   back .. front
-        add(d,    BACK,  "B",     "B",            "B");
-        add(d,    FRONT, "A",     "A B",          "B A");
-        add(d,    BACK,  "C",     "A B C",        "C B A");
-        remove(d, BACK,  "C",     "A B",          "B A");
-        remove(d, FRONT, "A",     "B",            "B");
-        remove(d, BACK,  "B",     "(empty)",      "(empty)");
-        add(d,    FRONT, "D",     "D",            "D");
+        //           end     entry   front .. back   back .. front
+        tryAdd(d,    BACK,  "B",     "B",            "B");
+        tryAdd(d,    FRONT, "A",     "A B",          "B A");
+        tryAdd(d,    BACK,  "C",     "A B C",        "C B A");
+        tryRemove(d, BACK,  "C",     "A B",          "B A");
+        tryRemove(d, FRONT, "A",     "B",            "B");
+        tryRemove(d, BACK,  "B",     "(empty)",      "(empty)");
+        tryAdd(d,    FRONT, "D",     "D",            "D");
 
         summary();
     }
 
 
-    /* ===== The driver: printing and checking. Nothing to change. ======== */
+    /* ===== The driver: printing and checking. Nothing to change. ========
+       tryAdd and tryRemove are not the deque's methods. They call them,
+       catch what an unfinished blank throws, and print one row.
+       =================================================================== */
 
     static final boolean FRONT = true;
     static final boolean BACK = false;
@@ -54,8 +57,8 @@ public class Exercise3
         System.out.println("---------        ---   -------------    -------------");
     }
 
-    static void add(LinkedDeque<String> d, boolean atFront, String entry,
-                    String f2b, String b2f)
+    static void tryAdd(LinkedDeque<String> d, boolean atFront,
+                       String entry, String f2b, String b2f)
     {
         String label = (atFront ? "addToFront " : "addToBack ") + entry;
 
@@ -76,8 +79,8 @@ public class Exercise3
         show(d, label, f2b, b2f);
     }
 
-    static void remove(LinkedDeque<String> d, boolean atFront, String wantEntry,
-                       String f2b, String b2f)
+    static void tryRemove(LinkedDeque<String> d, boolean atFront,
+                          String wantEntry, String f2b, String b2f)
     {
         String label = (atFront ? "removeFront -> " : "removeBack -> ") + wantEntry;
 
