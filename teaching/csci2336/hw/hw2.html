@@ -2544,6 +2544,11 @@ window.Quarto = {
   <li><a href="#problem-22-recursion-and-the-call-stack" id="toc-problem-22-recursion-and-the-call-stack" class="nav-link" data-scroll-target="#problem-22-recursion-and-the-call-stack">Problem 22 — Recursion and the call stack</a></li>
   <li><a href="#problem-23-counting-the-calls" id="toc-problem-23-counting-the-calls" class="nav-link" data-scroll-target="#problem-23-counting-the-calls">Problem 23 — Counting the calls</a></li>
   </ul></li>
+  <li><a href="#part-d-a-queue-application-and-reading-the-implementations" id="toc-part-d-a-queue-application-and-reading-the-implementations" class="nav-link" data-scroll-target="#part-d-a-queue-application-and-reading-the-implementations">Part D — A queue application, and reading the implementations</a>
+  <ul class="collapse">
+  <li><a href="#problem-24-the-counting-out-circle" id="toc-problem-24-the-counting-out-circle" class="nav-link" data-scroll-target="#problem-24-the-counting-out-circle">Problem 24 — The counting-out circle</a></li>
+  <li><a href="#problem-25-three-implementations-that-compile-but-are-wrong" id="toc-problem-25-three-implementations-that-compile-but-are-wrong" class="nav-link" data-scroll-target="#problem-25-three-implementations-that-compile-but-are-wrong">Problem 25 — Three implementations that compile but are wrong</a></li>
+  </ul></li>
   </ul>
 </nav>
 </div>
@@ -3183,6 +3188,57 @@ window.Quarto = {
 </ol>
 <div class="workbox" style="min-height:2.4in;">
 (Problem 23, parts (a)–(d))
+</div>
+</section>
+</section>
+<section id="part-d-a-queue-application-and-reading-the-implementations" class="level1">
+<h1>Part D — A queue application, and reading the implementations</h1>
+<section id="problem-24-the-counting-out-circle" class="level2">
+<h2 class="anchored" data-anchor-id="problem-24-the-counting-out-circle">Problem 24 — The counting-out circle</h2>
+<p>Ten people numbered 1 through 10 stand in a circle. Counting starts at person 1, and every <strong>third</strong> person is removed. The count then continues from the next person still in the circle.</p>
+<p>Simulate this with a queue holding <code>1 2 3 4 5 6 7 8 9 10</code> front → back. To count off three, <code>dequeue</code> and <code>enqueue</code> the same person twice, then <code>dequeue</code> the third person and do not put them back.</p>
+<ol type="a">
+<li>Write the queue, front → back, after each removal.</li>
+<li>In what order are the ten people removed?</li>
+<li>Who is the last person left?</li>
+<li>The simulation uses <code>enqueue</code> and <code>dequeue</code> only. Why is a queue the right ADT here, rather than a stack?</li>
+</ol>
+<div class="workbox" style="min-height:2.8in;">
+(Problem 24, parts (a)–(d))
+</div>
+</section>
+<section id="problem-25-three-implementations-that-compile-but-are-wrong" class="level2">
+<h2 class="anchored" data-anchor-id="problem-25-three-implementations-that-compile-but-are-wrong">Problem 25 — Three implementations that compile but are wrong</h2>
+<p>Each method below compiles and each is wrong. For each one, say what goes wrong when it runs, and give the <strong>one-line</strong> fix.</p>
+<ol type="a">
+<li>The array implementation.</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">void</span> <span class="fu">enqueue</span><span class="op">(</span>T newEntry<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ensureCapacity</span><span class="op">();</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>   queue<span class="op">[</span>backIndex<span class="op">]</span> <span class="op">=</span> newEntry<span class="op">;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>   backIndex <span class="op">=</span> <span class="op">(</span>backIndex <span class="op">+</span> <span class="dv">1</span><span class="op">)</span> <span class="op">%</span> queue<span class="op">.</span><span class="fu">length</span><span class="op">;</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ol start="2" type="a">
+<li>The array implementation, again.</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> T <span class="fu">dequeue</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>   T front <span class="op">=</span> <span class="fu">getFront</span><span class="op">();</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>   queue<span class="op">[</span>frontIndex<span class="op">]</span> <span class="op">=</span> <span class="kw">null</span><span class="op">;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>   frontIndex <span class="op">=</span> frontIndex <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> front<span class="op">;</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ol start="3" type="a">
+<li>The linked implementation.</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">void</span> <span class="fu">enqueue</span><span class="op">(</span>T newEntry<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>   <span class="bu">Node</span> newNode <span class="op">=</span> <span class="kw">new</span> <span class="bu">Node</span><span class="op">(</span>newEntry<span class="op">,</span> <span class="kw">null</span><span class="op">);</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span> <span class="op">(</span><span class="fu">isEmpty</span><span class="op">())</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>      firstNode <span class="op">=</span> newNode<span class="op">;</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>   <span class="cf">else</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>      lastNode<span class="op">.</span><span class="fu">setNext</span><span class="op">(</span>newNode<span class="op">);</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="workbox" style="min-height:2.6in;">
+(Problem 25, parts (a)–(c))
 </div>
 </section>
 </section>
