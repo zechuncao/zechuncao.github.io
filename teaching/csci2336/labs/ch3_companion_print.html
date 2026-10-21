@@ -6,6 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="dcterms.date" content="2026-10-21">
 
 <title>Queues and Deques — Chapter 3 Companion Lab</title>
 <style>
@@ -2217,9 +2218,16 @@ h1, h2, h3 {
 break-after: avoid;
 page-break-after: avoid;
 }
-table, .callout, figure, pre, blockquote {
+table, .callout, figure, pre, blockquote, .workbox, ol, ul {
 break-inside: avoid;
 page-break-inside: avoid;
+}
+
+.workbox {
+border: 1px dashed #aaa;
+padding: 0.5em;
+margin: 0.5em 0;
+color: #999;
 }
 p {
 orphans: 3;
@@ -2232,6 +2240,54 @@ nav#TOC, .quarto-title-banner {
 display: none;
 }
 </style>
+<script>
+  // Print button for the paginated builds. Paged.js rewrites every
+  // stylesheet it finds in the document and reflows the body into page
+  // boxes, so both the button and its CSS are added afterwards; a <style>
+  // block sitting in the head here is swallowed by that pass.
+  window.PagedConfig = {
+    after: function () {
+      var css = document.createElement("style");
+      css.textContent = [
+        "#print-now {",
+        "  position: fixed; top: 1rem; right: 1rem; z-index: 999;",
+        "  display: inline-flex; align-items: center; gap: 0.45em;",
+        "  padding: 0.5em 1.1em; border: none; border-radius: 4px;",
+        "  background: #4582ec; color: #fff;",
+        "  font-family: inherit; font-size: 0.95rem; font-weight: 600;",
+        "  cursor: pointer; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);",
+        "}",
+        "#print-now:hover { background: #2d6ad9; }",
+        "#print-now:focus-visible {",
+        "  outline: 3px solid rgba(69, 130, 236, 0.4); outline-offset: 2px;",
+        "}",
+        "@media print { #print-now { display: none !important; } }"
+      ].join("\n");
+      document.head.appendChild(css);
+
+      var button = document.createElement("button");
+      button.id = "print-now";
+      button.type = "button";
+      button.innerHTML =
+        '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" ' +
+        'fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">' +
+        '<path d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2H5zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1z"/>' +
+        '<path d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2V7zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/>' +
+        "</svg><span>Print</span>";
+      button.addEventListener("click", function () { window.print(); });
+      document.body.appendChild(button);
+
+      // Arriving from the "Print this packet" button on the web copy: open
+      // the dialog straight away, and drop the hash so a reload does not.
+      if (window.location.hash === "#print") {
+        try {
+          window.history.replaceState(null, "", window.location.pathname);
+        } catch (e) { /* file:// or blocked history: the hash just stays */ }
+        window.print();
+      }
+    }
+  };
+</script>
 <script>/**
  * @license Paged.js v0.4.3 | MIT | https://gitlab.coko.foundation/pagedjs/pagedjs
  */
@@ -35496,7 +35552,10 @@ display: none;
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#how-this-works" id="toc-how-this-works" class="nav-link active" data-scroll-target="#how-this-works">How this works</a></li>
+  <li><a href="#how-this-works" id="toc-how-this-works" class="nav-link active" data-scroll-target="#how-this-works">How this works</a>
+  <ul class="collapse">
+  <li><a href="#printing-this-lab-1" id="toc-printing-this-lab-1" class="nav-link" data-scroll-target="#printing-this-lab-1">Printing this lab</a></li>
+  </ul></li>
   <li><a href="#exercise-1-the-linked-queue" id="toc-exercise-1-the-linked-queue" class="nav-link" data-scroll-target="#exercise-1-the-linked-queue">Exercise 1 — The linked queue</a>
   <ul class="collapse">
   <li><a href="#what-the-console-should-say" id="toc-what-the-console-should-say" class="nav-link" data-scroll-target="#what-the-console-should-say">What the console should say</a></li>
@@ -35531,6 +35590,12 @@ display: none;
 <div class="quarto-title-meta">
 
     
+    <div>
+    <div class="quarto-title-meta-heading">Updated</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">October 21, 2026</p>
+    </div>
+  </div>
   
     
   </div>
@@ -35567,6 +35632,16 @@ text-decoration: none;
 <div class="screen-only">
 <p><a href="ch3_companion.html">Open the web version</a> to run the code and, after the review session, to see the answers.</p>
 </div>
+<section id="printing-this-lab-1" class="level3">
+<h3 class="anchored" data-anchor-id="printing-this-lab-1">Printing this lab</h3>
+<ol type="1">
+<li>Press the <strong>Print</strong> button in the top right corner, or <strong>Ctrl+P</strong> (<strong>Cmd+P</strong> on a Mac).</li>
+<li>Set <strong>Paper size</strong> to <em>Letter</em> and turn <strong>off</strong> “Headers and footers”.</li>
+<li>Check the preview. If the text looks squeezed or the right edge is cut off, set <strong>Margins</strong> to <em>None</em>.</li>
+<li>Print, or choose <strong>Save as PDF</strong> to annotate on a tablet.</li>
+</ol>
+<p>Use <strong>Chrome</strong> or <strong>Edge</strong>. Firefox and Safari may not break the pages correctly.</p>
+</section>
 </section>
 <section id="exercise-1-the-linked-queue" class="level2">
 <h2 class="anchored" data-anchor-id="exercise-1-the-linked-queue">Exercise 1 — The linked queue</h2>
