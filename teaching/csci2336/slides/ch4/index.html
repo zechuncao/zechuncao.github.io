@@ -438,9 +438,10 @@ Zechun (Jacob) Cao
 <li>Check that the base case returns the right answer.</li>
 <li>Assume <code>countDown(n - 1)</code> already does its job perfectly.</li>
 <li>Check that the recursive case builds the right answer out of it.</li>
+<li>Check that the argument lands on the base case.</li>
 </ol>
 <div class="fragment">
-<p>If all three hold, the method is correct for every <code>n</code>, because step 2 is step 3 one level down.</p>
+<p>If all four hold, the method is correct for every <code>n</code>. Step 2 is step 3 one level down, and step 4 is what brings the chain to the base case.</p>
 </div>
 </section>
 <section id="part-2" class="slide level2 center section-divider">
