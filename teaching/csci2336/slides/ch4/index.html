@@ -585,12 +585,12 @@ Zechun (Jacob) Cao
 <p><strong><em>For which arguments does <code>sumTo</code> finish?</em></strong></p>
 <ul class="choices row">
   <li><span class="k">A</span> every <code>n</code> ≥ 0</li>
-  <li class="fragment pick"><span class="k">B</span> even <code>n</code> only</li>
+  <li class="fragment pick"><span class="k">B</span> even <code>n</code> ≥ 0</li>
   <li><span class="k">C</span> odd <code>n</code> only</li>
   <li><span class="k">D</span> no <code>n</code> at all</li>
 </ul>
 <div class="fragment">
-<p><code>sumTo(8)</code> reaches <span class="math inline">\(8, 6, 4, 2, 0\)</span> and returns <span class="math inline">\(20\)</span>. <code>sumTo(7)</code> reaches <span class="math inline">\(7, 5, 3, 1, -1, -3, \dots\)</span> and steps straight over the base case.</p>
+<p><code>sumTo(8)</code> reaches <span class="math inline">\(8, 6, 4, 2, 0\)</span> and returns <span class="math inline">\(20\)</span>. <code>sumTo(7)</code> reaches <span class="math inline">\(7, 5, 3, 1, -1, -3, \dots\)</span> and steps straight over the base case. A negative even <code>n</code> moves away from <span class="math inline">\(0\)</span> from the start.</p>
 </div>
 </section>
 <section id="when-the-stack-runs-out" class="slide level2">
