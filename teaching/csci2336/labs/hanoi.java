@@ -27,9 +27,8 @@ public class TowersOfHanoi
 
       if (DISKS < 1 || DISKS > PRINT_LIMIT)
       {
-         System.out.println("DISKS is " + DISKS + ", which prints too many");
-         System.out.println("lines to read. Set it from 1 to " + PRINT_LIMIT
-                            + " to see the moves.");
+         System.out.println("DISKS is " + DISKS + ". Set it from 1 to "
+                            + PRINT_LIMIT + " to see the moves.");
       }
       else
       {
