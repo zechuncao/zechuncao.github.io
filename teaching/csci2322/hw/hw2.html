@@ -2312,6 +2312,10 @@ overflow: visible;
 
 .print-bar {
 margin: 0 0 1.75em 0;
+display: flex;
+align-items: center;
+gap: 1em;
+flex-wrap: wrap;
 }
 a.print-button,
 a.print-button:visited {
@@ -2336,6 +2340,9 @@ a.print-button:focus-visible {
 outline: 3px solid rgba(69, 130, 236, 0.4);
 outline-offset: 2px;
 }
+a.print-blank {
+font-size: 0.92em;
+}
 @media print {
 .print-bar { display: none; }
 }
@@ -2351,19 +2358,39 @@ outline-offset: 2px;
     '<path d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2V7zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/>' +
     "</svg>";
 
+  // The hash tells the printable copy to open the print dialog once it has
+  // finished paginating.
+  var BLANK = "hw2_print.html#print";
+  var ANSWERS = "hw2_instructor.html#print";
+
+  function link(href, label, className) {
+    var a = document.createElement("a");
+    a.className = className;
+    a.href = href;
+    a.target = "_blank";
+    a.rel = "noopener";
+    a.innerHTML = label;
+    return a;
+  }
+
   function init() {
-    var link = document.createElement("a");
-    link.className = "print-button";
-    // The hash tells the printable copy to open the print dialog once it has
-    // finished paginating.
-    link.href = "hw2_print.html#print";
-    link.target = "_blank";
-    link.rel = "noopener";
-    link.innerHTML = PRINTER_SVG + "<span>Print this packet</span>";
+    // Set by _quarto-review.yml. The review page shows the answers, so its
+    // button prints the answered copy; the blank copy stays one click away so
+    // the packet can still be printed clean and worked again. Read it here
+    // rather than at parse time: Quarto emits an inline `text:` include after
+    // the file includes whatever order the yml lists them in, so the flag is
+    // not set yet when this script is first evaluated.
+    var withAnswers = window.PRINTBAR_ANSWERS === true;
 
     var bar = document.createElement("div");
     bar.className = "print-bar";
-    bar.appendChild(link);
+
+    if (withAnswers) {
+      bar.appendChild(link(ANSWERS, PRINTER_SVG + "<span>Print with answers</span>", "print-button"));
+      bar.appendChild(link(BLANK, "<span>Print a blank copy</span>", "print-blank"));
+    } else {
+      bar.appendChild(link(BLANK, PRINTER_SVG + "<span>Print this packet</span>", "print-button"));
+    }
 
     var title = document.getElementById("title-block-header");
     if (title && title.parentNode) {
@@ -2381,6 +2408,7 @@ outline-offset: 2px;
   }
 })();
 </script>
+<script>window.PRINTBAR_ANSWERS = true;</script>
 
   
   <script>
@@ -2560,7 +2588,8 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The answers are now shown. Try each problem first, then click <strong>Show answer</strong> to check your work. If your answer disagrees with the key, go back and redo the problem before you read the explanation. You can type into the work boxes here, and what you type is saved in this browser. The <strong>Print this packet</strong> button still gives you a blank copy, so you can print one and work through the packet again.</p>
+<p>The answers are now shown. Try each problem first, then click <strong>Show answer</strong> to check your work. If your answer disagrees with the key, go back and redo the problem before you read the explanation. You can type into the work boxes here, and what you type is saved in this browser.</p>
+<p><strong>Print with answers</strong> gives you the worked packet to study from. <strong>Print a blank copy</strong> gives you the questions on their own, so you can work through them again before the exam.</p>
 </div>
 </div>
 </section>
