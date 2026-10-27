@@ -35,7 +35,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-46fd08338badd1484a18d996f0efd116.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-1cd458a07c1dd9b3f03fb698cf9e9606.css">
   <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -254,14 +254,13 @@ Zechun (Jacob) Cao
 <ul>
 <li>Number the bytes. <span class="ex-inline">Must Know</span></li>
 <li>Read a cumulative ACK. <span class="ex-inline">Must Know</span></li>
-<li>Explain a chat bug and a stalled download.</li>
+<li>Explain a chat bug and a held-back ACK.</li>
 <li>Calculate the next ACK. <span class="ex-inline">Must Know</span></li>
 </ul>
 </div><div class="column" style="width:44%;">
 <p><strong>After class</strong></p>
 <ul>
-<li>Follow data in both directions.</li>
-<li>Distinguish a byte stream from application messages.</li>
+<li>Follow data and ACKs in both directions.</li>
 </ul>
 </div></div>
 </section>
@@ -334,37 +333,6 @@ Zechun (Jacob) Cao
 </svg>
 <div class="fragment" data-fragment-index="2">
 <p>TCP may group those bytes into segments differently from the application’s writes.</p>
-</div>
-</section>
-<section id="why-number-bytes" class="slide level2">
-<h2>Why Number Bytes?</h2>
-<p>How could TCP split <strong>ABCDEF</strong> into segments?</p>
-<svg class="trace classroom-figure" viewbox="0 0 1000 200" role="img" aria-labelledby="partition-title">
-  <title id="partition-title">Byte positions remain stable when segment boundaries change</title>
-  <defs>
-    <marker id="partition-arrow" markerwidth="10" markerheight="10" refx="9" refy="5" orient="auto" markerunits="userSpaceOnUse">
-      <path d="M0,0 L9,5 L0,10" fill="#006791"></path>
-    </marker>
-  </defs>
-  <text x="10" y="42" text-anchor="start" class="lbl-blue" font-size="30">One grouping</text>
-  <rect x="315" y="8" width="175" height="56" rx="6" class="received"></rect>
-  <text x="402.5" y="46" text-anchor="middle" class="" font-size="30">AB</text>
-  <rect x="505" y="8" width="420" height="56" rx="6" class="received"></rect>
-  <text x="715.0" y="46" text-anchor="middle" class="" font-size="30">CDEF</text>
-  <g class="fragment" data-fragment-index="0">
-    <g class="arriving-packet">
-      <text x="10" y="150" text-anchor="start" class="lbl-blue" font-size="30">Another grouping</text>
-      <rect x="315" y="116" width="290" height="56" rx="6" class="received"></rect>
-      <text x="460.0" y="154" text-anchor="middle" class="" font-size="30">ABC</text>
-      <rect x="620" y="116" width="305" height="56" rx="6" class="received"></rect>
-      <text x="772.5" y="154" text-anchor="middle" class="" font-size="30">DEF</text>
-    </g>
-  </g>
-</svg>
-<p><span class="vote-prompt">What stays the same when the boundaries move?</span></p>
-<div class="choices"><div class="vote"><p><strong>A.</strong> The bytes and their positions.</p></div><div class="vote"><p><strong>B.</strong> The contents of segment 2.</p></div></div>
-<div class="fragment answer" data-fragment-index="1">
-<p><strong>A.</strong> Byte positions identify the data even if segment boundaries change.</p>
 </div>
 </section>
 <section id="can-tcp-split-a-message" class="slide level2">
@@ -618,9 +586,6 @@ Zechun (Jacob) Cao
 <div class="fragment" data-fragment-index="1">
 <p>The ACK identifies the <strong>next needed byte</strong>. It covers all earlier bytes in this connection, even if an earlier ACK was lost.</p>
 </div>
-<div class="fragment" data-fragment-index="2">
-<p>An ACK confirms receipt by TCP. The receiving application may not have read those bytes yet.</p>
-</div>
 </section>
 <section id="in-order-arrival" class="slide level2">
 <h2>In-Order Arrival</h2>
@@ -782,65 +747,6 @@ Zechun (Jacob) Cao
 <p><strong>ACK 1450</strong> covers all three segments. Host B can now deliver the buffered bytes in order.</p>
 </div>
 </section>
-<section id="when-an-ack-is-lost" class="slide level2">
-<h2>When an ACK Is Lost</h2>
-<p>Both segments arrive. Only the second ACK reaches A before timeout.</p>
-<p><span class="vote-prompt">Must A resend the first segment? Why?</span></p>
-<svg class="trace" viewbox="0 0 1000 320" role="img" aria-labelledby="fig6-title">
-  <title id="fig6-title">A later cumulative ACK covers a lost earlier ACK</title>
-  <defs>
-    <marker id="fig6-arrow" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse">
-      <path d="M0,0 L8,4 L0,8" fill="#006791"></path>
-    </marker>
-    <marker id="fig6-red" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse">
-      <path d="M0,0 L8,4 L0,8" fill="#c0392b"></path>
-    </marker>
-  </defs>
-  <text x="150" y="32" text-anchor="middle" class="lbl-blue" font-size="33">Host A</text>
-  <text x="870" y="32" text-anchor="middle" class="lbl-blue" font-size="33">Host B</text>
-  <path class="life" d="M150,50 V312 M870,50 V312"></path>
-  <text x="18" y="64" text-anchor="start" class="lbl-gray" font-size="25">time ↓</text>
-  <g class="fragment" data-fragment-index="0">
-    <path class="packet-path msg" d="M150,70 L870,106" marker-end="url(#fig6-arrow)"></path>
-    <g class="pkt" style="--dx:-648px; --dy:-32px">
-      <rect class="pkt-body" x="765" y="89" width="66" height="26" rx="6"></rect>
-      <rect class="pkt-hdr" x="771" y="95" width="16" height="14" rx="3"></rect>
-    </g>
-    <text x="510" y="70" text-anchor="middle" class="lbl-blue" font-size="30">Seq 1000 · 200 bytes</text>
-  </g>
-  <g class="fragment" data-fragment-index="1">
-    <path class="packet-path msg-r" d="M870,138 L474,158"></path>
-    <g class="pkt pkt-r pkt-lost" style="--dx:356px; --dy:-18px">
-      <rect class="pkt-body" x="481" y="143" width="66" height="26" rx="6"></rect>
-      <rect class="pkt-hdr" x="487" y="149" width="16" height="14" rx="3"></rect>
-    </g>
-    <path class="loss-cross" d="M465,149 l18,18 m0,-18 l-18,18"></path>
-    <text x="700" y="143" text-anchor="middle" class="lbl-red" font-size="30">ACK 1200</text>
-  </g>
-  <g class="fragment" data-fragment-index="1">
-    <text x="455" y="152" text-anchor="end" class="lbl-red" font-size="26">lost</text>
-  </g>
-  <g class="fragment" data-fragment-index="2">
-    <path class="packet-path msg" d="M150,208 L870,244" marker-end="url(#fig6-arrow)"></path>
-    <g class="pkt" style="--dx:-648px; --dy:-32px">
-      <rect class="pkt-body" x="765" y="227" width="66" height="26" rx="6"></rect>
-      <rect class="pkt-hdr" x="771" y="233" width="16" height="14" rx="3"></rect>
-    </g>
-    <text x="510" y="208" text-anchor="middle" class="lbl-blue" font-size="30">Seq 1200 · 100 bytes</text>
-  </g>
-  <g class="fragment" data-fragment-index="3">
-    <path class="packet-path msg" d="M870,274 L150,310" marker-end="url(#fig6-arrow)"></path>
-    <g class="pkt" style="--dx:648px; --dy:-32px">
-      <rect class="pkt-body" x="189" y="293" width="66" height="26" rx="6"></rect>
-      <rect class="pkt-hdr" x="195" y="299" width="16" height="14" rx="3"></rect>
-    </g>
-    <text x="510" y="274" text-anchor="middle" class="lbl-blue" font-size="30">ACK 1300</text>
-  </g>
-</svg>
-<div class="fragment answer" data-fragment-index="4">
-<p><strong>No retransmission is needed.</strong> ACK 1300 covers bytes 1000–1299.</p>
-</div>
-</section>
 <section id="your-turn-seq" class="slide level2">
 <h2>Your Turn: Seq</h2>
 <p>The next new byte is <strong>2400</strong>. Send segments with <strong>120, 80, and 150 payload bytes</strong>, in that order.</p>
@@ -918,79 +824,6 @@ Zechun (Jacob) Cao
 <p>Explain the last ACK in one sentence: <strong>all bytes through 2749 are now present in order.</strong></p>
 </div>
 </section>
-<section id="a-download-stalls" class="slide level2">
-<h2>A Download Stalls</h2>
-<p>A <strong>1500-byte</strong> game update has three <strong>500-byte</strong> pieces. B expects <strong>4000</strong>; the application reads available bytes immediately.</p>
-<svg class="trace classroom-figure" viewbox="0 0 1000 180" role="img" aria-labelledby="download-stall-title">
-<title id="download-stall-title">A missing middle piece prevents later bytes from reaching the application</title>
-<defs>
-  <marker id="download-stall-arrow" markerwidth="10" markerheight="10" refx="9" refy="5" orient="auto" markerunits="userSpaceOnUse">
-  <path d="M0,0 L9,5 L0,10" fill="#006791"></path>
-  </marker>
-  </defs>
-<text x="175" y="30" text-anchor="middle" class="lbl-blue" font-size="30">Piece 1</text>
-  <text x="500" y="30" text-anchor="middle" class="lbl-blue" font-size="30">Piece 2</text>
-  <text x="825" y="30" text-anchor="middle" class="lbl-blue" font-size="30">Piece 3</text>
-  <rect x="30" y="58" width="290" height="56" rx="6" class="missing"></rect>
-  <text x="175.0" y="96" text-anchor="middle" class="" font-size="30">4000–4499</text>
-  <rect x="355" y="58" width="290" height="56" rx="6" class="missing"></rect>
-  <text x="500.0" y="96" text-anchor="middle" class="" font-size="30">4500–4999</text>
-  <rect x="680" y="58" width="290" height="56" rx="6" class="missing"></rect>
-  <text x="825.0" y="96" text-anchor="middle" class="" font-size="30">5000–5499</text>
-  <g class="fragment" data-fragment-index="0">
-  <rect x="30" y="58" width="290" height="56" rx="6" class="received"></rect>
-  <text x="175.0" y="96" text-anchor="middle" class="" font-size="30">4000–4499</text>
-  <text x="175" y="158" text-anchor="middle" class="lbl-blue" font-size="27">arrived first</text>
-  </g>
-  <g class="fragment" data-fragment-index="1">
-  <g class="arriving-packet">
-  <rect x="680" y="58" width="290" height="56" rx="6" class="buffered"></rect>
-  <text x="825.0" y="96" text-anchor="middle" class="" font-size="30">5000–5499</text>
-  <text x="825" y="158" text-anchor="middle" class="lbl-gold" font-size="27">arrived next</text>
-  </g>
-  <text x="500" y="158" text-anchor="middle" class="lbl-red" font-size="27">still missing</text>
-  </g>
-</svg>
-<p><span class="vote-prompt">After pieces 1 and 3 arrive: how many bytes can the app read? Which ACK?</span></p>
-<div class="fragment answer" data-fragment-index="2">
-<p><strong>500 bytes; ACK 4500.</strong> Another 500 bytes are buffered beyond the gap.</p>
-</div>
-</section>
-<section id="the-download-continues" class="slide level2">
-<h2>The Download Continues</h2>
-<p>B has delivered <strong>4000–4499</strong> and buffered <strong>5000–5499</strong>. Piece 2 now arrives.</p>
-<svg class="trace" viewbox="0 0 1000 212" role="img" aria-labelledby="download-resumes-title">
-<title id="download-resumes-title">Filling the middle gap releases both the newly arrived and buffered bytes</title>
-<defs>
-  <marker id="download-resumes-arrow" markerwidth="10" markerheight="10" refx="9" refy="5" orient="auto" markerunits="userSpaceOnUse">
-  <path d="M0,0 L9,5 L0,10" fill="#006791"></path>
-  </marker>
-  </defs>
-<rect x="30" y="36" width="290" height="56" rx="6" class="received"></rect>
-  <text x="175.0" y="74" text-anchor="middle" class="" font-size="30">4000–4499</text>
-  <rect x="355" y="36" width="290" height="56" rx="6" class="missing"></rect>
-  <text x="500.0" y="74" text-anchor="middle" class="" font-size="30">4500–4999</text>
-  <rect x="680" y="36" width="290" height="56" rx="6" class="buffered"></rect>
-  <text x="825.0" y="74" text-anchor="middle" class="" font-size="30">5000–5499</text>
-  <text x="175" y="132" text-anchor="middle" class="lbl-gray" font-size="27">already delivered</text>
-  <text x="825" y="132" text-anchor="middle" class="lbl-gold" font-size="27">buffered</text>
-  <g class="fragment" data-fragment-index="0">
-  <g class="arriving-packet">
-  <rect x="355" y="36" width="290" height="56" rx="6" class="received"></rect>
-  <text x="500.0" y="74" text-anchor="middle" class="" font-size="30">4500–4999</text>
-  <text x="500" y="132" text-anchor="middle" class="lbl-blue" font-size="27">now arrives</text>
-  </g>
-  </g>
-  <g class="fragment" data-fragment-index="1">
-  <rect class="sweep" x="30" y="150" width="940" height="15" rx="7"></rect>
-  <text x="500" y="200" text-anchor="middle" class="lbl-green" font-size="29">ACK 5500 now covers 4000–5499</text>
-  </g>
-</svg>
-<p><span class="vote-prompt">Predict the new ACK and how many additional bytes the app can read.</span></p>
-<div class="fragment answer" data-fragment-index="1">
-<p><strong>ACK 5500; 1000 additional bytes.</strong> The missing piece and the buffered piece are now available in order.</p>
-</div>
-</section>
 <section id="your-turn-meaning" class="slide level2">
 <h2>Your Turn: Meaning</h2>
 <p>Host A receives <strong>ACK 5200</strong>. Which statement must be true?</p>
@@ -1000,7 +833,7 @@ Zechun (Jacob) Cao
 <li><strong>C.</strong> Host B has no bytes beyond 5200 buffered.</li>
 </ul>
 <div class="fragment answer ans">
-<p><strong>B.</strong> The ACK does not tell you whether later bytes are buffered or whether the application has read the data.</p>
+<p><strong>B.</strong> The ACK does not tell you which later bytes Host B has buffered.</p>
 </div>
 </section>
 <section id="is-your-upload-saved" class="slide level2">
@@ -1049,7 +882,6 @@ Zechun (Jacob) Cao
 <p>TCP sequence numbers and ACKs</p>
 <ul>
 <li>Data and ACKs in both directions</li>
-<li>Application message boundaries</li>
 </ul>
 <p><a href="#/topic-2">Continue to Topic 2 →</a></p>
 </section>
@@ -1088,16 +920,10 @@ Zechun (Jacob) Cao
 </table>
 <p>B’s reply carries data and an ACK together. The final ACK has no payload, SYN, or FIN, so it consumes no sequence number.</p>
 </section>
-<section id="message-boundaries-reading" class="slide level2">
-<h2>Message Boundaries <span class="rd">Reading</span></h2>
-<p>If you write <code>AB</code> and then <code>CDEF</code> to a TCP socket, the receiving application gets the ordered bytes <code>ABCDEF</code>.</p>
-<p>One read might return <code>ABC</code>, followed by a read returning <code>DEF</code>. A successful read need not match one write or one TCP segment.</p>
-<p>To separate application messages, define a delimiter, a fixed length, or a length field. TCP’s sequence numbers identify positions in the byte stream.</p>
-</section>
 <section id="topic-2" class="slide level2 center section-divider">
 <h2>Topic 2</h2>
-<p>Reliable Transfer Mechanisms</p>
-<p><span class="topic-ref">Read §3.4.1.</span></p>
+<p>From UDP to Reliable Delivery</p>
+<p><span class="topic-ref">Read §§3.2–3.3, §3.4.1, and the opening of §3.4.2.</span></p>
 </section>
 <section id="todays-plan-1" class="slide level2">
 <h2>Today’s Plan</h2>
@@ -1105,107 +931,276 @@ Zechun (Jacob) Cao
 <div class="column" style="width:56%;">
 <p><strong>In class</strong></p>
 <ul>
-<li>Detect corrupted data.</li>
-<li>Recover from a lost segment or ACK.</li>
-<li>Check an old ACK and compare deadlines.</li>
-<li>Avoid delivering a duplicate.</li>
-<li>Match each failure to its mechanism. <span class="ex-inline">Must Know</span></li>
+<li>Deliver an arriving segment to the right socket. <span class="ex-inline">Must Know</span></li>
+<li>Detect damaged bits with a checksum. <span class="ex-inline">Must Know</span></li>
+<li>Build reliable transfer from rdt1.0 to rdt3.0. <span class="ex-inline">Must Know</span></li>
+<li>Measure how busy one segment keeps a link. <span class="ex-inline">Must Know</span></li>
 </ul>
 </div><div class="column" style="width:44%;">
 <p><strong>After class</strong></p>
 <ul>
-<li>Compare the textbook’s rdt versions.</li>
-<li>Distinguish packet ACKs from TCP byte ACKs.</li>
+<li>The rdt versions side by side.</li>
+<li>Which applications choose UDP, and why.</li>
+<li>What an ACK number means in each protocol.</li>
 </ul>
 </div></div>
 </section>
-<section id="build-reliable-delivery" class="slide level2">
-<h2>Build Reliable Delivery</h2>
-<p>Keep TCP’s byte numbers. For the next examples, A sends <strong>one data segment and waits for its ACK</strong>.</p>
-<p><span class="vote-prompt">What could prevent A and B from finishing this exchange?</span></p>
+<section id="warm-up-who-receives-it" class="slide level2">
+<h2>Warm-Up: Who Receives It?</h2>
+<p>Three programs on your CloudLab VM share one address. A segment arrives for <strong>10.10.1.4</strong>.</p>
+<svg class="trace" viewbox="0 0 1000 196" role="img" aria-labelledby="demux-warm-title">
+  <title id="demux-warm-title">One arriving segment and three candidate programs on the same host</title>
+  <defs>
+    <marker id="dw-arrow" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse">
+      <path d="M0,0 L8,4 L0,8" fill="#006791"></path>
+    </marker>
+  </defs>
+  <path class="packet-path" d="M40,98 L300,98" marker-end="url(#dw-arrow)" stroke="#006791" stroke-width="3" fill="none"></path>
+  <g class="pkt">
+    <rect class="pkt-body" x="120" y="86" width="80" height="26" rx="6"></rect>
+    <rect class="pkt-hdr" x="127" y="93" width="18" height="12" rx="3"></rect>
+  </g>
+  <text x="160" y="72" text-anchor="middle" class="lbl-blue" font-size="26">to 10.10.1.4</text>
+  <text x="310" y="112" text-anchor="middle" class="lbl-red" font-size="42">?</text>
+  <rect x="330" y="6" width="640" height="184" rx="8" class="received"></rect>
+  <text x="650" y="34" text-anchor="middle" class="lbl-gray" font-size="24">Your VM 10.10.1.4</text>
+  <rect x="370" y="44" width="560" height="40" rx="6" class="missing"></rect>
+  <text x="650" y="71" text-anchor="middle" font-size="26">your project’s UDP endpoint</text>
+  <rect x="370" y="92" width="560" height="40" rx="6" class="missing"></rect>
+  <text x="650" y="119" text-anchor="middle" font-size="26">an SSH session you left open</text>
+  <rect x="370" y="140" width="560" height="40" rx="6" class="missing"></rect>
+  <text x="650" y="167" text-anchor="middle" font-size="26">a second SSH session</text>
+</svg>
+<p><span class="vote-prompt">Vote: what in the segment decides which of the three receives it?</span></p>
 <div class="fragment answer" data-fragment-index="0">
-<p>The data can be corrupted or lost. The ACK can also be corrupted, lost, or delayed.</p>
-</div>
-<div class="fragment answer" data-fragment-index="1">
-<p>At each failure, decide what information or action is missing. Assume later transmissions can succeed.</p>
+<p>Not the address: all three share it. The transport header carries the answer.</p>
 </div>
 </section>
-<section id="warm-up-changed-bits" class="slide level2">
-<h2>Warm-Up: Changed Bits</h2>
-<p>A bit error changes a character while the data is in transit.</p>
-<svg class="trace classroom-figure" viewbox="0 0 1000 175" role="img" aria-labelledby="corruption-title">
-  <title id="corruption-title">A payload can change without changing its length</title>
+<section id="demultiplexing-must-know" class="slide level2">
+<h2>Demultiplexing <span class="ex">Must Know</span></h2>
+<p>Every UDP and TCP header begins with a <strong>source port</strong> and a <strong>destination port</strong>.</p>
+<div class="fragment" data-fragment-index="0">
+<p>A <strong>UDP</strong> socket is named by two values: <strong>destination IP and destination port</strong>. Two senders writing to the same port reach <strong>one</strong> socket.</p>
+</div>
+<div class="fragment" data-fragment-index="1">
+<p>A <strong>TCP</strong> socket is named by four: <strong>source IP, source port, destination IP, destination port</strong>. Two senders reach <strong>two</strong> sockets.</p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p>Sorting arriving segments by those values is <strong>demultiplexing</strong>. Adding the ports on the way out is <strong>multiplexing</strong>.</p>
+</div>
+</section>
+<section id="your-turn-which-socket" class="slide level2">
+<h2>Your Turn: Which Socket?</h2>
+<p>Your VM holds a UDP endpoint on port <strong>5000</strong> and two SSH connections on port <strong>22</strong>.</p>
+<p><span class="vote-prompt">Name the socket each one reaches.</span></p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Arriving at 10.10.1.4</th>
+<th>Reaches</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>UDP 10.10.1.2:49152 → :5000</td>
+<td><span class="fragment ans" data-fragment-index="0">the UDP endpoint</span></td>
+</tr>
+<tr class="even">
+<td>UDP 10.10.1.3:51000 → :5000</td>
+<td><span class="fragment ans" data-fragment-index="1">the same socket</span></td>
+</tr>
+<tr class="odd">
+<td>TCP 10.10.1.2:49152 → :22</td>
+<td><span class="fragment ans" data-fragment-index="2">the first SSH socket</span></td>
+</tr>
+<tr class="even">
+<td>TCP 10.10.1.3:49152 → :22</td>
+<td><span class="fragment ans" data-fragment-index="3">a second socket</span></td>
+</tr>
+</tbody>
+</table>
+<div class="fragment answer" data-fragment-index="4">
+<p>Two datagrams, one socket. The endpoint reads each datagram’s source address — your project’s <code>.remote</code>.</p>
+</div>
+</section>
+<section id="what-udp-sends" class="slide level2">
+<h2>What UDP Sends</h2>
+<p>UDP adds <strong>8 bytes</strong> and hands the rest to IP.</p>
+<svg class="trace" viewbox="0 0 1000 238" role="img" aria-labelledby="udp-hdr-title">
+  <title id="udp-hdr-title">The eight-byte UDP header: four sixteen-bit fields</title>
+  <text x="275" y="34" text-anchor="middle" class="lbl-gray" font-size="25">16 bits</text>
+  <text x="725" y="34" text-anchor="middle" class="lbl-gray" font-size="25">16 bits</text>
+  <rect x="50" y="46" width="450" height="52" rx="4" class="received"></rect>
+  <rect x="500" y="46" width="450" height="52" rx="4" class="received"></rect>
+  <text x="275" y="80" text-anchor="middle" font-size="28">source port</text>
+  <text x="725" y="80" text-anchor="middle" font-size="28">destination port</text>
+  <rect x="50" y="98" width="450" height="52" rx="4" class="received"></rect>
+  <rect x="500" y="98" width="450" height="52" rx="4" class="buffered"></rect>
+  <text x="275" y="132" text-anchor="middle" font-size="28">length</text>
+  <text x="725" y="132" text-anchor="middle" font-size="28">checksum</text>
+  <rect x="50" y="150" width="900" height="58" rx="4" class="idle"></rect>
+  <text x="500" y="187" text-anchor="middle" font-size="28">application data</text>
+  <text x="50" y="232" text-anchor="start" class="lbl-gray" font-size="24">length counts the header too, so its smallest value is 8</text>
+</svg>
+<p><span class="vote-prompt">The shaded field is the only error check UDP offers. What can it do?</span></p>
+</section>
+<section id="udps-checksum-must-know" class="slide level2">
+<h2>UDP’s Checksum <span class="ex">Must Know</span></h2>
+<p>Add the 16-bit words with <strong>end-around carry</strong>, then <strong>complement</strong> the sum. Here is a datagram carrying the four bytes <code>FIRE</code>.</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Field</th>
+<th>Value</th>
+<th>Binary</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>source port</td>
+<td>40000</td>
+<td><code>1001110001000000</code></td>
+</tr>
+<tr class="even">
+<td>destination port</td>
+<td>5000</td>
+<td><code>0001001110001000</code></td>
+</tr>
+<tr class="odd">
+<td>length</td>
+<td>12</td>
+<td><code>0000000000001100</code></td>
+</tr>
+<tr class="even">
+<td>FI</td>
+<td>0x4649</td>
+<td><code>0100011001001001</code></td>
+</tr>
+<tr class="odd">
+<td>RE</td>
+<td>0x5245</td>
+<td><code>0101001001000101</code></td>
+</tr>
+</tbody>
+</table>
+<div class="fragment" data-fragment-index="0">
+<p>Sum, carries wrapped into the low bit: <code>0100100001100011</code></p>
+</div>
+<div class="fragment" data-fragment-index="1">
+<p>Checksum, the complement of that sum: <strong><code>1011011110011100</code></strong></p>
+</div>
+</section>
+<section id="what-the-check-misses" class="slide level2">
+<h2>What the Check Misses</h2>
+<p>The receiver adds <strong>every</strong> word, the checksum included, and expects one result.</p>
+<div class="fragment" data-fragment-index="0">
+<p><code>0100100001100011</code> + <code>1011011110011100</code> = <strong><code>1111111111111111</code></strong> — all ones. Anything else means the datagram is damaged.</p>
+</div>
+<div class="fragment" data-fragment-index="1">
+<p>Every one of the <strong>80</strong> single-bit flips in that datagram changes the result, so each one is caught.</p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p>But <strong>64</strong> pairs of flipped bits cancel and pass the check. A checksum is a cheap test, not a guarantee — and it never repairs anything.</p>
+</div>
+</section>
+<section id="why-udp-and-what-it-costs" class="slide level2">
+<h2>Why UDP, and What It Costs</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>What you get</strong></p>
+<ul>
+<li>A port pair, so the right socket gets the data.</li>
+<li>An optional checksum.</li>
+<li>No handshake before the first byte.</li>
+<li>No per-connection state at either end.</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><strong>What you do not get</strong></p>
+<ul>
+<li>Any promise the datagram arrives.</li>
+<li>Any promise about order.</li>
+<li>Any suppression of duplicates.</li>
+<li>Any limit on how fast you send.</li>
+</ul>
+</div></div>
+<div class="fragment answer" data-fragment-index="0">
+<p>Your transport has to supply the right-hand column itself.</p>
+</div>
+</section>
+<section id="the-service-and-the-channel" class="slide level2">
+<h2>The Service and the Channel</h2>
+<p>Reliable transfer is a layer. It offers two calls upward and uses two downward.</p>
+<svg class="trace" viewbox="0 0 1000 290" role="img" aria-labelledby="svc-title">
+  <title id="svc-title">The reliable data transfer layer between the application and an unreliable channel</title>
   <defs>
-    <marker id="corruption-arrow" markerwidth="10" markerheight="10" refx="9" refy="5" orient="auto" markerunits="userSpaceOnUse">
+    <marker id="sv-arrow" markerwidth="10" markerheight="10" refx="9" refy="5" orient="auto" markerunits="userSpaceOnUse">
       <path d="M0,0 L9,5 L0,10" fill="#006791"></path>
     </marker>
   </defs>
-  <text x="265" y="30" text-anchor="middle" class="lbl-blue" font-size="30">A sends</text>
-  <rect x="95" y="58" width="340" height="56" rx="6" class="received"></rect>
-  <text x="265.0" y="96" text-anchor="middle" class="" font-size="30">score=10</text>
-  <text x="265.0" y="146" text-anchor="middle" class="lbl-gray" font-size="26">8 payload bytes</text>
-  <g class="fragment" data-fragment-index="0">
-    <g class="arriving-packet">
-      <path class="packet-path msg" d="M455,85 L545,85" marker-end="url(#corruption-arrow)"></path>
-      <text x="735" y="30" text-anchor="middle" class="lbl-red" font-size="30">B receives</text>
-      <rect x="565" y="58" width="340" height="56" rx="6" class="damaged"></rect>
-      <text x="735.0" y="96" text-anchor="middle" class="" font-size="30">score=90</text>
-      <text x="735.0" y="146" text-anchor="middle" class="lbl-gray" font-size="26">8 payload bytes</text>
-    </g>
-  </g>
+  <rect x="30" y="14" width="400" height="54" rx="6" class="received"></rect>
+  <text x="230" y="48" text-anchor="middle" font-size="25">sending application</text>
+  <rect x="570" y="14" width="400" height="54" rx="6" class="received"></rect>
+  <text x="770" y="48" text-anchor="middle" font-size="25">receiving application</text>
+  <path d="M170,68 V112" marker-end="url(#sv-arrow)" stroke="#006791" stroke-width="2.5" fill="none"></path>
+  <text x="190" y="96" text-anchor="start" font-size="20" font-family="monospace">rdt_send(data)</text>
+  <path d="M830,112 V68" marker-end="url(#sv-arrow)" stroke="#006791" stroke-width="2.5" fill="none"></path>
+  <text x="810" y="96" text-anchor="end" font-size="20" font-family="monospace">deliver_data(data)</text>
+  <rect x="30" y="118" width="400" height="54" rx="6" class="buffered"></rect>
+  <text x="230" y="152" text-anchor="middle" font-size="25">rdt: sending side</text>
+  <rect x="570" y="118" width="400" height="54" rx="6" class="buffered"></rect>
+  <text x="770" y="152" text-anchor="middle" font-size="25">rdt: receiving side</text>
+  <path d="M170,172 V216" marker-end="url(#sv-arrow)" stroke="#006791" stroke-width="2.5" fill="none"></path>
+  <text x="190" y="200" text-anchor="start" font-size="20" font-family="monospace">udt_send(packet)</text>
+  <path d="M830,216 V172" marker-end="url(#sv-arrow)" stroke="#006791" stroke-width="2.5" fill="none"></path>
+  <text x="810" y="200" text-anchor="end" font-size="20" font-family="monospace">rdt_rcv(packet)</text>
+  <rect x="30" y="222" width="940" height="54" rx="6" class="missing"></rect>
+  <text x="500" y="256" text-anchor="middle" font-size="25">unreliable channel — the UDP socket you just met</text>
 </svg>
-<p><span class="vote-prompt">Vote: does receiving the expected length prove the data is correct?</span></p>
-<div class="choices"><div class="vote"><p><strong>A.</strong> Yes, all 8 bytes arrived.</p></div><div class="vote"><p><strong>B.</strong> No, their values may have changed.</p></div></div>
-<div class="fragment answer" data-fragment-index="1">
-<p><strong>B.</strong> The values need an error-detection check.</p>
-</div>
-</section>
-<section id="detect-corruption" class="slide level2">
-<h2>Detect Corruption</h2>
-<p>Attach a <strong>checksum</strong> so B can check the received bits.</p>
-<svg class="trace classroom-figure" viewbox="0 0 1000 210" role="img" aria-labelledby="checksum-role-title">
-  <title id="checksum-role-title">Checksum verification rejects a detected corrupt segment</title>
-  <defs>
-    <marker id="checksum-role-arrow" markerwidth="10" markerheight="10" refx="9" refy="5" orient="auto" markerunits="userSpaceOnUse">
-      <path d="M0,0 L9,5 L0,10" fill="#006791"></path>
-    </marker>
-  </defs>
-  <rect x="40" y="36" width="390" height="56" rx="6" class="received"></rect>
-  <text x="235.0" y="74" text-anchor="middle" class="" font-size="30">Payload + checksum</text>
-  <text x="235.0" y="124" text-anchor="middle" class="lbl-gray" font-size="26">sender computes the checksum</text>
-  <g class="fragment" data-fragment-index="0">
-    <path class="packet-path msg" d="M450,65 L550,65" marker-end="url(#checksum-role-arrow)"></path>
-    <rect x="570" y="36" width="390" height="56" rx="6" class="received"></rect>
-    <text x="765.0" y="74" text-anchor="middle" class="" font-size="30">Check at the receiver</text>
-    <text x="765.0" y="124" text-anchor="middle" class="lbl-gray" font-size="26">use the received bits</text>
-  </g>
-  <g class="fragment" data-fragment-index="1">
-    <text x="500" y="184" text-anchor="middle" class="lbl-red" font-size="30">Check fails → discard the damaged segment</text>
-  </g>
-</svg>
-<p><span class="vote-prompt">A failed check detects damage. Does it also supply the original data?</span></p>
-<div class="fragment answer" data-fragment-index="2">
-<p><strong>No.</strong> Another copy is needed. Some errors can go undetected; the checksum is not a repair code.</p>
-</div>
-</section>
-<section id="protect-the-ack-too" class="slide level2">
-<h2>Protect the ACK Too</h2>
-<p>B sends <strong>ACK 3100</strong>, but corruption changes it to <strong>ACK 3000</strong> on the way back.</p>
-<p><span class="vote-prompt">Vote: is checking only data segments enough?</span></p>
-<div class="choices"><div class="vote"><p><strong>A.</strong> Yes; ACKs contain no application data.</p></div><div class="vote"><p><strong>B.</strong> No; A relies on the ACK’s fields.</p></div></div>
 <div class="fragment answer" data-fragment-index="0">
-<p><strong>B.</strong> ACKs need error detection too. A must not act on a segment whose checksum fails.</p>
-</div>
-<div class="fragment answer" data-fragment-index="1">
-<p>A damaged control message can prevent progress even when the data arrived correctly.</p>
+<p>Everything that follows adds machinery <strong>between those four calls</strong>. The application’s two calls never change.</p>
 </div>
 </section>
-<section id="confirm-receipt" class="slide level2">
-<h2>Confirm Receipt</h2>
-<p>B expects byte <strong>3000</strong>. A sends <strong>100 payload bytes</strong>.</p>
-<p><span class="vote-prompt">Predict B’s ACK. What does that reply allow A to stop waiting for?</span></p>
+<section id="rdt1.0-a-perfect-channel" class="slide level2">
+<h2>rdt1.0: A Perfect Channel</h2>
+<p>Assume the channel never flips a bit and never loses a packet. One state on each side; on every arrow the event is above the line and the action below.</p>
+<svg class="trace" viewbox="0 0 1000 238" role="img" aria-labelledby="f39">
+  <title id="f39">rdt1.0: the sending side and the receiving side, one state each, redrawn after Kurose and Ross Figure 3.9</title>
+  <defs><marker id="a39" markerwidth="11" markerheight="11" refx="10" refy="5.5" orient="auto" markerunits="userSpaceOnUse"><path d="M0,0 L10,5.5 L0,11" fill="#006791"></path></marker><marker id="d39" markerwidth="11" markerheight="11" refx="10" refy="5.5" orient="auto" markerunits="userSpaceOnUse"><path d="M0,0 L10,5.5 L0,11" fill="#444"></path></marker></defs>
+  <path class="fsm-init" d="M54,48 L98,86" marker-end="url(#d39)"></path>
+  <circle class="fsm-state" cx="148" cy="120" r="56"></circle>
+  <text class="fsm-name" x="148" y="105" text-anchor="middle" font-size="19">Wait for</text>
+  <text class="fsm-name" x="148" y="127" text-anchor="middle" font-size="19">call from</text>
+  <text class="fsm-name" x="148" y="149" text-anchor="middle" font-size="19">above</text>
+  <path class="fsm-arc" d="M185,78 C231,47 231,193 185,162" marker-end="url(#a39)"></path>
+  <text class="fsm-code" x="268" y="96" text-anchor="start" font-size="15">rdt_send(data)</text>
+  <path class="fsm-rule" d="M268,107 H457"></path>
+  <text class="fsm-code" x="268" y="123" text-anchor="start" font-size="15">packet=make_pkt(data)</text>
+  <text class="fsm-code" x="268" y="142" text-anchor="start" font-size="15">udt_send(packet)</text>
+  <text class="fsm-cap" x="86" y="214" font-size="19">a. rdt1.0: sending side</text>
+  <path class="fsm-init" d="M554,48 L598,86" marker-end="url(#d39)"></path>
+  <circle class="fsm-state" cx="648" cy="120" r="56"></circle>
+  <text class="fsm-name" x="648" y="105" text-anchor="middle" font-size="19">Wait for</text>
+  <text class="fsm-name" x="648" y="127" text-anchor="middle" font-size="19">call from</text>
+  <text class="fsm-name" x="648" y="149" text-anchor="middle" font-size="19">below</text>
+  <path class="fsm-arc" d="M685,78 C731,47 731,193 685,162" marker-end="url(#a39)"></path>
+  <text class="fsm-code" x="768" y="96" text-anchor="start" font-size="15">rdt_rcv(packet)</text>
+  <path class="fsm-rule" d="M768,107 H957"></path>
+  <text class="fsm-code" x="768" y="123" text-anchor="start" font-size="15">extract(packet,data)</text>
+  <text class="fsm-code" x="768" y="142" text-anchor="start" font-size="15">deliver_data(data)</text>
+  <text class="fsm-cap" x="586" y="214" font-size="19">b. rdt1.0: receiving side</text>
+</svg>
+<p><span class="vote-prompt">No checksum, no ACK, no timer. Which assumption breaks first on a real link?</span></p>
+</section>
+<section id="rdt2.0-bit-errors" class="slide level2">
+<h2>rdt2.0: Bit Errors</h2>
+<p>The channel can flip bits. Add a <strong>checksum</strong>, <strong>feedback</strong> from B, and a <strong>retransmission</strong> from a saved copy.</p>
+<p><span class="vote-prompt">What must B send back, and what should A do if the news is bad?</span></p>
 <svg class="trace" viewbox="0 0 1000 285" role="img" aria-labelledby="fig7-title">
-  <title id="fig7-title">A valid ACK ends the sender's wait for the outstanding bytes</title>
+  <title id="fig7-title">A positive acknowledgment ends the sender's wait</title>
   <defs>
     <marker id="fig7-arrow" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse">
       <path d="M0,0 L8,4 L0,8" fill="#006791"></path>
@@ -1224,7 +1219,7 @@ Zechun (Jacob) Cao
       <rect class="pkt-body" x="765" y="111" width="66" height="26" rx="6"></rect>
       <rect class="pkt-hdr" x="771" y="117" width="16" height="14" rx="3"></rect>
     </g>
-    <text x="510" y="88" text-anchor="middle" class="lbl-blue" font-size="30">Seq 3000 · 100 bytes</text>
+    <text x="510" y="88" text-anchor="middle" class="lbl-blue" font-size="30">Pkt</text>
   </g>
   <g class="fragment" data-fragment-index="1">
     <path class="packet-path msg" d="M870,202 L150,246" marker-end="url(#fig7-arrow)"></path>
@@ -1232,11 +1227,297 @@ Zechun (Jacob) Cao
       <rect class="pkt-body" x="189" y="229" width="66" height="26" rx="6"></rect>
       <rect class="pkt-hdr" x="195" y="235" width="16" height="14" rx="3"></rect>
     </g>
-    <text x="510" y="206" text-anchor="middle" class="lbl-blue" font-size="30">ACK 3100</text>
+    <text x="510" y="206" text-anchor="middle" class="lbl-blue" font-size="30">ACK</text>
   </g>
 </svg>
 <div class="fragment" data-fragment-index="2">
-<p>A valid <strong>ACK 3100</strong> confirms receipt of the outstanding data. A can now continue with new data.</p>
+<p>An <strong>ACK</strong> says the packet arrived intact; a <strong>NAK</strong> asks for another copy.</p>
+</div>
+</section>
+<section id="rdt2.0-has-a-fatal-flaw" class="slide level2">
+<h2>rdt2.0 Has a Fatal Flaw</h2>
+<p>B sends an ACK, but the <strong>ACK itself</strong> is corrupted on the way back. A cannot read it.</p>
+<p><span class="vote-prompt">Vote: can A recover by simply sending the packet again?</span></p>
+<div class="choices"><div class="vote"><p><strong>A.</strong> Yes; ACKs contain no application data.</p></div><div class="vote"><p><strong>B.</strong> No; A relies on the ACK’s fields.</p></div></div>
+<div class="fragment answer" data-fragment-index="0">
+<p><strong>B.</strong> A cannot act on feedback it cannot read, and it cannot ask B what happened.</p>
+</div>
+<div class="fragment answer" data-fragment-index="1">
+<p>A’s only remaining move is to resend — which means B may receive a second copy of data it already holds.</p>
+</div>
+</section>
+<section id="fire-once-or-twice" class="slide level2">
+<h2>Fire Once or Twice?</h2>
+<p>An arcade game sends one four-byte command, <code>FIRE</code>, per shot. A resends after a garbled ACK.</p>
+<svg class="trace classroom-figure" viewbox="0 0 1000 235" role="img" aria-labelledby="duplicate-identity-title">
+  <title id="duplicate-identity-title">Equal payloads do not imply a duplicate</title>
+  <defs>
+    <marker id="duplicate-identity-arrow" markerwidth="10" markerheight="10" refx="9" refy="5" orient="auto" markerunits="userSpaceOnUse">
+      <path d="M0,0 L9,5 L0,10" fill="#006791"></path>
+    </marker>
+  </defs>
+  <text x="500" y="30" text-anchor="middle" class="lbl-blue" font-size="30">B has already delivered one FIRE.</text>
+  <rect x="100" y="65" width="340" height="56" rx="6" class="buffered"></rect>
+  <text x="270.0" y="103" text-anchor="middle" class="" font-size="30">FIRE</text>
+  <text x="270.0" y="153" text-anchor="middle" class="lbl-gray" font-size="26">incoming copy A</text>
+  <rect x="560" y="65" width="340" height="56" rx="6" class="buffered"></rect>
+  <text x="730.0" y="103" text-anchor="middle" class="" font-size="30">FIRE</text>
+  <text x="730.0" y="153" text-anchor="middle" class="lbl-gray" font-size="26">incoming copy B</text>
+  <g class="fragment" data-fragment-index="0">
+    <text x="270" y="198" text-anchor="middle" class="lbl-red" font-size="30">Pkt 0 → a retry</text>
+    <text x="730" y="198" text-anchor="middle" class="lbl-blue" font-size="30">Pkt 1 → a second shot</text>
+  </g>
+</svg>
+<p><span class="vote-prompt">Before the numbers are revealed: can B tell a retry from a second shot?</span></p>
+<div class="fragment answer" data-fragment-index="1">
+<p><strong>No.</strong> The bytes are identical. Only a number carried in the packet separates them.</p>
+</div>
+</section>
+<section id="rdt2.1-sequence-numbers" class="slide level2">
+<h2>rdt2.1: Sequence Numbers</h2>
+<p>Put a number in every packet. B has delivered <strong>Pkt 0</strong> and expects <strong>Pkt 1</strong>.</p>
+<p><span class="vote-prompt">Vote: deliver again; discard silently; or discard and repeat the ACK?</span></p>
+<svg class="trace" viewbox="0 0 1000 285" role="img" aria-labelledby="fig10-title">
+  <title id="fig10-title">Duplicate data is acknowledged again without duplicate application delivery</title>
+  <defs>
+    <marker id="fig10-arrow" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse">
+      <path d="M0,0 L8,4 L0,8" fill="#006791"></path>
+    </marker>
+    <marker id="fig10-red" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse">
+      <path d="M0,0 L8,4 L0,8" fill="#c0392b"></path>
+    </marker>
+  </defs>
+  <text x="150" y="32" text-anchor="middle" class="lbl-blue" font-size="33">Host A</text>
+  <text x="870" y="32" text-anchor="middle" class="lbl-blue" font-size="33">Host B</text>
+  <path class="life" d="M150,50 V277 M870,50 V277"></path>
+  <text x="18" y="64" text-anchor="start" class="lbl-gray" font-size="25">time ↓</text>
+  <g class="fragment" data-fragment-index="0">
+    <path class="packet-path msg" d="M150,76 L870,116" marker-end="url(#fig10-arrow)"></path>
+    <g class="pkt" style="--dx:-648px; --dy:-36px">
+      <rect class="pkt-body" x="765" y="99" width="66" height="26" rx="6"></rect>
+      <rect class="pkt-hdr" x="771" y="105" width="16" height="14" rx="3"></rect>
+    </g>
+    <text x="510" y="78" text-anchor="middle" class="lbl-blue" font-size="30">Pkt 0 again</text>
+  </g>
+  <g class="fragment" data-fragment-index="1">
+    <text x="500" y="172" text-anchor="middle" class="lbl-blue" font-size="31">Already received: do not deliver again</text>
+  </g>
+  <g class="fragment" data-fragment-index="2">
+    <path class="packet-path msg" d="M870,228 L150,268" marker-end="url(#fig10-arrow)"></path>
+    <g class="pkt" style="--dx:648px; --dy:-36px">
+      <rect class="pkt-body" x="189" y="251" width="66" height="26" rx="6"></rect>
+      <rect class="pkt-hdr" x="195" y="257" width="16" height="14" rx="3"></rect>
+    </g>
+    <text x="510" y="230" text-anchor="middle" class="lbl-blue" font-size="30">ACK again</text>
+  </g>
+</svg>
+<div class="fragment" data-fragment-index="3">
+<p>The number identifies the duplicate. <strong>One bit is enough</strong>: only one packet is ever outstanding, so 0 and 1 never collide.</p>
+</div>
+</section>
+<section id="rdt2.2-drop-the-nak" class="slide level2">
+<h2>rdt2.2: Drop the NAK</h2>
+<p>Suppose B recognizes a duplicate but <strong>sends no reply</strong>.</p>
+<svg class="trace" viewbox="0 0 1000 285" role="img" aria-labelledby="silent-receiver-title">
+  <title id="silent-receiver-title">Silence after duplicate receipt leaves the sender waiting</title>
+  <defs>
+    <marker id="silent-receiver-arrow" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse">
+      <path d="M0,0 L8,4 L0,8" fill="#006791"></path>
+    </marker>
+    <marker id="silent-receiver-red" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse">
+      <path d="M0,0 L8,4 L0,8" fill="#c0392b"></path>
+    </marker>
+  </defs>
+  <text x="150" y="32" text-anchor="middle" class="lbl-blue" font-size="33">Host A</text>
+  <text x="870" y="32" text-anchor="middle" class="lbl-blue" font-size="33">Host B</text>
+  <path class="life" d="M150,50 V277 M870,50 V277"></path>
+  <g class="fragment" data-fragment-index="0">
+    <path class="packet-path msg" d="M150,76 L870,116" marker-end="url(#silent-receiver-arrow)"></path>
+    <g class="pkt" style="--dx:-648px; --dy:-36px">
+      <rect class="pkt-body" x="765" y="99" width="66" height="26" rx="6"></rect>
+      <rect class="pkt-hdr" x="771" y="105" width="16" height="14" rx="3"></rect>
+    </g>
+    <text x="510" y="78" text-anchor="middle" class="lbl-blue" font-size="30">Pkt 0 again</text>
+  </g>
+  <g class="fragment" data-fragment-index="1">
+    <text x="500" y="178" text-anchor="middle" class="lbl-red" font-size="31">B discards the duplicate and stays silent.</text>
+  </g>
+  <g class="fragment" data-fragment-index="2">
+    <path class="packet-path msg" d="M150,232 L870,272" marker-end="url(#silent-receiver-arrow)"></path>
+    <g class="pkt" style="--dx:-648px; --dy:-36px">
+      <rect class="pkt-body" x="765" y="255" width="66" height="26" rx="6"></rect>
+      <rect class="pkt-hdr" x="771" y="261" width="16" height="14" rx="3"></rect>
+    </g>
+    <text x="510" y="234" text-anchor="middle" class="lbl-blue" font-size="30">Next timeout: Pkt 0 again</text>
+  </g>
+</svg>
+<p><span class="vote-prompt">What keeps A retransmitting? Which message would stop it?</span></p>
+<div class="fragment answer" data-fragment-index="3">
+<p>A still has no feedback. B sends a <strong>numbered ACK for the last packet it accepted</strong>; that repeat does the NAK’s job, so rdt2.2 drops the NAK.</p>
+</div>
+</section>
+<section id="rdt2.2-the-sender" class="slide level2">
+<h2>rdt2.2: The Sender</h2>
+<svg class="trace" viewbox="0 0 1000 454" role="img" aria-labelledby="f313">
+  <title id="f313">The four states of the rdt2.2 sender and the transitions between them, redrawn after Kurose and Ross Figure 3.13</title>
+  <defs><marker id="a313" markerwidth="11" markerheight="11" refx="10" refy="5.5" orient="auto" markerunits="userSpaceOnUse"><path d="M0,0 L10,5.5 L0,11" fill="#006791"></path></marker><marker id="d313" markerwidth="11" markerheight="11" refx="10" refy="5.5" orient="auto" markerunits="userSpaceOnUse"><path d="M0,0 L10,5.5 L0,11" fill="#444"></path></marker></defs>
+  <path class="fsm-init" d="M306,74 L370,124" marker-end="url(#d313)"></path>
+  <circle class="fsm-state" cx="420" cy="164" r="54"></circle>
+  <text class="fsm-name" x="420" y="149" text-anchor="middle" font-size="19">Wait for</text>
+  <text class="fsm-name" x="420" y="171" text-anchor="middle" font-size="19">call 0 from</text>
+  <text class="fsm-name" x="420" y="193" text-anchor="middle" font-size="19">above</text>
+  <circle class="fsm-state" cx="620" cy="164" r="54"></circle>
+  <text class="fsm-name" x="620" y="160" text-anchor="middle" font-size="19">Wait for</text>
+  <text class="fsm-name" x="620" y="182" text-anchor="middle" font-size="19">ACK 0</text>
+  <circle class="fsm-state" cx="620" cy="314" r="54"></circle>
+  <text class="fsm-name" x="620" y="299" text-anchor="middle" font-size="19">Wait for</text>
+  <text class="fsm-name" x="620" y="321" text-anchor="middle" font-size="19">call 1 from</text>
+  <text class="fsm-name" x="620" y="343" text-anchor="middle" font-size="19">above</text>
+  <circle class="fsm-state" cx="420" cy="314" r="54"></circle>
+  <text class="fsm-name" x="420" y="310" text-anchor="middle" font-size="19">Wait for</text>
+  <text class="fsm-name" x="420" y="332" text-anchor="middle" font-size="19">ACK 1</text>
+  <g class="fragment" data-fragment-index="0">
+    <path class="fsm-arc" d="M455,123 Q520,64 585,123" marker-end="url(#a313)"></path>
+    <text class="fsm-code" x="376.0" y="14" text-anchor="start" font-size="15">rdt_send(data)</text>
+    <path class="fsm-rule" d="M376,25 H664"></path>
+    <text class="fsm-code" x="376.0" y="41" text-anchor="start" font-size="15">sndpkt=make_pkt(0,data,checksum)</text>
+    <text class="fsm-code" x="376.0" y="60" text-anchor="start" font-size="15">udt_send(sndpkt)</text>
+  </g>
+  <g class="fragment" data-fragment-index="1">
+    <path class="fsm-arc" d="M660,200 Q722,239 660,278" marker-end="url(#a313)"></path>
+    <text class="fsm-code" x="716" y="200" text-anchor="start" font-size="15">rdt_rcv(rcvpkt)</text>
+    <text class="fsm-code" x="716" y="219" text-anchor="start" font-size="15">&amp;&amp; notcorrupt(rcvpkt)</text>
+    <text class="fsm-code" x="716" y="238" text-anchor="start" font-size="15">&amp;&amp; isACK(rcvpkt,0)</text>
+    <path class="fsm-rule" d="M716,249 H905"></path>
+    <text class="fsm-code" x="810" y="265" text-anchor="middle" font-size="18">Λ</text>
+  </g>
+  <g class="fragment" data-fragment-index="2">
+    <path class="fsm-arc" d="M585,355 Q520,398 455,355" marker-end="url(#a313)"></path>
+    <text class="fsm-code" x="376.0" y="394" text-anchor="start" font-size="15">rdt_send(data)</text>
+    <path class="fsm-rule" d="M376,405 H664"></path>
+    <text class="fsm-code" x="376.0" y="421" text-anchor="start" font-size="15">sndpkt=make_pkt(1,data,checksum)</text>
+    <text class="fsm-code" x="376.0" y="440" text-anchor="start" font-size="15">udt_send(sndpkt)</text>
+  </g>
+  <g class="fragment" data-fragment-index="3">
+    <path class="fsm-arc" d="M380,278 Q318,239 380,200" marker-end="url(#a313)"></path>
+    <text class="fsm-code" x="135.0" y="200" text-anchor="start" font-size="15">rdt_rcv(rcvpkt)</text>
+    <text class="fsm-code" x="135.0" y="219" text-anchor="start" font-size="15">&amp;&amp; notcorrupt(rcvpkt)</text>
+    <text class="fsm-code" x="135.0" y="238" text-anchor="start" font-size="15">&amp;&amp; isACK(rcvpkt,1)</text>
+    <path class="fsm-rule" d="M135,249 H324"></path>
+    <text class="fsm-code" x="230" y="265" text-anchor="middle" font-size="18">Λ</text>
+  </g>
+  <g class="fragment" data-fragment-index="4">
+    <path class="fsm-arc" d="M640,114 C652,55 729,132 670,144" marker-end="url(#a313)"></path>
+    <text class="fsm-code" x="716" y="94" text-anchor="start" font-size="15">rdt_rcv(rcvpkt) &amp;&amp;</text>
+    <text class="fsm-code" x="716" y="113" text-anchor="start" font-size="15">(corrupt(rcvpkt)||</text>
+    <text class="fsm-code" x="716" y="132" text-anchor="start" font-size="15">isACK(rcvpkt,1))</text>
+    <path class="fsm-rule" d="M716,143 H878"></path>
+    <text class="fsm-code" x="716" y="159" text-anchor="start" font-size="15">udt_send(sndpkt)</text>
+    <path class="fsm-arc" d="M400,364 C388,423 311,346 370,334" marker-end="url(#a313)"></path>
+    <text class="fsm-code" x="162.0" y="330" text-anchor="start" font-size="15">rdt_rcv(rcvpkt) &amp;&amp;</text>
+    <text class="fsm-code" x="162.0" y="349" text-anchor="start" font-size="15">(corrupt(rcvpkt)||</text>
+    <text class="fsm-code" x="162.0" y="368" text-anchor="start" font-size="15">isACK(rcvpkt,0))</text>
+    <path class="fsm-rule" d="M162,379 H324"></path>
+    <text class="fsm-code" x="162.0" y="395" text-anchor="start" font-size="15">udt_send(sndpkt)</text>
+  </g>
+</svg>
+<div class="fragment answer" data-fragment-index="3">
+<p><span class="math inline">\(\Lambda\)</span> = no action. <strong>A corrupted ACK and an ACK 1 both mean: resend.</strong></p>
+</div>
+</section>
+<section id="rdt2.2-the-receiver" class="slide level2">
+<h2>rdt2.2: The Receiver</h2>
+<svg class="trace" viewbox="0 0 1000 458" role="img" aria-labelledby="f314">
+  <title id="f314">The two states of the rdt2.2 receiver, each with a self-loop that repeats the stored ACK, redrawn after Kurose and Ross Figure 3.14</title>
+  <defs><marker id="a314" markerwidth="11" markerheight="11" refx="10" refy="5.5" orient="auto" markerunits="userSpaceOnUse"><path d="M0,0 L10,5.5 L0,11" fill="#006791"></path></marker><marker id="d314" markerwidth="11" markerheight="11" refx="10" refy="5.5" orient="auto" markerunits="userSpaceOnUse"><path d="M0,0 L10,5.5 L0,11" fill="#444"></path></marker></defs>
+  <path class="fsm-init" d="M228,134 L280,184" marker-end="url(#d314)"></path>
+  <circle class="fsm-state" cx="325" cy="238" r="54"></circle>
+  <text class="fsm-name" x="325" y="223" text-anchor="middle" font-size="19">Wait for</text>
+  <text class="fsm-name" x="325" y="245" text-anchor="middle" font-size="19">0 from</text>
+  <text class="fsm-name" x="325" y="267" text-anchor="middle" font-size="19">below</text>
+  <circle class="fsm-state" cx="585" cy="238" r="54"></circle>
+  <text class="fsm-name" x="585" y="223" text-anchor="middle" font-size="19">Wait for</text>
+  <text class="fsm-name" x="585" y="245" text-anchor="middle" font-size="19">1 from</text>
+  <text class="fsm-name" x="585" y="267" text-anchor="middle" font-size="19">below</text>
+  <g class="fragment" data-fragment-index="0">
+    <path class="fsm-arc" d="M350,190 Q455,136 560,190" marker-end="url(#a314)"></path>
+    <text class="fsm-code" x="300" y="14" text-anchor="start" font-size="15">rdt_rcv(rcvpkt) &amp;&amp; notcorrupt(rcvpkt)</text>
+    <text class="fsm-code" x="300" y="33" text-anchor="start" font-size="15">&amp;&amp; has_seq0(rcvpkt)</text>
+    <path class="fsm-rule" d="M300,44 H633"></path>
+    <text class="fsm-code" x="300" y="60" text-anchor="start" font-size="15">extract(rcvpkt,data)</text>
+    <text class="fsm-code" x="300" y="79" text-anchor="start" font-size="15">deliver_data(data)</text>
+    <text class="fsm-code" x="300" y="98" text-anchor="start" font-size="15">sndpkt=make_pkt(ACK,0,checksum)</text>
+    <text class="fsm-code" x="300" y="117" text-anchor="start" font-size="15">udt_send(sndpkt)</text>
+  </g>
+  <g class="fragment" data-fragment-index="1">
+    <path class="fsm-arc" d="M560,286 Q455,340 350,286" marker-end="url(#a314)"></path>
+    <text class="fsm-code" x="300" y="340" text-anchor="start" font-size="15">rdt_rcv(rcvpkt) &amp;&amp; notcorrupt(rcvpkt)</text>
+    <text class="fsm-code" x="300" y="359" text-anchor="start" font-size="15">&amp;&amp; has_seq1(rcvpkt)</text>
+    <path class="fsm-rule" d="M300,370 H633"></path>
+    <text class="fsm-code" x="300" y="386" text-anchor="start" font-size="15">extract(rcvpkt,data)</text>
+    <text class="fsm-code" x="300" y="405" text-anchor="start" font-size="15">deliver_data(data)</text>
+    <text class="fsm-code" x="300" y="424" text-anchor="start" font-size="15">sndpkt=make_pkt(ACK,1,checksum)</text>
+    <text class="fsm-code" x="300" y="443" text-anchor="start" font-size="15">udt_send(sndpkt)</text>
+  </g>
+  <g class="fragment" data-fragment-index="2">
+    <path class="fsm-arc" d="M277,213 C215,170 215,306 277,263" marker-end="url(#a314)"></path>
+    <text class="fsm-code" x="10" y="236" text-anchor="start" font-size="15">rdt_rcv(rcvpkt) &amp;&amp;</text>
+    <text class="fsm-code" x="10" y="255" text-anchor="start" font-size="15">(corrupt(rcvpkt)||</text>
+    <text class="fsm-code" x="10" y="274" text-anchor="start" font-size="15">has_seq1(rcvpkt))</text>
+    <path class="fsm-rule" d="M10,285 H172"></path>
+    <text class="fsm-code" x="10" y="301" text-anchor="start" font-size="15">sndpkt=make_pkt(ACK,1,checksum)</text>
+    <text class="fsm-code" x="10" y="320" text-anchor="start" font-size="15">udt_send(sndpkt)</text>
+    <path class="fsm-arc" d="M633,213 C695,170 695,306 633,263" marker-end="url(#a314)"></path>
+    <text class="fsm-code" x="694" y="160" text-anchor="start" font-size="15">rdt_rcv(rcvpkt) &amp;&amp;</text>
+    <text class="fsm-code" x="694" y="179" text-anchor="start" font-size="15">(corrupt(rcvpkt)||</text>
+    <text class="fsm-code" x="694" y="198" text-anchor="start" font-size="15">has_seq0(rcvpkt))</text>
+    <path class="fsm-rule" d="M694,209 H856"></path>
+    <text class="fsm-code" x="694" y="225" text-anchor="start" font-size="15">sndpkt=make_pkt(ACK,0,checksum)</text>
+    <text class="fsm-code" x="694" y="244" text-anchor="start" font-size="15">udt_send(sndpkt)</text>
+  </g>
+</svg>
+<div class="fragment answer" data-fragment-index="2">
+<p><code>Wait for 1 from below</code> holds <strong>ACK 0</strong>, so its loop repeats ACK 0.</p>
+</div>
+</section>
+<section id="alternating-bits" class="slide level2">
+<h2>Alternating Bits</h2>
+<p>Only one packet is outstanding at a time, so <strong>one bit</strong> tells the new packet from the last one: 0, 1, 0, 1.</p>
+<svg class="trace" viewbox="0 0 1000 300" role="img" aria-labelledby="altbit-title">
+  <title id="altbit-title">A corrupted packet 1 draws a repeat of ACK 0, which tells the sender to retry</title>
+  <defs>
+    <marker id="ab-arrow" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse">
+      <path d="M0,0 L8,4 L0,8" fill="#006791"></path>
+    </marker>
+    <marker id="ab-red" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse">
+      <path d="M0,0 L8,4 L0,8" fill="#c0392b"></path>
+    </marker>
+  </defs>
+  <text x="150" y="30" text-anchor="middle" class="lbl-blue" font-size="31">Host A</text>
+  <text x="790" y="30" text-anchor="middle" class="lbl-blue" font-size="31">Host B</text>
+  <path class="life" d="M150,44 V292 M790,44 V292"></path>
+  <text x="18" y="58" text-anchor="start" class="lbl-gray" font-size="24">time ↓</text>
+  <g class="fragment" data-fragment-index="0">
+    <path class="packet-path msg" d="M150,68 L790,100" marker-end="url(#ab-arrow)"></path>
+    <text x="470" y="64" text-anchor="middle" class="lbl-blue" font-size="28">Pkt 1</text>
+    <path class="loss-cross" d="M772,91 l18,18 m0,-18 l-18,18"></path>
+    <text x="812" y="108" text-anchor="start" class="lbl-red" font-size="26">corrupted</text>
+  </g>
+  <g class="fragment" data-fragment-index="1">
+    <path class="packet-path msg-r" d="M790,124 L150,156" marker-end="url(#ab-red)"></path>
+    <text x="470" y="120" text-anchor="middle" class="lbl-red" font-size="28">ACK 0 again — B still wants Pkt 1</text>
+  </g>
+  <g class="fragment" data-fragment-index="2">
+    <path class="packet-path msg" d="M150,182 L790,214" marker-end="url(#ab-arrow)"></path>
+    <text x="470" y="178" text-anchor="middle" class="lbl-blue" font-size="28">Pkt 1 again</text>
+  </g>
+  <g class="fragment" data-fragment-index="3">
+    <path class="packet-path msg-r" d="M790,238 L150,270" marker-end="url(#ab-red)"></path>
+    <text x="470" y="234" text-anchor="middle" class="lbl-red" font-size="28">ACK 1</text>
+  </g>
+</svg>
+<div class="fragment answer" data-fragment-index="4">
+<p>A repeated <strong>ACK 0</strong> does the work of a NAK. A sender waiting for ACK 1 reads <strong>ACK 0, or any corrupted ACK, as “retry packet 1.”</strong></p>
 </div>
 </section>
 <section id="your-turn-failure" class="slide level2">
@@ -1251,36 +1532,9 @@ Zechun (Jacob) Cao
 <p><strong>C.</strong> No packet reaches the receiver, and no timer creates an event at the sender.</p>
 </div>
 </section>
-<section id="keep-a-copy" class="slide level2">
-<h2>Keep a Copy?</h2>
-<p>You propose “send the data again” after a loss.</p>
-<svg class="trace classroom-figure" viewbox="0 0 1000 170" role="img" aria-labelledby="saved-copy-title">
-  <title id="saved-copy-title">Retransmission requires a retained sender copy</title>
-  <defs>
-    <marker id="saved-copy-arrow" markerwidth="10" markerheight="10" refx="9" refy="5" orient="auto" markerunits="userSpaceOnUse">
-      <path d="M0,0 L9,5 L0,10" fill="#006791"></path>
-    </marker>
-  </defs>
-  <text x="265" y="30" text-anchor="middle" class="lbl-blue" font-size="30">Suppose A deletes its copy on send</text>
-  <rect x="60" y="58" width="410" height="56" rx="6" class="missing"></rect>
-  <text x="265.0" y="96" text-anchor="middle" class="" font-size="30">Send buffer: empty</text>
-  <text x="265.0" y="146" text-anchor="middle" class="lbl-gray" font-size="26">nothing left to retransmit</text>
-  <g class="fragment" data-fragment-index="0">
-    <text x="755" y="30" text-anchor="middle" class="lbl-red" font-size="30">The network loses the segment</text>
-    <rect x="550" y="58" width="390" height="56" rx="6" class="damaged"></rect>
-    <text x="745.0" y="96" text-anchor="middle" class="" font-size="30">No copy reaches B</text>
-    <text x="745.0" y="146" text-anchor="middle" class="lbl-gray" font-size="26">nothing reaches the receiver</text>
-  </g>
-</svg>
-<p><span class="vote-prompt">When can A safely release the saved data?</span></p>
-<div class="choices"><div class="vote"><p><strong>A.</strong> As soon as A sends it.</p></div><div class="vote"><p><strong>B.</strong> After a valid ACK covers it.</p></div></div>
-<div class="fragment answer" data-fragment-index="1">
-<p><strong>B.</strong> Keep a copy until acknowledged, so A can <strong>retransmit</strong> it.</p>
-</div>
-</section>
-<section id="stop-waiting-when" class="slide level2">
-<h2>Stop Waiting When?</h2>
-<p>A has a saved copy, but no ACK arrives. A needs an event that occurs even when the network is silent.</p>
+<section id="rdt3.0-loss-and-the-timer" class="slide level2">
+<h2>rdt3.0: Loss and the Timer</h2>
+<p>Now the channel can also <strong>lose</strong> packets. No ACK comes back at all. A needs an event the silent network cannot supply.</p>
 <svg class="trace classroom-figure" viewbox="0 0 1000 240" role="img" aria-labelledby="deadline-title">
   <title id="deadline-title">A timer creates an event when a chosen deadline is reached</title>
   <defs>
@@ -1304,12 +1558,12 @@ Zechun (Jacob) Cao
 </svg>
 <p><span class="vote-prompt">What should A do when its chosen deadline expires?</span></p>
 <div class="fragment answer" data-fragment-index="2">
-<p><strong>Retransmit and restart the timer.</strong> The timer supplies the event that a lost packet cannot supply.</p>
+<p><strong>Retransmit and restart the timer.</strong> rdt3.0 adds <code>start_timer</code>, <code>stop_timer</code>, and a <code>timeout</code> arrow to the rdt2.2 sender.</p>
 </div>
 </section>
-<section id="a-data-segment-is-lost" class="slide level2">
-<h2>A Data Segment Is Lost</h2>
-<p><span class="vote-prompt">A’s timer expires. Should the retry use Seq 3000 or Seq 3100?</span></p>
+<section id="rdt3.0-a-packet-is-lost" class="slide level2">
+<h2>rdt3.0: A Packet Is Lost</h2>
+<p><span class="vote-prompt">A’s timer expires. Should the retry carry Pkt 0 or Pkt 1?</span></p>
 <svg class="trace" viewbox="0 0 1000 390" role="img" aria-labelledby="fig8-title">
   <title id="fig8-title">A timer triggers a retransmission after the first data segment is lost</title>
   <defs>
@@ -1331,7 +1585,7 @@ Zechun (Jacob) Cao
       <rect class="pkt-hdr" x="479" y="85" width="16" height="14" rx="3"></rect>
     </g>
     <path class="loss-cross" d="M537,85 l18,18 m0,-18 l-18,18"></path>
-    <text x="350" y="66" text-anchor="middle" class="lbl-red" font-size="30">Seq 3000 · 100 bytes</text>
+    <text x="350" y="66" text-anchor="middle" class="lbl-red" font-size="30">Pkt 0</text>
   </g>
   <g class="fragment" data-fragment-index="0">
     <text x="572" y="100" text-anchor="start" class="lbl-red" font-size="26">lost</text>
@@ -1347,7 +1601,7 @@ Zechun (Jacob) Cao
       <rect class="pkt-body" x="765" y="273" width="66" height="26" rx="6"></rect>
       <rect class="pkt-hdr" x="771" y="279" width="16" height="14" rx="3"></rect>
     </g>
-    <text x="510" y="250" text-anchor="middle" class="lbl-blue" font-size="30">Seq 3000 · 100 bytes again</text>
+    <text x="510" y="250" text-anchor="middle" class="lbl-blue" font-size="30">Pkt 0 again</text>
   </g>
   <g class="fragment" data-fragment-index="3">
     <path class="packet-path msg" d="M870,332 L150,376" marker-end="url(#fig8-arrow)"></path>
@@ -1355,19 +1609,19 @@ Zechun (Jacob) Cao
       <rect class="pkt-body" x="189" y="359" width="66" height="26" rx="6"></rect>
       <rect class="pkt-hdr" x="195" y="365" width="16" height="14" rx="3"></rect>
     </g>
-    <text x="510" y="336" text-anchor="middle" class="lbl-blue" font-size="30">ACK 3100</text>
+    <text x="510" y="336" text-anchor="middle" class="lbl-blue" font-size="30">ACK 0</text>
   </g>
 </svg>
 <div class="fragment" data-fragment-index="4">
-<p>Retry <strong>Seq 3000</strong>, with the same bytes. Restart the timer.</p>
+<p>Retry <strong>Pkt 0</strong>, the same packet. Restart the timer.</p>
 </div>
 </section>
-<section id="an-ack-is-lost" class="slide level2">
-<h2>An ACK Is Lost</h2>
-<p>B receives bytes <strong>3000–3099</strong>, but the ACK is lost.</p>
+<section id="rdt3.0-an-ack-is-lost" class="slide level2">
+<h2>rdt3.0: An ACK Is Lost</h2>
+<p>B receives <strong>Pkt 0</strong> and delivers it, but the ACK is lost.</p>
 <p><span class="vote-prompt">Predict A’s next action. Does A know the data arrived?</span></p>
 <svg class="trace" viewbox="0 0 1000 325" role="img" aria-labelledby="fig9-title">
-  <title id="fig9-title">ACK loss causes retransmission of data already received</title>
+  <title id="fig9-title">ACK loss causes retransmission of a packet already received</title>
   <defs>
     <marker id="fig9-arrow" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse">
       <path d="M0,0 L8,4 L0,8" fill="#006791"></path>
@@ -1386,7 +1640,7 @@ Zechun (Jacob) Cao
       <rect class="pkt-body" x="765" y="89" width="66" height="26" rx="6"></rect>
       <rect class="pkt-hdr" x="771" y="95" width="16" height="14" rx="3"></rect>
     </g>
-    <text x="510" y="70" text-anchor="middle" class="lbl-blue" font-size="30">Seq 3000 · 100 bytes</text>
+    <text x="510" y="70" text-anchor="middle" class="lbl-blue" font-size="30">Pkt 0</text>
   </g>
   <g class="fragment" data-fragment-index="1">
     <path class="packet-path msg-r" d="M870,134 L474,154"></path>
@@ -1395,7 +1649,7 @@ Zechun (Jacob) Cao
       <rect class="pkt-hdr" x="487" y="145" width="16" height="14" rx="3"></rect>
     </g>
     <path class="loss-cross" d="M465,145 l18,18 m0,-18 l-18,18"></path>
-    <text x="700" y="139" text-anchor="middle" class="lbl-red" font-size="30">ACK 3100</text>
+    <text x="700" y="139" text-anchor="middle" class="lbl-red" font-size="30">ACK 0</text>
   </g>
   <g class="fragment" data-fragment-index="1">
     <text x="455" y="148" text-anchor="end" class="lbl-red" font-size="26">lost</text>
@@ -1411,155 +1665,779 @@ Zechun (Jacob) Cao
       <rect class="pkt-body" x="765" y="293" width="66" height="26" rx="6"></rect>
       <rect class="pkt-hdr" x="771" y="299" width="16" height="14" rx="3"></rect>
     </g>
-    <text x="510" y="270" text-anchor="middle" class="lbl-blue" font-size="30">Seq 3000 · 100 bytes again</text>
+    <text x="510" y="270" text-anchor="middle" class="lbl-blue" font-size="30">Pkt 0 again</text>
   </g>
 </svg>
 <div class="fragment" data-fragment-index="4">
-<p>A cannot tell what was lost. <strong>Should B deliver these bytes again?</strong></p>
+<p><strong>Should B deliver these bytes again?</strong></p>
 </div>
 </section>
-<section id="same-sender-view" class="slide level2">
-<h2>Same Sender View</h2>
-<p>Only A’s observations are shown below.</p>
-<svg class="trace" viewbox="0 0 1000 250" role="img" aria-labelledby="sender-view-title">
-  <title id="sender-view-title">Lost data and lost feedback are indistinguishable to the waiting sender</title>
+<section id="recovery-tools-must-know" class="slide level2">
+<h2>Recovery Tools <span class="ex">Must Know</span></h2>
+<p><span class="vote-prompt">Name the mechanism for each row before revealing it.</span></p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>What needs to happen?</th>
+<th>Mechanism</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Detect damaged bits</td>
+<td><span class="fragment ans" data-fragment-index="0">Checksum</span></td>
+</tr>
+<tr class="even">
+<td>Tell the sender what arrived</td>
+<td><span class="fragment ans" data-fragment-index="1">Acknowledgment (ACK)</span></td>
+</tr>
+<tr class="odd">
+<td>Recognize repeated data</td>
+<td><span class="fragment ans" data-fragment-index="2">Sequence number + receiver state</span></td>
+</tr>
+<tr class="even">
+<td>Act when no valid ACK arrives</td>
+<td><span class="fragment ans" data-fragment-index="3">Timer</span></td>
+</tr>
+<tr class="odd">
+<td>Send another copy</td>
+<td><span class="fragment ans" data-fragment-index="4">Retransmission from a saved copy</span></td>
+</tr>
+</tbody>
+</table>
+<div class="fragment" data-fragment-index="5">
+<p>Together, these mechanisms recover from detected errors and loss when later transmissions succeed.</p>
+</div>
+</section>
+<section id="your-turn-retry-must-know" class="slide level2">
+<h2>Your Turn: Retry <span class="ex">Must Know</span></h2>
+<p>Back in TCP’s byte numbering. At <strong>0 ms</strong>, Host A sends <strong>Seq 6000, 120 payload bytes</strong>. Host B receives it at <strong>20 ms</strong>, delivers it, and sends an ACK that is lost.</p>
+<p>The timeout is <strong>80 ms</strong>. A retransmits immediately. The retry and its ACK each take <strong>20 ms</strong>; ignore processing time.</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Find</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Seq of the retransmission</td>
+<td><span class="fragment ans" data-fragment-index="0">6000</span></td>
+</tr>
+<tr class="even">
+<td>ACK sent by Host B</td>
+<td><span class="fragment ans" data-fragment-index="1">6120</span></td>
+</tr>
+<tr class="odd">
+<td>Time the retry’s ACK reaches A</td>
+<td><span class="fragment ans" data-fragment-index="2">80 + 20 + 20 = 120 ms</span></td>
+</tr>
+<tr class="even">
+<td>Total payload delivered to the application</td>
+<td><span class="fragment ans" data-fragment-index="3">120 bytes, once</span></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="warm-up-is-the-link-busy" class="slide level2">
+<h2>Warm-Up: Is the Link Busy?</h2>
+<p>A <strong>100 Mbps</strong> link carries one <strong>1500-byte</strong> segment, then waits a <strong>30 ms</strong> round trip for the ACK.</p>
+<svg class="trace" viewbox="0 0 1000 166" role="img" aria-labelledby="busy-title">
+  <title id="busy-title">A single segment occupies a sliver of one round trip</title>
   <defs>
-    <marker id="sender-view-arrow" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse">
+    <marker id="busy-arrow" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse">
       <path d="M0,0 L8,4 L0,8" fill="#006791"></path>
     </marker>
-  </defs>
-  <text x="250" y="30" text-anchor="middle" class="lbl-blue" font-size="30">Case A: data lost</text>
-  <text x="750" y="30" text-anchor="middle" class="lbl-blue" font-size="30">Case B: ACK lost</text>
-  <text x="120" y="64" text-anchor="middle" class="lbl-gray" font-size="26">A</text>
-  <text x="380" y="64" text-anchor="middle" class="lbl-gray" font-size="26">B</text>
-  <text x="620" y="64" text-anchor="middle" class="lbl-gray" font-size="26">A</text>
-  <text x="880" y="64" text-anchor="middle" class="lbl-gray" font-size="26">B</text>
-  <path class="life" d="M120,76 V196 M380,76 V196 M620,76 V196 M880,76 V196"></path>
-  <path class="msg-r" d="M120,98 L263,112"></path>
-  <path class="loss-cross" d="M254,103 l18,18 m0,-18 l-18,18"></path>
-  <text x="180" y="90" text-anchor="middle" class="lbl-red" font-size="26">data</text>
-  <path class="msg" d="M620,98 L880,112" marker-end="url(#sender-view-arrow)"></path>
-  <text x="750" y="90" text-anchor="middle" class="lbl-blue" font-size="26">data</text>
-  <path class="msg-r" d="M880,146 L737,160"></path>
-  <path class="loss-cross" d="M728,151 l18,18 m0,-18 l-18,18"></path>
-  <text x="830" y="138" text-anchor="middle" class="lbl-red" font-size="26">ACK</text>
-  <g class="fragment" data-fragment-index="0">
-    <text x="500" y="234" text-anchor="middle" class="lbl-red" font-size="30">A observes the same silence in both cases.</text>
-  </g>
-</svg>
-<p><span class="vote-prompt">Can A safely assume delivery in Case B without receiving an ACK?</span></p>
-<div class="fragment answer" data-fragment-index="1">
-<p><strong>No.</strong> A cannot distinguish the cases. Retrying must be safe even when B already has the data.</p>
-</div>
-</section>
-<section id="fire-once-or-twice" class="slide level2">
-<h2>Fire Once or Twice?</h2>
-<p>An arcade game sends one four-byte ASCII command, <code>FIRE</code>, per shot.</p>
-<svg class="trace classroom-figure" viewbox="0 0 1000 235" role="img" aria-labelledby="duplicate-identity-title">
-  <title id="duplicate-identity-title">Equal payloads do not imply duplicate byte positions</title>
-  <defs>
-    <marker id="duplicate-identity-arrow" markerwidth="10" markerheight="10" refx="9" refy="5" orient="auto" markerunits="userSpaceOnUse">
-      <path d="M0,0 L9,5 L0,10" fill="#006791"></path>
-    </marker>
-  </defs>
-  <text x="500" y="30" text-anchor="middle" class="lbl-blue" font-size="30">B has already received FIRE at bytes 3000–3003.</text>
-  <rect x="100" y="65" width="340" height="56" rx="6" class="buffered"></rect>
-  <text x="270.0" y="103" text-anchor="middle" class="" font-size="30">FIRE</text>
-  <text x="270.0" y="153" text-anchor="middle" class="lbl-gray" font-size="26">incoming copy A</text>
-  <rect x="560" y="65" width="340" height="56" rx="6" class="buffered"></rect>
-  <text x="730.0" y="103" text-anchor="middle" class="" font-size="30">FIRE</text>
-  <text x="730.0" y="153" text-anchor="middle" class="lbl-gray" font-size="26">incoming copy B</text>
-  <g class="fragment" data-fragment-index="0">
-    <text x="270" y="198" text-anchor="middle" class="lbl-red" font-size="30">Seq 3000 → retry</text>
-    <text x="730" y="198" text-anchor="middle" class="lbl-blue" font-size="30">Seq 3004 → new bytes</text>
-  </g>
-</svg>
-<p><span class="vote-prompt">Before revealing the sequence numbers: can payload text identify a retry?</span></p>
-<div class="fragment answer" data-fragment-index="1">
-<p><strong>No.</strong> Seq 3000 repeats the first shot’s bytes. Seq 3004 carries a new shot, even though the command is identical.</p>
-</div>
-</section>
-<section id="reject-the-duplicate" class="slide level2">
-<h2>Reject the Duplicate</h2>
-<p>B already delivered <strong>3000–3099</strong> and expects <strong>3100</strong>.</p>
-<p><span class="vote-prompt">Vote: deliver again; discard silently; or discard and repeat the ACK?</span></p>
-<svg class="trace" viewbox="0 0 1000 285" role="img" aria-labelledby="fig10-title">
-  <title id="fig10-title">Duplicate data is acknowledged again without duplicate application delivery</title>
-  <defs>
-    <marker id="fig10-arrow" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse">
-      <path d="M0,0 L8,4 L0,8" fill="#006791"></path>
-    </marker>
-    <marker id="fig10-red" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse">
+    <marker id="busy-red" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse">
       <path d="M0,0 L8,4 L0,8" fill="#c0392b"></path>
+    </marker>
+    <marker id="busy-caret" markerwidth="10" markerheight="10" refx="5" refy="1" orient="auto" markerunits="userSpaceOnUse">
+      <path d="M0,10 L5,1 L10,10" fill="none" stroke="#006791" stroke-width="2.5"></path>
+    </marker>
+  </defs>
+    <rect class="idle" x="60" y="30" width="880" height="42" rx="4"></rect>
+    <rect class="busy" x="60" y="30" width="4" height="42"></rect>
+    <text x="74" y="22" text-anchor="start" class="lbl-blue" font-size="26">0.12 ms: the segment goes out</text>
+    <path class="axis" d="M60,92 H940"></path>
+    <text x="60" y="126" text-anchor="middle" class="lbl-gray" font-size="26">0</text>
+    <text x="940" y="126" text-anchor="middle" class="lbl-gray" font-size="26">30.12 ms</text>
+  <g class="fragment" data-fragment-index="0">
+    <rect class="tbar-h" x="66" y="40" width="870" height="22" rx="3"></rect>
+    <text x="500" y="158" text-anchor="middle" class="lbl-red" font-size="30">A waits for its ACK. The link carries nothing.</text>
+  </g>
+</svg>
+<p><span class="vote-prompt">Vote: about 1 in 20 of that round trip, or fewer than 1 in 200?</span></p>
+<div class="fragment answer" data-fragment-index="1">
+<p><strong>Fewer than 1 in 200.</strong> Sending one segment and waiting leaves the link idle for almost the whole round trip.</p>
+</div>
+</section>
+<section id="link-utilization-must-know" class="slide level2">
+<h2>Link Utilization <span class="ex">Must Know</span></h2>
+<p><strong>Utilization</strong> is the fraction of time the sender is actually putting bits on the link.</p>
+<p><span class="math display">\[U = \frac{L/R}{\text{RTT} + L/R}\]</span></p>
+<div class="fragment" data-fragment-index="0">
+<p><span class="math inline">\(L = 1500\)</span> bytes <span class="math inline">\(= 12{,}000\)</span> bits, and <span class="math inline">\(R = 10^{8}\)</span> bits/sec, so <span class="math inline">\(L/R = 0.12\)</span> ms.</p>
+</div>
+<div class="fragment" data-fragment-index="1">
+<p><span class="math display">\[U = \frac{0.12}{30 + 0.12} = 0.0040 = \mathbf{0.40\%}\]</span></p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p>The sender moves <strong>398 kbps</strong> across a 100 Mbps link.</p>
+</div>
+</section>
+<section id="does-a-faster-link-help" class="slide level2">
+<h2>Does a Faster Link Help?</h2>
+<p>Replace the 100 Mbps link with <strong>1 Gbps</strong>. The distance does not change, so the round trip is still <strong>30 ms</strong>.</p>
+<p><span class="vote-prompt">Vote: does utilization rise, stay the same, or fall?</span></p>
+<div class="fragment answer" data-fragment-index="0">
+<p><strong>It falls, to 0.04%.</strong> With <span class="math inline">\(R = 10^{9}\)</span>, <span class="math inline">\(L/R\)</span> drops to <span class="math inline">\(0.012\)</span> ms while RTT is unchanged, so <span class="math inline">\(U = 0.012/30.012\)</span>.</p>
+</div>
+<div class="fragment answer" data-fragment-index="1">
+<p>Ten times the link rate gives one tenth the utilization. A faster link shortens transmission time; it does not shorten the round trip.</p>
+</div>
+</section>
+<section id="read-after-class-1" class="slide level2 center reading-divider">
+<h2>Read After Class</h2>
+<p>UDP and reliable transfer</p>
+<ul>
+<li>The rdt versions side by side, rdt1.0 to rdt3.0</li>
+<li>Which applications choose UDP, and why</li>
+<li>What an ACK number means in each protocol</li>
+</ul>
+<p><a href="#/topic-3">Continue to Topic 3 →</a></p>
+</section>
+<section id="the-rdt-versions-reading" class="slide level2">
+<h2>The rdt Versions <span class="rd">Reading</span></h2>
+<p>A <strong>NAK</strong> asks for a retry.</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Version</th>
+<th>The channel</th>
+<th>What it adds</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>rdt1.0</td>
+<td>perfect</td>
+<td>Nothing</td>
+</tr>
+<tr class="even">
+<td>rdt2.0</td>
+<td>bit errors</td>
+<td>Checksum and ACK/NAK</td>
+</tr>
+<tr class="odd">
+<td>rdt2.1</td>
+<td>ACKs too</td>
+<td>Sequence numbers</td>
+</tr>
+<tr class="even">
+<td>rdt2.2</td>
+<td>the same</td>
+<td>Numbered ACKs, no NAK</td>
+</tr>
+<tr class="odd">
+<td>rdt3.0</td>
+<td>errors and loss</td>
+<td>A countdown timer</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="where-udp-is-used-reading" class="slide level2">
+<h2>Where UDP Is Used <span class="rd">Reading</span></h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Application</th>
+<th>Why UDP</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>DNS</td>
+<td>One request, one reply. A handshake would double the delay.</td>
+</tr>
+<tr class="even">
+<td>Voice and video calls</td>
+<td>A late packet is worth less than a missing one.</td>
+</tr>
+<tr class="odd">
+<td>HTTP/3 over QUIC</td>
+<td>Reliability moves into the application, where it can change faster.</td>
+</tr>
+<tr class="even">
+<td>Your team project</td>
+<td>The same reason: the reliability is what you write.</td>
+</tr>
+</tbody>
+</table>
+<p>Chapter 2 sent DNS queries over UDP. Section 3.8 returns to QUIC.</p>
+</section>
+<section id="ack-conventions-reading" class="slide level2">
+<h2>ACK Conventions <span class="rd">Reading</span></h2>
+<p>In the textbook’s <strong>rdt2.2/rdt3.0</strong> examples, sequence numbers <strong>0 and 1</strong> label packets. <strong>ACK 0</strong> acknowledges packet 0.</p>
+<p>In <strong>TCP</strong>, sequence numbers label bytes. <strong>ACK 3100</strong> identifies the next needed byte and cumulatively acknowledges all earlier bytes.</p>
+<p>Before tracing a protocol, check what its numbers count and what its ACK promises. TCP’s byte-number rule does not apply to every reliable-transfer protocol.</p>
+</section>
+<section id="topic-3" class="slide level2 center section-divider">
+<h2>Topic 3</h2>
+<p>Pipelining and Retransmission</p>
+<p><span class="topic-ref">Read §§3.4.2–3.4.4 and §§3.5.3–3.5.4.</span></p>
+</section>
+<section id="todays-plan-2" class="slide level2">
+<h2>Today’s Plan</h2>
+<div class="columns">
+<div class="column" style="width:56%;">
+<p><strong>In class</strong></p>
+<ul>
+<li>Count the segments that fill a pipe. <span class="ex-inline">Must Know</span></li>
+<li>Slide a sender’s window.</li>
+<li>Compare two ways to recover a loss. <span class="ex-inline">Must Know</span></li>
+<li>Estimate a round trip and set a timeout. <span class="ex-inline">Must Know</span></li>
+<li>Spot a loss before the timer does. <span class="ex-inline">Must Know</span></li>
+</ul>
+</div><div class="column" style="width:44%;">
+<p><strong>After class</strong></p>
+<ul>
+<li>Why Selective Repeat limits its window.</li>
+<li>Why TCP has no negative acknowledgment.</li>
+<li>When TCP delays and duplicates an ACK.</li>
+<li>Why a retransmitted segment is never sampled.</li>
+</ul>
+</div></div>
+</section>
+<section id="send-three-then-wait" class="slide level2">
+<h2>Send Three, Then Wait</h2>
+<p>One segment at a time reached 0.40%. Now A sends <strong>three</strong> back to back before waiting. This is <strong>pipelining</strong>.</p>
+<p><span class="vote-prompt">Predict the new utilization. Does the round trip change?</span></p>
+<svg class="trace" viewbox="0 0 1000 274" role="img" aria-labelledby="three-title">
+  <title id="three-title">Three segments in flight triple the sender's busy time</title>
+  <defs>
+    <marker id="three-arrow" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse">
+      <path d="M0,0 L8,4 L0,8" fill="#006791"></path>
+    </marker>
+    <marker id="three-red" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse">
+      <path d="M0,0 L8,4 L0,8" fill="#c0392b"></path>
+    </marker>
+    <marker id="three-caret" markerwidth="10" markerheight="10" refx="5" refy="1" orient="auto" markerunits="userSpaceOnUse">
+      <path d="M0,10 L5,1 L10,10" fill="none" stroke="#006791" stroke-width="2.5"></path>
     </marker>
   </defs>
   <text x="150" y="32" text-anchor="middle" class="lbl-blue" font-size="33">Host A</text>
   <text x="870" y="32" text-anchor="middle" class="lbl-blue" font-size="33">Host B</text>
-  <path class="life" d="M150,50 V277 M870,50 V277"></path>
+  <path class="life" d="M150,50 V266 M870,50 V266"></path>
   <text x="18" y="64" text-anchor="start" class="lbl-gray" font-size="25">time ↓</text>
-  <g class="fragment" data-fragment-index="0">
-    <path class="packet-path msg" d="M150,76 L870,116" marker-end="url(#fig10-arrow)"></path>
-    <g class="pkt" style="--dx:-648px; --dy:-36px">
-      <rect class="pkt-body" x="765" y="99" width="66" height="26" rx="6"></rect>
-      <rect class="pkt-hdr" x="771" y="105" width="16" height="14" rx="3"></rect>
+    <path class="packet-path msg" d="M150,66 L870,90" marker-end="url(#three-arrow)"></path>
+    <g class="pkt" style="--dx:-662px; --dy:-22px">
+      <rect class="pkt-body" x="779" y="75" width="66" height="26" rx="6"></rect>
+      <rect class="pkt-hdr" x="785" y="81" width="16" height="14" rx="3"></rect>
     </g>
-    <text x="510" y="78" text-anchor="middle" class="lbl-blue" font-size="30">Seq 3000 · 100 bytes again</text>
+    <text x="510" y="60" text-anchor="middle" class="lbl-blue" font-size="30"></text>
+    <path class="packet-path msg" d="M150,84 L870,108" marker-end="url(#three-arrow)"></path>
+    <g class="pkt" style="--dx:-662px; --dy:-22px">
+      <rect class="pkt-body" x="779" y="93" width="66" height="26" rx="6"></rect>
+      <rect class="pkt-hdr" x="785" y="99" width="16" height="14" rx="3"></rect>
+    </g>
+    <text x="510" y="78" text-anchor="middle" class="lbl-blue" font-size="30"></text>
+    <path class="packet-path msg" d="M150,102 L870,126" marker-end="url(#three-arrow)"></path>
+    <g class="pkt" style="--dx:-662px; --dy:-22px">
+      <rect class="pkt-body" x="779" y="111" width="66" height="26" rx="6"></rect>
+      <rect class="pkt-hdr" x="785" y="117" width="16" height="14" rx="3"></rect>
+    </g>
+    <text x="510" y="96" text-anchor="middle" class="lbl-blue" font-size="30"></text>
+    <text x="500" y="58" text-anchor="middle" class="lbl-blue" font-size="29">Three segments, back to back</text>
+  <g class="fragment" data-fragment-index="0">
+    <path class="packet-path msg" d="M870,150 L150,174" marker-end="url(#three-arrow)"></path>
+    <g class="pkt" style="--dx:662px; --dy:-22px">
+      <rect class="pkt-body" x="175" y="159" width="66" height="26" rx="6"></rect>
+      <rect class="pkt-hdr" x="181" y="165" width="16" height="14" rx="3"></rect>
+    </g>
+    <text x="510" y="144" text-anchor="middle" class="lbl-blue" font-size="30"></text>
+    <path class="packet-path msg" d="M870,168 L150,192" marker-end="url(#three-arrow)"></path>
+    <g class="pkt" style="--dx:662px; --dy:-22px">
+      <rect class="pkt-body" x="175" y="177" width="66" height="26" rx="6"></rect>
+      <rect class="pkt-hdr" x="181" y="183" width="16" height="14" rx="3"></rect>
+    </g>
+    <text x="510" y="162" text-anchor="middle" class="lbl-blue" font-size="30"></text>
+    <path class="packet-path msg" d="M870,186 L150,210" marker-end="url(#three-arrow)"></path>
+    <g class="pkt" style="--dx:662px; --dy:-22px">
+      <rect class="pkt-body" x="175" y="195" width="66" height="26" rx="6"></rect>
+      <rect class="pkt-hdr" x="181" y="201" width="16" height="14" rx="3"></rect>
+    </g>
+    <text x="510" y="180" text-anchor="middle" class="lbl-blue" font-size="30"></text>
+    <text x="500" y="232" text-anchor="middle" class="lbl-blue" font-size="29">Three ACKs return inside the same round trip</text>
   </g>
   <g class="fragment" data-fragment-index="1">
-    <text x="500" y="172" text-anchor="middle" class="lbl-blue" font-size="31">Already received: do not deliver again</text>
-  </g>
-  <g class="fragment" data-fragment-index="2">
-    <path class="packet-path msg" d="M870,228 L150,268" marker-end="url(#fig10-arrow)"></path>
-    <g class="pkt" style="--dx:648px; --dy:-36px">
-      <rect class="pkt-body" x="189" y="251" width="66" height="26" rx="6"></rect>
-      <rect class="pkt-hdr" x="195" y="257" width="16" height="14" rx="3"></rect>
-    </g>
-    <text x="510" y="230" text-anchor="middle" class="lbl-blue" font-size="30">ACK 3100 again</text>
+    <text x="500" y="266" text-anchor="middle" class="lbl-green" font-size="30">Busy time triples: 3 × 0.12 ms of every 30.12 ms</text>
   </g>
 </svg>
-<div class="fragment" data-fragment-index="3">
-<p>The sequence number identifies the duplicate. Repeating the ACK lets Host A finish waiting.</p>
+<div class="fragment answer" data-fragment-index="2">
+<p><strong>1.20%,</strong> three times 0.40%. The round trip is unchanged.</p>
 </div>
 </section>
-<section id="why-ack-a-duplicate" class="slide level2">
-<h2>Why ACK a Duplicate?</h2>
-<p>Suppose B recognizes a duplicate but <strong>sends no reply</strong>.</p>
-<svg class="trace" viewbox="0 0 1000 285" role="img" aria-labelledby="silent-receiver-title">
-  <title id="silent-receiver-title">Silence after duplicate receipt leaves the sender waiting</title>
+<section id="fill-the-pipe" class="slide level2">
+<h2>Fill the Pipe</h2>
+<p>With <span class="math inline">\(N\)</span> segments in flight, the busy time is multiplied by <span class="math inline">\(N\)</span>:</p>
+<p><span class="math display">\[U = \frac{N \cdot L/R}{\text{RTT} + L/R}
+\qquad\text{so}\qquad
+N = \frac{\text{RTT} + L/R}{L/R} \ \text{gives} \ U = 1\]</span></p>
+<div class="fragment" data-fragment-index="0">
+<p><span class="math inline">\(N = 30.12 / 0.12 = \mathbf{251}\)</span> segments keep this link busy for the whole round trip.</p>
+</div>
+<div class="fragment" data-fragment-index="1">
+<p>Those 251 segments hold <strong>3.01 Mbit</strong>. Chapter 1 called this the bits in flight: <span class="math inline">\(R \times \text{RTT} = 10^{8} \times 0.030 = 3\)</span> Mbit.</p>
+</div>
+</section>
+<section id="your-turn-pipeline-must-know" class="slide level2">
+<h2>Your Turn: Pipeline <span class="ex">Must Know</span></h2>
+<p>A <strong>50 Mbps</strong> link carries <strong>1000-byte</strong> segments. The round trip is <strong>24 ms</strong>. Work each row with a neighbor before revealing it.</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Find</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Transmission time <span class="math inline">\(L/R\)</span></td>
+<td><span class="fragment ans" data-fragment-index="0"><span class="math inline">\(8000 / (5\times10^{7})\)</span> = 0.16 ms</span></td>
+</tr>
+<tr class="even">
+<td>Utilization with one segment in flight</td>
+<td><span class="fragment ans" data-fragment-index="1"><span class="math inline">\(0.16/24.16\)</span> = 0.66%</span></td>
+</tr>
+<tr class="odd">
+<td>Segments needed to fill the pipe</td>
+<td><span class="fragment ans" data-fragment-index="2"><span class="math inline">\(24.16/0.16\)</span> = 151</span></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="the-senders-window" class="slide level2">
+<h2>The Sender’s Window</h2>
+<p>The <strong>window</strong> limits how many packets A may have unacknowledged at one time.</p>
+<svg class="trace" viewbox="0 0 1000 288" role="img" aria-labelledby="win-title">
+  <title id="win-title">The window covers the unacknowledged packets and the ones free to send</title>
   <defs>
-    <marker id="silent-receiver-arrow" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse">
+    <marker id="win-arrow" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse">
       <path d="M0,0 L8,4 L0,8" fill="#006791"></path>
     </marker>
-    <marker id="silent-receiver-red" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse">
+    <marker id="win-red" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse">
       <path d="M0,0 L8,4 L0,8" fill="#c0392b"></path>
+    </marker>
+    <marker id="win-caret" markerwidth="10" markerheight="10" refx="5" refy="1" orient="auto" markerunits="userSpaceOnUse">
+      <path d="M0,10 L5,1 L10,10" fill="none" stroke="#006791" stroke-width="2.5"></path>
+    </marker>
+  </defs>
+    <rect class="cell-ack" x="48" y="96" width="88" height="60" rx="5"></rect>
+    <text x="92" y="136" text-anchor="middle" font-size="30">0</text>
+    <rect class="cell-ack" x="144" y="96" width="88" height="60" rx="5"></rect>
+    <text x="188" y="136" text-anchor="middle" font-size="30">1</text>
+    <rect class="cell-flight" x="240" y="96" width="88" height="60" rx="5"></rect>
+    <text x="284" y="136" text-anchor="middle" font-size="30">2</text>
+    <rect class="cell-flight" x="336" y="96" width="88" height="60" rx="5"></rect>
+    <text x="380" y="136" text-anchor="middle" font-size="30">3</text>
+    <rect class="cell-free" x="432" y="96" width="88" height="60" rx="5"></rect>
+    <text x="476" y="136" text-anchor="middle" font-size="30">4</text>
+    <rect class="cell-free" x="528" y="96" width="88" height="60" rx="5"></rect>
+    <text x="572" y="136" text-anchor="middle" font-size="30">5</text>
+    <rect class="cell-block" x="624" y="96" width="88" height="60" rx="5"></rect>
+    <text x="668" y="136" text-anchor="middle" font-size="30">6</text>
+    <rect class="cell-block" x="720" y="96" width="88" height="60" rx="5"></rect>
+    <text x="764" y="136" text-anchor="middle" font-size="30">7</text>
+    <rect class="cell-block" x="816" y="96" width="88" height="60" rx="5"></rect>
+    <text x="860" y="136" text-anchor="middle" font-size="30">8</text>
+    <g class="win" style="--dx:0px; --dy:0px">
+      <path d="M233,80 V66 H623 V80"></path>
+    </g>
+    <text x="428" y="54" text-anchor="middle" class="lbl-blue" font-size="28">window: N = 4 packets</text>
+    <text x="138" y="200" text-anchor="middle" class="lbl-green" font-size="27">acknowledged</text>
+    <text x="328" y="200" text-anchor="middle" class="lbl-gold" font-size="27">sent, waiting</text>
+    <text x="518" y="200" text-anchor="middle" class="lbl-blue" font-size="27">free to send</text>
+    <text x="768" y="200" text-anchor="middle" class="lbl-gray" font-size="27">not yet allowed</text>
+  <g class="fragment" data-fragment-index="0">
+    <path class="msg" d="M233,238 V212 M221,224 L233,210 L245,224"></path>
+    <text x="233" y="274" text-anchor="middle" class="lbl-blue" font-size="28">base: oldest unacknowledged</text>
+  </g>
+</svg>
+<div class="fragment answer" data-fragment-index="1">
+<p>The window moves right only when its oldest packet is acknowledged. Until then A cannot send past the right edge.</p>
+</div>
+</section>
+<section id="your-turn-slide-the-window" class="slide level2">
+<h2>Your Turn: Slide the Window</h2>
+<p><strong>N = 4</strong> with <strong>base = 2</strong>. ACKs for packets <strong>2 and 3</strong> arrive; A has sent nothing new.</p>
+<p><span class="vote-prompt">Predict the new base and which packets become free to send.</span></p>
+<svg class="trace" viewbox="0 0 1000 282" role="img" aria-labelledby="slide-title">
+  <title id="slide-title">Acknowledging packets 2 and 3 moves the window two cells right</title>
+  <defs>
+    <marker id="slide-arrow" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse">
+      <path d="M0,0 L8,4 L0,8" fill="#006791"></path>
+    </marker>
+    <marker id="slide-red" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse">
+      <path d="M0,0 L8,4 L0,8" fill="#c0392b"></path>
+    </marker>
+    <marker id="slide-caret" markerwidth="10" markerheight="10" refx="5" refy="1" orient="auto" markerunits="userSpaceOnUse">
+      <path d="M0,10 L5,1 L10,10" fill="none" stroke="#006791" stroke-width="2.5"></path>
+    </marker>
+  </defs>
+    <rect class="cell-ack" x="48" y="74" width="88" height="60" rx="5"></rect>
+    <text x="92" y="114" text-anchor="middle" font-size="30">0</text>
+    <rect class="cell-ack" x="144" y="74" width="88" height="60" rx="5"></rect>
+    <text x="188" y="114" text-anchor="middle" font-size="30">1</text>
+    <rect class="cell-flight" x="240" y="74" width="88" height="60" rx="5"></rect>
+    <text x="284" y="114" text-anchor="middle" font-size="30">2</text>
+    <rect class="cell-flight" x="336" y="74" width="88" height="60" rx="5"></rect>
+    <text x="380" y="114" text-anchor="middle" font-size="30">3</text>
+    <rect class="cell-free" x="432" y="74" width="88" height="60" rx="5"></rect>
+    <text x="476" y="114" text-anchor="middle" font-size="30">4</text>
+    <rect class="cell-free" x="528" y="74" width="88" height="60" rx="5"></rect>
+    <text x="572" y="114" text-anchor="middle" font-size="30">5</text>
+    <rect class="cell-block" x="624" y="74" width="88" height="60" rx="5"></rect>
+    <text x="668" y="114" text-anchor="middle" font-size="30">6</text>
+    <rect class="cell-block" x="720" y="74" width="88" height="60" rx="5"></rect>
+    <text x="764" y="114" text-anchor="middle" font-size="30">7</text>
+    <rect class="cell-block" x="816" y="74" width="88" height="60" rx="5"></rect>
+    <text x="860" y="114" text-anchor="middle" font-size="30">8</text>
+    <g class="win" style="--dx:0px; --dy:0px">
+      <path d="M233,58 V44 H623 V58"></path>
+    </g>
+    <text x="428" y="32" text-anchor="middle" class="lbl-blue" font-size="28">before: base = 2</text>
+  <g class="fragment" data-fragment-index="1">
+    <rect class="cell-ack" x="48" y="214" width="88" height="60" rx="5"></rect>
+    <text x="92" y="254" text-anchor="middle" font-size="30">0</text>
+    <rect class="cell-ack" x="144" y="214" width="88" height="60" rx="5"></rect>
+    <text x="188" y="254" text-anchor="middle" font-size="30">1</text>
+    <rect class="cell-ack" x="240" y="214" width="88" height="60" rx="5"></rect>
+    <text x="284" y="254" text-anchor="middle" font-size="30">2</text>
+    <rect class="cell-ack" x="336" y="214" width="88" height="60" rx="5"></rect>
+    <text x="380" y="254" text-anchor="middle" font-size="30">3</text>
+    <rect class="cell-free" x="432" y="214" width="88" height="60" rx="5"></rect>
+    <text x="476" y="254" text-anchor="middle" font-size="30">4</text>
+    <rect class="cell-free" x="528" y="214" width="88" height="60" rx="5"></rect>
+    <text x="572" y="254" text-anchor="middle" font-size="30">5</text>
+    <rect class="cell-free" x="624" y="214" width="88" height="60" rx="5"></rect>
+    <text x="668" y="254" text-anchor="middle" font-size="30">6</text>
+    <rect class="cell-free" x="720" y="214" width="88" height="60" rx="5"></rect>
+    <text x="764" y="254" text-anchor="middle" font-size="30">7</text>
+    <rect class="cell-block" x="816" y="214" width="88" height="60" rx="5"></rect>
+    <text x="860" y="254" text-anchor="middle" font-size="30">8</text>
+    <g class="win" style="--dx:-192px; --dy:0px">
+      <path d="M425,198 V184 H815 V198"></path>
+    </g>
+    <text x="620" y="172" text-anchor="middle" class="lbl-blue" font-size="28">after both ACKs: base = 4</text>
+  </g>
+</svg>
+<div class="fragment answer" data-fragment-index="2">
+<p><strong>base = 4.</strong> Packets <strong>6 and 7</strong> become free; packet 8 is still outside.</p>
+</div>
+</section>
+<section id="now-something-is-lost" class="slide level2">
+<h2>Now Something Is Lost</h2>
+<p>Four packets are in flight. <strong>Packet 1 never arrives.</strong> Packets 2 and 3 do.</p>
+<p><span class="vote-prompt">Vote: should A resend packet 1 alone, or packet 1 and everything after it?</span></p>
+<div class="choices"><div class="vote"><p><strong>A.</strong> Packet 1 alone</p></div><div class="vote"><p><strong>B.</strong> Packet 1 and everything after it</p></div></div>
+<div class="fragment answer" data-fragment-index="0">
+<p><strong>Both are real protocols.</strong> Resending everything from the loss onward is <strong>Go-Back-N</strong>; resending only what was lost is <strong>Selective Repeat</strong>.</p>
+</div>
+<div class="fragment answer" data-fragment-index="1">
+<p>What separates them is whether the receiver is willing to keep out-of-order packets.</p>
+</div>
+</section>
+<section id="go-back-n" class="slide level2">
+<h2>Go-Back-N</h2>
+<p><span class="vote-prompt">Predict B’s reply to packets 2 and 3, then what A resends.</span></p>
+<svg class="trace" viewbox="0 0 1000 430" role="img" aria-labelledby="gbn-title">
+  <title id="gbn-title">Go-Back-N resends every packet from the lost one onward</title>
+  <defs>
+    <marker id="gbn-arrow" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse">
+      <path d="M0,0 L8,4 L0,8" fill="#006791"></path>
+    </marker>
+    <marker id="gbn-red" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse">
+      <path d="M0,0 L8,4 L0,8" fill="#c0392b"></path>
+    </marker>
+    <marker id="gbn-caret" markerwidth="10" markerheight="10" refx="5" refy="1" orient="auto" markerunits="userSpaceOnUse">
+      <path d="M0,10 L5,1 L10,10" fill="none" stroke="#006791" stroke-width="2.5"></path>
     </marker>
   </defs>
   <text x="150" y="32" text-anchor="middle" class="lbl-blue" font-size="33">Host A</text>
   <text x="870" y="32" text-anchor="middle" class="lbl-blue" font-size="33">Host B</text>
-  <path class="life" d="M150,50 V277 M870,50 V277"></path>
-  <g class="fragment" data-fragment-index="0">
-    <path class="packet-path msg" d="M150,76 L870,116" marker-end="url(#silent-receiver-arrow)"></path>
-    <g class="pkt" style="--dx:-648px; --dy:-36px">
-      <rect class="pkt-body" x="765" y="99" width="66" height="26" rx="6"></rect>
-      <rect class="pkt-hdr" x="771" y="105" width="16" height="14" rx="3"></rect>
+  <path class="life" d="M150,50 V422 M870,50 V422"></path>
+  <text x="18" y="64" text-anchor="start" class="lbl-gray" font-size="25">time ↓</text>
+    <path class="packet-path msg" d="M150,60 L870,94" marker-end="url(#gbn-arrow)"></path>
+    <g class="pkt" style="--dx:-670px; --dy:-32px">
+      <rect class="pkt-body" x="787" y="81" width="66" height="22" rx="6"></rect>
+      <rect class="pkt-hdr" x="793" y="87" width="16" height="10" rx="3"></rect>
     </g>
-    <text x="510" y="78" text-anchor="middle" class="lbl-blue" font-size="30">Seq 3000 again</text>
+    <text x="510" y="59" text-anchor="middle" class="lbl-blue" font-size="30"></text>
+    <path class="packet-path msg-r" d="M150,90 L510,107"></path>
+    <g class="pkt pkt-r pkt-lost" style="--dx:-335px; --dy:-16px">
+      <rect class="pkt-body" x="452" y="95" width="66" height="22" rx="6"></rect>
+      <rect class="pkt-hdr" x="458" y="101" width="16" height="10" rx="3"></rect>
+    </g>
+    <path class="loss-cross" d="M501,98 l18,18 m0,-18 l-18,18"></path>
+    <text x="330" y="80" text-anchor="middle" class="lbl-red" font-size="30"></text>
+    <path class="packet-path msg" d="M150,120 L870,154" marker-end="url(#gbn-arrow)"></path>
+    <g class="pkt" style="--dx:-670px; --dy:-32px">
+      <rect class="pkt-body" x="787" y="141" width="66" height="22" rx="6"></rect>
+      <rect class="pkt-hdr" x="793" y="147" width="16" height="10" rx="3"></rect>
+    </g>
+    <text x="510" y="119" text-anchor="middle" class="lbl-blue" font-size="30"></text>
+    <path class="packet-path msg" d="M150,150 L870,184" marker-end="url(#gbn-arrow)"></path>
+    <g class="pkt" style="--dx:-670px; --dy:-32px">
+      <rect class="pkt-body" x="787" y="171" width="66" height="22" rx="6"></rect>
+      <rect class="pkt-hdr" x="793" y="177" width="16" height="10" rx="3"></rect>
+    </g>
+    <text x="510" y="149" text-anchor="middle" class="lbl-blue" font-size="30"></text>
+    <text x="534" y="112" text-anchor="start" class="lbl-red" font-size="26">pkt 1 lost</text>
+    <text x="500" y="222" text-anchor="middle" class="lbl-blue" font-size="29">pkt 0, 1, 2, 3 sent back to back</text>
+  <g class="fragment" data-fragment-index="0">
+    <path class="packet-path msg" d="M870,254 L150,288" marker-end="url(#gbn-arrow)"></path>
+    <g class="pkt" style="--dx:670px; --dy:-32px">
+      <rect class="pkt-body" x="167" y="275" width="66" height="22" rx="6"></rect>
+      <rect class="pkt-hdr" x="173" y="281" width="16" height="10" rx="3"></rect>
+    </g>
+    <text x="650" y="248" text-anchor="middle" class="lbl-blue" font-size="30">ACK 0</text>
+    <circle class="tally-ring" cx="330" cy="278" r="19"></circle>
+    <text x="330" y="288" text-anchor="middle" class="tally" font-size="28" font-weight="700">×3</text>
+    <text x="500" y="322" text-anchor="middle" class="lbl-red" font-size="29">ACK 0 repeats: pkt 2 and pkt 3 were discarded</text>
   </g>
   <g class="fragment" data-fragment-index="1">
-    <text x="500" y="178" text-anchor="middle" class="lbl-red" font-size="31">B discards the duplicate and stays silent.</text>
+    <rect class="tbar" x="126" y="60" width="11" height="292" rx="3"></rect>
+    <path class="ttick" d="M114,352 H174"></path>
   </g>
   <g class="fragment" data-fragment-index="2">
-    <path class="packet-path msg" d="M150,232 L870,272" marker-end="url(#silent-receiver-arrow)"></path>
-    <g class="pkt" style="--dx:-648px; --dy:-36px">
-      <rect class="pkt-body" x="765" y="255" width="66" height="26" rx="6"></rect>
-      <rect class="pkt-hdr" x="771" y="261" width="16" height="14" rx="3"></rect>
+    <path class="packet-path msg" d="M150,370 L870,404" marker-end="url(#gbn-arrow)"></path>
+    <g class="pkt" style="--dx:-670px; --dy:-32px">
+      <rect class="pkt-body" x="787" y="391" width="66" height="22" rx="6"></rect>
+      <rect class="pkt-hdr" x="793" y="397" width="16" height="10" rx="3"></rect>
     </g>
-    <text x="510" y="234" text-anchor="middle" class="lbl-blue" font-size="30">Next timeout: Seq 3000 again</text>
+    <text x="650" y="364" text-anchor="middle" class="lbl-blue" font-size="30">pkt 1, 2, 3 resent</text>
+    <circle class="tally-ring" cx="330" cy="394" r="19"></circle>
+    <text x="330" y="404" text-anchor="middle" class="tally" font-size="28" font-weight="700">×3</text>
   </g>
 </svg>
-<p><span class="vote-prompt">What keeps A retransmitting? Which message would stop it?</span></p>
-<div class="fragment answer" data-fragment-index="3">
-<p>A still lacks a valid ACK. B should send <strong>ACK 3100 again</strong>, without delivering the data again.</p>
+</section>
+<section id="go-back-n-at-the-receiver" class="slide level2">
+<h2>Go-Back-N at the Receiver</h2>
+<p>B delivered packet 0 and is waiting for packet 1.</p>
+<p><span class="vote-prompt">Why can B not simply hold packets 2 and 3 until packet 1 arrives?</span></p>
+<svg class="trace" viewbox="0 0 1000 300" role="img" aria-labelledby="gbnr-title">
+  <title id="gbnr-title">The Go-Back-N receiver discards out-of-order packets and repeats its last ACK</title>
+  <defs>
+    <marker id="gbnr-arrow" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse">
+      <path d="M0,0 L8,4 L0,8" fill="#006791"></path>
+    </marker>
+    <marker id="gbnr-red" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse">
+      <path d="M0,0 L8,4 L0,8" fill="#c0392b"></path>
+    </marker>
+    <marker id="gbnr-caret" markerwidth="10" markerheight="10" refx="5" refy="1" orient="auto" markerunits="userSpaceOnUse">
+      <path d="M0,10 L5,1 L10,10" fill="none" stroke="#006791" stroke-width="2.5"></path>
+    </marker>
+  </defs>
+    <rect class="received" x="48" y="28" width="216" height="62" rx="6"></rect>
+    <text x="156" y="70" text-anchor="middle" font-size="29">pkt 0</text>
+    <text x="156" y="122" text-anchor="middle" class="lbl-green" font-size="26">delivered</text>
+    <rect class="missing" x="280" y="28" width="216" height="62" rx="6"></rect>
+    <text x="388" y="70" text-anchor="middle" font-size="29">pkt 1</text>
+    <text x="388" y="122" text-anchor="middle" class="lbl-red" font-size="26">never arrived</text>
+    <rect class="missing" x="512" y="28" width="216" height="62" rx="6"></rect>
+    <text x="620" y="70" text-anchor="middle" font-size="29">pkt 2</text>
+    <text x="620" y="122" text-anchor="middle" class="lbl-red" font-size="26">discarded</text>
+    <rect class="missing" x="744" y="28" width="216" height="62" rx="6"></rect>
+    <text x="852" y="70" text-anchor="middle" font-size="29">pkt 3</text>
+    <text x="852" y="122" text-anchor="middle" class="lbl-red" font-size="26">discarded</text>
+  <g class="fragment" data-fragment-index="0">
+    <text x="500" y="184" text-anchor="middle" class="lbl-blue" font-size="30">B keeps no out-of-order packets, so it has nothing to add.</text>
+    <text x="500" y="232" text-anchor="middle" class="lbl-red" font-size="30">Its reply stays ACK 0: the last packet it received in order.</text>
+  </g>
+  <g class="fragment" data-fragment-index="1">
+    <text x="500" y="286" text-anchor="middle" class="lbl-green" font-size="30">One ACK 0 that gets through covers every earlier ACK 0.</text>
+  </g>
+</svg>
+</section>
+<section id="selective-repeat" class="slide level2">
+<h2>Selective Repeat</h2>
+<p><span class="vote-prompt">The same loss, but B keeps what arrives out of order. Predict its three ACKs.</span></p>
+<svg class="trace" viewbox="0 0 1000 412" role="img" aria-labelledby="sr-title">
+  <title id="sr-title">Selective Repeat buffers the later packets and resends only the lost one</title>
+  <defs>
+    <marker id="sr-arrow" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse">
+      <path d="M0,0 L8,4 L0,8" fill="#006791"></path>
+    </marker>
+    <marker id="sr-red" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse">
+      <path d="M0,0 L8,4 L0,8" fill="#c0392b"></path>
+    </marker>
+    <marker id="sr-caret" markerwidth="10" markerheight="10" refx="5" refy="1" orient="auto" markerunits="userSpaceOnUse">
+      <path d="M0,10 L5,1 L10,10" fill="none" stroke="#006791" stroke-width="2.5"></path>
+    </marker>
+  </defs>
+  <text x="150" y="32" text-anchor="middle" class="lbl-blue" font-size="33">Host A</text>
+  <text x="870" y="32" text-anchor="middle" class="lbl-blue" font-size="33">Host B</text>
+  <path class="life" d="M150,50 V404 M870,50 V404"></path>
+  <text x="18" y="64" text-anchor="start" class="lbl-gray" font-size="25">time ↓</text>
+    <path class="packet-path msg" d="M150,60 L870,94" marker-end="url(#sr-arrow)"></path>
+    <g class="pkt" style="--dx:-670px; --dy:-32px">
+      <rect class="pkt-body" x="787" y="81" width="66" height="22" rx="6"></rect>
+      <rect class="pkt-hdr" x="793" y="87" width="16" height="10" rx="3"></rect>
+    </g>
+    <text x="510" y="59" text-anchor="middle" class="lbl-blue" font-size="30"></text>
+    <path class="packet-path msg-r" d="M150,90 L510,107"></path>
+    <g class="pkt pkt-r pkt-lost" style="--dx:-335px; --dy:-16px">
+      <rect class="pkt-body" x="452" y="95" width="66" height="22" rx="6"></rect>
+      <rect class="pkt-hdr" x="458" y="101" width="16" height="10" rx="3"></rect>
+    </g>
+    <path class="loss-cross" d="M501,98 l18,18 m0,-18 l-18,18"></path>
+    <text x="330" y="80" text-anchor="middle" class="lbl-red" font-size="30"></text>
+    <path class="packet-path msg" d="M150,120 L870,154" marker-end="url(#sr-arrow)"></path>
+    <g class="pkt" style="--dx:-670px; --dy:-32px">
+      <rect class="pkt-body" x="787" y="141" width="66" height="22" rx="6"></rect>
+      <rect class="pkt-hdr" x="793" y="147" width="16" height="10" rx="3"></rect>
+    </g>
+    <text x="510" y="119" text-anchor="middle" class="lbl-blue" font-size="30"></text>
+    <path class="packet-path msg" d="M150,150 L870,184" marker-end="url(#sr-arrow)"></path>
+    <g class="pkt" style="--dx:-670px; --dy:-32px">
+      <rect class="pkt-body" x="787" y="171" width="66" height="22" rx="6"></rect>
+      <rect class="pkt-hdr" x="793" y="177" width="16" height="10" rx="3"></rect>
+    </g>
+    <text x="510" y="149" text-anchor="middle" class="lbl-blue" font-size="30"></text>
+    <text x="534" y="112" text-anchor="start" class="lbl-red" font-size="26">pkt 1 lost</text>
+  <g class="fragment" data-fragment-index="0">
+    <path class="packet-path msg" d="M870,214 L150,248" marker-end="url(#sr-arrow)"></path>
+    <g class="pkt" style="--dx:670px; --dy:-32px">
+      <rect class="pkt-body" x="167" y="236" width="66" height="20" rx="6"></rect>
+      <rect class="pkt-hdr" x="173" y="242" width="16" height="8" rx="3"></rect>
+    </g>
+    <text x="510" y="213" text-anchor="middle" class="lbl-blue" font-size="30"></text>
+    <path class="packet-path msg" d="M870,238 L150,272" marker-end="url(#sr-arrow)"></path>
+    <g class="pkt" style="--dx:670px; --dy:-32px">
+      <rect class="pkt-body" x="167" y="260" width="66" height="20" rx="6"></rect>
+      <rect class="pkt-hdr" x="173" y="266" width="16" height="8" rx="3"></rect>
+    </g>
+    <text x="510" y="237" text-anchor="middle" class="lbl-blue" font-size="30"></text>
+    <path class="packet-path msg" d="M870,262 L150,296" marker-end="url(#sr-arrow)"></path>
+    <g class="pkt" style="--dx:670px; --dy:-32px">
+      <rect class="pkt-body" x="167" y="284" width="66" height="20" rx="6"></rect>
+      <rect class="pkt-hdr" x="173" y="290" width="16" height="8" rx="3"></rect>
+    </g>
+    <text x="510" y="261" text-anchor="middle" class="lbl-blue" font-size="30"></text>
+    <text x="660" y="208" text-anchor="middle" class="lbl-blue" font-size="29">ACK 0, ACK 2, ACK 3</text>
+    <text x="200" y="330" text-anchor="start" class="lbl-green" font-size="29">B buffers pkt 2 and pkt 3</text>
+  </g>
+  <g class="fragment" data-fragment-index="1">
+    <rect class="tbar" x="126" y="60" width="11" height="296" rx="3"></rect>
+    <path class="ttick" d="M114,356 H174"></path>
+  </g>
+  <g class="fragment" data-fragment-index="2">
+    <path class="packet-path msg" d="M150,370 L870,404" marker-end="url(#sr-arrow)"></path>
+    <g class="pkt" style="--dx:-670px; --dy:-32px">
+      <rect class="pkt-body" x="787" y="391" width="66" height="22" rx="6"></rect>
+      <rect class="pkt-hdr" x="793" y="397" width="16" height="10" rx="3"></rect>
+    </g>
+    <text x="650" y="364" text-anchor="middle" class="lbl-blue" font-size="30">pkt 1 only</text>
+  </g>
+</svg>
+</section>
+<section id="compare-the-two-must-know" class="slide level2">
+<h2>Compare the Two <span class="ex">Must Know</span></h2>
+<p><span class="vote-prompt">Fill one column before revealing it.</span></p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Go-Back-N</th>
+<th>Selective Repeat</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Out-of-order packets</td>
+<td><span class="fragment ans" data-fragment-index="0">Discarded</span></td>
+<td><span class="fragment ans" data-fragment-index="0">Buffered</span></td>
+</tr>
+<tr class="even">
+<td>An ACK names</td>
+<td><span class="fragment ans" data-fragment-index="1">Last packet in order</span></td>
+<td><span class="fragment ans" data-fragment-index="1">That packet alone</span></td>
+</tr>
+<tr class="odd">
+<td>Resends after one loss, <span class="math inline">\(N=4\)</span></td>
+<td><span class="fragment ans" data-fragment-index="2">3 packets</span></td>
+<td><span class="fragment ans" data-fragment-index="2">1 packet</span></td>
+</tr>
+<tr class="even">
+<td>Sender timers</td>
+<td><span class="fragment ans" data-fragment-index="3">One, for the oldest</span></td>
+<td><span class="fragment ans" data-fragment-index="3">One per packet</span></td>
+</tr>
+</tbody>
+</table>
+<div class="fragment" data-fragment-index="4">
+<p><strong>TCP is neither.</strong> It uses one cumulative ACK and one timer, like Go-Back-N, but its receiver buffers out-of-order bytes, like Selective Repeat — and it normally resends only the segment that timed out.</p>
+</div>
+</section>
+<section id="your-turn-resends" class="slide level2">
+<h2>Your Turn: Resends</h2>
+<p>Packets <strong>0–4</strong> are in flight with <strong>N = 5</strong>. Packet <strong>2</strong> is lost; nothing else is.</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Find</th>
+<th>Go-Back-N</th>
+<th>Selective Repeat</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ACKs B sends</td>
+<td><span class="fragment ans" data-fragment-index="0">0, 1, 1, 1</span></td>
+<td><span class="fragment ans" data-fragment-index="0">0, 1, 3, 4</span></td>
+</tr>
+<tr class="even">
+<td>Duplicate ACKs A receives</td>
+<td><span class="fragment ans" data-fragment-index="1">2</span></td>
+<td><span class="fragment ans" data-fragment-index="1">0</span></td>
+</tr>
+<tr class="odd">
+<td>Packets A resends</td>
+<td><span class="fragment ans" data-fragment-index="2">2, 3, 4</span></td>
+<td><span class="fragment ans" data-fragment-index="2">2</span></td>
+</tr>
+</tbody>
+</table>
+<div class="fragment" data-fragment-index="3">
+<p>Go-Back-N resends two packets that B had already received correctly.</p>
 </div>
 </section>
 <section id="a-timeout-can-be-early" class="slide level2">
@@ -1611,85 +2489,144 @@ Zechun (Jacob) Cao
 <p><strong>No.</strong> A needless retry uses capacity; byte numbers prevent duplicate delivery.</p>
 </div>
 </section>
-<section id="an-old-ack-arrives" class="slide level2">
-<h2>An Old ACK Arrives</h2>
-<p>A already received <strong>ACK 3100</strong>, then sent bytes <strong>3100–3199</strong>. A second copy of the earlier ACK was delayed.</p>
-<svg class="trace" viewbox="0 0 1000 285" role="img" aria-labelledby="old-ack-title">
-  <title id="old-ack-title">A delayed ACK for previous data cannot acknowledge new data</title>
+<section id="warm-up-pick-a-deadline" class="slide level2">
+<h2>Warm-Up: Pick a Deadline</h2>
+<p>Any fixed deadline is a guess. Here are five round trips a sender actually measured.</p>
+<svg class="trace" viewbox="0 0 1000 232" role="img" aria-labelledby="rtt5-title">
+  <title id="rtt5-title">Five measured round trips, one far above the others</title>
   <defs>
-    <marker id="old-ack-arrow" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse">
+    <marker id="rtt5-arrow" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse">
       <path d="M0,0 L8,4 L0,8" fill="#006791"></path>
     </marker>
-    <marker id="old-ack-red" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse">
+    <marker id="rtt5-red" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse">
       <path d="M0,0 L8,4 L0,8" fill="#c0392b"></path>
+    </marker>
+    <marker id="rtt5-caret" markerwidth="10" markerheight="10" refx="5" refy="1" orient="auto" markerunits="userSpaceOnUse">
+      <path d="M0,10 L5,1 L10,10" fill="none" stroke="#006791" stroke-width="2.5"></path>
+    </marker>
+  </defs>
+    <path class="axis" d="M90,190 H930"></path>
+    <rect class="cell-free" x="150" y="139" width="92" height="51" rx="4"></rect>
+    <text x="196" y="224" text-anchor="middle" class="lbl-gray" font-size="26">100 ms</text>
+    <rect class="cell-free" x="300" y="128" width="92" height="62" rx="4"></rect>
+    <text x="346" y="224" text-anchor="middle" class="lbl-gray" font-size="26">120 ms</text>
+    <rect class="cell-free" x="450" y="141" width="92" height="49" rx="4"></rect>
+    <text x="496" y="224" text-anchor="middle" class="lbl-gray" font-size="26">95 ms</text>
+    <rect class="cell-free" x="600" y="36" width="92" height="154" rx="4"></rect>
+    <text x="646" y="224" text-anchor="middle" class="lbl-gray" font-size="26">300 ms</text>
+    <rect class="cell-free" x="750" y="134" width="92" height="56" rx="4"></rect>
+    <text x="796" y="224" text-anchor="middle" class="lbl-gray" font-size="26">110 ms</text>
+  <g class="fragment" data-fragment-index="0">
+    <path class="axis" d="M90,116 H930" stroke-dasharray="9 6" stroke="#006791"></path>
+    <text x="930" y="102" text-anchor="end" class="lbl-blue" font-size="27">average: 145 ms</text>
+  </g>
+</svg>
+<p><span class="vote-prompt">Vote: set the timeout at 120 ms, at 310 ms, or neither?</span></p>
+<div class="fragment answer" data-fragment-index="1">
+<p><strong>Neither.</strong> 120 ms retries on the 300 ms sample; 310 ms recovers slowly from every loss.</p>
+</div>
+</section>
+<section id="measure-the-round-trip" class="slide level2">
+<h2>Measure the Round Trip</h2>
+<p>A <strong>SampleRTT</strong> is the time from sending a segment to receiving the ACK that covers it.</p>
+<svg class="trace" viewbox="0 0 1000 248" role="img" aria-labelledby="srtt-title">
+  <title id="srtt-title">The sender measures one round trip from a send to its acknowledgment</title>
+  <defs>
+    <marker id="srtt-arrow" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse">
+      <path d="M0,0 L8,4 L0,8" fill="#006791"></path>
+    </marker>
+    <marker id="srtt-red" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse">
+      <path d="M0,0 L8,4 L0,8" fill="#c0392b"></path>
+    </marker>
+    <marker id="srtt-caret" markerwidth="10" markerheight="10" refx="5" refy="1" orient="auto" markerunits="userSpaceOnUse">
+      <path d="M0,10 L5,1 L10,10" fill="none" stroke="#006791" stroke-width="2.5"></path>
     </marker>
   </defs>
   <text x="150" y="32" text-anchor="middle" class="lbl-blue" font-size="33">Host A</text>
   <text x="870" y="32" text-anchor="middle" class="lbl-blue" font-size="33">Host B</text>
-  <path class="life" d="M150,50 V277 M870,50 V277"></path>
-  <g class="fragment" data-fragment-index="0">
-    <path class="packet-path msg-r" d="M150,134 L510,156"></path>
-    <g class="pkt pkt-r pkt-lost" style="--dx:-324px; --dy:-20px">
-      <rect class="pkt-body" x="441" y="141" width="66" height="26" rx="6"></rect>
-      <rect class="pkt-hdr" x="447" y="147" width="16" height="14" rx="3"></rect>
+  <path class="life" d="M150,50 V240 M870,50 V240"></path>
+  <text x="18" y="64" text-anchor="start" class="lbl-gray" font-size="25">time ↓</text>
+    <path class="packet-path msg" d="M150,70 L870,104" marker-end="url(#srtt-arrow)"></path>
+    <g class="pkt" style="--dx:-648px; --dy:-31px">
+      <rect class="pkt-body" x="765" y="88" width="66" height="26" rx="6"></rect>
+      <rect class="pkt-hdr" x="771" y="94" width="16" height="14" rx="3"></rect>
     </g>
-    <path class="loss-cross" d="M501,147 l18,18 m0,-18 l-18,18"></path>
-    <text x="350" y="116" text-anchor="middle" class="lbl-red" font-size="30">Seq 3100 · 100 bytes</text>
-  </g>
-  <g class="fragment" data-fragment-index="0">
-    <text x="538" y="168" text-anchor="start" class="lbl-red" font-size="26">lost</text>
-  </g>
-  <g class="fragment" data-fragment-index="1">
-    <path class="packet-path msg" d="M870,72 L150,248" marker-end="url(#old-ack-arrow)"></path>
-    <g class="pkt" style="--dx:648px; --dy:-158px">
-      <rect class="pkt-body" x="189" y="217" width="66" height="26" rx="6"></rect>
-      <rect class="pkt-hdr" x="195" y="223" width="16" height="14" rx="3"></rect>
+    <text x="540" y="64" text-anchor="middle" class="lbl-blue" font-size="30">Seq 1000 · 500 bytes</text>
+    <path class="packet-path msg" d="M870,150 L150,184" marker-end="url(#srtt-arrow)"></path>
+    <g class="pkt" style="--dx:648px; --dy:-31px">
+      <rect class="pkt-body" x="189" y="168" width="66" height="26" rx="6"></rect>
+      <rect class="pkt-hdr" x="195" y="174" width="16" height="14" rx="3"></rect>
     </g>
-    <text x="560" y="274" text-anchor="middle" class="lbl-blue" font-size="30">An old ACK 3100 arrives late.</text>
+    <text x="540" y="144" text-anchor="middle" class="lbl-blue" font-size="30">ACK 1500</text>
+    <path class="brace" d="M204,70 h-14 V184 h14"></path>
+    <text x="216" y="134" text-anchor="start" class="lbl-blue" font-size="29">SampleRTT</text>
+  <g class="fragment" data-fragment-index="0">
+    <text x="500" y="236" text-anchor="middle" class="lbl-blue" font-size="30">One sample per segment, measured at the sender.</text>
   </g>
 </svg>
-<p><span class="vote-prompt">Can A release the new bytes? What ACK is it waiting for?</span></p>
-<div class="fragment answer" data-fragment-index="2">
-<p><strong>No: it needs ACK 3200.</strong> ACK 3100 confirms none of the new bytes.</p>
+<div class="fragment answer" data-fragment-index="1">
+<p>TCP takes about one sample per round trip, not one per segment, and never samples a segment it retransmitted.</p>
 </div>
 </section>
-<section id="choose-the-timeout" class="slide level2">
-<h2>Choose the Timeout</h2>
-<p>Start the timer at <strong>0 ms</strong>. A successful data/ACK exchange takes <strong>70 ms</strong>. Compare fixed deadlines of <strong>40 ms</strong> and <strong>100 ms</strong>.</p>
-<p><span class="vote-prompt">Predict the first retry in each case.</span></p>
-<table class="caption-top">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>What happens?</th>
-<th>40 ms deadline</th>
-<th>100 ms deadline</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Nothing is lost</td>
-<td><span class="fragment ans" data-fragment-index="0">Retry at 40 ms</span></td>
-<td><span class="fragment ans" data-fragment-index="0">No retry</span></td>
-</tr>
-<tr class="even">
-<td>First data segment is lost</td>
-<td><span class="fragment ans" data-fragment-index="1">Retry at 40 ms</span></td>
-<td><span class="fragment ans" data-fragment-index="1">Retry at 100 ms</span></td>
-</tr>
-</tbody>
-</table>
-<div class="fragment answer" data-fragment-index="2">
-<p>A short deadline can cause needless retries. A long deadline delays recovery when data is lost.</p>
+<section id="smooth-the-samples" class="slide level2">
+<h2>Smooth the Samples</h2>
+<p>One sample is noisy, so TCP keeps a running average and moves it a little toward each new value:</p>
+<p><span class="math display">\[\text{EstimatedRTT} = (1-\alpha)\cdot\text{EstimatedRTT} + \alpha\cdot\text{SampleRTT},
+\qquad \alpha = \tfrac{1}{8}\]</span></p>
+<svg class="trace" viewbox="0 0 1000 262" role="img" aria-labelledby="ewma-title">
+  <title id="ewma-title">The estimate moves an eighth of the way toward each new sample</title>
+  <defs>
+    <marker id="ewma-arrow" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse">
+      <path d="M0,0 L8,4 L0,8" fill="#006791"></path>
+    </marker>
+    <marker id="ewma-red" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse">
+      <path d="M0,0 L8,4 L0,8" fill="#c0392b"></path>
+    </marker>
+    <marker id="ewma-caret" markerwidth="10" markerheight="10" refx="5" refy="1" orient="auto" markerunits="userSpaceOnUse">
+      <path d="M0,10 L5,1 L10,10" fill="none" stroke="#006791" stroke-width="2.5"></path>
+    </marker>
+  </defs>
+    <path class="axis" d="M130,40 V252 M130,252 H920"></path>
+    <text x="112" y="249" text-anchor="end" class="lbl-gray" font-size="25">60</text>
+    <path class="axis" d="M124,240 H136"></path>
+    <text x="112" y="182" text-anchor="end" class="lbl-gray" font-size="25">80</text>
+    <path class="axis" d="M124,173 H136"></path>
+    <text x="112" y="116" text-anchor="end" class="lbl-gray" font-size="25">100</text>
+    <path class="axis" d="M124,107 H136"></path>
+    <text x="112" y="49" text-anchor="end" class="lbl-gray" font-size="25">120</text>
+    <path class="axis" d="M124,40 H136"></path>
+    <text x="130" y="24" text-anchor="start" class="lbl-gray" font-size="25">RTT (ms)</text>
+    <circle class="est" cx="180" cy="173" r="7" fill="#006791"></circle>
+    <text x="180" y="215" text-anchor="start" class="lbl-blue" font-size="27">start: 80</text>
+  <g class="fragment" data-fragment-index="0">
+    <circle class="samp" cx="400" cy="67" r="9"></circle>
+    <text x="400" y="47" text-anchor="middle" class="lbl-gray" font-size="26">sample 112</text>
+    <path class="est" d="M180,173 L400,160"></path>
+    <circle cx="400" cy="160" r="7" fill="#006791"></circle>
+    <text x="400" y="204" text-anchor="middle" class="lbl-blue" font-size="27">84</text>
+  </g>
+  <g class="fragment" data-fragment-index="1">
+    <circle class="samp" cx="620" cy="107" r="9"></circle>
+    <text x="620" y="87" text-anchor="middle" class="lbl-gray" font-size="26">sample 100</text>
+    <path class="est" d="M400,160 L620,153"></path>
+    <circle cx="620" cy="153" r="7" fill="#006791"></circle>
+    <text x="620" y="197" text-anchor="middle" class="lbl-blue" font-size="27">86</text>
+  </g>
+  <g class="fragment" data-fragment-index="2">
+    <circle class="samp" cx="840" cy="207" r="9"></circle>
+    <text x="840" y="241" text-anchor="middle" class="lbl-gray" font-size="26">sample 70</text>
+    <path class="est" d="M620,153 L840,160"></path>
+    <circle cx="840" cy="160" r="7" fill="#006791"></circle>
+    <text x="840" y="142" text-anchor="middle" class="lbl-blue" font-size="27">84</text>
+  </g>
+</svg>
+<div class="fragment answer" data-fragment-index="3">
+<p>The estimate moves <strong>one eighth of the way</strong> toward each sample.</p>
 </div>
 </section>
-<section id="recovery-tools-must-know" class="slide level2">
-<h2>Recovery Tools <span class="ex">Must Know</span></h2>
-<p><span class="vote-prompt">Name the mechanism for each row before revealing it.</span></p>
+<section id="your-turn-estimate" class="slide level2">
+<h2>Your Turn: Estimate</h2>
+<p>EstimatedRTT starts at <strong>80 ms</strong> and <span class="math inline">\(\alpha = \tfrac{1}{8}\)</span>, so each new estimate is <span class="math inline">\((7 \cdot \text{Est} + \text{Sample})/8\)</span>.</p>
 <table class="caption-top">
 <colgroup>
 <col style="width: 50%">
@@ -1697,41 +2634,102 @@ Zechun (Jacob) Cao
 </colgroup>
 <thead>
 <tr class="header">
-<th>What needs to happen?</th>
-<th>Mechanism</th>
+<th>SampleRTT</th>
+<th>New EstimatedRTT</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Detect damaged bits</td>
-<td><span class="fragment ans" data-fragment-index="0">Checksum</span></td>
+<td>112 ms</td>
+<td><span class="fragment ans" data-fragment-index="0"><span class="math inline">\((7 \cdot 80 + 112)/8\)</span> = 84 ms</span></td>
 </tr>
 <tr class="even">
-<td>Tell the sender what arrived</td>
-<td><span class="fragment ans" data-fragment-index="1">Acknowledgment (ACK)</span></td>
+<td>100 ms</td>
+<td><span class="fragment ans" data-fragment-index="1"><span class="math inline">\((7 \cdot 84 + 100)/8\)</span> = 86 ms</span></td>
 </tr>
 <tr class="odd">
-<td>Recognize repeated data</td>
-<td><span class="fragment ans" data-fragment-index="2">Sequence number + receiver state</span></td>
-</tr>
-<tr class="even">
-<td>Act when no valid ACK arrives</td>
-<td><span class="fragment ans" data-fragment-index="3">Timer</span></td>
-</tr>
-<tr class="odd">
-<td>Send another copy</td>
-<td><span class="fragment ans" data-fragment-index="4">Retransmission from a saved copy</span></td>
+<td>70 ms</td>
+<td><span class="fragment ans" data-fragment-index="2"><span class="math inline">\((7 \cdot 86 + 70)/8\)</span> = 84 ms</span></td>
 </tr>
 </tbody>
 </table>
-<div class="fragment" data-fragment-index="5">
-<p>Together, these mechanisms recover from detected errors and loss when later transmissions succeed.</p>
+</section>
+<section id="one-average-is-not-enough" class="slide level2">
+<h2>One Average Is Not Enough</h2>
+<p>Two connections report samples with the <strong>same average</strong>.</p>
+<svg class="trace" viewbox="0 0 1000 248" role="img" aria-labelledby="jitter-title">
+  <title id="jitter-title">Two sample sets with the same average and very different spread</title>
+  <defs>
+    <marker id="jitter-arrow" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse">
+      <path d="M0,0 L8,4 L0,8" fill="#006791"></path>
+    </marker>
+    <marker id="jitter-red" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse">
+      <path d="M0,0 L8,4 L0,8" fill="#c0392b"></path>
+    </marker>
+    <marker id="jitter-caret" markerwidth="10" markerheight="10" refx="5" refy="1" orient="auto" markerunits="userSpaceOnUse">
+      <path d="M0,10 L5,1 L10,10" fill="none" stroke="#006791" stroke-width="2.5"></path>
+    </marker>
+  </defs>
+    <text x="210" y="34" text-anchor="middle" class="lbl-blue" font-size="30">Steady path</text>
+    <path class="axis" d="M40,200 H390"></path>
+    <path class="axis" d="M40,128 H390" stroke-dasharray="9 6" stroke="#006791"></path>
+    <circle class="samp" cx="70" cy="129" r="9"></circle>
+    <text x="70" y="111" text-anchor="middle" class="lbl-gray" font-size="24">98</text>
+    <circle class="samp" cx="135" cy="127" r="9"></circle>
+    <text x="135" y="109" text-anchor="middle" class="lbl-gray" font-size="24">101</text>
+    <circle class="samp" cx="200" cy="128" r="9"></circle>
+    <text x="200" y="110" text-anchor="middle" class="lbl-gray" font-size="24">99</text>
+    <circle class="samp" cx="265" cy="126" r="9"></circle>
+    <text x="265" y="108" text-anchor="middle" class="lbl-gray" font-size="24">102</text>
+    <circle class="samp" cx="330" cy="128" r="9"></circle>
+    <text x="330" y="110" text-anchor="middle" class="lbl-gray" font-size="24">100</text>
+    <text x="215" y="236" text-anchor="middle" class="lbl-blue" font-size="26">average 100 ms</text>
+    <text x="750" y="34" text-anchor="middle" class="lbl-blue" font-size="30">Jittery path</text>
+    <path class="axis" d="M580,200 H930"></path>
+    <path class="axis" d="M580,128 H930" stroke-dasharray="9 6" stroke="#006791"></path>
+    <circle class="samp" cx="610" cy="171" r="9"></circle>
+    <text x="610" y="153" text-anchor="middle" class="lbl-gray" font-size="24">40</text>
+    <circle class="samp" cx="675" cy="84" r="9"></circle>
+    <text x="675" y="66" text-anchor="middle" class="lbl-gray" font-size="24">160</text>
+    <circle class="samp" cx="740" cy="149" r="9"></circle>
+    <text x="740" y="131" text-anchor="middle" class="lbl-gray" font-size="24">70</text>
+    <circle class="samp" cx="805" cy="106" r="9"></circle>
+    <text x="805" y="88" text-anchor="middle" class="lbl-gray" font-size="24">130</text>
+    <circle class="samp" cx="870" cy="128" r="9"></circle>
+    <text x="870" y="110" text-anchor="middle" class="lbl-gray" font-size="24">100</text>
+    <text x="755" y="236" text-anchor="middle" class="lbl-blue" font-size="26">average 100 ms</text>
+    <path class="axis" d="M520,30 V230"></path>
+</svg>
+<p><span class="vote-prompt">Vote: should both use the same timeout?</span></p>
+<div class="fragment answer" data-fragment-index="1">
+<p><strong>No.</strong> A deadline just above 100 ms is safe on the left and fires constantly on the right.</p>
 </div>
 </section>
-<section id="your-turn-retry-must-know" class="slide level2">
-<h2>Your Turn: Retry <span class="ex">Must Know</span></h2>
-<p>At <strong>0 ms</strong>, Host A sends <strong>Seq 6000, 120 payload bytes</strong>. Host B receives it at <strong>20 ms</strong>, delivers it, and sends an ACK that is lost.</p>
-<p>The timeout is <strong>80 ms</strong>. A retransmits immediately. The retry and its ACK each take <strong>20 ms</strong>; ignore processing time.</p>
+<section id="measure-the-variation" class="slide level2">
+<h2>Measure the Variation</h2>
+<p>TCP keeps a second running average, of how far each sample fell from the estimate:</p>
+<p><span class="math display">\[\text{DevRTT} = (1-\beta)\cdot\text{DevRTT} + \beta\cdot|\text{SampleRTT} - \text{EstimatedRTT}|,
+\qquad \beta = \tfrac{1}{4}\]</span></p>
+<div class="fragment">
+<p>Use the EstimatedRTT from <strong>before</strong> this sample, then update it. On a steady path DevRTT stays near zero; on a jittery one it grows.</p>
+</div>
+</section>
+<section id="timeout-interval-must-know" class="slide level2">
+<h2>Timeout Interval <span class="ex">Must Know</span></h2>
+<p><span class="math display">\[\text{TimeoutInterval} = \text{EstimatedRTT} + 4\cdot\text{DevRTT}\]</span></p>
+<div class="fragment" data-fragment-index="0">
+<p><strong>EstimatedRTT = 84 ms, DevRTT = 6 ms, and a sample of 100 ms arrives.</strong></p>
+</div>
+<div class="fragment" data-fragment-index="1">
+<p><span class="math inline">\(|100 - 84| = 16\)</span>, so <span class="math inline">\(\text{DevRTT} = 0.75(6) + 0.25(16) = 8.5\)</span> ms, and <span class="math inline">\(\text{EstimatedRTT} = (7 \cdot 84 + 100)/8 = 86\)</span> ms.</p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p><span class="math display">\[\text{TimeoutInterval} = 86 + 4(8.5) = \mathbf{120 \text{ ms}}\]</span></p>
+</div>
+</section>
+<section id="your-turn-timeout" class="slide level2">
+<h2>Your Turn: Timeout</h2>
+<p>EstimatedRTT is <strong>90 ms</strong> and DevRTT is <strong>5 ms</strong>. A SampleRTT of <strong>130 ms</strong> then arrives.</p>
 <table class="caption-top">
 <colgroup>
 <col style="width: 50%">
@@ -1745,27 +2743,163 @@ Zechun (Jacob) Cao
 </thead>
 <tbody>
 <tr class="odd">
-<td>Seq of the retransmission</td>
-<td><span class="fragment ans" data-fragment-index="0">6000</span></td>
+<td>Timeout before the sample</td>
+<td><span class="fragment ans" data-fragment-index="0"><span class="math inline">\(90 + 4(5)\)</span> = 110 ms</span></td>
 </tr>
 <tr class="even">
-<td>ACK sent by Host B</td>
-<td><span class="fragment ans" data-fragment-index="1">6120</span></td>
+<td>New DevRTT</td>
+<td><span class="fragment ans" data-fragment-index="1"><span class="math inline">\(0.75(5) + 0.25(40)\)</span> = 13.75 ms</span></td>
 </tr>
 <tr class="odd">
-<td>Time the retry’s ACK reaches A</td>
-<td><span class="fragment ans" data-fragment-index="2">80 + 20 + 20 = 120 ms</span></td>
+<td>New EstimatedRTT</td>
+<td><span class="fragment ans" data-fragment-index="2"><span class="math inline">\((7 \cdot 90 + 130)/8\)</span> = 95 ms</span></td>
 </tr>
 <tr class="even">
-<td>Total payload delivered to the application</td>
-<td><span class="fragment ans" data-fragment-index="3">120 bytes, once</span></td>
+<td>New timeout</td>
+<td><span class="fragment ans" data-fragment-index="3"><span class="math inline">\(95 + 4(13.75)\)</span> = 150 ms</span></td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="remove-one-mechanism" class="slide level2">
-<h2>Remove One Mechanism</h2>
-<p>Keep the other mechanisms. Predict what fails in each case, then explain your choice to a neighbor.</p>
+<section id="when-it-times-out-anyway" class="slide level2">
+<h2>When It Times Out Anyway</h2>
+<p>A timeout usually means congestion, and retrying at the same pace would add to it.</p>
+<p><span class="vote-prompt">What should a sender do with its deadline after a timeout?</span></p>
+<div class="fragment answer" data-fragment-index="0">
+<p><strong>Double it.</strong> After a timeout at 120 ms the next deadline is 240 ms, then 480 ms. The formula resumes the moment a fresh ACK gives a usable sample.</p>
+</div>
+<div class="fragment answer" data-fragment-index="1">
+<p>This also keeps a retransmission from being sampled: its ACK is ambiguous, because A cannot tell which copy it answers.</p>
+</div>
+</section>
+<section id="a-timeout-is-slow" class="slide level2">
+<h2>A Timeout Is Slow</h2>
+<p>TCP starts a connection with a <strong>1 second</strong> timeout, before it has any sample to work with.</p>
+<svg class="trace" viewbox="0 0 1000 174" role="img" aria-labelledby="slowto-title">
+  <title id="slowto-title">A one-second timeout beside a thirty-millisecond round trip</title>
+  <defs>
+    <marker id="slowto-arrow" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse">
+      <path d="M0,0 L8,4 L0,8" fill="#006791"></path>
+    </marker>
+    <marker id="slowto-red" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse">
+      <path d="M0,0 L8,4 L0,8" fill="#c0392b"></path>
+    </marker>
+    <marker id="slowto-caret" markerwidth="10" markerheight="10" refx="5" refy="1" orient="auto" markerunits="userSpaceOnUse">
+      <path d="M0,10 L5,1 L10,10" fill="none" stroke="#006791" stroke-width="2.5"></path>
+    </marker>
+  </defs>
+    <rect class="idle" x="60" y="34" width="870" height="44" rx="4"></rect>
+    <rect class="busy" x="60" y="34" width="26" height="44"></rect>
+    <text x="96" y="24" text-anchor="start" class="lbl-blue" font-size="27">one 30 ms round trip</text>
+    <text x="495" y="112" text-anchor="middle" class="lbl-gray" font-size="29">TCP's initial timeout: 1 second</text>
+  <g class="fragment" data-fragment-index="0">
+    <text x="495" y="162" text-anchor="middle" class="lbl-red" font-size="30">A sender that waits it out idles for 33 round trips.</text>
+  </g>
+</svg>
+<p><span class="vote-prompt">Is there anything in the ACK stream that reports a loss sooner?</span></p>
+</section>
+<section id="three-duplicate-acks" class="slide level2">
+<h2>Three Duplicate ACKs</h2>
+<p>A sends five segments. <strong>Seq 2000 is lost</strong>; the four others arrive.</p>
+<p><span class="vote-prompt">Predict B’s reply to each of the three segments after the gap.</span></p>
+<svg class="trace" viewbox="0 0 1000 404" role="img" aria-labelledby="dup-title">
+  <title id="dup-title">Every segment after the gap produces another ACK naming the same byte</title>
+  <defs>
+    <marker id="dup-arrow" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse">
+      <path d="M0,0 L8,4 L0,8" fill="#006791"></path>
+    </marker>
+    <marker id="dup-red" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse">
+      <path d="M0,0 L8,4 L0,8" fill="#c0392b"></path>
+    </marker>
+    <marker id="dup-caret" markerwidth="10" markerheight="10" refx="5" refy="1" orient="auto" markerunits="userSpaceOnUse">
+      <path d="M0,10 L5,1 L10,10" fill="none" stroke="#006791" stroke-width="2.5"></path>
+    </marker>
+  </defs>
+  <text x="150" y="32" text-anchor="middle" class="lbl-blue" font-size="33">Host A</text>
+  <text x="870" y="32" text-anchor="middle" class="lbl-blue" font-size="33">Host B</text>
+  <path class="life" d="M150,50 V396 M870,50 V396"></path>
+  <text x="18" y="64" text-anchor="start" class="lbl-gray" font-size="25">time ↓</text>
+    <path class="packet-path msg" d="M150,60 L870,90" marker-end="url(#dup-arrow)"></path>
+    <g class="pkt" style="--dx:-670px; --dy:-28px">
+      <rect class="pkt-body" x="787" y="79" width="66" height="18" rx="6"></rect>
+      <rect class="pkt-hdr" x="793" y="85" width="16" height="6" rx="3"></rect>
+    </g>
+    <text x="510" y="57" text-anchor="middle" class="lbl-blue" font-size="30"></text>
+    <path class="packet-path msg-r" d="M150,84 L510,99"></path>
+    <g class="pkt pkt-r pkt-lost" style="--dx:-335px; --dy:-14px">
+      <rect class="pkt-body" x="452" y="89" width="66" height="18" rx="6"></rect>
+      <rect class="pkt-hdr" x="458" y="95" width="16" height="6" rx="3"></rect>
+    </g>
+    <path class="loss-cross" d="M501,90 l18,18 m0,-18 l-18,18"></path>
+    <text x="330" y="74" text-anchor="middle" class="lbl-red" font-size="30"></text>
+    <path class="packet-path msg" d="M150,108 L870,138" marker-end="url(#dup-arrow)"></path>
+    <g class="pkt" style="--dx:-670px; --dy:-28px">
+      <rect class="pkt-body" x="787" y="127" width="66" height="18" rx="6"></rect>
+      <rect class="pkt-hdr" x="793" y="133" width="16" height="6" rx="3"></rect>
+    </g>
+    <text x="510" y="105" text-anchor="middle" class="lbl-blue" font-size="30"></text>
+    <path class="packet-path msg" d="M150,132 L870,162" marker-end="url(#dup-arrow)"></path>
+    <g class="pkt" style="--dx:-670px; --dy:-28px">
+      <rect class="pkt-body" x="787" y="151" width="66" height="18" rx="6"></rect>
+      <rect class="pkt-hdr" x="793" y="157" width="16" height="6" rx="3"></rect>
+    </g>
+    <text x="510" y="129" text-anchor="middle" class="lbl-blue" font-size="30"></text>
+    <path class="packet-path msg" d="M150,156 L870,186" marker-end="url(#dup-arrow)"></path>
+    <g class="pkt" style="--dx:-670px; --dy:-28px">
+      <rect class="pkt-body" x="787" y="175" width="66" height="18" rx="6"></rect>
+      <rect class="pkt-hdr" x="793" y="181" width="16" height="6" rx="3"></rect>
+    </g>
+    <text x="510" y="153" text-anchor="middle" class="lbl-blue" font-size="30"></text>
+    <text x="534" y="104" text-anchor="start" class="lbl-red" font-size="26">Seq 2000 lost</text>
+    <text x="500" y="212" text-anchor="middle" class="lbl-blue" font-size="29">Seq 1000 to 5000, 1000 payload bytes each</text>
+  <g class="fragment" data-fragment-index="0">
+    <path class="packet-path msg" d="M870,250 L150,280" marker-end="url(#dup-arrow)"></path>
+    <g class="pkt" style="--dx:670px; --dy:-28px">
+      <rect class="pkt-body" x="167" y="269" width="66" height="18" rx="6"></rect>
+      <rect class="pkt-hdr" x="173" y="275" width="16" height="6" rx="3"></rect>
+    </g>
+    <text x="510" y="247" text-anchor="middle" class="lbl-blue" font-size="30"></text>
+    <path class="packet-path msg" d="M870,276 L150,306" marker-end="url(#dup-arrow)"></path>
+    <g class="pkt" style="--dx:670px; --dy:-28px">
+      <rect class="pkt-body" x="167" y="295" width="66" height="18" rx="6"></rect>
+      <rect class="pkt-hdr" x="173" y="301" width="16" height="6" rx="3"></rect>
+    </g>
+    <text x="510" y="273" text-anchor="middle" class="lbl-blue" font-size="30"></text>
+    <path class="packet-path msg" d="M870,302 L150,332" marker-end="url(#dup-arrow)"></path>
+    <g class="pkt" style="--dx:670px; --dy:-28px">
+      <rect class="pkt-body" x="167" y="321" width="66" height="18" rx="6"></rect>
+      <rect class="pkt-hdr" x="173" y="327" width="16" height="6" rx="3"></rect>
+    </g>
+    <text x="510" y="299" text-anchor="middle" class="lbl-blue" font-size="30"></text>
+    <path class="packet-path msg" d="M870,328 L150,358" marker-end="url(#dup-arrow)"></path>
+    <g class="pkt" style="--dx:670px; --dy:-28px">
+      <rect class="pkt-body" x="167" y="347" width="66" height="18" rx="6"></rect>
+      <rect class="pkt-hdr" x="173" y="353" width="16" height="6" rx="3"></rect>
+    </g>
+    <text x="510" y="325" text-anchor="middle" class="lbl-blue" font-size="30"></text>
+    <text x="680" y="244" text-anchor="middle" class="lbl-blue" font-size="29">ACK 2000</text>
+  </g>
+  <g class="fragment" data-fragment-index="1">
+    <text x="500" y="392" text-anchor="middle" class="lbl-red" font-size="30">ACK 2000 four times: one original, three duplicates</text>
+  </g>
+</svg>
+</section>
+<section id="fast-retransmit-must-know" class="slide level2">
+<h2>Fast Retransmit <span class="ex">Must Know</span></h2>
+<p>A <strong>duplicate ACK</strong> repeats an ACK number the sender has already seen. Each one means a segment arrived that could not fill the gap.</p>
+<div class="fragment" data-fragment-index="0">
+<p><strong>The rule:</strong> on the <strong>third duplicate</strong> — a fourth ACK carrying the same number — resend that segment at once, without waiting for its timer.</p>
+</div>
+<div class="fragment" data-fragment-index="1">
+<p>Three duplicates rather than one, because reordering in the network produces one or two on its own. Three means a segment is missing, not late.</p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p>Recovery takes about one round trip instead of a full timeout.</p>
+</div>
+</section>
+<section id="your-turn-fast-retransmit" class="slide level2">
+<h2>Your Turn: Fast Retransmit</h2>
+<p>A sends <strong>Seq 1000, 2000, 3000, 4000, 5000</strong>, each with <strong>1000 payload bytes</strong>. Only <strong>Seq 2000</strong> is lost.</p>
 <table class="caption-top">
 <colgroup>
 <col style="width: 50%">
@@ -1773,74 +2907,66 @@ Zechun (Jacob) Cao
 </colgroup>
 <thead>
 <tr class="header">
-<th>Remove</th>
-<th>Failure you can no longer handle</th>
+<th>Find</th>
+<th>Answer</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Checksum</td>
-<td><span class="fragment answer" data-fragment-index="0">Corrupted data can be accepted.</span></td>
+<td>ACKs B sends, in order</td>
+<td><span class="fragment ans" data-fragment-index="0">2000, 2000, 2000, 2000</span></td>
 </tr>
 <tr class="even">
-<td>Receiver’s record of accepted bytes</td>
-<td><span class="fragment answer" data-fragment-index="1">A retry can be delivered twice.</span></td>
+<td>Duplicate ACKs A receives</td>
+<td><span class="fragment ans" data-fragment-index="1">3</span></td>
 </tr>
 <tr class="odd">
-<td>Sender’s saved copy</td>
-<td><span class="fragment answer" data-fragment-index="2">A timer expires, but A has no data to retransmit.</span></td>
+<td>Bytes A resends</td>
+<td><span class="fragment ans" data-fragment-index="2">2000–2999, and nothing else</span></td>
+</tr>
+<tr class="even">
+<td>B’s ACK once the retry arrives</td>
+<td><span class="fragment ans" data-fragment-index="3">6000</span></td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="read-after-class-1" class="slide level2 center reading-divider">
-<h2>Read After Class</h2>
-<p>Reliable transfer mechanisms</p>
-<ul>
-<li>How the textbook builds rdt1.0 through rdt3.0</li>
-<li>What an ACK number means in each protocol</li>
-</ul>
-<p><a href="#/recap">Continue to the recap →</a></p>
-</section>
-<section id="the-rdt-versions-reading" class="slide level2">
-<h2>The rdt Versions <span class="rd">Reading</span></h2>
-<p><strong>NAK</strong> means negative acknowledgment: a request to retry.</p>
+<section id="timeout-or-duplicates" class="slide level2">
+<h2>Timeout or Duplicates?</h2>
 <table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
 <thead>
 <tr class="header">
-<th>Version</th>
-<th>What changes?</th>
+<th></th>
+<th>Timeout</th>
+<th>Three duplicate ACKs</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>rdt1.0</td>
-<td>Assume no bit errors or loss.</td>
+<td>What triggers it</td>
+<td><span class="fragment ans" data-fragment-index="0">No ACK at all</span></td>
+<td><span class="fragment ans" data-fragment-index="0">Later segments arriving</span></td>
 </tr>
 <tr class="even">
-<td>rdt2.0</td>
-<td>Add a checksum, ACK/NAK, and retry.</td>
+<td>How long it takes</td>
+<td><span class="fragment ans" data-fragment-index="1">EstimatedRTT + 4·DevRTT</span></td>
+<td><span class="fragment ans" data-fragment-index="1">About one round trip</span></td>
 </tr>
 <tr class="odd">
-<td>rdt2.1</td>
-<td>Sequence numbers detect duplicates.</td>
-</tr>
-<tr class="even">
-<td>rdt2.2</td>
-<td>Numbered ACKs replace NAKs.</td>
-</tr>
-<tr class="odd">
-<td>rdt3.0</td>
-<td>Add a timer for lost data or ACKs.</td>
+<td>Works when</td>
+<td><span class="fragment ans" data-fragment-index="2">Always</span></td>
+<td><span class="fragment ans" data-fragment-index="2">More data follows the gap</span></td>
 </tr>
 </tbody>
 </table>
-</section>
-<section id="ack-conventions-reading" class="slide level2">
-<h2>ACK Conventions <span class="rd">Reading</span></h2>
-<p>In the textbook’s <strong>rdt2.2/rdt3.0</strong> examples, sequence numbers <strong>0 and 1</strong> label packets. <strong>ACK 0</strong> acknowledges packet 0.</p>
-<p>In <strong>TCP</strong>, sequence numbers label bytes. <strong>ACK 3100</strong> identifies the next needed byte and cumulatively acknowledges all earlier bytes.</p>
-<p>Before tracing a protocol, check what its numbers count and what its ACK promises. TCP’s byte-number rule does not apply to every reliable-transfer protocol.</p>
+<div class="fragment" data-fragment-index="3">
+<p>The last segment of a transfer has nothing behind it, so only the timer can recover it.</p>
+</div>
 </section>
 <section id="recap" class="slide level2">
 <h2>Explain Your Choice</h2>
@@ -1862,15 +2988,89 @@ Zechun (Jacob) Cao
 <td><span class="fragment answer" data-fragment-index="0">Later bytes cannot confirm receipt of missing earlier bytes.</span></td>
 </tr>
 <tr class="even">
-<td>Why can a timeout happen without loss?</td>
-<td><span class="fragment answer" data-fragment-index="1">The ACK can arrive after the deadline.</span></td>
+<td>Why ACK a duplicate?</td>
+<td><span class="fragment answer" data-fragment-index="1">The sender may have missed the earlier ACK.</span></td>
 </tr>
 <tr class="odd">
-<td>Why ACK a duplicate?</td>
-<td><span class="fragment answer" data-fragment-index="2">The sender may have missed the earlier ACK.</span></td>
+<td>Why does a faster link lower utilization?</td>
+<td><span class="fragment answer" data-fragment-index="2">The round trip does not shrink with it.</span></td>
+</tr>
+<tr class="even">
+<td>Why wait for three duplicate ACKs?</td>
+<td><span class="fragment answer" data-fragment-index="3">One or two can come from reordering alone.</span></td>
 </tr>
 </tbody>
 </table>
+</section>
+<section id="read-after-class-2" class="slide level2 center reading-divider">
+<h2>Read After Class</h2>
+<p>Windows, timers, and ACK rules</p>
+<ul>
+<li>Why Selective Repeat limits its window, and why TCP has no NAK</li>
+<li>When TCP delays an ACK, and which arrivals duplicate one</li>
+<li>Why a late copy of an old ACK is not news</li>
+<li>Why the timeout estimate ignores a retransmitted segment</li>
+</ul>
+<p><a href="#/recap">Review the chapter →</a></p>
+</section>
+<section id="window-size-limits-reading" class="slide level2">
+<h2>Window Size Limits <span class="rd">Reading</span></h2>
+<p>A sequence number field is a fixed number of bits, so the numbers wrap. With 2 bits they run 0, 1, 2, 3, 0, 1, …</p>
+<p>Suppose the window is <strong>3</strong> and the sender sends packets 0, 1, 2. All three arrive and all three ACKs are lost. The sender times out and resends packet <strong>0</strong>. B has meanwhile advanced its window to 3, 0, 1 — so the number 0 is now the name of a <em>new</em> packet, and B accepts the retransmission as new data.</p>
+<p>Selective Repeat therefore needs a window no larger than <strong>half the sequence space</strong>: with 2 bits, no more than 2. Go-Back-N can use one less than the whole space, because its receiver keeps no window of its own.</p>
+</section>
+<section id="why-no-nak-reading" class="slide level2">
+<h2>Why No NAK <span class="rd">Reading</span></h2>
+<p>The textbook’s rdt2.0 answers a failed checksum with a <strong>NAK</strong>: “that packet was damaged, send it again.” TCP has no NAK.</p>
+<p>A cumulative ACK that stops advancing already reports the problem: ACK 2000 arriving again says bytes from 2000 are still missing. A NAK would also need its own protection against loss and against arriving out of order.</p>
+<p>Modern TCP can add <strong>selective acknowledgment</strong> (SACK, RFC 2018), an option that lists the ranges the receiver has buffered beyond the gap. It extends the ACK rather than replacing it.</p>
+</section>
+<section id="tcps-ack-rules-reading" class="slide level2">
+<h2>TCP’s ACK Rules <span class="rd">Reading</span></h2>
+<p>Our traces had Host B reply to every arrival. Real TCP uses four rules.</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>What arrives at B</th>
+<th>What B does</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>In order, nothing outstanding</td>
+<td>Wait up to 500 ms for more data, then ACK</td>
+</tr>
+<tr class="even">
+<td>In order, one ACK already waiting</td>
+<td>Send one ACK covering both segments</td>
+</tr>
+<tr class="odd">
+<td>Out of order, above the expected byte</td>
+<td>Send a duplicate ACK at once</td>
+</tr>
+<tr class="even">
+<td>Fills or partly fills the gap</td>
+<td>Send an ACK at once</td>
+</tr>
+</tbody>
+</table>
+<p>The delay in the first rule lets one ACK cover two segments. The immediate reply in the third is what makes fast retransmit possible.</p>
+</section>
+<section id="a-stale-ack-reading" class="slide level2">
+<h2>A Stale ACK <span class="rd">Reading</span></h2>
+<p>The network can hold a copy of an ACK and deliver it late. Suppose A has already received <strong>ACK 3100</strong> and has since sent bytes 3100–3199, and then a delayed second copy of ACK 3100 arrives.</p>
+<p>It is not news. An ACK names the next byte B expects, so ACK 3100 says nothing about bytes 3100–3199 no matter when it arrives; A is waiting for <strong>ACK 3200</strong> and must keep its copy of the new bytes until that number appears.</p>
+<p>This is why a sender acts on the ACK <em>number</em> and never on the arrival of an ACK. It is also why a duplicate ACK on its own means little, and why fast retransmit waits for three.</p>
+</section>
+<section id="sampling-a-retry-reading" class="slide level2">
+<h2>Sampling a Retry <span class="rd">Reading</span></h2>
+<p>If A sends a segment, times out, resends it, and then an ACK arrives, A cannot tell which copy that ACK answers.</p>
+<p>Measuring from the first send overstates the round trip; measuring from the retransmission understates it, and an estimate that shrinks after every loss produces a timeout that is too short, which causes more retransmissions.</p>
+<p>TCP therefore ignores retransmitted segments when sampling, and relies on doubling the interval while no clean sample is available. This is <strong>Karn’s algorithm</strong>.</p>
 
 </section>
     </div>
