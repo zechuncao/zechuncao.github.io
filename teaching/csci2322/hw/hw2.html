@@ -2361,7 +2361,6 @@ font-size: 0.92em;
   // The hash tells the printable copy to open the print dialog once it has
   // finished paginating.
   var BLANK = "hw2_print.html#print";
-  var ANSWERS = "hw2_instructor.html#print";
 
   function link(href, label, className) {
     var a = document.createElement("a");
@@ -2374,19 +2373,24 @@ font-size: 0.92em;
   }
 
   function init() {
-    // Set by _quarto-review.yml. The review page shows the answers, so its
-    // button prints the answered copy; the blank copy stays one click away so
-    // the packet can still be printed clean and worked again. Read it here
-    // rather than at parse time: Quarto emits an inline `text:` include after
-    // the file includes whatever order the yml lists them in, so the flag is
-    // not set yet when this script is first evaluated.
-    var withAnswers = window.PRINTBAR_ANSWERS === true;
+    // _quarto-review.yml sets this to the answered copy's href. The review
+    // page shows the answers, so its button prints that copy; the blank copy
+    // stays one click away so the packet can still be printed clean and
+    // worked again. The href lives in the review profile rather than here so
+    // the phase-1 builds carry no reference to the answer key at all, not
+    // even its filename. Read it here rather than at parse time: Quarto emits
+    // an inline `text:` include after the file includes whatever order the
+    // yml lists them in, so it is not set yet when this script is first
+    // evaluated.
+    var answers = typeof window.PRINTBAR_ANSWERS === "string"
+      ? window.PRINTBAR_ANSWERS
+      : null;
 
     var bar = document.createElement("div");
     bar.className = "print-bar";
 
-    if (withAnswers) {
-      bar.appendChild(link(ANSWERS, PRINTER_SVG + "<span>Print with answers</span>", "print-button"));
+    if (answers) {
+      bar.appendChild(link(answers, PRINTER_SVG + "<span>Print with answers</span>", "print-button"));
       bar.appendChild(link(BLANK, "<span>Print a blank copy</span>", "print-blank"));
     } else {
       bar.appendChild(link(BLANK, PRINTER_SVG + "<span>Print this packet</span>", "print-button"));
@@ -2408,7 +2412,7 @@ font-size: 0.92em;
   }
 })();
 </script>
-<script>window.PRINTBAR_ANSWERS = true;</script>
+<script>window.PRINTBAR_ANSWERS = "hw2_instructor.html#print";</script>
 
   
   <script>
