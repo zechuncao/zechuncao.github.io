@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-10-21">
+<meta name="dcterms.date" content="2026-10-28">
 
 <title>Homework 2 — Queues, Deques, Priority Queues, and Recursion</title>
 <style>
@@ -2347,6 +2347,10 @@ overflow: visible;
 
 .print-bar {
 margin: 0 0 1.75em 0;
+display: flex;
+align-items: center;
+gap: 1em;
+flex-wrap: wrap;
 }
 a.print-button,
 a.print-button:visited {
@@ -2371,6 +2375,9 @@ a.print-button:focus-visible {
 outline: 3px solid rgba(69, 130, 236, 0.4);
 outline-offset: 2px;
 }
+a.print-blank {
+font-size: 0.92em;
+}
 @media print {
 .print-bar { display: none; }
 }
@@ -2386,19 +2393,43 @@ outline-offset: 2px;
     '<path d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2V7zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/>' +
     "</svg>";
 
+  // The hash tells the printable copy to open the print dialog once it has
+  // finished paginating.
+  var BLANK = "hw2_print.html#print";
+
+  function link(href, label, className) {
+    var a = document.createElement("a");
+    a.className = className;
+    a.href = href;
+    a.target = "_blank";
+    a.rel = "noopener";
+    a.innerHTML = label;
+    return a;
+  }
+
   function init() {
-    var link = document.createElement("a");
-    link.className = "print-button";
-    // The hash tells the printable copy to open the print dialog once it has
-    // finished paginating.
-    link.href = "hw2_print.html#print";
-    link.target = "_blank";
-    link.rel = "noopener";
-    link.innerHTML = PRINTER_SVG + "<span>Print this packet</span>";
+    // _quarto-review.yml sets this to the answered copy's href. The review
+    // page shows the answers, so its button prints that copy; the blank copy
+    // stays one click away so the packet can still be printed clean and
+    // worked again. The href lives in the review profile rather than here so
+    // the phase-1 builds carry no reference to the answer key at all, not
+    // even its filename. Read it here rather than at parse time: Quarto emits
+    // an inline `text:` include after the file includes whatever order the
+    // yml lists them in, so it is not set yet when this script is first
+    // evaluated.
+    var answers = typeof window.PRINTBAR_ANSWERS === "string"
+      ? window.PRINTBAR_ANSWERS
+      : null;
 
     var bar = document.createElement("div");
     bar.className = "print-bar";
-    bar.appendChild(link);
+
+    if (answers) {
+      bar.appendChild(link(answers, PRINTER_SVG + "<span>Print with answers</span>", "print-button"));
+      bar.appendChild(link(BLANK, "<span>Print a blank copy</span>", "print-blank"));
+    } else {
+      bar.appendChild(link(BLANK, PRINTER_SVG + "<span>Print this packet</span>", "print-button"));
+    }
 
     var title = document.getElementById("title-block-header");
     if (title && title.parentNode) {
@@ -2416,6 +2447,7 @@ outline-offset: 2px;
   }
 })();
 </script>
+<script>window.PRINTBAR_ANSWERS = "hw2_instructor.html#print";</script>
 
   
   <script>
@@ -2508,10 +2540,7 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#how-to-use-this-packet" id="toc-how-to-use-this-packet" class="nav-link active" data-scroll-target="#how-to-use-this-packet">How to use this packet</a>
-  <ul class="collapse">
-  <li><a href="#typing-in-this-page-or-printing-it" id="toc-typing-in-this-page-or-printing-it" class="nav-link" data-scroll-target="#typing-in-this-page-or-printing-it">Typing in this page, or printing it</a></li>
-  </ul></li>
+  <li><a href="#how-to-use-this-packet" id="toc-how-to-use-this-packet" class="nav-link active" data-scroll-target="#how-to-use-this-packet">How to use this packet</a></li>
   <li><a href="#part-a-the-queue-the-deque-and-the-priority-queue" id="toc-part-a-the-queue-the-deque-and-the-priority-queue" class="nav-link" data-scroll-target="#part-a-the-queue-the-deque-and-the-priority-queue">Part A — The queue, the deque, and the priority queue</a>
   <ul class="collapse">
   <li><a href="#problem-1-what-is-printed" id="toc-problem-1-what-is-printed" class="nav-link" data-scroll-target="#problem-1-what-is-printed">Problem 1 — What is printed?</a></li>
@@ -2568,7 +2597,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Updated</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 21, 2026</p>
+      <p class="date">October 28, 2026</p>
     </div>
   </div>
   
@@ -2585,11 +2614,20 @@ window.Quarto = {
 <p>This packet covers <strong>Chapter 3</strong> — the queue, deque, and priority queue ADTs and their array and linked implementations — together with a first look at <strong>recursion</strong>. Those are also the topics on Exam 2.</p>
 <p>It is not collected on Blackboard. Work every problem on paper before you look at anything else, and bring your work to the in-class review session.</p>
 <p>Conventions used throughout. Queue contents are listed <strong>front → back</strong>, and deque contents <strong>front → back</strong> as well. The queue ADT is <code>enqueue</code>, <code>dequeue</code>, <code>getFront</code>, <code>isEmpty</code>, <code>clear</code>; <code>dequeue</code> and <code>getFront</code> throw <code>EmptyQueueException</code> on an empty queue. The deque ADT is <code>addToFront</code>, <code>addToBack</code>, <code>removeFront</code>, <code>removeBack</code>, <code>getFront</code>, <code>getBack</code>. A priority queue removes the entry of <strong>highest</strong> priority, and a <strong>smaller</strong> number means a higher priority. The circular array of length <code>n</code> leaves one location unused, starts with <code>frontIndex = 0</code> and <code>backIndex = n - 1</code>, and tests <code>frontIndex == (backIndex + 1) % n</code> for empty and <code>frontIndex == (backIndex + 2) % n</code> for full. The linked implementation keeps <code>firstNode</code> at the front and <code>lastNode</code> at the back. A Big O answer is the tightest simple bound, and <span class="math inline">\log</span> means <span class="math inline">\log_2</span>.</p>
-<section id="typing-in-this-page-or-printing-it" class="level3">
-<h3 class="anchored" data-anchor-id="typing-in-this-page-or-printing-it">Typing in this page, or printing it</h3>
-<p>You can type into the work boxes on this page. What you type is saved in this browser on this computer, so you can close the page and come back to where you left off. It is not sent anywhere and nobody else can see it, and clearing your browsing data erases it. Nothing here is submitted.</p>
-<p>To print, use the <strong>Print this packet</strong> button at the top of the page. A blank copy opens in a new tab and the print dialog follows. Set <strong>Paper size</strong> to <em>Letter</em> and turn <strong>off</strong> “Headers and footers”. If the right edge is cut off, set <strong>Margins</strong> to <em>None</em>. Choose <strong>Save as PDF</strong> to annotate it on a tablet. Use <strong>Chrome</strong> or <strong>Edge</strong>; Firefox and Safari may break the pages in the wrong places.</p>
-</section>
+<div class="callout callout-style-default callout-note callout-titled" title="Reviewing on your own?">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Reviewing on your own?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The answers are now shown. Try each problem first, then click <strong>Show answer</strong> to check your work. If your answer disagrees with the key, go back and redo the problem before you read the explanation. You can type into the work boxes here, and what you type is saved in this browser.</p>
+<p><strong>Print with answers</strong> gives you the worked packet to study from. <strong>Print a blank copy</strong> gives you the questions on their own, so you can work through them again before the exam.</p>
+</div>
+</div>
 </section>
 <section id="part-a-the-queue-the-deque-and-the-priority-queue" class="level1">
 <h1>Part A — The queue, the deque, and the priority queue</h1>
@@ -2613,6 +2651,27 @@ window.Quarto = {
 <div class="workbox" style="min-height:1.8in;">
 (Problem 1, parts (a)–(c))
 </div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Show answer — Problem 1">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Show answer — Problem 1
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p><code>PQQS</code>.</p></li>
+<li><p><code>S R</code>.</p></li>
+<li><p>The two <code>getFront</code> calls. <code>getFront</code> is an accessor: it returns the front entry and removes nothing. <code>dequeue</code> returns the front entry <em>and</em> removes it.</p></li>
+</ol>
+<p>Step by step: three enqueues give <code>P Q R</code>, and <code>dequeue</code> prints <code>P</code>, leaving <code>Q R</code>. <code>enqueue(&quot;S&quot;)</code> gives <code>Q R S</code>. <code>getFront</code> prints <code>Q</code> and changes nothing; <code>dequeue</code> prints <code>Q</code>, leaving <code>R S</code>. In <code>q.enqueue(q.dequeue())</code> the inner call removes <code>R</code> and the outer call puts it at the back, so the queue becomes <code>S R</code> — one entry moved from front to back. The last <code>getFront</code> prints <code>S</code>.</p>
+</div>
+</div>
+</div>
 </section>
 <section id="problem-2-the-queue-after-every-statement" class="level2">
 <h2 class="anchored" data-anchor-id="problem-2-the-queue-after-every-statement">Problem 2 — The queue after every statement</h2>
@@ -2630,6 +2689,65 @@ window.Quarto = {
 <div class="workbox" style="min-height:2.6in;">
 (Problem 2 — the queue after each statement, and the value of next)
 </div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Show answer — Problem 2">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Show answer — Problem 2
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>statement</th>
+<th>queue (front → back)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>enqueue(&quot;Ivy&quot;)</code></td>
+<td>Ivy</td>
+</tr>
+<tr class="even">
+<td><code>enqueue(&quot;Jon&quot;)</code></td>
+<td>Ivy Jon</td>
+</tr>
+<tr class="odd">
+<td><code>enqueue(&quot;Kay&quot;)</code></td>
+<td>Ivy Jon Kay</td>
+</tr>
+<tr class="even">
+<td><code>enqueue(dequeue())</code></td>
+<td>Jon Kay Ivy</td>
+</tr>
+<tr class="odd">
+<td><code>enqueue(getFront())</code></td>
+<td>Jon Kay Ivy Jon</td>
+</tr>
+<tr class="even">
+<td><code>enqueue(&quot;Lou&quot;)</code></td>
+<td>Jon Kay Ivy Jon Lou</td>
+</tr>
+<tr class="odd">
+<td><code>next = dequeue()</code></td>
+<td>Kay Ivy Jon Lou</td>
+</tr>
+<tr class="even">
+<td><code>enqueue(getFront())</code></td>
+<td>Kay Ivy Jon Lou Kay</td>
+</tr>
+</tbody>
+</table>
+<p><code>next</code> is <code>Jon</code>.</p>
+<p>Two statements look alike and are not. <code>enqueue(dequeue())</code> moves the front entry to the back and leaves the length unchanged. <code>enqueue(getFront())</code> <em>copies</em> the front entry to the back and makes the queue one longer, so <code>Jon</code> appears twice.</p>
+</div>
+</div>
+</div>
 </section>
 <section id="problem-3-the-deque-after-every-statement" class="level2">
 <h2 class="anchored" data-anchor-id="problem-3-the-deque-after-every-statement">Problem 3 — The deque after every statement</h2>
@@ -2646,6 +2764,68 @@ window.Quarto = {
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>d<span class="op">.</span><span class="fu">addToFront</span><span class="op">(</span>d<span class="op">.</span><span class="fu">getBack</span><span class="op">());</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="workbox" style="min-height:2.8in;">
 (Problem 3 — the deque after each statement)
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Show answer — Problem 3">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Show answer — Problem 3
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>statement</th>
+<th>deque (front → back)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>addToFront(&quot;Ray&quot;)</code></td>
+<td>Ray</td>
+</tr>
+<tr class="even">
+<td><code>addToFront(&quot;Sue&quot;)</code></td>
+<td>Sue Ray</td>
+</tr>
+<tr class="odd">
+<td><code>addToBack(&quot;Tim&quot;)</code></td>
+<td>Sue Ray Tim</td>
+</tr>
+<tr class="even">
+<td><code>addToBack(&quot;Uma&quot;)</code></td>
+<td>Sue Ray Tim Uma</td>
+</tr>
+<tr class="odd">
+<td><code>name = removeFront()</code> (<code>name</code> is Sue)</td>
+<td>Ray Tim Uma</td>
+</tr>
+<tr class="even">
+<td><code>addToBack(name)</code></td>
+<td>Ray Tim Uma Sue</td>
+</tr>
+<tr class="odd">
+<td><code>addToBack(getFront())</code></td>
+<td>Ray Tim Uma Sue Ray</td>
+</tr>
+<tr class="even">
+<td><code>addToFront(removeBack())</code></td>
+<td>Ray Ray Tim Uma Sue</td>
+</tr>
+<tr class="odd">
+<td><code>addToFront(getBack())</code></td>
+<td>Sue Ray Ray Tim Uma Sue</td>
+</tr>
+</tbody>
+</table>
+<p>The last two statements are the ones to watch. <code>addToFront(removeBack())</code> takes <code>Ray</code> off the back and puts it on the front, so the length does not change. <code>addToFront(getBack())</code> copies <code>Sue</code> from the back to the front, so <code>Sue</code> now sits at both ends.</p>
+</div>
+</div>
 </div>
 </section>
 <section id="problem-4-priority-queues-with-and-without-ties" class="level2">
@@ -2665,6 +2845,26 @@ window.Quarto = {
 </ol>
 <div class="workbox" style="min-height:2.4in;">
 (Problem 4, parts (a)–(c))
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Show answer — Problem 4">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Show answer — Problem 4
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p>Removed in the order <code>2, 3, 5</code>; <code>7</code> and <code>9</code> remain. The first <code>remove</code> takes the smallest of <span class="math inline">\{5, 9, 2, 7\}</span>, which is 2. After <code>add(3)</code> the queue holds <span class="math inline">\{5, 9, 7, 3\}</span>, so the next two removals take 3 and then 5. Arrival order plays no part.</p></li>
+<li><p><code>C, A, E, B, D</code>. <code>C</code> has priority 1. <code>A</code> and <code>E</code> both have priority 2 and <code>A</code> was added first. <code>B</code> and <code>D</code> both have priority 4 and <code>B</code> was added first.</p></li>
+<li><p><code>[(C,1), (A,2), (E,2), (B,4), (D,4)]</code>. Inserting a new entry after every entry of equal or higher priority puts it behind the entries it ties with, so the earlier arrival stays closer to index 0 and is removed first. Inserting <em>before</em> the equals would reverse each group of ties and give <code>C, E, A, D, B</code>.</p></li>
+</ol>
+</div>
+</div>
 </div>
 </section>
 <section id="problem-5-simulate-a-waiting-line" class="level2">
@@ -2714,6 +2914,77 @@ window.Quarto = {
 <div class="workbox" style="min-height:2.6in;">
 (Problem 5, parts (a)–(c))
 </div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Show answer — Problem 5">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Show answer — Problem 5
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li>Each customer begins at <span class="math inline">\max(\text{arrival},\ \text{previous
+departure})</span>.</li>
+</ol>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">customer</th>
+<th style="text-align: center;">arrives</th>
+<th style="text-align: center;">begins</th>
+<th style="text-align: center;">waits</th>
+<th style="text-align: center;">departs</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">6</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">9</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">11</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">11</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">15</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">15</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">16</td>
+</tr>
+</tbody>
+</table>
+<ol start="2" type="a">
+<li><p>Five served; average wait <span class="math inline">(0 + 4 + 3 + 4 + 3)/5 = 14/5 = 2.8</span> time units.</p></li>
+<li><p>Customer 2 is being served (service runs from 6 to 9). Customers 3 and 4 are waiting, in that order — 3 arrived at time 6 and 4 at time 7. Customer 1 left at time 6 and customer 5 has not arrived.</p></li>
+</ol>
+</div>
+</div>
+</div>
 </section>
 <section id="problem-6-which-adt" class="level2">
 <h2 class="anchored" data-anchor-id="problem-6-which-adt">Problem 6 — Which ADT?</h2>
@@ -2727,6 +2998,28 @@ window.Quarto = {
 </ol>
 <div class="workbox" style="min-height:2.2in;">
 (Problem 6, parts (a)–(e))
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Show answer — Problem 6">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Show answer — Problem 6
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p><strong>Queue.</strong> Remove the oldest entry: first in, first out.</p></li>
+<li><p><strong>Priority queue.</strong> Remove the entry of highest priority, whatever its arrival time. A plain queue would be right only if every patient were equally urgent.</p></li>
+<li><p><strong>Stack.</strong> Remove the most recently added entry: last in, first out.</p></li>
+<li><p><strong>Deque.</strong> The two requirements pull in opposite directions. Backspace removes at the <em>back</em> — the most recent character; delivery removes from the <em>front</em> — the oldest. <code>removeBack</code> serves the first and <code>removeFront</code> the second. A stack alone would deliver the line reversed, and a queue cannot remove the most recent character.</p></li>
+<li><p><strong>Stack.</strong> Each closing bracket must match the most recent unmatched opening bracket, which is LIFO.</p></li>
+</ol>
+</div>
+</div>
 </div>
 </section>
 <section id="problem-7-true-or-false-with-a-reason" class="level2">
@@ -2743,6 +3036,29 @@ window.Quarto = {
 <div class="workbox" style="min-height:2.6in;">
 (Problem 7, parts (a)–(f))
 </div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Show answer — Problem 7">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Show answer — Problem 7
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p><strong>T.</strong> <code>addToFront</code> puts each new entry ahead of the last, so the deque reads <code>z y x</code> front → back, and three <code>removeFront</code> calls return <code>z</code>, <code>y</code>, <code>x</code>. Adding and removing at the same end is stack behavior.</p></li>
+<li><p><strong>T.</strong> Add at the back and remove from the front is exactly first in, first out.</p></li>
+<li><p><strong>F.</strong> It returns them by priority. Arrival order matters only for ties, and only if the implementation keeps ties in order.</p></li>
+<li><p><strong>T.</strong> Both are accessors. Only <code>dequeue</code>, <code>removeFront</code>, and <code>removeBack</code> remove.</p></li>
+<li><p><strong>F.</strong> Moving entries from one queue to another, or from a queue back into itself, never changes their relative order. Reversal needs a stack, or a deque used from both ends.</p></li>
+<li><p><strong>F.</strong> It does not decrease in value one step at a time, but it wraps: from <code>n - 1</code> the next <code>dequeue</code> sets it to 0, which is smaller.</p></li>
+</ol>
+</div>
+</div>
+</div>
 </section>
 <section id="problem-8-reversing-a-queue-and-a-stack-from-a-deque" class="level2">
 <h2 class="anchored" data-anchor-id="problem-8-reversing-a-queue-and-a-stack-from-a-deque">Problem 8 — Reversing a queue, and a stack from a deque</h2>
@@ -2753,6 +3069,34 @@ window.Quarto = {
 </ol>
 <div class="workbox" style="min-height:2.6in;">
 (Problem 8, parts (a)–(c))
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Show answer — Problem 8">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Show answer — Problem 8
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li></li>
+</ol>
+<pre><code>Create an empty stack s
+while (q is not empty)
+    s.push(q.dequeue())
+while (s is not empty)
+    q.enqueue(s.pop())</code></pre>
+<p>Every entry is moved exactly twice, so the work is <span class="math inline">O(n)</span>.</p>
+<ol start="2" type="a">
+<li><p>A queue preserves order. Moving entries from one queue to another hands them over oldest first and adds them oldest first, so their relative sequence never changes, no matter how many times they are moved. The reversal comes from the stack’s LIFO removal rule, and nothing in the queue ADT supplies it.</p></li>
+<li><p><code>push</code> is <code>d.addToFront(newEntry)</code>, <code>pop</code> is <code>d.removeFront()</code>, and <code>peek</code> is <code>d.getFront()</code>. With <code>pop</code> written as <code>d.removeBack()</code> the class adds at one end and removes at the other, which is first in, first out: it would behave as a queue, and <code>peek</code> would no longer name the entry that <code>pop</code> returns.</p></li>
+</ol>
+</div>
+</div>
 </div>
 </section>
 </section>
@@ -2770,6 +3114,27 @@ window.Quarto = {
 <div class="workbox" style="min-height:2.2in;">
 (Problem 9, parts (a)–(d))
 </div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Show answer — Problem 9">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Show answer — Problem 9
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p><code>frontIndex == (backIndex + 1) % 8</code>.</p></li>
+<li><p><code>frontIndex == (backIndex + 2) % 8</code>.</p></li>
+<li><p>Seven. One of the eight locations is always empty, so the capacity is <span class="math inline">n - 1</span>.</p></li>
+<li><p>An empty queue has <code>frontIndex</code> one past <code>backIndex</code>. If every location could be filled, a full queue would also have <code>frontIndex</code> one past <code>backIndex</code> — the last <code>enqueue</code> advances <code>backIndex</code> to the slot just before <code>frontIndex</code>. The two conditions would be identical and <code>isEmpty()</code> could not tell them apart. Leaving one location unused keeps the full test two past <code>backIndex</code> instead of one, which no empty queue can satisfy. The price is one wasted slot.</p></li>
+</ol>
+</div>
+</div>
+</div>
 </section>
 <section id="problem-10-how-many-entries" class="level2">
 <h2 class="anchored" data-anchor-id="problem-10-how-many-entries">Problem 10 — How many entries?</h2>
@@ -2781,6 +3146,26 @@ window.Quarto = {
 </ol>
 <div class="workbox" style="min-height:2.0in;">
 (Problem 10, parts (a)–(c))
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Show answer — Problem 10">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Show answer — Problem 10
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p>Six. The count is <code>(backIndex - frontIndex + 1 + n) % n</code> <span class="math inline">= (2 - 6 + 1 + 9) \bmod 9 = 6</span>. The entries occupy indices 6, 7, 8, 0, 1, 2 — the walk from <code>frontIndex</code> wraps past the end of the array.</p></li>
+<li><p>No. Full would mean <code>frontIndex == (backIndex + 2) % 9</code>, that is <code>frontIndex == 4</code>, and <code>frontIndex</code> is 6.</p></li>
+<li><p>Two. The capacity is <span class="math inline">n - 1 = 8</span> entries and the queue holds 6.</p></li>
+</ol>
+</div>
+</div>
 </div>
 </section>
 <section id="problem-11-trace-the-circular-array" class="level2">
@@ -2910,6 +3295,144 @@ window.Quarto = {
 <div class="workbox" style="min-height:1.2in;">
 (Problem 11, parts (a)–(b))
 </div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Show answer — Problem 11">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Show answer — Problem 11
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li></li>
+</ol>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">operation</th>
+<th style="text-align: center;">0</th>
+<th style="text-align: center;">1</th>
+<th style="text-align: center;">2</th>
+<th style="text-align: center;">3</th>
+<th style="text-align: center;">4</th>
+<th style="text-align: center;">5</th>
+<th style="text-align: center;">front</th>
+<th style="text-align: center;">back</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>enqueue(11)</code></td>
+<td style="text-align: center;">11</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>enqueue(22)</code></td>
+<td style="text-align: center;">11</td>
+<td style="text-align: center;">22</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>enqueue(33)</code></td>
+<td style="text-align: center;">11</td>
+<td style="text-align: center;">22</td>
+<td style="text-align: center;">33</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>dequeue()</code> → 11</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">22</td>
+<td style="text-align: center;">33</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>dequeue()</code> → 22</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">33</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>enqueue(44)</code></td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">33</td>
+<td style="text-align: center;">44</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>enqueue(55)</code></td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">33</td>
+<td style="text-align: center;">44</td>
+<td style="text-align: center;">55</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>enqueue(66)</code></td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">33</td>
+<td style="text-align: center;">44</td>
+<td style="text-align: center;">55</td>
+<td style="text-align: center;">66</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>enqueue(77)</code></td>
+<td style="text-align: center;">77</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">33</td>
+<td style="text-align: center;">44</td>
+<td style="text-align: center;">55</td>
+<td style="text-align: center;">66</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">0</td>
+</tr>
+</tbody>
+</table>
+<p>The last <code>enqueue</code> is the wraparound: <code>backIndex = (5 + 1) % 6 = 0</code>, so 77 lands at index 0, ahead of the front entry in the array but behind it in the queue.</p>
+<ol start="2" type="a">
+<li>Yes. <code>(backIndex + 2) % 6 = (0 + 2) % 6 = 2</code>, which equals <code>frontIndex</code>. Five entries sit in a six-slot array and <strong>index 1</strong> is the unused location.</li>
+</ol>
+</div>
+</div>
+</div>
 </section>
 <section id="problem-12-where-are-the-indices" class="level2">
 <h2 class="anchored" data-anchor-id="problem-12-where-are-the-indices">Problem 12 — Where are the indices?</h2>
@@ -2921,6 +3444,26 @@ window.Quarto = {
 </ol>
 <div class="workbox" style="min-height:2.2in;">
 (Problem 12, parts (a)–(c))
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Show answer — Problem 12">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Show answer — Problem 12
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p>The 8 enqueues fill indices 0 through 7, so <code>backIndex = 7</code>. The 5 dequeues advance <code>frontIndex</code> to 5. Entries: <span class="math inline">(7 - 5 + 1 + 10) \bmod 10 = 3</span>, at indices 5, 6, 7.</p></li>
+<li><p>Six enqueues advance <code>backIndex</code> from 7 through 8, 9, 0, 1, 2 to <strong>3</strong>: <span class="math inline">(7 + 6) \bmod 10 = 3</span>. <code>frontIndex</code> is unchanged at 5. Entries: <span class="math inline">(3 - 5 + 1 + 10) \bmod 10 = 9</span>.</p></li>
+<li><p>Yes, exactly full. <code>(backIndex + 2) % 10 = (3 + 2) % 10 = 5</code>, which equals <code>frontIndex</code>. Nine entries occupy indices 5, 6, 7, 8, 9, 0, 1, 2, 3, and <strong>index 4</strong> is the unused location. A tenth enqueue would force a resize.</p></li>
+</ol>
+</div>
+</div>
 </div>
 </section>
 <section id="problem-13-growing-a-full-queue" class="level2">
@@ -2958,24 +3501,98 @@ window.Quarto = {
 <div class="workbox" style="min-height:2.4in;">
 (Problem 13, parts (a)–(c))
 </div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Show answer — Problem 13">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Show answer — Problem 13
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-14" class="callout-14-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p>Front to back: <strong>3, 5, 7, 1, 8</strong>. The walk starts at <code>frontIndex = 4</code> and wraps: indices 4, 5, 0, 1, 2. Full: <code>(backIndex + 2) % 6 = (2 + 2) % 6 = 4</code>, which equals <code>frontIndex</code>. Five entries in a six-slot array, with index 3 unused.</p></li>
+<li><p>The copy puts the front at index 0, in queue order:</p></li>
+</ol>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">index</th>
+<th style="text-align: center;">0</th>
+<th style="text-align: center;">1</th>
+<th style="text-align: center;">2</th>
+<th style="text-align: center;">3</th>
+<th style="text-align: center;">4</th>
+<th style="text-align: center;">5</th>
+<th style="text-align: center;">6</th>
+<th style="text-align: center;">7</th>
+<th style="text-align: center;">8</th>
+<th style="text-align: center;">9</th>
+<th style="text-align: center;">10</th>
+<th style="text-align: center;">11</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">after copy</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">–</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">after <code>enqueue(9)</code></td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">9</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">–</td>
+</tr>
+</tbody>
+</table>
+<p>After the copy <code>frontIndex = 0</code> and <code>backIndex = 4</code>; the enqueue advances <code>backIndex</code> to 5 and stores 9 there.</p>
+<ol start="3" type="a">
+<li>The entries wrap around the end of the old array — index 5 is followed by index 0. Copied slot for slot into a longer array, index 5 would no longer be followed by index 0 but by the six new empty slots, so the queue’s order would be broken in the middle. The copy has to walk the old array in queue order, starting at <code>frontIndex</code>.</li>
+</ol>
+</div>
+</div>
+</div>
 </section>
 <section id="problem-14-complete-the-array-implementation" class="level2">
 <h2 class="anchored" data-anchor-id="problem-14-complete-the-array-implementation">Problem 14 — Complete the array implementation</h2>
 <p><code>ensureCapacity()</code> guarantees room for one more entry, and <code>getFront()</code> throws <code>EmptyQueueException</code> on an empty queue. Complete the two methods.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">void</span> <span class="fu">enqueue</span><span class="op">(</span>T newEntry<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ensureCapacity</span><span class="op">();</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>   <span class="co">// Your code below (2 lines)</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> T <span class="fu">dequeue</span><span class="op">()</span> <span class="op">{</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>   T front <span class="op">=</span> <span class="fu">getFront</span><span class="op">();</span>   <span class="co">// might throw EmptyQueueException</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>   <span class="co">// Your code below (2 lines): release the slot, then advance frontIndex</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> front<span class="op">;</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">void</span> <span class="fu">enqueue</span><span class="op">(</span>T newEntry<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ensureCapacity</span><span class="op">();</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>   <span class="co">// Your code below (2 lines)</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> T <span class="fu">dequeue</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>   T front <span class="op">=</span> <span class="fu">getFront</span><span class="op">();</span>   <span class="co">// might throw EmptyQueueException</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>   <span class="co">// Your code below (2 lines): release the slot, then advance frontIndex</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> front<span class="op">;</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ol type="a">
 <li>Fill in the four lines.</li>
 <li>Why must the <code>% queue.length</code> appear in both methods?</li>
@@ -2984,16 +3601,50 @@ window.Quarto = {
 <div class="workbox" style="min-height:1.8in;">
 (Problem 14, parts (a)–(c))
 </div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Show answer — Problem 14">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Show answer — Problem 14
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-15" class="callout-15-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li></li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">void</span> <span class="fu">enqueue</span><span class="op">(</span>T newEntry<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ensureCapacity</span><span class="op">();</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>   backIndex <span class="op">=</span> <span class="op">(</span>backIndex <span class="op">+</span> <span class="dv">1</span><span class="op">)</span> <span class="op">%</span> queue<span class="op">.</span><span class="fu">length</span><span class="op">;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>   queue<span class="op">[</span>backIndex<span class="op">]</span> <span class="op">=</span> newEntry<span class="op">;</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> T <span class="fu">dequeue</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>   T front <span class="op">=</span> <span class="fu">getFront</span><span class="op">();</span>   <span class="co">// might throw EmptyQueueException</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>   queue<span class="op">[</span>frontIndex<span class="op">]</span> <span class="op">=</span> <span class="kw">null</span><span class="op">;</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>   frontIndex <span class="op">=</span> <span class="op">(</span>frontIndex <span class="op">+</span> <span class="dv">1</span><span class="op">)</span> <span class="op">%</span> queue<span class="op">.</span><span class="fu">length</span><span class="op">;</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> front<span class="op">;</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ol start="2" type="a">
+<li><p>It is the wraparound. Both indices move forward through the array and must come back to 0 after the last slot; without the remainder, the next <code>enqueue</code> past the end would write outside the array and the next <code>dequeue</code> past the end would read outside it.</p></li>
+<li><p>The queue still behaves correctly — <code>frontIndex</code> decides what is in it — but the array keeps a reference to an entry the queue no longer holds, so the garbage collector cannot reclaim it. That is the loitering problem from Chapter 2.</p></li>
+</ol>
+</div>
+</div>
+</div>
 </section>
 <section id="problem-15-the-copy-loop" class="level2">
 <h2 class="anchored" data-anchor-id="problem-15-the-copy-loop">Problem 15 — The copy loop</h2>
 <p>During a resize, the <code>oldSize - 1</code> entries of the full old array <code>oldQueue</code> are copied into the new array <code>queue</code> so that the front lands at index 0. Complete the loop <strong>without</strong> modifying <code>frontIndex</code> inside it, then set the two indices.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> index <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> index <span class="op">&lt;</span> oldSize <span class="op">-</span> <span class="dv">1</span><span class="op">;</span> index<span class="op">++)</span> <span class="op">{</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>   <span class="co">// Your code below (1 line)</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">// Your code below (2 lines)</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> index <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> index <span class="op">&lt;</span> oldSize <span class="op">-</span> <span class="dv">1</span><span class="op">;</span> index<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>   <span class="co">// Your code below (1 line)</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">// Your code below (2 lines)</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ol type="a">
 <li>Fill in the three lines.</li>
 <li>Why does the loop run <code>oldSize - 1</code> times rather than <code>oldSize</code> times?</li>
@@ -3002,30 +3653,61 @@ window.Quarto = {
 <div class="workbox" style="min-height:1.8in;">
 (Problem 15, parts (a)–(c))
 </div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Show answer — Problem 15">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Show answer — Problem 15
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-16" class="callout-16-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li></li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> index <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> index <span class="op">&lt;</span> oldSize <span class="op">-</span> <span class="dv">1</span><span class="op">;</span> index<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>   queue<span class="op">[</span>index<span class="op">]</span> <span class="op">=</span> oldQueue<span class="op">[(</span>frontIndex <span class="op">+</span> index<span class="op">)</span> <span class="op">%</span> oldSize<span class="op">];</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>frontIndex <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>backIndex <span class="op">=</span> oldSize <span class="op">-</span> <span class="dv">2</span><span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>(frontIndex + index) % oldSize</code> walks the old array in queue order, wrapping past its end. After the copy the entries occupy indices 0 through <code>oldSize - 2</code>, which is what the two assignments record.</p>
+<ol start="2" type="a">
+<li><p>Because a full queue holds <code>oldSize - 1</code> entries, not <code>oldSize</code> — one location is always unused. Copying <code>oldSize</code> entries would copy the unused slot as well and leave a <code>null</code> inside the queue.</p></li>
+<li></li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>queue<span class="op">[</span>index<span class="op">]</span> <span class="op">=</span> oldQueue<span class="op">[</span>frontIndex<span class="op">];</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>frontIndex <span class="op">=</span> <span class="op">(</span>frontIndex <span class="op">+</span> <span class="dv">1</span><span class="op">)</span> <span class="op">%</span> oldSize<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Two lines instead of one, and <code>frontIndex</code> must still be set to 0 afterwards. Both versions are correct; the one that leaves <code>frontIndex</code> alone is easier to reason about, because the field means the same thing throughout the loop.</p>
+</div>
+</div>
+</div>
 </section>
 <section id="problem-16-complete-the-linked-implementation" class="level2">
 <h2 class="anchored" data-anchor-id="problem-16-complete-the-linked-implementation">Problem 16 — Complete the linked implementation</h2>
 <p>Each <code>Node</code> holds <code>data</code> and <code>next</code>, has the constructor <code>Node(T entry, Node nextNode)</code>, and provides <code>getData()</code>, <code>getNext()</code>, and <code>setNext(Node)</code>. The field <code>firstNode</code> refers to the front node and <code>lastNode</code> to the back node; both are <code>null</code> when the queue is empty.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">void</span> <span class="fu">enqueue</span><span class="op">(</span>T newEntry<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>   <span class="bu">Node</span> newNode <span class="op">=</span> <span class="kw">new</span> <span class="bu">Node</span><span class="op">(</span>newEntry<span class="op">,</span> <span class="kw">null</span><span class="op">);</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span> <span class="op">(</span><span class="fu">isEmpty</span><span class="op">())</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>      <span class="co">// Your code below (1 line)</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>   <span class="cf">else</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>      <span class="co">// Your code below (1 line)</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>   <span class="co">// Your code below (1 line)</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> T <span class="fu">dequeue</span><span class="op">()</span> <span class="op">{</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>   T front <span class="op">=</span> <span class="fu">getFront</span><span class="op">();</span>   <span class="co">// might throw EmptyQueueException</span></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>   firstNode <span class="op">=</span> firstNode<span class="op">.</span><span class="fu">getNext</span><span class="op">();</span></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span> <span class="op">(</span>firstNode <span class="op">==</span> <span class="kw">null</span><span class="op">)</span></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>      <span class="co">// Your code below (1 line)</span></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> front<span class="op">;</span></span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">void</span> <span class="fu">enqueue</span><span class="op">(</span>T newEntry<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>   <span class="bu">Node</span> newNode <span class="op">=</span> <span class="kw">new</span> <span class="bu">Node</span><span class="op">(</span>newEntry<span class="op">,</span> <span class="kw">null</span><span class="op">);</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span> <span class="op">(</span><span class="fu">isEmpty</span><span class="op">())</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>      <span class="co">// Your code below (1 line)</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>   <span class="cf">else</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>      <span class="co">// Your code below (1 line)</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>   <span class="co">// Your code below (1 line)</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> T <span class="fu">dequeue</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>   T front <span class="op">=</span> <span class="fu">getFront</span><span class="op">();</span>   <span class="co">// might throw EmptyQueueException</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>   firstNode <span class="op">=</span> firstNode<span class="op">.</span><span class="fu">getNext</span><span class="op">();</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span> <span class="op">(</span>firstNode <span class="op">==</span> <span class="kw">null</span><span class="op">)</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>      <span class="co">// Your code below (1 line)</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> front<span class="op">;</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ol type="a">
 <li>Fill in the four lines.</li>
 <li>Why does the empty case assign <code>firstNode</code> while every case assigns <code>lastNode</code>?</li>
@@ -3034,6 +3716,45 @@ window.Quarto = {
 </ol>
 <div class="workbox" style="min-height:2.0in;">
 (Problem 16, parts (a)–(d))
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Show answer — Problem 16">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Show answer — Problem 16
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-17" class="callout-17-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li></li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">void</span> <span class="fu">enqueue</span><span class="op">(</span>T newEntry<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>   <span class="bu">Node</span> newNode <span class="op">=</span> <span class="kw">new</span> <span class="bu">Node</span><span class="op">(</span>newEntry<span class="op">,</span> <span class="kw">null</span><span class="op">);</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span> <span class="op">(</span><span class="fu">isEmpty</span><span class="op">())</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>      firstNode <span class="op">=</span> newNode<span class="op">;</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>   <span class="cf">else</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>      lastNode<span class="op">.</span><span class="fu">setNext</span><span class="op">(</span>newNode<span class="op">);</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>   lastNode <span class="op">=</span> newNode<span class="op">;</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> T <span class="fu">dequeue</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>   T front <span class="op">=</span> <span class="fu">getFront</span><span class="op">();</span>   <span class="co">// might throw EmptyQueueException</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>   firstNode <span class="op">=</span> firstNode<span class="op">.</span><span class="fu">getNext</span><span class="op">();</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span> <span class="op">(</span>firstNode <span class="op">==</span> <span class="kw">null</span><span class="op">)</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>      lastNode <span class="op">=</span> <span class="kw">null</span><span class="op">;</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> front<span class="op">;</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ol start="2" type="a">
+<li><p>A one-entry queue has the same node at both ends, so when the queue was empty the new node is the front as well as the back. In every other case the front does not change — the new node goes behind the existing last node — but the back always becomes the new node, so <code>lastNode = newNode</code> sits outside the <code>if</code>.</p></li>
+<li><p><code>dequeue</code> on a one-entry queue sets <code>firstNode</code> to <code>null</code> but leaves <code>lastNode</code> pointing at the node just removed. <code>isEmpty()</code> tests <code>firstNode == null</code>, so the queue correctly reports empty; the damage shows on the next <code>enqueue</code>, which takes the <code>isEmpty()</code> branch, sets <code>firstNode</code> to the new node, and then assigns <code>lastNode = newNode</code> — so this particular <code>enqueue</code> repairs it. The bug bites when <code>lastNode</code> is used before that: <code>getBack()</code>-style access, or an <code>enqueue</code> written to call <code>lastNode.setNext(newNode)</code> unconditionally, would link the new node behind a node that is no longer in the queue. A clean exposing sequence is <code>enqueue(1)</code>, <code>dequeue()</code>, then any use of <code>lastNode</code> before the next <code>enqueue</code>.</p></li>
+<li><p>Both are <span class="math inline">O(1)</span>. <code>enqueue</code> reaches the back directly through <code>lastNode</code> instead of walking the chain, and <code>dequeue</code> only moves <code>firstNode</code> forward one link. Neither depends on the number of entries.</p></li>
+</ol>
+</div>
+</div>
 </div>
 </section>
 <section id="problem-17-the-links-a-deque-needs" class="level2">
@@ -3046,6 +3767,26 @@ window.Quarto = {
 </ol>
 <div class="workbox" style="min-height:2.2in;">
 (Problem 17, parts (a)–(c))
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Show answer — Problem 17">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Show answer — Problem 17
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-18" class="callout-18-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p><code>removeBack</code>. Removing the last node means making the <em>next-to-last</em> node the new <code>lastNode</code>, and a singly linked chain has no link pointing backward, so the only way to reach that node is to walk from <code>firstNode</code> — <span class="math inline">O(n)</span>. The other five touch <code>firstNode</code>, <code>lastNode</code>, or <code>lastNode.next</code> only.</p></li>
+<li><p>Give every node a <code>previous</code> reference as well, making the chain doubly linked. Then <code>lastNode = lastNode.getPreviousNode()</code> is one step and <code>removeBack</code> becomes <span class="math inline">O(1)</span>. The cost is one extra reference per node and two links to keep correct on every add and every remove instead of one.</p></li>
+<li><p>The front is <code>lastNode.getNext()</code> — the last node’s <code>next</code> wraps to the first. One reference therefore reaches both ends, so <code>enqueue</code> (link the new node after <code>lastNode</code>, then move <code>lastNode</code>) and <code>dequeue</code> (unlink <code>lastNode.getNext()</code>) are both <span class="math inline">O(1)</span>, with one reference instead of two.</p></li>
+</ol>
+</div>
+</div>
 </div>
 </section>
 <section id="problem-18-what-each-operation-costs" class="level2">
@@ -3096,6 +3837,70 @@ window.Quarto = {
 <div class="workbox" style="min-height:2.2in;">
 (Problem 18, parts (a)–(c))
 </div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Show answer — Problem 18">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-19-contents" aria-controls="callout-19" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Show answer — Problem 18
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-19" class="callout-19-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li></li>
+</ol>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">linked chain</th>
+<th style="text-align: left;">circular array (with resizing)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>enqueue</code>, worst case</td>
+<td style="text-align: left;"><span class="math inline">O(1)</span></td>
+<td style="text-align: left;"><span class="math inline">O(n)</span> — the enqueue that doubles the array</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>enqueue</code>, amortized</td>
+<td style="text-align: left;"><span class="math inline">O(1)</span></td>
+<td style="text-align: left;"><span class="math inline">O(1)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>dequeue</code>, worst case</td>
+<td style="text-align: left;"><span class="math inline">O(1)</span></td>
+<td style="text-align: left;"><span class="math inline">O(1)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>getFront</code>, worst case</td>
+<td style="text-align: left;"><span class="math inline">O(1)</span></td>
+<td style="text-align: left;"><span class="math inline">O(1)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>clear</code></td>
+<td style="text-align: left;"><span class="math inline">O(1)</span></td>
+<td style="text-align: left;"><span class="math inline">O(n)</span> — every used slot is set to <code>null</code></td>
+</tr>
+</tbody>
+</table>
+<p>The one entry worth arguing over is the array’s worst-case <code>enqueue</code>: the copy is <span class="math inline">O(n)</span>, but it happens once per doubling, so the cost spread over the enqueues that filled the array is constant.</p>
+<ol start="2" type="a">
+<li><p>The chain allocates a node object per entry, holding a data reference and a <code>next</code> reference, and uses no more slots than it has entries. The array holds one reference per slot, but the array is longer than the queue: one slot is always unused, and right after a doubling about half the array is empty.</p></li>
+<li><p>Every <code>dequeue</code> would strand its slot at the front of the array. With <code>backIndex</code> only increasing, it would reach the end of the array while the leading slots sat empty, and the queue would report itself full — or force a resize — after <span class="math inline">n</span> enqueues in total, no matter how many dequeues had freed space. The circular treatment is what lets the freed slots be reused.</p></li>
+</ol>
+</div>
+</div>
+</div>
 </section>
 <section id="problem-19-priority-queue-array-or-chain" class="level2">
 <h2 class="anchored" data-anchor-id="problem-19-priority-queue-array-or-chain">Problem 19 — Priority queue: array or chain?</h2>
@@ -3108,29 +3913,50 @@ window.Quarto = {
 <div class="workbox" style="min-height:2.4in;">
 (Problem 19, parts (a)–(c))
 </div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Show answer — Problem 19">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-20-contents" aria-controls="callout-20" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Show answer — Problem 19
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-20" class="callout-20-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p>Each new entry has the lowest priority so far, so it belongs at the <strong>end</strong>. The array appends it, <span class="math inline">O(1)</span> per insertion and <span class="math inline">O(n)</span> overall. The chain, with only a head reference, has to walk to the end every time, <span class="math inline">O(n)</span> per insertion and <span class="math inline">O(n^2)</span> overall. A tail reference would make the chain <span class="math inline">O(1)</span> per insertion too.</p></li>
+<li><p>Each new entry has the highest priority so far, so it belongs at the <strong>front</strong>. The array shifts every entry already stored one place right: <span class="math inline">O(n)</span> per insertion, <span class="math inline">O(n^2)</span> overall. The exact count is <span class="math inline">0 + 1 + 2 + \cdots + 59 = \frac{59 \cdot 60}{2} = 1{,}770</span> shifts. The chain links each new entry at the head, <span class="math inline">O(1)</span> per insertion and <span class="math inline">O(n)</span> overall.</p></li>
+<li><p>Removal takes the highest-priority entry, which is at the front of both. The array shifts the remaining entries left, <span class="math inline">O(n)</span> per removal and <span class="math inline">O(n^2)</span> to empty it. The chain unlinks the head, <span class="math inline">O(1)</span> per removal and <span class="math inline">O(n)</span> overall.</p></li>
+</ol>
+<p>The sorted array is cheap when entries arrive nearly in priority order and expensive otherwise; the chain is the reverse, and its removals are always cheap. The heap, later in the course, makes insertion and removal both <span class="math inline">O(\log n)</span> without betting on the arrival order.</p>
+</div>
+</div>
+</div>
 </section>
 </section>
 <section id="part-c-recursion" class="level1">
 <h1>Part C — Recursion</h1>
 <section id="problem-20-the-base-case-and-the-recursive-case" class="level2">
 <h2 class="anchored" data-anchor-id="problem-20-the-base-case-and-the-recursive-case">Problem 20 — The base case and the recursive case</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">static</span> <span class="dt">int</span> <span class="fu">sum</span><span class="op">(</span><span class="dt">int</span> n<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span> <span class="op">(</span>n <span class="op">==</span> <span class="dv">0</span><span class="op">)</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> n <span class="op">+</span> <span class="fu">sum</span><span class="op">(</span>n <span class="op">-</span> <span class="dv">1</span><span class="op">);</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">static</span> <span class="dt">int</span> <span class="fu">countDigits</span><span class="op">(</span><span class="dt">int</span> n<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span> <span class="op">(</span>n <span class="op">&lt;</span> <span class="dv">10</span><span class="op">)</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> <span class="dv">1</span> <span class="op">+</span> <span class="fu">countDigits</span><span class="op">(</span>n <span class="op">/</span> <span class="dv">10</span><span class="op">);</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">static</span> <span class="dt">int</span> <span class="fu">broken</span><span class="op">(</span><span class="dt">int</span> n<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span> <span class="op">(</span>n <span class="op">==</span> <span class="dv">0</span><span class="op">)</span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> n <span class="op">+</span> <span class="fu">broken</span><span class="op">(</span>n <span class="op">+</span> <span class="dv">1</span><span class="op">);</span></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">static</span> <span class="dt">int</span> <span class="fu">sum</span><span class="op">(</span><span class="dt">int</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span> <span class="op">(</span>n <span class="op">==</span> <span class="dv">0</span><span class="op">)</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> n <span class="op">+</span> <span class="fu">sum</span><span class="op">(</span>n <span class="op">-</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">static</span> <span class="dt">int</span> <span class="fu">countDigits</span><span class="op">(</span><span class="dt">int</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span> <span class="op">(</span>n <span class="op">&lt;</span> <span class="dv">10</span><span class="op">)</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> <span class="dv">1</span> <span class="op">+</span> <span class="fu">countDigits</span><span class="op">(</span>n <span class="op">/</span> <span class="dv">10</span><span class="op">);</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">static</span> <span class="dt">int</span> <span class="fu">broken</span><span class="op">(</span><span class="dt">int</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span> <span class="op">(</span>n <span class="op">==</span> <span class="dv">0</span><span class="op">)</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> n <span class="op">+</span> <span class="fu">broken</span><span class="op">(</span>n <span class="op">+</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ol type="a">
 <li>For each method, write down its base case and its recursive case.</li>
 <li>What are <code>sum(4)</code> and <code>countDigits(40327)</code>?</li>
@@ -3140,16 +3966,65 @@ window.Quarto = {
 <div class="workbox" style="min-height:2.2in;">
 (Problem 20, parts (a)–(d))
 </div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Show answer — Problem 20">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-21-contents" aria-controls="callout-21" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Show answer — Problem 20
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-21" class="callout-21-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li></li>
+</ol>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">method</th>
+<th style="text-align: left;">base case</th>
+<th style="text-align: left;">recursive case</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>sum</code></td>
+<td style="text-align: left;"><code>n == 0</code>, returns 0</td>
+<td style="text-align: left;"><code>n + sum(n - 1)</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>countDigits</code></td>
+<td style="text-align: left;"><code>n &lt; 10</code>, returns 1</td>
+<td style="text-align: left;"><code>1 + countDigits(n / 10)</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>broken</code></td>
+<td style="text-align: left;"><code>n == 0</code>, returns 0</td>
+<td style="text-align: left;"><code>n + broken(n + 1)</code></td>
+</tr>
+</tbody>
+</table>
+<ol start="2" type="a">
+<li><p><code>sum(4)</code> is <span class="math inline">4 + 3 + 2 + 1 + 0 = 10</span>. <code>countDigits(40327)</code> is 5: the argument loses its last digit on every call — 40327, 4032, 403, 40, 4 — and the fifth call reaches the base case.</p></li>
+<li><p>It returns a value for every <code>n</code> that is zero or negative. For any <code>n &gt; 0</code> the argument grows on every call and never equals 0, so the recursion never stops, and Java reports <strong><code>StackOverflowError</code></strong>: each call adds a frame to the call stack, and the stack runs out of room. For <code>n &lt; 0</code> the argument moves toward 0 instead, so <code>broken(-3)</code> reaches <code>broken(0)</code> and returns <span class="math inline">-3 + (-2) + (-1) + 0 = -6</span>.</p></li>
+<li><p>Change the <code>+</code> in the recursive call to <code>-</code>: <code>return n + broken(n - 1);</code>. That makes the argument shrink toward the base case.</p></li>
+</ol>
+</div>
+</div>
+</div>
 </section>
 <section id="problem-21-trace-the-output" class="level2">
 <h2 class="anchored" data-anchor-id="problem-21-trace-the-output">Problem 21 — Trace the output</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">mystery</span><span class="op">(</span><span class="dt">int</span> n<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span> <span class="op">(</span>n <span class="op">&gt;</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>      <span class="bu">System</span><span class="op">.</span><span class="fu">out</span><span class="op">.</span><span class="fu">print</span><span class="op">(</span>n <span class="op">+</span> <span class="st">&quot; &quot;</span><span class="op">);</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mystery</span><span class="op">(</span>n <span class="op">-</span> <span class="dv">2</span><span class="op">);</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>      <span class="bu">System</span><span class="op">.</span><span class="fu">out</span><span class="op">.</span><span class="fu">print</span><span class="op">(</span>n <span class="op">+</span> <span class="st">&quot; &quot;</span><span class="op">);</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">mystery</span><span class="op">(</span><span class="dt">int</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span> <span class="op">(</span>n <span class="op">&gt;</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>      <span class="bu">System</span><span class="op">.</span><span class="fu">out</span><span class="op">.</span><span class="fu">print</span><span class="op">(</span>n <span class="op">+</span> <span class="st">&quot; &quot;</span><span class="op">);</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mystery</span><span class="op">(</span>n <span class="op">-</span> <span class="dv">2</span><span class="op">);</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>      <span class="bu">System</span><span class="op">.</span><span class="fu">out</span><span class="op">.</span><span class="fu">print</span><span class="op">(</span>n <span class="op">+</span> <span class="st">&quot; &quot;</span><span class="op">);</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ol type="a">
 <li>What does <code>mystery(7)</code> print?</li>
 <li>How many times is <code>mystery</code> called in total, counting the first call? List the argument of each call in the order the calls are made.</li>
@@ -3158,6 +4033,27 @@ window.Quarto = {
 </ol>
 <div class="workbox" style="min-height:2.2in;">
 (Problem 21, parts (a)–(d))
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Show answer — Problem 21">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-22-contents" aria-controls="callout-22" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Show answer — Problem 21
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-22" class="callout-22-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p><code>7 5 3 1 1 3 5 7</code></p></li>
+<li><p>Five calls, with arguments <strong>7, 5, 3, 1, −1</strong> in that order. The call with <span class="math inline">n = -1</span> fails the <code>if</code> and prints nothing, which is what stops the recursion; the other four each print twice, giving the eight numbers in (a).</p></li>
+<li><p><code>1 3 5 7</code></p></li>
+<li><p>The first <code>print</code> runs <em>before</em> the recursive call, so it prints 7, 5, 3, 1 on the way down. The second runs <em>after</em> the recursive call returns, and the calls return in the reverse of the order they were made, so it prints 1, 3, 5, 7 on the way back up. The output is one sequence followed by its reverse. This is the difference between doing work before the recursive call and doing it after.</p></li>
+</ol>
+</div>
+</div>
 </div>
 </section>
 <section id="problem-22-recursion-and-the-call-stack" class="level2">
@@ -3172,14 +4068,72 @@ window.Quarto = {
 <div class="workbox" style="min-height:2.2in;">
 (Problem 22, parts (a)–(d))
 </div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Show answer — Problem 22">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-23-contents" aria-controls="callout-23" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Show answer — Problem 22
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-23" class="callout-23-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p>Six frames, at the moment the base case is reached: <code>n = 0</code> on top, then 1, 2, 3, 4, and <code>n = 5</code> at the bottom. The bottom frame is the original call and it is still waiting.</p></li>
+<li><p>Last in, first out — the <code>n = 0</code> frame first and the <code>n = 5</code> frame last.</p></li>
+</ol>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">frame</th>
+<th style="text-align: center;">returns</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><code>n = 0</code></td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>n = 1</code></td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>n = 2</code></td>
+<td style="text-align: center;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>n = 3</code></td>
+<td style="text-align: center;">6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>n = 4</code></td>
+<td style="text-align: center;">10</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>n = 5</code></td>
+<td style="text-align: center;">15</td>
+</tr>
+</tbody>
+</table>
+<p>Each frame adds its own <code>n</code> to the value handed back from above.</p>
+<ol start="3" type="a">
+<li><p>A call must finish before the method that made it can continue, so the most recently started call is always the first to complete. That is exactly LIFO, which is what a stack provides. A queue would resume the <em>oldest</em> unfinished call first, and that call is waiting on the newest one.</p></li>
+<li><p>The loop uses no call stack: it keeps one running total in one frame, <span class="math inline">O(1)</span> space. <code>sum(n)</code> holds <span class="math inline">n + 1</span> frames at once, <span class="math inline">O(n)</span> space, and for a large enough <code>n</code> the stack runs out and Java throws <code>StackOverflowError</code>. Recursion costs memory that iteration does not, even when the arithmetic is identical.</p></li>
+</ol>
+</div>
+</div>
+</div>
 </section>
 <section id="problem-23-counting-the-calls" class="level2">
 <h2 class="anchored" data-anchor-id="problem-23-counting-the-calls">Problem 23 — Counting the calls</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">static</span> <span class="dt">int</span> <span class="fu">fib</span><span class="op">(</span><span class="dt">int</span> n<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span> <span class="op">(</span>n <span class="op">&lt;=</span> <span class="dv">1</span><span class="op">)</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> n<span class="op">;</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> <span class="fu">fib</span><span class="op">(</span>n <span class="op">-</span> <span class="dv">1</span><span class="op">)</span> <span class="op">+</span> <span class="fu">fib</span><span class="op">(</span>n <span class="op">-</span> <span class="dv">2</span><span class="op">);</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">static</span> <span class="dt">int</span> <span class="fu">fib</span><span class="op">(</span><span class="dt">int</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span> <span class="op">(</span>n <span class="op">&lt;=</span> <span class="dv">1</span><span class="op">)</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> n<span class="op">;</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> <span class="fu">fib</span><span class="op">(</span>n <span class="op">-</span> <span class="dv">1</span><span class="op">)</span> <span class="op">+</span> <span class="fu">fib</span><span class="op">(</span>n <span class="op">-</span> <span class="dv">2</span><span class="op">);</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ol type="a">
 <li>What is <code>fib(6)</code>?</li>
 <li>How many calls to <code>fib</code> are made in total while <code>fib(6)</code> is evaluated, counting the first call?</li>
@@ -3188,6 +4142,36 @@ window.Quarto = {
 </ol>
 <div class="workbox" style="min-height:2.4in;">
 (Problem 23, parts (a)–(d))
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Show answer — Problem 23">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-24-contents" aria-controls="callout-24" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Show answer — Problem 23
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-24" class="callout-24-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><ol start="8" type="1">
+<li>The sequence from <code>fib(0)</code> is <span class="math inline">0, 1, 1, 2, 3, 5, 8</span>.</li>
+</ol></li>
+<li><p><strong>25 calls.</strong> Writing <span class="math inline">C(n)</span> for the number of calls, <span class="math inline">C(0) = C(1) = 1</span> and <span class="math inline">C(n) = 1 + C(n-1) + C(n-2)</span>, so <span class="math inline">C(2) = 3</span>, <span class="math inline">C(3) = 5</span>, <span class="math inline">C(4) = 9</span>, <span class="math inline">C(5) = 15</span>, and <span class="math inline">C(6) = 25</span>.</p></li>
+<li><p>The tree branches twice at every node above the base cases:</p></li>
+</ol>
+<pre><code>                      fib(6)
+             fib(5)            fib(4)
+        fib(4)   fib(3)    fib(3)   fib(2)
+     fib(3) fib(2) ...      ...      ...</code></pre>
+<p>Counting every node: <code>fib(5)</code> once, <code>fib(4)</code> twice, <code>fib(3)</code> three times, <code>fib(2)</code> five times, <strong><code>fib(1)</code> eight times</strong>, and <code>fib(0)</code> five times — 25 nodes in all. Each repeated argument is recomputed from scratch; nothing is remembered between branches.</p>
+<ol start="4" type="a">
+<li>The two recursive calls recompute the same subproblems independently, so the number of calls grows like the Fibonacci numbers themselves — exponential in <code>n</code> — while the loop computes each value once and reuses it.</li>
+</ol>
+</div>
+</div>
 </div>
 </section>
 </section>
@@ -3199,12 +4183,81 @@ window.Quarto = {
 <p>Simulate this with a queue holding <code>1 2 3 4 5 6 7 8 9 10</code> front → back. To count off three, <code>dequeue</code> and <code>enqueue</code> the same person twice, then <code>dequeue</code> the third person and do not put them back.</p>
 <ol type="a">
 <li>Write the queue, front → back, after each removal.</li>
-<li>In what order are the ten people removed?</li>
+<li>In what order are people removed from the circle?</li>
 <li>Who is the last person left?</li>
 <li>The simulation uses <code>enqueue</code> and <code>dequeue</code> only. Why is a queue the right ADT here, rather than a stack?</li>
 </ol>
 <div class="workbox" style="min-height:2.8in;">
 (Problem 24, parts (a)–(d))
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Show answer — Problem 24">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-25-contents" aria-controls="callout-25" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Show answer — Problem 24
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-25" class="callout-25-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li></li>
+</ol>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">removed</th>
+<th style="text-align: left;">queue afterwards, front → back</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">3</td>
+<td style="text-align: left;"><code>4 5 6 7 8 9 10 1 2</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">6</td>
+<td style="text-align: left;"><code>7 8 9 10 1 2 4 5</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">9</td>
+<td style="text-align: left;"><code>10 1 2 4 5 7 8</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2</td>
+<td style="text-align: left;"><code>4 5 7 8 10 1</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">7</td>
+<td style="text-align: left;"><code>8 10 1 4 5</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1</td>
+<td style="text-align: left;"><code>4 5 8 10</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">8</td>
+<td style="text-align: left;"><code>10 4 5</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">5</td>
+<td style="text-align: left;"><code>10 4</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">10</td>
+<td style="text-align: left;"><code>4</code></td>
+</tr>
+</tbody>
+</table>
+<ol start="2" type="a">
+<li><p><code>3, 6, 9, 2, 7, 1, 8, 5, 10</code>.</p></li>
+<li><p>Person <strong>4</strong>.</p></li>
+<li><p>The circle is first-in, first-out: after two people are counted past, they go to the back and are not reached again until everyone else has been. A stack returns the person counted most recently, which would count the same few people over and over.</p></li>
+</ol>
+</div>
+</div>
 </div>
 </section>
 <section id="problem-25-three-implementations-that-compile-but-are-wrong" class="level2">
@@ -3213,32 +4266,63 @@ window.Quarto = {
 <ol type="a">
 <li>The array implementation.</li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">void</span> <span class="fu">enqueue</span><span class="op">(</span>T newEntry<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ensureCapacity</span><span class="op">();</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>   queue<span class="op">[</span>backIndex<span class="op">]</span> <span class="op">=</span> newEntry<span class="op">;</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>   backIndex <span class="op">=</span> <span class="op">(</span>backIndex <span class="op">+</span> <span class="dv">1</span><span class="op">)</span> <span class="op">%</span> queue<span class="op">.</span><span class="fu">length</span><span class="op">;</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">void</span> <span class="fu">enqueue</span><span class="op">(</span>T newEntry<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ensureCapacity</span><span class="op">();</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>   queue<span class="op">[</span>backIndex<span class="op">]</span> <span class="op">=</span> newEntry<span class="op">;</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>   backIndex <span class="op">=</span> <span class="op">(</span>backIndex <span class="op">+</span> <span class="dv">1</span><span class="op">)</span> <span class="op">%</span> queue<span class="op">.</span><span class="fu">length</span><span class="op">;</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ol start="2" type="a">
 <li>The array implementation, again.</li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> T <span class="fu">dequeue</span><span class="op">()</span> <span class="op">{</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>   T front <span class="op">=</span> <span class="fu">getFront</span><span class="op">();</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>   queue<span class="op">[</span>frontIndex<span class="op">]</span> <span class="op">=</span> <span class="kw">null</span><span class="op">;</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>   frontIndex <span class="op">=</span> frontIndex <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> front<span class="op">;</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> T <span class="fu">dequeue</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>   T front <span class="op">=</span> <span class="fu">getFront</span><span class="op">();</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>   queue<span class="op">[</span>frontIndex<span class="op">]</span> <span class="op">=</span> <span class="kw">null</span><span class="op">;</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>   frontIndex <span class="op">=</span> frontIndex <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> front<span class="op">;</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ol start="3" type="a">
 <li>The linked implementation.</li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">void</span> <span class="fu">enqueue</span><span class="op">(</span>T newEntry<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>   <span class="bu">Node</span> newNode <span class="op">=</span> <span class="kw">new</span> <span class="bu">Node</span><span class="op">(</span>newEntry<span class="op">,</span> <span class="kw">null</span><span class="op">);</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span> <span class="op">(</span><span class="fu">isEmpty</span><span class="op">())</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>      firstNode <span class="op">=</span> newNode<span class="op">;</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>   <span class="cf">else</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>      lastNode<span class="op">.</span><span class="fu">setNext</span><span class="op">(</span>newNode<span class="op">);</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">void</span> <span class="fu">enqueue</span><span class="op">(</span>T newEntry<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>   <span class="bu">Node</span> newNode <span class="op">=</span> <span class="kw">new</span> <span class="bu">Node</span><span class="op">(</span>newEntry<span class="op">,</span> <span class="kw">null</span><span class="op">);</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span> <span class="op">(</span><span class="fu">isEmpty</span><span class="op">())</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>      firstNode <span class="op">=</span> newNode<span class="op">;</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>   <span class="cf">else</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>      lastNode<span class="op">.</span><span class="fu">setNext</span><span class="op">(</span>newNode<span class="op">);</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="workbox" style="min-height:2.6in;">
 (Problem 25, parts (a)–(c))
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Show answer — Problem 25">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-26-contents" aria-controls="callout-26" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Show answer — Problem 25
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-26" class="callout-26-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><code>backIndex</code> is the index <em>of</em> the back entry, not the next free slot, so a new entry belongs one slot later than where this stores it. On an empty queue <code>backIndex</code> is <code>n - 1</code>, so the first entry lands in the last slot while <code>frontIndex</code> stays 0, and <code>getFront</code> reads slot 0 and returns <code>null</code>. Every entry after that sits one slot behind where the indices say it is: the first entry is stranded at the end of the array, and once a second entry arrives <code>getFront</code> returns <em>that</em> one instead.</li>
+</ol>
+<p>Fix: advance first, then store.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>backIndex <span class="op">=</span> <span class="op">(</span>backIndex <span class="op">+</span> <span class="dv">1</span><span class="op">)</span> <span class="op">%</span> queue<span class="op">.</span><span class="fu">length</span><span class="op">;</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>queue<span class="op">[</span>backIndex<span class="op">]</span> <span class="op">=</span> newEntry<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ol start="2" type="a">
+<li>Without <code>% queue.length</code>, <code>frontIndex</code> walks off the end of the array instead of wrapping to 0, and the next <code>getFront</code> throws <code>ArrayIndexOutOfBoundsException</code>. The queue is circular only because every index advance is taken modulo the length.</li>
+</ol>
+<p>Fix:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>frontIndex <span class="op">=</span> <span class="op">(</span>frontIndex <span class="op">+</span> <span class="dv">1</span><span class="op">)</span> <span class="op">%</span> queue<span class="op">.</span><span class="fu">length</span><span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ol start="3" type="a">
+<li><code>lastNode</code> is never set. The first <code>enqueue</code> on an empty queue leaves <code>lastNode</code> as <code>null</code>, so the second one throws <code>NullPointerException</code> at <code>lastNode.setNext(newNode)</code>. Even if it did not, the chain would never learn where its back is.</li>
+</ol>
+<p>Fix: add the assignment that both branches need, after the <code>if</code>/<code>else</code>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>lastNode <span class="op">=</span> newNode<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
 </div>
 </section>
 </section>
