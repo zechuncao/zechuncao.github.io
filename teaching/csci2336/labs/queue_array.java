@@ -1,9 +1,7 @@
 /* CSCI 2336 -- Chapter 3 Companion Lab, Exercise 2 of 4: the circular array.
  *
- * Write the seven lines marked "Your line(s) go here", in the ArrayQueue
- * class below: two in enqueue, two in dequeue, and three in
- * ensureCapacity, which is the method that grows the array. Nothing else
- * in this file needs changing.
+ * Write the four lines marked "Your two lines go here", in the ArrayQueue
+ * class below. Nothing else in this file needs changing.
  *
  * main() makes an ArrayQueue and performs ten operations on it, printing
  * the two indices, the number of entries and every slot after each one. The
@@ -130,7 +128,7 @@ final class ArrayQueue<T> implements QueueInterface<T>
     {
         ensureCapacity();   // doubles the array if it is full
 
-        // Your two lines go here: move backIndex, then store  (2)
+        // Your two lines go here  (2)
 
 
     } // end enqueue
@@ -159,13 +157,12 @@ final class ArrayQueue<T> implements QueueInterface<T>
 
             for (int index = 0; index < oldSize - 1; index++)
             {
-                // Your line goes here: one entry, in queue order  (1)
-
+                queue[index] = oldQueue[frontIndex];
+                frontIndex = (frontIndex + 1) % oldSize;
             } // end for
 
-            // Your two lines go here: where the front and back are  (2)
-
-
+            frontIndex = 0;
+            backIndex = oldSize - 2;
         } // end if
     } // end ensureCapacity
 

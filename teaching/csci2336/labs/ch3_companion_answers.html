@@ -35624,8 +35624,8 @@ text-decoration: none;
 <p>Four exercises, four browser tabs. Each one holds a structure that is finished except for the lines you have been tracing on the slides, and each one is small enough to read in a minute: the interface, the constructor, the <code>Node</code> class, <code>getFront</code>, <code>isEmpty</code> and the printing are all written for you.</p>
 <p>Everything that feeds the structure lives in <code>main</code>, and <strong>nothing in <code>main</code> needs changing.</strong> It makes one object of the class you are finishing, performs one operation per line on that object, and prints what the structure holds afterwards. The console that run prints when the structure works is printed below for each exercise: compare it with yours line by line, and the first row that differs is the operation to fix.</p>
 <p>Each file <strong>runs before you have typed anything.</strong> Press Run first: with every blank still empty the structure never stores anything, so the rows come out wrong, and an operation that cannot proceed at all stops the run with a line saying so. Fill in one blank, press Run again, and the rows start matching from the top down.</p>
-<p>A blank is an empty line under a comment that says how many lines belong there and what they are for:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Your two lines go here: move backIndex, then store  (2)</span></span>
+<p>A blank is an empty line under a comment that says how many lines belong there:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Your two lines go here  (2)</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="exercise-1-the-linked-queue" class="level2">
@@ -35723,13 +35723,13 @@ text-decoration: none;
 <section id="exercise-2-the-circular-array" class="level2">
 <h2 class="anchored" data-anchor-id="exercise-2-the-circular-array">Exercise 2 — The circular array</h2>
 <p><a class="livecode" href="https://v49.livecodes.io/?x=https://zechuncao.com/teaching/csci2336/labs/queue_array.java&amp;raw=java" target="_blank" rel="noopener">live code</a></p>
-<p>The queue holds 5 entries in an array of 6 slots, because one slot is always left unused. <code>frontIndex</code> starts at 0 and <code>backIndex</code> at <code>queue.length - 1</code>, so the queue starts empty.</p>
-<p>Write the two lines in <code>enqueue</code>, the two in <code>dequeue</code>, and the three in <code>ensureCapacity</code>, the method that doubles the array when the queue fills it.</p>
+<p>The queue holds 5 entries in an array of 6 slots, because one slot is always left unused. <code>frontIndex</code> starts at 0 and <code>backIndex</code> at <code>queue.length - 1</code>, so the queue starts empty. <code>ensureCapacity()</code> is written for you and doubles the array when it is full.</p>
+<p>Write the two lines in each method.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">void</span> <span class="fu">enqueue</span><span class="op">(</span>T newEntry<span class="op">)</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ensureCapacity</span><span class="op">();</span>   <span class="co">// doubles the array if it is full</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Your two lines go here: move backIndex, then store  (2)</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Your two lines go here  (2)</span></span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> <span class="co">// end enqueue</span></span>
@@ -35744,29 +35744,6 @@ text-decoration: none;
 <span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> front<span class="op">;</span></span>
 <span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> <span class="co">// end dequeue</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><code>ensureCapacity</code> runs before every <code>enqueue</code> and does nothing until the array is full. When it is, it allocates an array of twice the length and moves the old entries into it, front first.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="dt">void</span> <span class="fu">ensureCapacity</span><span class="op">()</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span><span class="fu">isFull</span><span class="op">())</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        T<span class="op">[]</span> oldQueue <span class="op">=</span> queue<span class="op">;</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> oldSize <span class="op">=</span> oldQueue<span class="op">.</span><span class="fu">length</span><span class="op">;</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">@SuppressWarnings</span><span class="op">(</span><span class="st">&quot;unchecked&quot;</span><span class="op">)</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        T<span class="op">[]</span> tempQueue <span class="op">=</span> <span class="op">(</span>T<span class="op">[])</span> <span class="kw">new</span> <span class="bu">Object</span><span class="op">[</span><span class="dv">2</span> <span class="op">*</span> oldSize<span class="op">];</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>        queue <span class="op">=</span> tempQueue<span class="op">;</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> index <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> index <span class="op">&lt;</span> oldSize <span class="op">-</span> <span class="dv">1</span><span class="op">;</span> index<span class="op">++)</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>            <span class="co">// Your line goes here: one entry, in queue order  (1)</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span> <span class="co">// end for</span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>        <span class="co">// Your two lines go here: where the front and back are  (2)</span></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span> <span class="co">// end if</span></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> <span class="co">// end ensureCapacity</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <section id="what-the-console-should-say-1" class="level3">
 <h3 class="anchored" data-anchor-id="what-the-console-should-say-1">What the console should say</h3>
 <p>Every operation prints <code>frontIndex</code>, <code>backIndex</code>, the number of entries, and every slot in the array. A slot shown as <code>_</code> is <code>null</code>.</p>
@@ -35786,7 +35763,7 @@ text-decoration: none;
 <p>Three lines in that run are worth stopping on.</p>
 <p><code>dequeue -&gt; A</code> puts a <code>_</code> back in slot 0. That is the first of your two lines in <code>dequeue</code> doing its job. Leave it out and the letter stays in the array after the entry has left the queue, which the <code>slots</code> column reports.</p>
 <p><code>enqueue G</code> wraps. <code>backIndex</code> was 5, the last slot, and the next entry goes to slot 0 rather than off the end. Five entries are now in the queue and the array is full, because <code>frontIndex == (backIndex + 2) % 6</code>.</p>
-<p><code>enqueue H</code> finds the array full, so <code>ensureCapacity()</code> doubles it to 12 slots and copies the five entries in queue order, which puts the front back at index 0. It is the only row in the run that reaches the three lines you wrote in <code>ensureCapacity</code>, so if every row above it is right and this one is not, the mistake is in those three lines.</p>
+<p><code>enqueue H</code> finds the array full, so <code>ensureCapacity()</code> doubles it to 12 slots and copies the five entries in queue order, which puts the front back at index 0.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Answer — the circular array">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -35797,46 +35774,25 @@ text-decoration: none;
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">void</span> <span class="fu">enqueue</span><span class="op">(</span>T newEntry<span class="op">)</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ensureCapacity</span><span class="op">();</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    backIndex <span class="op">=</span> <span class="op">(</span>backIndex <span class="op">+</span> <span class="dv">1</span><span class="op">)</span> <span class="op">%</span> queue<span class="op">.</span><span class="fu">length</span><span class="op">;</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    queue<span class="op">[</span>backIndex<span class="op">]</span> <span class="op">=</span> newEntry<span class="op">;</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> <span class="co">// end enqueue</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> T <span class="fu">dequeue</span><span class="op">()</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    T front <span class="op">=</span> <span class="fu">getFront</span><span class="op">();</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    queue<span class="op">[</span>frontIndex<span class="op">]</span> <span class="op">=</span> <span class="kw">null</span><span class="op">;</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    frontIndex <span class="op">=</span> <span class="op">(</span>frontIndex <span class="op">+</span> <span class="dv">1</span><span class="op">)</span> <span class="op">%</span> queue<span class="op">.</span><span class="fu">length</span><span class="op">;</span></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> front<span class="op">;</span></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> <span class="co">// end dequeue</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="dt">void</span> <span class="fu">ensureCapacity</span><span class="op">()</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span><span class="fu">isFull</span><span class="op">())</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>        T<span class="op">[]</span> oldQueue <span class="op">=</span> queue<span class="op">;</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> oldSize <span class="op">=</span> oldQueue<span class="op">.</span><span class="fu">length</span><span class="op">;</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">@SuppressWarnings</span><span class="op">(</span><span class="st">&quot;unchecked&quot;</span><span class="op">)</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        T<span class="op">[]</span> tempQueue <span class="op">=</span> <span class="op">(</span>T<span class="op">[])</span> <span class="kw">new</span> <span class="bu">Object</span><span class="op">[</span><span class="dv">2</span> <span class="op">*</span> oldSize<span class="op">];</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>        queue <span class="op">=</span> tempQueue<span class="op">;</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> index <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> index <span class="op">&lt;</span> oldSize <span class="op">-</span> <span class="dv">1</span><span class="op">;</span> index<span class="op">++)</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>            queue<span class="op">[</span>index<span class="op">]</span> <span class="op">=</span> oldQueue<span class="op">[(</span>frontIndex <span class="op">+</span> index<span class="op">)</span> <span class="op">%</span> oldSize<span class="op">];</span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span> <span class="co">// end for</span></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>        frontIndex <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>        backIndex <span class="op">=</span> oldSize <span class="op">-</span> <span class="dv">2</span><span class="op">;</span></span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span> <span class="co">// end if</span></span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> <span class="co">// end ensureCapacity</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">void</span> <span class="fu">enqueue</span><span class="op">(</span>T newEntry<span class="op">)</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ensureCapacity</span><span class="op">();</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    backIndex <span class="op">=</span> <span class="op">(</span>backIndex <span class="op">+</span> <span class="dv">1</span><span class="op">)</span> <span class="op">%</span> queue<span class="op">.</span><span class="fu">length</span><span class="op">;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    queue<span class="op">[</span>backIndex<span class="op">]</span> <span class="op">=</span> newEntry<span class="op">;</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> <span class="co">// end enqueue</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> T <span class="fu">dequeue</span><span class="op">()</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    T front <span class="op">=</span> <span class="fu">getFront</span><span class="op">();</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    queue<span class="op">[</span>frontIndex<span class="op">]</span> <span class="op">=</span> <span class="kw">null</span><span class="op">;</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    frontIndex <span class="op">=</span> <span class="op">(</span>frontIndex <span class="op">+</span> <span class="dv">1</span><span class="op">)</span> <span class="op">%</span> queue<span class="op">.</span><span class="fu">length</span><span class="op">;</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> front<span class="op">;</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> <span class="co">// end dequeue</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The <code>% queue.length</code> in both methods is the wraparound. Writing <code>enqueue</code>’s two lines the other way around stores the entry at the old <code>backIndex</code>, which overwrites the entry already there; the console shows the right number of entries in the wrong order.</p>
 <p><code>queue[frontIndex] = null</code> is not needed for the queue to behave correctly. It is there so the array does not keep a reference to an entry that has already left — the same loitering problem as the Chapter 2 array stack.</p>
-<p>In <code>ensureCapacity</code>, <code>(frontIndex + index) % oldSize</code> walks the old array in queue order and wraps past its end, so the front entry is the one that lands at index 0. The loop runs <code>oldSize - 1</code> times because a full queue holds one entry fewer than the array has slots, and afterwards the entries sit at indices 0 through <code>oldSize - 2</code>, which is what the two assignments record. Copying the old array slot for slot instead would break the queue at the point where it wraps.</p>
 </div>
 </div>
 </section>
@@ -35846,45 +35802,45 @@ text-decoration: none;
 <p><a class="livecode" href="https://v49.livecodes.io/?x=https://zechuncao.com/teaching/csci2336/labs/deque_linked.java&amp;raw=java" target="_blank" rel="noopener">live code</a></p>
 <p>Every node now refers to the node <em>before</em> it as well as the node after it. <code>DLNode</code> takes <code>DLNode(DLNode previousNode, T entry, DLNode nextNode)</code> and provides <code>getNext</code>, <code>setNext</code>, <code>getPrevious</code> and <code>setPrevious</code>.</p>
 <p><code>addToBack</code> and <code>removeFront</code> are written for you, directly above the two methods you write. The two you write are their mirror image: <code>firstNode</code> and <code>previous</code> in place of <code>lastNode</code> and <code>next</code>. Six lines are blank.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">void</span> <span class="fu">addToFront</span><span class="op">(</span>T newEntry<span class="op">)</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    DLNode newNode <span class="op">=</span> <span class="kw">new</span> <span class="fu">DLNode</span><span class="op">(</span><span class="kw">null</span><span class="op">,</span> newEntry<span class="op">,</span> firstNode<span class="op">);</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span><span class="fu">isEmpty</span><span class="op">())</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>        <span class="co">// Your line goes here: the deque was empty  (1)</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>        <span class="co">// Your line goes here: the old front has a previous  (1)</span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Your line goes here: the new node is the front now  (1)</span></span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> <span class="co">// end addToFront</span></span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> T <span class="fu">removeBack</span><span class="op">()</span></span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    T back <span class="op">=</span> <span class="fu">getBack</span><span class="op">();</span>   <span class="co">// might throw EmptyQueueException</span></span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Your line goes here: step lastNode back one node  (1)</span></span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>lastNode <span class="op">==</span> <span class="kw">null</span><span class="op">)</span></span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
-<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>        <span class="co">// Your line goes here: the deque is empty now  (1)</span></span>
-<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span></span>
-<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
-<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>        <span class="co">// Your line goes here: nothing follows the new back  (1)</span></span>
-<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> back<span class="op">;</span></span>
-<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> <span class="co">// end removeBack</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">void</span> <span class="fu">addToFront</span><span class="op">(</span>T newEntry<span class="op">)</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    DLNode newNode <span class="op">=</span> <span class="kw">new</span> <span class="fu">DLNode</span><span class="op">(</span><span class="kw">null</span><span class="op">,</span> newEntry<span class="op">,</span> firstNode<span class="op">);</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span><span class="fu">isEmpty</span><span class="op">())</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        <span class="co">// Your line goes here: the deque was empty  (1)</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>        <span class="co">// Your line goes here: the old front has a previous  (1)</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Your line goes here: the new node is the front now  (1)</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> <span class="co">// end addToFront</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> T <span class="fu">removeBack</span><span class="op">()</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    T back <span class="op">=</span> <span class="fu">getBack</span><span class="op">();</span>   <span class="co">// might throw EmptyQueueException</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Your line goes here: step lastNode back one node  (1)</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>lastNode <span class="op">==</span> <span class="kw">null</span><span class="op">)</span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>        <span class="co">// Your line goes here: the deque is empty now  (1)</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>        <span class="co">// Your line goes here: nothing follows the new back  (1)</span></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> back<span class="op">;</span></span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> <span class="co">// end removeBack</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The first line of <code>addToFront</code> is given because the argument order is the whole trick: a node added at the front has nothing before it and the old front after it, which is <code>new DLNode(null, newEntry, firstNode)</code>.</p>
 <section id="what-the-console-should-say-2" class="level3">
 <h3 class="anchored" data-anchor-id="what-the-console-should-say-2">What the console should say</h3>
@@ -35911,31 +35867,31 @@ text-decoration: none;
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">void</span> <span class="fu">addToFront</span><span class="op">(</span>T newEntry<span class="op">)</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    DLNode newNode <span class="op">=</span> <span class="kw">new</span> <span class="fu">DLNode</span><span class="op">(</span><span class="kw">null</span><span class="op">,</span> newEntry<span class="op">,</span> firstNode<span class="op">);</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span><span class="fu">isEmpty</span><span class="op">())</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>        lastNode <span class="op">=</span> newNode<span class="op">;</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>        firstNode<span class="op">.</span><span class="fu">setPrevious</span><span class="op">(</span>newNode<span class="op">);</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    firstNode <span class="op">=</span> newNode<span class="op">;</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> <span class="co">// end addToFront</span></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> T <span class="fu">removeBack</span><span class="op">()</span></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    T back <span class="op">=</span> <span class="fu">getBack</span><span class="op">();</span></span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    lastNode <span class="op">=</span> lastNode<span class="op">.</span><span class="fu">getPrevious</span><span class="op">();</span></span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>lastNode <span class="op">==</span> <span class="kw">null</span><span class="op">)</span></span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>        firstNode <span class="op">=</span> <span class="kw">null</span><span class="op">;</span></span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span></span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>        lastNode<span class="op">.</span><span class="fu">setNext</span><span class="op">(</span><span class="kw">null</span><span class="op">);</span></span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> back<span class="op">;</span></span>
-<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> <span class="co">// end removeBack</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">void</span> <span class="fu">addToFront</span><span class="op">(</span>T newEntry<span class="op">)</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    DLNode newNode <span class="op">=</span> <span class="kw">new</span> <span class="fu">DLNode</span><span class="op">(</span><span class="kw">null</span><span class="op">,</span> newEntry<span class="op">,</span> firstNode<span class="op">);</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span><span class="fu">isEmpty</span><span class="op">())</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>        lastNode <span class="op">=</span> newNode<span class="op">;</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>        firstNode<span class="op">.</span><span class="fu">setPrevious</span><span class="op">(</span>newNode<span class="op">);</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    firstNode <span class="op">=</span> newNode<span class="op">;</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> <span class="co">// end addToFront</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> T <span class="fu">removeBack</span><span class="op">()</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    T back <span class="op">=</span> <span class="fu">getBack</span><span class="op">();</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    lastNode <span class="op">=</span> lastNode<span class="op">.</span><span class="fu">getPrevious</span><span class="op">();</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>lastNode <span class="op">==</span> <span class="kw">null</span><span class="op">)</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>        firstNode <span class="op">=</span> <span class="kw">null</span><span class="op">;</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>        lastNode<span class="op">.</span><span class="fu">setNext</span><span class="op">(</span><span class="kw">null</span><span class="op">);</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> back<span class="op">;</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> <span class="co">// end removeBack</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Line by line against <code>addToBack</code>: where that one assigned <code>firstNode</code> on the empty deque, this one assigns <code>lastNode</code>; where it called <code>lastNode.setNext</code>, this one calls <code>firstNode.setPrevious</code>; where it ended with <code>lastNode = newNode</code>, this one ends with <code>firstNode = newNode</code>.</p>
 <p><code>removeBack</code> is the method the second reference exists for. <code>lastNode = lastNode.getPrevious()</code> is one step. With <code>next</code> references alone, finding the next-to-last node means walking the whole chain from <code>firstNode</code>, which is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false" form="prefix">(</mo><mi>n</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math> — the reason a deque is not built on the Exercise 1 chain.</p>
 <p>The <code>else</code> branch is new: <code>removeFront</code> and <code>removeBack</code> each have to clear the link that pointed at the node they removed, or the chain keeps a reference to it from the end that is still in the deque.</p>
@@ -35948,27 +35904,27 @@ text-decoration: none;
 <p><a class="livecode" href="https://v49.livecodes.io/?x=https://zechuncao.com/teaching/csci2336/labs/deque_palindrome.java&amp;raw=java" target="_blank" rel="noopener">live code</a></p>
 <p>This file hands you the finished deque — the one Exercise 3 asked you to write — and leaves the method that uses it blank. A word is a palindrome when it reads the same backwards. Put every character into the deque, then take one character off each end and compare them, until fewer than two are left.</p>
 <p>Five lines are blank: one to fill the deque, and four for one comparison.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="dt">static</span> <span class="dt">boolean</span> <span class="fu">isPalindrome</span><span class="op">(</span><span class="bu">String</span> word<span class="op">)</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    DequeInterface<span class="op">&lt;</span><span class="bu">Character</span><span class="op">&gt;</span> d <span class="op">=</span> <span class="kw">new</span> LinkedDeque<span class="op">&lt;</span><span class="bu">Character</span><span class="op">&gt;();</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> word<span class="op">.</span><span class="fu">length</span><span class="op">();</span> i<span class="op">++)</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>        <span class="co">// Your line goes here: this character goes at the back  (1)</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> k <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> k <span class="op">&lt;</span> word<span class="op">.</span><span class="fu">length</span><span class="op">()</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span> k<span class="op">++)</span></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>        <span class="co">// Your four lines go here: one off each end, compare  (4)</span></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="kw">true</span><span class="op">;</span></span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> <span class="co">// end isPalindrome</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="dt">static</span> <span class="dt">boolean</span> <span class="fu">isPalindrome</span><span class="op">(</span><span class="bu">String</span> word<span class="op">)</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    DequeInterface<span class="op">&lt;</span><span class="bu">Character</span><span class="op">&gt;</span> d <span class="op">=</span> <span class="kw">new</span> LinkedDeque<span class="op">&lt;</span><span class="bu">Character</span><span class="op">&gt;();</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> word<span class="op">.</span><span class="fu">length</span><span class="op">();</span> i<span class="op">++)</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>        <span class="co">// Your line goes here: this character goes at the back  (1)</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> k <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> k <span class="op">&lt;</span> word<span class="op">.</span><span class="fu">length</span><span class="op">()</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span> k<span class="op">++)</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>        <span class="co">// Your four lines go here: one off each end, compare  (4)</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> <span class="co">// end isPalindrome</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Declare the two characters you remove as <code>char</code>, not <code>Character</code>, so that <code>!=</code> compares the characters rather than the two objects holding them.</p>
 <section id="what-the-console-should-say-3" class="level3">
 <h3 class="anchored" data-anchor-id="what-the-console-should-say-3">What the console should say</h3>
@@ -35993,25 +35949,25 @@ text-decoration: none;
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="dt">static</span> <span class="dt">boolean</span> <span class="fu">isPalindrome</span><span class="op">(</span><span class="bu">String</span> word<span class="op">)</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    DequeInterface<span class="op">&lt;</span><span class="bu">Character</span><span class="op">&gt;</span> d <span class="op">=</span> <span class="kw">new</span> LinkedDeque<span class="op">&lt;</span><span class="bu">Character</span><span class="op">&gt;();</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> word<span class="op">.</span><span class="fu">length</span><span class="op">();</span> i<span class="op">++)</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>        d<span class="op">.</span><span class="fu">addToBack</span><span class="op">(</span>word<span class="op">.</span><span class="fu">charAt</span><span class="op">(</span>i<span class="op">));</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> k <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> k <span class="op">&lt;</span> word<span class="op">.</span><span class="fu">length</span><span class="op">()</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span> k<span class="op">++)</span></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>        <span class="dt">char</span> front <span class="op">=</span> d<span class="op">.</span><span class="fu">removeFront</span><span class="op">();</span></span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>        <span class="dt">char</span> back <span class="op">=</span> d<span class="op">.</span><span class="fu">removeBack</span><span class="op">();</span></span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>front <span class="op">!=</span> back<span class="op">)</span></span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="kw">false</span><span class="op">;</span></span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="kw">true</span><span class="op">;</span></span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> <span class="co">// end isPalindrome</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="dt">static</span> <span class="dt">boolean</span> <span class="fu">isPalindrome</span><span class="op">(</span><span class="bu">String</span> word<span class="op">)</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    DequeInterface<span class="op">&lt;</span><span class="bu">Character</span><span class="op">&gt;</span> d <span class="op">=</span> <span class="kw">new</span> LinkedDeque<span class="op">&lt;</span><span class="bu">Character</span><span class="op">&gt;();</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> word<span class="op">.</span><span class="fu">length</span><span class="op">();</span> i<span class="op">++)</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>        d<span class="op">.</span><span class="fu">addToBack</span><span class="op">(</span>word<span class="op">.</span><span class="fu">charAt</span><span class="op">(</span>i<span class="op">));</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> k <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> k <span class="op">&lt;</span> word<span class="op">.</span><span class="fu">length</span><span class="op">()</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span> k<span class="op">++)</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>        <span class="dt">char</span> front <span class="op">=</span> d<span class="op">.</span><span class="fu">removeFront</span><span class="op">();</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>        <span class="dt">char</span> back <span class="op">=</span> d<span class="op">.</span><span class="fu">removeBack</span><span class="op">();</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>front <span class="op">!=</span> back<span class="op">)</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> <span class="co">// end isPalindrome</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Filling the deque is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false" form="prefix">(</mo><mi>n</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math> and the comparison loop is at most <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">⌊</mo><mi>n</mi><mi>/</mi><mn>2</mn><mo stretchy="false" form="postfix">⌋</mo></mrow><annotation encoding="application/x-tex">\lfloor n/2 \rfloor</annotation></semantics></math> comparisons, so the whole test is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false" form="prefix">(</mo><mi>n</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math>.</p>
 <p>The deque is doing something neither a stack nor a queue can do alone. A stack would hand back the characters newest first and a queue oldest first; this loop needs both ends at once, which is the same reason the backspace problem on the slides needs a deque.</p>
 <p>Writing <code>if (d.removeFront() != d.removeBack())</code> instead compiles, because both calls return <code>Character</code>, and then compares the two objects rather than the characters in them. It happens to give the right answer for the characters Java caches, which makes it the worst kind of wrong.</p>
@@ -36067,29 +36023,37 @@ text-decoration: none;
 </section>
 <section id="if-you-finish-early" class="level2">
 <h2 class="anchored" data-anchor-id="if-you-finish-early">If you finish early</h2>
-<p>The copy loop you wrote in Exercise 2 leaves <code>frontIndex</code> alone and reaches each entry with <code>(frontIndex + index) % oldSize</code>. There is a second way to write it: advance <code>frontIndex</code> itself inside the loop, one step per entry, and read the old array at <code>frontIndex</code> every time. Write that version. The loop body becomes two lines instead of one, and the two assignments after the loop do not change.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> index <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> index <span class="op">&lt;</span> oldSize <span class="op">-</span> <span class="dv">1</span><span class="op">;</span> index<span class="op">++)</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Your two lines go here: read, then step frontIndex  (2)</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="callout callout-style-default callout-tip callout-titled" title="Answer — the other copy loop">
+<p><code>ensureCapacity()</code> is already in your Exercise 2 file. This is its copy loop with the three lines that move entries taken out. Fill them in from memory, then scroll up in your own file and check.</p>
+<p>The old array <code>oldQueue</code> is full and holds <code>oldSize - 1</code> entries. Copy them into the new array <code>queue</code> so that the front lands at index 0, then set the two indices.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> index <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> index <span class="op">&lt;</span> oldSize <span class="op">-</span> <span class="dv">1</span><span class="op">;</span> index<span class="op">++)</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Your two lines go here  (2)</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">// Your two lines go here  (2)</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Answer — the copy loop">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer — the other copy loop
+<span class="screen-reader-only">Tip</span>Answer — the copy loop
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> index <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> index <span class="op">&lt;</span> oldSize <span class="op">-</span> <span class="dv">1</span><span class="op">;</span> index<span class="op">++)</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    queue<span class="op">[</span>index<span class="op">]</span> <span class="op">=</span> oldQueue<span class="op">[</span>frontIndex<span class="op">];</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    frontIndex <span class="op">=</span> <span class="op">(</span>frontIndex <span class="op">+</span> <span class="dv">1</span><span class="op">)</span> <span class="op">%</span> oldSize<span class="op">;</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Both versions move the same entries in the same order, and both still need <code>frontIndex = 0</code> afterwards. The difference is what <code>frontIndex</code> means while the loop runs: in Exercise 2 it holds the front of the old queue from the first iteration to the last, and here it walks the old array and ends one step past the entry it read last. The version that leaves it alone is the easier one to reason about, which is why Exercise 2 uses it.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> index <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> index <span class="op">&lt;</span> oldSize <span class="op">-</span> <span class="dv">1</span><span class="op">;</span> index<span class="op">++)</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    queue<span class="op">[</span>index<span class="op">]</span> <span class="op">=</span> oldQueue<span class="op">[</span>frontIndex<span class="op">];</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    frontIndex <span class="op">=</span> <span class="op">(</span>frontIndex <span class="op">+</span> <span class="dv">1</span><span class="op">)</span> <span class="op">%</span> oldSize<span class="op">;</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>frontIndex <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>backIndex <span class="op">=</span> oldSize <span class="op">-</span> <span class="dv">2</span><span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The loop runs <code>oldSize - 1</code> times, once per used slot, and <code>% oldSize</code> wraps it past the end of the old array. Afterwards the entries sit at indices 0 through <code>oldSize - 2</code>, which is what the last two lines record.</p>
+<p>The same copy written without changing <code>frontIndex</code> inside the loop reads <code>queue[index] = oldQueue[(frontIndex + index) % oldSize];</code>, and then the loop body is one line instead of two. Either is correct.</p>
 </div>
 </div>
 </section>
