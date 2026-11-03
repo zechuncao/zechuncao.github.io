@@ -35,7 +35,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-ffd45ce43fb596ea27dd8ab304246118.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-737662147290f6361001829e591e21bf.css">
   <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -217,10 +217,10 @@ Zechun (Jacob) Cao
 </div>
 </div></div>
 </section>
-<section id="warm-up-the-empty-box" class="slide level2">
-<h2>Warm-Up: The Empty Box</h2>
-<p>A box with nothing in it. Beside it, a box holding that empty box.</p>
-<p><span class="vote-prompt">Vote — are those two the same thing?</span></p>
+<section id="warm-up-the-empty-folder" class="slide level2">
+<h2>Warm-Up: The Empty Folder</h2>
+<p>On your desktop sits an empty folder. Beside it sits a folder whose only contents are that empty folder.</p>
+<p><span class="vote-prompt">Vote — do those two folders hold the same thing?</span></p>
 <div class="columns">
 <div class="column" style="width:48%;">
 <div class="vote">
@@ -234,26 +234,26 @@ Zechun (Jacob) Cao
 </div>
 </div></div>
 </section>
-<section id="warm-up-the-nested-name" class="slide level2">
-<h2>Warm-Up: The Nested Name</h2>
-<p><span class="math display">\[A = \{a, \{a\}\}\]</span></p>
-<p><span class="vote-prompt">Vote — how many elements does <span class="math inline">\(A\)</span> have?</span></p>
+<section id="warm-up-the-playlist" class="slide level2">
+<h2>Warm-Up: The Playlist</h2>
+<p>Your first playlist holds three songs. Your second playlist holds those same three songs, and it also holds the first playlist.</p>
+<p><span class="vote-prompt">Vote — how many entries does the second playlist have?</span></p>
 <div class="columns">
 <div class="column" style="width:48%;">
 <div class="vote">
-<p><strong>A.</strong> One</p>
+<p><strong>A.</strong> Four</p>
 </div>
 </div><div class="column" style="width:4%;">
 
 </div><div class="column" style="width:48%;">
 <div class="vote">
-<p><strong>B.</strong> Two</p>
+<p><strong>B.</strong> Six</p>
 </div>
 </div></div>
 </section>
 <section id="warm-up-the-catch" class="slide level2">
 <h2>Warm-Up: The Catch</h2>
-<p>All three questions turn on the same thing: what counts as an element.</p>
+<p>All three questions turn on the same thing: what counts as one member.</p>
 <table class="caption-top">
 <colgroup>
 <col style="width: 50%">
@@ -271,17 +271,17 @@ Zechun (Jacob) Cao
 <td style="text-align: left;">Order and repetition carry no information</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><strong>2.</strong> empty box, box holding a box</td>
-<td style="text-align: left;"><span class="math inline">\(\emptyset\)</span> has no elements, <span class="math inline">\(\{\emptyset\}\)</span> has one</td>
+<td style="text-align: left;"><strong>2.</strong> the two folders</td>
+<td style="text-align: left;">One holds nothing, the other holds one thing</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><strong>3.</strong> <span class="math inline">\(\{a, \{a\}\}\)</span></td>
-<td style="text-align: left;">An element of a set can itself be a set</td>
+<td style="text-align: left;"><strong>3.</strong> the second playlist</td>
+<td style="text-align: left;">A collection can be a member, and it counts once</td>
 </tr>
 </tbody>
 </table>
 <div class="fragment">
-<p>The rest of this section gives each of those a symbol and a rule, so the answer stops depending on how carefully you read the sentence.</p>
+<p>This section gives each of those a symbol and a rule, so the answer stops depending on how carefully you read the sentence.</p>
 </div>
 </section>
 <section id="where-this-chapter-goes" class="slide level2">
@@ -293,30 +293,23 @@ Zechun (Jacob) Cao
 <ul>
 <li>Describing a Set</li>
 <li>Subsets and Cardinality</li>
+<li>Power Sets</li>
 <li>Cartesian Products</li>
 <li>Set Operations and Identities</li>
-</ul></li>
-<li>Functions (2.3)
-<ul>
-<li>Domain, Codomain, Image</li>
-<li>One-to-One and Onto</li>
-<li>Inverses, Floor and Ceiling</li>
 </ul></li>
 </ul>
 </div><div class="column" style="width:50%;">
 <ul>
-<li>Sequences and Sums (2.4)
+<li>Functions (2.3)
 <ul>
-<li>Recurrence Relations</li>
-<li>Summations</li>
-</ul></li>
-<li>Matrices (2.6)
-<ul>
-<li>Matrix Arithmetic</li>
-<li>Transposes and Powers</li>
+<li>Domain, Codomain, Image</li>
+<li>One-to-One and Onto</li>
+<li>Inverse Functions</li>
+<li>Floor and Ceiling</li>
 </ul></li>
 </ul>
 </div></div>
+<p>Sequences, summations, and matrices come later in the term.</p>
 </section>
 <section id="how-to-read-this-deck" class="slide level2">
 <h2>How to Read This Deck</h2>
@@ -338,17 +331,17 @@ Zechun (Jacob) Cao
 <section id="todays-plan" class="slide level2">
 <h2>Today’s Plan</h2>
 <ul>
-<li>Sets and membership</li>
+<li>Sets, membership, and what can be a member</li>
 <li>Describing a set
 <ul>
 <li>Roster method</li>
-<li>Set-builder notation</li>
-<li>Truth sets</li>
+<li>Set-builder notation and truth sets</li>
 </ul></li>
-<li>The universal set and the empty set</li>
+<li>The empty set and the universal set</li>
+<li>Venn diagrams</li>
 <li>Subsets, equality, and proper subsets</li>
 <li>Cardinality and power sets</li>
-<li>Tuples and Cartesian products</li>
+<li>Tuples, Cartesian products, and relations</li>
 </ul>
 </section>
 <section id="sets" class="slide level2">
@@ -360,6 +353,18 @@ Zechun (Jacob) Cao
 </ul>
 <div class="fragment">
 <p>Write <span class="math inline">\(a \in A\)</span> when <span class="math inline">\(a\)</span> is an element of the set <span class="math inline">\(A\)</span>, and <span class="math inline">\(a \notin A\)</span> when it is not.</p>
+</div>
+<div class="fragment">
+<p>Sets get uppercase names and their elements get lowercase ones.</p>
+</div>
+</section>
+<section id="what-can-be-a-member" class="slide level2">
+<h2>What Can Be a Member</h2>
+<p>Nothing requires the members of a set to have anything to do with each other.</p>
+<p><span class="math display">\[\{a,\; 2,\; \text{Fred},\; \text{New Jersey}\}\]</span></p>
+<p>That is a single set, and it has four elements.</p>
+<div class="fragment">
+<p>A type in a programming language is a set together with the operations its members allow. <code>boolean</code> is the set <span class="math inline">\(\{0, 1\}\)</span> with AND, OR, and NOT.</p>
 </div>
 </section>
 <section id="the-roster-method" class="slide level2">
@@ -449,6 +454,17 @@ Zechun (Jacob) Cao
 </tbody>
 </table>
 </section>
+<section id="the-empty-set-must-know" class="slide level2">
+<h2>The Empty Set <span class="ex">Must Know</span></h2>
+<p>The <strong>empty set</strong> has no elements. Write it <span class="math inline">\(\emptyset\)</span>, or <span class="math inline">\(\{\, \}\)</span>. A set with exactly one element is a <strong>singleton set</strong>.</p>
+<div class="fragment">
+<p>Because <span class="math inline">\(x \in \emptyset\)</span> is false for every <span class="math inline">\(x\)</span>, any statement of the form “every element of <span class="math inline">\(\emptyset\)</span> has property <span class="math inline">\(P\)</span>” is vacuously true.</p>
+</div>
+<div class="fragment">
+<p><span class="math inline">\(\emptyset\)</span> is not the same as <span class="math inline">\(\{\emptyset\}\)</span>: the second is a singleton whose one element is the empty set. Those are the two folders from the warm-up.</p>
+<p><span class="math display">\[\emptyset \neq \{\emptyset\}\]</span></p>
+</div>
+</section>
 <section id="set-builder-notation-must-know" class="slide level2 long-title">
 <h2>Set-Builder Notation <span class="ex">Must Know</span></h2>
 <p>Give the property every member satisfies instead of listing members.</p>
@@ -503,6 +519,25 @@ Zechun (Jacob) Cao
 <p><strong>D.</strong> <strong>A</strong> has no lower bound on <span class="math inline">\(n\)</span> and admits <span class="math inline">\(-3\)</span>; <strong>B</strong> gives the even numbers <span class="math inline">\(2, 4, 6, 8\)</span>; <strong>C</strong> rules out every integer <span class="math inline">\(n\)</span>.</p>
 </div>
 </section>
+<section id="set-notation-with-quantifiers" class="slide level2">
+<h2>Set Notation with Quantifiers</h2>
+<p>Restricting a quantifier to a set has its own shorthand.</p>
+<p><span class="math display">\[\forall x \in S\; P(x) \quad \text{abbreviates} \quad \forall x\,(x \in S \rightarrow P(x))\]</span></p>
+<p><span class="math display">\[\exists x \in S\; P(x) \quad \text{abbreviates} \quad \exists x\,(x \in S \wedge P(x))\]</span></p>
+<div class="fragment">
+<p>The conditional goes with <span class="math inline">\(\forall\)</span> and the conjunction with <span class="math inline">\(\exists\)</span>, exactly as in Chapter 1.</p>
+</div>
+</section>
+<section id="set-notation-with-quantifiers-1" class="slide level2">
+<h2>Set Notation with Quantifiers</h2>
+<p><strong><em>Example:</em></strong> What do <span class="math inline">\(\forall x \in \mathbb{R}\,(x^2 \geq 0)\)</span> and <span class="math inline">\(\exists x \in \mathbb{Z}\,(x^2 = 1)\)</span> say, and are they true?</p>
+<div class="fragment">
+<p><strong><em>Solution:</em></strong> The first says the square of every real number is nonnegative, and it is true.</p>
+</div>
+<div class="fragment">
+<p>The second says some integer has square <span class="math inline">\(1\)</span>. It is true, because <span class="math inline">\(x = 1\)</span> is such an integer, and so is <span class="math inline">\(x = -1\)</span>.</p>
+</div>
+</section>
 <section id="truth-sets-must-know" class="slide level2">
 <h2>Truth Sets <span class="ex">Must Know</span></h2>
 <p>Given a predicate <span class="math inline">\(P\)</span> and a domain <span class="math inline">\(D\)</span>, the <strong>truth set</strong> of <span class="math inline">\(P\)</span> is the set of elements of <span class="math inline">\(D\)</span> that make <span class="math inline">\(P\)</span> true.</p>
@@ -511,17 +546,20 @@ Zechun (Jacob) Cao
 <p><strong><em>Example:</em></strong> The truth set of <span class="math inline">\(P(x)\)</span>: “<span class="math inline">\(|x| = 1\)</span>” over the integers is <span class="math inline">\(\{-1, 1\}\)</span>.</p>
 </div>
 <div class="fragment">
-<p>A truth set is a set-builder description whose condition came from Chapter 1. The domain matters as much as the predicate: change <span class="math inline">\(D\)</span> and the same predicate gives a different set.</p>
+<p>The domain matters as much as the predicate: change <span class="math inline">\(D\)</span> and the same predicate gives a different set.</p>
 </div>
 </section>
 <section id="truth-sets-must-know-1" class="slide level2">
 <h2>Truth Sets <span class="ex">Must Know</span></h2>
-<p><strong><em>Example:</em></strong> Find the truth set of <span class="math inline">\(Q(x)\)</span>: “<span class="math inline">\(x^2 = 2\)</span>” where the domain is the set of integers.</p>
+<p><strong><em>Example:</em></strong> Over the integers, find the truth sets of <span class="math inline">\(Q(x)\)</span>: “<span class="math inline">\(x^2 = 2\)</span>” and <span class="math inline">\(R(x)\)</span>: “<span class="math inline">\(|x| = x\)</span>”.</p>
 <div class="fragment">
-<p><strong><em>Solution:</em></strong> <span class="math inline">\(\emptyset\)</span>. The two real solutions are <span class="math inline">\(\sqrt{2}\)</span> and <span class="math inline">\(-\sqrt{2}\)</span>, and neither is an integer, so no element of the domain satisfies <span class="math inline">\(Q\)</span>.</p>
+<p><strong><em>Solution:</em></strong> <span class="math inline">\(Q\)</span> has truth set <span class="math inline">\(\emptyset\)</span>. The two real solutions are <span class="math inline">\(\sqrt{2}\)</span> and <span class="math inline">\(-\sqrt{2}\)</span>, and neither is an integer.</p>
 </div>
 <div class="fragment">
-<p>Over <span class="math inline">\(\mathbb{R}\)</span> the same predicate has truth set <span class="math inline">\(\{\sqrt{2}, -\sqrt{2}\}\)</span>. Check the domain before you solve the equation.</p>
+<p><span class="math inline">\(R\)</span> has truth set <span class="math inline">\(\mathbb{N}\)</span>, because <span class="math inline">\(|x| = x\)</span> holds exactly when <span class="math inline">\(x \geq 0\)</span>.</p>
+</div>
+<div class="fragment">
+<p>Over <span class="math inline">\(\mathbb{R}\)</span>, <span class="math inline">\(Q\)</span> has truth set <span class="math inline">\(\{\sqrt{2}, -\sqrt{2}\}\)</span>. Check the domain before you solve the equation.</p>
 </div>
 </section>
 <section id="interval-notation" class="slide level2">
@@ -555,31 +593,97 @@ Zechun (Jacob) Cao
 </table>
 <p><span class="math inline">\([a, b]\)</span> is the <strong>closed</strong> interval, <span class="math inline">\((a, b)\)</span> the <strong>open</strong> one.</p>
 </section>
+<section id="interval-notation-1" class="slide level2">
+<h2>Interval Notation</h2>
+<p>A filled endpoint belongs to the set and a hollow one does not.</p>
+<svg class="diagram fig-xl" viewbox="0 0 720 300" role="img" aria-labelledby="int-t">
+  <title id="int-t">The four intervals between a and b on a number line</title>
+  <line class="guide" x1="200" y1="36" x2="200" y2="244"></line>
+  <line class="guide" x1="520" y1="36" x2="520" y2="244"></line>
+  <line class="axis" x1="60" y1="252" x2="660" y2="252"></line>
+  <line class="tick" x1="200" y1="244" x2="200" y2="262"></line>
+  <line class="tick" x1="520" y1="244" x2="520" y2="262"></line>
+  <text x="200" y="292" text-anchor="middle" font-size="28">a</text>
+  <text x="520" y="292" text-anchor="middle" font-size="28">b</text>
+  <g class="fragment" data-fragment-index="0">
+    <g class="grow">
+      <line class="bar" x1="200" y1="56" x2="520" y2="56"></line>
+      <circle class="dot" cx="200" cy="56" r="9"></circle>
+      <circle class="dot" cx="520" cy="56" r="9"></circle>
+      <text x="552" y="66" class="lbl-blue" font-size="28">[a, b]</text>
+    </g>
+  </g>
+  <g class="fragment" data-fragment-index="1">
+    <g class="grow">
+      <line class="bar" x1="200" y1="104" x2="520" y2="104"></line>
+      <circle class="dot" cx="200" cy="104" r="9"></circle>
+      <circle class="dot-open" cx="520" cy="104" r="9"></circle>
+      <text x="552" y="114" class="lbl-blue" font-size="28">[a, b)</text>
+    </g>
+  </g>
+  <g class="fragment" data-fragment-index="2">
+    <g class="grow">
+      <line class="bar" x1="200" y1="152" x2="520" y2="152"></line>
+      <circle class="dot-open" cx="200" cy="152" r="9"></circle>
+      <circle class="dot" cx="520" cy="152" r="9"></circle>
+      <text x="552" y="162" class="lbl-blue" font-size="28">(a, b]</text>
+    </g>
+  </g>
+  <g class="fragment" data-fragment-index="3">
+    <g class="grow">
+      <line class="bar" x1="200" y1="200" x2="520" y2="200"></line>
+      <circle class="dot-open" cx="200" cy="200" r="9"></circle>
+      <circle class="dot-open" cx="520" cy="200" r="9"></circle>
+      <text x="552" y="210" class="lbl-blue" font-size="28">(a, b)</text>
+    </g>
+  </g>
+</svg>
+</section>
 <section id="the-universal-set" class="slide level2">
 <h2>The Universal Set</h2>
 <p>The <strong>universal set</strong> <span class="math inline">\(U\)</span> holds everything currently under consideration. Its contents depend on the problem, and it is often left implicit.</p>
-<svg class="diagram" viewbox="0 0 920 230" role="img" aria-labelledby="univ-t">
+<svg class="diagram fig-md" viewbox="0 0 560 360" role="img" aria-labelledby="univ-t">
   <title id="univ-t">A set A drawn inside the universal set U</title>
-  <rect x="14" y="8" width="892" height="206" rx="10" class="univ"></rect>
-  <text x="40" y="44" class="lbl-gray" font-size="30">U</text>
-  <circle cx="440" cy="112" r="88" class="ring"></circle>
-  <text x="440" y="124" text-anchor="middle" class="lbl-blue" font-size="34">A</text>
+  <rect x="14" y="10" width="532" height="340" rx="10" class="univ"></rect>
+  <text x="44" y="50" class="lbl-gray" font-size="30">U</text>
+  <circle cx="196" cy="190" r="112" class="ring"></circle>
+  <text x="196" y="202" text-anchor="middle" class="lbl-blue" font-size="36">A</text>
   <g class="fragment" data-fragment-index="0">
-    <text x="700" y="124" text-anchor="middle" font-size="30">everything else</text>
+    <text x="434" y="200" text-anchor="middle" class="lbl-gray grow" font-size="26">everything else</text>
   </g>
 </svg>
-<p>A diagram like this one is a <strong>Venn diagram</strong>, after John Venn (1834–1923).</p>
 </section>
-<section id="the-empty-set-must-know" class="slide level2">
-<h2>The Empty Set <span class="ex">Must Know</span></h2>
-<p>The <strong>empty set</strong> has no elements. Write it <span class="math inline">\(\emptyset\)</span>, or <span class="math inline">\(\{\, \}\)</span>.</p>
-<div class="fragment">
-<p>Because <span class="math inline">\(x \in \emptyset\)</span> is false for every <span class="math inline">\(x\)</span>, any statement of the form “every element of <span class="math inline">\(\emptyset\)</span> has property <span class="math inline">\(P\)</span>” is true.</p>
-</div>
-<div class="fragment">
-<p><span class="math inline">\(\emptyset\)</span> is not the same as <span class="math inline">\(\{\emptyset\}\)</span>. The first has no elements. The second has one element, which happens to be a set with no elements.</p>
-<p><span class="math display">\[\emptyset \neq \{\emptyset\}\]</span></p>
-</div>
+<section id="venn-diagrams" class="slide level2">
+<h2>Venn Diagrams</h2>
+<p>A <strong>Venn diagram</strong> draws <span class="math inline">\(U\)</span> as a rectangle, each set as a circle inside it, and each element as a point. John Venn introduced them in 1881.</p>
+<p><strong><em>Example:</em></strong> Draw one for <span class="math inline">\(V\)</span>, the vowels of the English alphabet.</p>
+<svg class="diagram fig-sm" viewbox="0 0 560 380" role="img" aria-labelledby="vow-t">
+  <title id="vow-t">The five vowels inside a circle V, inside a rectangle of all 26 letters</title>
+  <rect x="14" y="10" width="532" height="360" rx="10" class="univ"></rect>
+  <text x="44" y="50" class="lbl-gray" font-size="28">U</text>
+  <g class="fragment" data-fragment-index="0">
+    <g class="grow">
+      <circle cx="280" cy="190" r="140" class="ring"></circle>
+      <text x="280" y="202" text-anchor="middle" class="lbl-blue" font-size="34">V</text>
+    </g>
+  </g>
+  <g class="fragment" data-fragment-index="1">
+    <g class="drop">
+      <text x="280" y="105" text-anchor="middle" font-size="30">a</text>
+      <text x="370" y="171" text-anchor="middle" font-size="30">e</text>
+      <text x="336" y="277" text-anchor="middle" font-size="30">i</text>
+      <text x="224" y="277" text-anchor="middle" font-size="30">o</text>
+      <text x="190" y="171" text-anchor="middle" font-size="30">u</text>
+    </g>
+  </g>
+  <g class="fragment" data-fragment-index="2">
+    <g class="drop">
+      <text x="470" y="120" text-anchor="middle" class="lbl-gray" font-size="28">b</text>
+      <text x="478" y="300" text-anchor="middle" class="lbl-gray" font-size="28">z</text>
+      <text x="86" y="300" text-anchor="middle" class="lbl-gray" font-size="28">q</text>
+    </g>
+  </g>
+</svg>
 </section>
 <section id="sets-inside-sets" class="slide level2">
 <h2>Sets Inside Sets</h2>
@@ -594,22 +698,36 @@ Zechun (Jacob) Cao
 <section id="sets-inside-sets-1" class="slide level2">
 <h2>Sets Inside Sets</h2>
 <p><span class="math inline">\(A = \{a, \{a\}\}\)</span> has two elements, drawn here as the two things inside the outer box.</p>
-<svg class="diagram" viewbox="0 0 900 200" role="img" aria-labelledby="nest-t">
+<svg class="diagram fig-sm" viewbox="0 0 480 300" role="img" aria-labelledby="nest-t">
   <title id="nest-t">The set A containing the object a and the set containing a</title>
-  <rect x="190" y="24" width="520" height="150" rx="14" class="ring"></rect>
-  <text x="218" y="62" class="lbl-blue" font-size="32">A</text>
+  <rect x="30" y="20" width="420" height="260" rx="14" class="ring"></rect>
+  <text x="60" y="62" class="lbl-blue" font-size="32">A</text>
   <g class="fragment" data-fragment-index="0">
-    <rect x="252" y="66" width="120" height="86" rx="8" class="grow" fill="#e6f0f5" stroke="none"></rect>
+    <g class="grow">
+      <rect x="70" y="110" width="130" height="120" rx="8" class="tint"></rect>
+      <text x="135" y="188" text-anchor="middle" font-size="46">a</text>
+    </g>
   </g>
-  <text x="312" y="126" text-anchor="middle" font-size="46">a</text>
   <g class="fragment" data-fragment-index="1">
-    <rect x="432" y="66" width="230" height="86" rx="8" class="grow" fill="#e6f0f5" stroke="none"></rect>
+    <g class="grow">
+      <rect x="240" y="110" width="170" height="120" rx="8" class="tint"></rect>
+      <rect x="260" y="130" width="130" height="80" rx="8" class="ring"></rect>
+      <text x="325" y="188" text-anchor="middle" font-size="46">a</text>
+    </g>
   </g>
-  <rect x="452" y="76" width="190" height="66" rx="8" class="ring"></rect>
-  <text x="547" y="126" text-anchor="middle" font-size="46">a</text>
 </svg>
-<div class="fragment">
+<div class="fragment" data-fragment-index="2">
 <p>The object <span class="math inline">\(a\)</span> and the set <span class="math inline">\(\{a\}\)</span> are different elements of <span class="math inline">\(A\)</span>.</p>
+</div>
+</section>
+<section id="naive-set-theory" class="slide level2">
+<h2>Naive Set Theory</h2>
+<p>Cantor’s 1895 description of a set takes for granted that any property whatever determines a set.</p>
+<div class="fragment">
+<p>In 1902 Bertrand Russell asked about the collection of all sets that are not members of themselves. If that collection is a member of itself, its own property says it is not; if it is not, it qualifies, so it is.</p>
+</div>
+<div class="fragment">
+<p>Axiomatic set theory rules such collections out. Every set in this course is safe under Cantor’s original version, called <strong>naive set theory</strong>, and that is the version we use.</p>
 </div>
 </section>
 <section id="set-equality" class="slide level2">
@@ -627,19 +745,28 @@ Zechun (Jacob) Cao
 <h2>Subsets</h2>
 <p><strong><em>Definition:</em></strong> <span class="math inline">\(A\)</span> is a <strong>subset</strong> of <span class="math inline">\(B\)</span>, written <span class="math inline">\(A \subseteq B\)</span>, when every element of <span class="math inline">\(A\)</span> is also an element of <span class="math inline">\(B\)</span>.</p>
 <p><span class="math display">\[A \subseteq B \quad \text{means} \quad \forall x\,(x \in A \rightarrow x \in B)\]</span></p>
-<svg class="diagram" viewbox="0 0 920 210" role="img" aria-labelledby="sub-t">
+<div class="fragment">
+<p><span class="math inline">\(\{1, 3, 5\} \subseteq \{1, 2, 3, 4, 5\}\)</span>, and <span class="math inline">\(\mathbb{Z}^+ \subseteq \mathbb{Z} \subseteq \mathbb{Q} \subseteq \mathbb{R}\)</span>.</p>
+</div>
+</section>
+<section id="subsets-1" class="slide level2">
+<h2>Subsets</h2>
+<p><span class="math inline">\(A \subseteq B\)</span> puts the circle for <span class="math inline">\(A\)</span> inside the circle for <span class="math inline">\(B\)</span>.</p>
+<svg class="diagram fig-md" viewbox="0 0 560 380" role="img" aria-labelledby="sub-t">
   <title id="sub-t">A drawn inside B, inside the universal set</title>
-  <rect x="14" y="6" width="892" height="196" rx="10" class="univ"></rect>
-  <text x="40" y="40" class="lbl-gray" font-size="28">U</text>
-  <circle cx="470" cy="104" r="92" class="ring"></circle>
-  <text x="470" y="42" text-anchor="middle" class="lbl-blue" font-size="30">B</text>
+  <rect x="14" y="10" width="532" height="360" rx="10" class="univ"></rect>
+  <text x="44" y="50" class="lbl-gray" font-size="28">U</text>
+  <circle cx="280" cy="200" r="140" class="ring"></circle>
+  <text x="280" y="106" text-anchor="middle" class="lbl-blue" font-size="32">B</text>
   <g class="fragment" data-fragment-index="0">
-    <circle cx="450" cy="116" r="52" class="ring grow"></circle>
-    <text x="450" y="128" text-anchor="middle" class="lbl-blue grow" font-size="30">A</text>
+    <g class="grow">
+      <circle cx="266" cy="232" r="74" class="ring"></circle>
+      <text x="266" y="244" text-anchor="middle" class="lbl-blue" font-size="32">A</text>
+    </g>
   </g>
 </svg>
 </section>
-<section id="subsets-1" class="slide level2">
+<section id="subsets-2" class="slide level2">
 <h2>Subsets</h2>
 <p>Two consequences fall straight out of the definition.</p>
 <div class="fragment">
@@ -656,10 +783,17 @@ Zechun (Jacob) Cao
 <p><strong><em>To show <span class="math inline">\(A \subseteq B\)</span>:</em></strong> take an arbitrary <span class="math inline">\(x \in A\)</span> and derive <span class="math inline">\(x \in B\)</span>.</p>
 <p><strong><em>To show <span class="math inline">\(A \nsubseteq B\)</span>:</em></strong> produce one <span class="math inline">\(x\)</span> with <span class="math inline">\(x \in A\)</span> and <span class="math inline">\(x \notin B\)</span>. That <span class="math inline">\(x\)</span> is a counterexample to <span class="math inline">\(x \in A \rightarrow x \in B\)</span>.</p>
 <div class="fragment">
+<p>The two tasks are not symmetric. Showing <span class="math inline">\(A \subseteq B\)</span> takes an argument that covers every <span class="math inline">\(x\)</span>; showing <span class="math inline">\(A \nsubseteq B\)</span> takes one <span class="math inline">\(x\)</span>.</p>
+</div>
+</section>
+<section id="showing-a-subset-claim-1" class="slide level2">
+<h2>Showing a Subset Claim</h2>
 <p>The computer science majors at this school are a subset of the students at this school: being a CS major here means being a student here.</p>
+<div class="fragment">
+<p>The integers whose squares are below <span class="math inline">\(100\)</span> are not a subset of the nonnegative integers. Take <span class="math inline">\(x = -4\)</span>: its square is <span class="math inline">\(16\)</span>, and <span class="math inline">\(-4\)</span> is not nonnegative.</p>
 </div>
 <div class="fragment">
-<p>The integers whose squares are below <span class="math inline">\(100\)</span> are not a subset of the nonnegative integers: <span class="math inline">\(-4\)</span> has square <span class="math inline">\(16\)</span> and is not nonnegative.</p>
+<p>The students who have taken discrete math here are not a subset of the CS majors here, as long as one student has taken it without majoring in CS.</p>
 </div>
 </section>
 <section id="elements-and-subsets-must-know" class="slide level2 long-title">
@@ -687,35 +821,12 @@ Zechun (Jacob) Cao
 <p>For <span class="math inline">\(A = \{1, 2, 3\}\)</span>: <span class="math inline">\(1 \in A\)</span> is true and <span class="math inline">\(1 \subseteq A\)</span> is not even well formed, because <span class="math inline">\(1\)</span> has no elements. <span class="math inline">\(\{1\} \subseteq A\)</span> is true and <span class="math inline">\(\{1\} \in A\)</span> is false, because <span class="math inline">\(A\)</span> lists <span class="math inline">\(1\)</span>, not <span class="math inline">\(\{1\}\)</span>.</p>
 </div>
 </section>
-<section id="elements-and-subsets-must-know-1" class="slide level2 long-title">
-<h2>Elements and Subsets <span class="ex">Must Know</span></h2>
-<p><strong><em>Example:</em></strong> Let <span class="math inline">\(A = \{a, \{a\}\}\)</span>. Which of these is false?</p>
-<p><span class="math display">\[\text{(i) } \{a\} \in \mathcal{P}(A)
-\qquad \text{(ii) } \{a\} \subseteq \mathcal{P}(A)\]</span></p>
-<p><span class="math display">\[\text{(iii) } \{\{a\}\} \in \mathcal{P}(A)
-\qquad \text{(iv) } \{\{a\}\} \subseteq \mathcal{P}(A)\]</span></p>
-<div class="fragment">
-<p><strong><em>Solution:</em></strong> (ii) is false. The elements of <span class="math inline">\(\mathcal{P}(A)\)</span> are the subsets of <span class="math inline">\(A\)</span>:</p>
-<p><span class="math display">\[\mathcal{P}(A) = \{\emptyset,\; \{a\},\; \{\{a\}\},\; \{a, \{a\}\}\}\]</span></p>
-</div>
-</section>
-<section id="elements-and-subsets-must-know-2" class="slide level2 long-title">
-<h2>Elements and Subsets <span class="ex">Must Know</span></h2>
-<p><span class="math display">\[\mathcal{P}(A) = \{\emptyset,\; \{a\},\; \{\{a\}\},\; \{a, \{a\}\}\}\]</span></p>
-<ol start="2" type="i">
-<li>claims that <span class="math inline">\(a\)</span> itself is one of those four subsets, and it is not.</li>
-</ol>
-<div class="fragment">
-<p>The other three hold. <span class="math inline">\(\{a\}\)</span> and <span class="math inline">\(\{\{a\}\}\)</span> are both on the list, which makes (i) and (iii) true, and <span class="math inline">\(\{\{a\}\}\)</span> is a one-element set whose element is on the list, which makes (iv) true.</p>
-</div>
-</section>
 <section id="chains-of-containment-must-know" class="slide level2 long-title">
 <h2>Chains of Containment <span class="ex">Must Know</span></h2>
-<p><strong><em>Example:</em></strong> Let <span class="math inline">\(B = \{\{a\}, 3, 4, 1\}\)</span> and let <span class="math inline">\(U\)</span> be the universal set. Which statement is correct?</p>
+<p><strong><em>Example:</em></strong> Let <span class="math inline">\(A = \{2, \{a\}, 3, 4\}\)</span>, let <span class="math inline">\(B = \{\{a\}, 3, 4, 1\}\)</span>, and let <span class="math inline">\(U\)</span> be the universal set. Which statement is correct?</p>
 <p><span class="math display">\[\text{(i) } \{2\} \in A
 \quad \text{(ii) } \{a\} \subseteq A
 \quad \text{(iii) } \emptyset \subseteq \{\{a\}\} \subseteq B \subseteq U\]</span></p>
-<p>where <span class="math inline">\(A = \{2, \{a\}, 3, 4\}\)</span>.</p>
 <div class="fragment">
 <p><strong><em>Solution:</em></strong> (iii). Read it one link at a time: <span class="math inline">\(\emptyset\)</span> is a subset of everything; <span class="math inline">\(\{\{a\}\}\)</span> has the single element <span class="math inline">\(\{a\}\)</span>, which <span class="math inline">\(B\)</span> lists; and every element of <span class="math inline">\(B\)</span> lies in <span class="math inline">\(U\)</span>.</p>
 </div>
@@ -766,6 +877,9 @@ Zechun (Jacob) Cao
 <div class="fragment">
 <p>The second half is what “proper” adds: <span class="math inline">\(B\)</span> has to hold at least one element that <span class="math inline">\(A\)</span> misses.</p>
 </div>
+<div class="fragment">
+<p>So <span class="math inline">\(\{1, 3\} \subset \{1, 2, 3\}\)</span>, while <span class="math inline">\(\{1, 2, 3\} \subseteq \{1, 2, 3\}\)</span> is true and <span class="math inline">\(\{1, 2, 3\} \subset \{1, 2, 3\}\)</span> is false.</p>
+</div>
 </section>
 <section id="set-cardinality" class="slide level2">
 <h2>Set Cardinality</h2>
@@ -776,6 +890,7 @@ Zechun (Jacob) Cao
 |\emptyset| = 0
 \qquad
 |\{\emptyset\}| = 1\]</span></p>
+<p>The English alphabet has <span class="math inline">\(|S| = 26\)</span>, and <span class="math inline">\(\mathbb{Z}^+\)</span> is infinite.</p>
 </div>
 <div class="fragment">
 <p>Count distinct elements, at the top level only: <span class="math inline">\(|\{a, \{a\}\}| = 2\)</span>, and <span class="math inline">\(|\{1, 1, 2\}| = 2\)</span>.</p>
@@ -793,7 +908,7 @@ Zechun (Jacob) Cao
 <section id="power-sets-must-know-1" class="slide level2">
 <h2>Power Sets <span class="ex">Must Know</span></h2>
 <p>Build the subsets by deciding, one element at a time, whether it is in.</p>
-<svg class="diagram" viewbox="0 0 900 270" role="img" aria-labelledby="pow-t">
+<svg class="diagram fig-xl" viewbox="0 0 900 270" role="img" aria-labelledby="pow-t">
   <title id="pow-t">A tree of in-or-out decisions for the elements a and b</title>
   <defs>
     <marker id="pow-arrow" markerwidth="10" markerheight="10" refx="9" refy="5" orient="auto" markerunits="userSpaceOnUse">
@@ -838,13 +953,78 @@ Zechun (Jacob) Cao
 </section>
 <section id="power-sets-must-know-2" class="slide level2">
 <h2>Power Sets <span class="ex">Must Know</span></h2>
-<p>Each element doubles the number of subsets, because every subset you already have appears twice: once without the new element and once with it.</p>
+<p>Each element is one in-or-out decision, so a subset of <span class="math inline">\(\{a, b, c\}\)</span> is a three-bit string.</p>
+<svg class="diagram fig-md" viewbox="0 0 600 370" role="img" aria-labelledby="bits-t">
+  <title id="bits-t">The eight three-bit strings paired with the eight subsets of a, b, c</title>
+  <text x="170" y="52" text-anchor="middle" class="lbl-gray" font-size="24">abc</text>
+  <text x="430" y="52" text-anchor="middle" class="lbl-gray" font-size="24">subset</text>
+  <line class="guide" x1="300" y1="66" x2="300" y2="358"></line>
+  <text x="170" y="92" text-anchor="middle" font-size="27">0 0 0</text>
+  <text x="170" y="128" text-anchor="middle" font-size="27">0 0 1</text>
+  <text x="170" y="164" text-anchor="middle" font-size="27">0 1 0</text>
+  <text x="170" y="200" text-anchor="middle" font-size="27">0 1 1</text>
+  <text x="170" y="236" text-anchor="middle" font-size="27">1 0 0</text>
+  <text x="170" y="272" text-anchor="middle" font-size="27">1 0 1</text>
+  <text x="170" y="308" text-anchor="middle" font-size="27">1 1 0</text>
+  <text x="170" y="344" text-anchor="middle" font-size="27">1 1 1</text>
+  <g class="fragment" data-fragment-index="0">
+    <g class="drop">
+      <text x="430" y="92" text-anchor="middle" class="lbl-blue" font-size="27">{ }</text>
+      <text x="430" y="128" text-anchor="middle" class="lbl-blue" font-size="27">{c}</text>
+      <text x="430" y="164" text-anchor="middle" class="lbl-blue" font-size="27">{b}</text>
+      <text x="430" y="200" text-anchor="middle" class="lbl-blue" font-size="27">{b, c}</text>
+      <text x="430" y="236" text-anchor="middle" class="lbl-blue" font-size="27">{a}</text>
+      <text x="430" y="272" text-anchor="middle" class="lbl-blue" font-size="27">{a, c}</text>
+      <text x="430" y="308" text-anchor="middle" class="lbl-blue" font-size="27">{a, b}</text>
+      <text x="430" y="344" text-anchor="middle" class="lbl-blue" font-size="27">{a, b, c}</text>
+    </g>
+  </g>
+</svg>
+</section>
+<section id="power-sets-must-know-3" class="slide level2">
+<h2>Power Sets <span class="ex">Must Know</span></h2>
+<p>Three bits give <span class="math inline">\(2^3 = 8\)</span> strings, so <span class="math inline">\(\{a, b, c\}\)</span> has eight subsets. The same count works for any size:</p>
 <p><span class="math display">\[|A| = n \quad \Longrightarrow \quad |\mathcal{P}(A)| = 2^n\]</span></p>
 <div class="fragment">
 <p><strong><em>Example:</em></strong> What is <span class="math inline">\(|\mathcal{P}(\{a, b, \{a, b\}\})|\)</span>?</p>
 </div>
 <div class="fragment">
 <p><strong><em>Solution:</em></strong> <span class="math inline">\(8\)</span>. The set has three elements — <span class="math inline">\(a\)</span>, <span class="math inline">\(b\)</span>, and the set <span class="math inline">\(\{a, b\}\)</span> — so <span class="math inline">\(n = 3\)</span> and <span class="math inline">\(2^3 = 8\)</span>. The inner braces make the third element look like two, but it counts once.</p>
+</div>
+</section>
+<section id="power-sets-must-know-4" class="slide level2">
+<h2>Power Sets <span class="ex">Must Know</span></h2>
+<p><strong><em>Example:</em></strong> Find <span class="math inline">\(\mathcal{P}(\emptyset)\)</span> and <span class="math inline">\(\mathcal{P}(\{\emptyset\})\)</span>.</p>
+<div class="fragment">
+<p><strong><em>Solution:</em></strong> <span class="math inline">\(\emptyset\)</span> has one subset, itself, so</p>
+<p><span class="math display">\[\mathcal{P}(\emptyset) = \{\emptyset\}.\]</span></p>
+</div>
+<div class="fragment">
+<p><span class="math inline">\(\{\emptyset\}\)</span> has two subsets, <span class="math inline">\(\emptyset\)</span> and <span class="math inline">\(\{\emptyset\}\)</span>, so</p>
+<p><span class="math display">\[\mathcal{P}(\{\emptyset\}) = \{\emptyset,\; \{\emptyset\}\}.\]</span></p>
+<p>The counts agree with <span class="math inline">\(2^0 = 1\)</span> and <span class="math inline">\(2^1 = 2\)</span>.</p>
+</div>
+</section>
+<section id="elements-and-subsets-must-know-1" class="slide level2 long-title">
+<h2>Elements and Subsets <span class="ex">Must Know</span></h2>
+<p><strong><em>Example:</em></strong> Let <span class="math inline">\(A = \{a, \{a\}\}\)</span>. Which of these is false?</p>
+<p><span class="math display">\[\text{(i) } \{a\} \in \mathcal{P}(A)
+\qquad \text{(ii) } \{a\} \subseteq \mathcal{P}(A)\]</span></p>
+<p><span class="math display">\[\text{(iii) } \{\{a\}\} \in \mathcal{P}(A)
+\qquad \text{(iv) } \{\{a\}\} \subseteq \mathcal{P}(A)\]</span></p>
+<div class="fragment">
+<p><strong><em>Solution:</em></strong> (ii) is false. The elements of <span class="math inline">\(\mathcal{P}(A)\)</span> are the subsets of <span class="math inline">\(A\)</span>:</p>
+<p><span class="math display">\[\mathcal{P}(A) = \{\emptyset,\; \{a\},\; \{\{a\}\},\; \{a, \{a\}\}\}\]</span></p>
+</div>
+</section>
+<section id="elements-and-subsets-must-know-2" class="slide level2 long-title">
+<h2>Elements and Subsets <span class="ex">Must Know</span></h2>
+<p><span class="math display">\[\mathcal{P}(A) = \{\emptyset,\; \{a\},\; \{\{a\}\},\; \{a, \{a\}\}\}\]</span></p>
+<ol start="2" type="i">
+<li>claims that <span class="math inline">\(a\)</span> itself is one of those four subsets, and it is not.</li>
+</ol>
+<div class="fragment">
+<p>The other three hold. <span class="math inline">\(\{a\}\)</span> and <span class="math inline">\(\{\{a\}\}\)</span> are both on the list, which makes (i) and (iii) true, and <span class="math inline">\(\{\{a\}\}\)</span> is a one-element set whose element is on the list, which makes (iv) true.</p>
 </div>
 </section>
 <section id="tuples" class="slide level2">
@@ -869,35 +1049,31 @@ Zechun (Jacob) Cao
 <section id="cartesian-product-must-know-1" class="slide level2">
 <h2>Cartesian Product <span class="ex">Must Know</span></h2>
 <p>Lay the pairs out as a grid: one row per element of <span class="math inline">\(A\)</span>, one column per element of <span class="math inline">\(B\)</span>.</p>
-<svg class="diagram" viewbox="0 0 900 290" role="img" aria-labelledby="cart-t">
-  <title id="cart-t">A three by two grid of the pairs in A cross B</title>
-  <text x="360" y="46" text-anchor="middle" class="lbl-blue" font-size="30">y</text>
-  <text x="540" y="46" text-anchor="middle" class="lbl-blue" font-size="30">z</text>
-  <text x="252" y="112" text-anchor="end" class="lbl-blue" font-size="30">a</text>
-  <text x="252" y="190" text-anchor="end" class="lbl-blue" font-size="30">b</text>
-  <text x="252" y="268" text-anchor="end" class="lbl-blue" font-size="30">c</text>
+<svg class="diagram fig-xl" viewbox="0 0 760 230" role="img" aria-labelledby="cart-t">
+  <title id="cart-t">A two by three grid of the pairs in A cross B</title>
+  <text x="255" y="48" text-anchor="middle" class="lbl-blue" font-size="30">1</text>
+  <text x="415" y="48" text-anchor="middle" class="lbl-blue" font-size="30">2</text>
+  <text x="575" y="48" text-anchor="middle" class="lbl-blue" font-size="30">3</text>
+  <text x="168" y="111" text-anchor="end" class="lbl-blue" font-size="30">a</text>
+  <text x="168" y="189" text-anchor="end" class="lbl-blue" font-size="30">b</text>
   <g class="fragment" data-fragment-index="0">
     <g class="drop">
-      <rect x="270" y="70" width="180" height="62" class="cell-on"></rect>
-      <rect x="450" y="70" width="180" height="62" class="cell-on"></rect>
-      <text x="360" y="110" text-anchor="middle" font-size="28">(a, y)</text>
-      <text x="540" y="110" text-anchor="middle" font-size="28">(a, z)</text>
+      <rect x="180" y="70" width="150" height="62" class="cell-on"></rect>
+      <rect x="340" y="70" width="150" height="62" class="cell-on"></rect>
+      <rect x="500" y="70" width="150" height="62" class="cell-on"></rect>
+      <text x="255" y="110" text-anchor="middle" font-size="28">(a, 1)</text>
+      <text x="415" y="110" text-anchor="middle" font-size="28">(a, 2)</text>
+      <text x="575" y="110" text-anchor="middle" font-size="28">(a, 3)</text>
     </g>
   </g>
   <g class="fragment" data-fragment-index="1">
     <g class="drop">
-      <rect x="270" y="148" width="180" height="62" class="cell-on"></rect>
-      <rect x="450" y="148" width="180" height="62" class="cell-on"></rect>
-      <text x="360" y="188" text-anchor="middle" font-size="28">(b, y)</text>
-      <text x="540" y="188" text-anchor="middle" font-size="28">(b, z)</text>
-    </g>
-  </g>
-  <g class="fragment" data-fragment-index="2">
-    <g class="drop">
-      <rect x="270" y="226" width="180" height="62" class="cell-on"></rect>
-      <rect x="450" y="226" width="180" height="62" class="cell-on"></rect>
-      <text x="360" y="266" text-anchor="middle" font-size="28">(c, y)</text>
-      <text x="540" y="266" text-anchor="middle" font-size="28">(c, z)</text>
+      <rect x="180" y="148" width="150" height="62" class="cell-on"></rect>
+      <rect x="340" y="148" width="150" height="62" class="cell-on"></rect>
+      <rect x="500" y="148" width="150" height="62" class="cell-on"></rect>
+      <text x="255" y="188" text-anchor="middle" font-size="28">(b, 1)</text>
+      <text x="415" y="188" text-anchor="middle" font-size="28">(b, 2)</text>
+      <text x="575" y="188" text-anchor="middle" font-size="28">(b, 3)</text>
     </g>
   </g>
 </svg>
@@ -907,10 +1083,34 @@ Zechun (Jacob) Cao
 <p>The grid has one cell per pair, so</p>
 <p><span class="math display">\[|A \times B| = |A| \cdot |B|.\]</span></p>
 <div class="fragment">
-<p><strong><em>Example:</em></strong> For <span class="math inline">\(A = \{a, b, c\}\)</span> and <span class="math inline">\(B = \{y, z\}\)</span>, <span class="math inline">\(|A \times B| = 3 \cdot 2 = 6\)</span>.</p>
+<p><strong><em>Example:</em></strong> For <span class="math inline">\(A = \{a, b\}\)</span> and <span class="math inline">\(B = \{1, 2, 3\}\)</span>, <span class="math inline">\(|A \times B| = 2 \cdot 3 = 6\)</span>, which is the six cells of the grid.</p>
 </div>
 <div class="fragment">
-<p>Reversing the factors gives a different set of pairs, though the count is the same: <span class="math inline">\((a, y) \in A \times B\)</span> and <span class="math inline">\((y, a) \in B \times A\)</span>.</p>
+<p>The rule holds whatever the elements are. For <span class="math inline">\(A\)</span> the <span class="math inline">\(50\)</span> states and <span class="math inline">\(B\)</span> the <span class="math inline">\(12\)</span> months, <span class="math inline">\(|A \times B| = 600\)</span>.</p>
+</div>
+</section>
+<section id="order-of-the-factors" class="slide level2">
+<h2>Order of the Factors</h2>
+<p><strong><em>Example:</em></strong> For <span class="math inline">\(A = \{a, b\}\)</span> and <span class="math inline">\(B = \{1, 2, 3\}\)</span>, compare <span class="math inline">\(B \times A\)</span> with <span class="math inline">\(A \times B\)</span>.</p>
+<div class="fragment">
+<p><strong><em>Solution:</em></strong></p>
+<p><span class="math display">\[B \times A = \{(1,a), (1,b), (2,a), (2,b), (3,a), (3,b)\}\]</span></p>
+<p>Both products have six pairs, and the two sets share none of them.</p>
+</div>
+<div class="fragment">
+<p><span class="math inline">\((a, 1)\)</span> has its letter first and <span class="math inline">\((1, a)\)</span> has its number first, so <span class="math inline">\(A \times B \neq B \times A\)</span>. The two agree only when <span class="math inline">\(A = B\)</span>, or when one of them is empty and both products are <span class="math inline">\(\emptyset\)</span>.</p>
+</div>
+</section>
+<section id="powers-of-a-set" class="slide level2">
+<h2>Powers of a Set</h2>
+<p><span class="math inline">\(A^n\)</span> is the Cartesian product of <span class="math inline">\(A\)</span> with itself <span class="math inline">\(n\)</span> times.</p>
+<p><span class="math display">\[A^n = \{(a_1, a_2, \ldots, a_n) \mid a_i \in A \text{ for } i = 1, 2, \ldots, n\}\]</span></p>
+<div class="fragment">
+<p><strong><em>Example:</em></strong> For <span class="math inline">\(A = \{1, 2\}\)</span>, write <span class="math inline">\(A^2\)</span> and <span class="math inline">\(A^3\)</span>.</p>
+</div>
+<div class="fragment">
+<p><strong><em>Solution:</em></strong> <span class="math inline">\(A^2 = \{(1,1), (1,2), (2,1), (2,2)\}\)</span>, four pairs, and <span class="math inline">\(A^3\)</span> has <span class="math inline">\(2^3 = 8\)</span> triples:</p>
+<p><span class="math display">\[\{(1,1,1), (1,1,2), (1,2,1), (1,2,2), (2,1,1), (2,1,2), (2,2,1), (2,2,2)\}\]</span></p>
 </div>
 </section>
 <section id="products-of-several-sets" class="slide level2">
@@ -928,15 +1128,99 @@ Zechun (Jacob) Cao
 </section>
 <section id="relations" class="slide level2">
 <h2>Relations</h2>
-<p><strong><em>Definition:</em></strong> A subset <span class="math inline">\(R\)</span> of <span class="math inline">\(A \times B\)</span> is a <strong>relation</strong> from <span class="math inline">\(A\)</span> to <span class="math inline">\(B\)</span>.</p>
+<p><strong><em>Definition:</em></strong> A subset <span class="math inline">\(R\)</span> of <span class="math inline">\(A \times B\)</span> is a <strong>relation</strong> from <span class="math inline">\(A\)</span> to <span class="math inline">\(B\)</span>. A relation from <span class="math inline">\(A\)</span> to itself is a relation <strong>on</strong> <span class="math inline">\(A\)</span>.</p>
 <div class="fragment">
 <p>Picking a relation means picking which cells of the grid to keep. Keeping exactly one cell in each row gives a function, the subject of Section 2.3. Any other collection of cells is still a relation, and Chapter 9 studies those.</p>
+</div>
+</section>
+<section id="relations-1" class="slide level2">
+<h2>Relations</h2>
+<p><strong><em>Example:</em></strong> Which ordered pairs make up the relation <span class="math inline">\(a \leq b\)</span> on <span class="math inline">\(\{0, 1, 2, 3\}\)</span>? Rows are <span class="math inline">\(a\)</span>, columns are <span class="math inline">\(b\)</span>.</p>
+<svg class="diagram fig-xs" viewbox="0 0 420 358" role="img" aria-labelledby="le-t">
+  <title id="le-t">A four by four grid with the cells where a is at most b shaded</title>
+  <text x="140" y="46" text-anchor="middle" class="lbl-blue" font-size="26">0</text>
+  <text x="212" y="46" text-anchor="middle" class="lbl-blue" font-size="26">1</text>
+  <text x="284" y="46" text-anchor="middle" class="lbl-blue" font-size="26">2</text>
+  <text x="356" y="46" text-anchor="middle" class="lbl-blue" font-size="26">3</text>
+  <text x="88" y="110" text-anchor="end" class="lbl-blue" font-size="26">0</text>
+  <text x="88" y="182" text-anchor="end" class="lbl-blue" font-size="26">1</text>
+  <text x="88" y="254" text-anchor="end" class="lbl-blue" font-size="26">2</text>
+  <text x="88" y="326" text-anchor="end" class="lbl-blue" font-size="26">3</text>
+  <rect x="104" y="64" width="72" height="72" class="cell"></rect>
+  <rect x="176" y="64" width="72" height="72" class="cell"></rect>
+  <rect x="248" y="64" width="72" height="72" class="cell"></rect>
+  <rect x="320" y="64" width="72" height="72" class="cell"></rect>
+  <rect x="104" y="136" width="72" height="72" class="cell"></rect>
+  <rect x="176" y="136" width="72" height="72" class="cell"></rect>
+  <rect x="248" y="136" width="72" height="72" class="cell"></rect>
+  <rect x="320" y="136" width="72" height="72" class="cell"></rect>
+  <rect x="104" y="208" width="72" height="72" class="cell"></rect>
+  <rect x="176" y="208" width="72" height="72" class="cell"></rect>
+  <rect x="248" y="208" width="72" height="72" class="cell"></rect>
+  <rect x="320" y="208" width="72" height="72" class="cell"></rect>
+  <rect x="104" y="280" width="72" height="72" class="cell"></rect>
+  <rect x="176" y="280" width="72" height="72" class="cell"></rect>
+  <rect x="248" y="280" width="72" height="72" class="cell"></rect>
+  <rect x="320" y="280" width="72" height="72" class="cell"></rect>
+  <g class="fragment" data-fragment-index="0">
+    <g class="drop">
+      <rect x="104" y="64" width="72" height="72" class="cell-on"></rect>
+      <rect x="176" y="64" width="72" height="72" class="cell-on"></rect>
+      <rect x="248" y="64" width="72" height="72" class="cell-on"></rect>
+      <rect x="320" y="64" width="72" height="72" class="cell-on"></rect>
+    </g>
+  </g>
+  <g class="fragment" data-fragment-index="1">
+    <g class="drop">
+      <rect x="176" y="136" width="72" height="72" class="cell-on"></rect>
+      <rect x="248" y="136" width="72" height="72" class="cell-on"></rect>
+      <rect x="320" y="136" width="72" height="72" class="cell-on"></rect>
+    </g>
+  </g>
+  <g class="fragment" data-fragment-index="2">
+    <g class="drop">
+      <rect x="248" y="208" width="72" height="72" class="cell-on"></rect>
+      <rect x="320" y="208" width="72" height="72" class="cell-on"></rect>
+    </g>
+  </g>
+  <g class="fragment" data-fragment-index="3">
+    <g class="drop">
+      <rect x="320" y="280" width="72" height="72" class="cell-on"></rect>
+    </g>
+  </g>
+</svg>
+</section>
+<section id="relations-2" class="slide level2">
+<h2>Relations</h2>
+<p><strong><em>Solution:</em></strong> The shaded cells, read row by row, are</p>
+<p><span class="math display">\[\begin{aligned}
+&amp;(0,0), (0,1), (0,2), (0,3), \\
+&amp;(1,1), (1,2), (1,3), \\
+&amp;(2,2), (2,3), \\
+&amp;(3,3)
+\end{aligned}\]</span></p>
+<div class="fragment">
+<p>Ten of the sixteen cells, because a cell is shaded exactly when its row index does not exceed its column index.</p>
+</div>
+</section>
+<section id="products-in-computing" class="slide level2">
+<h2>Products in Computing</h2>
+<p>Let <span class="math inline">\(A\)</span> be the students at a university and <span class="math inline">\(B\)</span> the courses it offers. Then <span class="math inline">\(A \times B\)</span> is every student-course pair the university could record.</p>
+<div class="fragment">
+<p>The enrollments that actually exist are a subset of <span class="math inline">\(A \times B\)</span>, so they are a relation from <span class="math inline">\(A\)</span> to <span class="math inline">\(B\)</span>.</p>
+</div>
+<div class="fragment">
+<p>That subset is what a two-column database table stores: one row per pair that holds, drawn from all the pairs the product allows.</p>
 </div>
 </section>
 <section id="your-turn" class="slide level2">
 <h2>Your Turn</h2>
 <p>Let <span class="math inline">\(A = \{1, 2, 3, 4, 5\}\)</span> and <span class="math inline">\(B = \{0, 3, 6\}\)</span>.</p>
 <table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Question</th>
@@ -953,19 +1237,53 @@ Zechun (Jacob) Cao
 <td style="text-align: left;"><span class="fragment ans"><span class="math inline">\(15\)</span></span></td>
 </tr>
 <tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\vert B \times A \vert\)</span></td>
+<td style="text-align: left;"><span class="fragment ans"><span class="math inline">\(15\)</span>, and a different set of pairs</span></td>
+</tr>
+<tr class="even">
 <td style="text-align: left;"><span class="math inline">\(\vert \mathcal{P}(B) \vert\)</span></td>
 <td style="text-align: left;"><span class="fragment ans"><span class="math inline">\(2^3 = 8\)</span></span></td>
 </tr>
-<tr class="even">
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\vert B^2 \vert\)</span></td>
+<td style="text-align: left;"><span class="fragment ans"><span class="math inline">\(3^2 = 9\)</span></span></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="your-turn-1" class="slide level2">
+<h2>Your Turn</h2>
+<p>Still with <span class="math inline">\(A = \{1, 2, 3, 4, 5\}\)</span> and <span class="math inline">\(B = \{0, 3, 6\}\)</span>.</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Question</th>
+<th style="text-align: left;">Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
 <td style="text-align: left;">Is <span class="math inline">\((3, 0) \in A \times B\)</span>?</td>
 <td style="text-align: left;"><span class="fragment ans">yes</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Is <span class="math inline">\((0, 3) \in A \times B\)</span>?</td>
+<td style="text-align: left;"><span class="fragment ans">no, <span class="math inline">\(0 \notin A\)</span></span></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Is <span class="math inline">\(\{3\} \in A\)</span>?</td>
 <td style="text-align: left;"><span class="fragment ans">no, <span class="math inline">\(A\)</span> lists <span class="math inline">\(3\)</span></span></td>
 </tr>
 <tr class="even">
+<td style="text-align: left;">Is <span class="math inline">\(\{3\} \subseteq A\)</span>?</td>
+<td style="text-align: left;"><span class="fragment ans">yes</span></td>
+</tr>
+<tr class="odd">
 <td style="text-align: left;">Is <span class="math inline">\(\emptyset \subseteq B\)</span>?</td>
+<td style="text-align: left;"><span class="fragment ans">yes, always</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Is <span class="math inline">\(\emptyset \in \mathcal{P}(B)\)</span>?</td>
 <td style="text-align: left;"><span class="fragment ans">yes, always</span></td>
 </tr>
 </tbody>
@@ -1768,7 +2086,7 @@ Zechun (Jacob) Cao
 </table>
 </div>
 </section>
-<section id="your-turn-1" class="slide level2">
+<section id="your-turn-2" class="slide level2">
 <h2>Your Turn</h2>
 <p>Let <span class="math inline">\(A = \{1, 2, 3, 4, 5\}\)</span>, <span class="math inline">\(B = \{0, 3, 6\}\)</span>, and let <span class="math inline">\(U\)</span> be the digits <span class="math inline">\(0\)</span> through <span class="math inline">\(9\)</span>.</p>
 <table class="caption-top">
