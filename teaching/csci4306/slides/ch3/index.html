@@ -1748,8 +1748,8 @@ Zechun (Jacob) Cao
 </tbody>
 </table>
 </section>
-<section id="warm-up-is-the-link-busy" class="slide level2">
-<h2>Warm-Up: Is the Link Busy?</h2>
+<section id="is-the-link-busy" class="slide level2">
+<h2>Is the Link Busy?</h2>
 <p>A <strong>100 Mbps</strong> link carries one <strong>1500-byte</strong> segment, then waits a <strong>30 ms</strong> round trip for the ACK.</p>
 <svg class="trace" viewbox="0 0 1000 166" role="img" aria-labelledby="busy-title">
   <title id="busy-title">A single segment occupies a sliver of one round trip</title>
@@ -1796,13 +1796,16 @@ Zechun (Jacob) Cao
 </section>
 <section id="does-a-faster-link-help" class="slide level2">
 <h2>Does a Faster Link Help?</h2>
-<p>Replace the 100 Mbps link with <strong>1 Gbps</strong>. The distance does not change, so the round trip is still <strong>30 ms</strong>.</p>
+<p>Replace the 100 Mbps link with <strong>1 Gbps</strong>. The distance is the same, so the round trip is still <strong>30 ms</strong>.</p>
 <p><span class="vote-prompt">Vote: does utilization rise, stay the same, or fall?</span></p>
 <div class="fragment answer" data-fragment-index="0">
 <p><strong>It falls, to 0.04%.</strong> With <span class="math inline">\(R = 10^{9}\)</span>, <span class="math inline">\(L/R\)</span> drops to <span class="math inline">\(0.012\)</span> ms while RTT is unchanged, so <span class="math inline">\(U = 0.012/30.012\)</span>.</p>
 </div>
 <div class="fragment answer" data-fragment-index="1">
-<p>Ten times the link rate gives one tenth the utilization. A faster link shortens transmission time; it does not shorten the round trip.</p>
+<p>Throughput barely changes: <strong>398 kbps</strong> before, <strong>400 kbps</strong> now. Either way the sender puts one segment on the wire, then waits 30 ms for the ACK.</p>
+</div>
+<div class="fragment answer" data-fragment-index="2">
+<p>The same work is now measured against ten times the capacity. A faster link does not help a sender that spends the round trip waiting.</p>
 </div>
 </section>
 <section id="read-after-class-1" class="slide level2 center reading-divider">
@@ -1907,7 +1910,7 @@ Zechun (Jacob) Cao
 <p><strong>In class</strong></p>
 <ul>
 <li>Count the segments that fill a pipe. <span class="ex-inline">Must Know</span></li>
-<li>Slide a sender’s window.</li>
+<li>Slide and size a window. <span class="ex-inline">Must Know</span></li>
 <li>Compare two ways to recover a loss. <span class="ex-inline">Must Know</span></li>
 <li>Estimate a round trip and set a timeout. <span class="ex-inline">Must Know</span></li>
 <li>Spot a loss before the timer does. <span class="ex-inline">Must Know</span></li>
@@ -1915,9 +1918,8 @@ Zechun (Jacob) Cao
 </div><div class="column" style="width:44%;">
 <p><strong>After class</strong></p>
 <ul>
-<li>Why Selective Repeat limits its window.</li>
 <li>Why TCP has no negative acknowledgment.</li>
-<li>When TCP delays and duplicates an ACK.</li>
+<li>Why a late copy of an old ACK is not news.</li>
 <li>Why a retransmitted segment is never sampled.</li>
 </ul>
 </div></div>
@@ -2033,6 +2035,17 @@ N = \frac{\text{RTT} + L/R}{L/R} \ \text{gives} \ U = 1\]</span></p>
 </tr>
 </tbody>
 </table>
+</section>
+<section id="why-not-send-everything" class="slide level2">
+<h2>Why Not Send Everything?</h2>
+<p>Filling the pipe took 251 segments. A has thousands more queued behind them.</p>
+<p><span class="vote-prompt">Vote: can A put them all on the wire and sort the losses out later, or must something hold it back?</span></p>
+<div class="fragment answer" data-fragment-index="0">
+<p><strong>Something has to hold it back.</strong> A must keep every unacknowledged segment in case it has to resend it, and B cannot stack up an unbounded run of arrivals ahead of a gap.</p>
+</div>
+<div class="fragment answer" data-fragment-index="1">
+<p>Both buffers are finite, so the number outstanding has to be capped — and not capped small, because under 251 on this link A is waiting with the wire idle again.</p>
+</div>
 </section>
 <section id="the-senders-window" class="slide level2">
 <h2>The Sender’s Window</h2>
@@ -2165,6 +2178,17 @@ N = \frac{\text{RTT} + L/R}{L/R} \ \text{gives} \ U = 1\]</span></p>
 <p>What separates them is whether the receiver is willing to keep out-of-order packets.</p>
 </div>
 </section>
+<section id="the-simplest-receiver" class="slide level2">
+<h2>The Simplest Receiver</h2>
+<p>Two designs were on the table. Take the cheaper receiver first: B gets <strong>no buffer</strong>, only the number of the next packet it expects.</p>
+<p><span class="vote-prompt">With a neighbor: write down B’s rule for a packet that is not that number.</span></p>
+<div class="fragment answer" data-fragment-index="0">
+<p><strong>Discard it.</strong> There is nowhere to put it, and B never has to track which packets it is missing.</p>
+</div>
+<div class="fragment answer" data-fragment-index="1">
+<p>That decides what an ACK can mean. B can only confirm the last packet that arrived <strong>in order</strong>, because that is the only thing it knows.</p>
+</div>
+</section>
 <section id="go-back-n" class="slide level2">
 <h2>Go-Back-N</h2>
 <p><span class="vote-prompt">Predict B’s reply to packets 2 and 3, then what A resends.</span></p>
@@ -2236,6 +2260,50 @@ N = \frac{\text{RTT} + L/R}{L/R} \ \text{gives} \ U = 1\]</span></p>
     <text x="650" y="364" text-anchor="middle" class="lbl-blue" font-size="30">pkt 1, 2, 3 resent</text>
     <circle class="tally-ring" cx="330" cy="394" r="19"></circle>
     <text x="330" y="404" text-anchor="middle" class="tally" font-size="28" font-weight="700">×3</text>
+  </g>
+</svg>
+</section>
+<section id="go-back-n-at-the-sender" class="slide level2">
+<h2>Go-Back-N at the Sender</h2>
+<svg class="trace" viewbox="0 0 1000 444" role="img" aria-labelledby="f320">
+  <title id="f320">The Go-Back-N sender: one state and three events, redrawn after Kurose and Ross Figure 3.20</title>
+  <defs><marker id="a320" markerwidth="11" markerheight="11" refx="10" refy="5.5" orient="auto" markerunits="userSpaceOnUse"><path d="M0,0 L10,5.5 L0,11" fill="#006791"></path></marker><marker id="d320" markerwidth="11" markerheight="11" refx="10" refy="5.5" orient="auto" markerunits="userSpaceOnUse"><path d="M0,0 L10,5.5 L0,11" fill="#444"></path></marker></defs>
+  <text class="fsm-code" x="306" y="32" text-anchor="start" font-size="14">base=1</text>
+  <text class="fsm-code" x="306" y="52" text-anchor="start" font-size="14">nextseqnum=1</text>
+  <path class="fsm-init" d="M400,62 L452,150" marker-end="url(#d320)"></path>
+  <circle class="fsm-state" cx="500" cy="215" r="58"></circle>
+  <text class="fsm-name" x="500" y="224" text-anchor="middle" font-size="23">Wait</text>
+  <path class="fsm-arc" d="M452,182 C336,116 336,314 452,250" marker-end="url(#a320)"></path>
+  <text class="fsm-code" x="18" y="104" text-anchor="start" font-size="14">rdt_send(data)</text>
+  <path class="fsm-rule" d="M18,114 H306"></path>
+  <text class="fsm-code" x="18" y="132" text-anchor="start" font-size="14">if (nextseqnum &lt; base+N) {</text>
+  <text class="fsm-code" x="18" y="151" text-anchor="start" font-size="14">&nbsp;&nbsp;sndpkt[nextseqnum]=</text>
+  <text class="fsm-code" x="18" y="170" text-anchor="start" font-size="14">&nbsp;&nbsp;&nbsp;&nbsp;make_pkt(nextseqnum,data,chksum)</text>
+  <text class="fsm-code" x="18" y="189" text-anchor="start" font-size="14">&nbsp;&nbsp;udt_send(sndpkt[nextseqnum])</text>
+  <text class="fsm-code" x="18" y="208" text-anchor="start" font-size="14">&nbsp;&nbsp;if (base == nextseqnum)</text>
+  <text class="fsm-code" x="18" y="227" text-anchor="start" font-size="14">&nbsp;&nbsp;&nbsp;&nbsp;start_timer</text>
+  <text class="fsm-code" x="18" y="246" text-anchor="start" font-size="14">&nbsp;&nbsp;nextseqnum++</text>
+  <text class="fsm-code" x="18" y="265" text-anchor="start" font-size="14">}</text>
+  <text class="fsm-code" x="18" y="284" text-anchor="start" font-size="14">else refuse_data(data)</text>
+  <path class="fsm-arc" d="M466,162 C472,58 600,66 546,158" marker-end="url(#a320)"></path>
+  <text class="fsm-code" x="622" y="56" text-anchor="start" font-size="14">timeout</text>
+  <path class="fsm-rule" d="M622,66 H904"></path>
+  <text class="fsm-code" x="622" y="84" text-anchor="start" font-size="14">start_timer</text>
+  <text class="fsm-code" x="622" y="103" text-anchor="start" font-size="14">udt_send(sndpkt[base])</text>
+  <text class="fsm-code" x="622" y="122" text-anchor="start" font-size="14">udt_send(sndpkt[base+1])</text>
+  <text class="fsm-code" x="622" y="141" text-anchor="start" font-size="14">&nbsp;&nbsp;…</text>
+  <text class="fsm-code" x="622" y="160" text-anchor="start" font-size="14">udt_send(sndpkt[nextseqnum-1])</text>
+  <path class="fsm-arc" d="M468,268 C468,380 576,380 548,266" marker-end="url(#a320)"></path>
+  <text class="fsm-code" x="596" y="262" text-anchor="start" font-size="14">rdt_rcv(rcvpkt) &amp;&amp; notcorrupt(rcvpkt)</text>
+  <path class="fsm-rule" d="M596,272 H940"></path>
+  <text class="fsm-code" x="596" y="290" text-anchor="start" font-size="14">base = getacknum(rcvpkt)+1</text>
+  <text class="fsm-code" x="596" y="309" text-anchor="start" font-size="14">if (base == nextseqnum)</text>
+  <text class="fsm-code" x="596" y="328" text-anchor="start" font-size="14">&nbsp;&nbsp;stop_timer</text>
+  <text class="fsm-code" x="596" y="347" text-anchor="start" font-size="14">else</text>
+  <text class="fsm-code" x="596" y="366" text-anchor="start" font-size="14">&nbsp;&nbsp;start_timer</text>
+  <g class="fragment" data-fragment-index="0">
+    <text x="500" y="408" text-anchor="middle" font-size="23">base is the oldest unacknowledged packet; nextseqnum is the next one free to send.</text>
+    <text x="500" y="438" text-anchor="middle" font-size="23">One timer runs, for base. A full window refuses the data rather than queueing it.</text>
   </g>
 </svg>
 </section>
@@ -2359,6 +2427,154 @@ N = \frac{\text{RTT} + L/R}{L/R} \ \text{gives} \ U = 1\]</span></p>
   </g>
 </svg>
 </section>
+<section id="selective-repeat-two-windows" class="slide level2">
+<h2>Selective Repeat: Two Windows</h2>
+<p>Both sides now keep a window, and the two do not move together.</p>
+<svg class="trace" viewbox="0 0 1000 412" role="img" aria-labelledby="f323">
+  <title id="f323">The sender's window and the receiver's window in Selective Repeat, redrawn after Kurose and Ross Figure 3.23</title>
+  <defs><marker id="a323" markerwidth="10" markerheight="10" refx="5" refy="1" orient="auto" markerunits="userSpaceOnUse"><path d="M0,10 L5,1 L10,10" fill="none" stroke="#006791" stroke-width="2.5"></path></marker></defs>
+  <text x="454" y="22" text-anchor="middle" class="lbl-blue" font-size="26">window: N = 4</text>
+  <path class="win" d="M302,42 V30 H606 V42"></path>
+  <text x="18" y="94" text-anchor="start" font-size="26">Sender</text>
+  <rect class="cell-ack" x="150" y="54" width="76" height="58" rx="5"></rect>
+  <text x="188" y="92" text-anchor="middle" font-size="27">0</text>
+  <rect class="cell-ack" x="226" y="54" width="76" height="58" rx="5"></rect>
+  <text x="264" y="92" text-anchor="middle" font-size="27">1</text>
+  <rect class="cell-flight" x="302" y="54" width="76" height="58" rx="5"></rect>
+  <text x="340" y="92" text-anchor="middle" font-size="27">2</text>
+  <rect class="cell-ack" x="378" y="54" width="76" height="58" rx="5"></rect>
+  <text x="416" y="92" text-anchor="middle" font-size="27">3</text>
+  <rect class="cell-flight" x="454" y="54" width="76" height="58" rx="5"></rect>
+  <text x="492" y="92" text-anchor="middle" font-size="27">4</text>
+  <rect class="cell-free" x="530" y="54" width="76" height="58" rx="5"></rect>
+  <text x="568" y="92" text-anchor="middle" font-size="27">5</text>
+  <rect class="cell-block" x="606" y="54" width="76" height="58" rx="5"></rect>
+  <text x="644" y="92" text-anchor="middle" font-size="27">6</text>
+  <rect class="cell-block" x="682" y="54" width="76" height="58" rx="5"></rect>
+  <text x="720" y="92" text-anchor="middle" font-size="27">7</text>
+  <rect class="cell-block" x="758" y="54" width="76" height="58" rx="5"></rect>
+  <text x="796" y="92" text-anchor="middle" font-size="27">8</text>
+  <rect class="cell-block" x="834" y="54" width="76" height="58" rx="5"></rect>
+  <text x="872" y="92" text-anchor="middle" font-size="27">9</text>
+  <g class="fragment" data-fragment-index="0">
+    <path class="msg" d="M340,140 V120 M328,132 L340,118 L352,132"></path>
+    <text x="340" y="170" text-anchor="middle" class="lbl-blue" font-size="26">base stays at 2, although 3 is already acknowledged</text>
+  </g>
+  <text x="454" y="206" text-anchor="middle" class="lbl-blue" font-size="26">window: N = 4</text>
+  <path class="win" d="M302,226 V214 H606 V226"></path>
+  <text x="18" y="278" text-anchor="start" font-size="26">Receiver</text>
+  <rect class="cell-ack" x="150" y="238" width="76" height="58" rx="5"></rect>
+  <text x="188" y="276" text-anchor="middle" font-size="27">0</text>
+  <rect class="cell-ack" x="226" y="238" width="76" height="58" rx="5"></rect>
+  <text x="264" y="276" text-anchor="middle" font-size="27">1</text>
+  <rect class="cell-free" x="302" y="238" width="76" height="58" rx="5"></rect>
+  <text x="340" y="276" text-anchor="middle" font-size="27">2</text>
+  <rect class="cell-ack" x="378" y="238" width="76" height="58" rx="5"></rect>
+  <text x="416" y="276" text-anchor="middle" font-size="27">3</text>
+  <rect class="cell-free" x="454" y="238" width="76" height="58" rx="5"></rect>
+  <text x="492" y="276" text-anchor="middle" font-size="27">4</text>
+  <rect class="cell-free" x="530" y="238" width="76" height="58" rx="5"></rect>
+  <text x="568" y="276" text-anchor="middle" font-size="27">5</text>
+  <rect class="cell-block" x="606" y="238" width="76" height="58" rx="5"></rect>
+  <text x="644" y="276" text-anchor="middle" font-size="27">6</text>
+  <rect class="cell-block" x="682" y="238" width="76" height="58" rx="5"></rect>
+  <text x="720" y="276" text-anchor="middle" font-size="27">7</text>
+  <rect class="cell-block" x="758" y="238" width="76" height="58" rx="5"></rect>
+  <text x="796" y="276" text-anchor="middle" font-size="27">8</text>
+  <rect class="cell-block" x="834" y="238" width="76" height="58" rx="5"></rect>
+  <text x="872" y="276" text-anchor="middle" font-size="27">9</text>
+  <g class="fragment" data-fragment-index="1">
+    <text x="500" y="340" text-anchor="middle" class="lbl-green" font-size="26">B has buffered 3 and is still waiting for 2, so nothing has gone up to the application yet.</text>
+  </g>
+  <text x="500" y="376" text-anchor="middle" class="lbl-gray" font-size="22">green: received and acknowledged · gold: sent, awaiting ACK</text>
+  <text x="500" y="402" text-anchor="middle" class="lbl-gray" font-size="22">white: inside the window, not yet arrived · grey: outside the window</text>
+</svg>
+</section>
+<section id="selective-repeat-the-dilemma" class="slide level2">
+<h2>Selective Repeat: The Dilemma</h2>
+<p><span class="vote-prompt">Watch B’s window in both panels. Can B tell them apart?</span></p>
+<svg class="trace" viewbox="0 0 1000 424" role="img" aria-labelledby="f327">
+  <title id="f327">Two scenarios in which the receiver's window is identical and a packet numbered zero arrives, redrawn after Kurose and Ross Figure 3.27</title>
+  <defs><marker id="a327" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8" fill="#006791"></path></marker><marker id="r327" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8" fill="#c0392b"></path></marker></defs>
+  <text x="500" y="24" text-anchor="middle" class="lbl-gray" font-size="24">2-bit sequence numbers: 0, 1, 2, 3, 0, 1, … · window N = 3</text>
+  <path class="life" d="M500,44 V392" stroke-dasharray="7 7"></path>
+  <text x="250" y="62" text-anchor="middle" font-size="27">(a) no problem</text>
+  <text x="750" y="62" text-anchor="middle" font-size="27">(b) oops</text>
+  <text x="110" y="100" text-anchor="middle" class="lbl-blue" font-size="24">A</text>
+  <text x="390" y="100" text-anchor="middle" class="lbl-blue" font-size="24">B</text>
+  <text x="610" y="100" text-anchor="middle" class="lbl-blue" font-size="24">A</text>
+  <text x="890" y="100" text-anchor="middle" class="lbl-blue" font-size="24">B</text>
+  <path class="life" d="M110,110 V330 M390,110 V330 M610,110 V330 M890,110 V330"></path>
+  <text x="250" y="124" text-anchor="middle" class="lbl-blue" font-size="23">pkt 0, 1, 2</text>
+  <path class="packet-path msg" d="M110,132 L390,156" marker-end="url(#a327)"></path>
+  <text x="750" y="124" text-anchor="middle" class="lbl-blue" font-size="23">pkt 0, 1, 2</text>
+  <path class="packet-path msg" d="M610,132 L890,156" marker-end="url(#a327)"></path>
+  <g class="fragment" data-fragment-index="0">
+    <path class="packet-path msg" d="M390,176 L110,200" marker-end="url(#a327)"></path>
+    <text x="250" y="226" text-anchor="middle" class="lbl-green" font-size="23">ACK 0, 1, 2 all arrive</text>
+    <path class="packet-path msg-r" d="M890,176 L726,190"></path>
+    <path class="loss-cross" d="M716,181 l18,18 m0,-18 l-18,18"></path>
+    <text x="750" y="226" text-anchor="middle" class="lbl-red" font-size="23">all three ACKs lost</text>
+  </g>
+  <g class="fragment" data-fragment-index="1">
+    <text x="250" y="262" text-anchor="middle" class="lbl-blue" font-size="25">B's window: 3, 0, 1</text>
+    <text x="750" y="262" text-anchor="middle" class="lbl-blue" font-size="25">B's window: 3, 0, 1</text>
+  </g>
+  <g class="fragment" data-fragment-index="2">
+    <text x="250" y="292" text-anchor="middle" font-size="23">pkt 3, then a new pkt 0</text>
+    <path class="packet-path msg" d="M110,302 L390,326" marker-end="url(#a327)"></path>
+    <text x="750" y="292" text-anchor="middle" font-size="23">timeout: resend pkt 0</text>
+    <path class="packet-path msg" d="M610,302 L890,326" marker-end="url(#r327)"></path>
+  </g>
+  <g class="fragment" data-fragment-index="3">
+    <text x="250" y="360" text-anchor="middle" class="lbl-green" font-size="24">B accepts the 0: new data</text>
+    <text x="750" y="360" text-anchor="middle" class="lbl-red" font-size="24">B accepts the 0: a duplicate</text>
+  </g>
+  <g class="fragment" data-fragment-index="4">
+    <text x="500" y="408" text-anchor="middle" class="lbl-red" font-size="25">B's window is 3, 0, 1 on both sides of the line, and the packet that arrives is numbered 0 on both.</text>
+  </g>
+</svg>
+</section>
+<section id="sizing-the-window-must-know" class="slide level2">
+<h2>Sizing the Window <span class="ex">Must Know</span></h2>
+<p>A <span class="math inline">\(k\)</span>-bit sequence number field gives <span class="math inline">\(2^k\)</span> names, and the names wrap.</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Largest safe <span class="math inline">\(N\)</span></th>
+<th><span class="math inline">\(k = 2\)</span></th>
+<th><span class="math inline">\(k = 3\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Go-Back-N</td>
+<td><span class="fragment ans" data-fragment-index="0"><span class="math inline">\(2^{k}-1\)</span></span></td>
+<td><span class="fragment ans" data-fragment-index="0">3</span></td>
+<td><span class="fragment ans" data-fragment-index="0">7</span></td>
+</tr>
+<tr class="even">
+<td>Selective Repeat</td>
+<td><span class="fragment ans" data-fragment-index="1"><span class="math inline">\(2^{k-1}\)</span></span></td>
+<td><span class="fragment ans" data-fragment-index="1">2</span></td>
+<td><span class="fragment ans" data-fragment-index="1">4</span></td>
+</tr>
+</tbody>
+</table>
+<div class="fragment" data-fragment-index="2">
+<p>Selective Repeat gets at most <strong>half</strong> the space, so the two windows can never hold one name twice. The window of 3 on the last slide was one too many.</p>
+</div>
+<div class="fragment" data-fragment-index="3">
+<p>Go-Back-N’s receiver keeps no window, only the next number it expects, so one name short of the space is safe.</p>
+</div>
+</section>
 <section id="compare-the-two-must-know" class="slide level2">
 <h2>Compare the Two <span class="ex">Must Know</span></h2>
 <p><span class="vote-prompt">Fill one column before revealing it.</span></p>
@@ -2396,10 +2612,15 @@ N = \frac{\text{RTT} + L/R}{L/R} \ \text{gives} \ U = 1\]</span></p>
 <td><span class="fragment ans" data-fragment-index="3">One, for the oldest</span></td>
 <td><span class="fragment ans" data-fragment-index="3">One per packet</span></td>
 </tr>
+<tr class="odd">
+<td>At <span class="math inline">\(N = 1\)</span></td>
+<td><span class="fragment ans" data-fragment-index="4">Send one, then wait</span></td>
+<td><span class="fragment ans" data-fragment-index="4">Send one, then wait</span></td>
+</tr>
 </tbody>
 </table>
-<div class="fragment" data-fragment-index="4">
-<p><strong>TCP is neither.</strong> It uses one cumulative ACK and one timer, like Go-Back-N, but its receiver buffers out-of-order bytes, like Selective Repeat — and it normally resends only the segment that timed out.</p>
+<div class="fragment" data-fragment-index="5">
+<p><strong>TCP is neither.</strong> One cumulative ACK and one timer, like Go-Back-N; a receiver that buffers out-of-order bytes, like Selective Repeat.</p>
 </div>
 </section>
 <section id="your-turn-resends" class="slide level2">
@@ -2440,58 +2661,8 @@ N = \frac{\text{RTT} + L/R}{L/R} \ \text{gives} \ U = 1\]</span></p>
 <p>Go-Back-N resends two packets that B had already received correctly.</p>
 </div>
 </section>
-<section id="a-timeout-can-be-early" class="slide level2">
-<h2>A Timeout Can Be Early</h2>
-<p>Both data and ACK can be delayed. Nothing in this exchange is lost.</p>
-<svg class="trace" viewbox="0 0 1000 288" role="img" aria-labelledby="late-ack-title">
-  <title id="late-ack-title">A delayed original ACK can arrive after a needless retransmission</title>
-  <defs>
-    <marker id="late-ack-arrow" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse">
-      <path d="M0,0 L8,4 L0,8" fill="#006791"></path>
-    </marker>
-    <marker id="late-ack-red" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse">
-      <path d="M0,0 L8,4 L0,8" fill="#c0392b"></path>
-    </marker>
-  </defs>
-  <text x="150" y="32" text-anchor="middle" class="lbl-blue" font-size="33">Host A</text>
-  <text x="870" y="32" text-anchor="middle" class="lbl-blue" font-size="33">Host B</text>
-  <path class="life" d="M150,50 V280 M870,50 V280"></path>
-  <g class="fragment" data-fragment-index="0">
-    <path class="packet-path msg" d="M150,64 L870,104" marker-end="url(#late-ack-arrow)"></path>
-    <g class="pkt" style="--dx:-648px; --dy:-36px">
-      <rect class="pkt-body" x="765" y="87" width="66" height="26" rx="6"></rect>
-      <rect class="pkt-hdr" x="771" y="93" width="16" height="14" rx="3"></rect>
-    </g>
-    <text x="510" y="66" text-anchor="middle" class="lbl-blue" font-size="30">Seq 3000 · 100 bytes</text>
-  </g>
-  <g class="fragment" data-fragment-index="1">
-    <text x="470" y="148" text-anchor="middle" class="lbl-red" font-size="31">A’s timer expires</text>
-  </g>
-  <g class="fragment" data-fragment-index="1">
-    <path class="packet-path msg" d="M150,182 L870,226" marker-end="url(#late-ack-arrow)"></path>
-    <g class="pkt" style="--dx:-648px; --dy:-40px">
-      <rect class="pkt-body" x="765" y="209" width="66" height="26" rx="6"></rect>
-      <rect class="pkt-hdr" x="771" y="215" width="16" height="14" rx="3"></rect>
-    </g>
-    <text x="690" y="208" text-anchor="middle" class="lbl-blue" font-size="30">Seq 3000 again</text>
-  </g>
-  <g class="fragment" data-fragment-index="2">
-    <path class="packet-path msg" d="M870,124 L150,252" marker-end="url(#late-ack-arrow)"></path>
-    <g class="pkt" style="--dx:648px; --dy:-115px">
-      <rect class="pkt-body" x="189" y="226" width="66" height="26" rx="6"></rect>
-      <rect class="pkt-hdr" x="195" y="232" width="16" height="14" rx="3"></rect>
-    </g>
-    <text x="520" y="280" text-anchor="middle" class="lbl-blue" font-size="30">The original ACK 3100 arrives late.</text>
-  </g>
-</svg>
-<p><span class="vote-prompt">Does a timeout prove loss? What can it cost?</span></p>
-<div class="fragment answer" data-fragment-index="3">
-<p><strong>No.</strong> A needless retry uses capacity; byte numbers prevent duplicate delivery.</p>
-</div>
-</section>
-<section id="warm-up-pick-a-deadline" class="slide level2">
-<h2>Warm-Up: Pick a Deadline</h2>
-<p>Any fixed deadline is a guess. Here are five round trips a sender actually measured.</p>
+<section id="pick-a-deadline" class="slide level2">
+<h2>Pick a Deadline</h2>
 <svg class="trace" viewbox="0 0 1000 232" role="img" aria-labelledby="rtt5-title">
   <title id="rtt5-title">Five measured round trips, one far above the others</title>
   <defs>
@@ -2521,9 +2692,9 @@ N = \frac{\text{RTT} + L/R}{L/R} \ \text{gives} \ U = 1\]</span></p>
     <text x="930" y="102" text-anchor="end" class="lbl-blue" font-size="27">average: 145 ms</text>
   </g>
 </svg>
-<p><span class="vote-prompt">Vote: set the timeout at 120 ms, at 310 ms, or neither?</span></p>
+<p><span class="vote-prompt">Any fixed deadline is a guess. Five round trips one sender measured: set the timeout at 120 ms, at 310 ms, or neither?</span></p>
 <div class="fragment answer" data-fragment-index="1">
-<p><strong>Neither.</strong> 120 ms retries on the 300 ms sample; 310 ms recovers slowly from every loss.</p>
+<p><strong>Neither.</strong> 120 ms retries on the 300 ms sample; 310 ms recovers slowly from every loss. An early retry costs capacity, not correctness: the sequence number makes the second copy a duplicate.</p>
 </div>
 </section>
 <section id="measure-the-round-trip" class="slide level2">
@@ -2623,36 +2794,6 @@ N = \frac{\text{RTT} + L/R}{L/R} \ \text{gives} \ U = 1\]</span></p>
 <div class="fragment answer" data-fragment-index="3">
 <p>The estimate moves <strong>one eighth of the way</strong> toward each sample.</p>
 </div>
-</section>
-<section id="your-turn-estimate" class="slide level2">
-<h2>Your Turn: Estimate</h2>
-<p>EstimatedRTT starts at <strong>80 ms</strong> and <span class="math inline">\(\alpha = \tfrac{1}{8}\)</span>, so each new estimate is <span class="math inline">\((7 \cdot \text{Est} + \text{Sample})/8\)</span>.</p>
-<table class="caption-top">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>SampleRTT</th>
-<th>New EstimatedRTT</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>112 ms</td>
-<td><span class="fragment ans" data-fragment-index="0"><span class="math inline">\((7 \cdot 80 + 112)/8\)</span> = 84 ms</span></td>
-</tr>
-<tr class="even">
-<td>100 ms</td>
-<td><span class="fragment ans" data-fragment-index="1"><span class="math inline">\((7 \cdot 84 + 100)/8\)</span> = 86 ms</span></td>
-</tr>
-<tr class="odd">
-<td>70 ms</td>
-<td><span class="fragment ans" data-fragment-index="2"><span class="math inline">\((7 \cdot 86 + 70)/8\)</span> = 84 ms</span></td>
-</tr>
-</tbody>
-</table>
 </section>
 <section id="one-average-is-not-enough" class="slide level2">
 <h2>One Average Is Not Enough</h2>
@@ -2797,6 +2938,44 @@ N = \frac{\text{RTT} + L/R}{L/R} \ \text{gives} \ U = 1\]</span></p>
   </g>
 </svg>
 <p><span class="vote-prompt">Is there anything in the ACK stream that reports a loss sooner?</span></p>
+</section>
+<section id="tcps-ack-rules" class="slide level2">
+<h2>TCP’s ACK Rules</h2>
+<p>Our traces had B answer every arrival. Real TCP follows four rules.</p>
+<p><span class="vote-prompt">Which reply goes out immediately, and what does it report?</span></p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>What arrives at B</th>
+<th>What B does</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>In order, nothing outstanding</td>
+<td><span class="fragment ans" data-fragment-index="0">Wait up to 500 ms, then ACK</span></td>
+</tr>
+<tr class="even">
+<td>In order, an ACK already waiting</td>
+<td><span class="fragment ans" data-fragment-index="1">One ACK covers both segments</span></td>
+</tr>
+<tr class="odd">
+<td>Out of order, past the expected byte</td>
+<td><span class="fragment ans" data-fragment-index="2">A duplicate ACK at once</span></td>
+</tr>
+<tr class="even">
+<td>Fills or partly fills the gap</td>
+<td><span class="fragment ans" data-fragment-index="3">An ACK at once</span></td>
+</tr>
+</tbody>
+</table>
+<div class="fragment" data-fragment-index="4">
+<p>The third rule is the answer: an arrival past a gap produces a duplicate ACK at once, with no timer involved.</p>
+</div>
 </section>
 <section id="three-duplicate-acks" class="slide level2">
 <h2>Three Duplicate ACKs</h2>
@@ -2968,6 +3147,982 @@ N = \frac{\text{RTT} + L/R}{L/R} \ \text{gives} \ U = 1\]</span></p>
 <p>The last segment of a transfer has nothing behind it, so only the timer can recover it.</p>
 </div>
 </section>
+<section id="read-after-class-2" class="slide level2 center reading-divider">
+<h2>Read After Class</h2>
+<p>Acknowledgments the sender cannot act on</p>
+<ul>
+<li>Why TCP has no negative acknowledgment, and what SACK adds</li>
+<li>Why a late copy of an old ACK is not news</li>
+<li>Why the timeout estimate ignores a retransmitted segment</li>
+</ul>
+<p><a href="#/topic-4">Continue to Topic 4 →</a></p>
+</section>
+<section id="why-no-nak-reading" class="slide level2">
+<h2>Why No NAK <span class="rd">Reading</span></h2>
+<p>The textbook’s rdt2.0 answers a failed checksum with a <strong>NAK</strong>: “that packet was damaged, send it again.” TCP has no NAK.</p>
+<p>A cumulative ACK that stops advancing already reports the problem: ACK 2000 arriving again says bytes from 2000 are still missing. A NAK would also need its own protection against loss and against arriving out of order.</p>
+<p>Modern TCP can add <strong>selective acknowledgment</strong> (SACK, RFC 2018), an option that lists the ranges the receiver has buffered beyond the gap. It extends the ACK rather than replacing it.</p>
+</section>
+<section id="a-stale-ack-reading" class="slide level2">
+<h2>A Stale ACK <span class="rd">Reading</span></h2>
+<p>The network can hold a copy of an ACK and deliver it late. Suppose A has already received <strong>ACK 3100</strong> and has since sent bytes 3100–3199, and then a delayed second copy of ACK 3100 arrives.</p>
+<p>It is not news. An ACK names the next byte B expects, so ACK 3100 says nothing about bytes 3100–3199 no matter when it arrives; A is waiting for <strong>ACK 3200</strong> and must keep its copy of the new bytes until that number appears.</p>
+<p>This is why a sender acts on the ACK <em>number</em> and never on the arrival of an ACK. It is also why a duplicate ACK on its own means little, and why fast retransmit waits for three.</p>
+</section>
+<section id="sampling-a-retry-reading" class="slide level2">
+<h2>Sampling a Retry <span class="rd">Reading</span></h2>
+<p>If A sends a segment, times out, resends it, and then an ACK arrives, A cannot tell which copy that ACK answers.</p>
+<p>Measuring from the first send overstates the round trip; measuring from the retransmission understates it, and an estimate that shrinks after every loss produces a timeout that is too short, which causes more retransmissions.</p>
+<p>TCP therefore ignores retransmitted segments when sampling, and relies on doubling the interval while no clean sample is available. This is <strong>Karn’s algorithm</strong>.</p>
+</section>
+<section id="topic-4" class="slide level2 center section-divider">
+<h2>Topic 4</h2>
+<p>Connections and Flow Control</p>
+<p><span class="topic-ref">Read §§3.5.5–3.5.6.</span></p>
+</section>
+<section id="todays-plan-3" class="slide level2">
+<h2>Today’s Plan</h2>
+<div class="columns">
+<div class="column" style="width:56%;">
+<p><strong>In class</strong></p>
+<ul>
+<li>Find out why two messages are not enough.</li>
+<li>Open a connection in three segments. <span class="ex-inline">Must Know</span></li>
+<li>Exhaust a server with half-open connections.</li>
+<li>Close a connection, then wait.</li>
+<li>Let the receiver throttle the sender. <span class="ex-inline">Must Know</span></li>
+</ul>
+</div><div class="column" style="width:44%;">
+<p><strong>After class</strong></p>
+<ul>
+<li>What a sender does when the window is zero.</li>
+<li>The states a connection passes through.</li>
+<li>Why a starting sequence number is random.</li>
+</ul>
+</div></div>
+</section>
+<section id="agreeing-to-connect" class="slide level2">
+<h2>Agreeing to Connect</h2>
+<p>Chapter 2 priced the handshake at one round trip. This is what the round trip buys.</p>
+<p><span class="vote-prompt">Before any byte moves, what must each side learn?</span></p>
+<div class="fragment answer" data-fragment-index="0">
+<p><strong>That the other side is willing</strong> — and willing <em>now</em>, not during some earlier attempt that has since been abandoned.</p>
+</div>
+<div class="fragment answer" data-fragment-index="1">
+<p><strong>Where the other side’s numbering starts.</strong> Topic 1’s sequence numbers had to begin somewhere, and each direction picks its own starting value.</p>
+</div>
+<div class="fragment answer" data-fragment-index="2">
+<p><strong>How much room the other side has.</strong> That number rides in every segment from here on, and it is the second half of tonight.</p>
+</div>
+</section>
+<section id="two-messages-the-half-open" class="slide level2">
+<h2>Two Messages: The Half-Open</h2>
+<p>Suppose a connection opened on two messages: a request, then an acceptance.</p>
+<svg class="trace" viewbox="0 0 1000 330" role="img" aria-labelledby="half-open">
+  <title id="half-open">A delayed duplicate request leaves the server holding a connection no client wants</title>
+  <defs><marker id="ho-a" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8" fill="#006791"></path></marker></defs>
+  <text x="180" y="34" text-anchor="middle" class="lbl-blue" font-size="30">Client</text>
+  <text x="820" y="34" text-anchor="middle" class="lbl-blue" font-size="30">Server</text>
+  <path class="life" d="M180,50 V322 M820,50 V322"></path>
+  <g class="fragment" data-fragment-index="0">
+    <path class="packet-path msg" d="M180,78 L820,124" marker-end="url(#ho-a)"></path>
+    <text x="500" y="72" text-anchor="middle" class="lbl-blue" font-size="27">connect(x)</text>
+    <text x="500" y="156" text-anchor="middle" class="lbl-red" font-size="25">a delayed copy of a request the client gave up on long ago</text>
+  </g>
+  <g class="fragment" data-fragment-index="1">
+    <path class="packet-path msg" d="M820,186 L180,232" marker-end="url(#ho-a)"></path>
+    <text x="500" y="180" text-anchor="middle" class="lbl-blue" font-size="27">accept(x)</text>
+    <text x="838" y="178" text-anchor="start" font-size="25">buffers</text>
+    <text x="838" y="206" text-anchor="start" font-size="25">allocated</text>
+  </g>
+  <g class="fragment" data-fragment-index="2">
+    <text x="500" y="272" text-anchor="middle" class="lbl-red" font-size="27">Nobody is listening for that reply.</text>
+    <text x="500" y="308" text-anchor="middle" class="lbl-red" font-size="27">The server holds the connection <tspan font-weight="700">half open</tspan>, and will hold it until it gives up.</text>
+  </g>
+</svg>
+</section>
+<section id="two-messages-stale-data" class="slide level2">
+<h2>Two Messages: Stale Data</h2>
+<p>The same two messages, but this time the client really did connect, send, and finish.</p>
+<svg class="trace" viewbox="0 0 1000 406" role="img" aria-labelledby="dup-data">
+  <title id="dup-data">A retransmitted request and a retransmitted segment reopen a finished connection and deliver its old bytes a second time</title>
+  <defs><marker id="dd-a" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8" fill="#006791"></path></marker><marker id="dd-r" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8" fill="#c0392b"></path></marker></defs>
+  <text x="180" y="28" text-anchor="middle" class="lbl-blue" font-size="29">Client</text>
+  <text x="820" y="28" text-anchor="middle" class="lbl-blue" font-size="29">Server</text>
+  <path class="life" d="M180,42 V398 M820,42 V398"></path>
+  <path class="packet-path msg" d="M180,62 L820,92" marker-end="url(#dd-a)"></path>
+  <text x="500" y="56" text-anchor="middle" class="lbl-blue" font-size="25">connect(x)</text>
+  <path class="packet-path msg" d="M820,112 L180,142" marker-end="url(#dd-a)"></path>
+  <text x="500" y="106" text-anchor="middle" class="lbl-blue" font-size="25">accept(x)</text>
+  <path class="packet-path msg" d="M180,162 L820,192" marker-end="url(#dd-a)"></path>
+  <text x="500" y="156" text-anchor="middle" class="lbl-blue" font-size="25">data(x+1): “transfer $500”</text>
+  <text x="500" y="222" text-anchor="middle" class="lbl-green" font-size="25">delivered once, and both sides close</text>
+  <path class="axis" d="M120,244 H880" stroke-dasharray="8 7"></path>
+  <g class="fragment" data-fragment-index="0">
+    <text x="500" y="276" text-anchor="middle" class="lbl-red" font-size="25">a retransmitted connect(x) arrives late</text>
+    <path class="packet-path msg" d="M180,282 L820,310" marker-end="url(#dd-r)"></path>
+    <text x="838" y="312" text-anchor="start" font-size="24">opens again</text>
+  </g>
+  <g class="fragment" data-fragment-index="1">
+    <text x="500" y="330" text-anchor="middle" class="lbl-red" font-size="25">and so does a retransmitted data(x+1)</text>
+    <path class="packet-path msg" d="M180,336 L820,364" marker-end="url(#dd-r)"></path>
+  </g>
+  <g class="fragment" data-fragment-index="2">
+    <text x="500" y="396" text-anchor="middle" class="lbl-red" font-size="26">The server transfers $500 a second time.</text>
+  </g>
+</svg>
+</section>
+<section id="three-way-handshake-must-know" class="slide level2">
+<h2>Three-Way Handshake <span class="ex">Must Know</span></h2>
+<svg class="trace" viewbox="0 0 1000 404" role="img" aria-labelledby="tcp3wh">
+  <title id="tcp3wh">The three segments that open a TCP connection, with each side's state</title>
+  <defs><marker id="wh-a" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8" fill="#006791"></path></marker></defs>
+  <text x="200" y="32" text-anchor="middle" class="lbl-blue" font-size="29">Client</text>
+  <text x="800" y="32" text-anchor="middle" class="lbl-blue" font-size="29">Server</text>
+  <path class="life" d="M200,48 V384 M800,48 V384"></path>
+  <text x="814" y="76" text-anchor="start" class="lbl-gray" font-size="23">LISTEN</text>
+  <g class="fragment" data-fragment-index="0">
+    <path class="packet-path msg" d="M200,98 L800,140" marker-end="url(#wh-a)"></path>
+    <text x="500" y="92" text-anchor="middle" font-size="25">SYN = 1, seq = 4521</text>
+    <text x="14" y="146" text-anchor="start" class="lbl-gray" font-size="23">SYN SENT</text>
+    <text x="814" y="166" text-anchor="start" class="lbl-gray" font-size="23">SYN RCVD</text>
+  </g>
+  <g class="fragment" data-fragment-index="1">
+    <path class="packet-path msg" d="M800,196 L200,238" marker-end="url(#wh-a)"></path>
+    <text x="500" y="190" text-anchor="middle" font-size="25">SYN = 1, ACK = 1, seq = 7832, ack = 4522</text>
+  </g>
+  <g class="fragment" data-fragment-index="2">
+    <path class="packet-path msg" d="M200,294 L800,336" marker-end="url(#wh-a)"></path>
+    <text x="500" y="288" text-anchor="middle" font-size="25">ACK = 1, seq = 4522, ack = 7833</text>
+    <text x="14" y="276" text-anchor="start" class="lbl-gray" font-size="23">ESTAB</text>
+    <text x="814" y="362" text-anchor="start" class="lbl-gray" font-size="23">ESTAB</text>
+  </g>
+  <g class="fragment" data-fragment-index="3">
+    <text x="500" y="398" text-anchor="middle" class="lbl-blue" font-size="25">Each SYN consumes one sequence number, so the client's first data byte is 4522.</text>
+  </g>
+</svg>
+<div class="fragment answer" data-fragment-index="4">
+<p>The third segment is what the two-message versions lacked: it proves the client is <strong>real and current</strong>.</p>
+</div>
+</section>
+<section id="your-turn-handshake" class="slide level2">
+<h2>Your Turn: Handshake</h2>
+<p>A client with starting number <strong>300</strong> opens a connection to a server whose starting number is <strong>9100</strong>.</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Segment</th>
+<th>Flags</th>
+<th>seq</th>
+<th>ack</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Client → server</td>
+<td><span class="fragment ans" data-fragment-index="0">SYN</span></td>
+<td><span class="fragment ans" data-fragment-index="0">300</span></td>
+<td><span class="fragment ans" data-fragment-index="0">none</span></td>
+</tr>
+<tr class="even">
+<td>Server → client</td>
+<td><span class="fragment ans" data-fragment-index="1">SYN, ACK</span></td>
+<td><span class="fragment ans" data-fragment-index="1">9100</span></td>
+<td><span class="fragment ans" data-fragment-index="1">301</span></td>
+</tr>
+<tr class="odd">
+<td>Client → server</td>
+<td><span class="fragment ans" data-fragment-index="2">ACK</span></td>
+<td><span class="fragment ans" data-fragment-index="2">301</span></td>
+<td><span class="fragment ans" data-fragment-index="2">9101</span></td>
+</tr>
+</tbody>
+</table>
+<div class="fragment" data-fragment-index="3">
+<p>The client’s first data byte is <strong>301</strong>.</p>
+</div>
+</section>
+<section id="syn-flood" class="slide level2">
+<h2>SYN Flood</h2>
+<p>A server that allocates on the first segment can be made to allocate until it has nothing left.</p>
+<p><span class="vote-prompt">What does an attacker send, and what does it never send?</span></p>
+<div class="fragment answer" data-fragment-index="0">
+<p><strong>SYNs, from forged addresses, and never the third segment.</strong> Each one leaves a half-open entry like the delayed copy two slides ago, except there are thousands a second, and the table fills.</p>
+</div>
+<div class="fragment answer" data-fragment-index="1">
+<p>Chapter 1 listed denial of service and IP spoofing as attacks the Internet was not built to resist. This is both at once, and the handshake is where they land.</p>
+</div>
+</section>
+<section id="syn-cookies" class="slide level2">
+<h2>SYN Cookies</h2>
+<p><span class="vote-prompt">If allocating on the SYN is the weakness, what should the server do instead?</span></p>
+<div class="fragment answer" data-fragment-index="0">
+<p><strong>Allocate nothing.</strong> The server answers the SYN and keeps no record of having done so.</p>
+</div>
+<div class="fragment answer" data-fragment-index="1">
+<p>It chooses its own starting number as a <strong>cookie</strong>: a hash of the two addresses, the two ports, and a secret only the server knows.</p>
+</div>
+<div class="fragment answer" data-fragment-index="2">
+<p>A real client returns that number plus one in its third segment. The server recomputes the hash; if it matches, the client completed a handshake, and only then are buffers allocated. A forged SYN costs the server one reply and nothing else.</p>
+</div>
+</section>
+<section id="closing-a-connection" class="slide level2">
+<h2>Closing a Connection</h2>
+<p>Each side closes its own direction, so the teardown takes four segments rather than three.</p>
+<svg class="trace" viewbox="0 0 1000 400" role="img" aria-labelledby="tcpclose">
+  <title id="tcpclose">The four segments of a TCP close and the client states between them</title>
+  <defs><marker id="cl-a" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8" fill="#006791"></path></marker></defs>
+  <text x="200" y="32" text-anchor="middle" class="lbl-blue" font-size="29">Client</text>
+  <text x="800" y="32" text-anchor="middle" class="lbl-blue" font-size="29">Server</text>
+  <path class="life" d="M200,48 V392 M800,48 V392"></path>
+  <g class="fragment" data-fragment-index="0">
+    <path class="packet-path msg" d="M200,76 L800,114" marker-end="url(#cl-a)"></path>
+    <text x="500" y="70" text-anchor="middle" font-size="25">FIN</text>
+    <text x="14" y="122" text-anchor="start" class="lbl-gray" font-size="22">FIN_WAIT_1</text>
+  </g>
+  <g class="fragment" data-fragment-index="1">
+    <path class="packet-path msg" d="M800,148 L200,186" marker-end="url(#cl-a)"></path>
+    <text x="500" y="142" text-anchor="middle" font-size="25">ACK</text>
+    <text x="14" y="194" text-anchor="start" class="lbl-gray" font-size="22">FIN_WAIT_2</text>
+    <text x="814" y="152" text-anchor="start" class="lbl-blue" font-size="22">may still send</text>
+  </g>
+  <g class="fragment" data-fragment-index="2">
+    <path class="packet-path msg" d="M800,232 L200,270" marker-end="url(#cl-a)"></path>
+    <text x="500" y="226" text-anchor="middle" font-size="25">FIN</text>
+  </g>
+  <g class="fragment" data-fragment-index="3">
+    <path class="packet-path msg" d="M200,304 L800,342" marker-end="url(#cl-a)"></path>
+    <text x="500" y="298" text-anchor="middle" font-size="25">ACK</text>
+    <text x="14" y="312" text-anchor="start" class="lbl-gray" font-size="22">TIME_WAIT</text>
+  </g>
+  <g class="fragment" data-fragment-index="4">
+    <text x="500" y="386" text-anchor="middle" class="lbl-blue" font-size="25">The middle two can be one segment when the server has nothing left to send.</text>
+  </g>
+</svg>
+</section>
+<section id="time_wait" class="slide level2">
+<h2>TIME_WAIT</h2>
+<p>The client has sent its last ACK and has nothing further to do. It waits anyway, typically from 30 seconds to two minutes.</p>
+<p><span class="vote-prompt">Why not release the connection at once?</span></p>
+<div class="fragment answer" data-fragment-index="0">
+<p><strong>Because that last ACK can be lost.</strong> The server would retransmit its FIN, and somebody has to be there to answer it.</p>
+</div>
+<div class="fragment answer" data-fragment-index="1">
+<p>The wait also lets stray segments of this connection die in the network before the same pair of ports can be reused — the duplicate-data failure again, which the handshake alone does not prevent.</p>
+</div>
+</section>
+<section id="the-receive-window" class="slide level2">
+<h2>The Receive Window</h2>
+<p>The sender’s window in topic 3 was limited by what the network could carry. A second limit comes from the receiver.</p>
+<svg class="trace" viewbox="0 0 1000 312" role="img" aria-labelledby="rwndfig">
+  <title id="rwndfig">The receive buffer, the bytes waiting in it, and the free space advertised as rwnd</title>
+  <defs><marker id="rw-a" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8" fill="#006791"></path></marker></defs>
+  <rect class="idle" x="150" y="80" width="700" height="80" rx="6"></rect>
+  <rect class="cell-flight" x="150" y="80" width="420" height="80" rx="6"></rect>
+  <text x="360" y="128" text-anchor="middle" font-size="27">arrived, not yet read</text>
+  <text x="710" y="128" text-anchor="middle" class="lbl-blue" font-size="27">free</text>
+  <text x="500" y="52" text-anchor="middle" font-size="26">RcvBuffer</text>
+  <path class="win" d="M150,70 V58 H850 V70"></path>
+  <path class="msg" d="M70,120 L140,120" marker-end="url(#rw-a)"></path>
+  <text x="66" y="112" text-anchor="end" font-size="24">from the</text>
+  <text x="66" y="140" text-anchor="end" font-size="24">network</text>
+  <path class="msg" d="M330,186 V224" marker-end="url(#rw-a)"></path>
+  <text x="346" y="258" text-anchor="start" font-size="24">the application reads, at its own pace</text>
+  <g class="fragment" data-fragment-index="0">
+    <path class="win" d="M570,176 V188 H850 V176"></path>
+    <text x="710" y="212" text-anchor="middle" class="lbl-blue" font-size="26">rwnd</text>
+  </g>
+  <g class="fragment" data-fragment-index="1">
+    <text x="500" y="304" text-anchor="middle" font-size="26">B puts rwnd in the header of every segment it sends. A keeps its in-flight bytes under it.</text>
+  </g>
+</svg>
+</section>
+<section id="flow-control-must-know" class="slide level2">
+<h2>Flow Control <span class="ex">Must Know</span></h2>
+<p><span class="math display">\[\text{rwnd} = \text{RcvBuffer} - (\text{LastByteRcvd} - \text{LastByteRead})\]</span></p>
+<div class="fragment" data-fragment-index="0">
+<p><strong>RcvBuffer is 6000 bytes. B has received in order through byte 24,500 and its application has read through byte 20,000.</strong></p>
+</div>
+<div class="fragment" data-fragment-index="1">
+<p>Waiting in the buffer: <span class="math inline">\(24{,}500 - 20{,}000 = 4500\)</span> bytes.</p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p><span class="math display">\[\text{rwnd} = 6000 - 4500 = \mathbf{1500 \text{ bytes}}\]</span></p>
+</div>
+<div class="fragment" data-fragment-index="3">
+<p>A then keeps <span class="math inline">\(\text{LastByteSent} - \text{LastByteAcked} \le 1500\)</span>. The receiver’s buffer cannot overflow, whatever the sender’s own window allows.</p>
+</div>
+</section>
+<section id="your-turn-rwnd" class="slide level2">
+<h2>Your Turn: rwnd</h2>
+<p>RcvBuffer is <strong>10,000</strong> bytes. B has received in order through <strong>57,000</strong> and read through <strong>51,000</strong>. A has sent through <strong>58,000</strong>; its last acknowledged byte is <strong>57,000</strong>.</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Find</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Bytes waiting in B’s buffer</td>
+<td><span class="fragment ans" data-fragment-index="0"><span class="math inline">\(57{,}000 - 51{,}000\)</span> = 6000</span></td>
+</tr>
+<tr class="even">
+<td>rwnd that B advertises</td>
+<td><span class="fragment ans" data-fragment-index="1"><span class="math inline">\(10{,}000 - 6000\)</span> = 4000</span></td>
+</tr>
+<tr class="odd">
+<td>Bytes A has in flight</td>
+<td><span class="fragment ans" data-fragment-index="2"><span class="math inline">\(58{,}000 - 57{,}000\)</span> = 1000</span></td>
+</tr>
+<tr class="even">
+<td>More bytes A may send now</td>
+<td><span class="fragment ans" data-fragment-index="3"><span class="math inline">\(4000 - 1000\)</span> = 3000</span></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="read-after-class-3" class="slide level2 center reading-divider">
+<h2>Read After Class</h2>
+<p>Connections, states, and a window of zero</p>
+<ul>
+<li>What a sender does when the advertised window reaches zero</li>
+<li>The states a connection moves through, opening and closing</li>
+<li>What a host answers when nothing is listening</li>
+<li>Why a starting sequence number is not simply zero</li>
+</ul>
+<p><a href="#/topic-5">Continue to Topic 5 →</a></p>
+</section>
+<section id="a-window-of-zero-reading" class="slide level2">
+<h2>A Window of Zero <span class="rd">Reading</span></h2>
+<p>When B’s application stops reading, the buffer fills and B advertises <strong>rwnd = 0</strong>. A must stop.</p>
+<p>The trouble is what happens next. B sends segments only when it has data or an ACK to send, and a sender that has stopped produces neither. The application could drain the buffer and B would have no reason to say so, leaving A waiting forever on a window that is no longer closed.</p>
+<p>TCP breaks the deadlock from the sender’s side: while rwnd is zero, A keeps sending <strong>one-byte segments</strong>. Each one draws an ACK, and every ACK carries the current rwnd, so A learns of the free space on its next probe rather than waiting to be told.</p>
+</section>
+<section id="connection-states-reading" class="slide level2">
+<h2>Connection States <span class="rd">Reading</span></h2>
+<p>The names on the two trace figures are states in a machine each side runs.</p>
+<p>The client opens with <code>SYN SENT</code> and reaches <code>ESTAB</code> on the SYNACK. Closing, it passes <code>FIN_WAIT_1</code> after its own FIN, <code>FIN_WAIT_2</code> after the server’s ACK, and <code>TIME_WAIT</code> after the server’s FIN, reaching <code>CLOSED</code> only when the wait expires.</p>
+<p>The server begins at <code>LISTEN</code>, moves to <code>SYN RCVD</code> on the SYN and <code>ESTAB</code> on the third segment. When the client closes first, the server passes <code>CLOSE_WAIT</code> — where it may keep sending — and <code>LAST_ACK</code> after its own FIN.</p>
+</section>
+<section id="the-rst-flag-reading" class="slide level2">
+<h2>The RST Flag <span class="rd">Reading</span></h2>
+<p>A SYN arriving at a port with no process in <code>LISTEN</code> is answered with a segment carrying the <strong>RST</strong> flag: no socket here.</p>
+<p>Chapter 2 showed you this already. Starting a TCP client before its server gave <code>ConnectionRefusedError</code> at once rather than a timeout, and the RST is why: the host answered, it simply had nothing listening.</p>
+<p>That difference is what a port scanner reads. An open port answers SYNACK, a closed port answers RST, and a filtered port answers nothing at all — so silence and refusal mean different things.</p>
+</section>
+<section id="a-random-start-reading" class="slide level2">
+<h2>A Random Start <span class="rd">Reading</span></h2>
+<p>Nothing in topic 1 required byte numbering to start at zero, and TCP makes sure it does not.</p>
+<p>If starting numbers were predictable, an attacker who could not see the connection could still guess the numbers in use and inject a segment the receiver would accept as genuine — the sequence number is the only thing marking a segment as belonging to this connection. Guessing it is the whole attack.</p>
+<p>The second reason is the one <code>TIME_WAIT</code> also addresses: a connection reusing a pair of ports must not accept a segment left over from the previous connection on them. A fresh random start puts the old numbers outside the new window.</p>
+</section>
+<section id="topic-5" class="slide level2 center section-divider">
+<h2>Topic 5</h2>
+<p>Congestion</p>
+<p><span class="topic-ref">Read §§3.6–3.7, and §3.8 after class.</span></p>
+</section>
+<section id="todays-plan-4" class="slide level2">
+<h2>Today’s Plan</h2>
+<div class="columns">
+<div class="column" style="width:56%;">
+<p><strong>In class</strong></p>
+<ul>
+<li>Watch a link fill, and count what it costs.</li>
+<li>Let the sender find its own rate.</li>
+<li>Read a congestion window trace. <span class="ex-inline">Must Know</span></li>
+<li>Work out what one connection gets. <span class="ex-inline">Must Know</span></li>
+<li>Decide whether the sharing is fair. <span class="ex-inline">Must Know</span></li>
+</ul>
+</div><div class="column" style="width:44%;">
+<p><strong>After class</strong></p>
+<ul>
+<li>How CUBIC climbs back faster.</li>
+<li>Reading congestion from delay alone.</li>
+<li>Why a fast long path is hard to fill.</li>
+<li>What QUIC moved out of the kernel.</li>
+</ul>
+</div></div>
+</section>
+<section id="warm-up-too-much-traffic" class="slide level2">
+<h2>Warm-Up: Too Much Traffic</h2>
+<p><span class="vote-prompt">Flow control stopped A from overrunning B. Nothing yet stops many senders from overrunning a <strong>router</strong>. What happens there first?</span></p>
+<div class="choices"><div class="vote"><p><strong>A.</strong> They queue</p></div><div class="vote"><p><strong>B.</strong> They are dropped</p></div><div class="vote"><p><strong>C.</strong> The link speeds up</p></div></div>
+<div class="fragment answer" data-fragment-index="0">
+<p><strong>A, then B.</strong> Chapter 1 called the wait <span class="math inline">\(d_{\text{queue}}\)</span> and left it unexplained. Tonight is where it comes from.</p>
+</div>
+</section>
+<section id="congestion-is-not-loss" class="slide level2">
+<h2>Congestion Is Not Loss</h2>
+<p><strong>Congestion</strong> is too many sources sending too much data too fast for the network to handle. Loss is one of its symptoms, not its definition.</p>
+<div class="fragment" data-fragment-index="0">
+<p>Nothing in the network tells a sender it is happening. No router sends a message, and no field in the segment reports it.</p>
+</div>
+<div class="fragment" data-fragment-index="1">
+<p>So a TCP sender has to <strong>infer</strong> congestion from what it can see — and then act on the inference without being told whether it was right.</p>
+</div>
+</section>
+<section id="two-senders-one-router" class="slide level2">
+<h2>Two Senders, One Router</h2>
+<p>Two connections cross one router. Its outgoing link runs at <strong>R = 100 Mbps</strong> and its buffer is unlimited, so nothing is ever dropped.</p>
+<svg class="trace" viewbox="0 0 1000 322" role="img" aria-labelledby="scen1">
+  <title id="scen1">Two senders sharing one router, and the throughput each gets as offered load rises</title>
+  <defs><marker id="s1-a" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8" fill="#006791"></path></marker></defs>
+  <rect class="cell-free" x="20" y="70" width="104" height="54" rx="6"></rect>
+  <text x="72" y="104" text-anchor="middle" font-size="26">A</text>
+  <rect class="cell-free" x="20" y="186" width="104" height="54" rx="6"></rect>
+  <text x="72" y="220" text-anchor="middle" font-size="26">B</text>
+  <path class="msg" d="M128,97 L212,140" marker-end="url(#s1-a)"></path>
+  <path class="msg" d="M128,213 L212,170" marker-end="url(#s1-a)"></path>
+  <rect class="cell-flight" x="216" y="128" width="112" height="54" rx="6"></rect>
+  <text x="272" y="162" text-anchor="middle" font-size="24">router</text>
+  <path class="msg" d="M332,155 L436,155" marker-end="url(#s1-a)"></path>
+  <text x="384" y="140" text-anchor="middle" class="lbl-blue" font-size="24">R</text>
+  <text x="228" y="228" text-anchor="start" font-size="23">unlimited buffer</text>
+  <text x="228" y="256" text-anchor="start" font-size="23">nothing is dropped</text>
+  <path class="axis" d="M600,290 H964 M600,290 V54"></path>
+  <text x="782" y="318" text-anchor="middle" font-size="24">offered load per sender</text>
+  <text x="590" y="44" text-anchor="middle" class="lbl-gray" font-size="23">throughput</text>
+  <g class="fragment" data-fragment-index="0">
+    <path class="est" d="M600,290 L800,150"></path>
+    <text x="770" y="254" text-anchor="middle" class="lbl-blue" font-size="23">what you send</text>
+    <text x="770" y="280" text-anchor="middle" class="lbl-blue" font-size="23">is what you get</text>
+  </g>
+  <g class="fragment" data-fragment-index="1">
+    <path class="est" d="M800,150 L964,150"></path>
+    <path class="axis" d="M600,150 H964" stroke-dasharray="8 6" stroke="#006791"></path>
+    <text x="596" y="142" text-anchor="end" class="lbl-blue" font-size="23">R/2</text>
+    <text x="884" y="130" text-anchor="middle" class="lbl-red" font-size="23">50 Mbps each, and no more</text>
+  </g>
+</svg>
+</section>
+<section id="the-cost-of-a-full-link" class="slide level2">
+<h2>The Cost of a Full Link</h2>
+<p>Throughput stops at 50 Mbps per sender. The queue does not stop at anything.</p>
+<svg class="trace" viewbox="0 0 1000 300" role="img" aria-labelledby="scen1b">
+  <title id="scen1b">Queueing delay climbing without bound as the offered load approaches half the link rate</title>
+  <path class="axis" d="M220,250 H840 M220,250 V40"></path>
+  <text x="530" y="290" text-anchor="middle" font-size="25">offered load per sender</text>
+  <text x="212" y="32" text-anchor="middle" class="lbl-gray" font-size="24">delay</text>
+  <path class="est" d="M220,248 C480,242 640,220 700,160 C736,122 748,80 750,40"></path>
+  <path class="axis" d="M750,250 V40" stroke-dasharray="8 6" stroke="#c0392b"></path>
+  <text x="762" y="68" text-anchor="start" class="lbl-red" font-size="24">R/2</text>
+  <g class="fragment" data-fragment-index="0">
+    <text x="500" y="112" text-anchor="middle" font-size="25">Approaching the link rate, the queue grows without bound</text>
+    <text x="500" y="144" text-anchor="middle" font-size="25">and so does the delay through it.</text>
+  </g>
+  <g class="fragment" data-fragment-index="1">
+    <text x="500" y="196" text-anchor="middle" class="lbl-red" font-size="25">First cost of congestion: long queueing delays at high load.</text>
+  </g>
+</svg>
+</section>
+<section id="when-the-buffer-is-finite" class="slide level2">
+<h2>When the Buffer Is Finite</h2>
+<p>Real routers have finite buffers, so packets really are dropped — and a dropped packet is retransmitted.</p>
+<p><span class="vote-prompt">If the sender retransmits every loss, what does the router’s outgoing link now carry?</span></p>
+<div class="fragment answer" data-fragment-index="0">
+<p><strong>Original data plus copies.</strong> The offered load at the link is larger than the data the application wanted to move, so the useful share of 50 Mbps shrinks.</p>
+</div>
+<div class="fragment answer" data-fragment-index="1">
+<p>A sender that could somehow retransmit <strong>only</strong> genuine losses would still fill the link with copies, and would still get less than 50 Mbps of useful throughput.</p>
+</div>
+</section>
+<section id="the-cost-of-retransmission" class="slide level2">
+<h2>The Cost of Retransmission</h2>
+<p>Topic 3 showed a timeout firing on a segment that was merely slow. Under load, that happens constantly.</p>
+<div class="fragment" data-fragment-index="0">
+<p>Each premature timeout puts a second copy of a segment on a link that is already full. In the worst case the router carries <strong>two copies of every packet</strong>.</p>
+</div>
+<div class="fragment" data-fragment-index="1">
+<p>Half the link’s work is then wasted, and the useful throughput falls to <span class="math inline">\(R/4 = 25\)</span> Mbps.</p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p><strong>Second cost of congestion:</strong> the sender must retransmit to make up for loss, and needless retransmissions cost the link capacity that the real data needed.</p>
+</div>
+</section>
+<section id="work-thrown-away" class="slide level2">
+<h2>Work Thrown Away</h2>
+<p>Now give the packets more than one hop, with four connections competing at two routers in turn.</p>
+<svg class="trace" viewbox="0 0 1000 300" role="img" aria-labelledby="scen3">
+  <title id="scen3">A two-hop connection losing at the second router after the first router already spent capacity on it</title>
+  <defs><marker id="s3-a" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8" fill="#006791"></path></marker><marker id="s3-r" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8" fill="#c0392b"></path></marker></defs>
+  <rect class="cell-free" x="20" y="108" width="92" height="52" rx="6"></rect>
+  <text x="66" y="142" text-anchor="middle" font-size="25">A</text>
+  <rect class="cell-flight" x="300" y="108" width="112" height="52" rx="6"></rect>
+  <text x="356" y="142" text-anchor="middle" font-size="23">router 1</text>
+  <rect class="cell-flight" x="620" y="108" width="112" height="52" rx="6"></rect>
+  <text x="676" y="142" text-anchor="middle" font-size="23">router 2</text>
+  <rect class="cell-free" x="900" y="108" width="92" height="52" rx="6"></rect>
+  <text x="946" y="142" text-anchor="middle" font-size="25">C</text>
+  <path class="msg" d="M116,134 L292,134" marker-end="url(#s3-a)"></path>
+  <path class="msg" d="M416,134 L612,134" marker-end="url(#s3-a)"></path>
+  <text x="206" y="116" text-anchor="middle" class="lbl-blue" font-size="23">one hop of work</text>
+  <text x="514" y="116" text-anchor="middle" class="lbl-blue" font-size="23">a second hop of work</text>
+  <g class="fragment" data-fragment-index="0">
+    <path class="msg" d="M736,134 L832,134" marker-end="url(#s3-r)"></path>
+    <path class="loss-cross" d="M836,124 l20,20 m0,-20 l-20,20"></path>
+    <text x="784" y="196" text-anchor="middle" class="lbl-red" font-size="25">dropped here, where other traffic also competes</text>
+  </g>
+  <g class="fragment" data-fragment-index="1">
+    <text x="500" y="250" text-anchor="middle" class="lbl-red" font-size="25">Third cost: every hop of capacity already spent on that packet is wasted,</text>
+    <text x="500" y="284" text-anchor="middle" class="lbl-red" font-size="25">and the traffic that pushed it out gained nothing from the loss either.</text>
+  </g>
+</svg>
+</section>
+<section id="the-three-costs" class="slide level2">
+<h2>The Three Costs</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>As load rises</th>
+<th>What it costs</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Queues build at the router</td>
+<td><span class="fragment ans" data-fragment-index="0">Delay climbs without bound</span></td>
+</tr>
+<tr class="even">
+<td>Packets are dropped and resent</td>
+<td><span class="fragment ans" data-fragment-index="1">Link capacity spent on copies</span></td>
+</tr>
+<tr class="odd">
+<td>A packet dies on a later hop</td>
+<td><span class="fragment ans" data-fragment-index="2">Every earlier hop’s work wasted</span></td>
+</tr>
+</tbody>
+</table>
+<div class="fragment" data-fragment-index="3">
+<p>None of these appears in a sender’s own measurements as “congestion”. All it ever sees is a slower round trip and a missing ACK.</p>
+</div>
+</section>
+<section id="who-tells-the-sender" class="slide level2">
+<h2>Who Tells the Sender?</h2>
+<p><span class="vote-prompt">Vote: should the network report congestion, or should the sender work it out alone?</span></p>
+<div class="fragment answer" data-fragment-index="0">
+<p><strong>End-to-end</strong> is what TCP does: no help from the network, congestion inferred from loss and delay. It needs nothing from routers, which is why it could be deployed at all.</p>
+</div>
+<div class="fragment answer" data-fragment-index="1">
+<p><strong>Network-assisted</strong> has routers mark or report. It is more direct, but it requires every router on the path to take part.</p>
+</div>
+<div class="fragment answer" data-fragment-index="2">
+<p>TCP chose end-to-end in 1988 and still runs that way by default. A network-assisted option exists and arrives at the end of tonight.</p>
+</div>
+</section>
+<section id="how-fast-to-start" class="slide level2">
+<h2>How Fast to Start?</h2>
+<p>A fresh connection knows nothing about the path or the bottleneck rate.</p>
+<p><span class="vote-prompt">Vote: open at full speed, at one segment, or at a fixed middle rate?</span></p>
+<div class="choices"><div class="vote"><p><strong>A.</strong> Full speed</p></div><div class="vote"><p><strong>B.</strong> One segment</p></div><div class="vote"><p><strong>C.</strong> A fixed middle rate</p></div></div>
+<div class="fragment answer" data-fragment-index="0">
+<p><strong>B, but not for long.</strong> A fixed rate is wrong on every path that is not that rate, so TCP <strong>probes</strong> instead: raise until something breaks, back off, raise again.</p>
+</div>
+</section>
+<section id="the-congestion-window" class="slide level2">
+<h2>The Congestion Window</h2>
+<p>Topic 3 gave the sender a window. Topic 4 gave the receiver a say in it. Now the network gets one.</p>
+<p><span class="math display">\[\text{LastByteSent} - \text{LastByteAcked} \;\le\; \min(\text{cwnd},\ \text{rwnd})\]</span></p>
+<div class="fragment" data-fragment-index="0">
+<p><strong>rwnd</strong> comes from the receiver, in a header field, and is exact. <strong>cwnd</strong> is the sender’s own guess at what the network will carry, and nothing confirms it.</p>
+</div>
+<div class="fragment" data-fragment-index="1">
+<p>Sending roughly one window per round trip, the rate is about <span class="math inline">\(\text{cwnd}/\text{RTT}\)</span>. Changing cwnd is how a sender changes its speed.</p>
+</div>
+</section>
+<section id="aimd" class="slide level2">
+<h2>AIMD</h2>
+<svg class="trace" viewbox="0 0 1000 350" role="img" aria-labelledby="aimdfig">
+  <title id="aimdfig">The additive-increase, multiplicative-decrease sawtooth</title>
+  <path class="axis" d="M90,262 H950 M90,262 V40"></path>
+  <text x="520" y="294" text-anchor="middle" font-size="24">time</text>
+  <text x="80" y="32" text-anchor="middle" class="lbl-gray" font-size="23">cwnd</text>
+  <path class="est" d="M100,246 L260,96 L260,171 L420,96 L420,171 L580,96 L580,171 L740,96 L740,171 L900,96"></path>
+  <g class="fragment" data-fragment-index="0">
+    <text x="330" y="70" text-anchor="middle" class="lbl-blue" font-size="24">additive increase: one more segment per round trip</text>
+  </g>
+  <g class="fragment" data-fragment-index="1">
+    <text x="740" y="232" text-anchor="middle" class="lbl-red" font-size="24">multiplicative decrease: halve on a loss</text>
+  </g>
+  <g class="fragment" data-fragment-index="2">
+    <text x="520" y="340" text-anchor="middle" font-size="24">Probe gently, retreat sharply, repeat. The shape has a name: the sawtooth.</text>
+  </g>
+</svg>
+</section>
+<section id="why-halve-it" class="slide level2">
+<h2>Why Halve It?</h2>
+<p><span class="vote-prompt">Increase by one, decrease by half. Why not increase by one and decrease by one?</span></p>
+<div class="fragment answer" data-fragment-index="0">
+<p><strong>Because the two jobs are not symmetric.</strong> Probing for spare capacity can afford to be slow and careful; getting out of the way of a congested link cannot.</p>
+</div>
+<div class="fragment answer" data-fragment-index="1">
+<p>Backing off by one segment at a time while a router is dropping would take hundreds of round trips to make any difference, and the queue builds the whole while.</p>
+</div>
+<div class="fragment answer" data-fragment-index="2">
+<p>Halving also makes competing connections <strong>converge</strong> to an equal share, which an additive decrease does not. That argument closes tonight.</p>
+</div>
+</section>
+<section id="slow-start" class="slide level2">
+<h2>Slow Start</h2>
+<p>At one segment per round trip, filling a fast path would take forever. So the opening phase doubles instead.</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Round</th>
+<th>cwnd</th>
+<th>Segments sent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>1</td>
+<td><span class="fragment ans" data-fragment-index="0">1</span></td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>2</td>
+<td><span class="fragment ans" data-fragment-index="0">2</span></td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>4</td>
+<td><span class="fragment ans" data-fragment-index="1">4</span></td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>8</td>
+<td><span class="fragment ans" data-fragment-index="1">8</span></td>
+</tr>
+</tbody>
+</table>
+<div class="fragment" data-fragment-index="2">
+<p>Every ACK adds one segment to cwnd, which doubles it each round trip. “Slow” names where it starts, not how it grows — this is the fastest TCP ever increases.</p>
+</div>
+</section>
+<section id="your-turn-slow-start" class="slide level2">
+<h2>Your Turn: Slow Start</h2>
+<p>A client fetches a <strong>30,000-byte</strong> object on a fresh connection. MSS is <strong>1500 bytes</strong>, the round trip is <strong>40 ms</strong>, nothing is lost, and the receiver’s window never binds.</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Find</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Segments needed</td>
+<td><span class="fragment ans" data-fragment-index="0"><span class="math inline">\(30{,}000 / 1500\)</span> = 20</span></td>
+</tr>
+<tr class="even">
+<td>Sent in rounds 1–4</td>
+<td><span class="fragment ans" data-fragment-index="1">1, 2, 4, 8 = 15</span></td>
+</tr>
+<tr class="odd">
+<td>Rounds in total</td>
+<td><span class="fragment ans" data-fragment-index="2">5: the last sends the remaining 5</span></td>
+</tr>
+<tr class="even">
+<td>Time to the last byte</td>
+<td><span class="fragment ans" data-fragment-index="3"><span class="math inline">\(5 \times 40\)</span> = 200 ms</span></td>
+</tr>
+</tbody>
+</table>
+<div class="fragment" data-fragment-index="4">
+<p>A short transfer never leaves slow start, so its speed is set by the round trip, not by the link rate.</p>
+</div>
+</section>
+<section id="leaving-slow-start" class="slide level2">
+<h2>Leaving Slow Start</h2>
+<p>Doubling cannot go on, so TCP keeps a threshold: <strong>ssthresh</strong>.</p>
+<div class="fragment" data-fragment-index="0">
+<p>Below ssthresh the window doubles each round trip. At or above it, the window grows by one segment per round trip — additive increase.</p>
+</div>
+<div class="fragment" data-fragment-index="1">
+<p>ssthresh is not a constant. It is set to <strong>half the window that was in use</strong> when congestion was last detected, so it records where trouble was found last time.</p>
+</div>
+</section>
+<section id="two-ways-to-lose" class="slide level2">
+<h2>Two Ways to Lose</h2>
+<p>Topic 3 gave a sender two ways to learn a segment is gone. TCP treats them as different news.</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Signal</th>
+<th>What it suggests</th>
+<th>cwnd becomes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Three duplicate ACKs</td>
+<td><span class="fragment ans" data-fragment-index="0">Segments still flow; one hole</span></td>
+<td><span class="fragment ans" data-fragment-index="0">Halved, then additive increase</span></td>
+</tr>
+<tr class="even">
+<td>Timeout</td>
+<td><span class="fragment ans" data-fragment-index="1">Nothing is getting through</span></td>
+<td><span class="fragment ans" data-fragment-index="1">1 segment, then slow start</span></td>
+</tr>
+</tbody>
+</table>
+<div class="fragment" data-fragment-index="2">
+<p>Both set ssthresh to half the window at the time. The difference is where cwnd restarts from — and a timeout restarts from the bottom because the evidence is so much worse.</p>
+</div>
+</section>
+<section id="the-full-picture-must-know" class="slide level2">
+<h2>The Full Picture <span class="ex">Must Know</span></h2>
+<svg class="trace" viewbox="0 0 1000 372" role="img" aria-labelledby="cwndtrace">
+  <title id="cwndtrace">A congestion window climbing through slow start and congestion avoidance, then collapsing on a timeout</title>
+  <path class="axis" d="M110,286 H940 M110,286 V40"></path>
+  <text x="520" y="316" text-anchor="middle" font-size="24">transmission round</text>
+  <text x="100" y="32" text-anchor="middle" class="lbl-gray" font-size="23">cwnd (MSS)</text>
+  <path class="est" d="M120,262 L217,245 L315,209 L412,138 L510,121 L607,103 L705,85 L802,68"></path>
+  <circle class="samp" cx="120" cy="262" r="6"></circle><circle class="samp" cx="217" cy="245" r="6"></circle>
+  <circle class="samp" cx="315" cy="209" r="6"></circle><circle class="samp" cx="412" cy="138" r="6"></circle>
+  <circle class="samp" cx="510" cy="121" r="6"></circle><circle class="samp" cx="607" cy="103" r="6"></circle>
+  <circle class="samp" cx="705" cy="85" r="6"></circle><circle class="samp" cx="802" cy="68" r="6"></circle>
+  <text x="120" y="282" text-anchor="middle" class="lbl-gray" font-size="21">1</text>
+  <text x="217" y="266" text-anchor="middle" class="lbl-gray" font-size="21">2</text>
+  <text x="315" y="230" text-anchor="middle" class="lbl-gray" font-size="21">4</text>
+  <text x="412" y="124" text-anchor="middle" class="lbl-gray" font-size="21">8</text>
+  <text x="510" y="107" text-anchor="middle" class="lbl-gray" font-size="21">9</text>
+  <text x="607" y="89" text-anchor="middle" class="lbl-gray" font-size="21">10</text>
+  <text x="705" y="71" text-anchor="middle" class="lbl-gray" font-size="21">11</text>
+  <text x="802" y="54" text-anchor="middle" class="lbl-gray" font-size="21">12</text>
+  <g class="fragment" data-fragment-index="0">
+    <path class="axis" d="M110,138 H940" stroke-dasharray="8 6" stroke="#006791"></path>
+    <text x="126" y="130" text-anchor="start" class="lbl-blue" font-size="22">ssthresh = 8</text>
+    <text x="266" y="186" text-anchor="middle" class="lbl-blue" font-size="23">slow start</text>
+    <text x="640" y="200" text-anchor="middle" class="lbl-blue" font-size="23">congestion avoidance</text>
+  </g>
+  <g class="fragment" data-fragment-index="1">
+    <path class="loss-cross" d="M812,58 l20,20 m0,-20 l-20,20"></path>
+    <path class="est" d="M802,68 L900,262" stroke="#c0392b"></path>
+    <circle class="samp" cx="900" cy="262" r="6"></circle>
+    <text x="690" y="46" text-anchor="middle" class="lbl-red" font-size="23">timeout at cwnd 12</text>
+  </g>
+  <g class="fragment" data-fragment-index="2">
+    <text x="520" y="362" text-anchor="middle" class="lbl-red" font-size="24">ssthresh becomes 6, cwnd restarts at 1, and slow start runs again up to 6.</text>
+  </g>
+</svg>
+</section>
+<section id="your-turn-read-the-trace" class="slide level2">
+<h2>Your Turn: Read the Trace</h2>
+<p>cwnd in MSS at the start of each round: <strong>1, 2, 4, 5, 6, 7, 8</strong>. During round 7 the sender gets <strong>three duplicate ACKs</strong>.</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Find</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Initial ssthresh</td>
+<td><span class="fragment ans" data-fragment-index="0">4: doubling stopped there</span></td>
+</tr>
+<tr class="even">
+<td>Slow start rounds</td>
+<td><span class="fragment ans" data-fragment-index="1">1–3</span></td>
+</tr>
+<tr class="odd">
+<td>Congestion avoidance rounds</td>
+<td><span class="fragment ans" data-fragment-index="2">4–7</span></td>
+</tr>
+<tr class="even">
+<td>ssthresh after the event</td>
+<td><span class="fragment ans" data-fragment-index="3"><span class="math inline">\(8/2\)</span> = 4</span></td>
+</tr>
+<tr class="odd">
+<td>cwnd at round 8</td>
+<td><span class="fragment ans" data-fragment-index="4">4, not 1: this was not a timeout</span></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="average-throughput-must-know" class="slide level2">
+<h2>Average Throughput <span class="ex">Must Know</span></h2>
+<p>One connection alone on a bottleneck link saws between <span class="math inline">\(W/2\)</span> and <span class="math inline">\(W\)</span>, so its average window is <span class="math inline">\(\tfrac{3}{4}W\)</span>.</p>
+<p><span class="math display">\[\text{average throughput} \approx \frac{0.75 \cdot W \cdot \text{MSS}}{\text{RTT}}\]</span></p>
+<div class="fragment" data-fragment-index="0">
+<p><strong>A 10 Mbps bottleneck, MSS 1250 bytes, RTT 50 ms.</strong></p>
+</div>
+<div class="fragment" data-fragment-index="1">
+<p><span class="math inline">\(W = (10 \times 10^{6})(0.050) / 10{,}000 = \mathbf{50}\)</span> segments, sawing between 25 and 50.</p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p>Average throughput <span class="math inline">\(= 0.75 \times 10 = \mathbf{7.5}\)</span> Mbps: one connection leaves a quarter of the link idle.</p>
+</div>
+</section>
+<section id="your-turn-throughput" class="slide level2">
+<h2>Your Turn: Throughput</h2>
+<p>A connection has a <strong>40 Mbps</strong> bottleneck to itself. MSS is <strong>1000 bytes</strong> and the round trip is <strong>20 ms</strong>.</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Find</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Bits per segment</td>
+<td><span class="fragment ans" data-fragment-index="0"><span class="math inline">\(1000 \times 8\)</span> = 8000</span></td>
+</tr>
+<tr class="even">
+<td>Window <span class="math inline">\(W\)</span> that fills the link</td>
+<td><span class="fragment ans" data-fragment-index="1"><span class="math inline">\((40 \times 10^{6})(0.020)/8000\)</span> = 100</span></td>
+</tr>
+<tr class="odd">
+<td>Average throughput</td>
+<td><span class="fragment ans" data-fragment-index="2"><span class="math inline">\(0.75 \times 40\)</span> = 30 Mbps</span></td>
+</tr>
+<tr class="even">
+<td>Rounds to climb <span class="math inline">\(W/2 \to W\)</span></td>
+<td><span class="fragment ans" data-fragment-index="3">50, so <span class="math inline">\(50 \times 20\)</span> = 1 second</span></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="the-bottleneck-link" class="slide level2">
+<h2>The Bottleneck Link</h2>
+<p>The sawtooth only touches the link rate at its peak, so a link with no buffer is idle three quarters of the time.</p>
+<div class="fragment" data-fragment-index="0">
+<p>Give the router a buffer of one bandwidth–delay product and the dip is covered: while cwnd is below <span class="math inline">\(W\)</span>, the queue drains and keeps the link busy.</p>
+</div>
+<div class="fragment" data-fragment-index="1">
+<p>Make the buffer much larger and the link is no faster, but every packet now waits behind a queue that never empties. Chapter 1’s <span class="math inline">\(d_{\text{queue}}\)</span> becomes permanent — the condition has a name, <strong>bufferbloat</strong>.</p>
+</div>
+<div class="fragment" data-fragment-index="2">
+<p>This is why a congested home link can show hundreds of milliseconds of delay while still reporting its full download speed.</p>
+</div>
+</section>
+<section id="is-it-fair-must-know" class="slide level2">
+<h2>Is It Fair? <span class="ex">Must Know</span></h2>
+<svg class="trace" viewbox="0 0 1000 446" role="img" aria-labelledby="fairfig">
+  <title id="fairfig">Two AIMD connections converging on an equal share of a bottleneck link</title>
+  <text x="186" y="34" text-anchor="middle" class="lbl-gray" font-size="22">connection 2</text>
+  <path class="axis" d="M180,390 H560 M180,390 V46"></path>
+  <path d="M180,390 L520,50" fill="none" stroke="#1e7b34" stroke-width="2.5" stroke-dasharray="7 6"></path>
+  <path d="M520,390 L180,50" fill="none" stroke="#c0392b" stroke-width="2.5"></path>
+  <text x="350" y="426" text-anchor="middle" font-size="23">connection 1 throughput</text>
+  <text x="566" y="56" text-anchor="start" class="lbl-green" font-size="22">equal share</text>
+  <text x="566" y="384" text-anchor="start" class="lbl-red" font-size="22">link full</text>
+  <g class="fragment" data-fragment-index="0">
+    <path class="est" d="M231,203 L282,152 L231,271 L316,186 L248,288 L333,203"></path>
+    <circle class="samp" cx="231" cy="203" r="7"></circle>
+    <text x="800" y="104" text-anchor="middle" font-size="22">Two connections, one bottleneck,</text>
+    <text x="800" y="134" text-anchor="middle" font-size="22">neither able to see the other.</text>
+    <text x="800" y="186" text-anchor="middle" font-size="22">up at 45°: both add one</text>
+    <text x="800" y="222" text-anchor="middle" font-size="22">back toward the origin: both halve</text>
+  </g>
+  <g class="fragment" data-fragment-index="1">
+    <circle class="tally-ring" cx="350" cy="220" r="17"></circle>
+    <text x="800" y="282" text-anchor="middle" class="lbl-green" font-size="22">Every cycle moves them</text>
+    <text x="800" y="312" text-anchor="middle" class="lbl-green" font-size="22">closer to the equal share,</text>
+    <text x="800" y="342" text-anchor="middle" class="lbl-green" font-size="22">whatever they started from.</text>
+  </g>
+</svg>
+</section>
+<section id="your-turn-fairness" class="slide level2">
+<h2>Your Turn: Fairness</h2>
+<p>A <strong>60 Mbps</strong> bottleneck carries one connection each from <strong>five</strong> applications. A sixth application opens <strong>seven</strong> parallel connections through it.</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Find</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Connections sharing the link</td>
+<td><span class="fragment ans" data-fragment-index="0"><span class="math inline">\(5 + 7\)</span> = 12</span></td>
+</tr>
+<tr class="even">
+<td>Share of the sixth application</td>
+<td><span class="fragment ans" data-fragment-index="1"><span class="math inline">\(7/12\)</span> = 58%, or 35 Mbps</span></td>
+</tr>
+<tr class="odd">
+<td>Share of each of the other five</td>
+<td><span class="fragment ans" data-fragment-index="2"><span class="math inline">\(1/12\)</span> = 8.3%, or 5 Mbps</span></td>
+</tr>
+</tbody>
+</table>
+<div class="fragment" data-fragment-index="3">
+<p>TCP is fair <strong>per connection</strong>, and nothing stops an application from opening more. A UDP sender that ignores loss entirely takes whatever it wants.</p>
+</div>
+</section>
+<section id="signals-other-than-loss" class="slide level2">
+<h2>Signals Other Than Loss</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Approach</th>
+<th>How the sender learns</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Loss-based (classic TCP)</td>
+<td><span class="fragment ans" data-fragment-index="0">Three duplicate ACKs, or a timeout</span></td>
+</tr>
+<tr class="even">
+<td>Network-assisted (ECN)</td>
+<td><span class="fragment ans" data-fragment-index="1">A router marks two bits in the IP header; the receiver echoes the mark in its ACK</span></td>
+</tr>
+<tr class="odd">
+<td>Delay-based (BBR)</td>
+<td><span class="fragment ans" data-fragment-index="2">Measured throughput falls below <span class="math inline">\(\text{cwnd}/\text{RTT}_{\min}\)</span></span></td>
+</tr>
+</tbody>
+</table>
+<div class="fragment" data-fragment-index="3">
+<p>ECN needs routers, sender and receiver alike. Delay-based needs only the sender.</p>
+</div>
+</section>
 <section id="recap" class="slide level2">
 <h2>Explain Your Choice</h2>
 <p>Choose one question and explain it to a neighbor. Use a specific event from a packet trace.</p>
@@ -3002,75 +4157,40 @@ N = \frac{\text{RTT} + L/R}{L/R} \ \text{gives} \ U = 1\]</span></p>
 </tbody>
 </table>
 </section>
-<section id="read-after-class-2" class="slide level2 center reading-divider">
+<section id="read-after-class-4" class="slide level2 center reading-divider">
 <h2>Read After Class</h2>
-<p>Windows, timers, and ACK rules</p>
+<p>Beyond the sawtooth</p>
 <ul>
-<li>Why Selective Repeat limits its window, and why TCP has no NAK</li>
-<li>When TCP delays an ACK, and which arrivals duplicate one</li>
-<li>Why a late copy of an old ACK is not news</li>
-<li>Why the timeout estimate ignores a retransmitted segment</li>
+<li>How CUBIC climbs back to the old window faster</li>
+<li>What a delay-based sender measures, and where it struggles</li>
+<li>Why a fast, long path is hard to keep full</li>
+<li>What QUIC moved out of the kernel and into the application</li>
 </ul>
 <p><a href="#/recap">Review the chapter →</a></p>
 </section>
-<section id="window-size-limits-reading" class="slide level2">
-<h2>Window Size Limits <span class="rd">Reading</span></h2>
-<p>A sequence number field is a fixed number of bits, so the numbers wrap. With 2 bits they run 0, 1, 2, 3, 0, 1, …</p>
-<p>Suppose the window is <strong>3</strong> and the sender sends packets 0, 1, 2. All three arrive and all three ACKs are lost. The sender times out and resends packet <strong>0</strong>. B has meanwhile advanced its window to 3, 0, 1 — so the number 0 is now the name of a <em>new</em> packet, and B accepts the retransmission as new data.</p>
-<p>Selective Repeat therefore needs a window no larger than <strong>half the sequence space</strong>: with 2 bits, no more than 2. Go-Back-N can use one less than the whole space, because its receiver keeps no window of its own.</p>
+<section id="tcp-cubic-reading" class="slide level2">
+<h2>TCP CUBIC <span class="rd">Reading</span></h2>
+<p>After a loss the window halves, and additive increase then needs <span class="math inline">\(W/2\)</span> round trips to get back. On a fast path that is a long time to run below capacity.</p>
+<p><strong>CUBIC</strong> keeps the window that was in use when the loss happened, calls it <span class="math inline">\(W_{\max}\)</span>, and grows as a cubic function of the time since. Far below <span class="math inline">\(W_{\max}\)</span> it climbs steeply; near <span class="math inline">\(W_{\max}\)</span> it flattens and approaches carefully; past it, having found no loss, it accelerates again to probe for new capacity.</p>
+<p>The bargain is the same, with a better-shaped increase: most of the recovery is quick, and the caution is spent only where the last loss was. CUBIC is the default in Linux.</p>
 </section>
-<section id="why-no-nak-reading" class="slide level2">
-<h2>Why No NAK <span class="rd">Reading</span></h2>
-<p>The textbook’s rdt2.0 answers a failed checksum with a <strong>NAK</strong>: “that packet was damaged, send it again.” TCP has no NAK.</p>
-<p>A cumulative ACK that stops advancing already reports the problem: ACK 2000 arriving again says bytes from 2000 are still missing. A NAK would also need its own protection against loss and against arriving out of order.</p>
-<p>Modern TCP can add <strong>selective acknowledgment</strong> (SACK, RFC 2018), an option that lists the ranges the receiver has buffered beyond the gap. It extends the ACK rather than replacing it.</p>
+<section id="delay-as-a-signal-reading" class="slide level2">
+<h2>Delay as a Signal <span class="rd">Reading</span></h2>
+<p>A loss-based sender only learns of congestion once a queue is full, which means it causes the delay it then reacts to.</p>
+<p>A delay-based sender watches instead. It keeps $ ext{RTT}<em>{}$, the smallest round trip it has seen, as its estimate of the path with no queue. If measured throughput is close to $ ext{cwnd}/ ext{RTT}</em>{}$, the packets are not queueing and the window may rise. If measured throughput falls well below it, the extra window is sitting in a buffer rather than moving data, and the window should come down. <strong>BBR</strong> works this way.</p>
+<p>The difficulty is coexistence: a delay-based sender backs off as a queue builds, and a loss-based sender beside it does not, taking the space that was given up.</p>
 </section>
-<section id="tcps-ack-rules-reading" class="slide level2">
-<h2>TCP’s ACK Rules <span class="rd">Reading</span></h2>
-<p>Our traces had Host B reply to every arrival. Real TCP uses four rules.</p>
-<table class="caption-top">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>What arrives at B</th>
-<th>What B does</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>In order, nothing outstanding</td>
-<td>Wait up to 500 ms for more data, then ACK</td>
-</tr>
-<tr class="even">
-<td>In order, one ACK already waiting</td>
-<td>Send one ACK covering both segments</td>
-</tr>
-<tr class="odd">
-<td>Out of order, above the expected byte</td>
-<td>Send a duplicate ACK at once</td>
-</tr>
-<tr class="even">
-<td>Fills or partly fills the gap</td>
-<td>Send an ACK at once</td>
-</tr>
-</tbody>
-</table>
-<p>The delay in the first rule lets one ACK cover two segments. The immediate reply in the third is what makes fast retransmit possible.</p>
+<section id="long-fat-pipes-reading" class="slide level2">
+<h2>Long Fat Pipes <span class="rd">Reading</span></h2>
+<p>To fill a link a sender needs a window of one bandwidth–delay product. On a 10 Gbps path with a 100 ms round trip, that is <span class="math inline">\(10^{10}     imes 0.1 / 8 = 125\)</span> MB in flight, which is about 83,000 segments of 1500 bytes.</p>
+<p>Two problems follow. The 16-bit window field cannot express it, which is what the window scale option exists for. Worse, additive increase needs one round trip per segment to climb back to 83,000 after a loss — well over an hour of near-perfect conditions.</p>
+<p>That arithmetic is why the classic sawtooth was replaced on fast paths. CUBIC’s shape and BBR’s different signal are both answers to it.</p>
 </section>
-<section id="a-stale-ack-reading" class="slide level2">
-<h2>A Stale ACK <span class="rd">Reading</span></h2>
-<p>The network can hold a copy of an ACK and deliver it late. Suppose A has already received <strong>ACK 3100</strong> and has since sent bytes 3100–3199, and then a delayed second copy of ACK 3100 arrives.</p>
-<p>It is not news. An ACK names the next byte B expects, so ACK 3100 says nothing about bytes 3100–3199 no matter when it arrives; A is waiting for <strong>ACK 3200</strong> and must keep its copy of the new bytes until that number appears.</p>
-<p>This is why a sender acts on the ACK <em>number</em> and never on the arrival of an ACK. It is also why a duplicate ACK on its own means little, and why fast retransmit waits for three.</p>
-</section>
-<section id="sampling-a-retry-reading" class="slide level2">
-<h2>Sampling a Retry <span class="rd">Reading</span></h2>
-<p>If A sends a segment, times out, resends it, and then an ACK arrives, A cannot tell which copy that ACK answers.</p>
-<p>Measuring from the first send overstates the round trip; measuring from the retransmission understates it, and an estimate that shrinks after every loss produces a timeout that is too short, which causes more retransmissions.</p>
-<p>TCP therefore ignores retransmitted segments when sampling, and relies on doubling the interval while no clean sample is available. This is <strong>Karn’s algorithm</strong>.</p>
+<section id="quic-reading" class="slide level2">
+<h2>QUIC <span class="rd">Reading</span></h2>
+<p><strong>QUIC</strong> puts a transport inside an application, on top of UDP. Everything this chapter built — sequence numbers, acknowledgments, retransmission, the congestion window — is implemented in user space rather than in the kernel’s TCP.</p>
+<p>It buys two things. Setup merges the handshake with the TLS exchange, so an encrypted connection opens in one round trip instead of chapter 2’s handshake-then-TLS sequence. And one QUIC connection carries several <strong>streams</strong>, each acknowledged and retransmitted on its own, so a loss on one no longer stalls the rest.</p>
+<p>The reasoning does not change. QUIC’s congestion control is the same AIMD family, against the same three costs.</p>
 
 </section>
     </div>
