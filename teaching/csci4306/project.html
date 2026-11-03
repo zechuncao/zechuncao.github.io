@@ -8,7 +8,7 @@
 
 <meta name="dcterms.date" content="2026-12-01">
 
-<title>Reliable Transport and an Application — Team Project</title>
+<title>Team Project — Reliable Transport and an Application</title>
 <style>
 
 span.smallcaps{font-variant: small-caps;}
@@ -2226,18 +2226,20 @@ code { font-size: 0.92em; }
   <li><a href="#teams-and-roles" id="toc-teams-and-roles" class="nav-link active" data-scroll-target="#teams-and-roles">Teams and roles</a></li>
   <li><a href="#the-interface" id="toc-the-interface" class="nav-link" data-scroll-target="#the-interface">The interface</a>
   <ul class="collapse">
-  <li><a href="#what-the-transport-layer-supports" id="toc-what-the-transport-layer-supports" class="nav-link" data-scroll-target="#what-the-transport-layer-supports">What the transport layer supports</a></li>
+  <li><a href="#the-contract" id="toc-the-contract" class="nav-link" data-scroll-target="#the-contract">The contract</a></li>
   <li><a href="#simulating-loss-and-delay" id="toc-simulating-loss-and-delay" class="nav-link" data-scroll-target="#simulating-loss-and-delay">Simulating loss and delay</a></li>
   </ul></li>
   <li><a href="#the-transport-side" id="toc-the-transport-side" class="nav-link" data-scroll-target="#the-transport-side">The transport side</a>
   <ul class="collapse">
-  <li><a href="#required" id="toc-required" class="nav-link" data-scroll-target="#required">Required</a></li>
+  <li><a href="#required-of-the-transport" id="toc-required-of-the-transport" class="nav-link" data-scroll-target="#required-of-the-transport">Required of the transport</a></li>
   <li><a href="#the-conformance-checklist" id="toc-the-conformance-checklist" class="nav-link" data-scroll-target="#the-conformance-checklist">The conformance checklist</a></li>
   <li><a href="#optional-a-window" id="toc-optional-a-window" class="nav-link" data-scroll-target="#optional-a-window">Optional: a window</a></li>
   </ul></li>
   <li><a href="#the-application-side" id="toc-the-application-side" class="nav-link" data-scroll-target="#the-application-side">The application side</a>
   <ul class="collapse">
+  <li><a href="#required-of-either-application" id="toc-required-of-either-application" class="nav-link" data-scroll-target="#required-of-either-application">Required of either application</a></li>
   <li><a href="#the-protocol-specification" id="toc-the-protocol-specification" class="nav-link" data-scroll-target="#the-protocol-specification">The protocol specification</a></li>
+  <li><a href="#start-against-a-stub-transport" id="toc-start-against-a-stub-transport" class="nav-link" data-scroll-target="#start-against-a-stub-transport">Start against a stub transport</a></li>
   </ul></li>
   <li><a href="#the-two-applications" id="toc-the-two-applications" class="nav-link" data-scroll-target="#the-two-applications">The two applications</a>
   <ul class="collapse">
@@ -2247,15 +2249,12 @@ code { font-size: 0.92em; }
   </ul></li>
   <li><a href="#running-on-cloudlab" id="toc-running-on-cloudlab" class="nav-link" data-scroll-target="#running-on-cloudlab">Running on CloudLab</a></li>
   <li><a href="#what-you-submit" id="toc-what-you-submit" class="nav-link" data-scroll-target="#what-you-submit">What you submit</a></li>
-  <li><a href="#demo-and-defense" id="toc-demo-and-defense" class="nav-link" data-scroll-target="#demo-and-defense">Demo and defense</a>
-  <ul class="collapse">
-  <li><a href="#run-on-another-teams-transport" id="toc-run-on-another-teams-transport" class="nav-link" data-scroll-target="#run-on-another-teams-transport">Run on another team’s transport</a></li>
-  </ul></li>
+  <li><a href="#demo-and-defense" id="toc-demo-and-defense" class="nav-link" data-scroll-target="#demo-and-defense">Demo and defense</a></li>
   <li><a href="#grading" id="toc-grading" class="nav-link" data-scroll-target="#grading">Grading</a>
   <ul class="collapse">
   <li><a href="#if-one-of-your-halves-does-not-work" id="toc-if-one-of-your-halves-does-not-work" class="nav-link" data-scroll-target="#if-one-of-your-halves-does-not-work">If one of your halves does not work</a></li>
   </ul></li>
-  <li><a href="#a-pace-that-fits-the-remaining-weeks" id="toc-a-pace-that-fits-the-remaining-weeks" class="nav-link" data-scroll-target="#a-pace-that-fits-the-remaining-weeks">A pace that fits the remaining weeks</a></li>
+  <li><a href="#suggested-pace" id="toc-suggested-pace" class="nav-link" data-scroll-target="#suggested-pace">Suggested pace</a></li>
   </ul>
 </nav>
 </div>
@@ -2263,8 +2262,8 @@ code { font-size: 0.92em; }
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Reliable Transport and an Application — Team Project</h1>
-<p class="subtitle lead">CSCI 4306 · A reliable transport over UDP, and an application built on top of it</p>
+<h1 class="title">Team Project — Reliable Transport and an Application</h1>
+<p class="subtitle lead">CSCI 4306 · Sequence numbers, retransmission, and a terminal application over UDP</p>
 </div>
 
 
@@ -2282,7 +2281,7 @@ code { font-size: 0.92em; }
     <div>
     <div class="quarto-title-meta-heading">Updated</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">October 27, 2026</p>
+      <p class="date-modified">November 3, 2026</p>
     </div>
   </div>
     
@@ -2293,11 +2292,11 @@ code { font-size: 0.92em; }
 </header>
 
 
-<p>You will build a working network stack in two halves. One half of your team writes a transport that carries messages reliably over UDP. The other half writes an application that runs on top of that transport and never looks inside it. The application is your pick of two: a shared drawing canvas, or a live quiz. Both are specified under <em>The two applications</em> below, and your team builds one of them.</p>
-<p>The two halves meet at an interface that is the same for every team in the class. Because it is the same everywhere, your application will also run over a transport written by people you have never worked with. On December 1 you will run it that way in front of the room.</p>
+<p>Your team writes a transport that carries messages reliably over UDP, and an application that uses that transport without looking inside it. The application is either a shared drawing canvas or a live quiz, and you pick which.</p>
+<p>The interface between the two halves is fixed and the same for every team. The application side is written and tested against it while the transport is still being built, so the two halves can be built at the same time.</p>
 <section id="teams-and-roles" class="level1">
 <h1>Teams and roles</h1>
-<p>A team is one to four people. The work has two halves, a transport and an application, and the sign-up sheet records who is on each. A team of one writes both.</p>
+<p>A team is one to four people. The work has two halves, and the sign-up sheet records which members write which. A team of one writes both.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -2321,18 +2320,11 @@ code { font-size: 0.92em; }
 </tbody>
 </table>
 <p>Sign up on the <a href="https://docs.google.com/spreadsheets/d/1NshiY6ZnDsPZgUZ6Ei5CX-mbRyaLVe9JZ7z5erz-kjg/edit?usp=sharing">team sign-up sheet</a> by the end of the day on <strong>Friday, October 30</strong>. List every member and the role they hold.</p>
-<p>The transport side’s first step is the conformance checklist below, which it works through alone and which needs no application.</p>
-<p>The application side’s first step is to write a <strong>stub transport</strong>: a file that has the seven methods and none of the machinery behind them. Yours is <code>transport.py</code>, about twenty-five lines, in which <code>send</code> is one <code>sendto</code>, <code>recv</code> is one <code>recvfrom</code>, and the other five methods do the least that satisfies their signature. No checksum, no sequence numbers, no retransmission. Two processes on one machine do not drop datagrams, so at <code>TRANSPORT_LOSS=0</code> this stub delivers everything and the entire application is testable against it from the first day: rendering, keyboard handling, every message type in your protocol, the host’s fan-out to several clients, a client joining and being sent the current state, and the status line.</p>
-<p>The stub leaves out three things, and the real transport is what supplies them:</p>
-<ul>
-<li><strong>Behaviour under loss.</strong> Set <code>TRANSPORT_LOSS=0.1</code> against the stub and send 40 messages. Three to eight of them never arrive, which on the canvas is cells that stay blank and in the quiz is answers the host never scores. Removing those holes is the whole job of the real transport. Spend five minutes watching them appear before you start writing it.</li>
-<li><strong>Real <code>stats</code> numbers.</strong> Have the stub return zeros for <code>sent</code>, <code>received</code>, <code>resent</code>, and <code>dropped</code>. Your status line will show zeros, but the plumbing that reads and draws them is exercised.</li>
-<li><strong>A measured <code>rtt_ms</code>.</strong> Have the stub report twice <code>TRANSPORT_DELAY</code>, which is the honest answer for a transport that waits for nothing. If you are building the quiz, this matters: your adjusted ranking needs a non-zero round-trip time to do anything, so set <code>TRANSPORT_DELAY</code> to different values at different clients and check that the ranking changes the way you expect.</li>
-</ul>
+<p>Both halves can start on the same day. The transport side works through the conformance checklist below, which needs no application; the application side starts against a stub transport and swaps in the real one later.</p>
 </section>
 <section id="the-interface" class="level1">
 <h1>The interface</h1>
-<p>Every team in the class ships a Python 3 file named <code>transport.py</code> containing a class named <code>Transport</code> with these seven methods and a constructor that takes no required arguments.</p>
+<p>Your transport is a Python 3 file named <code>transport.py</code> containing a class named <code>Transport</code> with these seven methods and a constructor that takes no required arguments.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># transport.py</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Transport:</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> bind(<span class="va">self</span>, port): ...</span>
@@ -2358,17 +2350,17 @@ code { font-size: 0.92em; }
 <span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Return a dict with at least these keys:</span></span>
 <span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>        <span class="co">#   rtt_ms, sent, received, resent, dropped</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>A <code>Transport</code> holds one UDP socket and a list of peers. A host binds once and talks to everybody through the same object, so a canvas with twelve painters still costs the application one <code>recv</code> call per pass through its loop.</p>
-<section id="what-the-transport-layer-supports" class="level2">
-<h2 class="anchored" data-anchor-id="what-the-transport-layer-supports">What the transport layer supports</h2>
-<p>These seven clauses are the contract. An application may rely on all of them, and a transport that breaks any one of them will fail on somebody else’s application on December 1.</p>
+<section id="the-contract" class="level2">
+<h2 class="anchored" data-anchor-id="the-contract">The contract</h2>
+<p>An application may rely on all seven clauses below, and on nothing else about the transport underneath it.</p>
 <ol type="1">
 <li><strong>Order and delivery.</strong> Messages sent to a peer arrive at that peer in the order they were sent, once each, with nothing missing. If that becomes impossible, the peer is reported closed.</li>
 <li><strong>Message boundaries are kept.</strong> One <code>send</code> becomes exactly one <code>recv</code>. Messages are never joined or split.</li>
 <li><strong>Size.</strong> <code>send</code> accepts up to 1024 bytes. A longer message raises <code>ValueError</code>. It is never truncated and never silently dropped.</li>
-<li><strong>Timeouts are honoured.</strong> <code>recv(timeout=0.05)</code> returns within roughly 50 ms whether or not a message arrived, and returns <code>None</code> when nothing did.</li>
+<li><strong>Timeouts are honored.</strong> <code>recv(timeout=0.05)</code> returns within roughly 50 ms whether or not a message arrived, and returns <code>None</code> when nothing did.</li>
 <li><strong>Single-threaded.</strong> No threads anywhere. Retransmission timers are serviced inside <code>send</code> and <code>recv</code>, which means an application that stops calling both of them stops retransmitting. Call one of them on every pass through your main loop.</li>
 <li><strong>UDP only.</strong> One <code>SOCK_DGRAM</code> socket. No <code>SOCK_STREAM</code> anywhere in the project.</li>
-<li><strong><code>rtt_ms</code> is a measurement.</strong> Time a message from <code>send</code> to the acknowledgement that covers it, and report that in milliseconds. Smoothing it with the estimator from §3.5.3 is optional.</li>
+<li><strong><code>rtt_ms</code> is a measurement.</strong> Time a message from <code>send</code> to the acknowledgment that covers it, and report that in milliseconds. Smoothing it with the estimator from §3.5.3 is optional.</li>
 </ol>
 </section>
 <section id="simulating-loss-and-delay" class="level2">
@@ -2398,18 +2390,17 @@ code { font-size: 0.92em; }
 </table>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="va">TRANSPORT_LOSS</span><span class="op">=</span>0.1 <span class="va">TRANSPORT_DELAY</span><span class="op">=</span>17.5 <span class="ex">python3</span> canvas_host.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><code>TRANSPORT_DELAY</code> is one-way, so setting it at both ends produces a round trip of twice the value: 17.5 at each end is a 35 ms path. Hold delayed datagrams in a queue and release them inside <code>send</code> and <code>recv</code>, the same place your retransmission timer is serviced. Do not use <code>time.sleep</code>, which would stall the application.</p>
-<p>A queued datagram goes out on your next call to <code>send</code> or <code>recv</code> and not before, so a process that sends a burst and then stops calling in leaves the whole burst sitting in the queue. This is the same caveat as clause 5, and it is easy to walk into: a test that sends a burst and then waits for a reply sees nothing arrive at all. An application main loop calls <code>recv</code> on every pass, which is what keeps the queue draining.</p>
-<p>Together these put a wide-area path on one VM. Everything except case 8 of the conformance checklist can be run and re-run on a single machine in a few seconds, which matters because you will run it hundreds of times.</p>
-<p>The application does not change when the loss or the delay changes, and it does not need to know either one is there.</p>
+<p>A queued datagram goes out on your next call to <code>send</code> or <code>recv</code> and not before. A test that sends a burst and then waits for a reply without calling either one leaves the whole burst in the queue and sees nothing arrive at all. The main loop clause 5 describes drains the queue and services the retransmission timer in the same calls.</p>
+<p>The two variables together give you a wide-area path on one VM, so the checklist runs in a few seconds and you can run it hundreds of times. The application does not change when the loss or the delay changes, and does not need to know either one is there.</p>
 <p>Do <strong>not</strong> use <code>tc</code> and <code>netem</code> to add loss. The only network interface that reaches a classmate’s VM is the one carrying your SSH session, and a root queueing discipline on it will degrade the terminal you are debugging in.</p>
 </section>
 </section>
 <section id="the-transport-side" class="level1">
 <h1>The transport side</h1>
-<section id="required" class="level2">
-<h2 class="anchored" data-anchor-id="required">Required</h2>
-<p>A stop-and-wait reliable transport: a checksum, sequence numbers, acknowledgements, a retransmission timeout, duplicate detection, per-peer state demultiplexed from one socket, and the seven methods above. One message outstanding at a time is enough to satisfy the whole contract.</p>
-<p>Write down your packet header — every field, its width, and its meaning — and your retransmission rule. That description is part of what you submit.</p>
+<section id="required-of-the-transport" class="level2">
+<h2 class="anchored" data-anchor-id="required-of-the-transport">Required of the transport</h2>
+<p>Build a stop-and-wait reliable transport. It needs a checksum, sequence numbers, acknowledgments, a retransmission timeout, duplicate detection, per-peer state demultiplexed from one socket, and the seven methods above. One message outstanding at a time satisfies the whole contract.</p>
+<p>Write down your packet header, giving every field, its width, and its meaning, and write down your retransmission rule. Both go in your report.</p>
 </section>
 <section id="the-conformance-checklist" class="level2">
 <h2 class="anchored" data-anchor-id="the-conformance-checklist">The conformance checklist</h2>
@@ -2470,13 +2461,12 @@ code { font-size: 0.92em; }
 </tr>
 </tbody>
 </table>
-<p>Case 8 needs a VM somewhere other than your own cluster, so run it against a classmate’s. The other seven run on one VM.</p>
-<p>Passing this checklist is the transport side’s definition of done. It does not depend on the application side’s progress.</p>
+<p>Case 8 needs a VM on a cluster other than your own, so run it against a classmate’s; the other seven run on one machine. The transport is finished when all eight pass at all three loss settings.</p>
 </section>
 <section id="optional-a-window" class="level2">
 <h2 class="anchored" data-anchor-id="optional-a-window">Optional: a window</h2>
-<p>Allowing several messages to be outstanding at once, with a cumulative acknowledgement and Go-Back-N retransmission, is worth up to 10 bonus points on the deliverable.</p>
-<p>It is worth knowing what it buys before you decide. The measurement I will run on December 1 is 100 messages back to back at <code>TRANSPORT_DELAY=17.5</code>, a 35 ms path, which is the shape of a client catching up after it has fallen behind. Stop-and-wait needs one round trip per message; a window of 8 needs 13.</p>
+<p>Stop-and-wait is a complete answer to the required work. Allowing several messages to be outstanding at once, with a cumulative acknowledgment and Go-Back-N retransmission, is worth up to 10 bonus points on the deliverable.</p>
+<p>The measurement I will run on December 1 is 100 messages back to back at <code>TRANSPORT_DELAY=17.5</code>, a 35 ms path. That is what a client does when it catches up after falling behind. Stop-and-wait spends one round trip per message, so 100 of them; a window of 8 spends 13, about eight times fewer.</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -2503,55 +2493,65 @@ code { font-size: 0.92em; }
 </tr>
 </tbody>
 </table>
-<p>Run it yourself on one VM before you decide whether to attempt the window. Measuring a real path instead, with <code>ping</code> to a classmate’s VM on another cluster, is a good check that your simulated numbers are honest, and the two longer rows are the range to expect.</p>
-<p>A stop-and-wait transport satisfies the whole contract, and an application running on one behaves correctly. It is about eight times slower to clear a backlog on a long path.</p>
+<p>Run the measurement yourself on one VM before you decide whether to attempt the window. Then <code>ping</code> a classmate’s VM on another cluster and compare: a real path should land in the range of the table’s two longer rows, and a simulated number far outside it is a sign your timing is wrong.</p>
 </section>
 </section>
 <section id="the-application-side" class="level1">
 <h1>The application side</h1>
-<p>Pick one of the two applications in the next section. Both are terminal programs: your CloudLab VM has no display, so everything is drawn with ANSI escape sequences over SSH.</p>
-<p>Three things are required of either choice.</p>
-<p><strong>The application never imports anything but <code>transport.py</code>.</strong> No <code>socket</code>, no <code>struct</code> for wire formats you did not define, no reaching into the transport’s internals. If you find yourself wanting to know whether a message was retransmitted, that number is in <code>stats</code>.</p>
-<p><strong>A status line showing <code>rtt_ms</code>, <code>resent</code>, and <code>dropped</code> for each connected peer</strong>, read from <code>stats</code> and redrawn as it changes. This is how the room sees which transport it is running on.</p>
-<p><strong>A single-threaded main loop.</strong> Watch the keyboard with <code>select.select([sys.stdin], [], [], 0)</code>, then call <code>recv(timeout=0.05)</code>, then redraw. No threads.</p>
+<p>Both applications are terminal programs: your CloudLab VM has no display, so everything is drawn with ANSI escape sequences over SSH.</p>
+<section id="required-of-either-application" class="level2">
+<h2 class="anchored" data-anchor-id="required-of-either-application">Required of either application</h2>
+<p><strong>Import nothing but <code>transport.py</code>.</strong> No <code>socket</code>, no <code>struct</code> for wire formats you did not define, no reaching into the transport’s internals. If you find yourself wanting to know whether a message was retransmitted, that number is in <code>stats</code>.</p>
+<p><strong>Draw a status line</strong> showing <code>rtt_ms</code>, <code>resent</code>, and <code>dropped</code> for each connected peer. Read the numbers from <code>stats</code> and redraw them as they change, so the resends are visible while the demo runs at <code>TRANSPORT_LOSS=0.1</code>.</p>
+<p><strong>Keep the main loop single-threaded.</strong> Watch the keyboard with <code>select.select([sys.stdin], [], [], 0)</code>, then call <code>recv(timeout=0.05)</code>, then redraw. Clause 5 is why: the transport retransmits nothing unless you call <code>send</code> or <code>recv</code>.</p>
+</section>
 <section id="the-protocol-specification" class="level2">
 <h2 class="anchored" data-anchor-id="the-protocol-specification">The protocol specification</h2>
-<p>Your team’s application protocol is yours to design, and you write it down in one page before you build it. It lists every message type, the layout of each one, and what the receiver does with it, including the cases that are easy to forget: a second join from a peer already connected, a message that arrives after a peer has left, a field whose value is out of range.</p>
-<p>Give it a version number. If you change it mid-project, the version changes and both sides know which one they are building against.</p>
+<p>You design your own application protocol, and you write it down in one page before you build it. List every message type, the layout of each one, and what the receiver does with it. Include the cases that are easy to forget: a second join from a peer already connected, a message that arrives after a peer has left, a field whose value is out of range.</p>
+<p>Give it a version number. If you change it mid-project, the version changes and both halves know which one they are building against.</p>
+</section>
+<section id="start-against-a-stub-transport" class="level2">
+<h2 class="anchored" data-anchor-id="start-against-a-stub-transport">Start against a stub transport</h2>
+<p>The application side cannot wait for a working transport, so write a <strong>stub</strong> first: a file with the seven methods and none of the machinery behind them. Call it <code>transport.py</code>, the same name the real one has, so nothing in the application changes when you swap the two. Thirty lines will do, in which <code>send</code> is one <code>sendto</code>, <code>recv</code> is one <code>recvfrom</code>, and the other five methods do the least that satisfies their signature. No checksum, no sequence numbers, no retransmission.</p>
+<p>With the loss set to 0 the stub delivers everything you send, so the whole application is testable against it from the first day: rendering, keyboard handling, every message type in your protocol, the host’s fan-out to several clients, a client joining and being sent the current state, and the status line.</p>
+<p>Three behaviors are worth more than the minimum, because they are what exercise the parts of your application that only move when the network does:</p>
+<ul>
+<li><strong>Discard datagrams.</strong> Read <code>TRANSPORT_LOSS</code> and drop that fraction in <code>send</code>, which is one <code>if random.random() &lt; loss: return</code>. At 0.1, forty messages lose about four. On the canvas that shows up as cells that stay blank, and in the quiz as answers the host never scores. Watch it for five minutes before you start writing the real transport, whose job is to close those holes.</li>
+<li><strong>Return <code>stats</code>.</strong> Zeros for <code>sent</code>, <code>received</code>, <code>resent</code>, and <code>dropped</code> are enough. Your status line will show zeros, but the code that reads the numbers and draws them is exercised.</li>
+<li><strong>Report an <code>rtt_ms</code>.</strong> Twice <code>TRANSPORT_DELAY</code> is the right answer for a transport that waits for nothing. The quiz needs it, because the adjusted ranking does nothing at all with a round-trip time of zero. Set <code>TRANSPORT_DELAY</code> to different values at different clients and check that the ranking changes the way you expect.</li>
+</ul>
 </section>
 </section>
 <section id="the-two-applications" class="level1">
 <h1>The two applications</h1>
 <section id="shared-canvas" class="level2">
 <h2 class="anchored" data-anchor-id="shared-canvas">Shared canvas</h2>
-<p>A host holds one canvas of <strong>36 columns by 20 rows</strong>. Clients connect, move a cursor, and paint cells. Every client sees every other client’s paint.</p>
-<p>Those dimensions are fixed for the class. Two characters per cell makes the canvas 72 columns wide and 22 rows tall with the status line, which fits an 80 by 24 terminal with no resizing, and the whole canvas is 720 bytes, which fits in one 1024-byte message.</p>
-<p>Required:</p>
+<p>A host holds one canvas of <strong>36 columns by 20 rows</strong>. Clients connect, move a cursor, and paint cells. Every client sees what the others paint.</p>
+<p>Those dimensions are fixed for the class. At two characters per cell the canvas is 72 columns wide, and 22 rows tall once the status line is counted, so it fits an 80 by 24 terminal with no resizing. At one byte per cell the whole canvas is 720 bytes, which fits in one 1024-byte message.</p>
+<p>Required, on top of the status line:</p>
 <ul>
-<li>Move the cursor, choose among at least 8 colours, and paint a cell.</li>
-<li>The host holds the canvas and relays each paint to the other clients.</li>
+<li>Move the cursor, choose among at least 8 colors, and paint a cell.</li>
+<li>The host holds the canvas and relays each painted cell to the other clients.</li>
 <li>A client that joins receives the whole canvas and draws it.</li>
 <li><strong>Redraw only the cells that changed.</strong> Repainting all 720 cells costs about 2.1 KB on a lightly used canvas and 4.6 KB when every cell differs. Sending that twenty times a second is 40 to 90 KB/s of escape sequences, which lags noticeably over a wide-area SSH session. Addressing one changed cell with <code>\x1b[row;colH</code> costs about 18 bytes and does not grow with the canvas.</li>
-<li>The status line from the previous section.</li>
 </ul>
 <p>There is no UDP broadcast on this path. The host sends to each peer in turn.</p>
 </section>
 <section id="live-quiz" class="level2">
 <h2 class="anchored" data-anchor-id="live-quiz">Live quiz</h2>
 <p>A host holds a list of questions. Clients connect, the host sends one question to each of them, clients answer, and the host scores them on correctness and on how quickly they answered.</p>
-<p>Ranking by when the answer arrived is the part worth thinking about. A client at Wisconsin is tens of milliseconds closer to the host than one at Clemson, and the shared VMs add scheduling jitter on top, so arrival order is partly a measurement of geography.</p>
+<p>Ranking by arrival time is the hard part. A client at Wisconsin is tens of milliseconds closer to the host than one at Clemson, and the shared VMs add scheduling jitter on top, so the answer that arrives first is partly the one that had the shortest path.</p>
 <p>Required, on top of the status line:</p>
 <ul>
 <li>Rank using <code>stats(peer)[&quot;rtt_ms&quot;]</code> to subtract the path from each answer’s arrival time, and show both the raw and the adjusted ranking on the scoreboard.</li>
 <li>A scoreboard that survives a client disconnecting and rejoining.</li>
 </ul>
-<p>At the defense, be ready to say why subtracting half the round-trip time is an estimate and not a measurement.</p>
+<p>At the defense, be ready to explain why subtracting half the round-trip time gives an estimate of the one-way delay rather than a measurement of it.</p>
 </section>
 <section id="working-in-a-terminal" class="level2">
 <h2 class="anchored" data-anchor-id="working-in-a-terminal">Working in a terminal</h2>
-<p>Four things in a terminal program will cost you time if you meet them unprepared.</p>
 <p><strong>Restore the terminal in a <code>finally</code> block.</strong> Reading single keystrokes needs <code>tty.setraw</code>, and a crash while the terminal is raw leaves a shell that echoes nothing and ignores Enter. Save <code>termios.tcgetattr(fd)</code> before you call <code>setraw</code>, restore it with <code>termios.tcsetattr</code> in <code>finally</code>, and type <code>reset</code> if you lose one anyway.</p>
-<p><strong>Use the 16 basic background colours</strong> (<code>\x1b[40m</code> through <code>\x1b[47m</code>), not the 256-colour sequences. Then your drawing looks the same whatever <code>TERM</code> your classmate’s terminal reports.</p>
+<p><strong>Use the eight basic background colors</strong> (<code>\x1b[40m</code> through <code>\x1b[47m</code>) rather than the 256-color sequences, and your drawing will look the same whatever <code>TERM</code> your classmate’s terminal reports.</p>
 <p><strong>Hide the cursor</strong> with <code>\x1b[?25l</code> while you draw and restore it with <code>\x1b[?25h</code> when you exit, or it blinks in the middle of the canvas.</p>
 <p><strong>Check the terminal size at startup</strong> with <code>shutil.get_terminal_size()</code> and exit with a message naming the size you need. Arrow keys also arrive as three bytes, <code>\x1b[A</code> through <code>\x1b[D</code>, so either handle the escape prefix or use WASD and say so on screen.</p>
 </section>
@@ -2559,9 +2559,9 @@ code { font-size: 0.92em; }
 <section id="running-on-cloudlab" class="level1">
 <h1>Running on CloudLab</h1>
 <p>Use the <code>network-vm</code> profile the same way the assignments do. One VM is enough for most of the work: run the host and two or three clients in separate SSH sessions to the same machine.</p>
-<p><strong>Name your experiment the same thing every time.</strong> The hostname CloudLab gives you embeds the experiment name, as in <code>dev.&lt;name&gt;.networksclass-pg0.&lt;cluster&gt;.cloudlab.us</code>. Pick one name, use it for the rest of the term, and your teammates can reach you without an exchange of addresses at the start of every session.</p>
+<p>The exception is case 8, which checks your <code>rtt_ms</code> against a path you did not simulate. Instantiate a second experiment of your own on a different cluster, or pair up with a classmate, and terminate any experiment you are not using.</p>
+<p><strong>Name your experiment the same thing every time.</strong> The hostname CloudLab gives you embeds the experiment name, as in <code>dev.&lt;name&gt;.networksclass-pg0.&lt;cluster&gt;.cloudlab.us</code>. Pick one name and use it for the rest of the term, and your teammates will know your address without asking for it at the start of every session.</p>
 <p>Experiments expire after 16 hours and <strong>the disk is wiped</strong> when they do, whether you terminated the experiment or it expired on its own. Work in a git repository and push before you stop.</p>
-<p>Case 8 of the conformance checklist is the only thing that needs a second machine on another cluster, because it checks your <code>rtt_ms</code> against a path you did not simulate. Either instantiate a second experiment of your own on a different cluster, or pair up with a classmate. Terminate what you are not using.</p>
 </section>
 <section id="what-you-submit" class="level1">
 <h1>What you submit</h1>
@@ -2569,27 +2569,20 @@ code { font-size: 0.92em; }
 <ol type="1">
 <li><strong>Your code.</strong> <code>transport.py</code> and its conformance test program, and the application.</li>
 <li><strong>Your protocol specification</strong>, with its version number.</li>
-<li><strong>A report</strong>, three to five pages as a PDF. It describes the packet header and the retransmission rule, gives the conformance checklist results at all three loss settings, and says what happened when you ran your application over another team’s transport.</li>
-<li><strong>A terminal recording</strong> of your stack working, as an <code>asciinema</code> cast or a screen capture. Room networks fail at inconvenient moments, and this is what you fall back on.</li>
+<li><strong>A report</strong>, three to five pages as a PDF. It describes the packet header and the retransmission rule, gives the conformance checklist results at all three loss settings, and says what the application looked like at <code>TRANSPORT_LOSS=0.1</code> over the stub and what it looks like now over your own transport.</li>
+<li><strong>A terminal recording</strong> of your stack working, as an <code>asciinema</code> cast or a screen capture. If the demo fails on the day, or the classroom network does, this is what we watch instead.</li>
 </ol>
 </section>
 <section id="demo-and-defense" class="level1">
 <h1>Demo and defense</h1>
 <p>Ten minutes per team, in class on December 1.</p>
-<p>You run your own application over your own transport. Then I hand you another team’s <code>transport.py</code>, you copy it into place, and you run the same application again without changing a line of it. I will also run the 100-message measurement from the window table above.</p>
-<p>Then the team answers four or five questions, spread so that every member answers at least one. They are drawn from your own layer’s internals, from the other half’s layer, and from the transport you borrowed. If your application needed changing to run on it, expect to be asked which contract clause was broken and what told you so.</p>
-<section id="run-on-another-teams-transport" class="level2">
-<h2 class="anchored" data-anchor-id="run-on-another-teams-transport">Run on another team’s transport</h2>
-<p>Before December 1, get a <code>transport.py</code> from another team, copy it over yours, change nothing else, and run your application on it at <code>TRANSPORT_LOSS=0</code> and <code>0.1</code>. Your report says what happened: whether it ran, what broke if it did not, and which of the seven contract clauses the break points at. A failure costs you no points, the diagnosis is what is graded, and an application that fails on every transport including your own is usually a protocol problem of your own.</p>
-<p>Leave that transport on the VM you are demoing from. It is also your insurance against your own failing on the day. Every transport in the class is submitted before class on December 1, so if the one you planned to use will not start, I can hand you another; having tested one yourself is faster than finding out in front of the room.</p>
-<p>If the network in the room is the problem rather than the code, the terminal recording you submitted is the demo.</p>
-</section>
+<p>Run your application over your own transport at <code>TRANSPORT_LOSS=0</code>, then again at <code>0.1</code> with the status line where the room can see the resends. Then run the conformance test program at all three settings. I will also run the 100-message burst measurement.</p>
+<p>The team then answers four or five questions, spread so that every member answers at least one. I will ask about your own half’s internals and about the other half’s: the application side should be able to say what the transport does when an acknowledgment is lost, and the transport side what the application does when a peer disconnects.</p>
 </section>
 <section id="grading" class="level1">
 <h1>Grading</h1>
 <p>The project is 25% of the course grade: the deliverable is 15% and the demo and defense is 10%. Both are team scores covering the whole stack, so the two roles share one grade.</p>
-<p>Two of the items below depend on other teams having something that runs. Those are scored against what the class actually has on the day, not against the number printed here.</p>
-<p><strong>Deliverable</strong>, out of 100:</p>
+<p><strong>Deliverable</strong>, out of 100, half of it on each side of the interface:</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 42%">
@@ -2604,26 +2597,18 @@ code { font-size: 0.92em; }
 <tbody>
 <tr class="odd">
 <td>The conformance checklist, each case demonstrated at all three loss settings</td>
-<td style="text-align: right;">30</td>
+<td style="text-align: right;">35</td>
 </tr>
 <tr class="even">
 <td>The packet header and retransmission rule described in your report</td>
-<td style="text-align: right;">10</td>
+<td style="text-align: right;">15</td>
 </tr>
 <tr class="odd">
-<td>At least two other teams’ applications run on your transport</td>
-<td style="text-align: right;">10</td>
+<td>The required application behavior, including the status line</td>
+<td style="text-align: right;">35</td>
 </tr>
 <tr class="even">
-<td>The required application behaviour, including the status line</td>
-<td style="text-align: right;">25</td>
-</tr>
-<tr class="odd">
 <td>The protocol specification</td>
-<td style="text-align: right;">10</td>
-</tr>
-<tr class="even">
-<td>Your application running on another team’s transport, with the diagnosis if it failed</td>
 <td style="text-align: right;">15</td>
 </tr>
 <tr class="odd">
@@ -2632,18 +2617,16 @@ code { font-size: 0.92em; }
 </tr>
 </tbody>
 </table>
-<p>A member reported by their own team as not contributing, and confirmed, has their individual score multiplied by less than 1. That is the only part of the grade that separates one member from another, and it works the same way in both roles.</p>
+<p>A member reported by their own team as not contributing, where I confirm the report, has their individual score multiplied by a factor below 1. Nothing else in the grade separates one member from another.</p>
 <section id="if-one-of-your-halves-does-not-work" class="level2">
 <h2 class="anchored" data-anchor-id="if-one-of-your-halves-does-not-work">If one of your halves does not work</h2>
-<p>If one half does not work you keep the other half’s points, and you can still demo.</p>
-<p>If your transport does not work, run your application over a borrowed one. You will already have one, because <em>Run on another team’s transport</em> above asks for it. If your application does not work, demonstrate your transport by running another team’s application on it. You will already have two of those, because the table above asks for them.</p>
-<p>Skipping that step costs you twice. You lose those 15 points, and you have nothing to borrow when you need it.</p>
-<p>Tell me as soon as you think one half is not going to arrive, and by November 17 at the latest, which is the week the pace table has your two halves meeting for the first time. With two weeks left I can hand you a working transport to develop against, or cut the application’s scope with you; on the day of the demo I cannot.</p>
+<p>If one half does not work you keep the other half’s 50 points, and you can still demo. A transport with no application demos through its conformance test program, which needs none. An application whose transport does not work demos over the stub at <code>TRANSPORT_LOSS=0</code>, which is reason enough to keep the stub in your repository after the real transport arrives.</p>
+<p>Tell me as soon as you think one half is not going to arrive, and by November 17 at the latest. That is the week the pace table has your two halves meeting for the first time, and with two weeks left there is still room to cut the application’s scope or simplify the packet format with you. There is nothing I can do about it on December 1.</p>
 </section>
 </section>
-<section id="a-pace-that-fits-the-remaining-weeks" class="level1">
-<h1>A pace that fits the remaining weeks</h1>
-<p>Assignment 3 is due November 1 and Assignment 4 on November 15, so the project’s heavy weeks are the two after that. Nothing below is collected or graded; it is the pace that reaches December 1 without a bad last week.</p>
+<section id="suggested-pace" class="level1">
+<h1>Suggested pace</h1>
+<p>Assignment 3 is due November 1 and Assignment 4 on November 15, so the project’s heavy weeks are the two after that. Nothing in the table below is collected or graded. Following it leaves the last week free for the report and the demo.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 33%">
@@ -2676,7 +2659,7 @@ code { font-size: 0.92em; }
 <tr class="even">
 <td>Nov 24</td>
 <td>Window, if you are attempting it</td>
-<td>Run on another team’s transport, report drafted</td>
+<td>Report drafted, demo rehearsed</td>
 </tr>
 <tr class="odd">
 <td>Dec 1</td>
