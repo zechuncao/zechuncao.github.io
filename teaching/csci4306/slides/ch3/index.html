@@ -35,7 +35,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-1cd458a07c1dd9b3f03fb698cf9e9606.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-c547e646e45bc3e44b83aaadf666dfc5.css">
   <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -371,9 +371,9 @@ Zechun (Jacob) Cao
 <p><span class="vote-prompt">Predict the completed message and the text left in the buffer.</span></p>
 <table class="caption-top">
 <colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
+<col style="width: 28%">
+<col style="width: 42%">
+<col style="width: 28%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -753,37 +753,37 @@ Zechun (Jacob) Cao
 <p>Use <strong>last byte = Seq + payload − 1</strong> and <strong>next Seq = Seq + payload</strong>. Compare each row with a neighbor before revealing it.</p>
 <table class="caption-top">
 <colgroup>
-<col style="width: 20%">
 <col style="width: 26%">
-<col style="width: 26%">
+<col style="width: 28%">
+<col style="width: 19%">
 <col style="width: 26%">
 </colgroup>
 <thead>
 <tr class="header">
 <th>Segment</th>
-<th style="text-align: right;">Payload</th>
-<th style="text-align: right;">Seq</th>
-<th style="text-align: right;">Last byte</th>
+<th>Payload</th>
+<th>Seq</th>
+<th>Last byte</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>A</td>
-<td style="text-align: right;">120 bytes</td>
-<td style="text-align: right;"><span class="fragment ans" data-fragment-index="0">2400</span></td>
-<td style="text-align: right;"><span class="fragment ans" data-fragment-index="0">2519</span></td>
+<td>120 bytes</td>
+<td><span class="fragment ans" data-fragment-index="0">2400</span></td>
+<td><span class="fragment ans" data-fragment-index="0">2519</span></td>
 </tr>
 <tr class="even">
 <td>B</td>
-<td style="text-align: right;">80 bytes</td>
-<td style="text-align: right;"><span class="fragment ans" data-fragment-index="1">2520</span></td>
-<td style="text-align: right;"><span class="fragment ans" data-fragment-index="1">2599</span></td>
+<td>80 bytes</td>
+<td><span class="fragment ans" data-fragment-index="1">2520</span></td>
+<td><span class="fragment ans" data-fragment-index="1">2599</span></td>
 </tr>
 <tr class="odd">
 <td>C</td>
-<td style="text-align: right;">150 bytes</td>
-<td style="text-align: right;"><span class="fragment ans" data-fragment-index="2">2600</span></td>
-<td style="text-align: right;"><span class="fragment ans" data-fragment-index="2">2749</span></td>
+<td>150 bytes</td>
+<td><span class="fragment ans" data-fragment-index="2">2600</span></td>
+<td><span class="fragment ans" data-fragment-index="2">2749</span></td>
 </tr>
 </tbody>
 </table>
@@ -795,28 +795,33 @@ Zechun (Jacob) Cao
 <h2>Your Turn: ACK <span class="ex">Must Know</span></h2>
 <p>Host B expects <strong>2400</strong> and buffers out-of-order data. Predict each ACK with a neighbor; point to the first gap.</p>
 <table class="caption-top">
+<colgroup>
+<col style="width: 26%">
+<col style="width: 48%">
+<col style="width: 24%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Arrival</th>
 <th>Bytes received</th>
-<th style="text-align: right;">ACK</th>
+<th>ACK</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>C</td>
 <td>2600–2749</td>
-<td style="text-align: right;"><span class="fragment ans" data-fragment-index="0">2400</span></td>
+<td><span class="fragment ans" data-fragment-index="0">2400</span></td>
 </tr>
 <tr class="even">
 <td>A</td>
 <td>2400–2519</td>
-<td style="text-align: right;"><span class="fragment ans" data-fragment-index="1">2520</span></td>
+<td><span class="fragment ans" data-fragment-index="1">2520</span></td>
 </tr>
 <tr class="odd">
 <td>B</td>
 <td>2520–2599</td>
-<td style="text-align: right;"><span class="fragment ans" data-fragment-index="2">2750</span></td>
+<td><span class="fragment ans" data-fragment-index="2">2750</span></td>
 </tr>
 </tbody>
 </table>
@@ -889,31 +894,37 @@ Zechun (Jacob) Cao
 <h2>Both Directions <span class="rd">Reading</span></h2>
 <p>Each direction has its <strong>own byte sequence</strong>. Host A’s next byte is <strong>70</strong>; Host B’s is <strong>900</strong>. A sends one byte and B echoes it.</p>
 <table class="caption-top">
+<colgroup>
+<col style="width: 32%">
+<col style="width: 19%">
+<col style="width: 20%">
+<col style="width: 28%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Direction</th>
-<th style="text-align: right;">Seq</th>
-<th style="text-align: right;">ACK</th>
+<th>Seq</th>
+<th>ACK</th>
 <th>Payload</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>A → B</td>
-<td style="text-align: right;">70</td>
-<td style="text-align: right;">900</td>
+<td>70</td>
+<td>900</td>
 <td>1 byte</td>
 </tr>
 <tr class="even">
 <td>B → A</td>
-<td style="text-align: right;">900</td>
-<td style="text-align: right;">71</td>
+<td>900</td>
+<td>71</td>
 <td>1 byte</td>
 </tr>
 <tr class="odd">
 <td>A → B</td>
-<td style="text-align: right;">71</td>
-<td style="text-align: right;">901</td>
+<td>71</td>
+<td>901</td>
 <td>0 bytes</td>
 </tr>
 </tbody>
@@ -995,8 +1006,8 @@ Zechun (Jacob) Cao
 <p><span class="vote-prompt">Name the socket each one reaches.</span></p>
 <table class="caption-top">
 <colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
+<col style="width: 61%">
+<col style="width: 38%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -1052,6 +1063,11 @@ Zechun (Jacob) Cao
 <h2>UDP’s Checksum <span class="ex">Must Know</span></h2>
 <p>Add the 16-bit words with <strong>end-around carry</strong>, then <strong>complement</strong> the sum. Here is a datagram carrying the four bytes <code>FIRE</code>.</p>
 <table class="caption-top">
+<colgroup>
+<col style="width: 35%">
+<col style="width: 21%">
+<col style="width: 43%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Field</th>
@@ -1677,8 +1693,8 @@ Zechun (Jacob) Cao
 <p><span class="vote-prompt">Name the mechanism for each row before revealing it.</span></p>
 <table class="caption-top">
 <colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
+<col style="width: 47%">
+<col style="width: 52%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -1719,8 +1735,8 @@ Zechun (Jacob) Cao
 <p>The timeout is <strong>80 ms</strong>. A retransmits immediately. The retry and its ACK each take <strong>20 ms</strong>; ignore processing time.</p>
 <table class="caption-top">
 <colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
+<col style="width: 61%">
+<col style="width: 38%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -1822,6 +1838,11 @@ Zechun (Jacob) Cao
 <h2>The rdt Versions <span class="rd">Reading</span></h2>
 <p>A <strong>NAK</strong> asks for a retry.</p>
 <table class="caption-top">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 30%">
+<col style="width: 50%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Version</th>
@@ -1862,8 +1883,8 @@ Zechun (Jacob) Cao
 <h2>Where UDP Is Used <span class="rd">Reading</span></h2>
 <table class="caption-top">
 <colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
+<col style="width: 26%">
+<col style="width: 73%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -2011,8 +2032,8 @@ N = \frac{\text{RTT} + L/R}{L/R} \ \text{gives} \ U = 1\]</span></p>
 <p>A <strong>50 Mbps</strong> link carries <strong>1000-byte</strong> segments. The round trip is <strong>24 ms</strong>. Work each row with a neighbor before revealing it.</p>
 <table class="caption-top">
 <colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
+<col style="width: 57%">
+<col style="width: 42%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -2540,10 +2561,10 @@ N = \frac{\text{RTT} + L/R}{L/R} \ \text{gives} \ U = 1\]</span></p>
 <p>A <span class="math inline">\(k\)</span>-bit sequence number field gives <span class="math inline">\(2^k\)</span> names, and the names wrap.</p>
 <table class="caption-top">
 <colgroup>
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
+<col style="width: 34%">
+<col style="width: 32%">
+<col style="width: 16%">
+<col style="width: 16%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -2577,12 +2598,12 @@ N = \frac{\text{RTT} + L/R}{L/R} \ \text{gives} \ U = 1\]</span></p>
 </section>
 <section id="compare-the-two-must-know" class="slide level2">
 <h2>Compare the Two <span class="ex">Must Know</span></h2>
-<p><span class="vote-prompt">Fill one column before revealing it.</span></p>
+<p><span class="vote-prompt">Fill one column before revealing it, with window <span class="math inline">\(N = 4\)</span>.</span></p>
 <table class="caption-top">
 <colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
+<col style="width: 35%">
+<col style="width: 32%">
+<col style="width: 32%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -2603,7 +2624,7 @@ N = \frac{\text{RTT} + L/R}{L/R} \ \text{gives} \ U = 1\]</span></p>
 <td><span class="fragment ans" data-fragment-index="1">That packet alone</span></td>
 </tr>
 <tr class="odd">
-<td>Resends after one loss, <span class="math inline">\(N=4\)</span></td>
+<td>Resends after one loss</td>
 <td><span class="fragment ans" data-fragment-index="2">3 packets</span></td>
 <td><span class="fragment ans" data-fragment-index="2">1 packet</span></td>
 </tr>
@@ -2628,9 +2649,9 @@ N = \frac{\text{RTT} + L/R}{L/R} \ \text{gives} \ U = 1\]</span></p>
 <p>Packets <strong>0–4</strong> are in flight with <strong>N = 5</strong>. Packet <strong>2</strong> is lost; nothing else is.</p>
 <table class="caption-top">
 <colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
+<col style="width: 47%">
+<col style="width: 22%">
+<col style="width: 30%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -2873,8 +2894,8 @@ N = \frac{\text{RTT} + L/R}{L/R} \ \text{gives} \ U = 1\]</span></p>
 <p>EstimatedRTT is <strong>90 ms</strong> and DevRTT is <strong>5 ms</strong>. A SampleRTT of <strong>130 ms</strong> then arrives.</p>
 <table class="caption-top">
 <colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
+<col style="width: 46%">
+<col style="width: 53%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -2946,7 +2967,7 @@ N = \frac{\text{RTT} + L/R}{L/R} \ \text{gives} \ U = 1\]</span></p>
 <table class="caption-top">
 <colgroup>
 <col style="width: 50%">
-<col style="width: 50%">
+<col style="width: 49%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -2964,7 +2985,7 @@ N = \frac{\text{RTT} + L/R}{L/R} \ \text{gives} \ U = 1\]</span></p>
 <td><span class="fragment ans" data-fragment-index="1">One ACK covers both segments</span></td>
 </tr>
 <tr class="odd">
-<td>Out of order, past the expected byte</td>
+<td>Out of order, above the gap</td>
 <td><span class="fragment ans" data-fragment-index="2">A duplicate ACK at once</span></td>
 </tr>
 <tr class="even">
@@ -3081,7 +3102,7 @@ N = \frac{\text{RTT} + L/R}{L/R} \ \text{gives} \ U = 1\]</span></p>
 <p>A sends <strong>Seq 1000, 2000, 3000, 4000, 5000</strong>, each with <strong>1000 payload bytes</strong>. Only <strong>Seq 2000</strong> is lost.</p>
 <table class="caption-top">
 <colgroup>
-<col style="width: 50%">
+<col style="width: 49%">
 <col style="width: 50%">
 </colgroup>
 <thead>
@@ -3114,9 +3135,9 @@ N = \frac{\text{RTT} + L/R}{L/R} \ \text{gives} \ U = 1\]</span></p>
 <h2>Timeout or Duplicates?</h2>
 <table class="caption-top">
 <colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
+<col style="width: 26%">
+<col style="width: 36%">
+<col style="width: 37%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -3308,12 +3329,12 @@ N = \frac{\text{RTT} + L/R}{L/R} \ \text{gives} \ U = 1\]</span></p>
 <section id="your-turn-handshake" class="slide level2">
 <h2>Your Turn: Handshake</h2>
 <p>A client with starting number <strong>300</strong> opens a connection to a server whose starting number is <strong>9100</strong>.</p>
-<table class="caption-top">
+<table class="caption-top" style="width:100%;">
 <colgroup>
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
+<col style="width: 38%">
+<col style="width: 27%">
+<col style="width: 17%">
+<col style="width: 16%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -3464,8 +3485,8 @@ N = \frac{\text{RTT} + L/R}{L/R} \ \text{gives} \ U = 1\]</span></p>
 <p>RcvBuffer is <strong>10,000</strong> bytes. B has received in order through <strong>57,000</strong> and read through <strong>51,000</strong>. A has sent through <strong>58,000</strong>; its last acknowledged byte is <strong>57,000</strong>.</p>
 <table class="caption-top">
 <colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
+<col style="width: 52%">
+<col style="width: 47%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -3781,6 +3802,11 @@ N = \frac{\text{RTT} + L/R}{L/R} \ \text{gives} \ U = 1\]</span></p>
 <h2>Slow Start</h2>
 <p>At one segment per round trip, filling a fast path would take forever. So the opening phase doubles instead.</p>
 <table class="caption-top">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 24%">
+<col style="width: 48%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Round</th>
@@ -3820,8 +3846,8 @@ N = \frac{\text{RTT} + L/R}{L/R} \ \text{gives} \ U = 1\]</span></p>
 <p>A client fetches a <strong>30,000-byte</strong> object on a fresh connection. MSS is <strong>1500 bytes</strong>, the round trip is <strong>40 ms</strong>, nothing is lost, and the receiver’s window never binds.</p>
 <table class="caption-top">
 <colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
+<col style="width: 39%">
+<col style="width: 60%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -3867,9 +3893,9 @@ N = \frac{\text{RTT} + L/R}{L/R} \ \text{gives} \ U = 1\]</span></p>
 <p>Topic 3 gave a sender two ways to learn a segment is gone. TCP treats them as different news.</p>
 <table class="caption-top">
 <colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
+<col style="width: 27%">
+<col style="width: 35%">
+<col style="width: 37%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -3937,7 +3963,7 @@ N = \frac{\text{RTT} + L/R}{L/R} \ \text{gives} \ U = 1\]</span></p>
 <p>cwnd in MSS at the start of each round: <strong>1, 2, 4, 5, 6, 7, 8</strong>. During round 7 the sender gets <strong>three duplicate ACKs</strong>.</p>
 <table class="caption-top">
 <colgroup>
-<col style="width: 50%">
+<col style="width: 49%">
 <col style="width: 50%">
 </colgroup>
 <thead>
@@ -3989,8 +4015,8 @@ N = \frac{\text{RTT} + L/R}{L/R} \ \text{gives} \ U = 1\]</span></p>
 <p>A connection has a <strong>40 Mbps</strong> bottleneck to itself. MSS is <strong>1000 bytes</strong> and the round trip is <strong>20 ms</strong>.</p>
 <table class="caption-top">
 <colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
+<col style="width: 48%">
+<col style="width: 51%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -4063,8 +4089,8 @@ N = \frac{\text{RTT} + L/R}{L/R} \ \text{gives} \ U = 1\]</span></p>
 <p>A <strong>60 Mbps</strong> bottleneck carries one connection each from <strong>five</strong> applications. A sixth application opens <strong>seven</strong> parallel connections through it.</p>
 <table class="caption-top">
 <colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
+<col style="width: 54%">
+<col style="width: 45%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -4095,8 +4121,8 @@ N = \frac{\text{RTT} + L/R}{L/R} \ \text{gives} \ U = 1\]</span></p>
 <h2>Signals Other Than Loss</h2>
 <table class="caption-top">
 <colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
+<col style="width: 24%">
+<col style="width: 75%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -4128,8 +4154,8 @@ N = \frac{\text{RTT} + L/R}{L/R} \ \text{gives} \ U = 1\]</span></p>
 <p>Choose one question and explain it to a neighbor. Use a specific event from a packet trace.</p>
 <table class="caption-top">
 <colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
+<col style="width: 41%">
+<col style="width: 58%">
 </colgroup>
 <thead>
 <tr class="header">
