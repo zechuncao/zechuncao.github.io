@@ -1,0 +1,253 @@
+<!-- Live voting for a Quarto RevealJS deck. Added with
+       include-after-body: poll.html
+     and installed by poll/install.sh, which fills in the two constants below.
+
+     The script does nothing at all unless the deck URL carries ?k=<key>, so
+     the copy on the website never calls the worker. Open the deck as
+
+       index.html?k=YOUR_KEY
+
+     in class. A slide votes when its heading carries data-poll="<id>":
+
+       ## Warm-Up: The Roster {data-poll="ch2-roster"}
+
+     Adding data-poll-answer makes it a scored question -- phones ask for a
+     nickname once, and the leaderboard ranks correct answers:
+
+       ## Name the Set [Must Know]{.ex} {data-poll="ch2-name-the-set" data-poll-answer="C"}
+
+     The options come from the .vote boxes already on the slide.
+       v   show or hide the tally (and tell the phones the answer)
+       l   show or hide the leaderboard -->
+
+<style>
+  .reveal .vote { position: relative; overflow: hidden; transition: opacity 300ms ease; }
+  .reveal .vote > * { position: relative; z-index: 1; }
+  .reveal .poll-fill {
+    position: absolute; left: 0; top: 0; bottom: 0; z-index: 0; width: 0;
+    background: rgba(0, 103, 145, 0.26);
+    transition: width 420ms ease;
+  }
+  .reveal .vote.poll-wrong { opacity: 0.42; }
+  .reveal .vote.poll-right { box-shadow: 0 0 0 3px #006791; }
+  .poll-badge {
+    position: fixed; top: 14px; left: 16px; z-index: 40;   /* the slide number owns the right corner */
+    white-space: pre;                                      /* keeps the gaps between the counts */
+    font: 600 17px/1 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: #006791; background: rgba(255, 255, 255, 0.88);
+    border: 1px solid rgba(0, 103, 145, 0.35); border-radius: 999px;
+    padding: 7px 13px; cursor: pointer; user-select: none;
+  }
+  .poll-badge.off { color: #a03030; border-color: rgba(160, 48, 48, 0.4); }
+  .poll-board {
+    position: fixed; z-index: 50; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    min-width: 420px; max-width: 70vw; max-height: 80vh; overflow: auto;
+    background: #fff; border: 1px solid rgba(0, 103, 145, 0.3); border-radius: 12px;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.22); padding: 26px 30px;
+    font-family: var(--r-main-font, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+    color: #1a1a1a; cursor: pointer;
+  }
+  .poll-board h3 { margin: 0 0 14px; font-size: 26px; color: #006791; font-weight: 700; }
+  .poll-board ol { margin: 0; padding: 0; list-style: none; font-size: 22px; }
+  .poll-board li { display: flex; align-items: baseline; gap: 14px; padding: 7px 0; border-bottom: 1px solid #eef2f5; }
+  .poll-board li:last-child { border-bottom: 0; }
+  .poll-board .pb-rank { width: 2.1em; color: #6a7781; font-size: 0.82em; }
+  .poll-board .pb-name { flex: 1; }
+  .poll-board .pb-score { font-weight: 700; color: #006791; }
+  .poll-board .pb-empty { font-size: 19px; color: #6a7781; }
+</style>
+
+<script>
+(function () {
+  var URL_BASE = "__POLL_URL__";
+  var ROOM = "__POLL_ROOM__";
+
+  var key = new URLSearchParams(location.search).get("k");
+  if (!key || URL_BASE.indexOf("__POLL") === 0) return;   // not the instructor's copy
+
+  var timer = null, boardTimer = null, current = null, shown = false, badge = null, board = null;
+
+  function post(path, data) {
+    return fetch(URL_BASE + path, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(data),
+    }).then(function (r) { return r.json(); });
+  }
+
+  function letterOf(v) {
+    var s = v.querySelector("strong");
+    return (s ? s.textContent : "").replace(/[^A-Za-z0-9]/g, "");
+  }
+
+  function letters(sec) {
+    var out = [];
+    sec.querySelectorAll(".vote").forEach(function (v) {
+      var t = letterOf(v);
+      if (t) out.push(t);
+    });
+    return out;
+  }
+
+  function ensureBadge() {
+    if (!badge) {
+      badge = document.createElement("div");
+      badge.className = "poll-badge";
+      badge.onclick = toggle;
+      document.body.appendChild(badge);
+    }
+    return badge;
+  }
+
+  function clearBars(sec) {
+    sec.querySelectorAll(".poll-fill").forEach(function (n) { n.remove(); });
+    sec.querySelectorAll(".vote").forEach(function (v) { v.classList.remove("poll-wrong", "poll-right"); });
+  }
+
+  function split(st) {
+    return st.opts.map(function (o) { return o + " " + (st.counts[o] || 0); }).join("   ");
+  }
+
+  function paint(sec, st) {
+    ensureBadge().textContent = shown
+      ? split(st) + "   ·   " + st.total + " votes"
+      : st.total + (st.total === 1 ? " vote" : " votes") + "   ·   press v";
+    badge.classList.remove("off");
+    clearBars(sec);
+    if (!shown) return;
+    sec.querySelectorAll(".vote").forEach(function (v) {
+      var o = letterOf(v);
+      var n = st.counts[o] || 0;
+      var pct = st.total ? Math.round((n / st.total) * 100) : 0;
+      var fill = document.createElement("div");
+      fill.className = "poll-fill";
+      v.appendChild(fill);
+      requestAnimationFrame(function () { fill.style.width = pct + "%"; });
+      if (st.answer) v.classList.add(o === st.answer ? "poll-right" : "poll-wrong");
+    });
+  }
+
+  function tick() {
+    if (!current) return;
+    var sec = current;
+    fetch(URL_BASE + "/s?r=" + encodeURIComponent(ROOM), { cache: "no-store" })
+      .then(function (r) { return r.json(); })
+      .then(function (st) { if (current === sec) paint(sec, st); })
+      .catch(function () { if (badge) { badge.textContent = "no connection"; badge.classList.add("off"); } });
+  }
+
+  function toggle() {
+    if (!current) return;
+    shown = !shown;
+    post("/reveal", { r: ROOM, k: key, on: shown }).catch(function () {});
+    tick();
+  }
+
+  // --- leaderboard ---------------------------------------------------------
+
+  function drawBoard(data) {
+    if (!board) return;
+    board.innerHTML = "";
+    var h = document.createElement("h3");
+    h.textContent = "Leaderboard";
+    board.appendChild(h);
+    var rows = (data && data.board) || [];
+    if (!rows.length) {
+      var p = document.createElement("div");
+      p.className = "pb-empty";
+      p.textContent = data ? "No scored answers yet." : "No connection.";
+      board.appendChild(p);
+      return;
+    }
+    var ol = document.createElement("ol");
+    rows.forEach(function (r) {
+      var li = document.createElement("li");
+      var a = document.createElement("span"); a.className = "pb-rank"; a.textContent = r.rank + ".";
+      var b = document.createElement("span"); b.className = "pb-name"; b.textContent = r.name;
+      var c = document.createElement("span"); c.className = "pb-score"; c.textContent = r.score;
+      li.appendChild(a); li.appendChild(b); li.appendChild(c);
+      ol.appendChild(li);
+    });
+    board.appendChild(ol);
+  }
+
+  function loadBoard() {
+    fetch(URL_BASE + "/board?r=" + encodeURIComponent(ROOM) + "&k=" + encodeURIComponent(key) + "&n=10", { cache: "no-store" })
+      .then(function (r) { return r.json(); })
+      .then(drawBoard)
+      .catch(function () { drawBoard(null); });
+  }
+
+  function toggleBoard() {
+    if (board) {
+      board.remove(); board = null;
+      if (boardTimer) { clearInterval(boardTimer); boardTimer = null; }
+      return;
+    }
+    board = document.createElement("div");
+    board.className = "poll-board";
+    board.onclick = toggleBoard;
+    document.body.appendChild(board);
+    loadBoard();
+    boardTimer = setInterval(loadBoard, 3000);
+  }
+
+  // --- slide wiring --------------------------------------------------------
+
+  function leave() {
+    if (timer) { clearInterval(timer); timer = null; }
+    if (current) clearBars(current);
+    if (badge) { badge.remove(); badge = null; }
+    var was = current;
+    current = null;
+    shown = false;
+    if (was) post("/close", { r: ROOM, k: key }).catch(function () {});
+  }
+
+  function enter(sec) {
+    current = sec;
+    shown = false;
+    ensureBadge().textContent = "opening…";
+    post("/open", {
+      r: ROOM, k: key, q: sec.dataset.poll, opts: letters(sec),
+      answer: sec.dataset.pollAnswer || null,
+    })
+      .then(function (st) {
+        if (current !== sec) return;
+        if (st.error) { badge.textContent = st.error; badge.classList.add("off"); return; }
+        paint(sec, st);
+        timer = setInterval(tick, 2500);
+      })
+      .catch(function () { if (badge) { badge.textContent = "no connection"; badge.classList.add("off"); } });
+  }
+
+  function onSlide(sec) {
+    if (current === sec) return;
+    if (current) leave();
+    if (sec && sec.dataset && sec.dataset.poll && letters(sec).length) enter(sec);
+  }
+
+  function start() {
+    onSlide(Reveal.getCurrentSlide());
+    Reveal.on("slidechanged", function (e) { onSlide(e.currentSlide); });
+    if (Reveal.addKeyBinding) {
+      Reveal.addKeyBinding({ keyCode: 86, key: "V", description: "Show or hide the vote tally" }, toggle);
+      Reveal.addKeyBinding({ keyCode: 76, key: "L", description: "Show or hide the leaderboard" }, toggleBoard);
+    } else {
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "v") toggle();
+        if (e.key === "l") toggleBoard();
+      });
+    }
+    window.addEventListener("beforeunload", function () {
+      if (current) navigator.sendBeacon(URL_BASE + "/close", new Blob([JSON.stringify({ r: ROOM, k: key })], { type: "application/json" }));
+    });
+  }
+
+  (function wait() {
+    if (window.Reveal && Reveal.isReady && Reveal.isReady()) return start();
+    if (window.Reveal && Reveal.on) return Reveal.on("ready", start);
+    setTimeout(wait, 150);
+  })();
+})();
+</script>

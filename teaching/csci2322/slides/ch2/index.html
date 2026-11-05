@@ -197,7 +197,7 @@ Zechun (Jacob) Cao
 </div>
 
 </section>
-<section id="warm-up-the-roster" class="slide level2">
+<section id="warm-up-the-roster" class="slide level2" data-poll="ch2-roster">
 <h2>Warm-Up: The Roster</h2>
 <blockquote>
 <p><em>“The team is Ana, Ben, and Cleo.”</em></p>
@@ -217,7 +217,7 @@ Zechun (Jacob) Cao
 </div>
 </div></div>
 </section>
-<section id="warm-up-the-empty-folder" class="slide level2">
+<section id="warm-up-the-empty-folder" class="slide level2" data-poll="ch2-empty-folder">
 <h2>Warm-Up: The Empty Folder</h2>
 <p>On your desktop sits an empty folder. Beside it sits a folder whose only contents are that empty folder.</p>
 <p><span class="vote-prompt">Vote — do those two folders hold the same thing?</span></p>
@@ -234,7 +234,7 @@ Zechun (Jacob) Cao
 </div>
 </div></div>
 </section>
-<section id="warm-up-the-playlist" class="slide level2">
+<section id="warm-up-the-playlist" class="slide level2" data-poll="ch2-playlist">
 <h2>Warm-Up: The Playlist</h2>
 <p>Your first playlist holds three songs. Your second playlist holds those same three songs, and it also holds the first playlist.</p>
 <p><span class="vote-prompt">Vote — how many entries does the second playlist have?</span></p>
@@ -251,8 +251,8 @@ Zechun (Jacob) Cao
 </div>
 </div></div>
 </section>
-<section id="warm-up-the-catch" class="slide level2">
-<h2>Warm-Up: The Catch</h2>
+<section id="warm-up-one-member" class="slide level2">
+<h2>Warm-Up: One Member</h2>
 <p>All three questions turn on the same thing: what counts as one member.</p>
 <table class="caption-top">
 <colgroup>
@@ -318,10 +318,10 @@ Zechun (Jacob) Cao
 <p><strong><span class="ex-inline">Must Know</span> — we do it in class; expect it on the exam.</strong> The definition, the law, or the worked problem a question is built from. Drill these first.</p>
 </div>
 <div class="fragment">
-<p><strong>Unmarked — we do it in class, and the exam can still ask about it.</strong> No mark does not mean off the exam. Understand it; just drill the marked slides first.</p>
+<p><strong>Unmarked — we do it in class, and the exam can still ask about it.</strong> Understand it; just drill the marked slides first.</p>
 </div>
 <div class="fragment">
-<p>A topic that takes several slides carries the mark on every one of them. A run of marked slides is one thing to learn, not five.</p>
+<p>A topic that takes several slides carries the mark on every one of them.</p>
 </div>
 </section>
 <section id="section-2.1" class="slide level2 center section-divider">
@@ -482,13 +482,13 @@ Zechun (Jacob) Cao
 </section>
 <section id="set-builder-notation-must-know-1" class="slide level2 long-title">
 <h2>Set-Builder Notation <span class="ex">Must Know</span></h2>
-<p>Reading the notation backwards is a separate skill: given the roster, find a description that produces exactly it.</p>
+<p>Given the roster, find a description that produces exactly it.</p>
 <p><strong><em>Example:</em></strong> Describe <span class="math inline">\(\{0, 3, 6, 9, 12\}\)</span> in set-builder notation.</p>
 <div class="fragment">
 <p><strong><em>Solution:</em></strong> <span class="math inline">\(\{3n \mid n = 0, 1, 2, 3, 4\}\)</span>. Every member is a multiple of <span class="math inline">\(3\)</span>, so the shape is <span class="math inline">\(3n\)</span>; the range of <span class="math inline">\(n\)</span> has to start at <span class="math inline">\(0\)</span> to give <span class="math inline">\(0\)</span> and stop at <span class="math inline">\(4\)</span> to give <span class="math inline">\(12\)</span>.</p>
 </div>
 </section>
-<section id="name-the-set-must-know" class="slide level2">
+<section id="name-the-set-must-know" class="slide level2" data-poll="ch2-name-the-set">
 <h2>Name the Set <span class="ex">Must Know</span></h2>
 <p><span class="vote-prompt">Vote — which one describes <span class="math inline">\(\{5, 10, 15, 20\}\)</span>?</span></p>
 <div class="columns vote-row">
@@ -546,7 +546,7 @@ Zechun (Jacob) Cao
 <p><strong><em>Example:</em></strong> The truth set of <span class="math inline">\(P(x)\)</span>: “<span class="math inline">\(|x| = 1\)</span>” over the integers is <span class="math inline">\(\{-1, 1\}\)</span>.</p>
 </div>
 <div class="fragment">
-<p>The domain matters as much as the predicate: change <span class="math inline">\(D\)</span> and the same predicate gives a different set.</p>
+<p>Change <span class="math inline">\(D\)</span> and the same predicate gives a different set.</p>
 </div>
 </section>
 <section id="truth-sets-must-know-1" class="slide level2">
@@ -717,7 +717,7 @@ Zechun (Jacob) Cao
   </g>
 </svg>
 <div class="fragment" data-fragment-index="2">
-<p>The object <span class="math inline">\(a\)</span> and the set <span class="math inline">\(\{a\}\)</span> are different elements of <span class="math inline">\(A\)</span>.</p>
+<p>Writing <span class="math inline">\(a\)</span> for <span class="math inline">\(\{a\}\)</span> would make <span class="math inline">\(A\)</span> a one-element set.</p>
 </div>
 </section>
 <section id="naive-set-theory" class="slide level2">
@@ -727,7 +727,7 @@ Zechun (Jacob) Cao
 <p>In 1902 Bertrand Russell asked about the collection of all sets that are not members of themselves. If that collection is a member of itself, its own property says it is not; if it is not, it qualifies, so it is.</p>
 </div>
 <div class="fragment">
-<p>Axiomatic set theory rules such collections out. Every set in this course is safe under Cantor’s original version, called <strong>naive set theory</strong>, and that is the version we use.</p>
+<p>Axiomatic set theory rules such collections out. Every set in this course is safe under Cantor’s original version, called <strong>naive set theory</strong>.</p>
 </div>
 </section>
 <section id="set-equality" class="slide level2">
@@ -738,7 +738,7 @@ Zechun (Jacob) Cao
 <p><span class="math display">\[\{1, 3, 5\} = \{3, 5, 1\}
 \qquad
 \{1, 5, 5, 5, 3, 3, 1\} = \{1, 3, 5\}\]</span></p>
-<p>Both hold: the two rosters on each line have the same elements.</p>
+<p>Order and repetition do not change the elements.</p>
 </div>
 </section>
 <section id="subsets" class="slide level2">
@@ -756,7 +756,7 @@ Zechun (Jacob) Cao
 <p>Now grow the circle for <span class="math inline">\(A\)</span> onto the circle for <span class="math inline">\(B\)</span>.</p>
 </div>
 <div class="fragment" data-fragment-index="3">
-<p>The definition still holds, so every set is a subset of itself.</p>
+<p>The definition still holds when <span class="math inline">\(A = B\)</span>.</p>
 </div>
 <svg class="diagram fig-sm" viewbox="0 0 560 330" role="img" aria-labelledby="sub-t">
   <title id="sub-t">A drawn inside B, then grown until its circle is the circle for B</title>
@@ -799,13 +799,10 @@ Zechun (Jacob) Cao
 <h2>Showing a Subset Claim</h2>
 <p><strong><em>To show <span class="math inline">\(A \subseteq B\)</span>:</em></strong> take an arbitrary <span class="math inline">\(x \in A\)</span> and derive <span class="math inline">\(x \in B\)</span>.</p>
 <p><strong><em>To show <span class="math inline">\(A \nsubseteq B\)</span>:</em></strong> produce one <span class="math inline">\(x\)</span> with <span class="math inline">\(x \in A\)</span> and <span class="math inline">\(x \notin B\)</span>. That <span class="math inline">\(x\)</span> is a counterexample to <span class="math inline">\(x \in A \rightarrow x \in B\)</span>.</p>
-<div class="fragment">
-<p>The two tasks are not symmetric. Showing <span class="math inline">\(A \subseteq B\)</span> takes an argument that covers every <span class="math inline">\(x\)</span>; showing <span class="math inline">\(A \nsubseteq B\)</span> takes one <span class="math inline">\(x\)</span>.</p>
-</div>
 </section>
 <section id="showing-a-subset-claim-1" class="slide level2">
 <h2>Showing a Subset Claim</h2>
-<p>The computer science majors at this school are a subset of the students at this school: being a CS major here means being a student here.</p>
+<p>The computer science majors at this school are a subset of the students at this school.</p>
 <div class="fragment">
 <p>The integers whose squares are below <span class="math inline">\(100\)</span> are not a subset of the nonnegative integers. Take <span class="math inline">\(x = -4\)</span>: its square is <span class="math inline">\(16\)</span>, and <span class="math inline">\(-4\)</span> is not nonnegative.</p>
 </div>
@@ -853,7 +850,7 @@ Zechun (Jacob) Cao
 </ol>
 </div>
 </section>
-<section id="chains-of-containment-must-know-1" class="slide level2 long-title">
+<section id="chains-of-containment-must-know-1" class="slide level2 long-title" data-poll="ch2-chains">
 <h2>Chains of Containment <span class="ex">Must Know</span></h2>
 <p><span class="vote-prompt">Vote — if <span class="math inline">\(A \in B\)</span> and <span class="math inline">\(B \subseteq C\)</span>, does <span class="math inline">\(A \in C\)</span> follow?</span></p>
 <div class="columns">
@@ -869,10 +866,10 @@ Zechun (Jacob) Cao
 </div>
 </div></div>
 <div class="fragment answer">
-<p><strong>A.</strong> <span class="math inline">\(A \in B\)</span> makes <span class="math inline">\(A\)</span> one of the elements of <span class="math inline">\(B\)</span>, and <span class="math inline">\(B \subseteq C\)</span> sends every element of <span class="math inline">\(B\)</span> into <span class="math inline">\(C\)</span>. So <span class="math inline">\(A \in C\)</span>.</p>
+<p><strong>A.</strong> <span class="math inline">\(A\)</span> is one of the elements of <span class="math inline">\(B\)</span>, and every element of <span class="math inline">\(B\)</span> is an element of <span class="math inline">\(C\)</span>. So <span class="math inline">\(A \in C\)</span>.</p>
 </div>
 <div class="fragment">
-<p>Swapping one symbol breaks it: <span class="math inline">\(A \subseteq B\)</span> and <span class="math inline">\(B \in C\)</span> do not give <span class="math inline">\(A \in C\)</span>. Take <span class="math inline">\(A = \{1\}\)</span>, <span class="math inline">\(B = \{1, 2\}\)</span>, <span class="math inline">\(C = \{\{1, 2\}\}\)</span>.</p>
+<p><span class="math inline">\(A \subseteq B\)</span> and <span class="math inline">\(B \in C\)</span> do not give <span class="math inline">\(A \in C\)</span>. Take <span class="math inline">\(A = \{1\}\)</span>, <span class="math inline">\(B = \{1, 2\}\)</span>, <span class="math inline">\(C = \{\{1, 2\}\}\)</span>.</p>
 </div>
 </section>
 <section id="equality-by-double-inclusion" class="slide level2">
@@ -892,7 +889,7 @@ Zechun (Jacob) Cao
 <p><strong><em>Definition:</em></strong> If <span class="math inline">\(A \subseteq B\)</span> and <span class="math inline">\(A \neq B\)</span>, then <span class="math inline">\(A\)</span> is a <strong>proper subset</strong> of <span class="math inline">\(B\)</span>, written <span class="math inline">\(A \subset B\)</span>.</p>
 <p><span class="math display">\[A \subset B \quad \text{means} \quad \forall x\,(x \in A \rightarrow x \in B) \;\wedge\; \exists x\,(x \in B \wedge x \notin A)\]</span></p>
 <div class="fragment">
-<p>The second half is what “proper” adds: <span class="math inline">\(B\)</span> has to hold at least one element that <span class="math inline">\(A\)</span> misses.</p>
+<p>The second conjunct is what “proper” adds: <span class="math inline">\(B\)</span> has at least one element that is not in <span class="math inline">\(A\)</span>.</p>
 </div>
 <div class="fragment">
 <p>So <span class="math inline">\(\{1, 3\} \subset \{1, 2, 3\}\)</span>, while <span class="math inline">\(\{1, 2, 3\} \subseteq \{1, 2, 3\}\)</span> is true and <span class="math inline">\(\{1, 2, 3\} \subset \{1, 2, 3\}\)</span> is false.</p>
@@ -1006,7 +1003,7 @@ Zechun (Jacob) Cao
 <p><strong><em>Example:</em></strong> What is <span class="math inline">\(|\mathcal{P}(\{a, b, \{a, b\}\})|\)</span>?</p>
 </div>
 <div class="fragment">
-<p><strong><em>Solution:</em></strong> <span class="math inline">\(8\)</span>. The set has three elements — <span class="math inline">\(a\)</span>, <span class="math inline">\(b\)</span>, and the set <span class="math inline">\(\{a, b\}\)</span> — so <span class="math inline">\(n = 3\)</span> and <span class="math inline">\(2^3 = 8\)</span>. The inner braces make the third element look like two, but it counts once.</p>
+<p><strong><em>Solution:</em></strong> <span class="math inline">\(8\)</span>. The set has three elements — <span class="math inline">\(a\)</span>, <span class="math inline">\(b\)</span>, and the set <span class="math inline">\(\{a, b\}\)</span> — so <span class="math inline">\(n = 3\)</span> and <span class="math inline">\(2^3 = 8\)</span>. Counting the inner set as two elements gives <span class="math inline">\(n = 4\)</span> and the wrong answer <span class="math inline">\(16\)</span>.</p>
 </div>
 </section>
 <section id="power-sets-must-know-4" class="slide level2">
@@ -1100,10 +1097,10 @@ Zechun (Jacob) Cao
 <p>The grid has one cell per pair, so</p>
 <p><span class="math display">\[|A \times B| = |A| \cdot |B|.\]</span></p>
 <div class="fragment">
-<p><strong><em>Example:</em></strong> For <span class="math inline">\(A = \{a, b\}\)</span> and <span class="math inline">\(B = \{1, 2, 3\}\)</span>, <span class="math inline">\(|A \times B| = 2 \cdot 3 = 6\)</span>, which is the six cells of the grid.</p>
+<p><strong><em>Example:</em></strong> For <span class="math inline">\(A = \{a, b\}\)</span> and <span class="math inline">\(B = \{1, 2, 3\}\)</span>, <span class="math inline">\(|A \times B| = 2 \cdot 3 = 6\)</span>.</p>
 </div>
 <div class="fragment">
-<p>The rule holds whatever the elements are. For <span class="math inline">\(A\)</span> the <span class="math inline">\(50\)</span> states and <span class="math inline">\(B\)</span> the <span class="math inline">\(12\)</span> months, <span class="math inline">\(|A \times B| = 600\)</span>.</p>
+<p>For <span class="math inline">\(A\)</span> the <span class="math inline">\(50\)</span> states and <span class="math inline">\(B\)</span> the <span class="math inline">\(12\)</span> months, <span class="math inline">\(|A \times B| = 600\)</span>.</p>
 </div>
 </section>
 <section id="order-of-the-factors" class="slide level2">
@@ -1227,7 +1224,7 @@ Zechun (Jacob) Cao
 <p>The enrollments that actually exist are a subset of <span class="math inline">\(A \times B\)</span>, so they are a relation from <span class="math inline">\(A\)</span> to <span class="math inline">\(B\)</span>.</p>
 </div>
 <div class="fragment">
-<p>That subset is what a two-column database table stores: one row per pair that holds, drawn from all the pairs the product allows.</p>
+<p>That subset is what a two-column database table stores: one row per pair that holds.</p>
 </div>
 </section>
 <section id="your-turn" class="slide level2">
@@ -1377,7 +1374,7 @@ Zechun (Jacob) Cao
 <p>When <span class="math inline">\(A \cap B = \emptyset\)</span>, the sets are <strong>disjoint</strong> and their circles do not overlap.</p>
 <p><strong><em>Example:</em></strong> <span class="math inline">\(\{1, 2, 3\} \cap \{4, 5, 6\} = \emptyset\)</span>, so those two sets are disjoint.</p>
 <div class="fragment">
-<p>The empty intersection is still a set — the one with nothing in it — so <span class="math inline">\(A \cap B\)</span> is defined for every pair of sets, disjoint or not.</p>
+<p>The empty intersection is still a set, so <span class="math inline">\(A \cap B\)</span> is defined for every pair of sets, disjoint or not.</p>
 </div>
 </section>
 <section id="difference-must-know" class="slide level2">
@@ -1412,7 +1409,7 @@ Zechun (Jacob) Cao
 <p><strong><em>Solution:</em></strong> <span class="math inline">\(\{1, 2, 4, 5\}\)</span>. Start from <span class="math inline">\(A\)</span> and drop whatever <span class="math inline">\(B\)</span> also holds, which here is only <span class="math inline">\(3\)</span>.</p>
 </div>
 <div class="fragment">
-<p>The elements <span class="math inline">\(0\)</span> and <span class="math inline">\(6\)</span> never enter the answer. They belong to <span class="math inline">\(B\)</span> and not to <span class="math inline">\(A\)</span>, so they are in <span class="math inline">\(B - A\)</span> instead, and <span class="math inline">\(B - A = \{0, 6\}\)</span>.</p>
+<p><span class="math inline">\(0\)</span> and <span class="math inline">\(6\)</span> belong to <span class="math inline">\(B\)</span> and not to <span class="math inline">\(A\)</span>, so they land in <span class="math inline">\(B - A = \{0, 6\}\)</span>.</p>
 </div>
 </section>
 <section id="complement" class="slide level2">
@@ -1445,10 +1442,10 @@ Zechun (Jacob) Cao
 <p><strong><em>Solution:</em></strong> <span class="math inline">\(\{x \in \mathbb{Z}^+ \mid x \text{ is even and } x &lt; 100\}\)</span>.</p>
 </div>
 <div class="fragment">
-<p>The answer depends on <span class="math inline">\(U\)</span>. With <span class="math inline">\(U\)</span> as every positive integer, the complement is all the even positive integers; with <span class="math inline">\(U\)</span> as the integers, it also picks up <span class="math inline">\(0\)</span> and the negatives.</p>
+<p>The answer depends on <span class="math inline">\(U\)</span>. With <span class="math inline">\(U\)</span> as every positive integer, the complement is all the even positive integers; with <span class="math inline">\(U\)</span> as the integers, it also contains <span class="math inline">\(0\)</span> and the negative integers.</p>
 </div>
 </section>
-<section id="which-region" class="slide level2">
+<section id="which-region" class="slide level2" data-poll="ch2-which-region">
 <h2>Which Region?</h2>
 <svg class="diagram" viewbox="0 0 920 210" role="img" aria-labelledby="which-t">
   <title id="which-t">The part of the universal set outside both circles is shaded</title>
@@ -1486,7 +1483,7 @@ Zechun (Jacob) Cao
 <section id="which-region-1" class="slide level2">
 <h2>Which Region?</h2>
 <div class="fragment answer">
-<p><strong>B.</strong> A point in the shaded part is outside <span class="math inline">\(A\)</span> and outside <span class="math inline">\(B\)</span>, so it fails to be in either one, which is what <span class="math inline">\(\overline{A \cup B}\)</span> says.</p>
+<p><strong>B.</strong> A point in the shaded part is outside <span class="math inline">\(A\)</span> and outside <span class="math inline">\(B\)</span>, which is what <span class="math inline">\(\overline{A \cup B}\)</span> says.</p>
 </div>
 <div class="fragment">
 <p><span class="math inline">\(\overline{A \cap B}\)</span> would also shade both crescents, because a point in <span class="math inline">\(A\)</span> alone is not in <span class="math inline">\(A \cap B\)</span>. The only region it leaves white is the overlap.</p>
@@ -1540,7 +1537,7 @@ Zechun (Jacob) Cao
 <p><span class="math display">\[|\overline{A \cup B}| = 60 - 48 = 12.\]</span></p>
 </div>
 <div class="fragment">
-<p>Finish by subtracting from <span class="math inline">\(|U|\)</span>. The question asks for the complement, and <span class="math inline">\(48\)</span> is the union.</p>
+<p>Stopping at <span class="math inline">\(48\)</span> answers a different question: that is the union, not its complement.</p>
 </div>
 </section>
 <section id="your-turn-must-know" class="slide level2">
@@ -1788,8 +1785,8 @@ Zechun (Jacob) Cao
 </div>
 <p>Both inclusions hold, so the two sets are equal.</p>
 </section>
-<section id="de-morgan-seen" class="slide level2">
-<h2>De Morgan, Seen</h2>
+<section id="de-morgan-on-a-venn-diagram" class="slide level2">
+<h2>De Morgan on a Venn Diagram</h2>
 <p>The two sides name the same region of the diagram.</p>
 <div class="columns">
 <div class="column" style="width:50%;">
@@ -1889,7 +1886,7 @@ Zechun (Jacob) Cao
 <p><strong>Case <span class="math inline">\(x \in A \cap C\)</span>.</strong> So <span class="math inline">\(x \in A\)</span> and <span class="math inline">\(x \in C\)</span>. From <span class="math inline">\(x \in C\)</span> comes <span class="math inline">\(x \in B \cup C\)</span>, hence <span class="math inline">\(x \in A \cap (B \cup C)\)</span>.</p>
 </div>
 <div class="fragment">
-<p>Both inclusions now hold, so the two sets are equal. Name the case split and the definition used at each line.</p>
+<p>Both inclusions now hold, so the two sets are equal.</p>
 </div>
 </section>
 <section id="membership-tables" class="slide level2">
@@ -2158,7 +2155,7 @@ Zechun (Jacob) Cao
 <li>Floor, ceiling, and factorial</li>
 </ul>
 </section>
-<section id="warm-up-is-it-a-function" class="slide level2">
+<section id="warm-up-is-it-a-function" class="slide level2" data-poll="ch2-function-warmup">
 <h2>Warm-Up: Is It a Function?</h2>
 <p>Each rule below is meant to send a student to a number.</p>
 <p><span class="vote-prompt">Vote — which one fails to be a function?</span></p>
@@ -2175,7 +2172,7 @@ Zechun (Jacob) Cao
 </div>
 </div></div>
 <div class="fragment answer">
-<p><strong>B.</strong> A student enrolled in three courses has three grades, and a rule that offers three answers for one input is not a function.</p>
+<p><strong>B.</strong> A student enrolled in three courses has three grades, and a rule with three answers for one input is not a function.</p>
 </div>
 </section>
 <section id="functions" class="slide level2">
@@ -2194,7 +2191,7 @@ Zechun (Jacob) Cao
 <p><span class="math display">\[\forall x\,\big[x \in A \rightarrow \exists y\,(y \in B \wedge (x, y) \in f)\big]\]</span></p>
 <p><span class="math display">\[\forall x, y_1, y_2\,\big[\big((x, y_1) \in f \wedge (x, y_2) \in f\big) \rightarrow y_1 = y_2\big]\]</span></p>
 <div class="fragment">
-<p>The first line is “every input gets an output”. The second is “no input gets two”. Back on the grid from Section 2.1, a function keeps exactly one cell in each row.</p>
+<p>Back on the grid from Section 2.1, a function keeps exactly one cell in each row.</p>
 </div>
 </section>
 <section id="domain-and-codomain" class="slide level2">
@@ -2240,7 +2237,7 @@ Zechun (Jacob) Cao
 <li>The <strong>range</strong>, written <span class="math inline">\(f(A)\)</span>, is the set of images of all the elements of <span class="math inline">\(A\)</span>.</li>
 </ul>
 <div class="fragment">
-<p>The codomain is declared; the range is whatever the arrows actually reach. The range is always a subset of the codomain, and it can be smaller.</p>
+<p>The range is always a subset of the codomain, and it can be smaller.</p>
 </div>
 </section>
 <section id="domain-and-codomain-2" class="slide level2">
@@ -2302,7 +2299,7 @@ f(\{c, d\}) = \{z\}\]</span></p>
 <h2>Equal Functions</h2>
 <p>Two functions are equal when they have the same domain, the same codomain, and the same image for every element of the domain.</p>
 <div class="fragment">
-<p>So <span class="math inline">\(f : \mathbb{Z} \rightarrow \mathbb{Z}\)</span> with <span class="math inline">\(f(x) = x^2\)</span> and <span class="math inline">\(g : \mathbb{Z} \rightarrow \mathbb{N}\)</span> with <span class="math inline">\(g(x) = x^2\)</span> are different functions. The rule is the same; the declared codomain is not.</p>
+<p>So <span class="math inline">\(f : \mathbb{Z} \rightarrow \mathbb{Z}\)</span> with <span class="math inline">\(f(x) = x^2\)</span> and <span class="math inline">\(g : \mathbb{Z} \rightarrow \mathbb{N}\)</span> with <span class="math inline">\(g(x) = x^2\)</span> are different functions.</p>
 </div>
 </section>
 <section id="representing-functions" class="slide level2">
@@ -2314,10 +2311,10 @@ f(\{c, d\}) = \{z\}\]</span></p>
 <li>a program, such as one that returns the <span class="math inline">\(n\)</span>th Fibonacci number.</li>
 </ul>
 <div class="fragment">
-<p>Whatever the presentation, the test is the same: one output for every input, and never two.</p>
+<p>A program counts as a function only when it returns a value for every input in the domain.</p>
 </div>
 </section>
-<section id="is-it-a-function-must-know" class="slide level2">
+<section id="is-it-a-function-must-know" class="slide level2" data-poll="ch2-is-it-a-function">
 <h2>Is It a Function? <span class="ex">Must Know</span></h2>
 <p><span class="vote-prompt">Vote — which of these is a function?</span></p>
 <div class="columns vote-row">
@@ -2336,7 +2333,7 @@ f(\{c, d\}) = \{z\}\]</span></p>
 <p><strong>B.</strong> Counting the <span class="math inline">\(1\)</span> bits of a string gives one integer, and every bit string has such a count.</p>
 </div>
 <div class="fragment">
-<p><strong>A</strong> fails twice over. For <span class="math inline">\(n = 4\)</span> it offers both <span class="math inline">\(2\)</span> and <span class="math inline">\(-2\)</span>, and for <span class="math inline">\(n = -1\)</span> it offers nothing at all.</p>
+<p>At <span class="math inline">\(n = 4\)</span>, <strong>A</strong> gives both <span class="math inline">\(2\)</span> and <span class="math inline">\(-2\)</span>; at <span class="math inline">\(n = -1\)</span> it gives nothing.</p>
 </div>
 </section>
 <section id="injections" class="slide level2">
@@ -2403,7 +2400,7 @@ f(\{c, d\}) = \{z\}\]</span></p>
     <text x="430" y="222" text-anchor="middle" class="lbl-red grow" font-size="26">two preimages for a</text>
   </g>
 </svg>
-<p><span class="math inline">\(f(1) = f(2) = a\)</span> while <span class="math inline">\(1 \neq 2\)</span>, so the definition fails.</p>
+<p><span class="math inline">\(f(1) = f(2) = a\)</span> while <span class="math inline">\(1 \neq 2\)</span>.</p>
 </section>
 <section id="surjections" class="slide level2">
 <h2>Surjections</h2>
@@ -2522,7 +2519,7 @@ f(\{c, d\}) = \{z\}\]</span></p>
 </tbody>
 </table>
 <div class="fragment">
-<p>The positive claims need an argument about every element. The negative claims need one counterexample, so look for a counterexample first.</p>
+<p>Look for a counterexample first.</p>
 </div>
 </section>
 <section id="showing-one-to-one-or-onto-2" class="slide level2">
@@ -2545,7 +2542,7 @@ f(\{c, d\}) = \{z\}\]</span></p>
 <p>It is not one-to-one either: <span class="math inline">\(f(2) = f(-2) = 4\)</span> while <span class="math inline">\(2 \neq -2\)</span>.</p>
 </div>
 </section>
-<section id="not-one-to-one-must-know" class="slide level2">
+<section id="not-one-to-one-must-know" class="slide level2" data-poll="ch2-not-one-to-one">
 <h2>Not One-to-One <span class="ex">Must Know</span></h2>
 <p><span class="vote-prompt">Vote — which <span class="math inline">\(f : \mathbb{R} \rightarrow \mathbb{R}\)</span> is not one-to-one?</span></p>
 <div class="columns vote-row">
@@ -2614,10 +2611,10 @@ f(\{c, d\}) = \{z\}\]</span></p>
 <h2>Inverse Functions</h2>
 <p>The reversed arrows form a function only when <span class="math inline">\(f\)</span> is a bijection.</p>
 <div class="fragment">
-<p>If <span class="math inline">\(f\)</span> is not onto, some <span class="math inline">\(b \in B\)</span> receives no arrow, so reversing leaves <span class="math inline">\(f^{-1}(b)\)</span> undefined. Not every input would have an output.</p>
+<p>If <span class="math inline">\(f\)</span> is not onto, some <span class="math inline">\(b \in B\)</span> receives no arrow, so reversing leaves <span class="math inline">\(f^{-1}(b)\)</span> undefined.</p>
 </div>
 <div class="fragment">
-<p>If <span class="math inline">\(f\)</span> is not one-to-one, some <span class="math inline">\(b\)</span> receives two arrows, so reversing gives <span class="math inline">\(f^{-1}(b)\)</span> two values. One input would have two outputs.</p>
+<p>If <span class="math inline">\(f\)</span> is not one-to-one, some <span class="math inline">\(b\)</span> receives two arrows, so reversing gives <span class="math inline">\(f^{-1}(b)\)</span> two values.</p>
 </div>
 <div class="fragment">
 <p>A function with an inverse is called <strong>invertible</strong>.</p>
@@ -2633,7 +2630,7 @@ f(\{c, d\}) = \{z\}\]</span></p>
 <p><strong><em>Example:</em></strong> Let <span class="math inline">\(f : \mathbb{Z} \rightarrow \mathbb{Z}\)</span> with <span class="math inline">\(f(x) = x + 1\)</span>.</p>
 </div>
 <div class="fragment">
-<p><strong><em>Solution:</em></strong> Invertible, with <span class="math inline">\(f^{-1}(y) = y - 1\)</span>. Adding one is undone by subtracting one.</p>
+<p><strong><em>Solution:</em></strong> Invertible, with <span class="math inline">\(f^{-1}(y) = y - 1\)</span>.</p>
 </div>
 </section>
 <section id="inverse-functions-3" class="slide level2">
@@ -2660,7 +2657,7 @@ f^{-1}(x) = \frac{x + 3}{5}.\]</span></p>
 <p>Check it: <span class="math inline">\(f^{-1}(7) = 2\)</span> and <span class="math inline">\(f(2) = 7\)</span>.</p>
 </div>
 </section>
-<section id="finding-an-inverse-must-know-1" class="slide level2">
+<section id="finding-an-inverse-must-know-1" class="slide level2" data-poll="ch2-finding-an-inverse">
 <h2>Finding an Inverse <span class="ex">Must Know</span></h2>
 <p>The same two steps on <span class="math inline">\(f(x) = ax + b\)</span> with <span class="math inline">\(a \neq 0\)</span> give</p>
 <p><span class="math display">\[f^{-1}(x) = \frac{x - b}{a}.\]</span></p>
@@ -2680,7 +2677,7 @@ f^{-1}(x) = \frac{x + 3}{5}.\]</span></p>
 </div></div>
 </div>
 <div class="fragment answer">
-<p><strong>B.</strong> <span class="math inline">\(f(1) = f(-1) = 4\)</span>, so it is not one-to-one. The squared term is what breaks it, and changing the sign or the constant does not help.</p>
+<p><strong>B.</strong> <span class="math inline">\(f(1) = f(-1) = 4\)</span>. Any <span class="math inline">\(ax^2 + b\)</span> takes the same value at <span class="math inline">\(x\)</span> and <span class="math inline">\(-x\)</span>.</p>
 </div>
 </section>
 <section id="floor-and-ceiling-must-know" class="slide level2">
@@ -2720,7 +2717,7 @@ f^{-1}(x) = \frac{x + 3}{5}.\]</span></p>
 </section>
 <section id="floor-and-ceiling-must-know-1" class="slide level2">
 <h2>Floor and Ceiling <span class="ex">Must Know</span></h2>
-<p>On a negative number the floor lands further from zero and the ceiling lands closer to it. The direction along the number line has not changed.</p>
+<p>On a negative number the floor is further from zero and the ceiling is closer to it.</p>
 <svg class="diagram" viewbox="0 0 900 200" role="img" aria-labelledby="fc2-t">
   <title id="fc2-t">A number line showing negative 3.5 moving down to negative 4 and up to negative 3</title>
   <defs>
@@ -2792,7 +2789,7 @@ f^{-1}(x) = \frac{x + 3}{5}.\]</span></p>
 </tbody>
 </table>
 </section>
-<section id="floor-and-ceiling-must-know-3" class="slide level2">
+<section id="floor-and-ceiling-must-know-3" class="slide level2" data-poll="ch2-floor-ceiling">
 <h2>Floor and Ceiling <span class="ex">Must Know</span></h2>
 <p><span class="vote-prompt">Vote — what is <span class="math inline">\(\lfloor -7/2 \rfloor + \lceil 5/3 \rceil\)</span>?</span></p>
 <div class="columns vote-row">
@@ -3093,6 +3090,259 @@ f^{-1}(x) = \frac{x + 3}{5}.\]</span></p>
           RevealZoom
         ]
       });
+    </script>
+    <!-- Live voting for a Quarto RevealJS deck. Added with
+           include-after-body: poll.html
+         and installed by poll/install.sh, which fills in the two constants below.
+
+         The script does nothing at all unless the deck URL carries ?k=<key>, so
+         the copy on the website never calls the worker. Open the deck as
+
+           index.html?k=YOUR_KEY
+
+         in class. A slide votes when its heading carries data-poll="<id>":
+
+           ## Warm-Up: The Roster {data-poll="ch2-roster"}
+
+         Adding data-poll-answer makes it a scored question -- phones ask for a
+         nickname once, and the leaderboard ranks correct answers:
+
+           ## Name the Set [Must Know]{.ex} {data-poll="ch2-name-the-set" data-poll-answer="C"}
+
+         The options come from the .vote boxes already on the slide.
+           v   show or hide the tally (and tell the phones the answer)
+           l   show or hide the leaderboard -->
+
+    <style>
+      .reveal .vote { position: relative; overflow: hidden; transition: opacity 300ms ease; }
+      .reveal .vote > * { position: relative; z-index: 1; }
+      .reveal .poll-fill {
+        position: absolute; left: 0; top: 0; bottom: 0; z-index: 0; width: 0;
+        background: rgba(0, 103, 145, 0.26);
+        transition: width 420ms ease;
+      }
+      .reveal .vote.poll-wrong { opacity: 0.42; }
+      .reveal .vote.poll-right { box-shadow: 0 0 0 3px #006791; }
+      .poll-badge {
+        position: fixed; top: 14px; left: 16px; z-index: 40;   /* the slide number owns the right corner */
+        white-space: pre;                                      /* keeps the gaps between the counts */
+        font: 600 17px/1 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        color: #006791; background: rgba(255, 255, 255, 0.88);
+        border: 1px solid rgba(0, 103, 145, 0.35); border-radius: 999px;
+        padding: 7px 13px; cursor: pointer; user-select: none;
+      }
+      .poll-badge.off { color: #a03030; border-color: rgba(160, 48, 48, 0.4); }
+      .poll-board {
+        position: fixed; z-index: 50; top: 50%; left: 50%; transform: translate(-50%, -50%);
+        min-width: 420px; max-width: 70vw; max-height: 80vh; overflow: auto;
+        background: #fff; border: 1px solid rgba(0, 103, 145, 0.3); border-radius: 12px;
+        box-shadow: 0 18px 50px rgba(0, 0, 0, 0.22); padding: 26px 30px;
+        font-family: var(--r-main-font, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+        color: #1a1a1a; cursor: pointer;
+      }
+      .poll-board h3 { margin: 0 0 14px; font-size: 26px; color: #006791; font-weight: 700; }
+      .poll-board ol { margin: 0; padding: 0; list-style: none; font-size: 22px; }
+      .poll-board li { display: flex; align-items: baseline; gap: 14px; padding: 7px 0; border-bottom: 1px solid #eef2f5; }
+      .poll-board li:last-child { border-bottom: 0; }
+      .poll-board .pb-rank { width: 2.1em; color: #6a7781; font-size: 0.82em; }
+      .poll-board .pb-name { flex: 1; }
+      .poll-board .pb-score { font-weight: 700; color: #006791; }
+      .poll-board .pb-empty { font-size: 19px; color: #6a7781; }
+    </style>
+
+    <script>
+    (function () {
+      var URL_BASE = "__POLL_URL__";
+      var ROOM = "__POLL_ROOM__";
+
+      var key = new URLSearchParams(location.search).get("k");
+      if (!key || URL_BASE.indexOf("__POLL") === 0) return;   // not the instructor's copy
+
+      var timer = null, boardTimer = null, current = null, shown = false, badge = null, board = null;
+
+      function post(path, data) {
+        return fetch(URL_BASE + path, {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify(data),
+        }).then(function (r) { return r.json(); });
+      }
+
+      function letterOf(v) {
+        var s = v.querySelector("strong");
+        return (s ? s.textContent : "").replace(/[^A-Za-z0-9]/g, "");
+      }
+
+      function letters(sec) {
+        var out = [];
+        sec.querySelectorAll(".vote").forEach(function (v) {
+          var t = letterOf(v);
+          if (t) out.push(t);
+        });
+        return out;
+      }
+
+      function ensureBadge() {
+        if (!badge) {
+          badge = document.createElement("div");
+          badge.className = "poll-badge";
+          badge.onclick = toggle;
+          document.body.appendChild(badge);
+        }
+        return badge;
+      }
+
+      function clearBars(sec) {
+        sec.querySelectorAll(".poll-fill").forEach(function (n) { n.remove(); });
+        sec.querySelectorAll(".vote").forEach(function (v) { v.classList.remove("poll-wrong", "poll-right"); });
+      }
+
+      function split(st) {
+        return st.opts.map(function (o) { return o + " " + (st.counts[o] || 0); }).join("   ");
+      }
+
+      function paint(sec, st) {
+        ensureBadge().textContent = shown
+          ? split(st) + "   ·   " + st.total + " votes"
+          : st.total + (st.total === 1 ? " vote" : " votes") + "   ·   press v";
+        badge.classList.remove("off");
+        clearBars(sec);
+        if (!shown) return;
+        sec.querySelectorAll(".vote").forEach(function (v) {
+          var o = letterOf(v);
+          var n = st.counts[o] || 0;
+          var pct = st.total ? Math.round((n / st.total) * 100) : 0;
+          var fill = document.createElement("div");
+          fill.className = "poll-fill";
+          v.appendChild(fill);
+          requestAnimationFrame(function () { fill.style.width = pct + "%"; });
+          if (st.answer) v.classList.add(o === st.answer ? "poll-right" : "poll-wrong");
+        });
+      }
+
+      function tick() {
+        if (!current) return;
+        var sec = current;
+        fetch(URL_BASE + "/s?r=" + encodeURIComponent(ROOM), { cache: "no-store" })
+          .then(function (r) { return r.json(); })
+          .then(function (st) { if (current === sec) paint(sec, st); })
+          .catch(function () { if (badge) { badge.textContent = "no connection"; badge.classList.add("off"); } });
+      }
+
+      function toggle() {
+        if (!current) return;
+        shown = !shown;
+        post("/reveal", { r: ROOM, k: key, on: shown }).catch(function () {});
+        tick();
+      }
+
+      // --- leaderboard ---------------------------------------------------------
+
+      function drawBoard(data) {
+        if (!board) return;
+        board.innerHTML = "";
+        var h = document.createElement("h3");
+        h.textContent = "Leaderboard";
+        board.appendChild(h);
+        var rows = (data && data.board) || [];
+        if (!rows.length) {
+          var p = document.createElement("div");
+          p.className = "pb-empty";
+          p.textContent = data ? "No scored answers yet." : "No connection.";
+          board.appendChild(p);
+          return;
+        }
+        var ol = document.createElement("ol");
+        rows.forEach(function (r) {
+          var li = document.createElement("li");
+          var a = document.createElement("span"); a.className = "pb-rank"; a.textContent = r.rank + ".";
+          var b = document.createElement("span"); b.className = "pb-name"; b.textContent = r.name;
+          var c = document.createElement("span"); c.className = "pb-score"; c.textContent = r.score;
+          li.appendChild(a); li.appendChild(b); li.appendChild(c);
+          ol.appendChild(li);
+        });
+        board.appendChild(ol);
+      }
+
+      function loadBoard() {
+        fetch(URL_BASE + "/board?r=" + encodeURIComponent(ROOM) + "&k=" + encodeURIComponent(key) + "&n=10", { cache: "no-store" })
+          .then(function (r) { return r.json(); })
+          .then(drawBoard)
+          .catch(function () { drawBoard(null); });
+      }
+
+      function toggleBoard() {
+        if (board) {
+          board.remove(); board = null;
+          if (boardTimer) { clearInterval(boardTimer); boardTimer = null; }
+          return;
+        }
+        board = document.createElement("div");
+        board.className = "poll-board";
+        board.onclick = toggleBoard;
+        document.body.appendChild(board);
+        loadBoard();
+        boardTimer = setInterval(loadBoard, 3000);
+      }
+
+      // --- slide wiring --------------------------------------------------------
+
+      function leave() {
+        if (timer) { clearInterval(timer); timer = null; }
+        if (current) clearBars(current);
+        if (badge) { badge.remove(); badge = null; }
+        var was = current;
+        current = null;
+        shown = false;
+        if (was) post("/close", { r: ROOM, k: key }).catch(function () {});
+      }
+
+      function enter(sec) {
+        current = sec;
+        shown = false;
+        ensureBadge().textContent = "opening…";
+        post("/open", {
+          r: ROOM, k: key, q: sec.dataset.poll, opts: letters(sec),
+          answer: sec.dataset.pollAnswer || null,
+        })
+          .then(function (st) {
+            if (current !== sec) return;
+            if (st.error) { badge.textContent = st.error; badge.classList.add("off"); return; }
+            paint(sec, st);
+            timer = setInterval(tick, 2500);
+          })
+          .catch(function () { if (badge) { badge.textContent = "no connection"; badge.classList.add("off"); } });
+      }
+
+      function onSlide(sec) {
+        if (current === sec) return;
+        if (current) leave();
+        if (sec && sec.dataset && sec.dataset.poll && letters(sec).length) enter(sec);
+      }
+
+      function start() {
+        onSlide(Reveal.getCurrentSlide());
+        Reveal.on("slidechanged", function (e) { onSlide(e.currentSlide); });
+        if (Reveal.addKeyBinding) {
+          Reveal.addKeyBinding({ keyCode: 86, key: "V", description: "Show or hide the vote tally" }, toggle);
+          Reveal.addKeyBinding({ keyCode: 76, key: "L", description: "Show or hide the leaderboard" }, toggleBoard);
+        } else {
+          document.addEventListener("keydown", function (e) {
+            if (e.key === "v") toggle();
+            if (e.key === "l") toggleBoard();
+          });
+        }
+        window.addEventListener("beforeunload", function () {
+          if (current) navigator.sendBeacon(URL_BASE + "/close", new Blob([JSON.stringify({ r: ROOM, k: key })], { type: "application/json" }));
+        });
+      }
+
+      (function wait() {
+        if (window.Reveal && Reveal.isReady && Reveal.isReady()) return start();
+        if (window.Reveal && Reveal.on) return Reveal.on("ready", start);
+        setTimeout(wait, 150);
+      })();
+    })();
     </script>
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
