@@ -35,7 +35,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-737662147290f6361001829e591e21bf.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-86121912844a5910e942a70f9f41eb5d.css">
   <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -687,7 +687,7 @@ Zechun (Jacob) Cao
 </section>
 <section id="sets-inside-sets" class="slide level2">
 <h2>Sets Inside Sets</h2>
-<p>An element of a set can itself be a set, and the braces are what tell you how deep each element sits.</p>
+<p>An element of a set can itself be a set. Each pair of braces encloses one set, so the nesting shows which objects are elements of which set.</p>
 <p><span class="math display">\[\{\{1, 2, 3\}, a, \{b, c\}\}
 \qquad
 \{\mathbb{N}, \mathbb{Z}, \mathbb{Q}, \mathbb{R}\}\]</span></p>
@@ -752,17 +752,34 @@ Zechun (Jacob) Cao
 <section id="subsets-1" class="slide level2">
 <h2>Subsets</h2>
 <p><span class="math inline">\(A \subseteq B\)</span> puts the circle for <span class="math inline">\(A\)</span> inside the circle for <span class="math inline">\(B\)</span>.</p>
-<svg class="diagram fig-md" viewbox="0 0 560 380" role="img" aria-labelledby="sub-t">
-  <title id="sub-t">A drawn inside B, inside the universal set</title>
-  <rect x="14" y="10" width="532" height="360" rx="10" class="univ"></rect>
-  <text x="44" y="50" class="lbl-gray" font-size="28">U</text>
-  <circle cx="280" cy="200" r="140" class="ring"></circle>
-  <text x="280" y="106" text-anchor="middle" class="lbl-blue" font-size="32">B</text>
+<div class="fragment" data-fragment-index="1">
+<p>Now grow the circle for <span class="math inline">\(A\)</span> onto the circle for <span class="math inline">\(B\)</span>.</p>
+</div>
+<div class="fragment" data-fragment-index="3">
+<p>The definition still holds, so every set is a subset of itself.</p>
+</div>
+<svg class="diagram fig-sm" viewbox="0 0 560 330" role="img" aria-labelledby="sub-t">
+  <title id="sub-t">A drawn inside B, then grown until its circle is the circle for B</title>
+  <rect x="14" y="8" width="532" height="314" rx="10" class="univ"></rect>
+  <text x="44" y="46" class="lbl-gray" font-size="28">U</text>
+  <circle cx="280" cy="165" r="140" class="ring"></circle>
+  <g class="fragment fade-out" data-fragment-index="2">
+    <text x="280" y="71" text-anchor="middle" class="lbl-blue" font-size="32">B</text>
+  </g>
   <g class="fragment" data-fragment-index="0">
-    <g class="grow">
-      <circle cx="266" cy="232" r="74" class="ring"></circle>
-      <text x="266" y="244" text-anchor="middle" class="lbl-blue" font-size="32">A</text>
+    <g class="fragment fade-out" data-fragment-index="2">
+      <g class="grow">
+        <circle cx="280" cy="165" r="74" class="ring"></circle>
+        <text x="280" y="177" text-anchor="middle" class="lbl-blue" font-size="32">A</text>
+      </g>
     </g>
+  </g>
+  <g class="fragment" data-fragment-index="2">
+    <g class="expand">
+      <g class="shade"><circle cx="280" cy="165" r="140"></circle></g>
+      <circle cx="280" cy="165" r="140" class="ring"></circle>
+    </g>
+    <text x="280" y="71" text-anchor="middle" class="lbl-blue" font-size="32">A = B</text>
   </g>
 </svg>
 </section>
@@ -798,7 +815,7 @@ Zechun (Jacob) Cao
 </section>
 <section id="elements-and-subsets-must-know" class="slide level2 long-title">
 <h2>Elements and Subsets <span class="ex">Must Know</span></h2>
-<p><span class="math inline">\(\in\)</span> and <span class="math inline">\(\subseteq\)</span> ask different questions, and the braces decide which answer you get.</p>
+<p><span class="math inline">\(\in\)</span> compares an object with a set. <span class="math inline">\(\subseteq\)</span> compares two sets.</p>
 <table class="caption-top">
 <thead>
 <tr class="header">
