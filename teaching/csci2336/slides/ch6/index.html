@@ -6,14 +6,14 @@
 <script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="index_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.10.18">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.11.9">
 
   <meta name="author" content="Zechun (Jacob) Cao">
   <title>Chapter 6 — Introducing Hashing and Implementing Dictionaries with Hashing</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="index_files/libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="index_files/libs/revealjs/dist/reveal.css">
   <style>
@@ -101,7 +101,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-66a3b8413e7bd13bdac2fb3a5182a247.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-8caad1bbd9aa463233aa28067acf64bd.css">
   <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -421,7 +421,7 @@ Zechun (Jacob) Cao
 <li><strong>Collision resolution.</strong> Algorithm and data structure to handle two keys that hash to the same array index.</li>
 </ul>
 <div class="fragment">
-<p>The first two are this part of the chapter. The third is the other three parts.</p>
+<p>The first two are this part of the chapter. The third is the rest of it.</p>
 </div>
 </section>
 <section id="classic-space-time-tradeoff" class="slide level2 long-title">
@@ -438,7 +438,7 @@ Zechun (Jacob) Cao
 <section id="part-1" class="slide level2 center section-divider">
 <h2>Part 1</h2>
 <p>Hash Functions</p>
-<p><span class="seclist"><span class="sec-on">hash functions</span> · separate chaining · linear probing · context</span></p>
+<p><span class="seclist"><span class="sec-on">hash functions</span> · collisions · linear probing · quadratic probing · double hashing · separate chaining</span></p>
 </section>
 <section id="computing-the-hash-function-must-know" class="slide level2 long-title">
 <h2>Computing the Hash Function <span class="ex">Must Know</span></h2>
@@ -695,9 +695,9 @@ Zechun (Jacob) Cao
 <section id="modular-hashing" class="slide level2">
 <h2>Modular Hashing</h2>
 <p><strong>Hash code.</strong> An <code>int</code> between <span class="math inline">\(-2^{31}\)</span> and <span class="math inline">\(2^{31} - 1\)</span>.</p>
-<p><strong>Hash function.</strong> An <code>int</code> between 0 and <span class="math inline">\(M - 1\)</span>, for use as an array index, where <span class="math inline">\(M\)</span> is the table size and is typically a prime.</p>
+<p><strong>Hash function.</strong> An <code>int</code> between 0 and <span class="math inline">\(n - 1\)</span>, for use as an array index, where <span class="math inline">\(n\)</span> is the table size and is typically a prime.</p>
 <div class="fragment">
-<p>Step 2 is the only place the table size appears. Change <span class="math inline">\(M\)</span> and every index changes, while no hash code does.</p>
+<p>Step 2 is the only place the table size appears. Change <span class="math inline">\(n\)</span> and every index changes, while no hash code does.</p>
 </div>
 </section>
 <section id="why-the-table-size-is-prime" class="slide level2 numtable long-title">
@@ -749,13 +749,13 @@ Zechun (Jacob) Cao
 <section id="three-versions-of-hash" class="slide level2 long-title">
 <h2>Three Versions of hash()</h2>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb6-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="dt">int</span> <span class="fu">hash</span><span class="op">(</span><span class="bu">Key</span> key<span class="op">)</span></span>
-<span id="cb6-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="op">{</span>  <span class="cf">return</span> key<span class="op">.</span><span class="fu">hashCode</span><span class="op">()</span> <span class="op">%</span> M<span class="op">;</span>  <span class="op">}</span>                   <span class="co">// bug</span></span>
+<span id="cb6-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="op">{</span>  <span class="cf">return</span> key<span class="op">.</span><span class="fu">hashCode</span><span class="op">()</span> <span class="op">%</span> n<span class="op">;</span>  <span class="op">}</span>                   <span class="co">// bug</span></span>
 <span id="cb6-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="dt">int</span> <span class="fu">hash</span><span class="op">(</span><span class="bu">Key</span> key<span class="op">)</span></span>
-<span id="cb6-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="op">{</span>  <span class="cf">return</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">abs</span><span class="op">(</span>key<span class="op">.</span><span class="fu">hashCode</span><span class="op">())</span> <span class="op">%</span> M<span class="op">;</span>  <span class="op">}</span>         <span class="co">// 1-in-a-billion bug</span></span>
+<span id="cb6-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="op">{</span>  <span class="cf">return</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">abs</span><span class="op">(</span>key<span class="op">.</span><span class="fu">hashCode</span><span class="op">())</span> <span class="op">%</span> n<span class="op">;</span>  <span class="op">}</span>         <span class="co">// 1-in-a-billion bug</span></span>
 <span id="cb6-6"><a href="" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="dt">int</span> <span class="fu">hash</span><span class="op">(</span><span class="bu">Key</span> key<span class="op">)</span></span>
-<span id="cb6-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="op">{</span>  <span class="cf">return</span> <span class="op">(</span>key<span class="op">.</span><span class="fu">hashCode</span><span class="op">()</span> <span class="op">&amp;</span> <span class="bn">0x7fffffff</span><span class="op">)</span> <span class="op">%</span> M<span class="op">;</span>  <span class="op">}</span>    <span class="co">// correct</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb6-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="op">{</span>  <span class="cf">return</span> <span class="op">(</span>key<span class="op">.</span><span class="fu">hashCode</span><span class="op">()</span> <span class="op">&amp;</span> <span class="bn">0x7fffffff</span><span class="op">)</span> <span class="op">%</span> n<span class="op">;</span>  <span class="op">}</span>    <span class="co">// correct</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
 <p><code>%</code> keeps the sign of its left operand, so the first can return a negative index. <code>Math.abs(-2147483648)</code> is <code>-2147483648</code>, because <span class="math inline">\(2^{31}\)</span> is not an <code>int</code>, and <code>"polygenelubricants"</code> has exactly that hash code. The third clears the sign bit.</p>
 </div>
@@ -789,125 +789,10 @@ Zechun (Jacob) Cao
 <p><code>-45 % 13</code> is <code>-6</code>, and <code>-6 + 13</code> is 7. <strong>−6</strong> is the answer without the <code>if</code>, <strong>6</strong> is <code>45 % 13</code>, the remainder of the code made positive first, and <strong>−3</strong> is <code>-45 / 13</code>.</p>
 </div>
 </section>
-<section id="uniform-hashing-assumption" class="slide level2 long-title">
-<h2>Uniform Hashing Assumption</h2>
-<p><strong>Uniform hashing assumption.</strong> Each key is equally likely to hash to an integer between 0 and <span class="math inline">\(M - 1\)</span>.</p>
-<p><strong>Bins and balls.</strong> Throw balls uniformly at random into <span class="math inline">\(M\)</span> bins.</p>
-<div class="anim" id="bins" data-gap="560">
-<div class="anim-cap" data-id="cap">16 bins, and balls thrown into them uniformly at random.</div>
-<svg viewbox="0 0 940 330" width="82%" xmlns="http://www.w3.org/2000/svg" role="img">
-<defs><marker id="ah-bins" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="context-stroke"></path></marker></defs>
-<rect class="bin" x="46.9" y="116" width="40" height="140" rx="4"></rect>
-<text class="idx" x="66.875" y="282" text-anchor="middle">0</text>
-<rect class="bin" x="100.6" y="116" width="40" height="140" rx="4"></rect>
-<text class="idx" x="120.625" y="282" text-anchor="middle">1</text>
-<rect class="bin" x="154.4" y="116" width="40" height="140" rx="4"></rect>
-<text class="idx" x="174.375" y="282" text-anchor="middle">2</text>
-<rect class="bin" x="208.1" y="116" width="40" height="140" rx="4"></rect>
-<text class="idx" x="228.125" y="282" text-anchor="middle">3</text>
-<rect class="bin" x="261.9" y="116" width="40" height="140" rx="4"></rect>
-<text class="idx" x="281.875" y="282" text-anchor="middle">4</text>
-<rect class="bin" x="315.6" y="116" width="40" height="140" rx="4"></rect>
-<text class="idx" x="335.625" y="282" text-anchor="middle">5</text>
-<rect class="bin" x="369.4" y="116" width="40" height="140" rx="4"></rect>
-<text class="idx" x="389.375" y="282" text-anchor="middle">6</text>
-<rect class="bin" x="423.1" y="116" width="40" height="140" rx="4"></rect>
-<text class="idx" x="443.125" y="282" text-anchor="middle">7</text>
-<rect class="bin" x="476.9" y="116" width="40" height="140" rx="4"></rect>
-<text class="idx" x="496.875" y="282" text-anchor="middle">8</text>
-<rect class="bin" x="530.6" y="116" width="40" height="140" rx="4"></rect>
-<text class="idx" x="550.625" y="282" text-anchor="middle">9</text>
-<rect class="bin" x="584.4" y="116" width="40" height="140" rx="4"></rect>
-<text class="idx" x="604.375" y="282" text-anchor="middle">10</text>
-<rect class="bin" x="638.1" y="116" width="40" height="140" rx="4"></rect>
-<text class="idx" x="658.125" y="282" text-anchor="middle">11</text>
-<rect class="bin" x="691.9" y="116" width="40" height="140" rx="4"></rect>
-<text class="idx" x="711.875" y="282" text-anchor="middle">12</text>
-<rect class="bin" x="745.6" y="116" width="40" height="140" rx="4"></rect>
-<text class="idx" x="765.625" y="282" text-anchor="middle">13</text>
-<rect class="bin" x="799.4" y="116" width="40" height="140" rx="4"></rect>
-<text class="idx" x="819.375" y="282" text-anchor="middle">14</text>
-<rect class="bin" x="853.1" y="116" width="40" height="140" rx="4"></rect>
-<text class="idx" x="873.125" y="282" text-anchor="middle">15</text>
-<circle data-id="b0" style="opacity:0" class="ball" cx="335.6" cy="236" r="11"></circle>
-<circle data-id="b1" style="opacity:0" class="ball" cx="443.1" cy="236" r="11"></circle>
-<circle data-id="b2" style="opacity:0" class="ball" cx="496.9" cy="236" r="11"></circle>
-<circle data-id="b3" style="opacity:0" class="ball" cx="873.1" cy="236" r="11"></circle>
-<circle data-id="b4" style="opacity:0" class="ball" cx="335.6" cy="211" r="11"></circle>
-<circle data-id="b5" style="opacity:0" class="ball" cx="604.4" cy="236" r="11"></circle>
-<circle data-id="b6" style="opacity:0" class="ball" cx="873.1" cy="211" r="11"></circle>
-<circle data-id="b7" style="opacity:0" class="ball" cx="819.4" cy="236" r="11"></circle>
-<circle data-id="b8" style="opacity:0" class="ball" cx="550.6" cy="236" r="11"></circle>
-<circle data-id="b9" style="opacity:0" class="ball" cx="174.4" cy="236" r="11"></circle>
-<circle data-id="b10" style="opacity:0" class="ball" cx="550.6" cy="211" r="11"></circle>
-<circle data-id="b11" style="opacity:0" class="ball" cx="765.6" cy="236" r="11"></circle>
-<circle data-id="b12" style="opacity:0" class="ball" cx="550.6" cy="186" r="11"></circle>
-<circle data-id="b13" style="opacity:0" class="ball" cx="873.1" cy="186" r="11"></circle>
-<circle data-id="b14" style="opacity:0" class="ball" cx="120.6" cy="236" r="11"></circle>
-<circle data-id="b15" style="opacity:0" class="ball" cx="765.6" cy="211" r="11"></circle>
-<circle data-id="b16" style="opacity:0" class="ball" cx="496.9" cy="211" r="11"></circle>
-<circle data-id="b17" style="opacity:0" class="ball" cx="604.4" cy="211" r="11"></circle>
-<circle data-id="b18" style="opacity:0" class="ball" cx="443.1" cy="211" r="11"></circle>
-<circle data-id="b19" style="opacity:0" class="ball" cx="228.1" cy="236" r="11"></circle>
-<circle data-id="b20" style="opacity:0" class="ball" cx="120.6" cy="211" r="11"></circle>
-<circle data-id="b21" style="opacity:0" class="ball" cx="604.4" cy="186" r="11"></circle>
-<circle data-id="b22" style="opacity:0" class="ball" cx="550.6" cy="161" r="11"></circle>
-<circle data-id="b23" style="opacity:0" class="ball" cx="389.4" cy="236" r="11"></circle>
-<circle data-id="b24" style="opacity:0" class="ball" cx="174.4" cy="211" r="11"></circle>
-<circle data-id="b25" style="opacity:0" class="ball" cx="658.1" cy="236" r="11"></circle>
-<circle data-id="b26" style="opacity:0" class="ball" cx="228.1" cy="211" r="11"></circle>
-<circle data-id="b27" style="opacity:0" class="ball" cx="604.4" cy="161" r="11"></circle>
-<circle data-id="b28" style="opacity:0" class="ball" cx="443.1" cy="186" r="11"></circle>
-<circle data-id="b29" style="opacity:0" class="ball" cx="496.9" cy="186" r="11"></circle>
-<circle data-id="b30" style="opacity:0" class="ball" cx="604.4" cy="136" r="11"></circle>
-<circle data-id="b31" style="opacity:0" class="ball" cx="66.9" cy="236" r="11"></circle>
-<circle data-id="b32" style="opacity:0" class="ball" cx="658.1" cy="211" r="11"></circle>
-<circle data-id="b33" style="opacity:0" class="ball" cx="550.6" cy="136" r="11"></circle>
-<circle data-id="b34" style="opacity:0" class="ball" cx="711.9" cy="236" r="11"></circle>
-<circle data-id="b35" style="opacity:0" class="ball" cx="711.9" cy="211" r="11"></circle>
-<circle data-id="b36" style="opacity:0" class="ball" cx="335.6" cy="186" r="11"></circle>
-<circle data-id="b37" style="opacity:0" class="ball" cx="228.1" cy="186" r="11"></circle>
-<circle data-id="b38" style="opacity:0" class="ball" cx="120.6" cy="186" r="11"></circle>
-<circle data-id="b39" style="opacity:0" class="ball" cx="658.1" cy="186" r="11"></circle>
-<circle data-id="b40" style="opacity:0" class="ball" cx="228.1" cy="161" r="11"></circle>
-<circle data-id="b41" style="opacity:0" class="ball" cx="174.4" cy="186" r="11"></circle>
-<circle data-id="b42" style="opacity:0" class="ball" cx="281.9" cy="236" r="11"></circle>
-<g data-id="note" style="transform:translate(470.0px,314px);opacity:0" class="ret tally"><text x="0" y="1" text-anchor="middle" dominant-baseline="central"></text></g>
-</svg>
-<script type="application/json" class="anim-data">[{"cap":{"h":"16 bins, and balls thrown into them uniformly at random."},"b0":{"o":0,"c":""},"b1":{"o":0,"c":""},"b2":{"o":0,"c":""},"b3":{"o":0,"c":""},"b4":{"o":0,"c":""},"b5":{"o":0,"c":""},"b6":{"o":0,"c":""},"b7":{"o":0,"c":""},"b8":{"o":0,"c":""},"b9":{"o":0,"c":""},"b10":{"o":0,"c":""},"b11":{"o":0,"c":""},"b12":{"o":0,"c":""},"b13":{"o":0,"c":""},"b14":{"o":0,"c":""},"b15":{"o":0,"c":""},"b16":{"o":0,"c":""},"b17":{"o":0,"c":""},"b18":{"o":0,"c":""},"b19":{"o":0,"c":""},"b20":{"o":0,"c":""},"b21":{"o":0,"c":""},"b22":{"o":0,"c":""},"b23":{"o":0,"c":""},"b24":{"o":0,"c":""},"b25":{"o":0,"c":""},"b26":{"o":0,"c":""},"b27":{"o":0,"c":""},"b28":{"o":0,"c":""},"b29":{"o":0,"c":""},"b30":{"o":0,"c":""},"b31":{"o":0,"c":""},"b32":{"o":0,"c":""},"b33":{"o":0,"c":""},"b34":{"o":0,"c":""},"b35":{"o":0,"c":""},"b36":{"o":0,"c":""},"b37":{"o":0,"c":""},"b38":{"o":0,"c":""},"b39":{"o":0,"c":""},"b40":{"o":0,"c":""},"b41":{"o":0,"c":""},"b42":{"o":0,"c":""},"note":{"x":470.0,"y":314,"o":0,"c":""}},{"cap":{"h":"Four throws, four different bins."},"_ph":[{"cap":{"h":"Four throws, four different bins."}},{"b0":{"o":1,"c":""},"b1":{"o":1,"c":""},"b2":{"o":1,"c":""},"b3":{"o":1,"c":""},"note":{"t":"4 throws","o":1}}],"b0":{"o":1,"c":""},"b1":{"o":1,"c":""},"b2":{"o":1,"c":""},"b3":{"o":1,"c":""},"note":{"t":"4 throws","o":1}},{"cap":{"h":"The fifth throw lands in a bin that already holds a ball. Two balls share a bin after about &radic;(&pi;M/2) = 5 throws."},"_ph":[{"cap":{"h":"The fifth throw lands in a bin that already holds a ball. Two balls share a bin after about &radic;(&pi;M/2) = 5 throws."}},{"b4":{"o":1,"c":"hot"},"note":{"t":"5 throws","o":1}}],"b4":{"o":1,"c":"hot"},"note":{"t":"5 throws","o":1}},{"cap":{"h":"After 16 throws -- one per bin on average -- six bins are still empty and the most loaded holds three balls."},"_ph":[{"cap":{"h":"After 16 throws -- one per bin on average -- six bins are still empty and the most loaded holds three balls."}},{"b5":{"o":1,"c":""},"b6":{"o":1,"c":""},"b7":{"o":1,"c":""},"b8":{"o":1,"c":""},"b9":{"o":1,"c":""},"b10":{"o":1,"c":""},"b11":{"o":1,"c":""},"b12":{"o":1,"c":""},"b13":{"o":1,"c":""},"b14":{"o":1,"c":""},"b15":{"o":1,"c":""},"note":{"t":"16 throws","o":1}}],"b5":{"o":1,"c":""},"b6":{"o":1,"c":""},"b7":{"o":1,"c":""},"b8":{"o":1,"c":""},"b9":{"o":1,"c":""},"b10":{"o":1,"c":""},"b11":{"o":1,"c":""},"b12":{"o":1,"c":""},"b13":{"o":1,"c":""},"b14":{"o":1,"c":""},"b15":{"o":1,"c":""},"note":{"t":"16 throws","o":1}},{"cap":{"h":"Every bin holds at least one ball only after 43 throws. The prediction is M ln M = 44."},"_ph":[{"cap":{"h":"Every bin holds at least one ball only after 43 throws. The prediction is M ln M = 44."}},{"b16":{"o":1,"c":""},"b17":{"o":1,"c":""},"b18":{"o":1,"c":""},"b19":{"o":1,"c":""},"b20":{"o":1,"c":""},"b21":{"o":1,"c":""},"b22":{"o":1,"c":""},"b23":{"o":1,"c":""},"b24":{"o":1,"c":""},"b25":{"o":1,"c":""},"b26":{"o":1,"c":""},"b27":{"o":1,"c":""},"b28":{"o":1,"c":""},"b29":{"o":1,"c":""},"b30":{"o":1,"c":""},"b31":{"o":1,"c":""},"b32":{"o":1,"c":""},"b33":{"o":1,"c":""},"b34":{"o":1,"c":""},"b35":{"o":1,"c":""},"b36":{"o":1,"c":""},"b37":{"o":1,"c":""},"b38":{"o":1,"c":""},"b39":{"o":1,"c":""},"b40":{"o":1,"c":""},"b41":{"o":1,"c":""},"b42":{"o":1,"c":""},"note":{"t":"43 throws","o":1}}],"b16":{"o":1,"c":""},"b17":{"o":1,"c":""},"b18":{"o":1,"c":""},"b19":{"o":1,"c":""},"b20":{"o":1,"c":""},"b21":{"o":1,"c":""},"b22":{"o":1,"c":""},"b23":{"o":1,"c":""},"b24":{"o":1,"c":""},"b25":{"o":1,"c":""},"b26":{"o":1,"c":""},"b27":{"o":1,"c":""},"b28":{"o":1,"c":""},"b29":{"o":1,"c":""},"b30":{"o":1,"c":""},"b31":{"o":1,"c":""},"b32":{"o":1,"c":""},"b33":{"o":1,"c":""},"b34":{"o":1,"c":""},"b35":{"o":1,"c":""},"b36":{"o":1,"c":""},"b37":{"o":1,"c":""},"b38":{"o":1,"c":""},"b39":{"o":1,"c":""},"b40":{"o":1,"c":""},"b41":{"o":1,"c":""},"b42":{"o":1,"c":""},"note":{"t":"43 throws","o":1}}]</script>
-<span class="fragment anim-step" data-anim="bins" data-step="1"></span>
-<span class="fragment anim-step" data-anim="bins" data-step="2"></span>
-<span class="fragment anim-step" data-anim="bins" data-step="3"></span>
-<span class="fragment anim-step" data-anim="bins" data-step="4"></span>
-</div>
-</section>
-<section id="bins-and-balls" class="slide level2">
-<h2>Bins and Balls</h2>
-<p><strong>Birthday problem.</strong> Expect two balls in the same bin after <span class="math inline">\(\sim \sqrt{\pi M / 2}\)</span> tosses.</p>
-<p><strong>Coupon collector.</strong> Expect every bin has <span class="math inline">\(\geq 1\)</span> ball after <span class="math inline">\(\sim M \ln M\)</span> tosses.</p>
-<p><strong>Load balancing.</strong> After <span class="math inline">\(M\)</span> tosses, expect the most loaded bin has <span class="math inline">\(\Theta(\log M / \log \log M)\)</span> balls.</p>
-<div class="fragment">
-<p>For the 16 bins in the figure that is 5 tosses, 44 tosses, and about 3 balls. The run shared a bin on toss 5, filled the last empty bin on toss 43, and held 3 in its most loaded bin at toss 16.</p>
-</div>
-</section>
-<section id="question-2" class="slide level2">
-<h2>Question</h2>
-<p>Twenty-five keys go into a hash table of 365 slots, and the hash function satisfies the uniform hashing assumption.</p>
-<p><strong><em>What is the chance that some two of the 25 collide?</em></strong></p>
-<ul class="choices row">
-  <li><span class="k">A</span> 0.3%</li>
-  <li><span class="k">B</span> 7%</li>
-  <li class="fragment pick"><span class="k">C</span> 57%</li>
-  <li><span class="k">D</span> 100%</li>
-</ul>
-<div class="fragment">
-<p>The 25 miss each other only if each one lands in a bin the others left alone: <span class="math inline">\(\frac{364}{365} \cdot \frac{363}{365} \cdots \frac{341}{365} = 0.43\)</span>. The birthday problem predicts the first collision at <span class="math inline">\(\sqrt{\pi \cdot 365 / 2} = 24\)</span> tosses, which is where 25 keys are.</p>
-</div>
-</section>
 <section id="hash-value-frequencies" class="slide level2 long-title">
 <h2>Hash Value Frequencies</h2>
 <div class="fig"><svg viewbox="0 0 940 232" width="92%" xmlns="http://www.w3.org/2000/svg" role="img">
-<text class="htitle" x="32" y="26" text-anchor="start">hash value frequencies for the 10,615 distinct words of A Tale of Two Cities (M = 97)</text>
+<text class="htitle" x="32" y="26" text-anchor="start">hash value frequencies for the 10,615 distinct words of A Tale of Two Cities (n = 97)</text>
 <line class="hbase" x1="30" y1="186" x2="910" y2="186"></line>
 <rect class="hbar" x="32.0" y="66.1" width="6.8" height="119.9"></rect>
 <rect class="hbar" x="41.0" y="53.5" width="6.8" height="132.5"></rect>
@@ -1021,7 +906,1114 @@ Zechun (Jacob) Cao
 <li>Compute <code>hashCode()</code> for a short string by Horner’s method, and compress it into a table index.</li>
 <li>Turn a negative hash code into an index, and say what goes wrong without the <code>if</code>.</li>
 <li>Write <code>hashCode()</code> for a type of your own from its fields.</li>
-<li>State the uniform hashing assumption, and say what the birthday problem and the coupon collector predict.</li>
+</ul>
+</section>
+<section id="part-2" class="slide level2 center section-divider">
+<h2>Part 2</h2>
+<p>Collision Resolution</p>
+<p><span class="seclist">hash functions · <span class="sec-on">collisions</span> · linear probing · quadratic probing · double hashing · separate chaining</span></p>
+</section>
+<section id="resolving-collisions-must-know" class="slide level2 long-title">
+<h2>Resolving Collisions <span class="ex">Must Know</span></h2>
+<p>Two different keys <strong>collide</strong> when the hash function computes one index for both. The location the new key reaches already holds an entry, and both entries belong in the dictionary.</p>
+<div class="fragment">
+<p>Two choices:</p>
+<ul>
+<li>Store the new entry in <strong>another location</strong> of the table. That is <strong>open addressing</strong>.</li>
+<li>Change the table so that <strong>one location holds more than one entry</strong>. That is <strong>separate chaining</strong>.</li>
+</ul>
+</div>
+<div class="fragment">
+<p>Neither choice changes the hash function. There are more possible keys than there are slots, so collisions happen whatever the function is.</p>
+</div>
+</section>
+<section id="resolving-collisions" class="slide level2">
+<h2>Resolving Collisions</h2>
+<p>A table of 13 slots, with <span class="math inline">\(H(k) = k \bmod 13\)</span> and one entry in it.</p>
+<div class="anim" id="two_ways" data-gap="620">
+<div class="anim-cap" data-id="cap">Slot 5 holds the entry whose key is 18, because H(18) = 5.</div>
+<svg viewbox="0 0 940 368" width="94%" xmlns="http://www.w3.org/2000/svg" role="img">
+<defs><marker id="ah-two_ways" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="context-stroke"></path></marker></defs>
+<rect class="slot" x="45.0" y="173.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="74.0" y="157.0" text-anchor="middle">0</text>
+<rect class="slot" x="111.0" y="173.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="140.0" y="157.0" text-anchor="middle">1</text>
+<rect class="slot" x="177.0" y="173.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="206.0" y="157.0" text-anchor="middle">2</text>
+<rect class="slot" x="243.0" y="173.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="272.0" y="157.0" text-anchor="middle">3</text>
+<rect class="slot" x="309.0" y="173.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="338.0" y="157.0" text-anchor="middle">4</text>
+<rect class="slot" x="375.0" y="173.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="404.0" y="157.0" text-anchor="middle">5</text>
+<rect class="slot" x="441.0" y="173.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="470.0" y="157.0" text-anchor="middle">6</text>
+<rect class="slot" x="507.0" y="173.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="536.0" y="157.0" text-anchor="middle">7</text>
+<rect class="slot" x="573.0" y="173.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="602.0" y="157.0" text-anchor="middle">8</text>
+<rect class="slot" x="639.0" y="173.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="668.0" y="157.0" text-anchor="middle">9</text>
+<rect class="slot" x="705.0" y="173.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="734.0" y="157.0" text-anchor="middle">10</text>
+<rect class="slot" x="771.0" y="173.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="800.0" y="157.0" text-anchor="middle">11</text>
+<rect class="slot" x="837.0" y="173.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="866.0" y="157.0" text-anchor="middle">12</text>
+<g data-id="ar" style="transform:translate(470.0px,46px);opacity:0" class="ret big"><text x="0" y="1" text-anchor="middle" dominant-baseline="central"></text></g>
+<g data-id="e1" style="transform:translate(404.0px,196px);opacity:1" class="kt"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">18</text></g>
+<g data-id="e2" style="transform:translate(404.0px,108px);opacity:0" class="kt"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">31</text></g>
+<path data-id="link" style="opacity:0" class="ptr" d="M404.0,220.0 L404.0,220.0" marker-end="url(#ah-two_ways)"></path>
+<g data-id="tag" style="transform:translate(470.0px,352px);opacity:0" class="ret tally"><text x="0" y="1" text-anchor="middle" dominant-baseline="central"></text></g>
+</svg>
+<script type="application/json" class="anim-data">[{"cap":{"h":"Slot 5 holds the entry whose key is 18, because H(18) = 5."},"ar":{"x":470.0,"y":46,"o":0,"c":""},"e1":{"x":404.0,"y":196,"o":1,"c":""},"e2":{"x":404.0,"y":108,"o":0,"c":""},"link":{"d":"M404.0,220.0 L404.0,220.0","o":0,"c":""},"tag":{"x":470.0,"y":352,"o":0,"c":""}},{"cap":{"h":"<code>add(31, value)<\/code>. The hash function runs on the new key."},"_ph":[{"cap":{"h":"<code>add(31, value)<\/code>. The hash function runs on the new key."}},{"ar":{"t":"H(31) = 31 mod 13 = 5","o":1}},{"e2":{"o":1,"c":"hot"}}],"ar":{"t":"H(31) = 31 mod 13 = 5","o":1},"e2":{"o":1,"c":"hot"}},{"cap":{"h":"Slot 5 is the index of both keys, and 18 is not 31. That is a <b>collision<\/b>."},"_ph":[{"cap":{"h":"Slot 5 is the index of both keys, and 18 is not 31. That is a <b>collision<\/b>."}},{"e2":{"c":"bad"}},{"e1":{"c":"bad"}}],"e2":{"c":"bad"},"e1":{"c":"bad"}},{"cap":{"h":"Storing 31 here would drop 18 from the dictionary, and both entries belong in it. Two choices are left."},"_ph":[{"cap":{"h":"Storing 31 here would drop 18 from the dictionary, and both entries belong in it. Two choices are left."}},{"e1":{"c":""},"e2":{"c":"hot"}}],"e1":{"c":""},"e2":{"c":"hot"}},{"cap":{"h":"<b>Choice 1.<\/b> Put 31 in another location of the table. That is <b>open addressing<\/b>."},"_ph":[{"cap":{"h":"<b>Choice 1.<\/b> Put 31 in another location of the table. That is <b>open addressing<\/b>."}},{"e2":{"x":470.0,"y":196,"c":"hot"}},{"tag":{"t":"open addressing","o":1}}],"e2":{"x":470.0,"y":196,"c":"hot"},"tag":{"t":"open addressing","o":1}},{"cap":{"h":"<b>Choice 2.<\/b> Let slot 5 hold more than one entry. That is <b>separate chaining<\/b>."},"_ph":[{"cap":{"h":"<b>Choice 2.<\/b> Let slot 5 hold more than one entry. That is <b>separate chaining<\/b>."}},{"e2":{"x":404.0,"y":300}},{"link":{"d":"M404.0,220.0 L404.0,272.0","o":1},"tag":{"t":"separate chaining","o":1}}],"e2":{"x":404.0,"y":300},"link":{"d":"M404.0,220.0 L404.0,272.0","o":1},"tag":{"t":"separate chaining","o":1}}]</script>
+<span class="fragment anim-step" data-anim="two_ways" data-step="1"></span>
+<span class="fragment anim-step" data-anim="two_ways" data-step="2"></span>
+<span class="fragment anim-step" data-anim="two_ways" data-step="3"></span>
+<span class="fragment anim-step" data-anim="two_ways" data-step="4"></span>
+<span class="fragment anim-step" data-anim="two_ways" data-step="5"></span>
+</div>
+</section>
+<section id="question-2" class="slide level2">
+<h2>Question</h2>
+<p>Slot 5 holds the entry whose key is 18, and <code>add(18, value)</code> is called with a new value for that same key.</p>
+<p><strong><em>Is that a collision?</em></strong></p>
+<ul class="choices row">
+  <li><span class="k">A</span> Yes, the slot is occupied.</li>
+  <li><span class="k">B</span> Yes, two adds, one location.</li>
+  <li class="fragment pick"><span class="k">C</span> No, the keys are equal.</li>
+  <li><span class="k">D</span> No, <code>add</code> ignores the location.</li>
+</ul>
+<div class="fragment">
+<p>A collision needs two <strong>different</strong> keys at one index. Equal keys mean one entry, so the entry count does not change.</p>
+</div>
+</section>
+<section id="collision-resolution" class="slide level2 center section-divider">
+<h2>Collision Resolution</h2>
+<p>Linear Probing</p>
+<p><span class="seclist">hash functions · collisions · <span class="sec-on">linear probing</span> · quadratic probing · double hashing · separate chaining</span></p>
+</section>
+<section id="linear-probing-must-know" class="slide level2">
+<h2>Linear Probing <span class="ex">Must Know</span></h2>
+<p>On a collision, examine the next location of the table, and keep going until a free one turns up. The locations examined are the <strong>probe sequence</strong>:</p>
+<p><span class="math display">\[(H(k) + j) \bmod n, \qquad j = 0, 1, 2, \dots\]</span></p>
+<div class="fragment">
+<ul>
+<li><span class="math inline">\(j = 0\)</span> is the home index <span class="math inline">\(H(k)\)</span> itself, and <span class="math inline">\(n\)</span> is the table size.</li>
+<li>Reducing mod <span class="math inline">\(n\)</span> makes the table circular: the location after <span class="math inline">\(n - 1\)</span> is 0.</li>
+<li>The walk stops at the first free location, or at the key itself, which makes the call a replacement.</li>
+</ul>
+</div>
+</section>
+<section id="tracing-linear-probing" class="slide level2 long-title">
+<h2>Tracing Linear Probing</h2>
+<p>The first three keys go in, one click each.</p>
+<div class="anim" id="linear_a" data-gap="560">
+<div class="anim-cap" data-id="cap">A table of 13 slots, H(k) = k mod 13, and the keys 18, 31, 44, 59, 12, 25 added in that order.</div>
+<svg viewbox="0 0 940 342" width="94%" xmlns="http://www.w3.org/2000/svg" role="img">
+<defs><marker id="ah-linear_a" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="context-stroke"></path></marker></defs>
+<rect class="slot" x="45.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="74.0" y="285.0" text-anchor="middle">0</text>
+<rect class="slot" x="111.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="140.0" y="285.0" text-anchor="middle">1</text>
+<rect class="slot" x="177.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="206.0" y="285.0" text-anchor="middle">2</text>
+<rect class="slot" x="243.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="272.0" y="285.0" text-anchor="middle">3</text>
+<rect class="slot" x="309.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="338.0" y="285.0" text-anchor="middle">4</text>
+<rect class="slot" x="375.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="404.0" y="285.0" text-anchor="middle">5</text>
+<rect class="slot" x="441.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="470.0" y="285.0" text-anchor="middle">6</text>
+<rect class="slot" x="507.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="536.0" y="285.0" text-anchor="middle">7</text>
+<rect class="slot" x="573.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="602.0" y="285.0" text-anchor="middle">8</text>
+<rect class="slot" x="639.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="668.0" y="285.0" text-anchor="middle">9</text>
+<rect class="slot" x="705.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="734.0" y="285.0" text-anchor="middle">10</text>
+<rect class="slot" x="771.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="800.0" y="285.0" text-anchor="middle">11</text>
+<rect class="slot" x="837.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="866.0" y="285.0" text-anchor="middle">12</text>
+<g data-id="ar1" style="transform:translate(470.0px,36px);opacity:0" class="ret big"><text x="0" y="1" text-anchor="middle" dominant-baseline="central"></text></g>
+<g data-id="ar2" style="transform:translate(470.0px,82px);opacity:0" class="ret tally"><text x="0" y="1" text-anchor="middle" dominant-baseline="central"></text></g>
+<path data-id="warc" style="opacity:0" class="wrap" d="M866.0,308.0 L866.0,308.0 L74.0,308.0 L74.0,308.0" marker-end="url(#ah-linear_a)"></path>
+<g data-id="e18" style="transform:translate(404.0px,150px);opacity:0" class="kt"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">18</text></g>
+<g data-id="e31" style="transform:translate(404.0px,150px);opacity:0" class="kt"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">31</text></g>
+<g data-id="e44" style="transform:translate(404.0px,150px);opacity:0" class="kt"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">44</text></g>
+</svg>
+<script type="application/json" class="anim-data">[{"cap":{"h":"A table of 13 slots, H(k) = k mod 13, and the keys 18, 31, 44, 59, 12, 25 added in that order."},"ar1":{"x":470.0,"y":36,"o":0,"c":""},"ar2":{"x":470.0,"y":82,"o":0,"c":""},"warc":{"d":"M866.0,308.0 L866.0,308.0 L74.0,308.0 L74.0,308.0","o":0,"c":""},"e18":{"x":404.0,"y":150,"o":0,"c":""},"e31":{"x":404.0,"y":150,"o":0,"c":""},"e44":{"x":404.0,"y":150,"o":0,"c":""}},{"cap":{"h":"<code>add(18)<\/code>. Nothing is in the table yet."},"_ph":[{"cap":{"h":"<code>add(18)<\/code>. Nothing is in the table yet."}},{"ar1":{"t":"H(18) = 18 mod 13 = 5","o":1},"ar2":{"t":"","o":0},"e18":{"x":404.0,"y":150,"o":1,"c":"hot"}},{"e18":{"x":404.0},"ar2":{"t":"j = 0:   (5 + 0) mod 13 = 5, free","o":1}},{"e18":{"y":236,"c":"hot"}}],"ar1":{"t":"H(18) = 18 mod 13 = 5","o":1},"ar2":{"t":"j = 0:   (5 + 0) mod 13 = 5, free","o":1},"e18":{"x":404.0,"y":236,"o":1,"c":"hot"}},{"cap":{"h":"<code>add(31)<\/code>. The hash function gives the same index as it gave 18."},"e18":{"c":"bad"},"_ph":[{"cap":{"h":"<code>add(31)<\/code>. The hash function gives the same index as it gave 18."},"e18":{"c":""}},{"ar1":{"t":"H(31) = 31 mod 13 = 5","o":1},"ar2":{"t":"","o":0},"e31":{"x":404.0,"y":150,"o":1,"c":"hot"}},{"e31":{"x":404.0},"ar2":{"t":"j = 0:   (5 + 0) mod 13 = 5, taken","o":1},"e18":{"c":"bad"}},{"e31":{"x":470.0},"ar2":{"t":"j = 1:   (5 + 1) mod 13 = 6, free","o":1}},{"e31":{"y":236,"c":"hot"}}],"ar1":{"t":"H(31) = 31 mod 13 = 5","o":1},"ar2":{"t":"j = 1:   (5 + 1) mod 13 = 6, free","o":1},"e31":{"x":470.0,"y":236,"o":1,"c":"hot"}},{"cap":{"h":"<code>add(44)<\/code>. The same index a third time."},"e18":{"c":"bad"},"e31":{"c":"bad"},"_ph":[{"cap":{"h":"<code>add(44)<\/code>. The same index a third time."},"e18":{"c":""},"e31":{"c":""}},{"ar1":{"t":"H(44) = 44 mod 13 = 5","o":1},"ar2":{"t":"","o":0},"e44":{"x":404.0,"y":150,"o":1,"c":"hot"}},{"e44":{"x":404.0},"ar2":{"t":"j = 0:   (5 + 0) mod 13 = 5, taken","o":1},"e18":{"c":"bad"}},{"e44":{"x":470.0},"ar2":{"t":"j = 1:   (5 + 1) mod 13 = 6, taken","o":1},"e31":{"c":"bad"}},{"e44":{"x":536.0},"ar2":{"t":"j = 2:   (5 + 2) mod 13 = 7, free","o":1}},{"e44":{"y":236,"c":"hot"}}],"ar1":{"t":"H(44) = 44 mod 13 = 5","o":1},"ar2":{"t":"j = 2:   (5 + 2) mod 13 = 7, free","o":1},"e44":{"x":536.0,"y":236,"o":1,"c":"hot"}}]</script>
+<span class="fragment anim-step" data-anim="linear_a" data-step="1"></span>
+<span class="fragment anim-step" data-anim="linear_a" data-step="2"></span>
+<span class="fragment anim-step" data-anim="linear_a" data-step="3"></span>
+</div>
+</section>
+<section id="question-3" class="slide level2">
+<h2>Question</h2>
+<p>Three keys are in, and the next key is 59.</p>
+<div class="fig still"><svg viewbox="0 0 940 148" width="74%" xmlns="http://www.w3.org/2000/svg" role="img">
+<rect class="slot" x="45.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="74.0" y="105.0" text-anchor="middle">0</text>
+<rect class="slot" x="111.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="140.0" y="105.0" text-anchor="middle">1</text>
+<rect class="slot" x="177.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="206.0" y="105.0" text-anchor="middle">2</text>
+<rect class="slot" x="243.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="272.0" y="105.0" text-anchor="middle">3</text>
+<rect class="slot" x="309.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="338.0" y="105.0" text-anchor="middle">4</text>
+<rect class="slot" x="375.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="404.0" y="105.0" text-anchor="middle">5</text>
+<rect class="slot" x="441.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="470.0" y="105.0" text-anchor="middle">6</text>
+<rect class="slot" x="507.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="536.0" y="105.0" text-anchor="middle">7</text>
+<rect class="slot" x="573.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="602.0" y="105.0" text-anchor="middle">8</text>
+<rect class="slot" x="639.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="668.0" y="105.0" text-anchor="middle">9</text>
+<rect class="slot" x="705.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="734.0" y="105.0" text-anchor="middle">10</text>
+<rect class="slot" x="771.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="800.0" y="105.0" text-anchor="middle">11</text>
+<rect class="slot" x="837.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="866.0" y="105.0" text-anchor="middle">12</text>
+<g class="kt" transform="translate(404.0,56)"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">18</text></g>
+<g class="kt" transform="translate(470.0,56)"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">31</text></g>
+<g class="kt" transform="translate(536.0,56)"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">44</text></g>
+</svg></div>
+<p><strong><em>Which slot does <code>add(59)</code> put it in?</em></strong></p>
+<ul class="choices row">
+  <li><span class="k">A</span> 7</li>
+  <li class="fragment pick"><span class="k">B</span> 8</li>
+  <li><span class="k">C</span> 4</li>
+  <li><span class="k">D</span> 0</li>
+</ul>
+<div class="fragment">
+<p>44 is in slot 7, so 59’s home index is taken and the probe moves on to 8. <strong>7</strong> takes the home index to be free, <strong>4</strong> probes backwards, and <strong>0</strong> takes the first free location in the table, not in the sequence.</p>
+</div>
+</section>
+<section id="tracing-linear-probing-1" class="slide level2 long-title">
+<h2>Tracing Linear Probing</h2>
+<p>The last three keys follow. 25 runs off the end of the row and carries on from 0.</p>
+<div class="anim" id="linear_b" data-gap="560">
+<div class="anim-cap" data-id="cap">Where the first three keys left the table. 59, 12, 25 are still to come.</div>
+<svg viewbox="0 0 940 342" width="94%" xmlns="http://www.w3.org/2000/svg" role="img">
+<defs><marker id="ah-linear_b" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="context-stroke"></path></marker></defs>
+<rect class="slot" x="45.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="74.0" y="285.0" text-anchor="middle">0</text>
+<rect class="slot" x="111.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="140.0" y="285.0" text-anchor="middle">1</text>
+<rect class="slot" x="177.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="206.0" y="285.0" text-anchor="middle">2</text>
+<rect class="slot" x="243.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="272.0" y="285.0" text-anchor="middle">3</text>
+<rect class="slot" x="309.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="338.0" y="285.0" text-anchor="middle">4</text>
+<rect class="slot" x="375.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="404.0" y="285.0" text-anchor="middle">5</text>
+<rect class="slot" x="441.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="470.0" y="285.0" text-anchor="middle">6</text>
+<rect class="slot" x="507.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="536.0" y="285.0" text-anchor="middle">7</text>
+<rect class="slot" x="573.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="602.0" y="285.0" text-anchor="middle">8</text>
+<rect class="slot" x="639.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="668.0" y="285.0" text-anchor="middle">9</text>
+<rect class="slot" x="705.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="734.0" y="285.0" text-anchor="middle">10</text>
+<rect class="slot" x="771.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="800.0" y="285.0" text-anchor="middle">11</text>
+<rect class="slot" x="837.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="866.0" y="285.0" text-anchor="middle">12</text>
+<g data-id="ar1" style="transform:translate(470.0px,36px);opacity:0" class="ret big"><text x="0" y="1" text-anchor="middle" dominant-baseline="central"></text></g>
+<g data-id="ar2" style="transform:translate(470.0px,82px);opacity:0" class="ret tally"><text x="0" y="1" text-anchor="middle" dominant-baseline="central"></text></g>
+<path data-id="warc" style="opacity:0" class="wrap" d="M866.0,308.0 L866.0,308.0 L74.0,308.0 L74.0,308.0" marker-end="url(#ah-linear_b)"></path>
+<g data-id="e18" style="transform:translate(404.0px,236px);opacity:1" class="kt"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">18</text></g>
+<g data-id="e31" style="transform:translate(470.0px,236px);opacity:1" class="kt"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">31</text></g>
+<g data-id="e44" style="transform:translate(536.0px,236px);opacity:1" class="kt"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">44</text></g>
+<g data-id="e59" style="transform:translate(536.0px,150px);opacity:0" class="kt"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">59</text></g>
+<g data-id="e12" style="transform:translate(866.0px,150px);opacity:0" class="kt"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">12</text></g>
+<g data-id="e25" style="transform:translate(866.0px,150px);opacity:0" class="kt"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">25</text></g>
+</svg>
+<script type="application/json" class="anim-data">[{"cap":{"h":"Where the first three keys left the table. 59, 12, 25 are still to come."},"ar1":{"x":470.0,"y":36,"o":0,"c":""},"ar2":{"x":470.0,"y":82,"o":0,"c":""},"warc":{"d":"M866.0,308.0 L866.0,308.0 L74.0,308.0 L74.0,308.0","o":0,"c":""},"e18":{"x":404.0,"y":236,"o":1,"c":""},"e31":{"x":470.0,"y":236,"o":1,"c":""},"e44":{"x":536.0,"y":236,"o":1,"c":""},"e59":{"x":536.0,"y":150,"o":0,"c":""},"e12":{"x":866.0,"y":150,"o":0,"c":""},"e25":{"x":866.0,"y":150,"o":0,"c":""}},{"cap":{"h":"<code>add(59)<\/code>. A different index, which no key so far has hashed to."},"_ph":[{"cap":{"h":"<code>add(59)<\/code>. A different index, which no key so far has hashed to."}},{"ar1":{"t":"H(59) = 59 mod 13 = 7","o":1},"ar2":{"t":"","o":0},"e59":{"x":536.0,"y":150,"o":1,"c":"hot"}},{"e59":{"x":536.0},"ar2":{"t":"j = 0:   (7 + 0) mod 13 = 7, taken","o":1},"e44":{"c":"bad"}},{"e59":{"x":602.0},"ar2":{"t":"j = 1:   (7 + 1) mod 13 = 8, free","o":1}},{"e59":{"y":236,"c":"hot"}}],"ar1":{"t":"H(59) = 59 mod 13 = 7","o":1},"ar2":{"t":"j = 1:   (7 + 1) mod 13 = 8, free","o":1},"e59":{"x":602.0,"y":236,"o":1,"c":"hot"},"e44":{"c":"bad"}},{"cap":{"h":"<code>add(12)<\/code>. The last slot of the table."},"e44":{"c":""},"e59":{"c":""},"_ph":[{"cap":{"h":"<code>add(12)<\/code>. The last slot of the table."},"e44":{"c":""},"e59":{"c":""}},{"ar1":{"t":"H(12) = 12 mod 13 = 12","o":1},"ar2":{"t":"","o":0},"e12":{"x":866.0,"y":150,"o":1,"c":"hot"}},{"e12":{"x":866.0},"ar2":{"t":"j = 0:   (12 + 0) mod 13 = 12, free","o":1}},{"e12":{"y":236,"c":"hot"}}],"ar1":{"t":"H(12) = 12 mod 13 = 12","o":1},"ar2":{"t":"j = 0:   (12 + 0) mod 13 = 12, free","o":1},"e12":{"x":866.0,"y":236,"o":1,"c":"hot"}},{"cap":{"h":"<code>add(25)<\/code>. The same index as 12, and 12 is the last slot there is."},"e12":{"c":"bad"},"_ph":[{"cap":{"h":"<code>add(25)<\/code>. The same index as 12, and 12 is the last slot there is."},"e12":{"c":""}},{"ar1":{"t":"H(25) = 25 mod 13 = 12","o":1},"ar2":{"t":"","o":0},"e25":{"x":866.0,"y":150,"o":1,"c":"hot"}},{"e25":{"x":866.0},"ar2":{"t":"j = 0:   (12 + 0) mod 13 = 12, taken","o":1},"e12":{"c":"bad"}},{"e25":{"o":0},"warc":{"o":1}},{"e25":{"x":74.0,"o":1},"ar2":{"t":"j = 1:   (12 + 1) mod 13 = 0, free","o":1}},{"e25":{"y":236,"c":"hot"}}],"ar1":{"t":"H(25) = 25 mod 13 = 12","o":1},"ar2":{"t":"j = 1:   (12 + 1) mod 13 = 0, free","o":1},"e25":{"x":74.0,"y":236,"o":1,"c":"hot"},"warc":{"o":1}}]</script>
+<span class="fragment anim-step" data-anim="linear_b" data-step="1"></span>
+<span class="fragment anim-step" data-anim="linear_b" data-step="2"></span>
+<span class="fragment anim-step" data-anim="linear_b" data-step="3"></span>
+</div>
+</section>
+<section id="the-probe-sequences-must-know" class="slide level2 long-title numtable">
+<h2>The Probe Sequences <span class="ex">Must Know</span></h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;">key</th>
+<th style="text-align: center;"><span class="math inline">\(H(k)\)</span></th>
+<th style="text-align: left;">probes</th>
+<th style="text-align: center;">slot</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">18</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;">5</td>
+<td style="text-align: center;">5</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">31</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;">5 → 6</td>
+<td style="text-align: center;">6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">44</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;">5 → 6 → 7</td>
+<td style="text-align: center;">7</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">59</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: left;">7 → 8</td>
+<td style="text-align: center;">8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: left;">12</td>
+<td style="text-align: center;">12</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">25</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: left;">12 → 0</td>
+<td style="text-align: center;">0</td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<p>Six keys cost five probes beyond their home indices. Four of the six collided, and 59 collided with 44, which is not stored at its own home index.</p>
+</div>
+</section>
+<section id="clustering" class="slide level2">
+<h2>Clustering</h2>
+<p>Linear probing leaves the occupied locations in runs. Each run is a <strong>cluster</strong>, and a key whose home index is inside one probes every location to the end of it.</p>
+<div class="fragment">
+<ul>
+<li>The six keys left two clusters: slots 5 to 8, and slots 12 and 0, which are neighbours in a circular table.</li>
+<li>A key hashing to 5, 6, 7 or 8 now lands in slot 9, and that cluster grows by one.</li>
+</ul>
+</div>
+<div class="fragment">
+<p>This is <strong>primary clustering</strong>: keys with different home indices end up on one probe sequence.</p>
+</div>
+</section>
+<section id="searching-a-probe-sequence-must-know" class="slide level2 long-title">
+<h2>Searching a Probe Sequence <span class="ex">Must Know</span></h2>
+<p>A search runs the probe sequence the insertion ran, and ends in one of three ways.</p>
+<ul>
+<li>The location holds the key. <strong>Found</strong>.</li>
+<li>The location is <strong>empty</strong>. Not found: nothing has ever been stored there, so no insertion can have walked past it.</li>
+<li>The sequence returns to the home index. The table is full and the key is not in it.</li>
+</ul>
+<div class="fragment">
+<p>A search that misses examines every location of the cluster it starts in.</p>
+</div>
+</section>
+<section id="question-4" class="slide level2">
+<h2>Question</h2>
+<p>The six keys are in the table, 83 is not one of them, and <span class="math inline">\(H(83) = 83 \bmod 13 = 5\)</span>.</p>
+<div class="fig still"><svg viewbox="0 0 940 148" width="74%" xmlns="http://www.w3.org/2000/svg" role="img">
+<rect class="slot" x="45.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="74.0" y="105.0" text-anchor="middle">0</text>
+<rect class="slot" x="111.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="140.0" y="105.0" text-anchor="middle">1</text>
+<rect class="slot" x="177.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="206.0" y="105.0" text-anchor="middle">2</text>
+<rect class="slot" x="243.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="272.0" y="105.0" text-anchor="middle">3</text>
+<rect class="slot" x="309.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="338.0" y="105.0" text-anchor="middle">4</text>
+<rect class="slot" x="375.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="404.0" y="105.0" text-anchor="middle">5</text>
+<rect class="slot" x="441.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="470.0" y="105.0" text-anchor="middle">6</text>
+<rect class="slot" x="507.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="536.0" y="105.0" text-anchor="middle">7</text>
+<rect class="slot" x="573.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="602.0" y="105.0" text-anchor="middle">8</text>
+<rect class="slot" x="639.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="668.0" y="105.0" text-anchor="middle">9</text>
+<rect class="slot" x="705.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="734.0" y="105.0" text-anchor="middle">10</text>
+<rect class="slot" x="771.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="800.0" y="105.0" text-anchor="middle">11</text>
+<rect class="slot" x="837.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="866.0" y="105.0" text-anchor="middle">12</text>
+<g class="kt" transform="translate(74.0,56)"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">25</text></g>
+<g class="kt" transform="translate(404.0,56)"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">18</text></g>
+<g class="kt" transform="translate(470.0,56)"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">31</text></g>
+<g class="kt" transform="translate(536.0,56)"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">44</text></g>
+<g class="kt" transform="translate(602.0,56)"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">59</text></g>
+<g class="kt" transform="translate(866.0,56)"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">12</text></g>
+</svg></div>
+<p><strong><em>How many locations does a search for 83 examine?</em></strong></p>
+<ul class="choices row">
+  <li><span class="k">A</span> 1</li>
+  <li><span class="k">B</span> 4</li>
+  <li><span class="k">C</span> 6</li>
+  <li class="fragment pick"><span class="k">D</span> 5</li>
+</ul>
+<div class="fragment">
+<p>83 is compared with 18, 31, 44 and 59, and the empty slot 9 ends the search. <strong>4</strong> leaves out that last location, <strong>6</strong> goes one past it, and <strong>1</strong> stops at the home index.</p>
+</div>
+</section>
+<section id="removing-an-entry" class="slide level2">
+<h2>Removing an Entry</h2>
+<p>This is the table the linear-probing trace left. One entry comes out of it, and the location it held is set to <code>null</code>.</p>
+<div class="anim" id="remove_null" data-gap="620">
+<div class="anim-cap" data-id="cap">The table the linear-probing trace left.</div>
+<svg viewbox="0 0 940 300" width="94%" xmlns="http://www.w3.org/2000/svg" role="img">
+<defs><marker id="ah-remove_null" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="context-stroke"></path></marker></defs>
+<rect class="slot" x="45.0" y="189.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="74.0" y="261.0" text-anchor="middle">0</text>
+<rect class="slot" x="111.0" y="189.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="140.0" y="261.0" text-anchor="middle">1</text>
+<rect class="slot" x="177.0" y="189.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="206.0" y="261.0" text-anchor="middle">2</text>
+<rect class="slot" x="243.0" y="189.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="272.0" y="261.0" text-anchor="middle">3</text>
+<rect class="slot" x="309.0" y="189.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="338.0" y="261.0" text-anchor="middle">4</text>
+<rect class="slot" x="375.0" y="189.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="404.0" y="261.0" text-anchor="middle">5</text>
+<rect class="slot" x="441.0" y="189.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="470.0" y="261.0" text-anchor="middle">6</text>
+<rect class="slot" x="507.0" y="189.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="536.0" y="261.0" text-anchor="middle">7</text>
+<rect class="slot" x="573.0" y="189.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="602.0" y="261.0" text-anchor="middle">8</text>
+<rect class="slot" x="639.0" y="189.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="668.0" y="261.0" text-anchor="middle">9</text>
+<rect class="slot" x="705.0" y="189.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="734.0" y="261.0" text-anchor="middle">10</text>
+<rect class="slot" x="771.0" y="189.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="800.0" y="261.0" text-anchor="middle">11</text>
+<rect class="slot" x="837.0" y="189.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="866.0" y="261.0" text-anchor="middle">12</text>
+<g data-id="e25" style="transform:translate(74.0px,212px);opacity:1" class="kt"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">25</text></g>
+<g data-id="e18" style="transform:translate(404.0px,212px);opacity:1" class="kt"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">18</text></g>
+<g data-id="e31" style="transform:translate(470.0px,212px);opacity:1" class="kt"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">31</text></g>
+<g data-id="e44" style="transform:translate(536.0px,212px);opacity:1" class="kt"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">44</text></g>
+<g data-id="e59" style="transform:translate(602.0px,212px);opacity:1" class="kt"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">59</text></g>
+<g data-id="e12" style="transform:translate(866.0px,212px);opacity:1" class="kt"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">12</text></g>
+<g data-id="ar" style="transform:translate(470.0px,36px);opacity:0" class="ret big"><text x="0" y="1" text-anchor="middle" dominant-baseline="central"></text></g>
+<g data-id="mk" style="transform:translate(404.0px,162px);opacity:0" class="mk"><path d="M0,0 L-11,-18 L11,-18 z"></path><text x="0" y="-26" text-anchor="middle"></text></g>
+<g data-id="note" style="transform:translate(470.0px,284px);opacity:0" class="ret tally"><text x="0" y="1" text-anchor="middle" dominant-baseline="central"></text></g>
+</svg>
+<script type="application/json" class="anim-data">[{"cap":{"h":"The table the linear-probing trace left."},"e25":{"x":74.0,"y":212,"o":1,"c":""},"e18":{"x":404.0,"y":212,"o":1,"c":""},"e31":{"x":470.0,"y":212,"o":1,"c":""},"e44":{"x":536.0,"y":212,"o":1,"c":""},"e59":{"x":602.0,"y":212,"o":1,"c":""},"e12":{"x":866.0,"y":212,"o":1,"c":""},"ar":{"x":470.0,"y":36,"o":0,"c":""},"mk":{"x":404.0,"y":162,"o":0,"c":""},"note":{"x":470.0,"y":284,"o":0,"c":""}},{"cap":{"h":"<code>remove(31)<\/code>. The probe sequence runs from H(31) = 5 until the key turns up."},"_ph":[{"cap":{"h":"<code>remove(31)<\/code>. The probe sequence runs from H(31) = 5 until the key turns up."}},{"ar":{"t":"H(31) = 31 mod 13 = 5","o":1},"mk":{"x":404.0,"o":1,"c":"hot"},"e18":{"c":"bad"}},{"mk":{"x":470.0,"o":1,"c":"hot"}},{"e31":{"c":"hot"}}],"ar":{"t":"H(31) = 31 mod 13 = 5","o":1},"mk":{"x":470.0,"o":1,"c":"hot"},"e18":{"c":"bad"},"e31":{"c":"hot"}},{"cap":{"h":"The entry is gone, and the removal writes <code>null<\/code> into slot 6, which is what the slot held before the table was ever used."},"e18":{"c":""},"_ph":[{"cap":{"h":"The entry is gone, and the removal writes <code>null<\/code> into slot 6, which is what the slot held before the table was ever used."},"e18":{"c":""}},{"e31":{"o":0},"mk":{"o":0}}],"e31":{"o":0},"mk":{"o":0}},{"cap":{"h":"<code>getValue(44)<\/code>. H(44) = 5, so the search starts where 31 started."},"_ph":[{"cap":{"h":"<code>getValue(44)<\/code>. H(44) = 5, so the search starts where 31 started."}},{"ar":{"t":"H(44) = 44 mod 13 = 5","o":1},"mk":{"x":404.0,"o":1,"c":"hot"},"e18":{"c":"bad"}},{"mk":{"x":470.0,"o":1,"c":"bad"}}],"ar":{"t":"H(44) = 44 mod 13 = 5","o":1},"mk":{"x":470.0,"o":1,"c":"bad"},"e18":{"c":"bad"}},{"cap":{"h":"The search stops at the <code>null<\/code> and reports 44 absent, although it is in slot 7."},"e18":{"c":""},"_ph":[{"cap":{"h":"The search stops at the <code>null<\/code> and reports 44 absent, although it is in slot 7."},"e18":{"c":""}},{"note":{"t":"44 reported absent","o":1,"c":"bad"}},{"e44":{"c":"hot"}}],"note":{"t":"44 reported absent","o":1,"c":"bad"},"e44":{"c":"hot"}}]</script>
+<span class="fragment anim-step" data-anim="remove_null" data-step="1"></span>
+<span class="fragment anim-step" data-anim="remove_null" data-step="2"></span>
+<span class="fragment anim-step" data-anim="remove_null" data-step="3"></span>
+<span class="fragment anim-step" data-anim="remove_null" data-step="4"></span>
+</div>
+</section>
+<section id="three-kinds-of-location-must-know" class="slide level2 long-title">
+<h2>Three Kinds of Location <span class="ex">Must Know</span></h2>
+<p>A removal cannot write <code>null</code> into the location it empties, because a search that reached it would stop there. So a location is one of three things.</p>
+<ul>
+<li><strong>Occupied.</strong> It holds an entry of the dictionary.</li>
+<li><strong>Empty.</strong> It holds <code>null</code> and always has.</li>
+<li><strong>Available.</strong> Its entry was removed.</li>
+</ul>
+<div class="fragment">
+<p>A search steps over an available location and stops only at an empty one. An insertion may reuse an available location, but only once it has searched the whole sequence for the key it is adding.</p>
+</div>
+</section>
+<section id="marking-a-location-available" class="slide level2 long-title">
+<h2>Marking a Location Available</h2>
+<p>The same removal, with the location it empties marked <strong>available</strong>.</p>
+<div class="anim" id="remove_avail" data-gap="620">
+<div class="anim-cap" data-id="cap">The table the linear-probing trace left.</div>
+<svg viewbox="0 0 940 300" width="94%" xmlns="http://www.w3.org/2000/svg" role="img">
+<defs><marker id="ah-remove_avail" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="context-stroke"></path></marker></defs>
+<rect class="slot" x="45.0" y="189.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="74.0" y="261.0" text-anchor="middle">0</text>
+<rect class="slot" x="111.0" y="189.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="140.0" y="261.0" text-anchor="middle">1</text>
+<rect class="slot" x="177.0" y="189.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="206.0" y="261.0" text-anchor="middle">2</text>
+<rect class="slot" x="243.0" y="189.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="272.0" y="261.0" text-anchor="middle">3</text>
+<rect class="slot" x="309.0" y="189.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="338.0" y="261.0" text-anchor="middle">4</text>
+<rect class="slot" x="375.0" y="189.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="404.0" y="261.0" text-anchor="middle">5</text>
+<rect class="slot" x="441.0" y="189.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="470.0" y="261.0" text-anchor="middle">6</text>
+<rect class="slot" x="507.0" y="189.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="536.0" y="261.0" text-anchor="middle">7</text>
+<rect class="slot" x="573.0" y="189.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="602.0" y="261.0" text-anchor="middle">8</text>
+<rect class="slot" x="639.0" y="189.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="668.0" y="261.0" text-anchor="middle">9</text>
+<rect class="slot" x="705.0" y="189.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="734.0" y="261.0" text-anchor="middle">10</text>
+<rect class="slot" x="771.0" y="189.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="800.0" y="261.0" text-anchor="middle">11</text>
+<rect class="slot" x="837.0" y="189.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="866.0" y="261.0" text-anchor="middle">12</text>
+<g data-id="e25" style="transform:translate(74.0px,212px);opacity:1" class="kt"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">25</text></g>
+<g data-id="e18" style="transform:translate(404.0px,212px);opacity:1" class="kt"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">18</text></g>
+<g data-id="e31" style="transform:translate(470.0px,212px);opacity:1" class="kt"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">31</text></g>
+<g data-id="e44" style="transform:translate(536.0px,212px);opacity:1" class="kt"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">44</text></g>
+<g data-id="e59" style="transform:translate(602.0px,212px);opacity:1" class="kt"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">59</text></g>
+<g data-id="e12" style="transform:translate(866.0px,212px);opacity:1" class="kt"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">12</text></g>
+<g data-id="ar" style="transform:translate(470.0px,36px);opacity:0" class="ret big"><text x="0" y="1" text-anchor="middle" dominant-baseline="central"></text></g>
+<g data-id="mk" style="transform:translate(404.0px,162px);opacity:0" class="mk"><path d="M0,0 L-11,-18 L11,-18 z"></path><text x="0" y="-26" text-anchor="middle"></text></g>
+<g data-id="note" style="transform:translate(470.0px,284px);opacity:0" class="ret tally"><text x="0" y="1" text-anchor="middle" dominant-baseline="central"></text></g>
+</svg>
+<script type="application/json" class="anim-data">[{"cap":{"h":"The table the linear-probing trace left."},"e25":{"x":74.0,"y":212,"o":1,"c":""},"e18":{"x":404.0,"y":212,"o":1,"c":""},"e31":{"x":470.0,"y":212,"o":1,"c":""},"e44":{"x":536.0,"y":212,"o":1,"c":""},"e59":{"x":602.0,"y":212,"o":1,"c":""},"e12":{"x":866.0,"y":212,"o":1,"c":""},"ar":{"x":470.0,"y":36,"o":0,"c":""},"mk":{"x":404.0,"y":162,"o":0,"c":""},"note":{"x":470.0,"y":284,"o":0,"c":""}},{"cap":{"h":"<code>remove(31)<\/code>. The probe sequence runs from H(31) = 5 until the key turns up."},"_ph":[{"cap":{"h":"<code>remove(31)<\/code>. The probe sequence runs from H(31) = 5 until the key turns up."}},{"ar":{"t":"H(31) = 31 mod 13 = 5","o":1},"mk":{"x":404.0,"o":1,"c":"hot"},"e18":{"c":"bad"}},{"mk":{"x":470.0,"o":1,"c":"hot"}},{"e31":{"c":"hot"}}],"ar":{"t":"H(31) = 31 mod 13 = 5","o":1},"mk":{"x":470.0,"o":1,"c":"hot"},"e18":{"c":"bad"},"e31":{"c":"hot"}},{"cap":{"h":"The entry is gone, and slot 6 is marked <b>available<\/b> instead."},"e18":{"c":""},"_ph":[{"cap":{"h":"The entry is gone, and slot 6 is marked <b>available<\/b> instead."},"e18":{"c":""}},{"e31":{"t":"A","c":"avail"},"mk":{"o":0}}],"e31":{"t":"A","c":"avail"},"mk":{"o":0}},{"cap":{"h":"<code>getValue(44)<\/code>. H(44) = 5, so the search starts where 31 started."},"_ph":[{"cap":{"h":"<code>getValue(44)<\/code>. H(44) = 5, so the search starts where 31 started."}},{"ar":{"t":"H(44) = 44 mod 13 = 5","o":1},"mk":{"x":404.0,"o":1,"c":"hot"},"e18":{"c":"bad"}},{"mk":{"x":470.0,"o":1,"c":"hot"}},{"mk":{"x":536.0,"o":1,"c":"hot"}},{"e44":{"c":"hot"}}],"ar":{"t":"H(44) = 44 mod 13 = 5","o":1},"mk":{"x":536.0,"o":1,"c":"hot"},"e18":{"c":"bad"},"e44":{"c":"hot"}},{"cap":{"h":"The search steps over slot 6 rather than stopping there, so 44 is still reachable from its home index."},"e18":{"c":""},"_ph":[{"cap":{"h":"The search steps over slot 6 rather than stopping there, so 44 is still reachable from its home index."},"e18":{"c":""}},{"note":{"t":"44 found, after 3 locations","o":1}}],"note":{"t":"44 found, after 3 locations","o":1}}]</script>
+<span class="fragment anim-step" data-anim="remove_avail" data-step="1"></span>
+<span class="fragment anim-step" data-anim="remove_avail" data-step="2"></span>
+<span class="fragment anim-step" data-anim="remove_avail" data-step="3"></span>
+<span class="fragment anim-step" data-anim="remove_avail" data-step="4"></span>
+</div>
+</section>
+<section id="question-5" class="slide level2">
+<h2>Question</h2>
+<p>Slot 6 is available, 57 is not in the table, and <span class="math inline">\(H(57) = 5\)</span>.</p>
+<div class="fig still"><svg viewbox="0 0 940 148" width="74%" xmlns="http://www.w3.org/2000/svg" role="img">
+<rect class="slot" x="45.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="74.0" y="105.0" text-anchor="middle">0</text>
+<rect class="slot" x="111.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="140.0" y="105.0" text-anchor="middle">1</text>
+<rect class="slot" x="177.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="206.0" y="105.0" text-anchor="middle">2</text>
+<rect class="slot" x="243.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="272.0" y="105.0" text-anchor="middle">3</text>
+<rect class="slot" x="309.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="338.0" y="105.0" text-anchor="middle">4</text>
+<rect class="slot" x="375.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="404.0" y="105.0" text-anchor="middle">5</text>
+<rect class="slot" x="441.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="470.0" y="105.0" text-anchor="middle">6</text>
+<rect class="slot" x="507.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="536.0" y="105.0" text-anchor="middle">7</text>
+<rect class="slot" x="573.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="602.0" y="105.0" text-anchor="middle">8</text>
+<rect class="slot" x="639.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="668.0" y="105.0" text-anchor="middle">9</text>
+<rect class="slot" x="705.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="734.0" y="105.0" text-anchor="middle">10</text>
+<rect class="slot" x="771.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="800.0" y="105.0" text-anchor="middle">11</text>
+<rect class="slot" x="837.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="866.0" y="105.0" text-anchor="middle">12</text>
+<g class="kt" transform="translate(74.0,56)"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">25</text></g>
+<g class="kt" transform="translate(404.0,56)"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">18</text></g>
+<g class="kt avail" transform="translate(470.0,56)"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">A</text></g>
+<g class="kt" transform="translate(536.0,56)"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">44</text></g>
+<g class="kt" transform="translate(602.0,56)"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">59</text></g>
+<g class="kt" transform="translate(866.0,56)"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">12</text></g>
+</svg></div>
+<p><strong><em>Where does <code>add(57, value)</code> store it?</em></strong></p>
+<ul class="choices row">
+  <li class="fragment pick"><span class="k">A</span> 6</li>
+  <li><span class="k">B</span> 9</li>
+  <li><span class="k">C</span> 5</li>
+  <li><span class="k">D</span> 1</li>
+</ul>
+<div class="fragment">
+<p>The insertion walks to slot 9 first, because a 57 stored anywhere along the sequence would make the call a replacement. None turns up, so it goes back to the first available location. <strong>9</strong> is the first empty location, which leaves the hole unused.</p>
+</div>
+</section>
+<section id="collision-resolution-1" class="slide level2 center section-divider">
+<h2>Collision Resolution</h2>
+<p>Quadratic Probing</p>
+<p><span class="seclist">hash functions · collisions · linear probing · <span class="sec-on">quadratic probing</span> · double hashing · separate chaining</span></p>
+</section>
+<section id="quadratic-probing-must-know" class="slide level2 long-title">
+<h2>Quadratic Probing <span class="ex">Must Know</span></h2>
+<p>Add the square of the probe number to the home index:</p>
+<p><span class="math display">\[(H(k) + j^2) \bmod n, \qquad j = 0, 1, 2, \dots\]</span></p>
+<div class="fragment">
+<ul>
+<li>The offsets are 0, 1, 4, 9, 16, …, so the sequence leaves the neighbourhood of the home index after two probes.</li>
+<li>It never fills consecutive locations, so a key whose home index is next to a cluster does not have to probe through it.</li>
+</ul>
+</div>
+<div class="fragment">
+<p>With <span class="math inline">\(n\)</span> prime the offsets reach <span class="math inline">\(\lceil n/2 \rceil\)</span> distinct locations and then repeat. For <span class="math inline">\(n = 13\)</span> that is 7 of the 13 slots, so the table has to stay at most half full for an insertion to be sure of one.</p>
+</div>
+</section>
+<section id="tracing-quadratic-probing" class="slide level2 long-title">
+<h2>Tracing Quadratic Probing</h2>
+<p>The same three keys go in again, with the offsets 0, 1, 4.</p>
+<div class="anim" id="quad_a" data-gap="560">
+<div class="anim-cap" data-id="cap">A table of 13 slots, H(k) = k mod 13, and the keys 18, 31, 44, 59, 12, 25 added in that order.</div>
+<svg viewbox="0 0 940 342" width="94%" xmlns="http://www.w3.org/2000/svg" role="img">
+<defs><marker id="ah-quad_a" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="context-stroke"></path></marker></defs>
+<rect class="slot" x="45.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="74.0" y="285.0" text-anchor="middle">0</text>
+<rect class="slot" x="111.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="140.0" y="285.0" text-anchor="middle">1</text>
+<rect class="slot" x="177.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="206.0" y="285.0" text-anchor="middle">2</text>
+<rect class="slot" x="243.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="272.0" y="285.0" text-anchor="middle">3</text>
+<rect class="slot" x="309.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="338.0" y="285.0" text-anchor="middle">4</text>
+<rect class="slot" x="375.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="404.0" y="285.0" text-anchor="middle">5</text>
+<rect class="slot" x="441.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="470.0" y="285.0" text-anchor="middle">6</text>
+<rect class="slot" x="507.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="536.0" y="285.0" text-anchor="middle">7</text>
+<rect class="slot" x="573.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="602.0" y="285.0" text-anchor="middle">8</text>
+<rect class="slot" x="639.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="668.0" y="285.0" text-anchor="middle">9</text>
+<rect class="slot" x="705.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="734.0" y="285.0" text-anchor="middle">10</text>
+<rect class="slot" x="771.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="800.0" y="285.0" text-anchor="middle">11</text>
+<rect class="slot" x="837.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="866.0" y="285.0" text-anchor="middle">12</text>
+<g data-id="ar1" style="transform:translate(470.0px,36px);opacity:0" class="ret big"><text x="0" y="1" text-anchor="middle" dominant-baseline="central"></text></g>
+<g data-id="ar2" style="transform:translate(470.0px,82px);opacity:0" class="ret tally"><text x="0" y="1" text-anchor="middle" dominant-baseline="central"></text></g>
+<path data-id="warc" style="opacity:0" class="wrap" d="M866.0,308.0 L866.0,308.0 L74.0,308.0 L74.0,308.0" marker-end="url(#ah-quad_a)"></path>
+<g data-id="e18" style="transform:translate(404.0px,150px);opacity:0" class="kt"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">18</text></g>
+<g data-id="e31" style="transform:translate(404.0px,150px);opacity:0" class="kt"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">31</text></g>
+<g data-id="e44" style="transform:translate(404.0px,150px);opacity:0" class="kt"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">44</text></g>
+</svg>
+<script type="application/json" class="anim-data">[{"cap":{"h":"A table of 13 slots, H(k) = k mod 13, and the keys 18, 31, 44, 59, 12, 25 added in that order."},"ar1":{"x":470.0,"y":36,"o":0,"c":""},"ar2":{"x":470.0,"y":82,"o":0,"c":""},"warc":{"d":"M866.0,308.0 L866.0,308.0 L74.0,308.0 L74.0,308.0","o":0,"c":""},"e18":{"x":404.0,"y":150,"o":0,"c":""},"e31":{"x":404.0,"y":150,"o":0,"c":""},"e44":{"x":404.0,"y":150,"o":0,"c":""}},{"cap":{"h":"<code>add(18)<\/code>. The offsets are 0, 1, 4, 9, 16, and the first of them is the home index itself."},"_ph":[{"cap":{"h":"<code>add(18)<\/code>. The offsets are 0, 1, 4, 9, 16, and the first of them is the home index itself."}},{"ar1":{"t":"H(18) = 18 mod 13 = 5","o":1},"ar2":{"t":"","o":0},"e18":{"x":404.0,"y":150,"o":1,"c":"hot"}},{"e18":{"x":404.0},"ar2":{"t":"j = 0:   (5 + 0) mod 13 = 5, free","o":1}},{"e18":{"y":236,"c":"hot"}}],"ar1":{"t":"H(18) = 18 mod 13 = 5","o":1},"ar2":{"t":"j = 0:   (5 + 0) mod 13 = 5, free","o":1},"e18":{"x":404.0,"y":236,"o":1,"c":"hot"}},{"cap":{"h":"<code>add(31)<\/code>. Slot 5 is taken, so j moves to 1."},"e18":{"c":"bad"},"_ph":[{"cap":{"h":"<code>add(31)<\/code>. Slot 5 is taken, so j moves to 1."},"e18":{"c":""}},{"ar1":{"t":"H(31) = 31 mod 13 = 5","o":1},"ar2":{"t":"","o":0},"e31":{"x":404.0,"y":150,"o":1,"c":"hot"}},{"e31":{"x":404.0},"ar2":{"t":"j = 0:   (5 + 0) mod 13 = 5, taken","o":1},"e18":{"c":"bad"}},{"e31":{"x":470.0},"ar2":{"t":"j = 1:   (5 + 1*1) mod 13 = 6, free","o":1}},{"e31":{"y":236,"c":"hot"}}],"ar1":{"t":"H(31) = 31 mod 13 = 5","o":1},"ar2":{"t":"j = 1:   (5 + 1*1) mod 13 = 6, free","o":1},"e31":{"x":470.0,"y":236,"o":1,"c":"hot"}},{"cap":{"h":"<code>add(44)<\/code>. Slots 5 and 6 are both taken, so j reaches 2."},"e18":{"c":"bad"},"e31":{"c":"bad"},"_ph":[{"cap":{"h":"<code>add(44)<\/code>. Slots 5 and 6 are both taken, so j reaches 2."},"e18":{"c":""},"e31":{"c":""}},{"ar1":{"t":"H(44) = 44 mod 13 = 5","o":1},"ar2":{"t":"","o":0},"e44":{"x":404.0,"y":150,"o":1,"c":"hot"}},{"e44":{"x":404.0},"ar2":{"t":"j = 0:   (5 + 0) mod 13 = 5, taken","o":1},"e18":{"c":"bad"}},{"e44":{"x":470.0},"ar2":{"t":"j = 1:   (5 + 1*1) mod 13 = 6, taken","o":1},"e31":{"c":"bad"}},{"e44":{"x":668.0},"ar2":{"t":"j = 2:   (5 + 2*2) mod 13 = 9, free","o":1}},{"e44":{"y":236,"c":"hot"}}],"ar1":{"t":"H(44) = 44 mod 13 = 5","o":1},"ar2":{"t":"j = 2:   (5 + 2*2) mod 13 = 9, free","o":1},"e44":{"x":668.0,"y":236,"o":1,"c":"hot"}}]</script>
+<span class="fragment anim-step" data-anim="quad_a" data-step="1"></span>
+<span class="fragment anim-step" data-anim="quad_a" data-step="2"></span>
+<span class="fragment anim-step" data-anim="quad_a" data-step="3"></span>
+</div>
+</section>
+<section id="question-6" class="slide level2">
+<h2>Question</h2>
+<p>The same three keys, placed by quadratic probing. The next key is 59.</p>
+<div class="fig still"><svg viewbox="0 0 940 148" width="74%" xmlns="http://www.w3.org/2000/svg" role="img">
+<rect class="slot" x="45.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="74.0" y="105.0" text-anchor="middle">0</text>
+<rect class="slot" x="111.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="140.0" y="105.0" text-anchor="middle">1</text>
+<rect class="slot" x="177.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="206.0" y="105.0" text-anchor="middle">2</text>
+<rect class="slot" x="243.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="272.0" y="105.0" text-anchor="middle">3</text>
+<rect class="slot" x="309.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="338.0" y="105.0" text-anchor="middle">4</text>
+<rect class="slot" x="375.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="404.0" y="105.0" text-anchor="middle">5</text>
+<rect class="slot" x="441.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="470.0" y="105.0" text-anchor="middle">6</text>
+<rect class="slot" x="507.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="536.0" y="105.0" text-anchor="middle">7</text>
+<rect class="slot" x="573.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="602.0" y="105.0" text-anchor="middle">8</text>
+<rect class="slot" x="639.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="668.0" y="105.0" text-anchor="middle">9</text>
+<rect class="slot" x="705.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="734.0" y="105.0" text-anchor="middle">10</text>
+<rect class="slot" x="771.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="800.0" y="105.0" text-anchor="middle">11</text>
+<rect class="slot" x="837.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="866.0" y="105.0" text-anchor="middle">12</text>
+<g class="kt" transform="translate(404.0,56)"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">18</text></g>
+<g class="kt" transform="translate(470.0,56)"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">31</text></g>
+<g class="kt" transform="translate(668.0,56)"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">44</text></g>
+</svg></div>
+<p><strong><em>Which slot does 59 take now?</em></strong></p>
+<ul class="choices row">
+  <li class="fragment pick"><span class="k">A</span> 7</li>
+  <li><span class="k">B</span> 8</li>
+  <li><span class="k">C</span> 9</li>
+  <li><span class="k">D</span> 10</li>
+</ul>
+<div class="fragment">
+<p>44 went to slot 9 instead of 7, so 59’s home index is free and the first probe takes it. Linear probing put 44 in slot 7 and sent 59 on to 8.</p>
+</div>
+</section>
+<section id="tracing-quadratic-probing-1" class="slide level2 long-title">
+<h2>Tracing Quadratic Probing</h2>
+<p>The last three keys go into the table quadratic probing has built.</p>
+<div class="anim" id="quad_b" data-gap="560">
+<div class="anim-cap" data-id="cap">Where the first three keys left the table. 59, 12, 25 are still to come.</div>
+<svg viewbox="0 0 940 342" width="94%" xmlns="http://www.w3.org/2000/svg" role="img">
+<defs><marker id="ah-quad_b" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="context-stroke"></path></marker></defs>
+<rect class="slot" x="45.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="74.0" y="285.0" text-anchor="middle">0</text>
+<rect class="slot" x="111.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="140.0" y="285.0" text-anchor="middle">1</text>
+<rect class="slot" x="177.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="206.0" y="285.0" text-anchor="middle">2</text>
+<rect class="slot" x="243.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="272.0" y="285.0" text-anchor="middle">3</text>
+<rect class="slot" x="309.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="338.0" y="285.0" text-anchor="middle">4</text>
+<rect class="slot" x="375.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="404.0" y="285.0" text-anchor="middle">5</text>
+<rect class="slot" x="441.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="470.0" y="285.0" text-anchor="middle">6</text>
+<rect class="slot" x="507.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="536.0" y="285.0" text-anchor="middle">7</text>
+<rect class="slot" x="573.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="602.0" y="285.0" text-anchor="middle">8</text>
+<rect class="slot" x="639.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="668.0" y="285.0" text-anchor="middle">9</text>
+<rect class="slot" x="705.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="734.0" y="285.0" text-anchor="middle">10</text>
+<rect class="slot" x="771.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="800.0" y="285.0" text-anchor="middle">11</text>
+<rect class="slot" x="837.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="866.0" y="285.0" text-anchor="middle">12</text>
+<g data-id="ar1" style="transform:translate(470.0px,36px);opacity:0" class="ret big"><text x="0" y="1" text-anchor="middle" dominant-baseline="central"></text></g>
+<g data-id="ar2" style="transform:translate(470.0px,82px);opacity:0" class="ret tally"><text x="0" y="1" text-anchor="middle" dominant-baseline="central"></text></g>
+<path data-id="warc" style="opacity:0" class="wrap" d="M866.0,308.0 L866.0,308.0 L74.0,308.0 L74.0,308.0" marker-end="url(#ah-quad_b)"></path>
+<g data-id="e18" style="transform:translate(404.0px,236px);opacity:1" class="kt"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">18</text></g>
+<g data-id="e31" style="transform:translate(470.0px,236px);opacity:1" class="kt"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">31</text></g>
+<g data-id="e44" style="transform:translate(668.0px,236px);opacity:1" class="kt"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">44</text></g>
+<g data-id="e59" style="transform:translate(536.0px,150px);opacity:0" class="kt"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">59</text></g>
+<g data-id="e12" style="transform:translate(866.0px,150px);opacity:0" class="kt"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">12</text></g>
+<g data-id="e25" style="transform:translate(866.0px,150px);opacity:0" class="kt"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">25</text></g>
+</svg>
+<script type="application/json" class="anim-data">[{"cap":{"h":"Where the first three keys left the table. 59, 12, 25 are still to come."},"ar1":{"x":470.0,"y":36,"o":0,"c":""},"ar2":{"x":470.0,"y":82,"o":0,"c":""},"warc":{"d":"M866.0,308.0 L866.0,308.0 L74.0,308.0 L74.0,308.0","o":0,"c":""},"e18":{"x":404.0,"y":236,"o":1,"c":""},"e31":{"x":470.0,"y":236,"o":1,"c":""},"e44":{"x":668.0,"y":236,"o":1,"c":""},"e59":{"x":536.0,"y":150,"o":0,"c":""},"e12":{"x":866.0,"y":150,"o":0,"c":""},"e25":{"x":866.0,"y":150,"o":0,"c":""}},{"cap":{"h":"<code>add(59)<\/code>. H(59) = 7, as it was with linear probing."},"_ph":[{"cap":{"h":"<code>add(59)<\/code>. H(59) = 7, as it was with linear probing."}},{"ar1":{"t":"H(59) = 59 mod 13 = 7","o":1},"ar2":{"t":"","o":0},"e59":{"x":536.0,"y":150,"o":1,"c":"hot"}},{"e59":{"x":536.0},"ar2":{"t":"j = 0:   (7 + 0) mod 13 = 7, free","o":1}},{"e59":{"y":236,"c":"hot"}}],"ar1":{"t":"H(59) = 59 mod 13 = 7","o":1},"ar2":{"t":"j = 0:   (7 + 0) mod 13 = 7, free","o":1},"e59":{"x":536.0,"y":236,"o":1,"c":"hot"}},{"cap":{"h":"<code>add(12)<\/code>. H(12) = 12, the last slot."},"e59":{"c":""},"_ph":[{"cap":{"h":"<code>add(12)<\/code>. H(12) = 12, the last slot."},"e59":{"c":""}},{"ar1":{"t":"H(12) = 12 mod 13 = 12","o":1},"ar2":{"t":"","o":0},"e12":{"x":866.0,"y":150,"o":1,"c":"hot"}},{"e12":{"x":866.0},"ar2":{"t":"j = 0:   (12 + 0) mod 13 = 12, free","o":1}},{"e12":{"y":236,"c":"hot"}}],"ar1":{"t":"H(12) = 12 mod 13 = 12","o":1},"ar2":{"t":"j = 0:   (12 + 0) mod 13 = 12, free","o":1},"e12":{"x":866.0,"y":236,"o":1,"c":"hot"}},{"cap":{"h":"<code>add(25)<\/code>. H(25) = 12 as well, and the offset 1 runs off the end of the table."},"e12":{"c":"bad"},"_ph":[{"cap":{"h":"<code>add(25)<\/code>. H(25) = 12 as well, and the offset 1 runs off the end of the table."},"e12":{"c":""}},{"ar1":{"t":"H(25) = 25 mod 13 = 12","o":1},"ar2":{"t":"","o":0},"e25":{"x":866.0,"y":150,"o":1,"c":"hot"}},{"e25":{"x":866.0},"ar2":{"t":"j = 0:   (12 + 0) mod 13 = 12, taken","o":1},"e12":{"c":"bad"}},{"e25":{"o":0},"warc":{"o":1}},{"e25":{"x":74.0,"o":1},"ar2":{"t":"j = 1:   (12 + 1*1) mod 13 = 0, free","o":1}},{"e25":{"y":236,"c":"hot"}}],"ar1":{"t":"H(25) = 25 mod 13 = 12","o":1},"ar2":{"t":"j = 1:   (12 + 1*1) mod 13 = 0, free","o":1},"e25":{"x":74.0,"y":236,"o":1,"c":"hot"},"warc":{"o":1}}]</script>
+<span class="fragment anim-step" data-anim="quad_b" data-step="1"></span>
+<span class="fragment anim-step" data-anim="quad_b" data-step="2"></span>
+<span class="fragment anim-step" data-anim="quad_b" data-step="3"></span>
+</div>
+</section>
+<section id="secondary-clustering" class="slide level2 long-title">
+<h2>Secondary Clustering</h2>
+<p>18, 31 and 44 share a home index, and each one walked the start of the same sequence, 5, 6, 9, stopping at the first free location.</p>
+<div class="fragment">
+<p>Quadratic probing spreads one probe sequence out, and every key with that home index follows the same sequence. That is <strong>secondary clustering</strong>.</p>
+<ul>
+<li>Linear probing: keys with <em>different</em> home indices end up on one probe sequence.</li>
+<li>Quadratic probing: only keys with the <em>same</em> home index do.</li>
+</ul>
+</div>
+</section>
+<section id="collision-resolution-2" class="slide level2 center section-divider">
+<h2>Collision Resolution</h2>
+<p>Double Hashing</p>
+<p><span class="seclist">hash functions · collisions · linear probing · quadratic probing · <span class="sec-on">double hashing</span> · separate chaining</span></p>
+</section>
+<section id="double-hashing-must-know" class="slide level2 long-title">
+<h2>Double Hashing <span class="ex">Must Know</span></h2>
+<p>A second hash function computes the step between probes, so the step depends on the key:</p>
+<p><span class="math display">\[(H_1(k) + j \cdot H_2(k)) \bmod n, \qquad j = 0, 1, 2, \dots\]</span></p>
+<p>with <span class="math inline">\(H_1(k) = k \bmod 13\)</span> and <span class="math inline">\(H_2(k) = 7 - (k \bmod 7)\)</span>.</p>
+<div class="fragment">
+<p><span class="math inline">\(H_2\)</span> returns 1 through 7, never 0, and a step of 0 would probe the home index forever. Every step from 1 to 7 is coprime with 13, so a sequence reaches all 13 slots.</p>
+</div>
+<div class="fragment">
+<p>Linear and quadratic probing add the same offsets to every key. This is the first method whose probe sequence depends on the key.</p>
+</div>
+</section>
+<section id="tracing-double-hashing" class="slide level2 long-title">
+<h2>Tracing Double Hashing</h2>
+<p>The first two keys. 18 lands on its first probe and never uses its step.</p>
+<div class="anim" id="double_a" data-gap="560">
+<div class="anim-cap" data-id="cap">A table of 13 slots, H(k) = k mod 13, and the keys 18, 31, 44, 59, 12, 25 added in that order.</div>
+<svg viewbox="0 0 940 342" width="94%" xmlns="http://www.w3.org/2000/svg" role="img">
+<defs><marker id="ah-double_a" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="context-stroke"></path></marker></defs>
+<rect class="slot" x="45.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="74.0" y="285.0" text-anchor="middle">0</text>
+<rect class="slot" x="111.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="140.0" y="285.0" text-anchor="middle">1</text>
+<rect class="slot" x="177.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="206.0" y="285.0" text-anchor="middle">2</text>
+<rect class="slot" x="243.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="272.0" y="285.0" text-anchor="middle">3</text>
+<rect class="slot" x="309.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="338.0" y="285.0" text-anchor="middle">4</text>
+<rect class="slot" x="375.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="404.0" y="285.0" text-anchor="middle">5</text>
+<rect class="slot" x="441.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="470.0" y="285.0" text-anchor="middle">6</text>
+<rect class="slot" x="507.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="536.0" y="285.0" text-anchor="middle">7</text>
+<rect class="slot" x="573.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="602.0" y="285.0" text-anchor="middle">8</text>
+<rect class="slot" x="639.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="668.0" y="285.0" text-anchor="middle">9</text>
+<rect class="slot" x="705.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="734.0" y="285.0" text-anchor="middle">10</text>
+<rect class="slot" x="771.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="800.0" y="285.0" text-anchor="middle">11</text>
+<rect class="slot" x="837.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="866.0" y="285.0" text-anchor="middle">12</text>
+<g data-id="ar1" style="transform:translate(470.0px,36px);opacity:0" class="ret big"><text x="0" y="1" text-anchor="middle" dominant-baseline="central"></text></g>
+<g data-id="ar2" style="transform:translate(470.0px,82px);opacity:0" class="ret tally"><text x="0" y="1" text-anchor="middle" dominant-baseline="central"></text></g>
+<path data-id="warc" style="opacity:0" class="wrap" d="M866.0,308.0 L866.0,308.0 L74.0,308.0 L74.0,308.0" marker-end="url(#ah-double_a)"></path>
+<g data-id="e18" style="transform:translate(404.0px,150px);opacity:0" class="kt"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">18</text></g>
+<g data-id="e31" style="transform:translate(404.0px,150px);opacity:0" class="kt"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">31</text></g>
+</svg>
+<script type="application/json" class="anim-data">[{"cap":{"h":"A table of 13 slots, H(k) = k mod 13, and the keys 18, 31, 44, 59, 12, 25 added in that order."},"ar1":{"x":470.0,"y":36,"o":0,"c":""},"ar2":{"x":470.0,"y":82,"o":0,"c":""},"warc":{"d":"M866.0,308.0 L866.0,308.0 L74.0,308.0 L74.0,308.0","o":0,"c":""},"e18":{"x":404.0,"y":150,"o":0,"c":""},"e31":{"x":404.0,"y":150,"o":0,"c":""}},{"cap":{"h":"<code>add(18)<\/code>. The step is H2(18), and the first probe does not use it."},"_ph":[{"cap":{"h":"<code>add(18)<\/code>. The step is H2(18), and the first probe does not use it."}},{"ar1":{"t":"H1(18) = 5,   H2(18) = 7 - 4 = 3","o":1},"ar2":{"t":"","o":0},"e18":{"x":404.0,"y":150,"o":1,"c":"hot"}},{"e18":{"x":404.0},"ar2":{"t":"j = 0:   (5 + 0) mod 13 = 5, free","o":1}},{"e18":{"y":236,"c":"hot"}}],"ar1":{"t":"H1(18) = 5,   H2(18) = 7 - 4 = 3","o":1},"ar2":{"t":"j = 0:   (5 + 0) mod 13 = 5, free","o":1},"e18":{"x":404.0,"y":236,"o":1,"c":"hot"}},{"cap":{"h":"<code>add(31)<\/code>. The home index is 5 again, so one step is added to it."},"e18":{"c":"bad"},"_ph":[{"cap":{"h":"<code>add(31)<\/code>. The home index is 5 again, so one step is added to it."},"e18":{"c":""}},{"ar1":{"t":"H1(31) = 5,   H2(31) = 7 - 3 = 4","o":1},"ar2":{"t":"","o":0},"e31":{"x":404.0,"y":150,"o":1,"c":"hot"}},{"e31":{"x":404.0},"ar2":{"t":"j = 0:   (5 + 0) mod 13 = 5, taken","o":1},"e18":{"c":"bad"}},{"e31":{"x":668.0},"ar2":{"t":"j = 1:   (5 + 1*4) mod 13 = 9, free","o":1}},{"e31":{"y":236,"c":"hot"}}],"ar1":{"t":"H1(31) = 5,   H2(31) = 7 - 3 = 4","o":1},"ar2":{"t":"j = 1:   (5 + 1*4) mod 13 = 9, free","o":1},"e31":{"x":668.0,"y":236,"o":1,"c":"hot"}}]</script>
+<span class="fragment anim-step" data-anim="double_a" data-step="1"></span>
+<span class="fragment anim-step" data-anim="double_a" data-step="2"></span>
+</div>
+</section>
+<section id="question-7" class="slide level2">
+<h2>Question</h2>
+<p>18 and 31 are in. The next key is 44, and <span class="math inline">\(44 \bmod 7 = 2\)</span>.</p>
+<div class="fig still"><svg viewbox="0 0 940 148" width="74%" xmlns="http://www.w3.org/2000/svg" role="img">
+<rect class="slot" x="45.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="74.0" y="105.0" text-anchor="middle">0</text>
+<rect class="slot" x="111.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="140.0" y="105.0" text-anchor="middle">1</text>
+<rect class="slot" x="177.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="206.0" y="105.0" text-anchor="middle">2</text>
+<rect class="slot" x="243.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="272.0" y="105.0" text-anchor="middle">3</text>
+<rect class="slot" x="309.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="338.0" y="105.0" text-anchor="middle">4</text>
+<rect class="slot" x="375.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="404.0" y="105.0" text-anchor="middle">5</text>
+<rect class="slot" x="441.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="470.0" y="105.0" text-anchor="middle">6</text>
+<rect class="slot" x="507.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="536.0" y="105.0" text-anchor="middle">7</text>
+<rect class="slot" x="573.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="602.0" y="105.0" text-anchor="middle">8</text>
+<rect class="slot" x="639.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="668.0" y="105.0" text-anchor="middle">9</text>
+<rect class="slot" x="705.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="734.0" y="105.0" text-anchor="middle">10</text>
+<rect class="slot" x="771.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="800.0" y="105.0" text-anchor="middle">11</text>
+<rect class="slot" x="837.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="866.0" y="105.0" text-anchor="middle">12</text>
+<g class="kt" transform="translate(404.0,56)"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">18</text></g>
+<g class="kt" transform="translate(668.0,56)"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">31</text></g>
+</svg></div>
+<p><strong><em>Which slot does 44 take?</em></strong></p>
+<ul class="choices row">
+  <li><span class="k">A</span> 6</li>
+  <li><span class="k">B</span> 7</li>
+  <li><span class="k">C</span> 9</li>
+  <li class="fragment pick"><span class="k">D</span> 10</li>
+</ul>
+<div class="fragment">
+<p><span class="math inline">\(H_2(44) = 7 - 2 = 5\)</span>, so the sequence is 5, 10, 2, … and slot 10 is free. <strong>6</strong> adds 1 like linear probing, <strong>7</strong> adds <span class="math inline">\(44 \bmod 7\)</span> rather than <span class="math inline">\(7 - (44 \bmod 7)\)</span>, and <strong>9</strong> reuses the step 31 was given.</p>
+</div>
+</section>
+<section id="tracing-double-hashing-1" class="slide level2 long-title">
+<h2>Tracing Double Hashing</h2>
+<p>The last four keys follow, each with its own step.</p>
+<div class="anim" id="double_b" data-gap="560">
+<div class="anim-cap" data-id="cap">Where the first two keys left the table. 44, 59, 12, 25 are still to come.</div>
+<svg viewbox="0 0 940 342" width="94%" xmlns="http://www.w3.org/2000/svg" role="img">
+<defs><marker id="ah-double_b" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="context-stroke"></path></marker></defs>
+<rect class="slot" x="45.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="74.0" y="285.0" text-anchor="middle">0</text>
+<rect class="slot" x="111.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="140.0" y="285.0" text-anchor="middle">1</text>
+<rect class="slot" x="177.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="206.0" y="285.0" text-anchor="middle">2</text>
+<rect class="slot" x="243.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="272.0" y="285.0" text-anchor="middle">3</text>
+<rect class="slot" x="309.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="338.0" y="285.0" text-anchor="middle">4</text>
+<rect class="slot" x="375.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="404.0" y="285.0" text-anchor="middle">5</text>
+<rect class="slot" x="441.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="470.0" y="285.0" text-anchor="middle">6</text>
+<rect class="slot" x="507.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="536.0" y="285.0" text-anchor="middle">7</text>
+<rect class="slot" x="573.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="602.0" y="285.0" text-anchor="middle">8</text>
+<rect class="slot" x="639.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="668.0" y="285.0" text-anchor="middle">9</text>
+<rect class="slot" x="705.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="734.0" y="285.0" text-anchor="middle">10</text>
+<rect class="slot" x="771.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="800.0" y="285.0" text-anchor="middle">11</text>
+<rect class="slot" x="837.0" y="213.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="866.0" y="285.0" text-anchor="middle">12</text>
+<g data-id="ar1" style="transform:translate(470.0px,36px);opacity:0" class="ret big"><text x="0" y="1" text-anchor="middle" dominant-baseline="central"></text></g>
+<g data-id="ar2" style="transform:translate(470.0px,82px);opacity:0" class="ret tally"><text x="0" y="1" text-anchor="middle" dominant-baseline="central"></text></g>
+<path data-id="warc" style="opacity:0" class="wrap" d="M866.0,308.0 L866.0,308.0 L74.0,308.0 L74.0,308.0" marker-end="url(#ah-double_b)"></path>
+<g data-id="e18" style="transform:translate(404.0px,236px);opacity:1" class="kt"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">18</text></g>
+<g data-id="e31" style="transform:translate(668.0px,236px);opacity:1" class="kt"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">31</text></g>
+<g data-id="e44" style="transform:translate(404.0px,150px);opacity:0" class="kt"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">44</text></g>
+<g data-id="e59" style="transform:translate(536.0px,150px);opacity:0" class="kt"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">59</text></g>
+<g data-id="e12" style="transform:translate(866.0px,150px);opacity:0" class="kt"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">12</text></g>
+<g data-id="e25" style="transform:translate(866.0px,150px);opacity:0" class="kt"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">25</text></g>
+</svg>
+<script type="application/json" class="anim-data">[{"cap":{"h":"Where the first two keys left the table. 44, 59, 12, 25 are still to come."},"ar1":{"x":470.0,"y":36,"o":0,"c":""},"ar2":{"x":470.0,"y":82,"o":0,"c":""},"warc":{"d":"M866.0,308.0 L866.0,308.0 L74.0,308.0 L74.0,308.0","o":0,"c":""},"e18":{"x":404.0,"y":236,"o":1,"c":""},"e31":{"x":668.0,"y":236,"o":1,"c":""},"e44":{"x":404.0,"y":150,"o":0,"c":""},"e59":{"x":536.0,"y":150,"o":0,"c":""},"e12":{"x":866.0,"y":150,"o":0,"c":""},"e25":{"x":866.0,"y":150,"o":0,"c":""}},{"cap":{"h":"<code>add(44)<\/code>. The home index is 5 a third time, and 44 has a step of its own."},"_ph":[{"cap":{"h":"<code>add(44)<\/code>. The home index is 5 a third time, and 44 has a step of its own."}},{"ar1":{"t":"H1(44) = 5,   H2(44) = 7 - 2 = 5","o":1},"ar2":{"t":"","o":0},"e44":{"x":404.0,"y":150,"o":1,"c":"hot"}},{"e44":{"x":404.0},"ar2":{"t":"j = 0:   (5 + 0) mod 13 = 5, taken","o":1},"e18":{"c":"bad"}},{"e44":{"x":734.0},"ar2":{"t":"j = 1:   (5 + 1*5) mod 13 = 10, free","o":1}},{"e44":{"y":236,"c":"hot"}}],"ar1":{"t":"H1(44) = 5,   H2(44) = 7 - 2 = 5","o":1},"ar2":{"t":"j = 1:   (5 + 1*5) mod 13 = 10, free","o":1},"e44":{"x":734.0,"y":236,"o":1,"c":"hot"},"e18":{"c":"bad"}},{"cap":{"h":"<code>add(59)<\/code>. H1(59) = 7, an index no key has reached."},"e18":{"c":""},"e44":{"c":""},"_ph":[{"cap":{"h":"<code>add(59)<\/code>. H1(59) = 7, an index no key has reached."},"e18":{"c":""},"e44":{"c":""}},{"ar1":{"t":"H1(59) = 7,   H2(59) = 7 - 3 = 4","o":1},"ar2":{"t":"","o":0},"e59":{"x":536.0,"y":150,"o":1,"c":"hot"}},{"e59":{"x":536.0},"ar2":{"t":"j = 0:   (7 + 0) mod 13 = 7, free","o":1}},{"e59":{"y":236,"c":"hot"}}],"ar1":{"t":"H1(59) = 7,   H2(59) = 7 - 3 = 4","o":1},"ar2":{"t":"j = 0:   (7 + 0) mod 13 = 7, free","o":1},"e59":{"x":536.0,"y":236,"o":1,"c":"hot"}},{"cap":{"h":"<code>add(12)<\/code>. H1(12) = 12, the last slot."},"e59":{"c":""},"_ph":[{"cap":{"h":"<code>add(12)<\/code>. H1(12) = 12, the last slot."},"e59":{"c":""}},{"ar1":{"t":"H1(12) = 12,   H2(12) = 7 - 5 = 2","o":1},"ar2":{"t":"","o":0},"e12":{"x":866.0,"y":150,"o":1,"c":"hot"}},{"e12":{"x":866.0},"ar2":{"t":"j = 0:   (12 + 0) mod 13 = 12, free","o":1}},{"e12":{"y":236,"c":"hot"}}],"ar1":{"t":"H1(12) = 12,   H2(12) = 7 - 5 = 2","o":1},"ar2":{"t":"j = 0:   (12 + 0) mod 13 = 12, free","o":1},"e12":{"x":866.0,"y":236,"o":1,"c":"hot"}},{"cap":{"h":"<code>add(25)<\/code>. H1(25) = 12 as well, and its step is 3."},"e12":{"c":"bad"},"_ph":[{"cap":{"h":"<code>add(25)<\/code>. H1(25) = 12 as well, and its step is 3."},"e12":{"c":""}},{"ar1":{"t":"H1(25) = 12,   H2(25) = 7 - 4 = 3","o":1},"ar2":{"t":"","o":0},"e25":{"x":866.0,"y":150,"o":1,"c":"hot"}},{"e25":{"x":866.0},"ar2":{"t":"j = 0:   (12 + 0) mod 13 = 12, taken","o":1},"e12":{"c":"bad"}},{"e25":{"o":0},"warc":{"o":1}},{"e25":{"x":206.0,"o":1},"ar2":{"t":"j = 1:   (12 + 1*3) mod 13 = 2, free","o":1}},{"e25":{"y":236,"c":"hot"}}],"ar1":{"t":"H1(25) = 12,   H2(25) = 7 - 4 = 3","o":1},"ar2":{"t":"j = 1:   (12 + 1*3) mod 13 = 2, free","o":1},"e25":{"x":206.0,"y":236,"o":1,"c":"hot"},"warc":{"o":1}}]</script>
+<span class="fragment anim-step" data-anim="double_b" data-step="1"></span>
+<span class="fragment anim-step" data-anim="double_b" data-step="2"></span>
+<span class="fragment anim-step" data-anim="double_b" data-step="3"></span>
+<span class="fragment anim-step" data-anim="double_b" data-step="4"></span>
+</div>
+</section>
+<section id="question-8" class="slide level2">
+<h2>Question</h2>
+<p>The key is 14, so <span class="math inline">\(H_1(14) = 1\)</span> and <span class="math inline">\(14 \bmod 7 = 0\)</span>.</p>
+<p><strong><em>What is <span class="math inline">\(H_2(14)\)</span>, and which slot does the next probe reach?</em></strong></p>
+<ul class="choices row">
+  <li><span class="k">A</span> 0, and slot 1 again.</li>
+  <li class="fragment pick"><span class="k">B</span> 7, and slot 8.</li>
+  <li><span class="k">C</span> 1, and slot 2.</li>
+  <li><span class="k">D</span> 7, but starting at slot 7.</li>
+</ul>
+<div class="fragment">
+<p><span class="math inline">\(7 - (k \bmod 7)\)</span> returns 7 where <span class="math inline">\(k \bmod 7\)</span> returns 0, which is why it is written that way. <strong>A</strong> never moves, <strong>C</strong> uses <span class="math inline">\(H_1\)</span> as the step, and <strong>D</strong> starts at <span class="math inline">\(H_2\)</span>.</p>
+</div>
+</section>
+<section id="comparing-the-three-methods" class="slide level2 long-title numtable">
+<h2>Comparing the Three Methods</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;">key</th>
+<th style="text-align: center;"><span class="math inline">\(H(k)\)</span></th>
+<th style="text-align: center;">linear</th>
+<th style="text-align: center;">quadratic</th>
+<th style="text-align: center;">double</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">18</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">5</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">31</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">44</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">9</td>
+<td style="text-align: center;">10</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">59</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">12</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">25</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">2</td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<p>Three keys hashed to 5. Linear probing filled 5, 6, 7 and took 59’s home index with it. Quadratic probing left slot 7 free. Double hashing gave the three of them steps of 3, 4 and 5.</p>
+</div>
+</section>
+<section id="comparing-the-three-methods-1" class="slide level2 long-title">
+<h2>Comparing the Three Methods</h2>
+<p>Linear probing has primary clustering. Quadratic probing removes it and keeps secondary clustering. Double hashing removes both.</p>
+<div class="fragment">
+<p>All three store every entry in the array itself, so an insertion needs a free location inside its own probe sequence. That is why the table is kept well under full.</p>
+</div>
+</section>
+<section id="collision-resolution-3" class="slide level2 center section-divider">
+<h2>Collision Resolution</h2>
+<p>Separate Chaining</p>
+<p><span class="seclist">hash functions · collisions · linear probing · quadratic probing · double hashing · <span class="sec-on">separate chaining</span></span></p>
+</section>
+<section id="separate-chaining-must-know" class="slide level2 long-title">
+<h2>Separate Chaining <span class="ex">Must Know</span></h2>
+<p>Separate chaining changes the table instead of the probe sequence. Each location is a <strong>bucket</strong>: a chain of linked nodes holding every entry whose key hashes to that index.</p>
+<div class="fragment">
+<ul>
+<li><code>add</code> links a new node at the <strong>head</strong> of the chain, which costs the same whatever the chain already holds.</li>
+<li>No entry is ever stored away from its home index, so there is no probe sequence and no available state.</li>
+<li>The load factor can pass 1. A bucket holds as many entries as hash to its index.</li>
+</ul>
+</div>
+</section>
+<section id="tracing-separate-chaining" class="slide level2 long-title">
+<h2>Tracing Separate Chaining</h2>
+<p>The same six keys go in again, each linked into the chain at its own home index.</p>
+<div class="anim" id="chaining" data-gap="620">
+<div class="anim-cap" data-id="cap">A table of 13 slots. Each one is a <b>bucket</b>: a chain of linked nodes, empty to begin with.</div>
+<svg viewbox="0 0 940 383" width="90%" xmlns="http://www.w3.org/2000/svg" role="img">
+<defs><marker id="ah-chaining" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="context-stroke"></path></marker></defs>
+<rect class="slot" x="45.0" y="127.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="74.0" y="111.0" text-anchor="middle">0</text>
+<rect class="slot" x="111.0" y="127.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="140.0" y="111.0" text-anchor="middle">1</text>
+<rect class="slot" x="177.0" y="127.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="206.0" y="111.0" text-anchor="middle">2</text>
+<rect class="slot" x="243.0" y="127.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="272.0" y="111.0" text-anchor="middle">3</text>
+<rect class="slot" x="309.0" y="127.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="338.0" y="111.0" text-anchor="middle">4</text>
+<rect class="slot" x="375.0" y="127.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="404.0" y="111.0" text-anchor="middle">5</text>
+<rect class="slot" x="441.0" y="127.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="470.0" y="111.0" text-anchor="middle">6</text>
+<rect class="slot" x="507.0" y="127.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="536.0" y="111.0" text-anchor="middle">7</text>
+<rect class="slot" x="573.0" y="127.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="602.0" y="111.0" text-anchor="middle">8</text>
+<rect class="slot" x="639.0" y="127.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="668.0" y="111.0" text-anchor="middle">9</text>
+<rect class="slot" x="705.0" y="127.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="734.0" y="111.0" text-anchor="middle">10</text>
+<rect class="slot" x="771.0" y="127.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="800.0" y="111.0" text-anchor="middle">11</text>
+<rect class="slot" x="837.0" y="127.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="866.0" y="111.0" text-anchor="middle">12</text>
+<g data-id="ar" style="transform:translate(470.0px,36px);opacity:0" class="ret big"><text x="0" y="1" text-anchor="middle" dominant-baseline="central"></text></g>
+<g data-id="n18" style="transform:translate(404.0px,232px);opacity:0" class="kt"><rect x="-29.0" y="-21.0" width="58" height="42" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">18</text></g>
+<path data-id="l18" style="opacity:0" class="ptr" d="M404.0,253.0 L404.0,265.0" marker-end="url(#ah-chaining)"></path>
+<g data-id="n31" style="transform:translate(404.0px,232px);opacity:0" class="kt"><rect x="-29.0" y="-21.0" width="58" height="42" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">31</text></g>
+<path data-id="l31" style="opacity:0" class="ptr" d="M404.0,253.0 L404.0,265.0" marker-end="url(#ah-chaining)"></path>
+<g data-id="n44" style="transform:translate(404.0px,232px);opacity:0" class="kt"><rect x="-29.0" y="-21.0" width="58" height="42" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">44</text></g>
+<path data-id="l44" style="opacity:0" class="ptr" d="M404.0,253.0 L404.0,265.0" marker-end="url(#ah-chaining)"></path>
+<g data-id="n59" style="transform:translate(536.0px,232px);opacity:0" class="kt"><rect x="-29.0" y="-21.0" width="58" height="42" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">59</text></g>
+<path data-id="l59" style="opacity:0" class="ptr" d="M536.0,253.0 L536.0,265.0" marker-end="url(#ah-chaining)"></path>
+<g data-id="n12" style="transform:translate(866.0px,232px);opacity:0" class="kt"><rect x="-29.0" y="-21.0" width="58" height="42" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">12</text></g>
+<path data-id="l12" style="opacity:0" class="ptr" d="M866.0,253.0 L866.0,265.0" marker-end="url(#ah-chaining)"></path>
+<g data-id="n25" style="transform:translate(866.0px,232px);opacity:0" class="kt"><rect x="-29.0" y="-21.0" width="58" height="42" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">25</text></g>
+<path data-id="l25" style="opacity:0" class="ptr" d="M866.0,253.0 L866.0,265.0" marker-end="url(#ah-chaining)"></path>
+<path data-id="b5" style="opacity:0" class="ptr" d="M404.0,173.0 L404.0,207.0" marker-end="url(#ah-chaining)"></path>
+<path data-id="b7" style="opacity:0" class="ptr" d="M536.0,173.0 L536.0,207.0" marker-end="url(#ah-chaining)"></path>
+<path data-id="b12" style="opacity:0" class="ptr" d="M866.0,173.0 L866.0,207.0" marker-end="url(#ah-chaining)"></path>
+</svg>
+<script type="application/json" class="anim-data">[{"cap":{"h":"A table of 13 slots. Each one is a <b>bucket<\/b>: a chain of linked nodes, empty to begin with."},"ar":{"x":470.0,"y":36,"o":0,"c":""},"n18":{"x":404.0,"y":232,"o":0,"c":""},"l18":{"d":"M404.0,253.0 L404.0,265.0","o":0,"c":""},"n31":{"x":404.0,"y":232,"o":0,"c":""},"l31":{"d":"M404.0,253.0 L404.0,265.0","o":0,"c":""},"n44":{"x":404.0,"y":232,"o":0,"c":""},"l44":{"d":"M404.0,253.0 L404.0,265.0","o":0,"c":""},"n59":{"x":536.0,"y":232,"o":0,"c":""},"l59":{"d":"M536.0,253.0 L536.0,265.0","o":0,"c":""},"n12":{"x":866.0,"y":232,"o":0,"c":""},"l12":{"d":"M866.0,253.0 L866.0,265.0","o":0,"c":""},"n25":{"x":866.0,"y":232,"o":0,"c":""},"l25":{"d":"M866.0,253.0 L866.0,265.0","o":0,"c":""},"b5":{"d":"M404.0,173.0 L404.0,207.0","o":0,"c":""},"b7":{"d":"M536.0,173.0 L536.0,207.0","o":0,"c":""},"b12":{"d":"M866.0,173.0 L866.0,207.0","o":0,"c":""}},{"cap":{"h":"<code>add(18)<\/code>. The chain at slot 5 is empty, so 18 becomes its only node."},"_ph":[{"cap":{"h":"<code>add(18)<\/code>. The chain at slot 5 is empty, so 18 becomes its only node."}},{"ar":{"t":"H(18) = 18 mod 13 = 5","o":1}},{"n18":{"y":232,"o":1,"c":"hot"},"b5":{"o":1}}],"ar":{"t":"H(18) = 18 mod 13 = 5","o":1},"n18":{"y":232,"o":1,"c":"hot"},"b5":{"o":1}},{"cap":{"h":"<code>add(31)<\/code>. The same slot. The new node is linked at the <b>head<\/b> of the chain."},"n18":{"c":"","y":290},"_ph":[{"cap":{"h":"<code>add(31)<\/code>. The same slot. The new node is linked at the <b>head<\/b> of the chain."},"n18":{"c":""}},{"ar":{"t":"H(31) = 31 mod 13 = 5","o":1}},{"n18":{"y":290},"l18":{"y":58}},{"n31":{"y":232,"o":1,"c":"hot"},"b5":{"o":1},"l31":{"o":1}}],"ar":{"t":"H(31) = 31 mod 13 = 5","o":1},"l18":{"y":58},"n31":{"y":232,"o":1,"c":"hot"},"b5":{"o":1},"l31":{"o":1}},{"cap":{"h":"<code>add(44)<\/code>. The same slot again, and again at the head."},"n31":{"c":"","y":290},"_ph":[{"cap":{"h":"<code>add(44)<\/code>. The same slot again, and again at the head."},"n31":{"c":""}},{"ar":{"t":"H(44) = 44 mod 13 = 5","o":1}},{"n31":{"y":290},"l31":{"y":58},"n18":{"y":348},"l18":{"y":116}},{"n44":{"y":232,"o":1,"c":"hot"},"b5":{"o":1},"l44":{"o":1}}],"ar":{"t":"H(44) = 44 mod 13 = 5","o":1},"l31":{"y":58},"n18":{"y":348},"l18":{"y":116},"n44":{"y":232,"o":1,"c":"hot"},"b5":{"o":1},"l44":{"o":1}},{"cap":{"h":"<code>add(59)<\/code>. Slot 7, and a chain of its own."},"n44":{"c":""},"_ph":[{"cap":{"h":"<code>add(59)<\/code>. Slot 7, and a chain of its own."},"n44":{"c":""}},{"ar":{"t":"H(59) = 59 mod 13 = 7","o":1}},{"n59":{"y":232,"o":1,"c":"hot"},"b7":{"o":1}}],"ar":{"t":"H(59) = 59 mod 13 = 7","o":1},"n59":{"y":232,"o":1,"c":"hot"},"b7":{"o":1}},{"cap":{"h":"<code>add(12)<\/code>. Slot 12."},"n59":{"c":""},"_ph":[{"cap":{"h":"<code>add(12)<\/code>. Slot 12."},"n59":{"c":""}},{"ar":{"t":"H(12) = 12 mod 13 = 12","o":1}},{"n12":{"y":232,"o":1,"c":"hot"},"b12":{"o":1}}],"ar":{"t":"H(12) = 12 mod 13 = 12","o":1},"n12":{"y":232,"o":1,"c":"hot"},"b12":{"o":1}},{"cap":{"h":"<code>add(25)<\/code>. Slot 12 as well, at the head of that chain."},"n12":{"c":"","y":290},"_ph":[{"cap":{"h":"<code>add(25)<\/code>. Slot 12 as well, at the head of that chain."},"n12":{"c":""}},{"ar":{"t":"H(25) = 25 mod 13 = 12","o":1}},{"n12":{"y":290},"l12":{"y":58}},{"n25":{"y":232,"o":1,"c":"hot"},"b12":{"o":1},"l25":{"o":1}}],"ar":{"t":"H(25) = 25 mod 13 = 12","o":1},"l12":{"y":58},"n25":{"y":232,"o":1,"c":"hot"},"b12":{"o":1},"l25":{"o":1}}]</script>
+<span class="fragment anim-step" data-anim="chaining" data-step="1"></span>
+<span class="fragment anim-step" data-anim="chaining" data-step="2"></span>
+<span class="fragment anim-step" data-anim="chaining" data-step="3"></span>
+<span class="fragment anim-step" data-anim="chaining" data-step="4"></span>
+<span class="fragment anim-step" data-anim="chaining" data-step="5"></span>
+<span class="fragment anim-step" data-anim="chaining" data-step="6"></span>
+</div>
+</section>
+<section id="the-chains" class="slide level2 wrap-table">
+<h2>The Chains</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;">index</th>
+<th style="text-align: left;">chain (head → tail)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">5</td>
+<td style="text-align: left;">44 → 31 → 18</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">7</td>
+<td style="text-align: left;">59</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">12</td>
+<td style="text-align: left;">25 → 12</td>
+</tr>
+</tbody>
+</table>
+<p>The other ten buckets are empty.</p>
+<div class="fragment">
+<p>Linking at the head puts the newest key first, so a chain reads in reverse insertion order. Six keys fill three of the 13 buckets, and the longest chain holds three of them.</p>
+</div>
+</section>
+<section id="searching-and-removing-a-chain" class="slide level2 long-title">
+<h2>Searching and Removing a Chain</h2>
+<p><code>getValue</code> hashes the key, then compares it with the keys of one chain, in order, until it matches or the chain ends.</p>
+<ul>
+<li>A search examines one chain and no other part of the table.</li>
+<li>A miss on an empty bucket costs no comparison at all.</li>
+<li><code>remove</code> unlinks a node from its chain, and no other key’s search runs through that node.</li>
+</ul>
+<div class="fragment">
+<p>Open addressing needs the available state because a key can sit far from its home index. Here every key is in the chain of its own index.</p>
+</div>
+</section>
+<section id="question-9" class="slide level2">
+<h2>Question</h2>
+<p>Slot 5’s chain is 44 → 31 → 18, slot 7 holds 59, and slot 12’s chain is 25 → 12. Every other bucket is empty.</p>
+<p><strong><em>Which search makes no key comparison at all?</em></strong></p>
+<ul class="choices row">
+  <li><span class="k">A</span> 57</li>
+  <li><span class="k">B</span> 20</li>
+  <li class="fragment pick"><span class="k">C</span> 21</li>
+  <li><span class="k">D</span> 25</li>
+</ul>
+<div class="fragment">
+<p><span class="math inline">\(21 \bmod 13 = 8\)</span>, and slot 8’s chain is empty, so the search stops before comparing anything. 57 costs three comparisons on slot 5’s chain, 20 costs one on slot 7, and 25 is found at the head of its chain after one.</p>
+</div>
+</section>
+<section id="open-addressing-or-chaining" class="slide level2 long-title wrap-table">
+<h2>Open Addressing or Chaining</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">open addressing</th>
+<th style="text-align: left;">separate chaining</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">load factor</td>
+<td style="text-align: left;">under 1, near 0.5</td>
+<td style="text-align: left;">no limit</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">removal</td>
+<td style="text-align: left;">marks it available</td>
+<td style="text-align: left;">unlinks a node</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">memory</td>
+<td style="text-align: left;">the array alone</td>
+<td style="text-align: left;">a node per entry</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">an entry sits</td>
+<td style="text-align: left;">anywhere in it</td>
+<td style="text-align: left;">in its own chain</td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<p>Both keep a search short as long as the hash function spreads the keys; neither helps a function that sends every key to one index.</p>
+</div>
+</section>
+<section id="what-you-can-do-now-1" class="slide level2">
+<h2>What You Can Do Now</h2>
+<ul>
+<li>Trace an insertion sequence with linear probing, quadratic probing or double hashing, and show the final table.</li>
+<li>List the probe sequence of a key that collides, and count the locations a search examines.</li>
+<li>Say which clustering each of the three methods has, and why.</li>
+<li>Compute <span class="math inline">\(H_2(k) = 7 - (k \bmod 7)\)</span>, and say why it is never 0.</li>
+<li>Build the chains of a separate-chaining table, and say what a removal does there that it cannot do in an array.</li>
 </ul>
 
 </section>
@@ -1062,7 +2054,7 @@ Zechun (Jacob) Cao
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
 'jumpToSlide': true,
-'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true,"width":"normal","numbers":true},
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"\u003ci class=\"fas fa-gear\">\u003c/i>","content":"\u003cul class=\"slide-menu-items\">\n\u003cli class=\"slide-tool-item active\" data-item=\"0\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\">\u003ckbd>f\u003c/kbd> Fullscreen\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"1\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\">\u003ckbd>s\u003c/kbd> Speaker View\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"2\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\">\u003ckbd>o\u003c/kbd> Slide Overview\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"3\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\">\u003ckbd>e\u003c/kbd> PDF Export Mode\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"4\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\">\u003ckbd>r\u003c/kbd> Scroll View Mode\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"5\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\">\u003ckbd>b\u003c/kbd> Toggle Chalkboard\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"6\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\">\u003ckbd>c\u003c/kbd> Toggle Notes Canvas\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"7\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\">\u003ckbd>d\u003c/kbd> Download Drawings\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"8\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\">\u003ckbd>?\u003c/kbd> Keyboard Help\u003c/a>\u003c/li>\n\u003c/ul>"}],"openButton":true,"openButtonLabel":"Slide menu","width":"normal","numbers":true},
 'chalkboard': {"buttons":true,"theme":"whiteboard","boardmarkerWidth":3},
 'smaller': false,
  
@@ -1448,7 +2440,8 @@ Zechun (Jacob) Cao
               return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
           }
           // Inspect non-navigation links and adorn them if external
-         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          window.quartoDecorateExternalLinks = function (root) {
+         var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
           for (var i=0; i<links.length; i++) {
             const link = links[i];
             if (!isInternal(link.href)) {
@@ -1457,8 +2450,69 @@ Zechun (Jacob) Cao
               if (link.dataset.originalHref !== undefined) {
                 link.href = link.dataset.originalHref;
               }
+              if (!link.classList.contains('no-external-icon')) {
+              }
             }
           }
+          };
+          window.quartoDecorateExternalLinks(window.document);
+        // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
+        // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
+        const hideOnEscAndFocusOut = {
+          name: 'hideOnEscAndFocusOut',
+          defaultValue: true,
+          fn(instance) {
+            const dismiss = () => {
+              // A show scheduled by the trigger delay would otherwise reopen it
+              instance.clearDelayTimeouts();
+              instance.hide();
+            };
+            const onKeyDown = (event) => {
+              if (event.key !== 'Escape') {
+                return;
+              }
+              // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
+              // except an open reveal.js slide menu, which Esc should close too.
+              // The menu handles keys only when its keyboard option is on.
+              const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
+                window.Reveal.getConfig().menu?.keyboard !== false;
+              if (!menuHandlesEsc) {
+                event.stopPropagation();
+              }
+              if (instance.popper.contains(window.document.activeElement)) {
+                // Disabled while refocusing so the focus trigger does not reopen it
+                instance.disable();
+                instance.reference.focus();
+                instance.enable();
+              }
+              dismiss();
+            };
+            const onFocusOut = (event) => {
+              const target = event.relatedTarget;
+              if (target && !instance.reference.contains(target) &&
+                  !instance.popper.contains(target)) {
+                dismiss();
+              }
+            };
+            // On the trigger too: a click trigger (code-annotations: select) has no
+            // blur handling. Attached for the instance's lifetime so leaving the
+            // trigger also cancels a show still pending on the trigger delay.
+            instance.reference.addEventListener('focusout', onFocusOut);
+            return {
+              onShow() {
+                window.document.addEventListener('keydown', onKeyDown, true);
+                instance.popper.addEventListener('focusout', onFocusOut);
+              },
+              onHide() {
+                window.document.removeEventListener('keydown', onKeyDown, true);
+                instance.popper.removeEventListener('focusout', onFocusOut);
+              },
+              onDestroy() {
+                instance.reference.removeEventListener('focusout', onFocusOut);
+              },
+            };
+          },
+        };
         function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
           const config = {
             allowHTML: true,
@@ -1472,6 +2526,7 @@ Zechun (Jacob) Cao
             interactiveBorder: 10,
             theme: 'light-border',
             placement: 'bottom-start',
+            plugins: [hideOnEscAndFocusOut],
           };
           if (contentFn) {
             config.content = contentFn;
