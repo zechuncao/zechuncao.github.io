@@ -6,14 +6,14 @@
 <script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="index_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.10.18">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.11.9">
 
   <meta name="author" content="Zechun (Jacob) Cao">
   <title>Chapter 2 — Basic Structures: Sets, Functions, Sequences, Sums, and Matrices</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="index_files/libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="index_files/libs/revealjs/dist/reveal.css">
   <style>
@@ -35,7 +35,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-86121912844a5910e942a70f9f41eb5d.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-bc79ef01c14fef4fc07edde9ddf9e89b.css">
   <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -196,6 +196,19 @@ Zechun (Jacob) Cao
 </div>
 </div>
 
+</section>
+<section id="vote-from-your-phone" class="slide level2">
+<h2>Vote From Your Phone</h2>
+<div class="columns">
+<div class="column" style="width:40%;">
+<p><img data-src="images/vote_qr.svg" alt="QR code that opens the class vote page" width="330"></p>
+</div><div class="column" style="width:60%;">
+<p>Scan the code to open the vote page, or type this address:</p>
+<p><span class="joinurl"><code>poll.zechuncao.workers.dev?r=csci2322</code></span></p>
+<p>Keep the page open for the whole class. The buttons become active when a vote slide is on the screen, and you can change your answer while the question is open.</p>
+<p>Votes are anonymous. A scored question asks for a nickname, and that nickname is what the leaderboard shows.</p>
+</div></div>
+<!-- Written by poll/install.sh from poll/deck/poll_join.qmd. Edit it there. -->
 </section>
 <section id="warm-up-the-roster" class="slide level2" data-poll="ch2-roster">
 <h2>Warm-Up: The Roster</h2>
@@ -1219,12 +1232,171 @@ Zechun (Jacob) Cao
 </section>
 <section id="products-in-computing" class="slide level2">
 <h2>Products in Computing</h2>
-<p>Let <span class="math inline">\(A\)</span> be the students at a university and <span class="math inline">\(B\)</span> the courses it offers. Then <span class="math inline">\(A \times B\)</span> is every student-course pair the university could record.</p>
-<div class="fragment">
-<p>The enrollments that actually exist are a subset of <span class="math inline">\(A \times B\)</span>, so they are a relation from <span class="math inline">\(A\)</span> to <span class="math inline">\(B\)</span>.</p>
+<p>A university stores its students in one table and its courses in another.</p>
+<div class="cap">
+<p>Pair every Student row with every Course row.</p>
 </div>
-<div class="fragment">
-<p>That subset is what a two-column database table stores: one row per pair that holds.</p>
+<svg class="diagram fig-lg" viewbox="0 0 760 292" role="img" aria-labelledby="xjoin-t">
+  <title id="xjoin-t">A Student table and a Course table beside the six-row table of every student-course pair</title>
+  <text x="80" y="18" text-anchor="middle" class="lbl-blue" font-size="24">Student</text>
+  <rect x="0" y="30" width="160" height="38" class="cell"></rect>
+  <text x="80" y="55" text-anchor="middle" class="lbl-gray" font-size="22">name</text>
+  <rect x="0" y="68" width="160" height="34" class="cell"></rect>
+  <text x="80" y="91" text-anchor="middle" font-size="22">Ana</text>
+  <rect x="0" y="102" width="160" height="34" class="cell"></rect>
+  <text x="80" y="125" text-anchor="middle" font-size="22">Ben</text>
+  <rect x="0" y="136" width="160" height="34" class="cell"></rect>
+  <text x="80" y="159" text-anchor="middle" font-size="22">Cleo</text>
+  <text x="180" y="112" text-anchor="middle" class="lbl-gray" font-size="30">×</text>
+  <text x="300" y="18" text-anchor="middle" class="lbl-blue" font-size="24">Course</text>
+  <rect x="200" y="30" width="200" height="38" class="cell"></rect>
+  <text x="300" y="55" text-anchor="middle" class="lbl-gray" font-size="22">code</text>
+  <rect x="200" y="68" width="200" height="34" class="cell"></rect>
+  <text x="300" y="91" text-anchor="middle" font-size="22">CSCI 2322</text>
+  <rect x="200" y="102" width="200" height="34" class="cell"></rect>
+  <text x="300" y="125" text-anchor="middle" font-size="22">CSCI 2336</text>
+  <text x="420" y="112" text-anchor="middle" class="lbl-gray" font-size="30">=</text>
+  <text x="600" y="18" text-anchor="middle" class="lbl-blue" font-size="24">Student × Course</text>
+  <rect x="440" y="30" width="150" height="38" class="cell"></rect>
+  <rect x="590" y="30" width="170" height="38" class="cell"></rect>
+  <text x="515" y="55" text-anchor="middle" class="lbl-gray" font-size="22">name</text>
+  <text x="675" y="55" text-anchor="middle" class="lbl-gray" font-size="22">code</text>
+  <g class="fragment" data-fragment-index="0">
+    <g class="drop">
+      <rect x="440" y="68" width="150" height="34" class="cell"></rect>
+      <rect x="590" y="68" width="170" height="34" class="cell"></rect>
+      <text x="515" y="91" text-anchor="middle" font-size="22">Ana</text>
+      <text x="675" y="91" text-anchor="middle" font-size="22">CSCI 2322</text>
+      <rect x="440" y="102" width="150" height="34" class="cell"></rect>
+      <rect x="590" y="102" width="170" height="34" class="cell"></rect>
+      <text x="515" y="125" text-anchor="middle" font-size="22">Ana</text>
+      <text x="675" y="125" text-anchor="middle" font-size="22">CSCI 2336</text>
+    </g>
+  </g>
+  <g class="fragment" data-fragment-index="1">
+    <g class="drop">
+      <rect x="440" y="136" width="150" height="34" class="cell"></rect>
+      <rect x="590" y="136" width="170" height="34" class="cell"></rect>
+      <text x="515" y="159" text-anchor="middle" font-size="22">Ben</text>
+      <text x="675" y="159" text-anchor="middle" font-size="22">CSCI 2322</text>
+      <rect x="440" y="170" width="150" height="34" class="cell"></rect>
+      <rect x="590" y="170" width="170" height="34" class="cell"></rect>
+      <text x="515" y="193" text-anchor="middle" font-size="22">Ben</text>
+      <text x="675" y="193" text-anchor="middle" font-size="22">CSCI 2336</text>
+    </g>
+  </g>
+  <g class="fragment" data-fragment-index="2">
+    <g class="drop">
+      <rect x="440" y="204" width="150" height="34" class="cell"></rect>
+      <rect x="590" y="204" width="170" height="34" class="cell"></rect>
+      <text x="515" y="227" text-anchor="middle" font-size="22">Cleo</text>
+      <text x="675" y="227" text-anchor="middle" font-size="22">CSCI 2322</text>
+      <rect x="440" y="238" width="150" height="34" class="cell"></rect>
+      <rect x="590" y="238" width="170" height="34" class="cell"></rect>
+      <text x="515" y="261" text-anchor="middle" font-size="22">Cleo</text>
+      <text x="675" y="261" text-anchor="middle" font-size="22">CSCI 2336</text>
+    </g>
+  </g>
+</svg>
+<div class="fragment" data-fragment-index="3">
+<p>Three students and two courses give <span class="math inline">\(|A \times B| = 3 \cdot 2 = 6\)</span> rows. A database builds this table with a cross join.</p>
+</div>
+</section>
+<section id="products-in-computing-1" class="slide level2">
+<h2>Products in Computing</h2>
+<p>Only some of those six pairs are enrollments that actually exist.</p>
+<div class="cap">
+<p>Keep only the rows that are real enrollments.</p>
+</div>
+<svg class="diagram fig-lg" viewbox="0 0 760 292" role="img" aria-labelledby="enrol-t">
+  <title id="enrol-t">Four of the six product rows highlighted and copied into an Enrollment table</title>
+  <text x="160" y="18" text-anchor="middle" class="lbl-blue" font-size="24">Student × Course</text>
+  <rect x="0" y="30" width="150" height="38" class="cell"></rect>
+  <rect x="150" y="30" width="170" height="38" class="cell"></rect>
+  <text x="75" y="55" text-anchor="middle" class="lbl-gray" font-size="22">name</text>
+  <text x="235" y="55" text-anchor="middle" class="lbl-gray" font-size="22">code</text>
+      <rect x="0" y="68" width="150" height="34" class="cell"></rect>
+      <rect x="150" y="68" width="170" height="34" class="cell"></rect>
+      <text x="75" y="91" text-anchor="middle" font-size="22">Ana</text>
+      <text x="235" y="91" text-anchor="middle" font-size="22">CSCI 2322</text>
+      <rect x="0" y="102" width="150" height="34" class="cell"></rect>
+      <rect x="150" y="102" width="170" height="34" class="cell"></rect>
+      <text x="75" y="125" text-anchor="middle" font-size="22">Ana</text>
+      <text x="235" y="125" text-anchor="middle" font-size="22">CSCI 2336</text>
+      <rect x="0" y="136" width="150" height="34" class="cell"></rect>
+      <rect x="150" y="136" width="170" height="34" class="cell"></rect>
+      <text x="75" y="159" text-anchor="middle" font-size="22">Ben</text>
+      <text x="235" y="159" text-anchor="middle" font-size="22">CSCI 2322</text>
+      <rect x="0" y="170" width="150" height="34" class="cell"></rect>
+      <rect x="150" y="170" width="170" height="34" class="cell"></rect>
+      <text x="75" y="193" text-anchor="middle" font-size="22">Ben</text>
+      <text x="235" y="193" text-anchor="middle" font-size="22">CSCI 2336</text>
+      <rect x="0" y="204" width="150" height="34" class="cell"></rect>
+      <rect x="150" y="204" width="170" height="34" class="cell"></rect>
+      <text x="75" y="227" text-anchor="middle" font-size="22">Cleo</text>
+      <text x="235" y="227" text-anchor="middle" font-size="22">CSCI 2322</text>
+      <rect x="0" y="238" width="150" height="34" class="cell"></rect>
+      <rect x="150" y="238" width="170" height="34" class="cell"></rect>
+      <text x="75" y="261" text-anchor="middle" font-size="22">Cleo</text>
+      <text x="235" y="261" text-anchor="middle" font-size="22">CSCI 2336</text>
+  <path class="map" d="M 344 150 L 396 150"></path>
+  <path class="dot" d="M 394 143 L 410 150 L 394 157 Z"></path>
+  <text x="590" y="18" text-anchor="middle" class="lbl-blue" font-size="24">Enrollment</text>
+  <rect x="430" y="30" width="150" height="38" class="cell"></rect>
+  <rect x="580" y="30" width="170" height="38" class="cell"></rect>
+  <text x="505" y="55" text-anchor="middle" class="lbl-gray" font-size="22">name</text>
+  <text x="665" y="55" text-anchor="middle" class="lbl-gray" font-size="22">code</text>
+  <g class="fragment" data-fragment-index="0">
+    <rect x="0" y="68" width="150" height="34" class="cell-on"></rect>
+    <rect x="150" y="68" width="170" height="34" class="cell-on"></rect>
+    <text x="75" y="91" text-anchor="middle" font-size="22">Ana</text>
+    <text x="235" y="91" text-anchor="middle" font-size="22">CSCI 2322</text>
+    <g class="drop">
+      <rect x="430" y="68" width="150" height="34" class="cell"></rect>
+      <rect x="580" y="68" width="170" height="34" class="cell"></rect>
+      <text x="505" y="91" text-anchor="middle" font-size="22">Ana</text>
+      <text x="665" y="91" text-anchor="middle" font-size="22">CSCI 2322</text>
+    </g>
+  </g>
+  <g class="fragment" data-fragment-index="1">
+    <rect x="0" y="102" width="150" height="34" class="cell-on"></rect>
+    <rect x="150" y="102" width="170" height="34" class="cell-on"></rect>
+    <text x="75" y="125" text-anchor="middle" font-size="22">Ana</text>
+    <text x="235" y="125" text-anchor="middle" font-size="22">CSCI 2336</text>
+    <g class="drop">
+      <rect x="430" y="102" width="150" height="34" class="cell"></rect>
+      <rect x="580" y="102" width="170" height="34" class="cell"></rect>
+      <text x="505" y="125" text-anchor="middle" font-size="22">Ana</text>
+      <text x="665" y="125" text-anchor="middle" font-size="22">CSCI 2336</text>
+    </g>
+  </g>
+  <g class="fragment" data-fragment-index="2">
+    <rect x="0" y="136" width="150" height="34" class="cell-on"></rect>
+    <rect x="150" y="136" width="170" height="34" class="cell-on"></rect>
+    <text x="75" y="159" text-anchor="middle" font-size="22">Ben</text>
+    <text x="235" y="159" text-anchor="middle" font-size="22">CSCI 2322</text>
+    <g class="drop">
+      <rect x="430" y="136" width="150" height="34" class="cell"></rect>
+      <rect x="580" y="136" width="170" height="34" class="cell"></rect>
+      <text x="505" y="159" text-anchor="middle" font-size="22">Ben</text>
+      <text x="665" y="159" text-anchor="middle" font-size="22">CSCI 2322</text>
+    </g>
+  </g>
+  <g class="fragment" data-fragment-index="3">
+    <rect x="0" y="238" width="150" height="34" class="cell-on"></rect>
+    <rect x="150" y="238" width="170" height="34" class="cell-on"></rect>
+    <text x="75" y="261" text-anchor="middle" font-size="22">Cleo</text>
+    <text x="235" y="261" text-anchor="middle" font-size="22">CSCI 2336</text>
+    <g class="drop">
+      <rect x="430" y="170" width="150" height="34" class="cell"></rect>
+      <rect x="580" y="170" width="170" height="34" class="cell"></rect>
+      <text x="505" y="193" text-anchor="middle" font-size="22">Cleo</text>
+      <text x="665" y="193" text-anchor="middle" font-size="22">CSCI 2336</text>
+    </g>
+  </g>
+</svg>
+<div class="fragment" data-fragment-index="4">
+<p>The kept rows are a subset of <span class="math inline">\(A \times B\)</span>, so Enrollment is a relation from <span class="math inline">\(A\)</span> to <span class="math inline">\(B\)</span>. Ana appears twice, so this relation is not a function.</p>
 </div>
 </section>
 <section id="your-turn" class="slide level2">
@@ -1329,20 +1501,20 @@ Zechun (Jacob) Cao
 <h2>Union</h2>
 <p><strong><em>Definition:</em></strong> The <strong>union</strong> of <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>, written <span class="math inline">\(A \cup B\)</span>, is the set of elements in at least one of them.</p>
 <p><span class="math display">\[A \cup B = \{x \mid x \in A \vee x \in B\}\]</span></p>
-<svg class="diagram" viewbox="0 0 920 230" role="img" aria-labelledby="union-t">
+<svg class="diagram fig-xs" viewbox="0 0 488 230" role="img" aria-labelledby="union-t">
   <title id="union-t">Both circles shaded for the union of A and B</title>
-  <rect x="14" y="6" width="892" height="218" rx="10" class="univ"></rect>
+  <rect x="14" y="6" width="460" height="218" rx="10" class="univ"></rect>
   <text x="40" y="40" class="lbl-gray" font-size="28">U</text>
   <g class="fragment" data-fragment-index="0">
     <g class="shade grow">
-      <circle cx="380" cy="116" r="100"></circle>
-      <circle cx="540" cy="116" r="100"></circle>
+      <circle cx="164" cy="116" r="100"></circle>
+      <circle cx="324" cy="116" r="100"></circle>
     </g>
   </g>
-  <circle cx="380" cy="116" r="100" class="ring"></circle>
-  <circle cx="540" cy="116" r="100" class="ring"></circle>
-  <text x="318" y="84" text-anchor="middle" class="lbl-blue" font-size="30">A</text>
-  <text x="602" y="84" text-anchor="middle" class="lbl-blue" font-size="30">B</text>
+  <circle cx="164" cy="116" r="100" class="ring"></circle>
+  <circle cx="324" cy="116" r="100" class="ring"></circle>
+  <text x="102" y="84" text-anchor="middle" class="lbl-blue" font-size="30">A</text>
+  <text x="386" y="84" text-anchor="middle" class="lbl-blue" font-size="30">B</text>
 </svg>
 <p><strong><em>Example:</em></strong> <span class="math inline">\(\{1, 2, 3\} \cup \{3, 4, 5\} = \{1, 2, 3, 4, 5\}\)</span>.</p>
 </section>
@@ -1350,22 +1522,22 @@ Zechun (Jacob) Cao
 <h2>Intersection</h2>
 <p><strong><em>Definition:</em></strong> The <strong>intersection</strong> of <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>, written <span class="math inline">\(A \cap B\)</span>, is the set of elements in both.</p>
 <p><span class="math display">\[A \cap B = \{x \mid x \in A \wedge x \in B\}\]</span></p>
-<svg class="diagram" viewbox="0 0 920 230" role="img" aria-labelledby="inter-t">
+<svg class="diagram fig-xs" viewbox="0 0 488 230" role="img" aria-labelledby="inter-t">
   <title id="inter-t">Only the overlap shaded for the intersection of A and B</title>
   <defs>
-    <clippath id="clip-inter-a"><circle cx="380" cy="116" r="100"></circle></clippath>
+    <clippath id="clip-inter-a"><circle cx="164" cy="116" r="100"></circle></clippath>
   </defs>
-  <rect x="14" y="6" width="892" height="218" rx="10" class="univ"></rect>
+  <rect x="14" y="6" width="460" height="218" rx="10" class="univ"></rect>
   <text x="40" y="40" class="lbl-gray" font-size="28">U</text>
   <g class="fragment" data-fragment-index="0">
     <g class="shade grow" clip-path="url(#clip-inter-a)">
-      <circle cx="540" cy="116" r="100"></circle>
+      <circle cx="324" cy="116" r="100"></circle>
     </g>
   </g>
-  <circle cx="380" cy="116" r="100" class="ring"></circle>
-  <circle cx="540" cy="116" r="100" class="ring"></circle>
-  <text x="318" y="84" text-anchor="middle" class="lbl-blue" font-size="30">A</text>
-  <text x="602" y="84" text-anchor="middle" class="lbl-blue" font-size="30">B</text>
+  <circle cx="164" cy="116" r="100" class="ring"></circle>
+  <circle cx="324" cy="116" r="100" class="ring"></circle>
+  <text x="102" y="84" text-anchor="middle" class="lbl-blue" font-size="30">A</text>
+  <text x="386" y="84" text-anchor="middle" class="lbl-blue" font-size="30">B</text>
 </svg>
 <p><strong><em>Example:</em></strong> <span class="math inline">\(\{1, 2, 3\} \cap \{3, 4, 5\} = \{3\}\)</span>.</p>
 </section>
@@ -1381,25 +1553,25 @@ Zechun (Jacob) Cao
 <h2>Difference <span class="ex">Must Know</span></h2>
 <p><strong><em>Definition:</em></strong> The <strong>difference</strong> of <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>, written <span class="math inline">\(A - B\)</span>, is the set of elements of <span class="math inline">\(A\)</span> that are not in <span class="math inline">\(B\)</span>. It is also called the complement of <span class="math inline">\(B\)</span> with respect to <span class="math inline">\(A\)</span>.</p>
 <p><span class="math display">\[A - B = \{x \mid x \in A \wedge x \notin B\}\]</span></p>
-<svg class="diagram" viewbox="0 0 920 230" role="img" aria-labelledby="diff-t">
+<svg class="diagram fig-sm" viewbox="0 0 488 230" role="img" aria-labelledby="diff-t">
   <title id="diff-t">The part of A outside B shaded for A minus B</title>
   <defs>
     <mask id="mask-diff">
-      <circle cx="380" cy="116" r="100" fill="#ffffff"></circle>
-      <circle cx="540" cy="116" r="100" fill="#000000"></circle>
+      <circle cx="164" cy="116" r="100" fill="#ffffff"></circle>
+      <circle cx="324" cy="116" r="100" fill="#000000"></circle>
     </mask>
   </defs>
-  <rect x="14" y="6" width="892" height="218" rx="10" class="univ"></rect>
+  <rect x="14" y="6" width="460" height="218" rx="10" class="univ"></rect>
   <text x="40" y="40" class="lbl-gray" font-size="28">U</text>
   <g class="fragment" data-fragment-index="0">
     <g class="shade grow" mask="url(#mask-diff)">
-      <circle cx="380" cy="116" r="100"></circle>
+      <circle cx="164" cy="116" r="100"></circle>
     </g>
   </g>
-  <circle cx="380" cy="116" r="100" class="ring"></circle>
-  <circle cx="540" cy="116" r="100" class="ring"></circle>
-  <text x="318" y="84" text-anchor="middle" class="lbl-blue" font-size="30">A</text>
-  <text x="602" y="84" text-anchor="middle" class="lbl-blue" font-size="30">B</text>
+  <circle cx="164" cy="116" r="100" class="ring"></circle>
+  <circle cx="324" cy="116" r="100" class="ring"></circle>
+  <text x="102" y="84" text-anchor="middle" class="lbl-blue" font-size="30">A</text>
+  <text x="386" y="84" text-anchor="middle" class="lbl-blue" font-size="30">B</text>
 </svg>
 </section>
 <section id="difference-must-know-1" class="slide level2">
@@ -1416,23 +1588,23 @@ Zechun (Jacob) Cao
 <h2>Complement</h2>
 <p><strong><em>Definition:</em></strong> The <strong>complement</strong> of <span class="math inline">\(A\)</span>, written <span class="math inline">\(\overline{A}\)</span>, is <span class="math inline">\(U - A\)</span>: everything in the universal set that is not in <span class="math inline">\(A\)</span>.</p>
 <p><span class="math display">\[\overline{A} = \{x \in U \mid x \notin A\}\]</span></p>
-<svg class="diagram" viewbox="0 0 920 230" role="img" aria-labelledby="comp-t">
+<svg class="diagram fig-sm" viewbox="0 0 488 230" role="img" aria-labelledby="comp-t">
   <title id="comp-t">Everything in the universal set outside A shaded</title>
   <defs>
     <mask id="mask-comp">
-      <rect x="14" y="6" width="892" height="218" rx="10" fill="#ffffff"></rect>
-      <circle cx="440" cy="116" r="100" fill="#000000"></circle>
+      <rect x="14" y="6" width="460" height="218" rx="10" fill="#ffffff"></rect>
+      <circle cx="244" cy="116" r="100" fill="#000000"></circle>
     </mask>
   </defs>
   <g class="fragment" data-fragment-index="0">
     <g class="shade grow" mask="url(#mask-comp)">
-      <rect x="14" y="6" width="892" height="218" rx="10"></rect>
+      <rect x="14" y="6" width="460" height="218" rx="10"></rect>
     </g>
   </g>
-  <rect x="14" y="6" width="892" height="218" rx="10" class="univ"></rect>
+  <rect x="14" y="6" width="460" height="218" rx="10" class="univ"></rect>
   <text x="40" y="40" class="lbl-gray" font-size="28">U</text>
-  <circle cx="440" cy="116" r="100" class="ring"></circle>
-  <text x="440" y="128" text-anchor="middle" class="lbl-blue" font-size="30">A</text>
+  <circle cx="244" cy="116" r="100" class="ring"></circle>
+  <text x="244" y="128" text-anchor="middle" class="lbl-blue" font-size="30">A</text>
 </svg>
 </section>
 <section id="complement-1" class="slide level2">
@@ -1447,24 +1619,24 @@ Zechun (Jacob) Cao
 </section>
 <section id="which-region" class="slide level2" data-poll="ch2-which-region">
 <h2>Which Region?</h2>
-<svg class="diagram" viewbox="0 0 920 210" role="img" aria-labelledby="which-t">
+<svg class="diagram fig-md" viewbox="0 0 488 210" role="img" aria-labelledby="which-t">
   <title id="which-t">The part of the universal set outside both circles is shaded</title>
   <defs>
     <mask id="mask-which">
-      <rect x="14" y="6" width="892" height="198" rx="10" fill="#ffffff"></rect>
-      <circle cx="380" cy="106" r="92" fill="#000000"></circle>
-      <circle cx="540" cy="106" r="92" fill="#000000"></circle>
+      <rect x="14" y="6" width="460" height="198" rx="10" fill="#ffffff"></rect>
+      <circle cx="164" cy="106" r="92" fill="#000000"></circle>
+      <circle cx="324" cy="106" r="92" fill="#000000"></circle>
     </mask>
   </defs>
   <g class="shade" mask="url(#mask-which)">
-    <rect x="14" y="6" width="892" height="198" rx="10"></rect>
+    <rect x="14" y="6" width="460" height="198" rx="10"></rect>
   </g>
-  <rect x="14" y="6" width="892" height="198" rx="10" class="univ"></rect>
+  <rect x="14" y="6" width="460" height="198" rx="10" class="univ"></rect>
   <text x="40" y="40" class="lbl-gray" font-size="28">U</text>
-  <circle cx="380" cy="106" r="92" class="ring"></circle>
-  <circle cx="540" cy="106" r="92" class="ring"></circle>
-  <text x="322" y="76" text-anchor="middle" class="lbl-blue" font-size="30">A</text>
-  <text x="598" y="76" text-anchor="middle" class="lbl-blue" font-size="30">B</text>
+  <circle cx="164" cy="106" r="92" class="ring"></circle>
+  <circle cx="324" cy="106" r="92" class="ring"></circle>
+  <text x="106" y="76" text-anchor="middle" class="lbl-blue" font-size="30">A</text>
+  <text x="382" y="76" text-anchor="middle" class="lbl-blue" font-size="30">B</text>
 </svg>
 <p><span class="vote-prompt">Vote — which expression is shaded?</span></p>
 <div class="columns">
@@ -1498,30 +1670,30 @@ Zechun (Jacob) Cao
 <section id="counting-a-union-must-know" class="slide level2">
 <h2>Counting a Union <span class="ex">Must Know</span></h2>
 <p>Adding <span class="math inline">\(|A|\)</span> and <span class="math inline">\(|B|\)</span> counts everything in the overlap twice, so subtract one copy back out.</p>
-<svg class="diagram" viewbox="0 0 920 230" role="img" aria-labelledby="ie-t">
+<svg class="diagram fig-md" viewbox="0 0 660 230" role="img" aria-labelledby="ie-t">
   <title id="ie-t">A and B shaded in turn, with the overlap marked as counted twice</title>
   <defs>
-    <clippath id="clip-ie-a"><circle cx="380" cy="112" r="100"></circle></clippath>
+    <clippath id="clip-ie-a"><circle cx="164" cy="112" r="100"></circle></clippath>
   </defs>
-  <rect x="14" y="6" width="892" height="218" rx="10" class="univ"></rect>
+  <rect x="14" y="6" width="460" height="218" rx="10" class="univ"></rect>
   <text x="40" y="40" class="lbl-gray" font-size="28">U</text>
   <g class="fragment" data-fragment-index="0">
-    <g class="shade grow"><circle cx="380" cy="112" r="100"></circle></g>
+    <g class="shade grow"><circle cx="164" cy="112" r="100"></circle></g>
   </g>
   <g class="fragment" data-fragment-index="1">
-    <g class="shade grow"><circle cx="540" cy="112" r="100"></circle></g>
+    <g class="shade grow"><circle cx="324" cy="112" r="100"></circle></g>
   </g>
   <g class="fragment" data-fragment-index="2">
     <g class="shade-r grow" clip-path="url(#clip-ie-a)">
-      <circle cx="540" cy="112" r="100"></circle>
+      <circle cx="324" cy="112" r="100"></circle>
     </g>
-    <text x="700" y="202" text-anchor="start" class="lbl-red grow" font-size="26">counted twice</text>
-    <path class="map-bad grow" d="M690 190 L484 128"></path>
+    <text x="492" y="150" text-anchor="start" class="lbl-red grow" font-size="26">counted twice</text>
+    <path class="map-bad grow" d="M488 142 L278 124"></path>
   </g>
-  <circle cx="380" cy="112" r="100" class="ring"></circle>
-  <circle cx="540" cy="112" r="100" class="ring"></circle>
-  <text x="318" y="80" text-anchor="middle" class="lbl-blue" font-size="30">A</text>
-  <text x="602" y="80" text-anchor="middle" class="lbl-blue" font-size="30">B</text>
+  <circle cx="164" cy="112" r="100" class="ring"></circle>
+  <circle cx="324" cy="112" r="100" class="ring"></circle>
+  <text x="102" y="80" text-anchor="middle" class="lbl-blue" font-size="30">A</text>
+  <text x="386" y="80" text-anchor="middle" class="lbl-blue" font-size="30">B</text>
 </svg>
 <p><span class="math display">\[|A \cup B| = |A| + |B| - |A \cap B|\]</span></p>
 </section>
@@ -1793,7 +1965,7 @@ Zechun (Jacob) Cao
 <div class="cap">
 <p><span class="math inline">\(\overline{A \cap B}\)</span></p>
 </div>
-<svg class="diagram" viewbox="0 0 470 230" role="img" aria-labelledby="dm1-t">
+<svg class="diagram fig-sm" viewbox="0 0 470 230" role="img" aria-labelledby="dm1-t">
   <title id="dm1-t">Everything except the overlap of A and B is shaded</title>
   <defs>
     <clippath id="dm-ca"><circle cx="180" cy="120" r="76"></circle></clippath>
@@ -1818,7 +1990,7 @@ Zechun (Jacob) Cao
 <div class="cap">
 <p><span class="math inline">\(\overline{A} \cup \overline{B}\)</span></p>
 </div>
-<svg class="diagram" viewbox="0 0 470 230" role="img" aria-labelledby="dm2-t">
+<svg class="diagram fig-sm" viewbox="0 0 470 230" role="img" aria-labelledby="dm2-t">
   <title id="dm2-t">The outside of A together with the outside of B is shaded</title>
   <defs>
     <mask id="dm-na">
@@ -2196,7 +2368,7 @@ Zechun (Jacob) Cao
 </section>
 <section id="domain-and-codomain" class="slide level2">
 <h2>Domain and Codomain</h2>
-<svg class="diagram" viewbox="0 0 900 330" role="img" aria-labelledby="fn-t">
+<svg class="diagram fig-xl" viewbox="0 0 900 330" role="img" aria-labelledby="fn-t">
   <title id="fn-t">An arrow diagram for f from A to B with four inputs and three outputs</title>
   <defs>
     <marker id="fn-arrow" markerwidth="10" markerheight="10" refx="9" refy="5" orient="auto" markerunits="userSpaceOnUse">
@@ -2339,7 +2511,7 @@ f(\{c, d\}) = \{z\}\]</span></p>
 <section id="injections" class="slide level2">
 <h2>Injections</h2>
 <p><strong><em>Definition:</em></strong> <span class="math inline">\(f\)</span> is <strong>one-to-one</strong>, or <strong>injective</strong>, when <span class="math inline">\(f(a) = f(b)\)</span> implies <span class="math inline">\(a = b\)</span> for all <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> in the domain.</p>
-<svg class="diagram" viewbox="0 0 900 230" role="img" aria-labelledby="inj-t">
+<svg class="diagram fig-xl" viewbox="0 0 900 230" role="img" aria-labelledby="inj-t">
   <title id="inj-t">Three arrows landing on three different elements, one element unused</title>
   <defs>
     <marker id="inj-arrow" markerwidth="10" markerheight="10" refx="9" refy="5" orient="auto" markerunits="userSpaceOnUse">
@@ -2372,7 +2544,7 @@ f(\{c, d\}) = \{z\}\]</span></p>
 <section id="injections-1" class="slide level2">
 <h2>Injections</h2>
 <p>The same diagram with one arrow moved stops being one-to-one.</p>
-<svg class="diagram" viewbox="0 0 900 230" role="img" aria-labelledby="noninj-t">
+<svg class="diagram fig-xl" viewbox="0 0 900 230" role="img" aria-labelledby="noninj-t">
   <title id="noninj-t">Two arrows landing on the same element, so the function is not one-to-one</title>
   <defs>
     <marker id="ni-arrow" markerwidth="10" markerheight="10" refx="9" refy="5" orient="auto" markerunits="userSpaceOnUse">
@@ -2405,7 +2577,7 @@ f(\{c, d\}) = \{z\}\]</span></p>
 <section id="surjections" class="slide level2">
 <h2>Surjections</h2>
 <p><strong><em>Definition:</em></strong> <span class="math inline">\(f : A \rightarrow B\)</span> is <strong>onto</strong>, or <strong>surjective</strong>, when for every <span class="math inline">\(b \in B\)</span> there is an <span class="math inline">\(a \in A\)</span> with <span class="math inline">\(f(a) = b\)</span>.</p>
-<svg class="diagram" viewbox="0 0 900 230" role="img" aria-labelledby="sur-t">
+<svg class="diagram fig-xl" viewbox="0 0 900 230" role="img" aria-labelledby="sur-t">
   <title id="sur-t">Four arrows covering all three elements of the codomain</title>
   <defs>
     <marker id="sur-arrow" markerwidth="10" markerheight="10" refx="9" refy="5" orient="auto" markerunits="userSpaceOnUse">
@@ -2439,7 +2611,7 @@ f(\{c, d\}) = \{z\}\]</span></p>
 <section id="bijections" class="slide level2">
 <h2>Bijections</h2>
 <p><strong><em>Definition:</em></strong> <span class="math inline">\(f\)</span> is a <strong>one-to-one correspondence</strong>, or a <strong>bijection</strong>, when it is both one-to-one and onto.</p>
-<svg class="diagram" viewbox="0 0 900 230" role="img" aria-labelledby="bij-t">
+<svg class="diagram fig-xl" viewbox="0 0 900 230" role="img" aria-labelledby="bij-t">
   <title id="bij-t">Three arrows pairing off three inputs with three outputs</title>
   <defs>
     <marker id="bij-arrow" markerwidth="10" markerheight="10" refx="9" refy="5" orient="auto" markerunits="userSpaceOnUse">
@@ -2577,7 +2749,7 @@ f(\{c, d\}) = \{z\}\]</span></p>
 <h2>Inverse Functions</h2>
 <p><strong><em>Definition:</em></strong> Let <span class="math inline">\(f\)</span> be a bijection from <span class="math inline">\(A\)</span> to <span class="math inline">\(B\)</span>. The <strong>inverse</strong> of <span class="math inline">\(f\)</span>, written <span class="math inline">\(f^{-1}\)</span>, is the function from <span class="math inline">\(B\)</span> to <span class="math inline">\(A\)</span> with</p>
 <p><span class="math display">\[f^{-1}(b) = a \quad \text{when} \quad f(a) = b.\]</span></p>
-<svg class="diagram" viewbox="0 0 900 230" role="img" aria-labelledby="inv-t">
+<svg class="diagram fig-xl" viewbox="0 0 900 230" role="img" aria-labelledby="inv-t">
   <title id="inv-t">The arrows of a bijection, then the same pairs followed backwards</title>
   <defs>
     <marker id="inv-arrow" markerwidth="10" markerheight="10" refx="9" refy="5" orient="auto" markerunits="userSpaceOnUse">
@@ -2684,7 +2856,7 @@ f^{-1}(x) = \frac{x + 3}{5}.\]</span></p>
 <h2>Floor and Ceiling <span class="ex">Must Know</span></h2>
 <p><strong><em>Definition:</em></strong> The <strong>floor</strong> of <span class="math inline">\(x\)</span>, written <span class="math inline">\(\lfloor x \rfloor\)</span>, is the largest integer less than or equal to <span class="math inline">\(x\)</span>. The <strong>ceiling</strong> of <span class="math inline">\(x\)</span>, written <span class="math inline">\(\lceil x \rceil\)</span>, is the smallest integer greater than or equal to <span class="math inline">\(x\)</span>.</p>
 <p>Both are functions from <span class="math inline">\(\mathbb{R}\)</span> to <span class="math inline">\(\mathbb{Z}\)</span>.</p>
-<svg class="diagram" viewbox="0 0 900 200" role="img" aria-labelledby="fc1-t">
+<svg class="diagram fig-lg" viewbox="0 0 900 200" role="img" aria-labelledby="fc1-t">
   <title id="fc1-t">A number line showing 3.5 moving down to 3 and up to 4</title>
   <defs>
     <marker id="fc-arrow" markerwidth="10" markerheight="10" refx="9" refy="5" orient="auto" markerunits="userSpaceOnUse">
@@ -2718,7 +2890,7 @@ f^{-1}(x) = \frac{x + 3}{5}.\]</span></p>
 <section id="floor-and-ceiling-must-know-1" class="slide level2">
 <h2>Floor and Ceiling <span class="ex">Must Know</span></h2>
 <p>On a negative number the floor is further from zero and the ceiling is closer to it.</p>
-<svg class="diagram" viewbox="0 0 900 200" role="img" aria-labelledby="fc2-t">
+<svg class="diagram fig-lg" viewbox="0 0 900 200" role="img" aria-labelledby="fc2-t">
   <title id="fc2-t">A number line showing negative 3.5 moving down to negative 4 and up to negative 3</title>
   <defs>
     <marker id="fc2-arrow" markerwidth="10" markerheight="10" refx="9" refy="5" orient="auto" markerunits="userSpaceOnUse">
@@ -2789,7 +2961,7 @@ f^{-1}(x) = \frac{x + 3}{5}.\]</span></p>
 </tbody>
 </table>
 </section>
-<section id="floor-and-ceiling-must-know-3" class="slide level2" data-poll="ch2-floor-ceiling">
+<section id="floor-and-ceiling-must-know-3" class="slide level2" data-poll="ch2-floor-ceiling" data-poll-answer="B">
 <h2>Floor and Ceiling <span class="ex">Must Know</span></h2>
 <p><span class="vote-prompt">Vote — what is <span class="math inline">\(\lfloor -7/2 \rfloor + \lceil 5/3 \rceil\)</span>?</span></p>
 <div class="columns vote-row">
@@ -2910,7 +3082,7 @@ f^{-1}(x) = \frac{x + 3}{5}.\]</span></p>
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
 'jumpToSlide': true,
-'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true,"width":"normal","numbers":true},
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"\u003ci class=\"fas fa-gear\">\u003c/i>","content":"\u003cul class=\"slide-menu-items\">\n\u003cli class=\"slide-tool-item active\" data-item=\"0\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\">\u003ckbd>f\u003c/kbd> Fullscreen\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"1\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\">\u003ckbd>s\u003c/kbd> Speaker View\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"2\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\">\u003ckbd>o\u003c/kbd> Slide Overview\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"3\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\">\u003ckbd>e\u003c/kbd> PDF Export Mode\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"4\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\">\u003ckbd>r\u003c/kbd> Scroll View Mode\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"5\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\">\u003ckbd>b\u003c/kbd> Toggle Chalkboard\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"6\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\">\u003ckbd>c\u003c/kbd> Toggle Notes Canvas\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"7\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\">\u003ckbd>d\u003c/kbd> Download Drawings\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"8\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\">\u003ckbd>?\u003c/kbd> Keyboard Help\u003c/a>\u003c/li>\n\u003c/ul>"}],"openButton":true,"openButtonLabel":"Slide menu","width":"normal","numbers":true},
 'chalkboard': {"buttons":true,"theme":"whiteboard","boardmarkerWidth":3},
 'smaller': false,
  
@@ -3095,12 +3267,11 @@ f^{-1}(x) = \frac{x + 3}{5}.\]</span></p>
            include-after-body: poll.html
          and installed by poll/install.sh, which fills in the two constants below.
 
-         The script does nothing at all unless the deck URL carries ?k=<key>, so
-         the copy on the website never calls the worker. Open the deck as
-
-           index.html?k=YOUR_KEY
-
-         in class. A slide votes when its heading carries data-poll="<id>":
+         The script does nothing at all without a key, so the copy on the website
+         never calls the worker. install.sh writes the key to poll_key.js beside
+         the deck, and that file is gitignored and excluded from the website
+         rsync: open index.html here and voting is on, open it on the site and it
+         is off. A ?k=<key> in the URL overrides the file, before the "#". A slide votes when its heading carries data-poll="<id>":
 
            ## Warm-Up: The Roster {data-poll="ch2-roster"}
 
@@ -3109,11 +3280,34 @@ f^{-1}(x) = \frac{x + 3}{5}.\]</span></p>
 
            ## Name the Set [Must Know]{.ex} {data-poll="ch2-name-the-set" data-poll-answer="C"}
 
-         The options come from the .vote boxes already on the slide.
+         The options come from the .vote boxes already on the slide, and every
+         vote slide carries the join QR code in its right margin, under the vote
+         count and the same width as it, so a student who decides to join
+         mid-question can still reach the page.
            v   show or hide the tally (and tell the phones the answer)
-           l   show or hide the leaderboard -->
+           l   show or hide the leaderboard
+           r   twice, to start a new class: tallies and board count from now on -->
 
     <style>
+
+      /* How a vote box looks, so a deck can adopt polling without copying CSS.
+         Wrapped in :where() to carry no specificity of its own: a deck that
+         styles .vote in its own .scss still wins, and one that does not gets
+         this. The two choices are boxed and side by side so the room can see
+         what it is voting on from the back row. */
+      .reveal :where(.vote) {
+        background: #e6f0f5;
+        border-left: 6px solid #006791;
+        border-radius: 4px;
+        padding: 0.45em 0.7em;
+        text-align: center;
+      }
+      .reveal :where(.vote-prompt) { color: #006791; font-weight: 700; }
+      /* Four options stack two .columns rows; give the second row air. The margin
+         has to sit on the boxes, not the row -- reveal's column layout swallows a
+         margin on the row and renders it as a hairline. */
+      .reveal :where(.vote-row + .vote-row .vote) { margin-top: 0.5em; }
+
       .reveal .vote { position: relative; overflow: hidden; transition: opacity 300ms ease; }
       .reveal .vote > * { position: relative; z-index: 1; }
       .reveal .poll-fill {
@@ -3123,15 +3317,59 @@ f^{-1}(x) = \frac{x + 3}{5}.\]</span></p>
       }
       .reveal .vote.poll-wrong { opacity: 0.42; }
       .reveal .vote.poll-right { box-shadow: 0 0 0 3px #006791; }
+      /* The vote panel: the count on top, the join code under it, one width for
+         both. It sits in the right margin, which a wired deck leaves clear --
+         measured on CSCI 2322 chapter 2, slide content stops 154px short of the
+         right edge on every slide -- but not at the very top of it, because
+         Quarto's slide number is there (x 1213-1272, y 8-34 at 1280x720). Hence
+         top: 44px rather than 14px.
+
+         142px is what that margin holds at a 12px gutter, and it is the width
+         both children take. The badge takes it as a minimum, not a fixed width:
+         a revealed split is wider than the resting count, and align-items
+         flex-end lets it grow leftwards instead of wrapping to two lines. */
+      .poll-corner {
+        position: fixed; z-index: 40; top: 44px; right: 12px; width: 142px;
+        display: flex; flex-direction: column; align-items: flex-end; gap: 8px;
+      }
+      /* Width is pinned to the column, not merely floored at it. A revealed
+         four-option split ("A 5   B 3   C 2   D 1   ·   24 votes") is about
+         260px wide; left free to grow it would reach back to x 1008 and land on
+         the title, which on six of this deck's eleven vote slides carries a Must
+         Know pill out to x 1126. pre-wrap keeps the gaps between the counts and
+         lets the line break in them, so the split stacks inside the column
+         instead. The resting count is one line and still reads as a pill. */
       .poll-badge {
-        position: fixed; top: 14px; left: 16px; z-index: 40;   /* the slide number owns the right corner */
-        white-space: pre;                                      /* keeps the gaps between the counts */
-        font: 600 17px/1 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        min-width: 100%; max-width: 100%; box-sizing: border-box; text-align: center;
+        white-space: pre-wrap;                                 /* keeps the gaps, and wraps in them */
+        font: 600 17px/1.35 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         color: #006791; background: rgba(255, 255, 255, 0.88);
-        border: 1px solid rgba(0, 103, 145, 0.35); border-radius: 999px;
+        border: 1px solid rgba(0, 103, 145, 0.35); border-radius: 16px;
         padding: 7px 13px; cursor: pointer; user-select: none;
       }
       .poll-badge.off { color: #a03030; border-color: rgba(160, 48, 48, 0.4); }
+      /* The no-key notice is a sentence, not a count, so it wraps inside the
+         column instead of reaching 360px to the left across the slide. */
+      .poll-hint { white-space: normal; line-height: 1.25; border-radius: 10px; }
+      .poll-qr {                   /* 142 - 14 padding - 2 border = 126px of code, up from 110 */
+        width: 100%; box-sizing: border-box;
+        background: #fff; border: 1px solid rgba(0, 0, 0, 0.14); border-radius: 7px;
+        padding: 7px 7px 5px;                    /* white quiet zone, so the code still scans */
+      }
+      .poll-qr img { display: block; width: 100%; height: auto; }
+
+      /* The address on the join slide is there to be retyped by a student whose
+         camera will not read the code, so it has to stay on one line: a URL
+         broken across two invites typing the break in. The monospace face is
+         wide enough that a workers.dev address overruns a 60% column at body
+         size, so this trims it to what the column holds. It lives here rather
+         than in a deck's .scss so that adopting the deck needs no CSS. */
+      .reveal .joinurl code { font-size: 0.74em; white-space: nowrap; }
+      .poll-qr .pq-cap {
+        margin-top: 5px; text-align: center;
+        font: 600 13px/1.2 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        color: #4a5560;
+      }
       .poll-board {
         position: fixed; z-index: 50; top: 50%; left: 50%; transform: translate(-50%, -50%);
         min-width: 420px; max-width: 70vw; max-height: 80vh; overflow: auto;
@@ -3140,7 +3378,14 @@ f^{-1}(x) = \frac{x + 3}{5}.\]</span></p>
         font-family: var(--r-main-font, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
         color: #1a1a1a; cursor: pointer;
       }
-      .poll-board h3 { margin: 0 0 14px; font-size: 26px; color: #006791; font-weight: 700; }
+      .poll-toast {
+        position: fixed; top: 14px; left: 50%; transform: translateX(-50%); z-index: 60;
+        font: 600 17px/1 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        color: #a03030; background: rgba(255, 255, 255, 0.95);
+        border: 1px solid rgba(160, 48, 48, 0.4); border-radius: 999px; padding: 8px 15px;
+      }
+      .poll-board h3 { margin: 0 0 4px; font-size: 26px; color: #006791; font-weight: 700; }
+      .poll-board .pb-since { margin: 0 0 14px; font-size: 15px; color: #6a7781; }
       .poll-board ol { margin: 0; padding: 0; list-style: none; font-size: 22px; }
       .poll-board li { display: flex; align-items: baseline; gap: 14px; padding: 7px 0; border-bottom: 1px solid #eef2f5; }
       .poll-board li:last-child { border-bottom: 0; }
@@ -3150,15 +3395,36 @@ f^{-1}(x) = \frac{x + 3}{5}.\]</span></p>
       .poll-board .pb-empty { font-size: 19px; color: #6a7781; }
     </style>
 
+    <!-- poll_key.js holds the worker key. It sits beside the deck, is gitignored,
+         and is excluded from the website rsync, so the folder on this machine can
+         vote and the same deck on the site cannot. Missing, it 404s and voting
+         stays off, which is the safe direction to fail in. -->
+    <script src="poll_key.js"></script>
+
     <script>
     (function () {
-      var URL_BASE = "__POLL_URL__";
-      var ROOM = "__POLL_ROOM__";
+      var URL_BASE = "https://poll.zechuncao.workers.dev";
+      var ROOM = "csci2322";
 
-      var key = new URLSearchParams(location.search).get("k");
-      if (!key || URL_BASE.indexOf("__POLL") === 0) return;   // not the instructor's copy
+      if (URL_BASE.indexOf("__POLL") === 0) return;           // deck was never wired
+      // ?k= still wins, which is how one deck folder drives a second room.
+      var key = new URLSearchParams(location.search).get("k") || window.__POLL_KEY__ || null;
+
+      // Without a key the poll layer is off: no QR code, no badge, and v does
+      // nothing. On the website that silence is the whole point. On a local copy
+      // it is indistinguishable from a deck where voting is broken, so there it
+      // says which it is. A key after the "#" reads as no key at all.
+      // A PDF of the deck is a handout. None of this belongs in one -- not the QR
+      // code, not the badge, not the notice -- so printing switches the lot off.
+      if (location.search.indexOf("print-pdf") >= 0) return;
+
+      var local = location.protocol === "file:" ||
+                  /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
+      if (!key && !local) return;
 
       var timer = null, boardTimer = null, current = null, shown = false, badge = null, board = null;
+      var qr = null, corner = null;
+      var toastEl = null, toastTimer = null, armed = 0;
 
       function post(path, data) {
         return fetch(URL_BASE + path, {
@@ -3182,14 +3448,48 @@ f^{-1}(x) = \frac{x + 3}{5}.\]</span></p>
         return out;
       }
 
+      // enter() builds the QR first, so appending in call order would put the code
+      // above the count. The badge is inserted at the top instead, which fixes the
+      // order whichever is created first.
+      function ensureCorner() {
+        if (!corner) {
+          corner = document.createElement("div");
+          corner.className = "poll-corner";
+          document.body.appendChild(corner);
+        }
+        return corner;
+      }
+
+      function dropCorner() {
+        if (corner && !corner.childElementCount) { corner.remove(); corner = null; }
+      }
+
       function ensureBadge() {
         if (!badge) {
           badge = document.createElement("div");
           badge.className = "poll-badge";
           badge.onclick = toggle;
-          document.body.appendChild(badge);
+          var c = ensureCorner();
+          c.insertBefore(badge, c.firstChild);
         }
         return badge;
+      }
+
+      function ensureQR() {
+        if (!qr) {
+          qr = document.createElement("div");
+          qr.className = "poll-qr";
+          var img = document.createElement("img");
+          img.src = "images/vote_qr.svg";          // written beside the deck by install.sh
+          img.alt = "QR code that opens the class vote page";
+          var cap = document.createElement("div");
+          cap.className = "pq-cap";
+          cap.textContent = "Scan to vote";
+          qr.appendChild(img);
+          qr.appendChild(cap);
+          ensureCorner().appendChild(qr);
+        }
+        return qr;
       }
 
       function clearBars(sec) {
@@ -3197,14 +3497,20 @@ f^{-1}(x) = \frac{x + 3}{5}.\]</span></p>
         sec.querySelectorAll(".vote").forEach(function (v) { v.classList.remove("poll-wrong", "poll-right"); });
       }
 
+      // A letter and its count are joined by a non-breaking space, so the badge
+      // can only wrap between pairs. With a plain space the column broke "D 1"
+      // across two lines, leaving a bare "1" under the row.
       function split(st) {
-        return st.opts.map(function (o) { return o + " " + (st.counts[o] || 0); }).join("   ");
+        return st.opts.map(function (o) { return o + "\u00a0" + (st.counts[o] || 0); }).join("  ");
       }
 
       function paint(sec, st) {
+        // The column is 142px, so a revealed split wraps. Breaking before the
+        // total keeps "24 votes" whole on the last line instead of letting
+        // "votes" wrap off on its own.
         ensureBadge().textContent = shown
-          ? split(st) + "   ·   " + st.total + " votes"
-          : st.total + (st.total === 1 ? " vote" : " votes") + "   ·   press v";
+          ? split(st) + "\n" + st.total + " votes"
+          : st.total + (st.total === 1 ? " vote" : " votes");
         badge.classList.remove("off");
         clearBars(sec);
         if (!shown) return;
@@ -3229,11 +3535,15 @@ f^{-1}(x) = \frac{x + 3}{5}.\]</span></p>
           .catch(function () { if (badge) { badge.textContent = "no connection"; badge.classList.add("off"); } });
       }
 
+      // The /reveal reply carries the state the worker just wrote, so paint from it.
+      // Asking /s instead races the write and paints a screen of zeros for one tick.
       function toggle() {
         if (!current) return;
+        var sec = current;
         shown = !shown;
-        post("/reveal", { r: ROOM, k: key, on: shown }).catch(function () {});
-        tick();
+        post("/reveal", { r: ROOM, k: key, on: shown })
+          .then(function (st) { if (current === sec) paint(sec, st); })
+          .catch(function () { tick(); });
       }
 
       // --- leaderboard ---------------------------------------------------------
@@ -3244,6 +3554,12 @@ f^{-1}(x) = \frac{x + 3}{5}.\]</span></p>
         var h = document.createElement("h3");
         h.textContent = "Leaderboard";
         board.appendChild(h);
+        if (data && data.since) {
+          var sub = document.createElement("div");
+          sub.className = "pb-since";
+          sub.textContent = "since " + new Date(data.since).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+          board.appendChild(sub);
+        }
         var rows = (data && data.board) || [];
         if (!rows.length) {
           var p = document.createElement("div");
@@ -3285,12 +3601,46 @@ f^{-1}(x) = \frac{x + 3}{5}.\]</span></p>
         boardTimer = setInterval(loadBoard, 3000);
       }
 
+      // --- new class -----------------------------------------------------------
+
+      function toast(text, ms) {
+        if (!toastEl) {
+          toastEl = document.createElement("div");
+          toastEl.className = "poll-toast";
+          document.body.appendChild(toastEl);
+        }
+        toastEl.textContent = text;
+        if (toastTimer) clearTimeout(toastTimer);
+        toastTimer = setTimeout(function () {
+          if (toastEl) { toastEl.remove(); toastEl = null; }
+        }, ms || 4000);
+      }
+
+      // Two presses, because one stray r should not wipe the standings mid-class.
+      function restart() {
+        if (Date.now() - armed > 4000) {
+          armed = Date.now();
+          toast("Start a new leaderboard? press r again", 4200);
+          return;
+        }
+        armed = 0;
+        post("/restart", { r: ROOM, k: key })
+          .then(function () {
+            toast("New class. Tallies and leaderboard start from now.", 3500);
+            if (board) loadBoard();
+            tick();
+          })
+          .catch(function () { toast("No connection: the leaderboard was not restarted.", 3500); });
+      }
+
       // --- slide wiring --------------------------------------------------------
 
       function leave() {
         if (timer) { clearInterval(timer); timer = null; }
         if (current) clearBars(current);
         if (badge) { badge.remove(); badge = null; }
+        if (qr) { qr.remove(); qr = null; }
+        dropCorner();
         var was = current;
         current = null;
         shown = false;
@@ -3300,6 +3650,7 @@ f^{-1}(x) = \frac{x + 3}{5}.\]</span></p>
       function enter(sec) {
         current = sec;
         shown = false;
+        ensureQR();                                // up before the worker answers, or if it never does
         ensureBadge().textContent = "opening…";
         post("/open", {
           r: ROOM, k: key, q: sec.dataset.poll, opts: letters(sec),
@@ -3320,16 +3671,40 @@ f^{-1}(x) = \frac{x + 3}{5}.\]</span></p>
         if (sec && sec.dataset && sec.dataset.poll && letters(sec).length) enter(sec);
       }
 
+      function hint() {
+        var sec = Reveal.getCurrentSlide();
+        var el = document.querySelector(".poll-hint");
+        if (!sec || !sec.dataset || !sec.dataset.poll) { if (el) { el.remove(); dropCorner(); } return; }
+        if (!el) {
+          el = document.createElement("div");
+          el.className = "poll-badge off poll-hint";
+          ensureCorner().appendChild(el);
+        }
+        // The deployed deck has no key file, so this is what a student sees when
+        // they review a vote slide on the site. Keep it to a plain "not live"
+        // note and leave the cause in the tooltip, where it still tells the
+        // instructor what is wrong if the key goes missing in class.
+        el.textContent = "voting off";
+        el.title = "no poll_key.js beside the deck";
+      }
+
       function start() {
+        if (!key) {
+          hint();
+          Reveal.on("slidechanged", hint);
+          return;
+        }
         onSlide(Reveal.getCurrentSlide());
         Reveal.on("slidechanged", function (e) { onSlide(e.currentSlide); });
         if (Reveal.addKeyBinding) {
           Reveal.addKeyBinding({ keyCode: 86, key: "V", description: "Show or hide the vote tally" }, toggle);
           Reveal.addKeyBinding({ keyCode: 76, key: "L", description: "Show or hide the leaderboard" }, toggleBoard);
+          Reveal.addKeyBinding({ keyCode: 82, key: "R", description: "Press twice: new class, restart the leaderboard" }, restart);
         } else {
           document.addEventListener("keydown", function (e) {
             if (e.key === "v") toggle();
             if (e.key === "l") toggleBoard();
+            if (e.key === "r") restart();
           });
         }
         window.addEventListener("beforeunload", function () {
@@ -3419,7 +3794,8 @@ f^{-1}(x) = \frac{x + 3}{5}.\]</span></p>
               return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
           }
           // Inspect non-navigation links and adorn them if external
-         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          window.quartoDecorateExternalLinks = function (root) {
+         var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
           for (var i=0; i<links.length; i++) {
             const link = links[i];
             if (!isInternal(link.href)) {
@@ -3428,8 +3804,69 @@ f^{-1}(x) = \frac{x + 3}{5}.\]</span></p>
               if (link.dataset.originalHref !== undefined) {
                 link.href = link.dataset.originalHref;
               }
+              if (!link.classList.contains('no-external-icon')) {
+              }
             }
           }
+          };
+          window.quartoDecorateExternalLinks(window.document);
+        // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
+        // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
+        const hideOnEscAndFocusOut = {
+          name: 'hideOnEscAndFocusOut',
+          defaultValue: true,
+          fn(instance) {
+            const dismiss = () => {
+              // A show scheduled by the trigger delay would otherwise reopen it
+              instance.clearDelayTimeouts();
+              instance.hide();
+            };
+            const onKeyDown = (event) => {
+              if (event.key !== 'Escape') {
+                return;
+              }
+              // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
+              // except an open reveal.js slide menu, which Esc should close too.
+              // The menu handles keys only when its keyboard option is on.
+              const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
+                window.Reveal.getConfig().menu?.keyboard !== false;
+              if (!menuHandlesEsc) {
+                event.stopPropagation();
+              }
+              if (instance.popper.contains(window.document.activeElement)) {
+                // Disabled while refocusing so the focus trigger does not reopen it
+                instance.disable();
+                instance.reference.focus();
+                instance.enable();
+              }
+              dismiss();
+            };
+            const onFocusOut = (event) => {
+              const target = event.relatedTarget;
+              if (target && !instance.reference.contains(target) &&
+                  !instance.popper.contains(target)) {
+                dismiss();
+              }
+            };
+            // On the trigger too: a click trigger (code-annotations: select) has no
+            // blur handling. Attached for the instance's lifetime so leaving the
+            // trigger also cancels a show still pending on the trigger delay.
+            instance.reference.addEventListener('focusout', onFocusOut);
+            return {
+              onShow() {
+                window.document.addEventListener('keydown', onKeyDown, true);
+                instance.popper.addEventListener('focusout', onFocusOut);
+              },
+              onHide() {
+                window.document.removeEventListener('keydown', onKeyDown, true);
+                instance.popper.removeEventListener('focusout', onFocusOut);
+              },
+              onDestroy() {
+                instance.reference.removeEventListener('focusout', onFocusOut);
+              },
+            };
+          },
+        };
         function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
           const config = {
             allowHTML: true,
@@ -3443,6 +3880,7 @@ f^{-1}(x) = \frac{x + 3}{5}.\]</span></p>
             interactiveBorder: 10,
             theme: 'light-border',
             placement: 'bottom-start',
+            plugins: [hideOnEscAndFocusOut],
           };
           if (contentFn) {
             config.content = contentFn;
