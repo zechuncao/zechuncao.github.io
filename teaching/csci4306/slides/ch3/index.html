@@ -6,14 +6,14 @@
 <script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="index_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.10.18">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.11.9">
 
   <meta name="author" content="Zechun (Jacob) Cao">
   <title>Chapter 3 — TCP and Reliable Transfer</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="index_files/libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="index_files/libs/revealjs/dist/reveal.css">
   <style>
@@ -35,7 +35,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-c547e646e45bc3e44b83aaadf666dfc5.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-fe53f27fb2f5a5023a878fa18ad94147.css">
   <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -3207,11 +3207,11 @@ N = \frac{\text{RTT} + L/R}{L/R} \ \text{gives} \ U = 1\]</span></p>
 <div class="column" style="width:56%;">
 <p><strong>In class</strong></p>
 <ul>
-<li>Find out why two messages are not enough.</li>
-<li>Open a connection in three segments. <span class="ex-inline">Must Know</span></li>
+<li>See a late copy break a two-message setup.</li>
+<li>Number a connection, then open it in three segments. <span class="ex-inline">Must Know</span></li>
 <li>Exhaust a server with half-open connections.</li>
 <li>Close a connection, then wait.</li>
-<li>Let the receiver throttle the sender. <span class="ex-inline">Must Know</span></li>
+<li>Advertise a receive window. <span class="ex-inline">Must Know</span></li>
 </ul>
 </div><div class="column" style="width:44%;">
 <p><strong>After class</strong></p>
@@ -3224,41 +3224,55 @@ N = \frac{\text{RTT} + L/R}{L/R} \ \text{gives} \ U = 1\]</span></p>
 </section>
 <section id="agreeing-to-connect" class="slide level2">
 <h2>Agreeing to Connect</h2>
-<p>Chapter 2 priced the handshake at one round trip. This is what the round trip buys.</p>
+<p>You may adopt numbering here, and differnet font bolding effects, too texty here.</p>
+<p>Chapter 2 priced the handshake at one round trip. This is what it buys.</p>
 <p><span class="vote-prompt">Before any byte moves, what must each side learn?</span></p>
 <div class="fragment answer" data-fragment-index="0">
-<p><strong>That the other side is willing</strong> — and willing <em>now</em>, not during some earlier attempt that has since been abandoned.</p>
+<p><strong>That the other side is willing</strong>, and willing now.</p>
 </div>
 <div class="fragment answer" data-fragment-index="1">
-<p><strong>Where the other side’s numbering starts.</strong> Topic 1’s sequence numbers had to begin somewhere, and each direction picks its own starting value.</p>
+<p><strong>Where the other side’s numbering starts.</strong></p>
 </div>
 <div class="fragment answer" data-fragment-index="2">
-<p><strong>How much room the other side has.</strong> That number rides in every segment from here on, and it is the second half of tonight.</p>
+<p><strong>How much room the other side has.</strong></p>
+</div>
+</section>
+<section id="a-segment-can-arrive-late" class="slide level2">
+<h2>A Segment Can Arrive Late</h2>
+<p>You may adopt numbering here, and differnet font bolding effects, too texty here.</p>
+<p>Topic 2 gave the channel two faults: it corrupts bits, and it loses packets. Connection setup runs into a third.</p>
+<p><span class="vote-prompt">A retransmits a segment it believes was lost. Where is the first copy?</span></p>
+<div class="fragment answer" data-fragment-index="0">
+<p><strong>Possibly still in the network.</strong> A long queue or a slow path can hold it for seconds, and nothing in the segment says when it was sent.</p>
+</div>
+<div class="fragment answer" data-fragment-index="1">
+<p><strong>So B can receive a copy of a segment A has given up on.</strong> The next two slides each show that copy arriving.</p>
 </div>
 </section>
 <section id="two-messages-the-half-open" class="slide level2">
 <h2>Two Messages: The Half-Open</h2>
-<p>Suppose a connection opened on two messages: a request, then an acceptance.</p>
-<svg class="trace" viewbox="0 0 1000 330" role="img" aria-labelledby="half-open">
+<p>Suppose a connection opened on two messages: a request, then an acceptance. The late copy arrives at the server.</p>
+<p><span class="vote-prompt">Which side allocates, and which side knows nothing about it?</span></p>
+<svg class="trace" viewbox="0 0 1000 338" role="img" aria-labelledby="half-open">
   <title id="half-open">A delayed duplicate request leaves the server holding a connection no client wants</title>
   <defs><marker id="ho-a" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8" fill="#006791"></path></marker></defs>
   <text x="180" y="34" text-anchor="middle" class="lbl-blue" font-size="30">Client</text>
   <text x="820" y="34" text-anchor="middle" class="lbl-blue" font-size="30">Server</text>
-  <path class="life" d="M180,50 V322 M820,50 V322"></path>
+  <path class="life" d="M180,50 V268 M820,50 V268"></path>
   <g class="fragment" data-fragment-index="0">
     <path class="packet-path msg" d="M180,78 L820,124" marker-end="url(#ho-a)"></path>
     <text x="500" y="72" text-anchor="middle" class="lbl-blue" font-size="27">connect(x)</text>
-    <text x="500" y="156" text-anchor="middle" class="lbl-red" font-size="25">a delayed copy of a request the client gave up on long ago</text>
+    <text x="500" y="152" text-anchor="middle" class="lbl-red" font-size="25">a delayed copy the client gave up on long ago</text>
   </g>
   <g class="fragment" data-fragment-index="1">
-    <path class="packet-path msg" d="M820,186 L180,232" marker-end="url(#ho-a)"></path>
-    <text x="500" y="180" text-anchor="middle" class="lbl-blue" font-size="27">accept(x)</text>
-    <text x="838" y="178" text-anchor="start" font-size="25">buffers</text>
-    <text x="838" y="206" text-anchor="start" font-size="25">allocated</text>
+    <path class="packet-path msg" d="M820,200 L180,244" marker-end="url(#ho-a)"></path>
+    <text x="500" y="194" text-anchor="middle" class="lbl-blue" font-size="27">accept(x)</text>
+    <text x="838" y="192" text-anchor="start" font-size="25">buffers</text>
+    <text x="838" y="220" text-anchor="start" font-size="25">allocated</text>
   </g>
   <g class="fragment" data-fragment-index="2">
-    <text x="500" y="272" text-anchor="middle" class="lbl-red" font-size="27">Nobody is listening for that reply.</text>
-    <text x="500" y="308" text-anchor="middle" class="lbl-red" font-size="27">The server holds the connection <tspan font-weight="700">half open</tspan>, and will hold it until it gives up.</text>
+    <text x="500" y="292" text-anchor="middle" class="lbl-red" font-size="27">Nobody is listening for that reply.</text>
+    <text x="500" y="328" text-anchor="middle" class="lbl-red" font-size="27">The server holds the connection <tspan font-weight="700">half open</tspan> until it gives up.</text>
   </g>
 </svg>
 </section>
@@ -3270,7 +3284,7 @@ N = \frac{\text{RTT} + L/R}{L/R} \ \text{gives} \ U = 1\]</span></p>
   <defs><marker id="dd-a" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8" fill="#006791"></path></marker><marker id="dd-r" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8" fill="#c0392b"></path></marker></defs>
   <text x="180" y="28" text-anchor="middle" class="lbl-blue" font-size="29">Client</text>
   <text x="820" y="28" text-anchor="middle" class="lbl-blue" font-size="29">Server</text>
-  <path class="life" d="M180,42 V398 M820,42 V398"></path>
+  <path class="life" d="M180,42 V372 M820,42 V372"></path>
   <path class="packet-path msg" d="M180,62 L820,92" marker-end="url(#dd-a)"></path>
   <text x="500" y="56" text-anchor="middle" class="lbl-blue" font-size="25">connect(x)</text>
   <path class="packet-path msg" d="M820,112 L180,142" marker-end="url(#dd-a)"></path>
@@ -3292,6 +3306,20 @@ N = \frac{\text{RTT} + L/R}{L/R} \ \text{gives} \ U = 1\]</span></p>
     <text x="500" y="396" text-anchor="middle" class="lbl-red" font-size="26">The server transfers $500 a second time.</text>
   </g>
 </svg>
+</section>
+<section id="numbering-a-new-connection" class="slide level2">
+<h2>Numbering a New Connection</h2>
+<p>The opening segments are where each side’s byte numbering starts.</p>
+<p><span class="vote-prompt">A SYN carries no data. What ack number comes back?</span></p>
+<div class="fragment answer" data-fragment-index="0">
+<p><strong>One more than the SYN’s.</strong> An ack number is the next byte expected, so <span class="math inline">\(\text{seq} = x\)</span> draws <span class="math inline">\(\text{ack} = x + 1\)</span>.</p>
+</div>
+<div class="fragment answer" data-fragment-index="1">
+<p><strong>A SYN consumes that number,</strong> so the first data byte is <span class="math inline">\(x + 1\)</span>.</p>
+</div>
+<div class="fragment answer" data-fragment-index="2">
+<p><strong>Each direction picks its own starting number, and a new connection picks again.</strong></p>
+</div>
 </section>
 <section id="three-way-handshake-must-know" class="slide level2">
 <h2>Three-Way Handshake <span class="ex">Must Know</span></h2>
@@ -3322,8 +3350,19 @@ N = \frac{\text{RTT} + L/R}{L/R} \ \text{gives} \ U = 1\]</span></p>
     <text x="500" y="398" text-anchor="middle" class="lbl-blue" font-size="25">Each SYN consumes one sequence number, so the client's first data byte is 4522.</text>
   </g>
 </svg>
-<div class="fragment answer" data-fragment-index="4">
-<p>The third segment is what the two-message versions lacked: it proves the client is <strong>real and current</strong>.</p>
+</section>
+<section id="why-three-is-enough" class="slide level2">
+<h2>Why Three Is Enough</h2>
+<p>You may adopt numbering here, and differnet font bolding effects, too texty here.</p>
+<p><span class="vote-prompt">Replay both failures against the three-segment version.</span></p>
+<div class="fragment answer" data-fragment-index="0">
+<p><strong>The late copy.</strong> The server answers it; the client has no such connection and replies <code>RST</code>, so the entry is released instead of lingering.</p>
+</div>
+<div class="fragment answer" data-fragment-index="1">
+<p><strong>The stale data.</strong> Its numbers belong to the old connection, and this one chose a different starting value, so they fall outside the window.</p>
+</div>
+<div class="fragment answer" data-fragment-index="2">
+<p>The third segment is what the two-message versions lacked: it proves the client is real and current.</p>
 </div>
 </section>
 <section id="your-turn-handshake" class="slide level2">
@@ -3371,26 +3410,26 @@ N = \frac{\text{RTT} + L/R}{L/R} \ \text{gives} \ U = 1\]</span></p>
 </section>
 <section id="syn-flood" class="slide level2">
 <h2>SYN Flood</h2>
-<p>A server that allocates on the first segment can be made to allocate until it has nothing left.</p>
+<p>The server allocates the moment the first segment arrives.</p>
 <p><span class="vote-prompt">What does an attacker send, and what does it never send?</span></p>
 <div class="fragment answer" data-fragment-index="0">
-<p><strong>SYNs, from forged addresses, and never the third segment.</strong> Each one leaves a half-open entry like the delayed copy two slides ago, except there are thousands a second, and the table fills.</p>
+<p><strong>SYNs from forged addresses, and never the third segment.</strong> Each one leaves a half-open entry that the server holds for a minute or more, and enough of them exhaust the resources a real client needs.</p>
 </div>
 <div class="fragment answer" data-fragment-index="1">
-<p>Chapter 1 listed denial of service and IP spoofing as attacks the Internet was not built to resist. This is both at once, and the handshake is where they land.</p>
+<p>Chapter 1 listed denial of service and IP spoofing. This is both at once.</p>
 </div>
 </section>
 <section id="syn-cookies" class="slide level2">
 <h2>SYN Cookies</h2>
 <p><span class="vote-prompt">If allocating on the SYN is the weakness, what should the server do instead?</span></p>
 <div class="fragment answer" data-fragment-index="0">
-<p><strong>Allocate nothing.</strong> The server answers the SYN and keeps no record of having done so.</p>
+<p><strong>Allocate nothing.</strong> The server answers and keeps no record of having answered.</p>
 </div>
 <div class="fragment answer" data-fragment-index="1">
-<p>It chooses its own starting number as a <strong>cookie</strong>: a hash of the two addresses, the two ports, and a secret only the server knows.</p>
+<p>Its starting number <em>is</em> the record: a hash of the two addresses, the two ports, and a secret only the server knows.</p>
 </div>
 <div class="fragment answer" data-fragment-index="2">
-<p>A real client returns that number plus one in its third segment. The server recomputes the hash; if it matches, the client completed a handshake, and only then are buffers allocated. A forged SYN costs the server one reply and nothing else.</p>
+<p>A real client acks that number plus one. The server recomputes the hash and allocates only on a match.</p>
 </div>
 </section>
 <section id="closing-a-connection" class="slide level2">
@@ -3429,13 +3468,40 @@ N = \frac{\text{RTT} + L/R}{L/R} \ \text{gives} \ U = 1\]</span></p>
 </section>
 <section id="time_wait" class="slide level2">
 <h2>TIME_WAIT</h2>
-<p>The client has sent its last ACK and has nothing further to do. It waits anyway, typically from 30 seconds to two minutes.</p>
-<p><span class="vote-prompt">Why not release the connection at once?</span></p>
-<div class="fragment answer" data-fragment-index="0">
-<p><strong>Because that last ACK can be lost.</strong> The server would retransmit its FIN, and somebody has to be there to answer it.</p>
-</div>
-<div class="fragment answer" data-fragment-index="1">
-<p>The wait also lets stray segments of this connection die in the network before the same pair of ports can be reused — the duplicate-data failure again, which the handshake alone does not prevent.</p>
+<p>The client sends its last ACK, then waits 30 seconds to two minutes.</p>
+<p><span class="vote-prompt">What breaks if it releases at once?</span></p>
+<svg class="trace" viewbox="0 0 1000 322" role="img" aria-labelledby="timewait">
+  <title id="timewait">A lost final ACK draws a retransmitted FIN, which only a client still in TIME_WAIT can answer</title>
+  <defs>
+    <marker id="tw-a" markerwidth="9" markerheight="9" refx="8" refy="4" orient="auto" markerunits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8" fill="#006791"></path></marker>
+  </defs>
+  <text x="200" y="30" text-anchor="middle" class="lbl-blue" font-size="29">Client</text>
+  <text x="800" y="30" text-anchor="middle" class="lbl-blue" font-size="29">Server</text>
+  <path class="life" d="M200,46 V288 M800,46 V288"></path>
+  <text x="814" y="74" text-anchor="start" class="lbl-gray" font-size="23">LAST_ACK</text>
+  <g class="fragment" data-fragment-index="0">
+    <path class="packet-path msg-r" d="M200,80 L530,98"></path>
+    <path class="loss-cross" d="M540,90 l18,18 m0,-18 l-18,18"></path>
+    <text x="350" y="74" text-anchor="middle" class="lbl-red" font-size="26">the last ACK</text>
+    <text x="574" y="106" text-anchor="start" class="lbl-red" font-size="25">lost</text>
+    <rect class="tbar" x="176" y="86" width="11" height="190" rx="3"></rect>
+    <text x="164" y="190" text-anchor="end" class="lbl-gray" font-size="23">TIME_WAIT</text>
+  </g>
+  <g class="fragment" data-fragment-index="1">
+    <rect class="tbar" x="789" y="110" width="11" height="58" rx="3"></rect>
+    <path class="ttick" d="M777,168 H843"></path>
+    <text x="856" y="160" text-anchor="start" class="lbl-red" font-size="24">no ACK</text>
+    <path class="packet-path msg" d="M800,190 L200,216" marker-end="url(#tw-a)"></path>
+    <text x="500" y="184" text-anchor="middle" font-size="26">FIN again</text>
+  </g>
+  <g class="fragment" data-fragment-index="2">
+    <path class="packet-path msg" d="M200,250 L800,276" marker-end="url(#tw-a)"></path>
+    <text x="500" y="244" text-anchor="middle" font-size="26">ACK</text>
+    <text x="500" y="314" text-anchor="middle" class="lbl-green" font-size="26">The client was still there to answer, so the server's close completes.</text>
+  </g>
+</svg>
+<div class="fragment" data-fragment-index="3">
+<p>The wait also lets stray segments die before these ports are reused.</p>
 </div>
 </section>
 <section id="the-receive-window" class="slide level2">
@@ -3467,18 +3533,30 @@ N = \frac{\text{RTT} + L/R}{L/R} \ \text{gives} \ U = 1\]</span></p>
 <section id="flow-control-must-know" class="slide level2">
 <h2>Flow Control <span class="ex">Must Know</span></h2>
 <p><span class="math display">\[\text{rwnd} = \text{RcvBuffer} - (\text{LastByteRcvd} - \text{LastByteRead})\]</span></p>
-<div class="fragment" data-fragment-index="0">
-<p><strong>RcvBuffer is 6000 bytes. B has received in order through byte 24,500 and its application has read through byte 20,000.</strong></p>
-</div>
-<div class="fragment" data-fragment-index="1">
-<p>Waiting in the buffer: <span class="math inline">\(24{,}500 - 20{,}000 = 4500\)</span> bytes.</p>
-</div>
-<div class="fragment" data-fragment-index="2">
-<p><span class="math display">\[\text{rwnd} = 6000 - 4500 = \mathbf{1500 \text{ bytes}}\]</span></p>
-</div>
-<div class="fragment" data-fragment-index="3">
-<p>A then keeps <span class="math inline">\(\text{LastByteSent} - \text{LastByteAcked} \le 1500\)</span>. The receiver’s buffer cannot overflow, whatever the sender’s own window allows.</p>
-</div>
+<p><span class="vote-prompt">RcvBuffer is 6000 bytes. B has received in order through 24,500 and read through 20,000. What does B advertise?</span></p>
+<svg class="trace" viewbox="0 0 1000 300" role="img" aria-labelledby="fcfig">
+  <title id="fcfig">The free space left in a 6000-byte receive buffer holding 4500 unread bytes</title>
+  <text x="500" y="40" text-anchor="middle" font-size="26">RcvBuffer = 6000 bytes</text>
+  <path class="win" d="M140,66 V52 H860 V66"></path>
+  <rect class="idle" x="140" y="110" width="720" height="78" rx="6"></rect>
+  <g class="fragment" data-fragment-index="0">
+    <rect class="cell-flight" x="140" y="110" width="540" height="78" rx="6"></rect>
+    <text x="410" y="158" text-anchor="middle" font-size="25">arrived, not yet read</text>
+    <text x="140" y="100" text-anchor="middle" class="lbl-blue" font-size="23">read through 20,000</text>
+    <text x="680" y="100" text-anchor="middle" class="lbl-blue" font-size="23">received through 24,500</text>
+  </g>
+  <g class="fragment" data-fragment-index="1">
+    <text x="380" y="240" text-anchor="middle" font-size="26">24,500 − 20,000 = 4500 waiting</text>
+  </g>
+  <g class="fragment" data-fragment-index="2">
+    <rect class="cell-free" x="680" y="110" width="180" height="78" rx="6"></rect>
+    <path class="win" d="M680,198 V210 H860 V198"></path>
+    <text x="770" y="240" text-anchor="middle" class="lbl-blue" font-size="26">rwnd = 6000 − 4500 = 1500</text>
+  </g>
+  <g class="fragment" data-fragment-index="3">
+    <text x="500" y="288" text-anchor="middle" font-size="26">A keeps LastByteSent − LastByteAcked under 1500.</text>
+  </g>
+</svg>
 </section>
 <section id="your-turn-rwnd" class="slide level2">
 <h2>Your Turn: rwnd</h2>
@@ -4149,40 +4227,6 @@ N = \frac{\text{RTT} + L/R}{L/R} \ \text{gives} \ U = 1\]</span></p>
 <p>ECN needs routers, sender and receiver alike. Delay-based needs only the sender.</p>
 </div>
 </section>
-<section id="recap" class="slide level2">
-<h2>Explain Your Choice</h2>
-<p>Choose one question and explain it to a neighbor. Use a specific event from a packet trace.</p>
-<table class="caption-top">
-<colgroup>
-<col style="width: 41%">
-<col style="width: 58%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Question</th>
-<th>Check your explanation</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Why does a gap hold back an ACK?</td>
-<td><span class="fragment answer" data-fragment-index="0">Later bytes cannot confirm receipt of missing earlier bytes.</span></td>
-</tr>
-<tr class="even">
-<td>Why ACK a duplicate?</td>
-<td><span class="fragment answer" data-fragment-index="1">The sender may have missed the earlier ACK.</span></td>
-</tr>
-<tr class="odd">
-<td>Why does a faster link lower utilization?</td>
-<td><span class="fragment answer" data-fragment-index="2">The round trip does not shrink with it.</span></td>
-</tr>
-<tr class="even">
-<td>Why wait for three duplicate ACKs?</td>
-<td><span class="fragment answer" data-fragment-index="3">One or two can come from reordering alone.</span></td>
-</tr>
-</tbody>
-</table>
-</section>
 <section id="read-after-class-4" class="slide level2 center reading-divider">
 <h2>Read After Class</h2>
 <p>Beyond the sawtooth</p>
@@ -4192,7 +4236,6 @@ N = \frac{\text{RTT} + L/R}{L/R} \ \text{gives} \ U = 1\]</span></p>
 <li>Why a fast, long path is hard to keep full</li>
 <li>What QUIC moved out of the kernel and into the application</li>
 </ul>
-<p><a href="#/recap">Review the chapter →</a></p>
 </section>
 <section id="tcp-cubic-reading" class="slide level2">
 <h2>TCP CUBIC <span class="rd">Reading</span></h2>
@@ -4256,7 +4299,7 @@ N = \frac{\text{RTT} + L/R}{L/R} \ \text{gives} \ U = 1\]</span></p>
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
 'jumpToSlide': true,
-'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true,"width":"normal","numbers":true},
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"\u003ci class=\"fas fa-gear\">\u003c/i>","content":"\u003cul class=\"slide-menu-items\">\n\u003cli class=\"slide-tool-item active\" data-item=\"0\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\">\u003ckbd>f\u003c/kbd> Fullscreen\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"1\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\">\u003ckbd>s\u003c/kbd> Speaker View\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"2\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\">\u003ckbd>o\u003c/kbd> Slide Overview\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"3\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\">\u003ckbd>e\u003c/kbd> PDF Export Mode\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"4\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\">\u003ckbd>r\u003c/kbd> Scroll View Mode\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"5\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\">\u003ckbd>b\u003c/kbd> Toggle Chalkboard\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"6\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\">\u003ckbd>c\u003c/kbd> Toggle Notes Canvas\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"7\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\">\u003ckbd>d\u003c/kbd> Download Drawings\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"8\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\">\u003ckbd>?\u003c/kbd> Keyboard Help\u003c/a>\u003c/li>\n\u003c/ul>"}],"openButton":true,"openButtonLabel":"Slide menu","width":"normal","numbers":true},
 'chalkboard': {"buttons":true,"theme":"whiteboard","boardmarkerWidth":3},
 'smaller': false,
  
@@ -4512,7 +4555,8 @@ N = \frac{\text{RTT} + L/R}{L/R} \ \text{gives} \ U = 1\]</span></p>
               return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
           }
           // Inspect non-navigation links and adorn them if external
-         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          window.quartoDecorateExternalLinks = function (root) {
+         var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
           for (var i=0; i<links.length; i++) {
             const link = links[i];
             if (!isInternal(link.href)) {
@@ -4521,8 +4565,69 @@ N = \frac{\text{RTT} + L/R}{L/R} \ \text{gives} \ U = 1\]</span></p>
               if (link.dataset.originalHref !== undefined) {
                 link.href = link.dataset.originalHref;
               }
+              if (!link.classList.contains('no-external-icon')) {
+              }
             }
           }
+          };
+          window.quartoDecorateExternalLinks(window.document);
+        // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
+        // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
+        const hideOnEscAndFocusOut = {
+          name: 'hideOnEscAndFocusOut',
+          defaultValue: true,
+          fn(instance) {
+            const dismiss = () => {
+              // A show scheduled by the trigger delay would otherwise reopen it
+              instance.clearDelayTimeouts();
+              instance.hide();
+            };
+            const onKeyDown = (event) => {
+              if (event.key !== 'Escape') {
+                return;
+              }
+              // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
+              // except an open reveal.js slide menu, which Esc should close too.
+              // The menu handles keys only when its keyboard option is on.
+              const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
+                window.Reveal.getConfig().menu?.keyboard !== false;
+              if (!menuHandlesEsc) {
+                event.stopPropagation();
+              }
+              if (instance.popper.contains(window.document.activeElement)) {
+                // Disabled while refocusing so the focus trigger does not reopen it
+                instance.disable();
+                instance.reference.focus();
+                instance.enable();
+              }
+              dismiss();
+            };
+            const onFocusOut = (event) => {
+              const target = event.relatedTarget;
+              if (target && !instance.reference.contains(target) &&
+                  !instance.popper.contains(target)) {
+                dismiss();
+              }
+            };
+            // On the trigger too: a click trigger (code-annotations: select) has no
+            // blur handling. Attached for the instance's lifetime so leaving the
+            // trigger also cancels a show still pending on the trigger delay.
+            instance.reference.addEventListener('focusout', onFocusOut);
+            return {
+              onShow() {
+                window.document.addEventListener('keydown', onKeyDown, true);
+                instance.popper.addEventListener('focusout', onFocusOut);
+              },
+              onHide() {
+                window.document.removeEventListener('keydown', onKeyDown, true);
+                instance.popper.removeEventListener('focusout', onFocusOut);
+              },
+              onDestroy() {
+                instance.reference.removeEventListener('focusout', onFocusOut);
+              },
+            };
+          },
+        };
         function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
           const config = {
             allowHTML: true,
@@ -4536,6 +4641,7 @@ N = \frac{\text{RTT} + L/R}{L/R} \ \text{gives} \ U = 1\]</span></p>
             interactiveBorder: 10,
             theme: 'light-border',
             placement: 'bottom-start',
+            plugins: [hideOnEscAndFocusOut],
           };
           if (contentFn) {
             config.content = contentFn;
