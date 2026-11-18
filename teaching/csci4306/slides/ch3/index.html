@@ -3224,30 +3224,23 @@ N = \frac{\text{RTT} + L/R}{L/R} \ \text{gives} \ U = 1\]</span></p>
 </section>
 <section id="agreeing-to-connect" class="slide level2">
 <h2>Agreeing to Connect</h2>
-<p>You may adopt numbering here, and differnet font bolding effects, too texty here.</p>
 <p>Chapter 2 priced the handshake at one round trip. This is what it buys.</p>
 <p><span class="vote-prompt">Before any byte moves, what must each side learn?</span></p>
-<div class="fragment answer" data-fragment-index="0">
-<p><strong>That the other side is willing</strong>, and willing now.</p>
-</div>
-<div class="fragment answer" data-fragment-index="1">
-<p><strong>Where the other side’s numbering starts.</strong></p>
-</div>
-<div class="fragment answer" data-fragment-index="2">
-<p><strong>How much room the other side has.</strong></p>
-</div>
+<ol type="1">
+<li class="fragment"><strong>Willingness.</strong> That the other side will accept this connection, now.</li>
+<li class="fragment"><strong>A starting number.</strong> Where its byte numbering begins.</li>
+<li class="fragment"><strong>Room.</strong> How much buffer it has free.</li>
+</ol>
 </section>
 <section id="a-segment-can-arrive-late" class="slide level2">
 <h2>A Segment Can Arrive Late</h2>
-<p>You may adopt numbering here, and differnet font bolding effects, too texty here.</p>
 <p>Topic 2 gave the channel two faults: it corrupts bits, and it loses packets. Connection setup runs into a third.</p>
 <p><span class="vote-prompt">A retransmits a segment it believes was lost. Where is the first copy?</span></p>
-<div class="fragment answer" data-fragment-index="0">
-<p><strong>Possibly still in the network.</strong> A long queue or a slow path can hold it for seconds, and nothing in the segment says when it was sent.</p>
-</div>
-<div class="fragment answer" data-fragment-index="1">
-<p><strong>So B can receive a copy of a segment A has given up on.</strong> The next two slides each show that copy arriving.</p>
-</div>
+<ol type="1">
+<li class="fragment"><strong>Still in the network.</strong> A long queue or a slow path holds it for seconds.</li>
+<li class="fragment"><strong>Nothing dates it.</strong> The segment carries no clue of when it was sent.</li>
+<li class="fragment"><strong>So B can receive a copy A gave up on.</strong> The next two slides show it arriving.</li>
+</ol>
 </section>
 <section id="two-messages-the-half-open" class="slide level2">
 <h2>Two Messages: The Half-Open</h2>
@@ -3353,15 +3346,12 @@ N = \frac{\text{RTT} + L/R}{L/R} \ \text{gives} \ U = 1\]</span></p>
 </section>
 <section id="why-three-is-enough" class="slide level2">
 <h2>Why Three Is Enough</h2>
-<p>You may adopt numbering here, and differnet font bolding effects, too texty here.</p>
 <p><span class="vote-prompt">Replay both failures against the three-segment version.</span></p>
-<div class="fragment answer" data-fragment-index="0">
-<p><strong>The late copy.</strong> The server answers it; the client has no such connection and replies <code>RST</code>, so the entry is released instead of lingering.</p>
-</div>
-<div class="fragment answer" data-fragment-index="1">
-<p><strong>The stale data.</strong> Its numbers belong to the old connection, and this one chose a different starting value, so they fall outside the window.</p>
-</div>
-<div class="fragment answer" data-fragment-index="2">
+<ol type="1">
+<li class="fragment"><strong>The late copy.</strong> The server answers it. The client has no such connection and replies <code>RST</code>, so the entry is released.</li>
+<li class="fragment"><strong>The stale data.</strong> Its numbers belong to the old connection, and this one started somewhere else, so they fall outside the window.</li>
+</ol>
+<div class="fragment">
 <p>The third segment is what the two-message versions lacked: it proves the client is real and current.</p>
 </div>
 </section>
