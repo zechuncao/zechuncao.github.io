@@ -4236,12 +4236,12 @@ N = \frac{\text{RTT} + L/R}{L/R} \ \text{gives} \ U = 1\]</span></p>
 <section id="delay-as-a-signal-reading" class="slide level2">
 <h2>Delay as a Signal <span class="rd">Reading</span></h2>
 <p>A loss-based sender only learns of congestion once a queue is full, which means it causes the delay it then reacts to.</p>
-<p>A delay-based sender watches instead. It keeps $ ext{RTT}<em>{}$, the smallest round trip it has seen, as its estimate of the path with no queue. If measured throughput is close to $ ext{cwnd}/ ext{RTT}</em>{}$, the packets are not queueing and the window may rise. If measured throughput falls well below it, the extra window is sitting in a buffer rather than moving data, and the window should come down. <strong>BBR</strong> works this way.</p>
+<p>A delay-based sender watches instead. It keeps <span class="math inline">\(\text{RTT}_{\min}\)</span>, the smallest round trip it has seen, as its estimate of the path with no queue. If measured throughput is close to <span class="math inline">\(\text{cwnd}/\text{RTT}_{\min}\)</span>, the packets are not queueing and the window may rise. If measured throughput falls well below it, the extra window is sitting in a buffer rather than moving data, and the window should come down. <strong>BBR</strong> works this way.</p>
 <p>The difficulty is coexistence: a delay-based sender backs off as a queue builds, and a loss-based sender beside it does not, taking the space that was given up.</p>
 </section>
 <section id="long-fat-pipes-reading" class="slide level2">
 <h2>Long Fat Pipes <span class="rd">Reading</span></h2>
-<p>To fill a link a sender needs a window of one bandwidth–delay product. On a 10 Gbps path with a 100 ms round trip, that is <span class="math inline">\(10^{10}     imes 0.1 / 8 = 125\)</span> MB in flight, which is about 83,000 segments of 1500 bytes.</p>
+<p>To fill a link a sender needs a window of one bandwidth–delay product. On a 10 Gbps path with a 100 ms round trip, that is <span class="math inline">\(10^{10} \times 0.1 / 8 = 125\)</span> MB in flight, which is about 83,000 segments of 1500 bytes.</p>
 <p>Two problems follow. The 16-bit window field cannot express it, which is what the window scale option exists for. Worse, additive increase needs one round trip per segment to climb back to 83,000 after a loss — well over an hour of near-perfect conditions.</p>
 <p>That arithmetic is why the classic sawtooth was replaced on fast paths. CUBIC’s shape and BBR’s different signal are both answers to it.</p>
 </section>
