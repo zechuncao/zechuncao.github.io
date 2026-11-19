@@ -101,7 +101,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-8caad1bbd9aa463233aa28067acf64bd.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-631699d46447719b18935c507c2c4325.css">
   <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -265,6 +265,19 @@ Zechun (Jacob) Cao
     </div>
 </div>
 
+</section>
+<section id="vote-from-your-phone" class="slide level2">
+<h2>Vote From Your Phone</h2>
+<div class="columns">
+<div class="column" style="width:40%;">
+<p><img data-src="images/vote_qr.svg" alt="QR code that opens the class vote page" width="330"></p>
+</div><div class="column" style="width:60%;">
+<p>Scan the code to open the vote page, or type this address:</p>
+<p><span class="joinurl"><code>poll.zechuncao.workers.dev?r=csci2336</code></span></p>
+<p>Keep the page open for the whole class. The buttons become active when a vote slide is on the screen, and you can change your answer while the question is open.</p>
+<p>Votes are anonymous. A scored question asks for a nickname, and that nickname is what the leaderboard shows.</p>
+</div></div>
+<!-- Written by poll/install.sh from poll/deck/poll_join.qmd. Edit it there. -->
 </section>
 <section id="how-to-read-this-deck" class="slide level2">
 <h2>How to Read This Deck</h2>
@@ -438,7 +451,7 @@ Zechun (Jacob) Cao
 <section id="part-1" class="slide level2 center section-divider">
 <h2>Part 1</h2>
 <p>Hash Functions</p>
-<p><span class="seclist"><span class="sec-on">hash functions</span> · collisions · linear probing · quadratic probing · double hashing · separate chaining</span></p>
+<p><span class="seclist"><span class="sec-on">hash functions</span> · collisions · linear probing · quadratic probing · double hashing · separate chaining · the dictionary class</span></p>
 </section>
 <section id="computing-the-hash-function-must-know" class="slide level2 long-title">
 <h2>Computing the Hash Function <span class="ex">Must Know</span></h2>
@@ -622,15 +635,15 @@ Zechun (Jacob) Cao
 <p>The nesting is Horner’s method, and it is the polynomial <span class="math display">\[3{,}045{,}982 = 99 \cdot 31^3 + 97 \cdot 31^2 + 108 \cdot 31 + 108.\]</span></p>
 </div>
 </section>
-<section id="question" class="slide level2">
+<section id="question" class="slide level2" data-poll="ch6-cat-hashcode" data-poll-answer="C">
 <h2>Question</h2>
 <p><code>'c'</code> is 99, <code>'a'</code> is 97 and <code>'t'</code> is 116.</p>
 <p><strong><em>What is <code>"cat".hashCode()</code>?</em></strong></p>
 <ul class="choices row">
-  <li><span class="k">A</span> 312</li>
-  <li><span class="k">B</span> 3,282</li>
-  <li class="fragment pick"><span class="k">C</span> 98,262</li>
-  <li><span class="k">D</span> 114,582</li>
+  <li><span class="k">A</span> <span class="opt">312</span></li>
+  <li><span class="k">B</span> <span class="opt">3,282</span></li>
+  <li class="fragment pick"><span class="k">C</span> <span class="opt">98,262</span></li>
+  <li><span class="k">D</span> <span class="opt">114,582</span></li>
 </ul>
 <div class="fragment">
 <p><span class="math inline">\(99 \cdot 961 + 97 \cdot 31 + 116 = 98{,}262\)</span>. <strong>312</strong> adds the three values and ignores position, <strong>3,282</strong> is <span class="math inline">\(3166 + 116\)</span>, which drops the multiply at the last character, and <strong>114,582</strong> is <code>"tac"</code>.</p>
@@ -775,15 +788,15 @@ Zechun (Jacob) Cao
 <p>Adding the table length to a negative remainder brings it into range without changing which slot it names. <code>"Rivera"</code> has hash code <span class="math inline">\(-1{,}846{,}791{,}179\)</span>, so <code>%</code> gives <span class="math inline">\(-12\)</span>, and the <code>if</code> makes it 1.</p>
 </div>
 </section>
-<section id="question-1" class="slide level2">
+<section id="question-1" class="slide level2" data-poll="ch6-neg-index" data-poll-answer="B">
 <h2>Question</h2>
 <p>A key’s <code>hashCode()</code> returns <span class="math inline">\(-45\)</span>, and the table has 13 slots.</p>
 <p><strong><em>Which index does <code>getHashIndex</code> return?</em></strong></p>
 <ul class="choices row">
-  <li><span class="k">A</span> −6</li>
-  <li class="fragment pick"><span class="k">B</span> 7</li>
-  <li><span class="k">C</span> 6</li>
-  <li><span class="k">D</span> −3</li>
+  <li><span class="k">A</span> <span class="opt">−6</span></li>
+  <li class="fragment pick"><span class="k">B</span> <span class="opt">7</span></li>
+  <li><span class="k">C</span> <span class="opt">6</span></li>
+  <li><span class="k">D</span> <span class="opt">−3</span></li>
 </ul>
 <div class="fragment">
 <p><code>-45 % 13</code> is <code>-6</code>, and <code>-6 + 13</code> is 7. <strong>−6</strong> is the answer without the <code>if</code>, <strong>6</strong> is <code>45 % 13</code>, the remainder of the code made positive first, and <strong>−3</strong> is <code>-45 / 13</code>.</p>
@@ -911,7 +924,7 @@ Zechun (Jacob) Cao
 <section id="part-2" class="slide level2 center section-divider">
 <h2>Part 2</h2>
 <p>Collision Resolution</p>
-<p><span class="seclist">hash functions · <span class="sec-on">collisions</span> · linear probing · quadratic probing · double hashing · separate chaining</span></p>
+<p><span class="seclist">hash functions · <span class="sec-on">collisions</span> · linear probing · quadratic probing · double hashing · separate chaining · the dictionary class</span></p>
 </section>
 <section id="resolving-collisions-must-know" class="slide level2 long-title">
 <h2>Resolving Collisions <span class="ex">Must Know</span></h2>
@@ -974,15 +987,15 @@ Zechun (Jacob) Cao
 <span class="fragment anim-step" data-anim="two_ways" data-step="5"></span>
 </div>
 </section>
-<section id="question-2" class="slide level2">
+<section id="question-2" class="slide level2" data-poll="ch6-is-collision" data-poll-answer="C">
 <h2>Question</h2>
 <p>Slot 5 holds the entry whose key is 18, and <code>add(18, value)</code> is called with a new value for that same key.</p>
 <p><strong><em>Is that a collision?</em></strong></p>
 <ul class="choices row">
-  <li><span class="k">A</span> Yes, the slot is occupied.</li>
-  <li><span class="k">B</span> Yes, two adds, one location.</li>
-  <li class="fragment pick"><span class="k">C</span> No, the keys are equal.</li>
-  <li><span class="k">D</span> No, <code>add</code> ignores the location.</li>
+  <li><span class="k">A</span> <span class="opt">Yes, the slot is occupied.</span></li>
+  <li><span class="k">B</span> <span class="opt">Yes, two adds, one location.</span></li>
+  <li class="fragment pick"><span class="k">C</span> <span class="opt">No, the keys are equal.</span></li>
+  <li><span class="k">D</span> <span class="opt">No, <code>add</code> ignores the location.</span></li>
 </ul>
 <div class="fragment">
 <p>A collision needs two <strong>different</strong> keys at one index. Equal keys mean one entry, so the entry count does not change.</p>
@@ -991,7 +1004,7 @@ Zechun (Jacob) Cao
 <section id="collision-resolution" class="slide level2 center section-divider">
 <h2>Collision Resolution</h2>
 <p>Linear Probing</p>
-<p><span class="seclist">hash functions · collisions · <span class="sec-on">linear probing</span> · quadratic probing · double hashing · separate chaining</span></p>
+<p><span class="seclist">hash functions · collisions · <span class="sec-on">linear probing</span> · quadratic probing · double hashing · separate chaining · the dictionary class</span></p>
 </section>
 <section id="linear-probing-must-know" class="slide level2">
 <h2>Linear Probing <span class="ex">Must Know</span></h2>
@@ -1051,7 +1064,7 @@ Zechun (Jacob) Cao
 <span class="fragment anim-step" data-anim="linear_a" data-step="3"></span>
 </div>
 </section>
-<section id="question-3" class="slide level2">
+<section id="question-3" class="slide level2" data-poll="ch6-linear-59" data-poll-answer="B">
 <h2>Question</h2>
 <p>Three keys are in, and the next key is 59.</p>
 <div class="fig still"><svg viewbox="0 0 940 148" width="74%" xmlns="http://www.w3.org/2000/svg" role="img">
@@ -1087,10 +1100,10 @@ Zechun (Jacob) Cao
 </svg></div>
 <p><strong><em>Which slot does <code>add(59)</code> put it in?</em></strong></p>
 <ul class="choices row">
-  <li><span class="k">A</span> 7</li>
-  <li class="fragment pick"><span class="k">B</span> 8</li>
-  <li><span class="k">C</span> 4</li>
-  <li><span class="k">D</span> 0</li>
+  <li><span class="k">A</span> <span class="opt">7</span></li>
+  <li class="fragment pick"><span class="k">B</span> <span class="opt">8</span></li>
+  <li><span class="k">C</span> <span class="opt">4</span></li>
+  <li><span class="k">D</span> <span class="opt">0</span></li>
 </ul>
 <div class="fragment">
 <p>44 is in slot 7, so 59’s home index is taken and the probe moves on to 8. <strong>7</strong> takes the home index to be free, <strong>4</strong> probes backwards, and <strong>0</strong> takes the first free location in the table, not in the sequence.</p>
@@ -1224,7 +1237,7 @@ Zechun (Jacob) Cao
 <p>A search that misses examines every location of the cluster it starts in.</p>
 </div>
 </section>
-<section id="question-4" class="slide level2">
+<section id="question-4" class="slide level2" data-poll="ch6-search-83" data-poll-answer="D">
 <h2>Question</h2>
 <p>The six keys are in the table, 83 is not one of them, and <span class="math inline">\(H(83) = 83 \bmod 13 = 5\)</span>.</p>
 <div class="fig still"><svg viewbox="0 0 940 148" width="74%" xmlns="http://www.w3.org/2000/svg" role="img">
@@ -1263,10 +1276,10 @@ Zechun (Jacob) Cao
 </svg></div>
 <p><strong><em>How many locations does a search for 83 examine?</em></strong></p>
 <ul class="choices row">
-  <li><span class="k">A</span> 1</li>
-  <li><span class="k">B</span> 4</li>
-  <li><span class="k">C</span> 6</li>
-  <li class="fragment pick"><span class="k">D</span> 5</li>
+  <li><span class="k">A</span> <span class="opt">1</span></li>
+  <li><span class="k">B</span> <span class="opt">4</span></li>
+  <li><span class="k">C</span> <span class="opt">6</span></li>
+  <li class="fragment pick"><span class="k">D</span> <span class="opt">5</span></li>
 </ul>
 <div class="fragment">
 <p>83 is compared with 18, 31, 44 and 59, and the empty slot 9 ends the search. <strong>4</strong> leaves out that last location, <strong>6</strong> goes one past it, and <strong>1</strong> stops at the home index.</p>
@@ -1384,7 +1397,7 @@ Zechun (Jacob) Cao
 <span class="fragment anim-step" data-anim="remove_avail" data-step="4"></span>
 </div>
 </section>
-<section id="question-5" class="slide level2">
+<section id="question-5" class="slide level2" data-poll="ch6-add-57" data-poll-answer="A">
 <h2>Question</h2>
 <p>Slot 6 is available, 57 is not in the table, and <span class="math inline">\(H(57) = 5\)</span>.</p>
 <div class="fig still"><svg viewbox="0 0 940 148" width="74%" xmlns="http://www.w3.org/2000/svg" role="img">
@@ -1423,10 +1436,10 @@ Zechun (Jacob) Cao
 </svg></div>
 <p><strong><em>Where does <code>add(57, value)</code> store it?</em></strong></p>
 <ul class="choices row">
-  <li class="fragment pick"><span class="k">A</span> 6</li>
-  <li><span class="k">B</span> 9</li>
-  <li><span class="k">C</span> 5</li>
-  <li><span class="k">D</span> 1</li>
+  <li class="fragment pick"><span class="k">A</span> <span class="opt">6</span></li>
+  <li><span class="k">B</span> <span class="opt">9</span></li>
+  <li><span class="k">C</span> <span class="opt">5</span></li>
+  <li><span class="k">D</span> <span class="opt">1</span></li>
 </ul>
 <div class="fragment">
 <p>The insertion walks to slot 9 first, because a 57 stored anywhere along the sequence would make the call a replacement. None turns up, so it goes back to the first available location. <strong>9</strong> is the first empty location, which leaves the hole unused.</p>
@@ -1435,7 +1448,7 @@ Zechun (Jacob) Cao
 <section id="collision-resolution-1" class="slide level2 center section-divider">
 <h2>Collision Resolution</h2>
 <p>Quadratic Probing</p>
-<p><span class="seclist">hash functions · collisions · linear probing · <span class="sec-on">quadratic probing</span> · double hashing · separate chaining</span></p>
+<p><span class="seclist">hash functions · collisions · linear probing · <span class="sec-on">quadratic probing</span> · double hashing · separate chaining · the dictionary class</span></p>
 </section>
 <section id="quadratic-probing-must-know" class="slide level2 long-title">
 <h2>Quadratic Probing <span class="ex">Must Know</span></h2>
@@ -1497,7 +1510,7 @@ Zechun (Jacob) Cao
 <span class="fragment anim-step" data-anim="quad_a" data-step="3"></span>
 </div>
 </section>
-<section id="question-6" class="slide level2">
+<section id="question-6" class="slide level2" data-poll="ch6-quad-59" data-poll-answer="A">
 <h2>Question</h2>
 <p>The same three keys, placed by quadratic probing. The next key is 59.</p>
 <div class="fig still"><svg viewbox="0 0 940 148" width="74%" xmlns="http://www.w3.org/2000/svg" role="img">
@@ -1533,10 +1546,10 @@ Zechun (Jacob) Cao
 </svg></div>
 <p><strong><em>Which slot does 59 take now?</em></strong></p>
 <ul class="choices row">
-  <li class="fragment pick"><span class="k">A</span> 7</li>
-  <li><span class="k">B</span> 8</li>
-  <li><span class="k">C</span> 9</li>
-  <li><span class="k">D</span> 10</li>
+  <li class="fragment pick"><span class="k">A</span> <span class="opt">7</span></li>
+  <li><span class="k">B</span> <span class="opt">8</span></li>
+  <li><span class="k">C</span> <span class="opt">9</span></li>
+  <li><span class="k">D</span> <span class="opt">10</span></li>
 </ul>
 <div class="fragment">
 <p>44 went to slot 9 instead of 7, so 59’s home index is free and the first probe takes it. Linear probing put 44 in slot 7 and sent 59 on to 8.</p>
@@ -1605,7 +1618,7 @@ Zechun (Jacob) Cao
 <section id="collision-resolution-2" class="slide level2 center section-divider">
 <h2>Collision Resolution</h2>
 <p>Double Hashing</p>
-<p><span class="seclist">hash functions · collisions · linear probing · quadratic probing · <span class="sec-on">double hashing</span> · separate chaining</span></p>
+<p><span class="seclist">hash functions · collisions · linear probing · quadratic probing · <span class="sec-on">double hashing</span> · separate chaining · the dictionary class</span></p>
 </section>
 <section id="double-hashing-must-know" class="slide level2 long-title">
 <h2>Double Hashing <span class="ex">Must Know</span></h2>
@@ -1663,7 +1676,7 @@ Zechun (Jacob) Cao
 <span class="fragment anim-step" data-anim="double_a" data-step="2"></span>
 </div>
 </section>
-<section id="question-7" class="slide level2">
+<section id="question-7" class="slide level2" data-poll="ch6-double-44" data-poll-answer="D">
 <h2>Question</h2>
 <p>18 and 31 are in. The next key is 44, and <span class="math inline">\(44 \bmod 7 = 2\)</span>.</p>
 <div class="fig still"><svg viewbox="0 0 940 148" width="74%" xmlns="http://www.w3.org/2000/svg" role="img">
@@ -1698,10 +1711,10 @@ Zechun (Jacob) Cao
 </svg></div>
 <p><strong><em>Which slot does 44 take?</em></strong></p>
 <ul class="choices row">
-  <li><span class="k">A</span> 6</li>
-  <li><span class="k">B</span> 7</li>
-  <li><span class="k">C</span> 9</li>
-  <li class="fragment pick"><span class="k">D</span> 10</li>
+  <li><span class="k">A</span> <span class="opt">6</span></li>
+  <li><span class="k">B</span> <span class="opt">7</span></li>
+  <li><span class="k">C</span> <span class="opt">9</span></li>
+  <li class="fragment pick"><span class="k">D</span> <span class="opt">10</span></li>
 </ul>
 <div class="fragment">
 <p><span class="math inline">\(H_2(44) = 7 - 2 = 5\)</span>, so the sequence is 5, 10, 2, … and slot 10 is free. <strong>6</strong> adds 1 like linear probing, <strong>7</strong> adds <span class="math inline">\(44 \bmod 7\)</span> rather than <span class="math inline">\(7 - (44 \bmod 7)\)</span>, and <strong>9</strong> reuses the step 31 was given.</p>
@@ -1757,92 +1770,127 @@ Zechun (Jacob) Cao
 <span class="fragment anim-step" data-anim="double_b" data-step="4"></span>
 </div>
 </section>
-<section id="question-8" class="slide level2">
+<section id="question-8" class="slide level2" data-poll="ch6-h2-14" data-poll-answer="B">
 <h2>Question</h2>
-<p>The key is 14, so <span class="math inline">\(H_1(14) = 1\)</span> and <span class="math inline">\(14 \bmod 7 = 0\)</span>.</p>
-<p><strong><em>What is <span class="math inline">\(H_2(14)\)</span>, and which slot does the next probe reach?</em></strong></p>
-<ul class="choices row">
-  <li><span class="k">A</span> 0, and slot 1 again.</li>
-  <li class="fragment pick"><span class="k">B</span> 7, and slot 8.</li>
-  <li><span class="k">C</span> 1, and slot 2.</li>
-  <li><span class="k">D</span> 7, but starting at slot 7.</li>
+<p><span class="math inline">\(H_2(k) = 7 - (k \bmod 7)\)</span> gives the <strong>step</strong> a probe adds, not an index. At <span class="math inline">\(j = 1\)</span> the sequence reaches <span class="math inline">\(H_1(k) + H_2(k)\)</span>.</p>
+<p><strong><em>The key is 14, with <span class="math inline">\(H_1(14) = 1\)</span>. Which slot does <span class="math inline">\(j = 1\)</span> reach?</em></strong></p>
+<ul class="choices">
+  <li><span class="k">A</span> <span class="opt">Slot 1 again, on a step of 0.</span></li>
+  <li class="fragment pick"><span class="k">B</span> <span class="opt">Slot 8, on a step of 7.</span></li>
+  <li><span class="k">C</span> <span class="opt">Slot 2, on a step of 1.</span></li>
+  <li><span class="k">D</span> <span class="opt">Slot 7, reading the step as an index.</span></li>
+</ul>
+</section>
+<section id="comparing-the-three-methods" class="slide level2 long-title">
+<h2>Comparing the Three Methods</h2>
+<div class="anim" id="cluster_compare" data-gap="620">
+<div class="anim-cap" data-id="cap">The same six keys, three times over: one table per method.</div>
+<svg viewbox="0 0 1040 470" width="100%" xmlns="http://www.w3.org/2000/svg" role="img">
+<defs><marker id="ah-cluster_compare" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="context-stroke"></path></marker></defs>
+<rect class="slot" x="159.0" y="99.0" width="50" height="38" rx="4"></rect>
+<rect class="slot" x="215.0" y="99.0" width="50" height="38" rx="4"></rect>
+<rect class="slot" x="271.0" y="99.0" width="50" height="38" rx="4"></rect>
+<rect class="slot" x="327.0" y="99.0" width="50" height="38" rx="4"></rect>
+<rect class="slot" x="383.0" y="99.0" width="50" height="38" rx="4"></rect>
+<rect class="slot" x="439.0" y="99.0" width="50" height="38" rx="4"></rect>
+<rect class="slot" x="495.0" y="99.0" width="50" height="38" rx="4"></rect>
+<rect class="slot" x="551.0" y="99.0" width="50" height="38" rx="4"></rect>
+<rect class="slot" x="607.0" y="99.0" width="50" height="38" rx="4"></rect>
+<rect class="slot" x="663.0" y="99.0" width="50" height="38" rx="4"></rect>
+<rect class="slot" x="719.0" y="99.0" width="50" height="38" rx="4"></rect>
+<rect class="slot" x="775.0" y="99.0" width="50" height="38" rx="4"></rect>
+<rect class="slot" x="831.0" y="99.0" width="50" height="38" rx="4"></rect>
+<text class="rowname" x="139.0" y="125" text-anchor="end">linear</text>
+<rect class="slot" x="159.0" y="207.0" width="50" height="38" rx="4"></rect>
+<rect class="slot" x="215.0" y="207.0" width="50" height="38" rx="4"></rect>
+<rect class="slot" x="271.0" y="207.0" width="50" height="38" rx="4"></rect>
+<rect class="slot" x="327.0" y="207.0" width="50" height="38" rx="4"></rect>
+<rect class="slot" x="383.0" y="207.0" width="50" height="38" rx="4"></rect>
+<rect class="slot" x="439.0" y="207.0" width="50" height="38" rx="4"></rect>
+<rect class="slot" x="495.0" y="207.0" width="50" height="38" rx="4"></rect>
+<rect class="slot" x="551.0" y="207.0" width="50" height="38" rx="4"></rect>
+<rect class="slot" x="607.0" y="207.0" width="50" height="38" rx="4"></rect>
+<rect class="slot" x="663.0" y="207.0" width="50" height="38" rx="4"></rect>
+<rect class="slot" x="719.0" y="207.0" width="50" height="38" rx="4"></rect>
+<rect class="slot" x="775.0" y="207.0" width="50" height="38" rx="4"></rect>
+<rect class="slot" x="831.0" y="207.0" width="50" height="38" rx="4"></rect>
+<text class="rowname" x="139.0" y="233" text-anchor="end">quadratic</text>
+<rect class="slot" x="159.0" y="315.0" width="50" height="38" rx="4"></rect>
+<rect class="slot" x="215.0" y="315.0" width="50" height="38" rx="4"></rect>
+<rect class="slot" x="271.0" y="315.0" width="50" height="38" rx="4"></rect>
+<rect class="slot" x="327.0" y="315.0" width="50" height="38" rx="4"></rect>
+<rect class="slot" x="383.0" y="315.0" width="50" height="38" rx="4"></rect>
+<rect class="slot" x="439.0" y="315.0" width="50" height="38" rx="4"></rect>
+<rect class="slot" x="495.0" y="315.0" width="50" height="38" rx="4"></rect>
+<rect class="slot" x="551.0" y="315.0" width="50" height="38" rx="4"></rect>
+<rect class="slot" x="607.0" y="315.0" width="50" height="38" rx="4"></rect>
+<rect class="slot" x="663.0" y="315.0" width="50" height="38" rx="4"></rect>
+<rect class="slot" x="719.0" y="315.0" width="50" height="38" rx="4"></rect>
+<rect class="slot" x="775.0" y="315.0" width="50" height="38" rx="4"></rect>
+<rect class="slot" x="831.0" y="315.0" width="50" height="38" rx="4"></rect>
+<text class="rowname" x="139.0" y="341" text-anchor="end">double</text>
+<text class="idx" x="184.0" y="429.0" text-anchor="middle">0</text>
+<text class="idx" x="240.0" y="429.0" text-anchor="middle">1</text>
+<text class="idx" x="296.0" y="429.0" text-anchor="middle">2</text>
+<text class="idx" x="352.0" y="429.0" text-anchor="middle">3</text>
+<text class="idx" x="408.0" y="429.0" text-anchor="middle">4</text>
+<text class="idx" x="464.0" y="429.0" text-anchor="middle">5</text>
+<text class="idx" x="520.0" y="429.0" text-anchor="middle">6</text>
+<text class="idx" x="576.0" y="429.0" text-anchor="middle">7</text>
+<text class="idx" x="632.0" y="429.0" text-anchor="middle">8</text>
+<text class="idx" x="688.0" y="429.0" text-anchor="middle">9</text>
+<text class="idx" x="744.0" y="429.0" text-anchor="middle">10</text>
+<text class="idx" x="800.0" y="429.0" text-anchor="middle">11</text>
+<text class="idx" x="856.0" y="429.0" text-anchor="middle">12</text>
+<g data-id="notelin" style="transform:translate(520.0px,164px);opacity:0" class="ret rowname"><text x="0" y="1" text-anchor="middle" dominant-baseline="central"></text></g>
+<g data-id="lin18" style="transform:translate(464.0px,56px);opacity:0" class="kt sm"><rect x="-25.0" y="-19.0" width="50" height="38" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">18</text></g>
+<g data-id="lin31" style="transform:translate(464.0px,56px);opacity:0" class="kt sm"><rect x="-25.0" y="-19.0" width="50" height="38" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">31</text></g>
+<g data-id="lin44" style="transform:translate(464.0px,56px);opacity:0" class="kt sm"><rect x="-25.0" y="-19.0" width="50" height="38" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">44</text></g>
+<g data-id="lin59" style="transform:translate(576.0px,56px);opacity:0" class="kt sm"><rect x="-25.0" y="-19.0" width="50" height="38" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">59</text></g>
+<g data-id="lin12" style="transform:translate(856.0px,56px);opacity:0" class="kt sm"><rect x="-25.0" y="-19.0" width="50" height="38" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">12</text></g>
+<g data-id="lin25" style="transform:translate(856.0px,56px);opacity:0" class="kt sm"><rect x="-25.0" y="-19.0" width="50" height="38" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">25</text></g>
+<g data-id="notequa" style="transform:translate(520.0px,272px);opacity:0" class="ret rowname"><text x="0" y="1" text-anchor="middle" dominant-baseline="central"></text></g>
+<g data-id="qua18" style="transform:translate(464.0px,164px);opacity:0" class="kt sm"><rect x="-25.0" y="-19.0" width="50" height="38" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">18</text></g>
+<g data-id="qua31" style="transform:translate(464.0px,164px);opacity:0" class="kt sm"><rect x="-25.0" y="-19.0" width="50" height="38" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">31</text></g>
+<g data-id="qua44" style="transform:translate(464.0px,164px);opacity:0" class="kt sm"><rect x="-25.0" y="-19.0" width="50" height="38" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">44</text></g>
+<g data-id="qua59" style="transform:translate(576.0px,164px);opacity:0" class="kt sm"><rect x="-25.0" y="-19.0" width="50" height="38" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">59</text></g>
+<g data-id="qua12" style="transform:translate(856.0px,164px);opacity:0" class="kt sm"><rect x="-25.0" y="-19.0" width="50" height="38" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">12</text></g>
+<g data-id="qua25" style="transform:translate(856.0px,164px);opacity:0" class="kt sm"><rect x="-25.0" y="-19.0" width="50" height="38" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">25</text></g>
+<g data-id="notedbl" style="transform:translate(520.0px,380px);opacity:0" class="ret rowname"><text x="0" y="1" text-anchor="middle" dominant-baseline="central"></text></g>
+<g data-id="dbl18" style="transform:translate(464.0px,272px);opacity:0" class="kt sm"><rect x="-25.0" y="-19.0" width="50" height="38" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">18</text></g>
+<g data-id="dbl31" style="transform:translate(464.0px,272px);opacity:0" class="kt sm"><rect x="-25.0" y="-19.0" width="50" height="38" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">31</text></g>
+<g data-id="dbl44" style="transform:translate(464.0px,272px);opacity:0" class="kt sm"><rect x="-25.0" y="-19.0" width="50" height="38" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">44</text></g>
+<g data-id="dbl59" style="transform:translate(576.0px,272px);opacity:0" class="kt sm"><rect x="-25.0" y="-19.0" width="50" height="38" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">59</text></g>
+<g data-id="dbl12" style="transform:translate(856.0px,272px);opacity:0" class="kt sm"><rect x="-25.0" y="-19.0" width="50" height="38" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">12</text></g>
+<g data-id="dbl25" style="transform:translate(856.0px,272px);opacity:0" class="kt sm"><rect x="-25.0" y="-19.0" width="50" height="38" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">25</text></g>
+</svg>
+<script type="application/json" class="anim-data">[{"cap":{"h":"The same six keys, three times over: one table per method."},"notelin":{"x":520.0,"y":164,"o":0,"c":""},"lin18":{"x":464.0,"y":56,"o":0,"c":""},"lin31":{"x":464.0,"y":56,"o":0,"c":""},"lin44":{"x":464.0,"y":56,"o":0,"c":""},"lin59":{"x":576.0,"y":56,"o":0,"c":""},"lin12":{"x":856.0,"y":56,"o":0,"c":""},"lin25":{"x":856.0,"y":56,"o":0,"c":""},"notequa":{"x":520.0,"y":272,"o":0,"c":""},"qua18":{"x":464.0,"y":164,"o":0,"c":""},"qua31":{"x":464.0,"y":164,"o":0,"c":""},"qua44":{"x":464.0,"y":164,"o":0,"c":""},"qua59":{"x":576.0,"y":164,"o":0,"c":""},"qua12":{"x":856.0,"y":164,"o":0,"c":""},"qua25":{"x":856.0,"y":164,"o":0,"c":""},"notedbl":{"x":520.0,"y":380,"o":0,"c":""},"dbl18":{"x":464.0,"y":272,"o":0,"c":""},"dbl31":{"x":464.0,"y":272,"o":0,"c":""},"dbl44":{"x":464.0,"y":272,"o":0,"c":""},"dbl59":{"x":576.0,"y":272,"o":0,"c":""},"dbl12":{"x":856.0,"y":272,"o":0,"c":""},"dbl25":{"x":856.0,"y":272,"o":0,"c":""}},{"cap":{"h":"<code>add(18)<\/code>. H(18) = 5, and slot 5 is free in all three tables."},"_ph":[{"cap":{"h":"<code>add(18)<\/code>. H(18) = 5, and slot 5 is free in all three tables."}},{"lin18":{"o":1,"c":"hot"},"qua18":{"o":1,"c":"hot"},"dbl18":{"o":1,"c":"hot"}},{"lin18":{"x":464.0,"y":118},"qua18":{"x":464.0,"y":226},"dbl18":{"x":464.0,"y":334}}],"lin18":{"o":1,"c":"hot","x":464.0,"y":118},"qua18":{"o":1,"c":"hot","x":464.0,"y":226},"dbl18":{"o":1,"c":"hot","x":464.0,"y":334}},{"cap":{"h":"<code>add(31)<\/code>. H(31) = 5 as well. 18 is there, so each method now probes its own way."},"lin18":{"c":""},"qua18":{"c":""},"dbl18":{"c":""},"_ph":[{"cap":{"h":"<code>add(31)<\/code>. H(31) = 5 as well. 18 is there, so each method now probes its own way."},"lin18":{"c":""},"qua18":{"c":""},"dbl18":{"c":""}},{"lin31":{"o":1,"c":"hot"},"qua31":{"o":1,"c":"hot"},"dbl31":{"o":1,"c":"hot"}},{"lin31":{"x":520.0,"y":118},"qua31":{"x":520.0,"y":226},"dbl31":{"x":688.0,"y":334}}],"lin31":{"o":1,"c":"hot","x":520.0,"y":118},"qua31":{"o":1,"c":"hot","x":520.0,"y":226},"dbl31":{"o":1,"c":"hot","x":688.0,"y":334}},{"cap":{"h":"<code>add(44)<\/code>. H(44) = 5 again \u2014 the third key to hash there."},"lin31":{"c":""},"qua31":{"c":""},"dbl31":{"c":""},"_ph":[{"cap":{"h":"<code>add(44)<\/code>. H(44) = 5 again \u2014 the third key to hash there."},"lin31":{"c":""},"qua31":{"c":""},"dbl31":{"c":""}},{"lin44":{"o":1,"c":"hot"},"qua44":{"o":1,"c":"hot"},"dbl44":{"o":1,"c":"hot"}},{"lin44":{"x":576.0,"y":118},"qua44":{"x":688.0,"y":226},"dbl44":{"x":744.0,"y":334}}],"lin44":{"o":1,"c":"hot","x":576.0,"y":118},"qua44":{"o":1,"c":"hot","x":688.0,"y":226},"dbl44":{"o":1,"c":"hot","x":744.0,"y":334}},{"cap":{"h":"<code>add(59)<\/code>. H(59) = 7, which linear probing has already filled with 44."},"lin44":{"c":""},"qua44":{"c":""},"dbl44":{"c":""},"_ph":[{"cap":{"h":"<code>add(59)<\/code>. H(59) = 7, which linear probing has already filled with 44."},"lin44":{"c":""},"qua44":{"c":""},"dbl44":{"c":""}},{"lin59":{"o":1,"c":"hot"},"qua59":{"o":1,"c":"hot"},"dbl59":{"o":1,"c":"hot"}},{"lin59":{"x":632.0,"y":118},"qua59":{"x":576.0,"y":226},"dbl59":{"x":576.0,"y":334}}],"lin59":{"o":1,"c":"hot","x":632.0,"y":118},"qua59":{"o":1,"c":"hot","x":576.0,"y":226},"dbl59":{"o":1,"c":"hot","x":576.0,"y":334}},{"cap":{"h":"<code>add(12)<\/code>. H(12) = 12, free in all three."},"lin59":{"c":""},"qua59":{"c":""},"dbl59":{"c":""},"_ph":[{"cap":{"h":"<code>add(12)<\/code>. H(12) = 12, free in all three."},"lin59":{"c":""},"qua59":{"c":""},"dbl59":{"c":""}},{"lin12":{"o":1,"c":"hot"},"qua12":{"o":1,"c":"hot"},"dbl12":{"o":1,"c":"hot"}},{"lin12":{"x":856.0,"y":118},"qua12":{"x":856.0,"y":226},"dbl12":{"x":856.0,"y":334}}],"lin12":{"o":1,"c":"hot","x":856.0,"y":118},"qua12":{"o":1,"c":"hot","x":856.0,"y":226},"dbl12":{"o":1,"c":"hot","x":856.0,"y":334}},{"cap":{"h":"<code>add(25)<\/code>. H(25) = 12 as well, and every probe runs off the end of the row."},"lin12":{"c":""},"qua12":{"c":""},"dbl12":{"c":""},"_ph":[{"cap":{"h":"<code>add(25)<\/code>. H(25) = 12 as well, and every probe runs off the end of the row."},"lin12":{"c":""},"qua12":{"c":""},"dbl12":{"c":""}},{"lin25":{"o":1,"c":"hot"},"qua25":{"o":1,"c":"hot"},"dbl25":{"o":1,"c":"hot"}},{"lin25":{"o":0},"qua25":{"o":0},"dbl25":{"o":0}},{"lin25":{"x":184.0,"y":118,"o":1},"qua25":{"x":184.0,"y":226,"o":1},"dbl25":{"x":296.0,"y":334,"o":1}}],"lin25":{"o":1,"c":"hot","x":184.0,"y":118},"qua25":{"o":1,"c":"hot","x":184.0,"y":226},"dbl25":{"o":1,"c":"hot","x":296.0,"y":334}},{"cap":{"h":"Linear probing filled slots 5, 6, 7 and 8 as one run. 59 hashed to 7, found 44 there, and left its own home index."},"lin25":{"c":""},"qua25":{"c":""},"dbl25":{"c":""},"_ph":[{"cap":{"h":"Linear probing filled slots 5, 6, 7 and 8 as one run. 59 hashed to 7, found 44 there, and left its own home index."},"lin25":{"c":""},"qua25":{"c":""},"dbl25":{"c":""}},{"lin18":{"c":"bad"},"lin31":{"c":"bad"},"lin44":{"c":"bad"},"lin59":{"c":"bad"},"notelin":{"t":"slots 5\u20138: one run, and 59 was pushed out of slot 7","o":1}}],"lin18":{"c":"bad"},"lin31":{"c":"bad"},"lin44":{"c":"bad"},"lin59":{"c":"bad"},"notelin":{"t":"slots 5\u20138: one run, and 59 was pushed out of slot 7","o":1}},{"cap":{"h":"Quadratic probing left slot 7 for 59. The three keys that hashed to 5 still walked one path: 5, 6, 9."},"_ph":[{"cap":{"h":"Quadratic probing left slot 7 for 59. The three keys that hashed to 5 still walked one path: 5, 6, 9."}},{"qua18":{"c":"bad"},"qua31":{"c":"bad"},"qua44":{"c":"bad"},"notequa":{"t":"one path for all three: 5 \u2192 6 \u2192 9","o":1}}],"qua18":{"c":"bad"},"qua31":{"c":"bad"},"qua44":{"c":"bad"},"notequa":{"t":"one path for all three: 5 \u2192 6 \u2192 9","o":1}},{"cap":{"h":"Double hashing gave those three keys steps of 3, 4 and 5, so each walked a path of its own."},"_ph":[{"cap":{"h":"Double hashing gave those three keys steps of 3, 4 and 5, so each walked a path of its own."}},{"dbl18":{"c":"good"},"dbl31":{"c":"good"},"dbl44":{"c":"good"},"notedbl":{"t":"steps 3, 4 and 5: three different paths","o":1}}],"dbl18":{"c":"good"},"dbl31":{"c":"good"},"dbl44":{"c":"good"},"notedbl":{"t":"steps 3, 4 and 5: three different paths","o":1}}]</script>
+<span class="fragment anim-step" data-anim="cluster_compare" data-step="1"></span>
+<span class="fragment anim-step" data-anim="cluster_compare" data-step="2"></span>
+<span class="fragment anim-step" data-anim="cluster_compare" data-step="3"></span>
+<span class="fragment anim-step" data-anim="cluster_compare" data-step="4"></span>
+<span class="fragment anim-step" data-anim="cluster_compare" data-step="5"></span>
+<span class="fragment anim-step" data-anim="cluster_compare" data-step="6"></span>
+<span class="fragment anim-step" data-anim="cluster_compare" data-step="7"></span>
+<span class="fragment anim-step" data-anim="cluster_compare" data-step="8"></span>
+<span class="fragment anim-step" data-anim="cluster_compare" data-step="9"></span>
+</div>
+</section>
+<section id="which-clustering-each-method-has" class="slide level2 long-title">
+<h2>Which Clustering Each Method Has</h2>
+<ul>
+<li><strong>Linear probing</strong> has primary clustering: keys with different home indices end up on one probe sequence, and the run grows.</li>
+<li><strong>Quadratic probing</strong> removes primary clustering and keeps secondary clustering. Only keys with the same home index share a sequence.</li>
+<li><strong>Double hashing</strong> removes both, because the step comes from the key.</li>
 </ul>
 <div class="fragment">
-<p><span class="math inline">\(7 - (k \bmod 7)\)</span> returns 7 where <span class="math inline">\(k \bmod 7\)</span> returns 0, which is why it is written that way. <strong>A</strong> never moves, <strong>C</strong> uses <span class="math inline">\(H_1\)</span> as the step, and <strong>D</strong> starts at <span class="math inline">\(H_2\)</span>.</p>
-</div>
-</section>
-<section id="comparing-the-three-methods" class="slide level2 long-title numtable">
-<h2>Comparing the Three Methods</h2>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: center;">key</th>
-<th style="text-align: center;"><span class="math inline">\(H(k)\)</span></th>
-<th style="text-align: center;">linear</th>
-<th style="text-align: center;">quadratic</th>
-<th style="text-align: center;">double</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">18</td>
-<td style="text-align: center;">5</td>
-<td style="text-align: center;">5</td>
-<td style="text-align: center;">5</td>
-<td style="text-align: center;">5</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">31</td>
-<td style="text-align: center;">5</td>
-<td style="text-align: center;">6</td>
-<td style="text-align: center;">6</td>
-<td style="text-align: center;">9</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">44</td>
-<td style="text-align: center;">5</td>
-<td style="text-align: center;">7</td>
-<td style="text-align: center;">9</td>
-<td style="text-align: center;">10</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">59</td>
-<td style="text-align: center;">7</td>
-<td style="text-align: center;">8</td>
-<td style="text-align: center;">7</td>
-<td style="text-align: center;">7</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">12</td>
-<td style="text-align: center;">12</td>
-<td style="text-align: center;">12</td>
-<td style="text-align: center;">12</td>
-<td style="text-align: center;">12</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">25</td>
-<td style="text-align: center;">12</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">2</td>
-</tr>
-</tbody>
-</table>
-<div class="fragment">
-<p>Three keys hashed to 5. Linear probing filled 5, 6, 7 and took 59’s home index with it. Quadratic probing left slot 7 free. Double hashing gave the three of them steps of 3, 4 and 5.</p>
-</div>
-</section>
-<section id="comparing-the-three-methods-1" class="slide level2 long-title">
-<h2>Comparing the Three Methods</h2>
-<p>Linear probing has primary clustering. Quadratic probing removes it and keeps secondary clustering. Double hashing removes both.</p>
-<div class="fragment">
-<p>All three store every entry in the array itself, so an insertion needs a free location inside its own probe sequence. That is why the table is kept well under full.</p>
+<p>59 hashed to 7, and kept slot 7 in the two tables that removed primary clustering. 18, 31 and 44 share a home index, and only double hashing sent them to three different slots.</p>
 </div>
 </section>
 <section id="collision-resolution-3" class="slide level2 center section-divider">
 <h2>Collision Resolution</h2>
 <p>Separate Chaining</p>
-<p><span class="seclist">hash functions · collisions · linear probing · quadratic probing · double hashing · <span class="sec-on">separate chaining</span></span></p>
+<p><span class="seclist">hash functions · collisions · linear probing · quadratic probing · double hashing · <span class="sec-on">separate chaining</span> · the dictionary class</span></p>
 </section>
 <section id="separate-chaining-must-know" class="slide level2 long-title">
 <h2>Separate Chaining <span class="ex">Must Know</span></h2>
@@ -1955,20 +2003,6 @@ Zechun (Jacob) Cao
 <p>Open addressing needs the available state because a key can sit far from its home index. Here every key is in the chain of its own index.</p>
 </div>
 </section>
-<section id="question-9" class="slide level2">
-<h2>Question</h2>
-<p>Slot 5’s chain is 44 → 31 → 18, slot 7 holds 59, and slot 12’s chain is 25 → 12. Every other bucket is empty.</p>
-<p><strong><em>Which search makes no key comparison at all?</em></strong></p>
-<ul class="choices row">
-  <li><span class="k">A</span> 57</li>
-  <li><span class="k">B</span> 20</li>
-  <li class="fragment pick"><span class="k">C</span> 21</li>
-  <li><span class="k">D</span> 25</li>
-</ul>
-<div class="fragment">
-<p><span class="math inline">\(21 \bmod 13 = 8\)</span>, and slot 8’s chain is empty, so the search stops before comparing anything. 57 costs three comparisons on slot 5’s chain, 20 costs one on slot 7, and 25 is found at the head of its chain after one.</p>
-</div>
-</section>
 <section id="open-addressing-or-chaining" class="slide level2 long-title wrap-table">
 <h2>Open Addressing or Chaining</h2>
 <table class="caption-top">
@@ -1981,24 +2015,29 @@ Zechun (Jacob) Cao
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">load factor</td>
-<td style="text-align: left;">under 1, near 0.5</td>
-<td style="text-align: left;">no limit</td>
+<td style="text-align: left;">an entry sits</td>
+<td style="text-align: left;">anywhere in it</td>
+<td style="text-align: left;">in its own chain</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">removal</td>
+<td style="text-align: left;">a search walks</td>
+<td style="text-align: left;">a probe sequence</td>
+<td style="text-align: left;">one chain</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">a removal</td>
 <td style="text-align: left;">marks it available</td>
 <td style="text-align: left;">unlinks a node</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">memory</td>
 <td style="text-align: left;">the array alone</td>
 <td style="text-align: left;">a node per entry</td>
 </tr>
-<tr class="even">
-<td style="text-align: left;">an entry sits</td>
-<td style="text-align: left;">anywhere in it</td>
-<td style="text-align: left;">in its own chain</td>
+<tr class="odd">
+<td style="text-align: left;">entries it holds</td>
+<td style="text-align: left;">one per location</td>
+<td style="text-align: left;">no fixed limit</td>
 </tr>
 </tbody>
 </table>
@@ -2014,6 +2053,738 @@ Zechun (Jacob) Cao
 <li>Say which clustering each of the three methods has, and why.</li>
 <li>Compute <span class="math inline">\(H_2(k) = 7 - (k \bmod 7)\)</span>, and say why it is never 0.</li>
 <li>Build the chains of a separate-chaining table, and say what a removal does there that it cannot do in an array.</li>
+</ul>
+</section>
+<section id="part-3" class="slide level2 center section-divider">
+<h2>Part 3</h2>
+<p>Implementing a Dictionary with Hashing</p>
+<p><span class="seclist">hash functions · collisions · linear probing · quadratic probing · double hashing · separate chaining · <span class="sec-on">the dictionary class</span></span></p>
+</section>
+<section id="four-operations-two-costs" class="slide level2 long-title wrap-table">
+<h2>Four Operations, Two Costs</h2>
+<p>Every dictionary operation begins by searching for the key, so each one costs what that search costs.</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">the call</th>
+<th style="text-align: left;">the key is there</th>
+<th style="text-align: left;">the key is not there</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>getValue</code></td>
+<td style="text-align: left;">successful</td>
+<td style="text-align: left;">unsuccessful</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>contains</code></td>
+<td style="text-align: left;">successful</td>
+<td style="text-align: left;">unsuccessful</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>remove</code></td>
+<td style="text-align: left;">successful</td>
+<td style="text-align: left;">unsuccessful</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>add</code></td>
+<td style="text-align: left;">successful, and replaces</td>
+<td style="text-align: left;">unsuccessful, and stores</td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<p>Two costs fill the whole table. The common case for <code>add</code> is a key that is not there, so storing a new entry costs the <strong>unsuccessful</strong> search: the probe sequence has to come back empty before the entry can go in.</p>
+</div>
+</section>
+<section id="load-factor-must-know" class="slide level2">
+<h2>Load Factor <span class="ex">Must Know</span></h2>
+<p><span class="math display">\[\lambda = \frac{\text{number of entries in the dictionary}}{\text{number of locations in the hash table}}\]</span></p>
+<ul>
+<li><span class="math inline">\(\lambda\)</span> is never negative, and it is 0 for an empty dictionary.</li>
+<li>With open addressing every entry is in the array, so <span class="math inline">\(\lambda \le 1\)</span>.</li>
+<li>With separate chaining <span class="math inline">\(\lambda\)</span> has no maximum. It is the average length of a chain.</li>
+</ul>
+<div class="fragment">
+<p>Part 2’s table holds six entries in 13 slots, so <span class="math inline">\(\lambda = 6/13 \approx
+0.46\)</span>.</p>
+</div>
+</section>
+<section id="the-cost-of-a-search-must-know" class="slide level2 long-title numtable cost-table">
+<h2>The Cost of a Search <span class="ex">Must Know</span></h2>
+<p>Average number of comparisons, in terms of <span class="math inline">\(\lambda\)</span>:</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 36%">
+<col style="width: 36%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">method</th>
+<th style="text-align: center;">a search that fails</th>
+<th style="text-align: center;">a search that succeeds</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">linear probing</td>
+<td style="text-align: center;"><span class="math inline">\(\tfrac12\bigl[1 + 1/(1-\lambda)^2\bigr]\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\tfrac12\bigl[1 + 1/(1-\lambda)\bigr]\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">quadratic, double hashing</td>
+<td style="text-align: center;"><span class="math inline">\(1/(1-\lambda)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(-\ln(1-\lambda)/\lambda\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">separate chaining</td>
+<td style="text-align: center;"><span class="math inline">\(\lambda\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1 + \lambda/2\)</span></td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<p>Every formula is in <span class="math inline">\(\lambda\)</span> alone. <strong>The cost of a search is independent of the table size <span class="math inline">\(n\)</span>:</strong> it depends on how full the table is, not on how big it is.</p>
+</div>
+</section>
+<section id="what-the-formulas-say" class="slide level2 long-title">
+<h2>What the Formulas Say</h2>
+<div class="anim" id="cost_curves" data-gap="420">
+<div class="anim-cap" data-id="cap">Average probes against the load factor, from the formulas above.</div>
+<svg viewbox="0 0 1040 448" width="100%" xmlns="http://www.w3.org/2000/svg" role="img">
+<defs><marker id="ah-cost_curves" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="context-stroke"></path></marker></defs>
+<text class="htitle" x="288.0" y="26" text-anchor="middle">a search that fails</text>
+<line class="grid" x1="88" y1="320.0" x2="488" y2="320.0"></line>
+<text class="hax" x="76" y="327.0" text-anchor="end">0</text>
+<line class="grid" x1="88" y1="275.3" x2="488" y2="275.3"></line>
+<text class="hax" x="76" y="282.3333333333333" text-anchor="end">2</text>
+<line class="grid" x1="88" y1="230.7" x2="488" y2="230.7"></line>
+<text class="hax" x="76" y="237.66666666666669" text-anchor="end">4</text>
+<line class="grid" x1="88" y1="186.0" x2="488" y2="186.0"></line>
+<text class="hax" x="76" y="193.0" text-anchor="end">6</text>
+<line class="grid" x1="88" y1="141.3" x2="488" y2="141.3"></line>
+<text class="hax" x="76" y="148.33333333333334" text-anchor="end">8</text>
+<line class="grid" x1="88" y1="96.7" x2="488" y2="96.7"></line>
+<text class="hax" x="76" y="103.66666666666666" text-anchor="end">10</text>
+<line class="grid" x1="88" y1="52.0" x2="488" y2="52.0"></line>
+<text class="hax" x="76" y="59.0" text-anchor="end">12</text>
+<line class="grid" x1="188.0" y1="52" x2="188.0" y2="320"></line>
+<line class="grid" x1="288.0" y1="52" x2="288.0" y2="320"></line>
+<line class="grid" x1="388.0" y1="52" x2="388.0" y2="320"></line>
+<line class="grid" x1="488.0" y1="52" x2="488.0" y2="320"></line>
+<text class="hax" x="88.0" y="348" text-anchor="middle">0</text>
+<text class="hax" x="188.0" y="348" text-anchor="middle">0.25</text>
+<text class="hax" x="288.0" y="348" text-anchor="middle">0.5</text>
+<text class="hax" x="388.0" y="348" text-anchor="middle">0.75</text>
+<text class="hax" x="488.0" y="348" text-anchor="middle">1</text>
+<line class="hbase" x1="88" y1="320" x2="488" y2="320"></line>
+<line class="hbase" x1="88" y1="52" x2="88" y2="320"></line>
+<text class="haxname" x="288.0" y="378" text-anchor="middle">load factor λ</text>
+<text class="haxname" x="30" y="186.0" text-anchor="middle" transform="rotate(-90 30 186.0)">average probes</text>
+<text class="htitle" x="820.0" y="26" text-anchor="middle">a search that succeeds</text>
+<line class="grid" x1="620" y1="320.0" x2="1020" y2="320.0"></line>
+<text class="hax" x="608" y="327.0" text-anchor="end">0</text>
+<line class="grid" x1="620" y1="275.3" x2="1020" y2="275.3"></line>
+<text class="hax" x="608" y="282.3333333333333" text-anchor="end">2</text>
+<line class="grid" x1="620" y1="230.7" x2="1020" y2="230.7"></line>
+<text class="hax" x="608" y="237.66666666666669" text-anchor="end">4</text>
+<line class="grid" x1="620" y1="186.0" x2="1020" y2="186.0"></line>
+<text class="hax" x="608" y="193.0" text-anchor="end">6</text>
+<line class="grid" x1="620" y1="141.3" x2="1020" y2="141.3"></line>
+<text class="hax" x="608" y="148.33333333333334" text-anchor="end">8</text>
+<line class="grid" x1="620" y1="96.7" x2="1020" y2="96.7"></line>
+<text class="hax" x="608" y="103.66666666666666" text-anchor="end">10</text>
+<line class="grid" x1="620" y1="52.0" x2="1020" y2="52.0"></line>
+<text class="hax" x="608" y="59.0" text-anchor="end">12</text>
+<line class="grid" x1="720.0" y1="52" x2="720.0" y2="320"></line>
+<line class="grid" x1="820.0" y1="52" x2="820.0" y2="320"></line>
+<line class="grid" x1="920.0" y1="52" x2="920.0" y2="320"></line>
+<line class="grid" x1="1020.0" y1="52" x2="1020.0" y2="320"></line>
+<text class="hax" x="620.0" y="348" text-anchor="middle">0</text>
+<text class="hax" x="720.0" y="348" text-anchor="middle">0.25</text>
+<text class="hax" x="820.0" y="348" text-anchor="middle">0.5</text>
+<text class="hax" x="920.0" y="348" text-anchor="middle">0.75</text>
+<text class="hax" x="1020.0" y="348" text-anchor="middle">1</text>
+<line class="hbase" x1="620" y1="320" x2="1020" y2="320"></line>
+<line class="hbase" x1="620" y1="52" x2="620" y2="320"></line>
+<text class="haxname" x="820.0" y="378" text-anchor="middle">load factor λ</text>
+<path data-id="c00" style="opacity:0" class="curve" fill="none" stroke="#9E2B0E" d="M88.0,297.7 L90.0,297.6 L92.0,297.4 L94.0,297.3 L96.0,297.2 L98.0,297.1 L100.0,297.0 L102.0,296.8 L104.0,296.7 L106.0,296.6 L108.0,296.5 L110.0,296.3 L112.0,296.2 L114.0,296.1 L116.0,295.9 L118.0,295.8 L120.0,295.6 L122.0,295.5 L124.0,295.3 L126.0,295.2 L128.0,295.0 L130.0,294.9 L132.0,294.7 L134.0,294.6 L136.0,294.4 L138.0,294.2 L140.0,294.1 L142.0,293.9 L144.0,293.7 L146.0,293.6 L148.0,293.4 L150.0,293.2 L152.0,293.0 L154.0,292.8 L156.0,292.6 L158.0,292.4 L160.0,292.2 L162.0,292.0 L164.0,291.8 L166.0,291.6 L168.0,291.4 L170.0,291.2 L172.0,290.9 L174.0,290.7 L176.0,290.5 L178.0,290.2 L180.0,290.0 L182.0,289.8 L184.0,289.5 L186.0,289.2 L188.0,289.0 L190.0,288.7 L192.0,288.4 L194.0,288.2 L196.0,287.9 L198.0,287.6 L200.0,287.3 L202.0,287.0 L204.0,286.7 L206.0,286.4 L208.0,286.0 L210.0,285.7 L212.0,285.4 L214.0,285.0 L216.0,284.7 L218.0,284.3 L220.0,284.0 L222.0,283.6 L224.0,283.2 L226.0,282.8 L228.0,282.4 L230.0,282.0 L232.0,281.6 L234.0,281.1 L236.0,280.7 L238.0,280.2 L240.0,279.8 L242.0,279.3 L244.0,278.8 L246.0,278.3 L248.0,277.8 L250.0,277.3 L252.0,276.8 L254.0,276.2 L256.0,275.6 L258.0,275.1 L260.0,274.5 L262.0,273.9 L264.0,273.2 L266.0,272.6 L268.0,271.9 L270.0,271.2 L272.0,270.5 L274.0,269.8 L276.0,269.1 L278.0,268.3 L280.0,267.5 L282.0,266.7 L284.0,265.9 L286.0,265.0 L288.0,264.2 L290.0,263.3 L292.0,262.3 L294.0,261.4 L296.0,260.4 L298.0,259.3 L300.0,258.3 L302.0,257.2 L304.0,256.1 L306.0,254.9 L308.0,253.7 L310.0,252.4 L312.0,251.2 L314.0,249.8 L316.0,248.4 L318.0,247.0 L320.0,245.5 L322.0,244.0 L324.0,242.4 L326.0,240.8 L328.0,239.0 L330.0,237.3 L332.0,235.4 L334.0,233.5 L336.0,231.5 L338.0,229.4 L340.0,227.3 L342.0,225.0 L344.0,222.7 L346.0,220.2 L348.0,217.7 L350.0,215.0 L352.0,212.2 L354.0,209.3 L356.0,206.3 L358.0,203.1 L360.0,199.8 L362.0,196.3 L364.0,192.6 L366.0,188.8 L368.0,184.8 L370.0,180.5 L372.0,176.1 L374.0,171.4 L376.0,166.4 L378.0,161.2 L380.0,155.7 L382.0,149.8 L384.0,143.6 L386.0,137.1 L388.0,130.2 L390.0,122.8 L392.0,115.0 L394.0,106.6 L396.0,97.7 L398.0,88.3 L400.0,78.1 L402.0,67.3 L404.0,55.6"></path>
+<path data-id="c01" style="opacity:0" class="curve" fill="none" stroke="#D55E00" d="M88.0,297.7 L90.0,297.6 L92.0,297.4 L94.0,297.3 L96.0,297.2 L98.0,297.1 L100.0,297.0 L102.0,296.9 L104.0,296.7 L106.0,296.6 L108.0,296.5 L110.0,296.4 L112.0,296.2 L114.0,296.1 L116.0,296.0 L118.0,295.9 L120.0,295.7 L122.0,295.6 L124.0,295.5 L126.0,295.3 L128.0,295.2 L130.0,295.0 L132.0,294.9 L134.0,294.8 L136.0,294.6 L138.0,294.5 L140.0,294.3 L142.0,294.2 L144.0,294.0 L146.0,293.9 L148.0,293.7 L150.0,293.6 L152.0,293.4 L154.0,293.3 L156.0,293.1 L158.0,292.9 L160.0,292.8 L162.0,292.6 L164.0,292.4 L166.0,292.3 L168.0,292.1 L170.0,291.9 L172.0,291.7 L174.0,291.5 L176.0,291.4 L178.0,291.2 L180.0,291.0 L182.0,290.8 L184.0,290.6 L186.0,290.4 L188.0,290.2 L190.0,290.0 L192.0,289.8 L194.0,289.6 L196.0,289.4 L198.0,289.2 L200.0,289.0 L202.0,288.8 L204.0,288.5 L206.0,288.3 L208.0,288.1 L210.0,287.9 L212.0,287.6 L214.0,287.4 L216.0,287.2 L218.0,286.9 L220.0,286.7 L222.0,286.4 L224.0,286.2 L226.0,285.9 L228.0,285.6 L230.0,285.4 L232.0,285.1 L234.0,284.8 L236.0,284.6 L238.0,284.3 L240.0,284.0 L242.0,283.7 L244.0,283.4 L246.0,283.1 L248.0,282.8 L250.0,282.5 L252.0,282.1 L254.0,281.8 L256.0,281.5 L258.0,281.2 L260.0,280.8 L262.0,280.5 L264.0,280.1 L266.0,279.8 L268.0,279.4 L270.0,279.0 L272.0,278.6 L274.0,278.3 L276.0,277.9 L278.0,277.5 L280.0,277.1 L282.0,276.6 L284.0,276.2 L286.0,275.8 L288.0,275.3 L290.0,274.9 L292.0,274.4 L294.0,274.0 L296.0,273.5 L298.0,273.0 L300.0,272.5 L302.0,272.0 L304.0,271.4 L306.0,270.9 L308.0,270.4 L310.0,269.8 L312.0,269.2 L314.0,268.7 L316.0,268.1 L318.0,267.5 L320.0,266.8 L322.0,266.2 L324.0,265.5 L326.0,264.9 L328.0,264.2 L330.0,263.5 L332.0,262.7 L334.0,262.0 L336.0,261.2 L338.0,260.4 L340.0,259.6 L342.0,258.8 L344.0,258.0 L346.0,257.1 L348.0,256.2 L350.0,255.3 L352.0,254.3 L354.0,253.3 L356.0,252.3 L358.0,251.3 L360.0,250.2 L362.0,249.1 L364.0,248.0 L366.0,246.8 L368.0,245.6 L370.0,244.3 L372.0,243.0 L374.0,241.6 L376.0,240.2 L378.0,238.8 L380.0,237.3 L382.0,235.7 L384.0,234.1 L386.0,232.4 L388.0,230.7 L390.0,228.8 L392.0,226.9 L394.0,225.0 L396.0,222.9 L398.0,220.7 L400.0,218.5 L402.0,216.1 L404.0,213.7 L406.0,211.1 L408.0,208.3 L410.0,205.5 L412.0,202.5 L414.0,199.3 L416.0,195.9 L418.0,192.4 L420.0,188.6 L422.0,184.6 L424.0,180.4 L426.0,175.9 L428.0,171.1 L430.0,166.0 L432.0,160.5 L434.0,154.6 L436.0,148.2 L438.0,141.3 L440.0,133.9 L442.0,125.8 L444.0,117.0 L446.0,107.3 L448.0,96.7 L450.0,84.9 L452.0,71.9 L454.0,57.3"></path>
+<path data-id="c02" style="opacity:0" class="curve" fill="none" stroke="#006791" d="M88.0,320.0 L90.0,319.9 L92.0,319.8 L94.0,319.7 L96.0,319.6 L98.0,319.4 L100.0,319.3 L102.0,319.2 L104.0,319.1 L106.0,319.0 L108.0,318.9 L110.0,318.8 L112.0,318.7 L114.0,318.5 L116.0,318.4 L118.0,318.3 L120.0,318.2 L122.0,318.1 L124.0,318.0 L126.0,317.9 L128.0,317.8 L130.0,317.7 L132.0,317.5 L134.0,317.4 L136.0,317.3 L138.0,317.2 L140.0,317.1 L142.0,317.0 L144.0,316.9 L146.0,316.8 L148.0,316.6 L150.0,316.5 L152.0,316.4 L154.0,316.3 L156.0,316.2 L158.0,316.1 L160.0,316.0 L162.0,315.9 L164.0,315.8 L166.0,315.6 L168.0,315.5 L170.0,315.4 L172.0,315.3 L174.0,315.2 L176.0,315.1 L178.0,315.0 L180.0,314.9 L182.0,314.8 L184.0,314.6 L186.0,314.5 L188.0,314.4 L190.0,314.3 L192.0,314.2 L194.0,314.1 L196.0,314.0 L198.0,313.9 L200.0,313.7 L202.0,313.6 L204.0,313.5 L206.0,313.4 L208.0,313.3 L210.0,313.2 L212.0,313.1 L214.0,313.0 L216.0,312.9 L218.0,312.7 L220.0,312.6 L222.0,312.5 L224.0,312.4 L226.0,312.3 L228.0,312.2 L230.0,312.1 L232.0,312.0 L234.0,311.8 L236.0,311.7 L238.0,311.6 L240.0,311.5 L242.0,311.4 L244.0,311.3 L246.0,311.2 L248.0,311.1 L250.0,311.0 L252.0,310.8 L254.0,310.7 L256.0,310.6 L258.0,310.5 L260.0,310.4 L262.0,310.3 L264.0,310.2 L266.0,310.1 L268.0,309.9 L270.0,309.8 L272.0,309.7 L274.0,309.6 L276.0,309.5 L278.0,309.4 L280.0,309.3 L282.0,309.2 L284.0,309.1 L286.0,308.9 L288.0,308.8 L290.0,308.7 L292.0,308.6 L294.0,308.5 L296.0,308.4 L298.0,308.3 L300.0,308.2 L302.0,308.1 L304.0,307.9 L306.0,307.8 L308.0,307.7 L310.0,307.6 L312.0,307.5 L314.0,307.4 L316.0,307.3 L318.0,307.2 L320.0,307.0 L322.0,306.9 L324.0,306.8 L326.0,306.7 L328.0,306.6 L330.0,306.5 L332.0,306.4 L334.0,306.3 L336.0,306.2 L338.0,306.0 L340.0,305.9 L342.0,305.8 L344.0,305.7 L346.0,305.6 L348.0,305.5 L350.0,305.4 L352.0,305.3 L354.0,305.1 L356.0,305.0 L358.0,304.9 L360.0,304.8 L362.0,304.7 L364.0,304.6 L366.0,304.5 L368.0,304.4 L370.0,304.3 L372.0,304.1 L374.0,304.0 L376.0,303.9 L378.0,303.8 L380.0,303.7 L382.0,303.6 L384.0,303.5 L386.0,303.4 L388.0,303.2 L390.0,303.1 L392.0,303.0 L394.0,302.9 L396.0,302.8 L398.0,302.7 L400.0,302.6 L402.0,302.5 L404.0,302.4 L406.0,302.2 L408.0,302.1 L410.0,302.0 L412.0,301.9 L414.0,301.8 L416.0,301.7 L418.0,301.6 L420.0,301.5 L422.0,301.4 L424.0,301.2 L426.0,301.1 L428.0,301.0 L430.0,300.9 L432.0,300.8 L434.0,300.7 L436.0,300.6 L438.0,300.5 L440.0,300.3 L442.0,300.2 L444.0,300.1 L446.0,300.0 L448.0,299.9 L450.0,299.8 L452.0,299.7 L454.0,299.6 L456.0,299.5 L458.0,299.3 L460.0,299.2 L462.0,299.1 L464.0,299.0 L466.0,298.9 L468.0,298.8"></path>
+<path data-id="c10" style="opacity:0" class="curve" fill="none" stroke="#9E2B0E" d="M620.0,297.7 L622.0,297.6 L624.0,297.6 L626.0,297.5 L628.0,297.4 L630.0,297.4 L632.0,297.3 L634.0,297.3 L636.0,297.2 L638.0,297.1 L640.0,297.1 L642.0,297.0 L644.0,297.0 L646.0,296.9 L648.0,296.8 L650.0,296.8 L652.0,296.7 L654.0,296.6 L656.0,296.6 L658.0,296.5 L660.0,296.4 L662.0,296.4 L664.0,296.3 L666.0,296.2 L668.0,296.1 L670.0,296.1 L672.0,296.0 L674.0,295.9 L676.0,295.8 L678.0,295.8 L680.0,295.7 L682.0,295.6 L684.0,295.5 L686.0,295.5 L688.0,295.4 L690.0,295.3 L692.0,295.2 L694.0,295.1 L696.0,295.0 L698.0,295.0 L700.0,294.9 L702.0,294.8 L704.0,294.7 L706.0,294.6 L708.0,294.5 L710.0,294.4 L712.0,294.3 L714.0,294.2 L716.0,294.1 L718.0,294.0 L720.0,293.9 L722.0,293.8 L724.0,293.7 L726.0,293.6 L728.0,293.5 L730.0,293.4 L732.0,293.3 L734.0,293.2 L736.0,293.1 L738.0,293.0 L740.0,292.9 L742.0,292.8 L744.0,292.6 L746.0,292.5 L748.0,292.4 L750.0,292.3 L752.0,292.2 L754.0,292.0 L756.0,291.9 L758.0,291.8 L760.0,291.7 L762.0,291.5 L764.0,291.4 L766.0,291.2 L768.0,291.1 L770.0,291.0 L772.0,290.8 L774.0,290.7 L776.0,290.5 L778.0,290.4 L780.0,290.2 L782.0,290.1 L784.0,289.9 L786.0,289.7 L788.0,289.6 L790.0,289.4 L792.0,289.2 L794.0,289.1 L796.0,288.9 L798.0,288.7 L800.0,288.5 L802.0,288.3 L804.0,288.2 L806.0,288.0 L808.0,287.8 L810.0,287.6 L812.0,287.4 L814.0,287.2 L816.0,286.9 L818.0,286.7 L820.0,286.5 L822.0,286.3 L824.0,286.0 L826.0,285.8 L828.0,285.6 L830.0,285.3 L832.0,285.1 L834.0,284.8 L836.0,284.6 L838.0,284.3 L840.0,284.0 L842.0,283.7 L844.0,283.5 L846.0,283.2 L848.0,282.9 L850.0,282.6 L852.0,282.2 L854.0,281.9 L856.0,281.6 L858.0,281.3 L860.0,280.9 L862.0,280.6 L864.0,280.2 L866.0,279.8 L868.0,279.4 L870.0,279.1 L872.0,278.7 L874.0,278.2 L876.0,277.8 L878.0,277.4 L880.0,276.9 L882.0,276.5 L884.0,276.0 L886.0,275.5 L888.0,275.0 L890.0,274.5 L892.0,273.9 L894.0,273.4 L896.0,272.8 L898.0,272.2 L900.0,271.6 L902.0,271.0 L904.0,270.3 L906.0,269.7 L908.0,269.0 L910.0,268.2 L912.0,267.5 L914.0,266.7 L916.0,265.9 L918.0,265.0 L920.0,264.2 L922.0,263.3 L924.0,262.3 L926.0,261.3 L928.0,260.3 L930.0,259.2 L932.0,258.1 L934.0,256.9 L936.0,255.7 L938.0,254.4 L940.0,253.0 L942.0,251.6 L944.0,250.1 L946.0,248.5 L948.0,246.8 L950.0,245.0 L952.0,243.1 L954.0,241.2 L956.0,239.0 L958.0,236.8 L960.0,234.4 L962.0,231.8 L964.0,229.1 L966.0,226.1 L968.0,222.9 L970.0,219.5 L972.0,215.8 L974.0,211.7 L976.0,207.3 L978.0,202.5 L980.0,197.2 L982.0,191.3 L984.0,184.8 L986.0,177.5 L988.0,169.2 L990.0,159.9 L992.0,149.3 L994.0,137.0 L996.0,122.7 L998.0,105.8 L1000.0,85.5"></path>
+<path data-id="c11" style="opacity:0" class="curve" fill="none" stroke="#D55E00" d="M620.0,297.7 L622.0,297.6 L624.0,297.6 L626.0,297.5 L628.0,297.4 L630.0,297.4 L632.0,297.3 L634.0,297.3 L636.0,297.2 L638.0,297.1 L640.0,297.1 L642.0,297.0 L644.0,297.0 L646.0,296.9 L648.0,296.8 L650.0,296.8 L652.0,296.7 L654.0,296.7 L656.0,296.6 L658.0,296.5 L660.0,296.5 L662.0,296.4 L664.0,296.3 L666.0,296.3 L668.0,296.2 L670.0,296.1 L672.0,296.1 L674.0,296.0 L676.0,295.9 L678.0,295.9 L680.0,295.8 L682.0,295.7 L684.0,295.7 L686.0,295.6 L688.0,295.5 L690.0,295.4 L692.0,295.4 L694.0,295.3 L696.0,295.2 L698.0,295.2 L700.0,295.1 L702.0,295.0 L704.0,294.9 L706.0,294.9 L708.0,294.8 L710.0,294.7 L712.0,294.6 L714.0,294.5 L716.0,294.5 L718.0,294.4 L720.0,294.3 L722.0,294.2 L724.0,294.1 L726.0,294.1 L728.0,294.0 L730.0,293.9 L732.0,293.8 L734.0,293.7 L736.0,293.6 L738.0,293.5 L740.0,293.4 L742.0,293.4 L744.0,293.3 L746.0,293.2 L748.0,293.1 L750.0,293.0 L752.0,292.9 L754.0,292.8 L756.0,292.7 L758.0,292.6 L760.0,292.5 L762.0,292.4 L764.0,292.3 L766.0,292.2 L768.0,292.1 L770.0,292.0 L772.0,291.9 L774.0,291.8 L776.0,291.7 L778.0,291.6 L780.0,291.5 L782.0,291.4 L784.0,291.3 L786.0,291.1 L788.0,291.0 L790.0,290.9 L792.0,290.8 L794.0,290.7 L796.0,290.6 L798.0,290.5 L800.0,290.3 L802.0,290.2 L804.0,290.1 L806.0,290.0 L808.0,289.8 L810.0,289.7 L812.0,289.6 L814.0,289.4 L816.0,289.3 L818.0,289.2 L820.0,289.0 L822.0,288.9 L824.0,288.8 L826.0,288.6 L828.0,288.5 L830.0,288.3 L832.0,288.2 L834.0,288.0 L836.0,287.9 L838.0,287.7 L840.0,287.6 L842.0,287.4 L844.0,287.3 L846.0,287.1 L848.0,286.9 L850.0,286.8 L852.0,286.6 L854.0,286.4 L856.0,286.3 L858.0,286.1 L860.0,285.9 L862.0,285.7 L864.0,285.5 L866.0,285.3 L868.0,285.1 L870.0,285.0 L872.0,284.8 L874.0,284.6 L876.0,284.3 L878.0,284.1 L880.0,283.9 L882.0,283.7 L884.0,283.5 L886.0,283.3 L888.0,283.0 L890.0,282.8 L892.0,282.6 L894.0,282.3 L896.0,282.1 L898.0,281.8 L900.0,281.6 L902.0,281.3 L904.0,281.1 L906.0,280.8 L908.0,280.5 L910.0,280.2 L912.0,279.9 L914.0,279.6 L916.0,279.3 L918.0,279.0 L920.0,278.7 L922.0,278.4 L924.0,278.1 L926.0,277.7 L928.0,277.4 L930.0,277.0 L932.0,276.6 L934.0,276.3 L936.0,275.9 L938.0,275.5 L940.0,275.1 L942.0,274.6 L944.0,274.2 L946.0,273.8 L948.0,273.3 L950.0,272.8 L952.0,272.3 L954.0,271.8 L956.0,271.3 L958.0,270.7 L960.0,270.2 L962.0,269.6 L964.0,268.9 L966.0,268.3 L968.0,267.6 L970.0,266.9 L972.0,266.2 L974.0,265.4 L976.0,264.6 L978.0,263.8 L980.0,262.9 L982.0,261.9 L984.0,260.9 L986.0,259.8 L988.0,258.7 L990.0,257.5 L992.0,256.1 L994.0,254.7 L996.0,253.2 L998.0,251.5 L1000.0,249.6"></path>
+<path data-id="c12" style="opacity:0" class="curve" fill="none" stroke="#006791" d="M620.0,297.7 L622.0,297.6 L624.0,297.6 L626.0,297.5 L628.0,297.4 L630.0,297.4 L632.0,297.3 L634.0,297.3 L636.0,297.2 L638.0,297.2 L640.0,297.1 L642.0,297.1 L644.0,297.0 L646.0,296.9 L648.0,296.9 L650.0,296.8 L652.0,296.8 L654.0,296.7 L656.0,296.7 L658.0,296.6 L660.0,296.6 L662.0,296.5 L664.0,296.4 L666.0,296.4 L668.0,296.3 L670.0,296.3 L672.0,296.2 L674.0,296.2 L676.0,296.1 L678.0,296.0 L680.0,296.0 L682.0,295.9 L684.0,295.9 L686.0,295.8 L688.0,295.8 L690.0,295.7 L692.0,295.7 L694.0,295.6 L696.0,295.5 L698.0,295.5 L700.0,295.4 L702.0,295.4 L704.0,295.3 L706.0,295.3 L708.0,295.2 L710.0,295.2 L712.0,295.1 L714.0,295.0 L716.0,295.0 L718.0,294.9 L720.0,294.9 L722.0,294.8 L724.0,294.8 L726.0,294.7 L728.0,294.7 L730.0,294.6 L732.0,294.5 L734.0,294.5 L736.0,294.4 L738.0,294.4 L740.0,294.3 L742.0,294.3 L744.0,294.2 L746.0,294.1 L748.0,294.1 L750.0,294.0 L752.0,294.0 L754.0,293.9 L756.0,293.9 L758.0,293.8 L760.0,293.8 L762.0,293.7 L764.0,293.6 L766.0,293.6 L768.0,293.5 L770.0,293.5 L772.0,293.4 L774.0,293.4 L776.0,293.3 L778.0,293.3 L780.0,293.2 L782.0,293.1 L784.0,293.1 L786.0,293.0 L788.0,293.0 L790.0,292.9 L792.0,292.9 L794.0,292.8 L796.0,292.8 L798.0,292.7 L800.0,292.6 L802.0,292.6 L804.0,292.5 L806.0,292.5 L808.0,292.4 L810.0,292.4 L812.0,292.3 L814.0,292.3 L816.0,292.2 L818.0,292.1 L820.0,292.1 L822.0,292.0 L824.0,292.0 L826.0,291.9 L828.0,291.9 L830.0,291.8 L832.0,291.7 L834.0,291.7 L836.0,291.6 L838.0,291.6 L840.0,291.5 L842.0,291.5 L844.0,291.4 L846.0,291.4 L848.0,291.3 L850.0,291.2 L852.0,291.2 L854.0,291.1 L856.0,291.1 L858.0,291.0 L860.0,291.0 L862.0,290.9 L864.0,290.9 L866.0,290.8 L868.0,290.7 L870.0,290.7 L872.0,290.6 L874.0,290.6 L876.0,290.5 L878.0,290.5 L880.0,290.4 L882.0,290.4 L884.0,290.3 L886.0,290.2 L888.0,290.2 L890.0,290.1 L892.0,290.1 L894.0,290.0 L896.0,290.0 L898.0,289.9 L900.0,289.8 L902.0,289.8 L904.0,289.7 L906.0,289.7 L908.0,289.6 L910.0,289.6 L912.0,289.5 L914.0,289.5 L916.0,289.4 L918.0,289.3 L920.0,289.3 L922.0,289.2 L924.0,289.2 L926.0,289.1 L928.0,289.1 L930.0,289.0 L932.0,289.0 L934.0,288.9 L936.0,288.8 L938.0,288.8 L940.0,288.7 L942.0,288.7 L944.0,288.6 L946.0,288.6 L948.0,288.5 L950.0,288.5 L952.0,288.4 L954.0,288.3 L956.0,288.3 L958.0,288.2 L960.0,288.2 L962.0,288.1 L964.0,288.1 L966.0,288.0 L968.0,288.0 L970.0,287.9 L972.0,287.8 L974.0,287.8 L976.0,287.7 L978.0,287.7 L980.0,287.6 L982.0,287.6 L984.0,287.5 L986.0,287.4 L988.0,287.4 L990.0,287.3 L992.0,287.3 L994.0,287.2 L996.0,287.2 L998.0,287.1 L1000.0,287.1"></path>
+<g><line data-id="g0" style="opacity:0" x1="78.6" y1="432" x2="120.6" y2="432" stroke="#9E2B0E" stroke-width="4"></line><text class="hleg" x="132.6" y="439" text-anchor="start">linear probing</text></g>
+<g><line data-id="g1" style="opacity:0" x1="309.4" y1="432" x2="351.4" y2="432" stroke="#D55E00" stroke-width="4"></line><text class="hleg" x="363.4" y="439" text-anchor="start">quadratic probing, double hashing</text></g>
+<g><line data-id="g2" style="opacity:0" x1="734.0" y1="432" x2="776.0" y2="432" stroke="#006791" stroke-width="4"></line><text class="hleg" x="788.0" y="439" text-anchor="start">separate chaining</text></g>
+</svg>
+<script type="application/json" class="anim-data">[{"cap":{"h":"Average probes against the load factor, from the formulas above."},"c00":{"o":0,"c":""},"c01":{"o":0,"c":""},"c02":{"o":0,"c":""},"c10":{"o":0,"c":""},"c11":{"o":0,"c":""},"c12":{"o":0,"c":""},"g0":{"o":0,"c":""},"g1":{"o":0,"c":""},"g2":{"o":0,"c":""}},{"cap":{"h":"Linear probing. A failing search walks the cluster it lands in, and the clusters run together as the table fills."},"_ph":[{"cap":{"h":"Linear probing. A failing search walks the cluster it lands in, and the clusters run together as the table fills."}},{"c00":{"o":1},"c10":{"o":1},"g0":{"o":1}}],"c00":{"o":1},"c10":{"o":1},"g0":{"o":1}},{"cap":{"h":"Quadratic probing and double hashing. No primary clustering, so the same table costs less."},"_ph":[{"cap":{"h":"Quadratic probing and double hashing. No primary clustering, so the same table costs less."}},{"c01":{"o":1},"c11":{"o":1},"g1":{"o":1}}],"c01":{"o":1},"c11":{"o":1},"g1":{"o":1}},{"cap":{"h":"Separate chaining. A failing search reads one chain, whose average length is \u03bb itself."},"_ph":[{"cap":{"h":"Separate chaining. A failing search reads one chain, whose average length is \u03bb itself."}},{"c02":{"o":1},"c12":{"o":1},"g2":{"o":1}}],"c02":{"o":1},"c12":{"o":1},"g2":{"o":1}}]</script>
+<span class="fragment anim-step" data-anim="cost_curves" data-step="1"></span>
+<span class="fragment anim-step" data-anim="cost_curves" data-step="2"></span>
+<span class="fragment anim-step" data-anim="cost_curves" data-step="3"></span>
+</div>
+</section>
+<section id="open-addressing-by-the-numbers" class="slide level2 long-title numtable">
+<h2>Open Addressing by the Numbers</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;"><span class="math inline">\(\lambda\)</span></th>
+<th style="text-align: center;">0.1</th>
+<th style="text-align: center;">0.3</th>
+<th style="text-align: center;">0.5</th>
+<th style="text-align: center;">0.7</th>
+<th style="text-align: center;">0.9</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">linear, fails</td>
+<td style="text-align: center;">1.1</td>
+<td style="text-align: center;">1.5</td>
+<td style="text-align: center;">2.5</td>
+<td style="text-align: center;">6.1</td>
+<td style="text-align: center;">50.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">linear, succeeds</td>
+<td style="text-align: center;">1.1</td>
+<td style="text-align: center;">1.2</td>
+<td style="text-align: center;">1.5</td>
+<td style="text-align: center;">2.2</td>
+<td style="text-align: center;">5.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">quadratic and double, fails</td>
+<td style="text-align: center;">1.1</td>
+<td style="text-align: center;">1.4</td>
+<td style="text-align: center;">2.0</td>
+<td style="text-align: center;">3.3</td>
+<td style="text-align: center;">10.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">quadratic and double, succeeds</td>
+<td style="text-align: center;">1.1</td>
+<td style="text-align: center;">1.2</td>
+<td style="text-align: center;">1.4</td>
+<td style="text-align: center;">1.7</td>
+<td style="text-align: center;">2.6</td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<ul>
+<li>A search that succeeds stays cheap in both. It stops at the key it finds.</li>
+<li>A search that fails is the one that grows with the load factor.</li>
+<li>At <span class="math inline">\(\lambda = 0.9\)</span>: linear probing averages 50.5 comparisons, the other two 10.0.</li>
+</ul>
+</div>
+</section>
+<section id="separate-chaining-by-the-numbers" class="slide level2 long-title numtable">
+<h2>Separate Chaining by the Numbers</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;"><span class="math inline">\(\lambda\)</span></th>
+<th style="text-align: center;">0.5</th>
+<th style="text-align: center;">1.0</th>
+<th style="text-align: center;">1.5</th>
+<th style="text-align: center;">2.0</th>
+<th style="text-align: center;">4.0</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">a search that fails</td>
+<td style="text-align: center;">0.5</td>
+<td style="text-align: center;">1.0</td>
+<td style="text-align: center;">1.5</td>
+<td style="text-align: center;">2.0</td>
+<td style="text-align: center;">4.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">a search that succeeds</td>
+<td style="text-align: center;">1.3</td>
+<td style="text-align: center;">1.5</td>
+<td style="text-align: center;">1.8</td>
+<td style="text-align: center;">2.0</td>
+<td style="text-align: center;">3.0</td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<p>Nothing breaks when <span class="math inline">\(\lambda\)</span> passes 1, because no chain has to fit inside the array. The cost grows with <span class="math inline">\(\lambda\)</span> instead of exploding, which is why chaining is the scheme that tolerates a crowded table.</p>
+</div>
+</section>
+<section id="keeping-the-load-factor-down-must-know" class="slide level2 long-title">
+<h2>Keeping the Load Factor Down <span class="ex">Must Know</span></h2>
+<ul>
+<li><strong>Open addressing:</strong> keep <span class="math inline">\(\lambda \le 0.5\)</span>.</li>
+<li><strong>Separate chaining:</strong> keep <span class="math inline">\(\lambda \le 1.0\)</span>.</li>
+</ul>
+<div class="fragment">
+<p>A dictionary cannot refuse an entry to stay inside those bounds, so it does the other thing: when an addition pushes <span class="math inline">\(\lambda\)</span> past the limit, the table grows.</p>
+</div>
+</section>
+<section id="rehashing-must-know" class="slide level2">
+<h2>Rehashing <span class="ex">Must Know</span></h2>
+<p>Growing the table takes three steps.</p>
+<ol type="1">
+<li>Compute the new size: <strong>double</strong> the present size, then move up to the <strong>next prime</strong>.</li>
+<li>Allocate a new array of that size.</li>
+<li><strong>Add every current entry again</strong>, with <code>add</code>, into the new array.</li>
+</ol>
+<div class="fragment">
+<p>Step 3 is the expensive one, and it is not optional. An index is computed from the table size, so an entry copied slot-for-slot would sit at an index no search would compute for it.</p>
+</div>
+</section>
+<section id="question-9" class="slide level2" data-poll="ch6-new-size" data-poll-answer="B">
+<h2>Question</h2>
+<p>A table of 17 locations has grown too full.</p>
+<p><strong><em>What size does it grow to?</em></strong></p>
+<ul class="choices row">
+  <li><span class="k">A</span> <span class="opt">34</span></li>
+  <li class="fragment pick"><span class="k">B</span> <span class="opt">37</span></li>
+  <li><span class="k">C</span> <span class="opt">19</span></li>
+  <li><span class="k">D</span> <span class="opt">35</span></li>
+</ul>
+<div class="fragment">
+<p><span class="math inline">\(2 \times 17 = 34\)</span>, and 34, 35 and 36 are all composite, so the next prime is 37. <strong>34</strong> stops before the prime, <strong>19</strong> is the next prime after 17 and does not double, and <strong>35</strong> is <span class="math inline">\(5 \times 7\)</span>.</p>
+</div>
+</section>
+<section id="growing-the-table" class="slide level2">
+<h2>Growing the Table</h2>
+<div class="anim" id="rehash" data-gap="812">
+<div class="anim-cap" data-id="cap">The linear-probing table from Part 2: 6 entries in 13 slots.</div>
+<svg viewbox="0 0 1040 430" width="100%" xmlns="http://www.w3.org/2000/svg" role="img">
+<defs><marker id="ah-rehash" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="context-stroke"></path></marker></defs>
+<rect class="slot" x="95.0" y="93.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="124.0" y="77.0" text-anchor="middle">0</text>
+<rect class="slot" x="161.0" y="93.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="190.0" y="77.0" text-anchor="middle">1</text>
+<rect class="slot" x="227.0" y="93.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="256.0" y="77.0" text-anchor="middle">2</text>
+<rect class="slot" x="293.0" y="93.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="322.0" y="77.0" text-anchor="middle">3</text>
+<rect class="slot" x="359.0" y="93.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="388.0" y="77.0" text-anchor="middle">4</text>
+<rect class="slot" x="425.0" y="93.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="454.0" y="77.0" text-anchor="middle">5</text>
+<rect class="slot" x="491.0" y="93.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="520.0" y="77.0" text-anchor="middle">6</text>
+<rect class="slot" x="557.0" y="93.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="586.0" y="77.0" text-anchor="middle">7</text>
+<rect class="slot" x="623.0" y="93.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="652.0" y="77.0" text-anchor="middle">8</text>
+<rect class="slot" x="689.0" y="93.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="718.0" y="77.0" text-anchor="middle">9</text>
+<rect class="slot" x="755.0" y="93.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="784.0" y="77.0" text-anchor="middle">10</text>
+<rect class="slot" x="821.0" y="93.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="850.0" y="77.0" text-anchor="middle">11</text>
+<rect class="slot" x="887.0" y="93.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="916.0" y="77.0" text-anchor="middle">12</text>
+<text class="rowname" x="520.0" y="45.0" text-anchor="middle">size 13</text>
+<g><rect data-id="newrow" style="opacity:0" class="slot" x="14.5" y="302.0" width="31" height="40" rx="4"></rect><text class="idx sm" x="30.0" y="364.0" text-anchor="middle">0</text><rect class="slot" x="49.5" y="302.0" width="31" height="40" rx="4"></rect><text class="idx sm" x="65.0" y="364.0" text-anchor="middle">1</text><rect class="slot" x="84.5" y="302.0" width="31" height="40" rx="4"></rect><text class="idx sm" x="100.0" y="364.0" text-anchor="middle">2</text><rect class="slot" x="119.5" y="302.0" width="31" height="40" rx="4"></rect><text class="idx sm" x="135.0" y="364.0" text-anchor="middle">3</text><rect class="slot" x="154.5" y="302.0" width="31" height="40" rx="4"></rect><text class="idx sm" x="170.0" y="364.0" text-anchor="middle">4</text><rect class="slot" x="189.5" y="302.0" width="31" height="40" rx="4"></rect><text class="idx sm" x="205.0" y="364.0" text-anchor="middle">5</text><rect class="slot" x="224.5" y="302.0" width="31" height="40" rx="4"></rect><text class="idx sm" x="240.0" y="364.0" text-anchor="middle">6</text><rect class="slot" x="259.5" y="302.0" width="31" height="40" rx="4"></rect><text class="idx sm" x="275.0" y="364.0" text-anchor="middle">7</text><rect class="slot" x="294.5" y="302.0" width="31" height="40" rx="4"></rect><text class="idx sm" x="310.0" y="364.0" text-anchor="middle">8</text><rect class="slot" x="329.5" y="302.0" width="31" height="40" rx="4"></rect><text class="idx sm" x="345.0" y="364.0" text-anchor="middle">9</text><rect class="slot" x="364.5" y="302.0" width="31" height="40" rx="4"></rect><text class="idx sm" x="380.0" y="364.0" text-anchor="middle">10</text><rect class="slot" x="399.5" y="302.0" width="31" height="40" rx="4"></rect><text class="idx sm" x="415.0" y="364.0" text-anchor="middle">11</text><rect class="slot" x="434.5" y="302.0" width="31" height="40" rx="4"></rect><text class="idx sm" x="450.0" y="364.0" text-anchor="middle">12</text><rect class="slot" x="469.5" y="302.0" width="31" height="40" rx="4"></rect><text class="idx sm" x="485.0" y="364.0" text-anchor="middle">13</text><rect class="slot" x="504.5" y="302.0" width="31" height="40" rx="4"></rect><text class="idx sm" x="520.0" y="364.0" text-anchor="middle">14</text><rect class="slot" x="539.5" y="302.0" width="31" height="40" rx="4"></rect><text class="idx sm" x="555.0" y="364.0" text-anchor="middle">15</text><rect class="slot" x="574.5" y="302.0" width="31" height="40" rx="4"></rect><text class="idx sm" x="590.0" y="364.0" text-anchor="middle">16</text><rect class="slot" x="609.5" y="302.0" width="31" height="40" rx="4"></rect><text class="idx sm" x="625.0" y="364.0" text-anchor="middle">17</text><rect class="slot" x="644.5" y="302.0" width="31" height="40" rx="4"></rect><text class="idx sm" x="660.0" y="364.0" text-anchor="middle">18</text><rect class="slot" x="679.5" y="302.0" width="31" height="40" rx="4"></rect><text class="idx sm" x="695.0" y="364.0" text-anchor="middle">19</text><rect class="slot" x="714.5" y="302.0" width="31" height="40" rx="4"></rect><text class="idx sm" x="730.0" y="364.0" text-anchor="middle">20</text><rect class="slot" x="749.5" y="302.0" width="31" height="40" rx="4"></rect><text class="idx sm" x="765.0" y="364.0" text-anchor="middle">21</text><rect class="slot" x="784.5" y="302.0" width="31" height="40" rx="4"></rect><text class="idx sm" x="800.0" y="364.0" text-anchor="middle">22</text><rect class="slot" x="819.5" y="302.0" width="31" height="40" rx="4"></rect><text class="idx sm" x="835.0" y="364.0" text-anchor="middle">23</text><rect class="slot" x="854.5" y="302.0" width="31" height="40" rx="4"></rect><text class="idx sm" x="870.0" y="364.0" text-anchor="middle">24</text><rect class="slot" x="889.5" y="302.0" width="31" height="40" rx="4"></rect><text class="idx sm" x="905.0" y="364.0" text-anchor="middle">25</text><rect class="slot" x="924.5" y="302.0" width="31" height="40" rx="4"></rect><text class="idx sm" x="940.0" y="364.0" text-anchor="middle">26</text><rect class="slot" x="959.5" y="302.0" width="31" height="40" rx="4"></rect><text class="idx sm" x="975.0" y="364.0" text-anchor="middle">27</text><rect class="slot" x="994.5" y="302.0" width="31" height="40" rx="4"></rect><text class="idx sm" x="1010.0" y="364.0" text-anchor="middle">28</text></g>
+<g data-id="newname" style="transform:translate(520.0px,396.0px);opacity:0" class="ret rowname"><text x="0" y="1" text-anchor="middle" dominant-baseline="central"></text></g>
+<g data-id="lam" style="transform:translate(520.0px,206px);opacity:0" class="ret tally"><text x="0" y="1" text-anchor="middle" dominant-baseline="central"></text></g>
+<g data-id="e25" style="transform:translate(124.0px,116px);opacity:1" class="kt"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">25</text></g>
+<g data-id="e18" style="transform:translate(454.0px,116px);opacity:1" class="kt"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">18</text></g>
+<g data-id="e31" style="transform:translate(520.0px,116px);opacity:1" class="kt"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">31</text></g>
+<g data-id="e44" style="transform:translate(586.0px,116px);opacity:1" class="kt"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">44</text></g>
+<g data-id="e59" style="transform:translate(652.0px,116px);opacity:1" class="kt"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">59</text></g>
+<g data-id="e12" style="transform:translate(916.0px,116px);opacity:1" class="kt"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">12</text></g>
+<g data-id="e36" style="transform:translate(784.0px,46px);opacity:0" class="kt"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">36</text></g>
+<g data-id="n18" style="transform:translate(660.0px,322px);opacity:0" class="kt sm"><rect x="-15.5" y="-20.0" width="31" height="40" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">18</text></g>
+<g data-id="n31" style="transform:translate(100.0px,322px);opacity:0" class="kt sm"><rect x="-15.5" y="-20.0" width="31" height="40" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">31</text></g>
+<g data-id="n44" style="transform:translate(555.0px,322px);opacity:0" class="kt sm"><rect x="-15.5" y="-20.0" width="31" height="40" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">44</text></g>
+<g data-id="n59" style="transform:translate(65.0px,322px);opacity:0" class="kt sm"><rect x="-15.5" y="-20.0" width="31" height="40" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">59</text></g>
+<g data-id="n12" style="transform:translate(450.0px,322px);opacity:0" class="kt sm"><rect x="-15.5" y="-20.0" width="31" height="40" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">12</text></g>
+<g data-id="n25" style="transform:translate(905.0px,322px);opacity:0" class="kt sm"><rect x="-15.5" y="-20.0" width="31" height="40" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">25</text></g>
+<g data-id="n36" style="transform:translate(275.0px,322px);opacity:0" class="kt sm"><rect x="-15.5" y="-20.0" width="31" height="40" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">36</text></g>
+</svg>
+<script type="application/json" class="anim-data">[{"cap":{"h":"The linear-probing table from Part 2: 6 entries in 13 slots."},"newrow":{"o":0,"c":""},"newname":{"x":520.0,"y":396.0,"o":0,"c":""},"lam":{"x":520.0,"y":206,"o":0,"c":""},"e25":{"x":124.0,"y":116,"o":1,"c":""},"e18":{"x":454.0,"y":116,"o":1,"c":""},"e31":{"x":520.0,"y":116,"o":1,"c":""},"e44":{"x":586.0,"y":116,"o":1,"c":""},"e59":{"x":652.0,"y":116,"o":1,"c":""},"e12":{"x":916.0,"y":116,"o":1,"c":""},"e36":{"x":784.0,"y":46,"o":0,"c":""},"n18":{"x":660.0,"y":322,"o":0,"c":""},"n31":{"x":100.0,"y":322,"o":0,"c":""},"n44":{"x":555.0,"y":322,"o":0,"c":""},"n59":{"x":65.0,"y":322,"o":0,"c":""},"n12":{"x":450.0,"y":322,"o":0,"c":""},"n25":{"x":905.0,"y":322,"o":0,"c":""},"n36":{"x":275.0,"y":322,"o":0,"c":""}},{"cap":{"h":"7 entries in 29 slots."},"e36":{"o":1,"c":"","y":116},"lam":{"t":"\u03bb = 7/29 = 0.24","o":1,"c":"","y":206},"newrow":{"o":1},"newname":{"t":"size 29","o":1},"e25":{"c":""},"n25":{"o":1,"c":""},"e18":{"c":""},"n18":{"o":1,"c":""},"e31":{"c":""},"n31":{"o":1,"c":""},"e44":{"c":""},"n44":{"o":1,"c":""},"e59":{"c":""},"n59":{"o":1,"c":""},"n36":{"o":1,"c":""},"e12":{"c":""},"n12":{"o":1,"c":""},"_ph":[{"cap":{"h":"<code>add(36, value)<\/code>. H(36) = 36 mod 13 = 10, and slot 10 is free."}},{"e36":{"o":1,"c":"hot"}},{"e36":{"y":116}},{"cap":{"h":"Every addition ends by checking the load factor."},"e36":{"c":""}},{"lam":{"t":"\u03bb = 7/13 = 0.54 > 0.5","o":1,"c":"bad"}},{"cap":{"h":"Double the size, then move up to the next prime: 2 \u00d7 13 = 26, and 29 is the next prime after it."}},{"newrow":{"o":1},"newname":{"t":"size 29","o":1},"lam":{"o":0}},{"cap":{"h":"<code>add(25, value)<\/code> into the new table. 25 mod 29 = 25."},"e25":{"c":"hot"},"n25":{"o":1,"c":"hot"}},{"cap":{"h":"<code>add(18, value)<\/code> into the new table. 18 mod 29 = 18."},"e25":{"c":""},"n25":{"c":""},"e18":{"c":"hot"},"n18":{"o":1,"c":"hot"}},{"cap":{"h":"<code>add(31, value)<\/code> into the new table. 31 mod 29 = 2."},"e18":{"c":""},"n18":{"c":""},"e31":{"c":"hot"},"n31":{"o":1,"c":"hot"}},{"cap":{"h":"<code>add(44, value)<\/code> into the new table. 44 mod 29 = 15."},"e31":{"c":""},"n31":{"c":""},"e44":{"c":"hot"},"n44":{"o":1,"c":"hot"}},{"cap":{"h":"<code>add(59, value)<\/code> into the new table. 59 mod 29 = 1."},"e44":{"c":""},"n44":{"c":""},"e59":{"c":"hot"},"n59":{"o":1,"c":"hot"}},{"cap":{"h":"<code>add(36, value)<\/code> into the new table. 36 mod 29 = 7."},"e59":{"c":""},"n59":{"c":""},"e36":{"c":"hot"},"n36":{"o":1,"c":"hot"}},{"cap":{"h":"<code>add(12, value)<\/code> into the new table. 12 mod 29 = 12."},"e36":{"c":""},"n36":{"c":""},"e12":{"c":"hot"},"n12":{"o":1,"c":"hot"}},{"cap":{"h":"7 entries in 29 slots."},"e12":{"c":""},"n12":{"c":""}},{"lam":{"t":"\u03bb = 7/29 = 0.24","o":1,"c":"","y":206}}]}]</script>
+<span class="fragment anim-step" data-anim="rehash" data-step="1"></span>
+</div>
+</section>
+<section id="what-the-resize-cost" class="slide level2 long-title">
+<h2>What the Resize Cost</h2>
+<p>Seven <code>add</code> calls ran to move seven entries, and each one hashed its key again. One addition out of the seven paid for all of it.</p>
+<div class="fragment">
+<ul>
+<li>A location in the <strong>available</strong> state holds no entry, so it is skipped. Rehashing clears every tombstone the table had collected.</li>
+<li>Only 12 kept the index it had. An index is <span class="math inline">\(k \bmod n\)</span>, and <span class="math inline">\(n\)</span> changed.</li>
+</ul>
+</div>
+<div class="fragment">
+<p>The load factor drops from 0.54 to 0.24, so the next resize is a long way off. Spread over the additions between them, the cost of growing is constant per addition.</p>
+</div>
+</section>
+<section id="a-hash-table-of-entries" class="slide level2 long-title">
+<h2>A Hash Table of Entries</h2>
+<p>The array does not hold keys. A location holds <code>null</code>, the shared <code>AVAILABLE</code> entry, or a reference to an <strong>entry object</strong>. Search key and the value are stored together.</p>
+<div class="fig still"><svg viewbox="0 0 940 322" width="86%" xmlns="http://www.w3.org/2000/svg" role="img"><defs><marker id="ae-entry_object" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="context-stroke"></path></marker></defs>
+<rect class="slot" x="110.0" y="39.0" width="96" height="46" rx="5"></rect>
+<text class="idx" x="158.0" y="23.0" text-anchor="middle"></text>
+<rect class="slot" x="214.0" y="39.0" width="96" height="46" rx="5"></rect>
+<text class="idx" x="262.0" y="23.0" text-anchor="middle"></text>
+<rect class="slot" x="318.0" y="39.0" width="96" height="46" rx="5"></rect>
+<text class="idx" x="366.0" y="23.0" text-anchor="middle"></text>
+<rect class="slot" x="422.0" y="39.0" width="96" height="46" rx="5"></rect>
+<text class="idx" x="470.0" y="23.0" text-anchor="middle"></text>
+<rect class="slot" x="526.0" y="39.0" width="96" height="46" rx="5"></rect>
+<text class="idx" x="574.0" y="23.0" text-anchor="middle"></text>
+<rect class="slot" x="630.0" y="39.0" width="96" height="46" rx="5"></rect>
+<text class="idx" x="678.0" y="23.0" text-anchor="middle"></text>
+<rect class="slot" x="734.0" y="39.0" width="96" height="46" rx="5"></rect>
+<text class="idx" x="782.0" y="23.0" text-anchor="middle"></text>
+<text class="rowname" x="470.0" y="24" text-anchor="middle">the hash table</text>
+<g class="nul"><line x1="132.0" y1="78" x2="184.0" y2="46"></line></g>
+<g class="nul"><line x1="548.0" y1="78" x2="600.0" y2="46"></line></g>
+<circle class="dotref" cx="366.0" cy="62" r="6"></circle>
+<path class="ptr" d="M366.0,74.0 L366.0,144.0" marker-end="url(#ae-entry_object)"></path>
+<rect class="cell" x="198.0" y="159.0" width="168" height="54" rx="4"></rect>
+<text class="fldname" x="282.0" y="194" text-anchor="middle">key</text>
+<path class="ptr" d="M282.0,213.0 L282.0,258.0" marker-end="url(#ae-entry_object)"></path>
+<rect class="cell" x="366.0" y="159.0" width="168" height="54" rx="4"></rect>
+<text class="fldname" x="450.0" y="194" text-anchor="middle">value</text>
+<path class="ptr" d="M450.0,213.0 L450.0,258.0" marker-end="url(#ae-entry_object)"></path>
+<text class="lbl" x="282.0" y="284" text-anchor="middle">the search key</text>
+<text class="lbl" x="450.0" y="284" text-anchor="middle">its value</text>
+<text class="lbl" x="142.0" y="194" text-anchor="end">an Entry</text>
+<circle class="dotref" cx="678.0" cy="62" r="6"></circle>
+<path class="ptr" d="M678.0,74.0 L790.0,158.0" marker-end="url(#ae-entry_object)"></path>
+<rect class="cell avail" x="718.0" y="159.0" width="150" height="54" rx="4"></rect>
+<text class="code" x="793.0" y="194" text-anchor="middle">AVAILABLE</text>
+</svg></div>
+</section>
+<section id="the-entry-class" class="slide level2">
+<h2>The Entry Class</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb8-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="kw">protected</span> <span class="dt">final</span> <span class="kw">class</span> Entry<span class="op">&lt;</span>S<span class="op">,</span> T<span class="op">&gt;</span></span>
+<span id="cb8-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb8-3"><a href="" aria-hidden="true" tabindex="-1"></a>   <span class="kw">private</span> S key<span class="op">;</span></span>
+<span id="cb8-4"><a href="" aria-hidden="true" tabindex="-1"></a>   <span class="kw">private</span> T value<span class="op">;</span></span>
+<span id="cb8-5"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="" aria-hidden="true" tabindex="-1"></a>   <span class="kw">private</span> <span class="fu">Entry</span><span class="op">(</span>S searchKey<span class="op">,</span> T dataValue<span class="op">)</span></span>
+<span id="cb8-7"><a href="" aria-hidden="true" tabindex="-1"></a>   <span class="op">{</span></span>
+<span id="cb8-8"><a href="" aria-hidden="true" tabindex="-1"></a>      key <span class="op">=</span> searchKey<span class="op">;</span></span>
+<span id="cb8-9"><a href="" aria-hidden="true" tabindex="-1"></a>      value <span class="op">=</span> dataValue<span class="op">;</span></span>
+<span id="cb8-10"><a href="" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
+<span id="cb8-11"><a href="" aria-hidden="true" tabindex="-1"></a>   <span class="co">// getKey, getValue and setValue go here</span></span>
+<span id="cb8-12"><a href="" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb8-13"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="" aria-hidden="true" tabindex="-1"></a><span class="kw">protected</span> <span class="dt">final</span> Entry<span class="op">&lt;</span>K<span class="op">,</span> V<span class="op">&gt;</span> AVAILABLE <span class="op">=</span> <span class="kw">new</span> Entry<span class="op">&lt;&gt;(</span><span class="kw">null</span><span class="op">,</span> <span class="kw">null</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment">
+<p>One object stands for the available state, and every location a removal empties refers to that same object. So Part 2’s three kinds of location are three outcomes of reading one array element: <code>null</code>, <code>AVAILABLE</code>, or an entry.</p>
+</div>
+</section>
+<section id="the-class-hasheddictionary" class="slide level2 long-title">
+<h2>The Class HashedDictionary</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb9-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> HashedDictionary<span class="op">&lt;</span>K<span class="op">,</span> V<span class="op">&gt;</span> <span class="kw">implements</span> DictionaryInterface<span class="op">&lt;</span>K<span class="op">,</span> V<span class="op">&gt;</span></span>
+<span id="cb9-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb9-3"><a href="" aria-hidden="true" tabindex="-1"></a>   <span class="kw">private</span> <span class="dt">int</span> numberOfEntries<span class="op">;</span></span>
+<span id="cb9-4"><a href="" aria-hidden="true" tabindex="-1"></a>   <span class="kw">private</span> Entry<span class="op">&lt;</span>K<span class="op">,</span> V<span class="op">&gt;[]</span> hashTable<span class="op">;</span></span>
+<span id="cb9-5"><a href="" aria-hidden="true" tabindex="-1"></a>   <span class="kw">private</span> <span class="dt">int</span> tableSize<span class="op">;</span>                        <span class="co">// must be prime</span></span>
+<span id="cb9-6"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="" aria-hidden="true" tabindex="-1"></a>   <span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> <span class="dt">int</span> DEFAULT_CAPACITY <span class="op">=</span> <span class="dv">5</span><span class="op">;</span>        <span class="co">// must be prime</span></span>
+<span id="cb9-8"><a href="" aria-hidden="true" tabindex="-1"></a>   <span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> <span class="dt">int</span> MAX_CAPACITY <span class="op">=</span> <span class="dv">10000</span><span class="op">;</span></span>
+<span id="cb9-9"><a href="" aria-hidden="true" tabindex="-1"></a>   <span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> <span class="dt">double</span> MAX_LOAD_FACTOR <span class="op">=</span> <span class="fl">0.5</span><span class="op">;</span>    <span class="co">// open addressing</span></span>
+<span id="cb9-10"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-11"><a href="" aria-hidden="true" tabindex="-1"></a>   <span class="kw">protected</span> <span class="dt">final</span> Entry<span class="op">&lt;</span>K<span class="op">,</span> V<span class="op">&gt;</span> AVAILABLE <span class="op">=</span> <span class="kw">new</span> Entry<span class="op">&lt;&gt;(</span><span class="kw">null</span><span class="op">,</span> <span class="kw">null</span><span class="op">);</span></span>
+<span id="cb9-12"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-13"><a href="" aria-hidden="true" tabindex="-1"></a>   <span class="kw">public</span> <span class="fu">HashedDictionary</span><span class="op">()</span></span>
+<span id="cb9-14"><a href="" aria-hidden="true" tabindex="-1"></a>   <span class="op">{</span></span>
+<span id="cb9-15"><a href="" aria-hidden="true" tabindex="-1"></a>      <span class="kw">this</span><span class="op">(</span>DEFAULT_CAPACITY<span class="op">);</span></span>
+<span id="cb9-16"><a href="" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment">
+<p><code>MAX_LOAD_FACTOR</code> is the 0.5 of the rule, written down once. Every <code>add</code> compares against it.</p>
+</div>
+</section>
+<section id="the-constructor" class="slide level2 long-title">
+<h2>The Constructor</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb10-1"><a href="" aria-hidden="true" tabindex="-1"></a>   <span class="kw">public</span> <span class="fu">HashedDictionary</span><span class="op">(</span><span class="dt">int</span> initialCapacity<span class="op">)</span></span>
+<span id="cb10-2"><a href="" aria-hidden="true" tabindex="-1"></a>   <span class="op">{</span></span>
+<span id="cb10-3"><a href="" aria-hidden="true" tabindex="-1"></a>      initialCapacity <span class="op">=</span> <span class="fu">checkCapacity</span><span class="op">(</span>initialCapacity<span class="op">);</span></span>
+<span id="cb10-4"><a href="" aria-hidden="true" tabindex="-1"></a>      numberOfEntries <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb10-5"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="" aria-hidden="true" tabindex="-1"></a>      <span class="co">// the size is the capacity asked for, raised to a prime</span></span>
+<span id="cb10-7"><a href="" aria-hidden="true" tabindex="-1"></a>      <span class="dt">int</span> tableSize <span class="op">=</span> <span class="fu">getNextPrime</span><span class="op">(</span>initialCapacity<span class="op">);</span></span>
+<span id="cb10-8"><a href="" aria-hidden="true" tabindex="-1"></a>      <span class="fu">checkSize</span><span class="op">(</span>tableSize<span class="op">);</span></span>
+<span id="cb10-9"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="" aria-hidden="true" tabindex="-1"></a>      <span class="at">@SuppressWarnings</span><span class="op">(</span><span class="st">"unchecked"</span><span class="op">)</span></span>
+<span id="cb10-11"><a href="" aria-hidden="true" tabindex="-1"></a>      Entry<span class="op">&lt;</span>K<span class="op">,</span> V<span class="op">&gt;[]</span> temp <span class="op">=</span> <span class="op">(</span>Entry<span class="op">&lt;</span>K<span class="op">,</span> V<span class="op">&gt;[])</span><span class="kw">new</span> Entry<span class="op">[</span>tableSize<span class="op">];</span></span>
+<span id="cb10-12"><a href="" aria-hidden="true" tabindex="-1"></a>      hashTable <span class="op">=</span> temp<span class="op">;</span></span>
+<span id="cb10-13"><a href="" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment">
+<p>A caller asking for 20 locations gets 23. The table size is never the number the caller gave unless that number is already prime.</p>
+</div>
+</section>
+<section id="getvalue" class="slide level2">
+<h2>getValue</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb11-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> V <span class="fu">getValue</span><span class="op">(</span>K key<span class="op">)</span></span>
+<span id="cb11-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb11-3"><a href="" aria-hidden="true" tabindex="-1"></a>   V result <span class="op">=</span> <span class="kw">null</span><span class="op">;</span></span>
+<span id="cb11-4"><a href="" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int</span> index <span class="op">=</span> <span class="fu">getHashIndex</span><span class="op">(</span>key<span class="op">);</span>          <span class="co">// probes, and returns where key is</span></span>
+<span id="cb11-5"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span> <span class="op">((</span>hashTable<span class="op">[</span>index<span class="op">]</span> <span class="op">!=</span> <span class="kw">null</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="op">(</span>hashTable<span class="op">[</span>index<span class="op">]</span> <span class="op">!=</span> AVAILABLE<span class="op">))</span></span>
+<span id="cb11-7"><a href="" aria-hidden="true" tabindex="-1"></a>      result <span class="op">=</span> hashTable<span class="op">[</span>index<span class="op">].</span><span class="fu">getValue</span><span class="op">();</span></span>
+<span id="cb11-8"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> result<span class="op">;</span>                          <span class="co">// null if the key is not there</span></span>
+<span id="cb11-10"><a href="" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment">
+<p>Chapter 5’s <code>getValue</code> walked the structure. This one computes an index and reads one location, and returns <code>null</code> the same way.</p>
+</div>
+</section>
+<section id="question-10" class="slide level2" data-poll="ch6-where-is-the-loop" data-poll-answer="B">
+<h2>Question</h2>
+<p><code>getValue</code> again, with the declarations left out:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb12-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> index <span class="op">=</span> <span class="fu">getHashIndex</span><span class="op">(</span>key<span class="op">);</span></span>
+<span id="cb12-2"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">((</span>hashTable<span class="op">[</span>index<span class="op">]</span> <span class="op">!=</span> <span class="kw">null</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="op">(</span>hashTable<span class="op">[</span>index<span class="op">]</span> <span class="op">!=</span> AVAILABLE<span class="op">))</span></span>
+<span id="cb12-4"><a href="" aria-hidden="true" tabindex="-1"></a>   result <span class="op">=</span> hashTable<span class="op">[</span>index<span class="op">].</span><span class="fu">getValue</span><span class="op">();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong><em>There is no loop here. Where did the probing go?</em></strong></p>
+<ul class="choices row">
+  <li><span class="k">A</span> <span class="opt">Nowhere; one read is all it needs.</span></li>
+  <li class="fragment pick"><span class="k">B</span> <span class="opt">Into <code>getHashIndex</code>.</span></li>
+  <li><span class="k">C</span> <span class="opt">Into <code>hashCode</code>.</span></li>
+  <li><span class="k">D</span> <span class="opt">Into the array itself.</span></li>
+</ul>
+<div class="fragment">
+<p><code>getHashIndex</code> computes the home index, then follows the probe sequence until it finds the key or an empty location. Part 1’s version only compressed a hash code.</p>
+</div>
+</section>
+<section id="remove" class="slide level2">
+<h2>remove</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb13-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> V <span class="fu">remove</span><span class="op">(</span>K key<span class="op">)</span></span>
+<span id="cb13-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb13-3"><a href="" aria-hidden="true" tabindex="-1"></a>   V removedValue <span class="op">=</span> <span class="kw">null</span><span class="op">;</span></span>
+<span id="cb13-4"><a href="" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int</span> index <span class="op">=</span> <span class="fu">getHashIndex</span><span class="op">(</span>key<span class="op">);</span></span>
+<span id="cb13-5"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span> <span class="op">((</span>hashTable<span class="op">[</span>index<span class="op">]</span> <span class="op">!=</span> <span class="kw">null</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="op">(</span>hashTable<span class="op">[</span>index<span class="op">]</span> <span class="op">!=</span> AVAILABLE<span class="op">))</span></span>
+<span id="cb13-7"><a href="" aria-hidden="true" tabindex="-1"></a>   <span class="op">{</span></span>
+<span id="cb13-8"><a href="" aria-hidden="true" tabindex="-1"></a>      removedValue <span class="op">=</span> hashTable<span class="op">[</span>index<span class="op">].</span><span class="fu">getValue</span><span class="op">();</span></span>
+<span id="cb13-9"><a href="" aria-hidden="true" tabindex="-1"></a>      hashTable<span class="op">[</span>index<span class="op">]</span> <span class="op">=</span> AVAILABLE<span class="op">;</span>             <span class="co">// not null</span></span>
+<span id="cb13-10"><a href="" aria-hidden="true" tabindex="-1"></a>      numberOfEntries<span class="op">--;</span></span>
+<span id="cb13-11"><a href="" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
+<span id="cb13-12"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-13"><a href="" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> removedValue<span class="op">;</span></span>
+<span id="cb13-14"><a href="" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment">
+<p>One assignment does the removal, and it writes <code>AVAILABLE</code> rather than <code>null</code>. That is the whole of Part 2’s rule in code.</p>
+</div>
+</section>
+<section id="add-must-know" class="slide level2">
+<h2>add <span class="ex">Must Know</span></h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb14-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> V <span class="fu">add</span><span class="op">(</span>K key<span class="op">,</span> V value<span class="op">)</span></span>
+<span id="cb14-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb14-3"><a href="" aria-hidden="true" tabindex="-1"></a>   V oldValue<span class="op">;</span></span>
+<span id="cb14-4"><a href="" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int</span> index <span class="op">=</span> <span class="fu">getHashIndex</span><span class="op">(</span>key<span class="op">);</span></span>
+<span id="cb14-5"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span> <span class="op">((</span>hashTable<span class="op">[</span>index<span class="op">]</span> <span class="op">==</span> <span class="kw">null</span><span class="op">)</span> <span class="op">||</span> <span class="op">(</span>hashTable<span class="op">[</span>index<span class="op">]</span> <span class="op">==</span> AVAILABLE<span class="op">))</span></span>
+<span id="cb14-7"><a href="" aria-hidden="true" tabindex="-1"></a>   <span class="op">{</span></span>
+<span id="cb14-8"><a href="" aria-hidden="true" tabindex="-1"></a>      hashTable<span class="op">[</span>index<span class="op">]</span> <span class="op">=</span> <span class="kw">new</span> Entry<span class="op">&lt;&gt;(</span>key<span class="op">,</span> value<span class="op">);</span>   <span class="co">// key was not there</span></span>
+<span id="cb14-9"><a href="" aria-hidden="true" tabindex="-1"></a>      numberOfEntries<span class="op">++;</span></span>
+<span id="cb14-10"><a href="" aria-hidden="true" tabindex="-1"></a>      oldValue <span class="op">=</span> <span class="kw">null</span><span class="op">;</span></span>
+<span id="cb14-11"><a href="" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
+<span id="cb14-12"><a href="" aria-hidden="true" tabindex="-1"></a>   <span class="cf">else</span></span>
+<span id="cb14-13"><a href="" aria-hidden="true" tabindex="-1"></a>   <span class="op">{</span></span>
+<span id="cb14-14"><a href="" aria-hidden="true" tabindex="-1"></a>      oldValue <span class="op">=</span> hashTable<span class="op">[</span>index<span class="op">].</span><span class="fu">getValue</span><span class="op">();</span>       <span class="co">// key was there</span></span>
+<span id="cb14-15"><a href="" aria-hidden="true" tabindex="-1"></a>      hashTable<span class="op">[</span>index<span class="op">].</span><span class="fu">setValue</span><span class="op">(</span>value<span class="op">);</span></span>
+<span id="cb14-16"><a href="" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
+<span id="cb14-17"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-18"><a href="" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span> <span class="op">(</span><span class="fu">isHashTableTooFull</span><span class="op">())</span></span>
+<span id="cb14-19"><a href="" aria-hidden="true" tabindex="-1"></a>      <span class="fu">enlargeHashTable</span><span class="op">();</span></span>
+<span id="cb14-20"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-21"><a href="" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> oldValue<span class="op">;</span></span>
+<span id="cb14-22"><a href="" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="reading-add" class="slide level2 long-title">
+<h2>Reading add</h2>
+<p>The two branches are Chapter 5’s two outcomes, unchanged: a new key is stored and <code>null</code> comes back, and a key already present has its value replaced and the old value comes back.</p>
+<div class="fragment">
+<p>The resize check is last, and it runs on every addition, including the one that only replaced a value. That costs a comparison and is what keeps <span class="math inline">\(\lambda\)</span> inside the bound.</p>
+</div>
+</section>
+<section id="enlargehashtable" class="slide level2 long-title">
+<h2>enlargeHashTable</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb15-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="dt">void</span> <span class="fu">enlargeHashTable</span><span class="op">()</span></span>
+<span id="cb15-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb15-3"><a href="" aria-hidden="true" tabindex="-1"></a>   Entry<span class="op">&lt;</span>K<span class="op">,</span> V<span class="op">&gt;[]</span> oldTable <span class="op">=</span> hashTable<span class="op">;</span></span>
+<span id="cb15-4"><a href="" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int</span> oldSize <span class="op">=</span> hashTable<span class="op">.</span><span class="fu">length</span><span class="op">;</span></span>
+<span id="cb15-5"><a href="" aria-hidden="true" tabindex="-1"></a>   <span class="dt">int</span> newSize <span class="op">=</span> <span class="fu">getNextPrime</span><span class="op">(</span>oldSize <span class="op">+</span> oldSize<span class="op">);</span></span>
+<span id="cb15-6"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="" aria-hidden="true" tabindex="-1"></a>   <span class="at">@SuppressWarnings</span><span class="op">(</span><span class="st">"unchecked"</span><span class="op">)</span></span>
+<span id="cb15-8"><a href="" aria-hidden="true" tabindex="-1"></a>   Entry<span class="op">&lt;</span>K<span class="op">,</span> V<span class="op">&gt;[]</span> temp <span class="op">=</span> <span class="op">(</span>Entry<span class="op">&lt;</span>K<span class="op">,</span> V<span class="op">&gt;[])</span><span class="kw">new</span> Entry<span class="op">[</span>newSize<span class="op">];</span></span>
+<span id="cb15-9"><a href="" aria-hidden="true" tabindex="-1"></a>   hashTable <span class="op">=</span> temp<span class="op">;</span></span>
+<span id="cb15-10"><a href="" aria-hidden="true" tabindex="-1"></a>   numberOfEntries <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>              <span class="co">// add will count them again</span></span>
+<span id="cb15-11"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-12"><a href="" aria-hidden="true" tabindex="-1"></a>   <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> index <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> index <span class="op">&lt;</span> oldSize<span class="op">;</span> index<span class="op">++)</span></span>
+<span id="cb15-13"><a href="" aria-hidden="true" tabindex="-1"></a>   <span class="op">{</span></span>
+<span id="cb15-14"><a href="" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> <span class="op">((</span>oldTable<span class="op">[</span>index<span class="op">]</span> <span class="op">!=</span> <span class="kw">null</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="op">(</span>oldTable<span class="op">[</span>index<span class="op">]</span> <span class="op">!=</span> AVAILABLE<span class="op">))</span></span>
+<span id="cb15-15"><a href="" aria-hidden="true" tabindex="-1"></a>         <span class="fu">add</span><span class="op">(</span>oldTable<span class="op">[</span>index<span class="op">].</span><span class="fu">getKey</span><span class="op">(),</span> oldTable<span class="op">[</span>index<span class="op">].</span><span class="fu">getValue</span><span class="op">());</span></span>
+<span id="cb15-16"><a href="" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
+<span id="cb15-17"><a href="" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment">
+<p><code>hashTable</code> is reassigned before the loop, so each <code>add</code> writes into the new array while the loop reads the old one.</p>
+</div>
+</section>
+<section id="iterating-a-hash-table" class="slide level2 long-title">
+<h2>Iterating a Hash Table</h2>
+<p>An iterator walks the array from index 0 and returns the key in every location that holds a current entry, skipping the empty ones and the available ones.</p>
+<div class="fig still"><svg viewbox="0 0 940 148" width="74%" xmlns="http://www.w3.org/2000/svg" role="img">
+<rect class="slot" x="45.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="74.0" y="105.0" text-anchor="middle">0</text>
+<rect class="slot" x="111.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="140.0" y="105.0" text-anchor="middle">1</text>
+<rect class="slot" x="177.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="206.0" y="105.0" text-anchor="middle">2</text>
+<rect class="slot" x="243.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="272.0" y="105.0" text-anchor="middle">3</text>
+<rect class="slot" x="309.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="338.0" y="105.0" text-anchor="middle">4</text>
+<rect class="slot" x="375.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="404.0" y="105.0" text-anchor="middle">5</text>
+<rect class="slot" x="441.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="470.0" y="105.0" text-anchor="middle">6</text>
+<rect class="slot" x="507.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="536.0" y="105.0" text-anchor="middle">7</text>
+<rect class="slot" x="573.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="602.0" y="105.0" text-anchor="middle">8</text>
+<rect class="slot" x="639.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="668.0" y="105.0" text-anchor="middle">9</text>
+<rect class="slot" x="705.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="734.0" y="105.0" text-anchor="middle">10</text>
+<rect class="slot" x="771.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="800.0" y="105.0" text-anchor="middle">11</text>
+<rect class="slot" x="837.0" y="33.0" width="58" height="46" rx="5"></rect>
+<text class="idx" x="866.0" y="105.0" text-anchor="middle">12</text>
+<g class="kt" transform="translate(74.0,56)"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">25</text></g>
+<g class="kt" transform="translate(404.0,56)"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">18</text></g>
+<g class="kt avail" transform="translate(470.0,56)"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">A</text></g>
+<g class="kt" transform="translate(536.0,56)"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">44</text></g>
+<g class="kt" transform="translate(602.0,56)"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">59</text></g>
+<g class="kt" transform="translate(866.0,56)"><rect x="-29.0" y="-23.0" width="58" height="46" rx="5"></rect><text x="0" y="1" text-anchor="middle" dominant-baseline="central">12</text></g>
+</svg></div>
+<div class="fragment">
+<p>The order is the array’s, so it depends on the hash function and on the order collisions were resolved in. It is not the order the entries were added in, and it is not sorted.</p>
+</div>
+</section>
+<section id="javas-hashmap-must-know" class="slide level2 long-title">
+<h2>Java’s HashMap <span class="ex">Must Know</span></h2>
+<p><code>java.util.HashMap</code> is the dictionary of Chapter 5, implemented by hashing.</p>
+<ul>
+<li>Each location is a <strong>bucket</strong> that holds several entries, so it resolves collisions by chaining.</li>
+<li>The default maximum load factor is <strong>0.75</strong>, and the default table holds 16 buckets.</li>
+<li>Passing the number of buckets to the constructor avoids resizing a table whose size you can predict.</li>
+</ul>
+<div class="fragment">
+<p>It doubles rather than moving to the next prime: its sizes are powers of two, and it compresses a hash code with a bit mask instead of <code>%</code>.</p>
+</div>
+</section>
+<section id="question-11" class="slide level2" data-poll="ch6-hashmap-grow" data-poll-answer="A">
+<h2>Question</h2>
+<p>A <code>HashMap</code> is created with 32 buckets and the default maximum load factor of 0.75. Entries with distinct keys are added one at a time.</p>
+<p><strong><em>Which addition is the first to resize the table?</em></strong></p>
+<ul class="choices row">
+  <li class="fragment pick"><span class="k">A</span> <span class="opt">the 25th</span></li>
+  <li><span class="k">B</span> <span class="opt">the 24th</span></li>
+  <li><span class="k">C</span> <span class="opt">the 32nd</span></li>
+  <li><span class="k">D</span> <span class="opt">the 16th</span></li>
+</ul>
+<div class="fragment">
+<p><span class="math inline">\(32 \times 0.75 = 24\)</span> entries is the threshold, so the 24th addition fits and the 25th passes it. The new table holds 64 buckets.</p>
+</div>
+</section>
+<section id="javas-hashset" class="slide level2">
+<h2>Java’s HashSet</h2>
+<p><code>java.util.HashSet</code> implements <code>java.util.Set</code>, and it holds an instance of <code>HashMap</code> to do it.</p>
+<div class="fragment">
+<p>A set is a dictionary with the values thrown away: every element is stored as a key, mapped to one shared placeholder object. <code>contains</code> is <code>containsKey</code>, and it costs what a <code>HashMap</code> search costs.</p>
+</div>
+</section>
+<section id="dictionary-implementations-must-know" class="slide level2 cost-table long-title">
+<h2>Dictionary Implementations <span class="ex">Must Know</span></h2>
+<p>Chapter 5’s table, with the two rows this chapter adds.</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">implementation</th>
+<th style="text-align: center;"><code>add</code></th>
+<th style="text-align: center;"><code>getValue</code></th>
+<th style="text-align: center;"><code>remove</code></th>
+<th style="text-align: left;">key interface</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">unsorted array</td>
+<td style="text-align: center;"><span class="math inline">\(O(n)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(O(n)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(O(n)\)</span></td>
+<td style="text-align: left;"><code>equals</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">sorted array</td>
+<td style="text-align: center;"><span class="math inline">\(O(n)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(O(\log n)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(O(n)\)</span></td>
+<td style="text-align: left;"><code>compareTo</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">unsorted chain</td>
+<td style="text-align: center;"><span class="math inline">\(O(n)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(O(n)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(O(n)\)</span></td>
+<td style="text-align: left;"><code>equals</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">sorted chain</td>
+<td style="text-align: center;"><span class="math inline">\(O(n)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(O(n)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(O(n)\)</span></td>
+<td style="text-align: left;"><code>compareTo</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">hashing, average</td>
+<td style="text-align: center;"><span class="math inline">\(O(1)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(O(1)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(O(1)\)</span></td>
+<td style="text-align: left;"><code>hashCode</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">hashing, worst</td>
+<td style="text-align: center;"><span class="math inline">\(O(n)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(O(n)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(O(n)\)</span></td>
+<td style="text-align: left;"><code>hashCode</code></td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<p>The worst case is every key at one index, searched from the front.</p>
+</div>
+</section>
+<section id="what-it-cost" class="slide level2 long-title">
+<h2>What It Cost</h2>
+<p>Hashing gives up two things the other four implementations had.</p>
+<ul>
+<li><strong>Order.</strong> Nothing comes out sorted, and no operation asks a key to compare with another. <code>compareTo</code> is replaced by <code>hashCode</code>.</li>
+<li><strong>Space.</strong> The table is kept half empty on purpose, and it is rebuilt whenever it fills.</li>
+</ul>
+<div class="fragment">
+<p>Chapter 7 keeps the order and gives up the constant: a search tree compares keys, returns them sorted, and costs <span class="math inline">\(O(\log n)\)</span>.</p>
+</div>
+</section>
+<section id="what-you-can-do-now-2" class="slide level2">
+<h2>What You Can Do Now</h2>
+<ul>
+<li>Compute a load factor, and say whether it is inside the limit for its collision-resolution scheme.</li>
+<li>Read an average search cost off the formulas for a given <span class="math inline">\(\lambda\)</span>, and say which search the load factor ruins first.</li>
+<li>Give the size a table of <span class="math inline">\(n\)</span> locations grows to, and say why every entry is added again rather than copied.</li>
+<li>Say what one location of the table holds, and write <code>getValue</code>, <code>remove</code> and <code>add</code> from it.</li>
+<li>Give the average and worst-case cost of a dictionary operation with hashing, and say what makes the worst case happen.</li>
 </ul>
 
 </section>
@@ -2363,6 +3134,484 @@ Zechun (Jacob) Cao
       else document.addEventListener('DOMContentLoaded', function () {
         if (Reveal.isReady()) init(); else Reveal.on('ready', init);
       });
+    })();
+    </script>
+    <!-- Live voting for a Quarto RevealJS deck. Added with
+           include-after-body: poll.html
+         and installed by poll/install.sh, which fills in the two constants below.
+
+         The script does nothing at all without a key, so the copy on the website
+         never calls the worker. install.sh writes the key to poll_key.js beside
+         the deck, and that file is gitignored and excluded from the website
+         rsync: open index.html here and voting is on, open it on the site and it
+         is off. A ?k=<key> in the URL overrides the file, before the "#". A slide votes when its heading carries data-poll="<id>":
+
+           ## Warm-Up: The Roster {data-poll="ch2-roster"}
+
+         Adding data-poll-answer makes it a scored question -- phones ask for a
+         nickname once, and the leaderboard ranks correct answers:
+
+           ## Name the Set [Must Know]{.ex} {data-poll="ch2-name-the-set" data-poll-answer="C"}
+
+         The options come from the boxes already on the slide -- a .vote box, or
+         a <li> of a ul.choices list, which is how the data structures decks write
+         a four-option question under a figure. The letter is read from the
+         <strong> of a .vote and from the .k badge of a choices item. Every vote
+         slide carries the join QR code in its right margin, under the vote count
+         and the same width as it, so a student who decides to join mid-question
+         can still reach the page.
+           v   show or hide the tally (and tell the phones the answer)
+           l   show or hide the leaderboard
+           r   twice, to start a new class: tallies and board count from now on -->
+
+    <style>
+
+      /* How a vote box looks, so a deck can adopt polling without copying CSS.
+         Wrapped in :where() to carry no specificity of its own: a deck that
+         styles .vote in its own .scss still wins, and one that does not gets
+         this. The two choices are boxed and side by side so the room can see
+         what it is voting on from the back row. */
+      .reveal :where(.vote) {
+        background: #e6f0f5;
+        border-left: 6px solid #006791;
+        border-radius: 4px;
+        padding: 0.45em 0.7em;
+        text-align: center;
+      }
+      .reveal :where(.vote-prompt) { color: #006791; font-weight: 700; }
+      /* Four options stack two .columns rows; give the second row air. The margin
+         has to sit on the boxes, not the row -- reveal's column layout swallows a
+         margin on the row and renders it as a hairline. */
+      .reveal :where(.vote-row + .vote-row .vote) { margin-top: 0.5em; }
+
+      .reveal .vote { position: relative; overflow: hidden; transition: opacity 300ms ease; }
+      .reveal .vote > * { position: relative; z-index: 1; }
+      .reveal .poll-fill {
+        position: absolute; left: 0; top: 0; bottom: 0; z-index: 0; width: 0;
+        background: rgba(0, 103, 145, 0.26);
+        transition: width 420ms ease;
+      }
+      .reveal .poll-wrong { opacity: 0.42; }
+      .reveal .poll-right { box-shadow: 0 0 0 3px #006791; }
+
+      /* A ul.choices item is the other shape a question takes: the letter in a
+         .k badge and the option beside it as a bare text node. A text node
+         cannot be lifted above the fill the way .vote > * is, so the fill drops
+         behind it instead, and `isolation` keeps that negative layer inside the
+         item -- above its own background, below its letter and its words. */
+      .reveal ul.choices > li {
+        position: relative; isolation: isolate; overflow: hidden;
+        transition: opacity 300ms ease;
+      }
+      .reveal ul.choices > li > .poll-fill { z-index: -1; }
+      /* An option box is also the bar its share is drawn in, so it needs a
+         track to draw in. A ul.choices.row item is otherwise only as wide as
+         its own words, and a fifth of the vote on one reads as a sliver at its
+         left edge rather than as a bar. The stacked ul.choices already fills
+         the slide's width, so only the row form needs this. */
+      .reveal section[data-poll] ul.choices.row > li { min-width: 7.5em; }
+      /* The vote panel: the count on top, the join code under it, one width for
+         both. It sits in the right margin, which a wired deck leaves clear --
+         measured on CSCI 2322 chapter 2, slide content stops 154px short of the
+         right edge on every slide -- but not at the very top of it, because
+         Quarto's slide number is there (x 1213-1272, y 8-34 at 1280x720). Hence
+         top: 44px rather than 14px.
+
+         142px is what that margin holds at a 12px gutter, and it is the width
+         both children take. The badge takes it as a minimum, not a fixed width:
+         a revealed split is wider than the resting count, and align-items
+         flex-end lets it grow leftwards instead of wrapping to two lines. */
+      .poll-corner {
+        position: fixed; z-index: 40; top: 44px; right: 12px; width: 142px;
+        display: flex; flex-direction: column; align-items: flex-end; gap: 8px;
+      }
+      /* Width is pinned to the column, not merely floored at it. A revealed
+         four-option split ("A 5   B 3   C 2   D 1   ·   24 votes") is about
+         260px wide; left free to grow it would reach back to x 1008 and land on
+         the title, which on six of this deck's eleven vote slides carries a Must
+         Know pill out to x 1126. pre-wrap keeps the gaps between the counts and
+         lets the line break in them, so the split stacks inside the column
+         instead. The resting count is one line and still reads as a pill. */
+      .poll-badge {
+        min-width: 100%; max-width: 100%; box-sizing: border-box; text-align: center;
+        white-space: pre-wrap;                                 /* keeps the gaps, and wraps in them */
+        font: 600 17px/1.35 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        color: #006791; background: rgba(255, 255, 255, 0.88);
+        border: 1px solid rgba(0, 103, 145, 0.35); border-radius: 16px;
+        padding: 7px 13px; cursor: pointer; user-select: none;
+      }
+      .poll-badge.off { color: #a03030; border-color: rgba(160, 48, 48, 0.4); }
+      /* The no-key notice is a sentence, not a count, so it wraps inside the
+         column instead of reaching 360px to the left across the slide. */
+      .poll-hint { white-space: normal; line-height: 1.25; border-radius: 10px; }
+      .poll-qr {                   /* 142 - 14 padding - 2 border = 126px of code, up from 110 */
+        width: 100%; box-sizing: border-box;
+        background: #fff; border: 1px solid rgba(0, 0, 0, 0.14); border-radius: 7px;
+        padding: 7px 7px 5px;                    /* white quiet zone, so the code still scans */
+      }
+      .poll-qr img { display: block; width: 100%; height: auto; }
+
+      /* The address on the join slide is there to be retyped by a student whose
+         camera will not read the code, so it has to stay on one line: a URL
+         broken across two invites typing the break in. The monospace face is
+         wide enough that a workers.dev address overruns a 60% column at body
+         size, so this trims it to what the column holds. It lives here rather
+         than in a deck's .scss so that adopting the deck needs no CSS. */
+      .reveal .joinurl code { font-size: 0.74em; white-space: nowrap; }
+      .poll-qr .pq-cap {
+        margin-top: 5px; text-align: center;
+        font: 600 13px/1.2 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        color: #4a5560;
+      }
+      .poll-board {
+        position: fixed; z-index: 50; top: 50%; left: 50%; transform: translate(-50%, -50%);
+        min-width: 420px; max-width: 70vw; max-height: 80vh; overflow: auto;
+        background: #fff; border: 1px solid rgba(0, 103, 145, 0.3); border-radius: 12px;
+        box-shadow: 0 18px 50px rgba(0, 0, 0, 0.22); padding: 26px 30px;
+        font-family: var(--r-main-font, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+        color: #1a1a1a; cursor: pointer;
+      }
+      .poll-toast {
+        position: fixed; top: 14px; left: 50%; transform: translateX(-50%); z-index: 60;
+        font: 600 17px/1 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        color: #a03030; background: rgba(255, 255, 255, 0.95);
+        border: 1px solid rgba(160, 48, 48, 0.4); border-radius: 999px; padding: 8px 15px;
+      }
+      .poll-board h3 { margin: 0 0 4px; font-size: 26px; color: #006791; font-weight: 700; }
+      .poll-board .pb-since { margin: 0 0 14px; font-size: 15px; color: #6a7781; }
+      .poll-board ol { margin: 0; padding: 0; list-style: none; font-size: 22px; }
+      .poll-board li { display: flex; align-items: baseline; gap: 14px; padding: 7px 0; border-bottom: 1px solid #eef2f5; }
+      .poll-board li:last-child { border-bottom: 0; }
+      .poll-board .pb-rank { width: 2.1em; color: #6a7781; font-size: 0.82em; }
+      .poll-board .pb-name { flex: 1; }
+      .poll-board .pb-score { font-weight: 700; color: #006791; }
+      .poll-board .pb-empty { font-size: 19px; color: #6a7781; }
+    </style>
+
+    <!-- poll_key.js holds the worker key. It sits beside the deck, is gitignored,
+         and is excluded from the website rsync, so the folder on this machine can
+         vote and the same deck on the site cannot. Missing, it 404s and voting
+         stays off, which is the safe direction to fail in. -->
+    <script src="poll_key.js"></script>
+
+    <script>
+    (function () {
+      var URL_BASE = "https://poll.zechuncao.workers.dev";
+      var ROOM = "csci2336";
+
+      if (URL_BASE.indexOf("__POLL") === 0) return;           // deck was never wired
+      // ?k= still wins, which is how one deck folder drives a second room.
+      var key = new URLSearchParams(location.search).get("k") || window.__POLL_KEY__ || null;
+
+      // Without a key the poll layer is off: no QR code, no badge, and v does
+      // nothing. On the website that silence is the whole point. On a local copy
+      // it is indistinguishable from a deck where voting is broken, so there it
+      // says which it is. A key after the "#" reads as no key at all.
+      // A PDF of the deck is a handout. None of this belongs in one -- not the QR
+      // code, not the badge, not the notice -- so printing switches the lot off.
+      if (location.search.indexOf("print-pdf") >= 0) return;
+
+      var local = location.protocol === "file:" ||
+                  /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
+      if (!key && !local) return;
+
+      var timer = null, boardTimer = null, current = null, shown = false, badge = null, board = null;
+      var qr = null, corner = null;
+      var toastEl = null, toastTimer = null, armed = 0;
+
+      function post(path, data) {
+        return fetch(URL_BASE + path, {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify(data),
+        }).then(function (r) { return r.json(); });
+      }
+
+      var OPTS = ".vote, ul.choices > li";
+
+      function letterOf(v) {
+        var s = v.querySelector("strong, .k");
+        return (s ? s.textContent : "").replace(/[^A-Za-z0-9]/g, "");
+      }
+
+      function letters(sec) {
+        var out = [];
+        sec.querySelectorAll(OPTS).forEach(function (v) {
+          var t = letterOf(v);
+          if (t) out.push(t);
+        });
+        return out;
+      }
+
+      // enter() builds the QR first, so appending in call order would put the code
+      // above the count. The badge is inserted at the top instead, which fixes the
+      // order whichever is created first.
+      function ensureCorner() {
+        if (!corner) {
+          corner = document.createElement("div");
+          corner.className = "poll-corner";
+          document.body.appendChild(corner);
+        }
+        return corner;
+      }
+
+      function dropCorner() {
+        if (corner && !corner.childElementCount) { corner.remove(); corner = null; }
+      }
+
+      function ensureBadge() {
+        if (!badge) {
+          badge = document.createElement("div");
+          badge.className = "poll-badge";
+          badge.onclick = toggle;
+          var c = ensureCorner();
+          c.insertBefore(badge, c.firstChild);
+        }
+        return badge;
+      }
+
+      function ensureQR() {
+        if (!qr) {
+          qr = document.createElement("div");
+          qr.className = "poll-qr";
+          var img = document.createElement("img");
+          img.src = "images/vote_qr.svg";          // written beside the deck by install.sh
+          img.alt = "QR code that opens the class vote page";
+          var cap = document.createElement("div");
+          cap.className = "pq-cap";
+          cap.textContent = "Scan to vote";
+          qr.appendChild(img);
+          qr.appendChild(cap);
+          ensureCorner().appendChild(qr);
+        }
+        return qr;
+      }
+
+      function clearBars(sec) {
+        sec.querySelectorAll(".poll-fill").forEach(function (n) { n.remove(); });
+        sec.querySelectorAll(OPTS).forEach(function (v) { v.classList.remove("poll-wrong", "poll-right"); });
+      }
+
+      // A letter and its count are joined by a non-breaking space, so the badge
+      // can only wrap between pairs. With a plain space the column broke "D 1"
+      // across two lines, leaving a bare "1" under the row.
+      function split(st) {
+        return st.opts.map(function (o) { return o + "\u00a0" + (st.counts[o] || 0); }).join("  ");
+      }
+
+      function paint(sec, st) {
+        // The column is 142px, so a revealed split wraps. Breaking before the
+        // total keeps "24 votes" whole on the last line instead of letting
+        // "votes" wrap off on its own.
+        ensureBadge().textContent = shown
+          ? split(st) + "\n" + st.total + " votes"
+          : st.total + (st.total === 1 ? " vote" : " votes");
+        badge.classList.remove("off");
+        clearBars(sec);
+        if (!shown) return;
+        sec.querySelectorAll(OPTS).forEach(function (v) {
+          var o = letterOf(v);
+          var n = st.counts[o] || 0;
+          var pct = st.total ? Math.round((n / st.total) * 100) : 0;
+          var fill = document.createElement("div");
+          fill.className = "poll-fill";
+          v.appendChild(fill);
+          requestAnimationFrame(function () { fill.style.width = pct + "%"; });
+          if (st.answer) v.classList.add(o === st.answer ? "poll-right" : "poll-wrong");
+        });
+      }
+
+      function tick() {
+        if (!current) return;
+        var sec = current;
+        fetch(URL_BASE + "/s?r=" + encodeURIComponent(ROOM), { cache: "no-store" })
+          .then(function (r) { return r.json(); })
+          .then(function (st) { if (current === sec) paint(sec, st); })
+          .catch(function () { if (badge) { badge.textContent = "no connection"; badge.classList.add("off"); } });
+      }
+
+      // The /reveal reply carries the state the worker just wrote, so paint from it.
+      // Asking /s instead races the write and paints a screen of zeros for one tick.
+      function toggle() {
+        if (!current) return;
+        var sec = current;
+        shown = !shown;
+        post("/reveal", { r: ROOM, k: key, on: shown })
+          .then(function (st) { if (current === sec) paint(sec, st); })
+          .catch(function () { tick(); });
+      }
+
+      // --- leaderboard ---------------------------------------------------------
+
+      function drawBoard(data) {
+        if (!board) return;
+        board.innerHTML = "";
+        var h = document.createElement("h3");
+        h.textContent = "Leaderboard";
+        board.appendChild(h);
+        if (data && data.since) {
+          var sub = document.createElement("div");
+          sub.className = "pb-since";
+          sub.textContent = "since " + new Date(data.since).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+          board.appendChild(sub);
+        }
+        var rows = (data && data.board) || [];
+        if (!rows.length) {
+          var p = document.createElement("div");
+          p.className = "pb-empty";
+          p.textContent = data ? "No scored answers yet." : "No connection.";
+          board.appendChild(p);
+          return;
+        }
+        var ol = document.createElement("ol");
+        rows.forEach(function (r) {
+          var li = document.createElement("li");
+          var a = document.createElement("span"); a.className = "pb-rank"; a.textContent = r.rank + ".";
+          var b = document.createElement("span"); b.className = "pb-name"; b.textContent = r.name;
+          var c = document.createElement("span"); c.className = "pb-score"; c.textContent = r.score;
+          li.appendChild(a); li.appendChild(b); li.appendChild(c);
+          ol.appendChild(li);
+        });
+        board.appendChild(ol);
+      }
+
+      function loadBoard() {
+        fetch(URL_BASE + "/board?r=" + encodeURIComponent(ROOM) + "&k=" + encodeURIComponent(key) + "&n=10", { cache: "no-store" })
+          .then(function (r) { return r.json(); })
+          .then(drawBoard)
+          .catch(function () { drawBoard(null); });
+      }
+
+      function toggleBoard() {
+        if (board) {
+          board.remove(); board = null;
+          if (boardTimer) { clearInterval(boardTimer); boardTimer = null; }
+          return;
+        }
+        board = document.createElement("div");
+        board.className = "poll-board";
+        board.onclick = toggleBoard;
+        document.body.appendChild(board);
+        loadBoard();
+        boardTimer = setInterval(loadBoard, 3000);
+      }
+
+      // --- new class -----------------------------------------------------------
+
+      function toast(text, ms) {
+        if (!toastEl) {
+          toastEl = document.createElement("div");
+          toastEl.className = "poll-toast";
+          document.body.appendChild(toastEl);
+        }
+        toastEl.textContent = text;
+        if (toastTimer) clearTimeout(toastTimer);
+        toastTimer = setTimeout(function () {
+          if (toastEl) { toastEl.remove(); toastEl = null; }
+        }, ms || 4000);
+      }
+
+      // Two presses, because one stray r should not wipe the standings mid-class.
+      function restart() {
+        if (Date.now() - armed > 4000) {
+          armed = Date.now();
+          toast("Start a new leaderboard? press r again", 4200);
+          return;
+        }
+        armed = 0;
+        post("/restart", { r: ROOM, k: key })
+          .then(function () {
+            toast("New class. Tallies and leaderboard start from now.", 3500);
+            if (board) loadBoard();
+            tick();
+          })
+          .catch(function () { toast("No connection: the leaderboard was not restarted.", 3500); });
+      }
+
+      // --- slide wiring --------------------------------------------------------
+
+      function leave() {
+        if (timer) { clearInterval(timer); timer = null; }
+        if (current) clearBars(current);
+        if (badge) { badge.remove(); badge = null; }
+        if (qr) { qr.remove(); qr = null; }
+        dropCorner();
+        var was = current;
+        current = null;
+        shown = false;
+        if (was) post("/close", { r: ROOM, k: key }).catch(function () {});
+      }
+
+      function enter(sec) {
+        current = sec;
+        shown = false;
+        ensureQR();                                // up before the worker answers, or if it never does
+        ensureBadge().textContent = "opening…";
+        post("/open", {
+          r: ROOM, k: key, q: sec.dataset.poll, opts: letters(sec),
+          answer: sec.dataset.pollAnswer || null,
+        })
+          .then(function (st) {
+            if (current !== sec) return;
+            if (st.error) { badge.textContent = st.error; badge.classList.add("off"); return; }
+            paint(sec, st);
+            timer = setInterval(tick, 2500);
+          })
+          .catch(function () { if (badge) { badge.textContent = "no connection"; badge.classList.add("off"); } });
+      }
+
+      function onSlide(sec) {
+        if (current === sec) return;
+        if (current) leave();
+        if (sec && sec.dataset && sec.dataset.poll && letters(sec).length) enter(sec);
+      }
+
+      function hint() {
+        var sec = Reveal.getCurrentSlide();
+        var el = document.querySelector(".poll-hint");
+        if (!sec || !sec.dataset || !sec.dataset.poll) { if (el) { el.remove(); dropCorner(); } return; }
+        if (!el) {
+          el = document.createElement("div");
+          el.className = "poll-badge off poll-hint";
+          ensureCorner().appendChild(el);
+        }
+        // The deployed deck has no key file, so this is what a student sees when
+        // they review a vote slide on the site. Keep it to a plain "not live"
+        // note and leave the cause in the tooltip, where it still tells the
+        // instructor what is wrong if the key goes missing in class.
+        el.textContent = "voting off";
+        el.title = "no poll_key.js beside the deck";
+      }
+
+      function start() {
+        if (!key) {
+          hint();
+          Reveal.on("slidechanged", hint);
+          return;
+        }
+        onSlide(Reveal.getCurrentSlide());
+        Reveal.on("slidechanged", function (e) { onSlide(e.currentSlide); });
+        if (Reveal.addKeyBinding) {
+          Reveal.addKeyBinding({ keyCode: 86, key: "V", description: "Show or hide the vote tally" }, toggle);
+          Reveal.addKeyBinding({ keyCode: 76, key: "L", description: "Show or hide the leaderboard" }, toggleBoard);
+          Reveal.addKeyBinding({ keyCode: 82, key: "R", description: "Press twice: new class, restart the leaderboard" }, restart);
+        } else {
+          document.addEventListener("keydown", function (e) {
+            if (e.key === "v") toggle();
+            if (e.key === "l") toggleBoard();
+            if (e.key === "r") restart();
+          });
+        }
+        window.addEventListener("beforeunload", function () {
+          if (current) navigator.sendBeacon(URL_BASE + "/close", new Blob([JSON.stringify({ r: ROOM, k: key })], { type: "application/json" }));
+        });
+      }
+
+      (function wait() {
+        if (window.Reveal && Reveal.isReady && Reveal.isReady()) return start();
+        if (window.Reveal && Reveal.on) return Reveal.on("ready", start);
+        setTimeout(wait, 150);
+      })();
     })();
     </script>
     <script id="quarto-html-after-body" type="application/javascript">
